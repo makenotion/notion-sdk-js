@@ -1,0 +1,19 @@
+{
+  "name": "@notion/client",
+  "version": "0.1.0",
+  "description": "",
+  "engines": {
+    "node": ">=14.15.0"
+  },
+  "main": "./dist",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "got": "^11.8.2",
+    "typescript": "^4.2.4"
+  }
+}
