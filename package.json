@@ -13,7 +13,9 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "got": "^11.8.2",
+    "got": "^11.8.2"
+  },
+  "devDependencies": {
     "typescript": "^4.2.4"
   }
 }
