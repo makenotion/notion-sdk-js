@@ -12,7 +12,7 @@
     "lib": ["ES2019"],
 
     // Emit location
-    "outDir": "dist",
+    "outDir": "build",
 
     // Emit sourcemaps
     "declarationMap": true,
@@ -32,10 +32,11 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedIndexedAccess": true,
     "noPropertyAccessFromIndexSignature": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
   },
 
   "include": [
-    "src/**/*"
+    "src/**/*",
+    "test/**/*",
   ],
 }
