@@ -79,8 +79,8 @@ export default class Client {
       return this.request<DatabasesRetrieveResponse>(
         databasesRetrieve.path(args),
         databasesRetrieve.method,
-        pick(args, ...databasesRetrieve.queryParams),
-        pick(args, ...databasesRetrieve.bodyParams),
+        pick(args, databasesRetrieve.queryParams),
+        pick(args, databasesRetrieve.bodyParams),
         args.auth,
       );
     },
@@ -89,12 +89,11 @@ export default class Client {
      * Query a database
      */
     query: (args: WithAuth<DatabasesQueryParameters>): Promise<DatabasesQueryResponse> => {
-      return this.request(
+      return this.request<DatabasesQueryResponse>(
         databasesQuery.path(args),
         databasesQuery.method,
-        // TODO: there's a type check error on the following line
-        pick(args, ...databasesQuery.queryParams),
-        pick(args, ...databasesQuery.bodyParams),
+        pick(args, databasesQuery.queryParams),
+        pick(args, databasesQuery.bodyParams),
         args.auth,
       );
     },
