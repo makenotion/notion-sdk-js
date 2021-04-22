@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-empty-interface */
+
 import { NotionDatabase, NotionDatabaseFilter, NotionDatabaseSorts, NotionPage, PaginatedList } from './api-types';
 
 /**

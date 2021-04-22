@@ -6,12 +6,12 @@
  *
  * @param _x The variable with no remaining values
  */
-export function assertNever(_x: never): never {
+export function assertNever(_x: never): never { // eslint-disable-line @typescript-eslint/no-unused-vars
   throw new Error('Unexpected value. Should have been never.');
 }
 
 
-export function pick<O extends {}, K extends keyof O> (base: O, keys: readonly K[]): Pick<O, K> {
+export function pick<O extends unknown, K extends keyof O> (base: O, keys: readonly K[]): Pick<O, K> {
   const entries = keys.map(key => ([key, base[key]]));
   return Object.fromEntries(entries);
 }

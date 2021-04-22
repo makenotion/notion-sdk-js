@@ -5,22 +5,39 @@
  * In the future, the contents of this file will be generated from an API definition.
  */
 
-export type NotionObject = NotionDatabase | NotionPage | PaginatedList;
+export type NotionObject = NotionSingularObject | PaginatedList;
+export type NotionSingularObject = NotionDatabase | NotionPage;
+
+interface PropertyFilter {
+  property: string;
+  // title?: TextFilter;
+  // text?: TextFilter;
+  // number?: NumberFilter;
+  // checkbox?: CheckboxFilter;
+  // ...
+}
+
+// either property or timestamp are defined but not both
+interface Sort {
+  property?: string;
+  timestamp?: 'created_time' | 'last_edited_time';
+  direction: 'ascending' | 'descending';
+}
 
 // TODO: fill in the rest of these types
 export interface NotionDatabase {
   object: 'database';
   id: string;
 }
-export interface NotionDatabaseFilter {}
-export interface NotionDatabaseSorts {}
+export type NotionDatabaseFilter = PropertyFilter; // | ...
+export type NotionDatabaseSorts = Sort[];
 
 export interface NotionPage {
   object: 'page',
   id: string;
 }
 
-export interface PaginatedList<O extends NotionObject = NotionObject> {
+export interface PaginatedList<O extends NotionSingularObject = NotionSingularObject> {
   object: 'list',
   results: O[],
   has_more: boolean;

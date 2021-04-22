@@ -8,6 +8,7 @@
   "main": "./dist",
   "scripts": {
     "build": "tsc",
+    "lint": "eslint . --ext .ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -16,6 +17,9 @@
     "got": "^11.8.2"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.22.0",
+    "@typescript-eslint/parser": "^4.22.0",
+    "eslint": "^7.24.0",
     "typescript": "^4.2.4"
   }
 }
