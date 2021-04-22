@@ -15,6 +15,14 @@ export interface ClientOptions {
   logLevel?: LogLevel;
 }
 
+export interface RequestParameters {
+  path: string;
+  method: Method;
+  query?: QueryParams;
+  body?: Record<string, unknown>;
+  auth?: string;
+}
+
 export default class Client {
 
   #auth?: string;
@@ -48,7 +56,7 @@ export default class Client {
    * @param body
    * @returns
    */
-  public async request<Response>(path: string, method: Method, query?: QueryParams, body?: Record<string, unknown>, auth?: string): Promise<Response> {
+  public async request<Response>({ path, method, query, body, auth }: RequestParameters): Promise<Response> {
     this.log(LogLevel.INFO, `request start`, { method, path });
 
     // TODO: check error conditions and throw the appropriate error
@@ -72,26 +80,26 @@ export default class Client {
      * Retrieve a database
      */
     retrieve: (args: WithAuth<DatabasesRetrieveParameters>): Promise<DatabasesRetrieveResponse> => {
-      return this.request<DatabasesRetrieveResponse>(
-        databasesRetrieve.path(args),
-        databasesRetrieve.method,
-        pick(args, databasesRetrieve.queryParams),
-        pick(args, databasesRetrieve.bodyParams),
-        args.auth,
-      );
+      return this.request<DatabasesRetrieveResponse>({
+        path: databasesRetrieve.path(args),
+        method: databasesRetrieve.method,
+        query: pick(args, databasesRetrieve.queryParams),
+        body: pick(args, databasesRetrieve.bodyParams),
+        auth: args.auth,
+      });
     },
 
     /**
      * Query a database
      */
     query: (args: WithAuth<DatabasesQueryParameters>): Promise<DatabasesQueryResponse> => {
-      return this.request<DatabasesQueryResponse>(
-        databasesQuery.path(args),
-        databasesQuery.method,
-        pick(args, databasesQuery.queryParams),
-        pick(args, databasesQuery.bodyParams),
-        args.auth,
-      );
+      return this.request<DatabasesQueryResponse>({
+        path: databasesQuery.path(args),
+        method: databasesQuery.method,
+        query: pick(args, databasesQuery.queryParams),
+        body: pick(args, databasesQuery.bodyParams),
+        auth: args.auth,
+      });
     },
   };
 
