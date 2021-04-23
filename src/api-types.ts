@@ -17,12 +17,6 @@ interface PropertyFilter {
   // ...
 }
 
-// either property or timestamp are defined but not both
-interface Sort {
-  property?: string;
-  timestamp?: 'created_time' | 'last_edited_time';
-  direction: 'ascending' | 'descending';
-}
 
 // TODO: fill in the rest of these types
 export interface NotionDatabase {
@@ -30,7 +24,12 @@ export interface NotionDatabase {
   id: string;
 }
 export type NotionDatabaseFilter = PropertyFilter; // | ...
-export type NotionDatabaseSorts = Sort[];
+export interface NotionDatabaseSort {
+  // TODO: either property or timestamp are defined but not both
+  property?: string;
+  timestamp?: 'created_time' | 'last_edited_time';
+  direction: 'ascending' | 'descending';
+}
 
 export interface NotionPage {
   object: 'page',

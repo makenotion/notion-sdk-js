@@ -10,7 +10,7 @@ import got, { Got, Options as GotOptions, Headers as GotHeaders } from 'got';
 
 export interface ClientOptions {
   auth?: string;
-  timeout?: number;
+  timeoutMs?: number;
   baseUrl?: string;
   logLevel?: LogLevel;
 }
@@ -34,7 +34,7 @@ export default class Client {
     this.#logLevel = options?.logLevel ?? LogLevel.WARN;
 
     const prefixUrl = (options?.baseUrl ?? 'https://api.notion.com') + '/v1/';
-    const timeout = options?.timeout ?? 60;
+    const timeout = options?.timeoutMs ?? 60_000;
 
     this.#got = got.extend({
       prefixUrl,
@@ -109,7 +109,7 @@ export default class Client {
    * @param level The level for this message
    * @param args Arguments to send to the console
    */
-  private log(level: LogLevel, ...args: any[]) { // eslint-disable-line @typescript-eslint/no-explicit-any
+  private log(level: LogLevel, ...args: unknown[]) {
     if (logLevelSeverity(level) >= logLevelSeverity(this.#logLevel)) {
       console.log(`${this.constructor.name} ${level}: `, ...args);
     }
@@ -122,6 +122,7 @@ export default class Client {
    * an empty object
    *
    * @param auth API key or access token
+   * @returns headers key-value object
    */
   private authAsHeaders(auth?: string): GotHeaders {
     const headers: GotHeaders = {};

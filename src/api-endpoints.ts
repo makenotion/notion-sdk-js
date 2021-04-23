@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-empty-interface */
 
-import { NotionDatabase, NotionDatabaseFilter, NotionDatabaseSorts, NotionPage, PaginatedList } from './api-types';
+import { NotionDatabase, NotionDatabaseFilter, NotionDatabaseSort, NotionPage, PaginatedList } from './api-types';
 
 /**
  * Notion API Endpoints
@@ -43,7 +43,7 @@ interface DatabasesQueryPathParameters {
 interface DatabasesQueryQueryParameters {}
 interface DatabasesQueryBodyParameters {
   filter?: NotionDatabaseFilter;
-  sorts?: NotionDatabaseSorts;
+  sorts?: NotionDatabaseSort[];
   start_cursor?: string;
 }
 
