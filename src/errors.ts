@@ -71,6 +71,10 @@ export class ResponseError extends Error implements ClientError {
     this.headers = original.response.headers;
     this.body = original.response.rawBody.toString();
   }
+
+  static isResponseError(error: ClientError): error is ResponseError {
+    return error.code !== undefined && Object.values(ErrorCode).includes(error.code as ErrorCode);
+  }
 }
 
 export function wrapError(originalError: unknown): ClientError {
