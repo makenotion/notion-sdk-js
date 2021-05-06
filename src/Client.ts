@@ -1,4 +1,5 @@
 import { LogLevel, logLevelSeverity } from './logging';
+import { wrapError, ClientError } from './errors';
 import { pick } from './helpers';
 import {
   DatabasesRetrieveParameters, DatabasesRetrieveResponse, databasesRetrieve,
@@ -59,16 +60,25 @@ export default class Client {
   public async request<Response>({ path, method, query, body, auth }: RequestParameters): Promise<Response> {
     this.log(LogLevel.INFO, `request start`, { method, path });
 
-    // TODO: check error conditions and throw the appropriate error
-    const response = this.#got(path, {
-      method,
-      searchParams: query,
-      json: body,
-      headers: this.authAsHeaders(auth),
-    }).json<Response>();
+    try {
+      const response = await (this.#got(path, {
+        method,
+        searchParams: query,
+        json: body,
+        headers: this.authAsHeaders(auth),
+      }).json<Response>());
 
-    this.log(LogLevel.INFO, `request end`, { method, path });
-    return response;
+      this.log(LogLevel.INFO, `request success`, { method, path });
+      return response;
+    } catch (error) {
+      const clientError: ClientError = wrapError(error)
+      this.log(LogLevel.WARN, `request fail`, { code: clientError.code, message: clientError.message });
+      if (clientError.body !== undefined) {
+        // The response body may contain sensitive information so logged separately at the DEBUG level
+        this.log(LogLevel.DEBUG, `  response body`, { body: clientError.body });
+      }
+      throw clientError;
+    }
   }
 
   /*
