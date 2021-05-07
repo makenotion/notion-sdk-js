@@ -3,13 +3,9 @@
 package-lock.json
 /build
 
-/examples/database-update-send-email/node_modules
-/examples/database-update-send-email/package-lock.json
-/examples/database-update-send-email/.env
-
-/examples/github-issue-sync/node_modules
-/examples/github-issue-sync/package-lock.json
-/examples/github-issue-sync/.env
+/examples/**/node_modules
+/examples/**/package-lock.json
+/examples/**/.env
 
 
 
