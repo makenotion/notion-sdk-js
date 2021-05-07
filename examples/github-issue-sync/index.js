@@ -6,19 +6,14 @@ dotenv.config();
 const octokit = new Octokit({auth: process.env.GITHUB_KEY})
 const notion = new Client({auth:process.env.NOTION_KEY}); 
 
-const database_id = process.env.NOTION_DATABASE_ID; 
+const database_id = process.env.NOTION_DATABASE_ID;
 
-(async function main() {
-    console.log("Running main function"); 
-    
-    //Get all issues currently in the database and save them
-    issues_in_database = {}
-    await getIssuesFromDatabase(issues_in_database, null);
+async function syncIssuesWithDatabase(){
+    console.log("Syncing GitHub Issues with Notion Database")
+    const issuesInDatabase = await getIssuesFromDatabse(); 
 
-    console.log(issues_in_database)
-
-    //Get all GitHub Issues from a Repo
-    var gitHubIssues = {}; 
+    //Get a list of github issues and add them to a local store
+    let gitHubIssues = {}; 
     const iterator = octokit.paginate.iterator(octokit.rest.issues.listForRepo, {
         owner: process.env.GITHUB_REPO_OWNER,
         repo:process.env.GITHUB_REPO_NAME, 
@@ -37,12 +32,12 @@ const database_id = process.env.NOTION_DATABASE_ID;
     }
 
     //Create new issues or update existing in a Notion Database
-    for await (const [key,value] of Object.entries(gitHubIssues)){
+    for (const [key,value] of Object.entries(gitHubIssues)){
         const issue_number = key 
         const issues_details = value
         //If the issue does not exist in the database yet, add it to the database
-        if(!(issue_number in issues_in_database)){
-            const response = await notion.request({
+        if(!(issue_number in issuesInDatabase)){
+            await notion.request({
                 path:'pages', 
                 method:"POST", 
                 body:{
@@ -59,7 +54,7 @@ const database_id = process.env.NOTION_DATABASE_ID;
         //This issue already exists in the database so we want to update the page
         {
             await notion.request({
-                path:'pages/'+issues_in_database[issue_number].page_id,
+                path:'pages/'+issuesInDatabase[issue_number].page_id,
                 method:'patch', 
                 body:{
                     "properties": {
@@ -72,37 +67,49 @@ const database_id = process.env.NOTION_DATABASE_ID;
             })
         }
     }
-    //Run this function every hour
-    setTimeout(main, 5*1000)
-})();
+    //Run this function every five minutes
+    setTimeout(syncIssuesWithDatabase, 5*1000)
+}
 
-//Get a paginated list of Issues currently in a the database. 
-async function getIssuesFromDatabase(issues, start_cursor = null) {
-    var request_payload = "";
-    //Create the request payload based on the presense of a start_cursor
-    if(start_cursor == null){
-        request_payload = {
-            path:'databases/' + database_id + '/query', 
-            method:'POST',
-        }
-    } else {
-        request_payload= {
-            path:'databases/' + database_id + '/query', 
-            method:'POST',
-            body:{
-                "start_cursor": start_cursor
+(async () => {
+    syncIssuesWithDatabase(); 
+})()
+
+//Get a paginated list of Tasks currently in a the database. 
+async function getIssuesFromDatabse() {
+
+    const issues = {}; 
+
+    async function getPageOfIssues(cursor){
+        let request_payload = "";
+        //Create the request payload based on the presense of a start_cursor
+        if(cursor == undefined){
+            request_payload = {
+                path:'databases/' + database_id + '/query', 
+                method:'POST',
+            }
+        } else {
+            request_payload= {
+                path:'databases/' + database_id + '/query', 
+                method:'POST',
+                body:{
+                    "start_cursor": cursor
+                }
             }
         }
-    }
-    //While there are more pages left in the query, get pages from the database. 
-    const current_pages = await notion.request(request_payload).then(async function(response){ 
-        for(const page of response.results){
-            issues_in_database[page.properties["Issue Number"].number] = {
+        //While there are more pages left in the query, get pages from the database. 
+        const current_pages = await notion.request(request_payload)
+        
+        for(const page of current_pages.results){
+            issues[page.properties["Issue Number"].number] = {
                 "page_id": page.id, 
             }
         }
-        if(response.has_more){
-            await getIssuesFromDatabase(issues, response.next_cursor)
+        if(current_pages.has_more){
+            await getPageOfIssues(current_pages.next_cursor)
         }
-    })
+        
+    }
+    await getPageOfIssues();
+    return issues; 
 }; 
