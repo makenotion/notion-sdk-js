@@ -1,36 +1,56 @@
 import type { IncomingHttpHeaders } from 'http';
-import type { RequestError as GotRequestError, HTTPError } from 'got';
+import type {
+  HTTPError as GotHTTPError,
+  TimeoutError as GotTimeoutError,
+  Response as GotResponse,
+} from 'got';
+import { isObject } from './helpers';
 
-/**
- * An error produced by the Client.
- *
- * Each of these errors have a `code` property, which can be depended on to separate kinds of errors.
- */
-export interface ClientError extends Error {
-  code: ErrorCode | string;
-  status?: number;
-  headers?: IncomingHttpHeaders;
-  body?: string;
+export class RequestTimeoutError extends Error {
+  readonly code = 'notionhq_client_request_timeout';
+
+  constructor(message = 'Request to Notion API has timed out') {
+    super(message);
+    this.name = 'RequestTimeoutError';
+  }
+
+  static isRequestTimeoutError(error: unknown): error is RequestTimeoutError {
+    return (
+      error instanceof Error &&
+      error.name === 'RequestTimeoutError' &&
+      'code' in error && error['code'] === RequestTimeoutError.prototype.code
+    );
+  }
 }
 
-/**
- * Transforms any error into a coded error by enforcing a default value for the `code` property.
- *
- * @param error any Error
- * @returns a ClientError
- */
-function anyErrorAsClientError(error: Error): ClientError {
-  const asClientError = error as ClientError;
-  asClientError.code = asClientError.code ?? 'notionhq_client_error';
-  return asClientError;
+export class HTTPResponseError extends Error {
+  readonly code: string = 'notionhq_client_response_error';
+  readonly status: number;
+  readonly headers: IncomingHttpHeaders;
+  readonly body: string;
+
+  constructor(response: GotResponse, message?: string) {
+    super(message ?? `Request to Notion API failed with status: ${response.statusCode}`);
+    this.name = 'HTTPResponseError';
+    this.status = response.statusCode;
+    this.headers = response.headers;
+    this.body = response.rawBody.toString();
+  }
+
+  static isHTTPResponseError(error: unknown): error is HTTPResponseError {
+    return (
+      error instanceof Error &&
+      error.name === 'HTTPResponseError' &&
+      'code' in error && error['code'] === HTTPResponseError.prototype.code
+    );
+  }
 }
+
 
 /**
  * Error codes for responses from the API.
- *
- * When a ClientError's code property is equal to one of these, it is a ResponseError and has more information.
  */
-export enum ErrorCode {
+export enum APIErrorCode {
   Unauthorized = 'unauthorized',
   RestrictedResource = 'restricted_resource',
   ObjectNotFound = 'object_not_found',
@@ -45,69 +65,95 @@ export enum ErrorCode {
 }
 
 /**
- * Body of an error response from the API
+ * Body of an error response from the API.
  */
-interface ErrorResponseBody {
+interface APIErrorResponseBody {
+  code: APIErrorCode;
   message: string;
-  code: ErrorCode;
 }
 
 /**
  * A response from the API indicating a problem.
  *
- * Use the `code` property to handle various kinds of errors. All its possible values are in `ErrorCode`.
+ * Use the `code` property to handle various kinds of errors. All its possible values are in `APIErrorCode`.
  */
-export class ResponseError extends Error implements ClientError {
-  readonly code: ErrorCode;
-  readonly status: number;
-  readonly headers: IncomingHttpHeaders;
-  readonly body: string;
+export class APIResponseError extends HTTPResponseError implements APIErrorResponseBody {
+  readonly code: APIErrorCode;
 
-  constructor(original: HTTPError, body: ErrorResponseBody) {
-    super(body.message);
-    this.message = body.message;
+  constructor(response: GotResponse, body: APIErrorResponseBody) {
+    super(response, body.message);
+    this.name = 'APIResponseError';
     this.code = body.code;
-    this.status = original.response.statusCode;
-    this.headers = original.response.headers;
-    this.body = original.response.rawBody.toString();
   }
 
-  static isResponseError(error: ClientError): error is ResponseError {
-    return error.code !== undefined && Object.values(ErrorCode).includes(error.code as ErrorCode);
+  static isAPIResponseError(error: unknown): error is APIResponseError {
+    return (
+      error instanceof Error &&
+      error.name === 'APIResponseError' &&
+      'code' in error && isAPIErrorCode(error['code'])
+    );
   }
 }
 
-export function wrapError(originalError: unknown): ClientError {
-  if (isGotError(originalError)) {
-    if (isHttpError(originalError)) {
-      if (typeof originalError.response.body === 'string') {
-        const body = JSON.parse(originalError.response.body);
-        if (isErrorResponseBody(body)) {
-          return new ResponseError(originalError, body);
-        }
-      }
+
+type RequestError = RequestTimeoutError | HTTPResponseError;
+
+export function buildRequestError(error: unknown): RequestError | undefined {
+  if (isGotTimeoutError(error)) {
+    return new RequestTimeoutError();
+  }
+  if (isGotHTTPError(error)) {
+    if (isAPIErrorResponseBody(error.response.body)) {
+      return new APIResponseError(error.response, error.response.body);
     }
+    return new HTTPResponseError(error.response);
   }
-  if (originalError instanceof Error) {
-    return anyErrorAsClientError(originalError);
-  }
-  return anyErrorAsClientError(new Error(`An unknown client error occurred: ${originalError}`));
+  return;
 }
 
 /*
  * Type guards
  */
 
-function isGotError(error: unknown): error is GotRequestError {
-  const asAny = error as any; // eslint-disable-line @typescript-eslint/no-explicit-any
-  return 'options' in asAny && 'method' in asAny.options;
+function isAPIErrorResponseBody(body: unknown): body is APIErrorResponseBody {
+  if (typeof body !== 'string') {
+    return false;
+  }
+
+  let parsed;
+  try {
+    parsed = JSON.parse(body);
+  } catch (parseError) {
+    return false;
+  }
+
+  return (
+    isObject(parsed) &&
+    typeof parsed['message'] === 'string' &&
+    isAPIErrorCode(parsed['code'])
+  );
 }
 
-function isHttpError(error: GotRequestError): error is HTTPError {
-  return 'response' in error;
+function isAPIErrorCode(code: unknown): code is APIErrorCode {
+  return typeof code === 'string' && Object.values<string>(APIErrorCode).includes(code);
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function isErrorResponseBody(body: any): body is ErrorResponseBody {
-  return 'message' in body && 'code' in body && Object.values(ErrorCode).includes(body.code);
+function isGotTimeoutError(error: unknown): error is GotTimeoutError {
+  return (
+    error instanceof Error &&
+    error.name === 'TimeoutError' &&
+    'event' in error && typeof error['event'] === 'string' &&
+    isObject(error['request']) &&
+    isObject(error['timings'])
+  );
+}
+
+function isGotHTTPError(error: unknown): error is GotHTTPError {
+  return (
+    error instanceof Error &&
+    error.name === 'HTTPError' &&
+    'request' in error && isObject(error['request']) &&
+    'response' in error && isObject(error['response']) &&
+    'timings' in error && isObject(error['timings'])
+  );
 }

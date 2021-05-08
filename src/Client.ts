@@ -1,13 +1,11 @@
+import got, { Got, Options as GotOptions, Headers as GotHeaders } from 'got';
 import { LogLevel, logLevelSeverity } from './logging';
-import { wrapError, ClientError } from './errors';
+import { buildRequestError, HTTPResponseError } from './errors'
 import { pick } from './helpers';
 import {
   DatabasesRetrieveParameters, DatabasesRetrieveResponse, databasesRetrieve,
   DatabasesQueryResponse, DatabasesQueryParameters, databasesQuery,
 } from './api-endpoints';
-
-import got, { Got, Options as GotOptions, Headers as GotHeaders } from 'got';
-
 
 export interface ClientOptions {
   auth?: string;
@@ -74,13 +72,20 @@ export default class Client {
       this.log(LogLevel.INFO, `request success`, { method, path });
       return response;
     } catch (error) {
-      const clientError: ClientError = wrapError(error)
-      this.log(LogLevel.WARN, `request fail`, { code: clientError.code, message: clientError.message });
-      if (clientError.body !== undefined) {
-        // The response body may contain sensitive information so logged separately at the DEBUG level
-        this.log(LogLevel.DEBUG, `  response body`, { body: clientError.body });
+      // Build an error of a known type, otherwise throw unexpected errors
+      const requestError = buildRequestError(error);
+      if (requestError === undefined) {
+        throw error;
       }
-      throw clientError;
+
+      this.log(LogLevel.WARN, `request fail`, { code: requestError.code, message: requestError.message });
+      if (HTTPResponseError.isHTTPResponseError(requestError)) {
+        // The response body may contain sensitive information so it is logged separately at the DEBUG level
+        this.log(LogLevel.DEBUG, `failed response body`, { body: requestError.body });
+      }
+
+      // Throw as a known error type
+      throw requestError;
     }
   }
 
