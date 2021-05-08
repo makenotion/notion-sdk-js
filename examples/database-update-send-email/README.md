@@ -1,7 +1,7 @@
 # Sample Integration: Notion to Email 
 
 ## About the Integration 
-# 
+
 This Notion integration sends an email whenever the Status of a page in a database is updated. This sample was built using [this database template](https://www.notion.so/5b593126d3eb401db62c83cbe362d2d5?v=a44397b3675545f389a6f28282c402ae) and emails are sent using [SendGrid's API](https://sendgrid.com). 
 
 ## Running Locally
