@@ -1,4 +1,4 @@
-import { LogLevel, logLevelSeverity } from './logging';
+import { Logger, LogLevel, logLevelSeverity, makeConsoleLogger } from './logging';
 import { pick } from './helpers';
 import {
   DatabasesRetrieveParameters, DatabasesRetrieveResponse, databasesRetrieve,
@@ -13,6 +13,7 @@ export interface ClientOptions {
   timeoutMs?: number;
   baseUrl?: string;
   logLevel?: LogLevel;
+  logger?: Logger;
 }
 
 export interface RequestParameters {
@@ -27,11 +28,13 @@ export default class Client {
 
   #auth?: string;
   #logLevel: LogLevel;
+  #logger: Logger;
   #got: Got;
 
   public constructor(options?: ClientOptions) {
     this.#auth = options?.auth;
     this.#logLevel = options?.logLevel ?? LogLevel.WARN;
+    this.#logger = options?.logger ?? makeConsoleLogger(this.constructor.name);
 
     const prefixUrl = (options?.baseUrl ?? 'https://api.notion.com') + '/v1/';
     const timeout = options?.timeoutMs ?? 60_000;
@@ -57,7 +60,7 @@ export default class Client {
    * @returns
    */
   public async request<Response>({ path, method, query, body, auth }: RequestParameters): Promise<Response> {
-    this.log(LogLevel.INFO, `request start`, { method, path });
+    this.log(LogLevel.INFO, 'request start', { method, path });
 
     // If the body is empty, don't send the body in the HTTP request
     const json = (body !== undefined && Object.entries(body).length === 0) ? undefined : body;
@@ -112,9 +115,9 @@ export default class Client {
    * @param level The level for this message
    * @param args Arguments to send to the console
    */
-  private log(level: LogLevel, ...args: unknown[]) {
+  private log(level: LogLevel, message: string, extraInfo: Record<string, unknown>) {
     if (logLevelSeverity(level) >= logLevelSeverity(this.#logLevel)) {
-      console.log(`${this.constructor.name} ${level}: `, ...args);
+      this.#logger(level, message, extraInfo);
     }
   }
 
