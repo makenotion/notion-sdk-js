@@ -1,3 +1,5 @@
+import type { Agent } from 'http';
+import { URL } from 'url';
 import { LogLevel, logLevelSeverity } from './logging';
 import { pick } from './helpers';
 import {
@@ -5,7 +7,7 @@ import {
   DatabasesQueryResponse, DatabasesQueryParameters, databasesQuery,
 } from './api-endpoints';
 
-import got, { Got, Options as GotOptions, Headers as GotHeaders } from 'got';
+import got, { Got, Options as GotOptions, Headers as GotHeaders, Agents as GotAgents } from 'got';
 
 
 export interface ClientOptions {
@@ -13,6 +15,7 @@ export interface ClientOptions {
   timeoutMs?: number;
   baseUrl?: string;
   logLevel?: LogLevel;
+  agent?: Agent;
 }
 
 export interface RequestParameters {
@@ -44,6 +47,7 @@ export default class Client {
         'user-agent': 'notion:client/v0.1.0',
       },
       retry: 0,
+      agent: makeAgentOption(prefixUrl, options?.agent),
     });
   }
 
@@ -145,3 +149,28 @@ type QueryParams = GotOptions['searchParams'];
 
 
 type WithAuth<P> = P & { auth?: string };
+
+/*
+ * Helper functions
+ */
+
+function makeAgentOption(prefixUrl: string, agent: Agent | undefined): GotAgents | undefined {
+  if (agent === undefined) {
+    return undefined;
+  }
+  return {
+    [selectProtocol(prefixUrl)]: agent,
+  };
+}
+
+function selectProtocol(prefixUrl: string): 'http' | 'https' {
+  const url = new URL(prefixUrl);
+
+  if (url.protocol === 'https:') {
+    return 'https';
+  } else if (url.protocol === 'http:') {
+    return 'http';
+  }
+
+  throw new TypeError(`baseUrl option must begin with "https://" or "http://"`);
+}
