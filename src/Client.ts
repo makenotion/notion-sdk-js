@@ -59,11 +59,14 @@ export default class Client {
   public async request<Response>({ path, method, query, body, auth }: RequestParameters): Promise<Response> {
     this.log(LogLevel.INFO, `request start`, { method, path });
 
+    // If the body is empty, don't send the body in the HTTP request
+    const json = (body !== undefined && Object.entries(body).length === 0) ? undefined : body;
+
     // TODO: check error conditions and throw the appropriate error
     const response = this.#got(path, {
       method,
+      json,
       searchParams: query,
-      json: body,
       headers: this.authAsHeaders(auth),
     }).json<Response>();
 
