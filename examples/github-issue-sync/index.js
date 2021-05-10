@@ -68,7 +68,7 @@ async function syncIssuesWithDatabase(){
         }
     }
     //Run this function every five minutes
-    setTimeout(syncIssuesWithDatabase, 5*1000)
+    setTimeout(syncIssuesWithDatabase, 5*60*1000)
 }
 
 (async () => {

@@ -17,7 +17,7 @@ async function findChangesAndSendEmails() {
     const currTasksInDatabase = await getTasksFromDatabase()
 
     //Iterate over the current tasks and compare them to tasks in our local store (tasksInDatabase)
-    for await (const [key,value] of Object.entries(currTasksInDatabase)){
+    for (const [key,value] of Object.entries(currTasksInDatabase)){
         const page_id = key; 
         const curr_status = value.Status;
         //If this task hasn't been seen before
