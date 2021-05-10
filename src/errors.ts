@@ -24,7 +24,7 @@ export class RequestTimeoutError extends Error {
 }
 
 export class HTTPResponseError extends Error {
-  readonly code = 'notionhq_client_response_error';
+  readonly code: string = 'notionhq_client_response_error';
   readonly status: number;
   readonly headers: IncomingHttpHeaders;
   readonly body: string;
