@@ -129,8 +129,8 @@ function isAPIErrorResponseBody(body: unknown): body is APIErrorResponseBody {
 
   return (
     isObject(parsed) &&
-    typeof parsed.message === 'string' &&
-    isAPIErrorCode(parsed.code)
+    typeof parsed['message'] === 'string' &&
+    isAPIErrorCode(parsed['code'])
   );
 }
 
