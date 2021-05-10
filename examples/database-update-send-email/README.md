@@ -31,7 +31,7 @@ You can create your Notion API key [here](www.notion.com/integrations).
 
 You can create your SendGrid API key [here](https://signup.sendgrid.com).
 
-To create a Notion database that will work with this example, use duplicate [this template](https://www.notion.so/5b593126d3eb401db62c83cbe362d2d5?v=a44397b3675545f389a6f28282c402ae).
+To create a Notion database that will work with this example, duplicate [this template](https://www.notion.so/5b593126d3eb401db62c83cbe362d2d5?v=a44397b3675545f389a6f28282c402ae).
 
 ### 3. Run code 
 
