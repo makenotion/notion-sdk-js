@@ -31,7 +31,7 @@ You can create your Notion API key [here](www.notion.com/integrations).
 
 You can create your GitHub Personal Access token by following the guide [here](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token).
 
-To create a Notion database that will work with this example, use duplicate [this empty database template](https://www.notion.so/367cd67cfe8f49bfaf0ac21305ebb9bf?v=bc79ca62b36e4c54b655ceed4ef06ebd).
+To create a Notion database that will work with this example, duplicate [this empty database template](https://www.notion.so/367cd67cfe8f49bfaf0ac21305ebb9bf?v=bc79ca62b36e4c54b655ceed4ef06ebd).
 
 ### 3. Run code 
 
