@@ -7,6 +7,16 @@ export enum LogLevel {
   ERROR = 'error',
 }
 
+export interface Logger {
+  (level: LogLevel, message: string, extraInfo: Record<string, unknown>): void;
+}
+
+export function makeConsoleLogger(name: string): Logger {
+  return (level, message, extraInfo) => {
+    console[level](`${name} ${level}:`, message, extraInfo);
+  };
+}
+
 /**
  * Transforms a log level into a comparable (numerical) value ordered by severity.
  */
