@@ -1,11 +1,14 @@
+import type { Agent } from 'http';
+import { URL } from 'url';
 import { Logger, LogLevel, logLevelSeverity, makeConsoleLogger } from './logging';
+import { buildRequestError, HTTPResponseError } from './errors'
 import { pick } from './helpers';
 import {
   DatabasesRetrieveParameters, DatabasesRetrieveResponse, databasesRetrieve,
   DatabasesQueryResponse, DatabasesQueryParameters, databasesQuery,
 } from './api-endpoints';
 
-import got, { Got, Options as GotOptions, Headers as GotHeaders } from 'got';
+import got, { Got, Options as GotOptions, Headers as GotHeaders, Agents as GotAgents } from 'got';
 
 
 export interface ClientOptions {
@@ -14,6 +17,7 @@ export interface ClientOptions {
   baseUrl?: string;
   logLevel?: LogLevel;
   logger?: Logger;
+  agent?: Agent;
 }
 
 export interface RequestParameters {
@@ -47,6 +51,7 @@ export default class Client {
         'user-agent': 'notion:client/v0.1.0',
       },
       retry: 0,
+      agent: makeAgentOption(prefixUrl, options?.agent),
     });
   }
 
@@ -65,16 +70,32 @@ export default class Client {
     // If the body is empty, don't send the body in the HTTP request
     const json = (body !== undefined && Object.entries(body).length === 0) ? undefined : body;
 
-    // TODO: check error conditions and throw the appropriate error
-    const response = this.#got(path, {
-      method,
-      json,
-      searchParams: query,
-      headers: this.authAsHeaders(auth),
-    }).json<Response>();
+    try {
+      const response = await this.#got(path, {
+        method,
+        searchParams: query,
+        json,
+        headers: this.authAsHeaders(auth),
+      }).json<Response>();
 
-    this.log(LogLevel.INFO, `request end`, { method, path });
-    return response;
+      this.log(LogLevel.INFO, `request success`, { method, path });
+      return response;
+    } catch (error) {
+      // Build an error of a known type, otherwise throw unexpected errors
+      const requestError = buildRequestError(error);
+      if (requestError === undefined) {
+        throw error;
+      }
+
+      this.log(LogLevel.WARN, `request fail`, { code: requestError.code, message: requestError.message });
+      if (HTTPResponseError.isHTTPResponseError(requestError)) {
+        // The response body may contain sensitive information so it is logged separately at the DEBUG level
+        this.log(LogLevel.DEBUG, `failed response body`, { body: requestError.body });
+      }
+
+      // Throw as a known error type
+      throw requestError;
+    }
   }
 
   /*
@@ -148,3 +169,28 @@ type QueryParams = GotOptions['searchParams'];
 
 
 type WithAuth<P> = P & { auth?: string };
+
+/*
+ * Helper functions
+ */
+
+function makeAgentOption(prefixUrl: string, agent: Agent | undefined): GotAgents | undefined {
+  if (agent === undefined) {
+    return undefined;
+  }
+  return {
+    [selectProtocol(prefixUrl)]: agent,
+  };
+}
+
+function selectProtocol(prefixUrl: string): 'http' | 'https' {
+  const url = new URL(prefixUrl);
+
+  if (url.protocol === 'https:') {
+    return 'https';
+  } else if (url.protocol === 'http:') {
+    return 'http';
+  }
+
+  throw new TypeError(`baseUrl option must begin with "https://" or "http://"`);
+}
