@@ -1,6 +1,7 @@
 import type { Agent } from 'http';
 import { URL } from 'url';
 import { LogLevel, logLevelSeverity } from './logging';
+import { buildRequestError, HTTPResponseError } from './errors'
 import { pick } from './helpers';
 import {
   DatabasesRetrieveParameters, DatabasesRetrieveResponse, databasesRetrieve,
@@ -66,16 +67,32 @@ export default class Client {
     // If the body is empty, don't send the body in the HTTP request
     const json = (body !== undefined && Object.entries(body).length === 0) ? undefined : body;
 
-    // TODO: check error conditions and throw the appropriate error
-    const response = this.#got(path, {
-      method,
-      json,
-      searchParams: query,
-      headers: this.authAsHeaders(auth),
-    }).json<Response>();
+    try {
+      const response = await this.#got(path, {
+        method,
+        searchParams: query,
+        json,
+        headers: this.authAsHeaders(auth),
+      }).json<Response>();
 
-    this.log(LogLevel.INFO, `request end`, { method, path });
-    return response;
+      this.log(LogLevel.INFO, `request success`, { method, path });
+      return response;
+    } catch (error) {
+      // Build an error of a known type, otherwise throw unexpected errors
+      const requestError = buildRequestError(error);
+      if (requestError === undefined) {
+        throw error;
+      }
+
+      this.log(LogLevel.WARN, `request fail`, { code: requestError.code, message: requestError.message });
+      if (HTTPResponseError.isHTTPResponseError(requestError)) {
+        // The response body may contain sensitive information so it is logged separately at the DEBUG level
+        this.log(LogLevel.DEBUG, `failed response body`, { body: requestError.body });
+      }
+
+      // Throw as a known error type
+      throw requestError;
+    }
   }
 
   /*

@@ -15,3 +15,7 @@ export function pick<O extends unknown, K extends keyof O> (base: O, keys: reado
   const entries = keys.map(key => ([key, base[key]]));
   return Object.fromEntries(entries);
 }
+
+export function isObject(o: unknown): o is Record<PropertyKey, unknown> {
+  return typeof o === 'object' && o !== null;
+}
