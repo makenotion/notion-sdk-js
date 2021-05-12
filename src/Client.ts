@@ -10,7 +10,6 @@ import {
 
 import got, { Got, Options as GotOptions, Headers as GotHeaders, Agents as GotAgents } from 'got';
 
-
 export interface ClientOptions {
   auth?: string;
   timeoutMs?: number;
@@ -18,6 +17,7 @@ export interface ClientOptions {
   logLevel?: LogLevel;
   logger?: Logger;
   agent?: Agent;
+  notionVersion?: string;
 }
 
 export interface RequestParameters {
@@ -35,6 +35,8 @@ export default class Client {
   #logger: Logger;
   #got: Got;
 
+  static readonly defaultNotionVersion = '2021-05-13';
+
   public constructor(options?: ClientOptions) {
     this.#auth = options?.auth;
     this.#logLevel = options?.logLevel ?? LogLevel.WARN;
@@ -42,11 +44,13 @@ export default class Client {
 
     const prefixUrl = (options?.baseUrl ?? 'https://api.notion.com') + '/v1/';
     const timeout = options?.timeoutMs ?? 60_000;
+    const notionVersion = options?.notionVersion ?? Client.defaultNotionVersion;
 
     this.#got = got.extend({
       prefixUrl,
       timeout,
       headers: {
+        'Notion-Version': notionVersion,
         // TODO: update with format appropriate for telemetry, use version from package.json
         'user-agent': 'notion:client/v0.1.0',
       },
