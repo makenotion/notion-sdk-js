@@ -1,6 +1,6 @@
 # Sample Integration: Notion to Email 
 
-<a href="#"> <img src="https://dev.notion.so/front-static/external/readme/images/notion-email-example@2x.png" alt="drawing" width="500"/> </a>
+<img src="https://dev.notion.so/front-static/external/readme/images/notion-email-example@2x.png" alt="drawing" width="500"/>
 
 ## About the Integration 
 
