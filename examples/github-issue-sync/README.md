@@ -1,6 +1,6 @@
 # Sample Integration: GitHub Issues to Notion
 
-![Header Image](https://dev.notion.so/front-static/external/readme/images/github-notion-example@2x.png)
+<img src="https://dev.notion.so/front-static/external/readme/images/github-notion-example@2x.png" alt="drawing" width="500"/>
 
 ## About the Integration 
 
