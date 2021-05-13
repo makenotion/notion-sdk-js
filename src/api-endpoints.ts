@@ -112,7 +112,7 @@ export const databasesQuery = {
   pathParams: ['database_id'],
   queryParams: [],
   bodyParams: ['filter', 'sorts', 'start_cursor', 'page_size'],
-  path: (p: DatabasesQueryPathParameters) => `databases/${p.database_id}`,
+  path: (p: DatabasesQueryPathParameters) => `databases/${p.database_id}/query`,
 } as const;
 
 /*
