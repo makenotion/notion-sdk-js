@@ -21,7 +21,7 @@ async function findChangesAndSendEmails() {
         const page_id = key; 
         const curr_status = value.Status;
         //If this task hasn't been seen before
-        if(!(page_id) in tasksInDatabase){
+        if(!(page_id in tasksInDatabase)){
             //Add this task to the local store of all tasks
             tasksInDatabase[page_id] = {
                 "Status": curr_status
