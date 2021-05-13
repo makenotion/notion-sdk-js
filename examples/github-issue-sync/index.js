@@ -10,7 +10,7 @@ const database_id = process.env.NOTION_DATABASE_ID;
 
 async function syncIssuesWithDatabase(){
     console.log("Syncing GitHub Issues with Notion Database")
-    const issuesInDatabase = await getIssuesFromDatabse(); 
+    const issuesInDatabase = await getIssuesFromDatabase(); 
 
     //Get a list of github issues and add them to a local store
     let gitHubIssues = {}; 
@@ -76,7 +76,7 @@ async function syncIssuesWithDatabase(){
 })()
 
 //Get a paginated list of Tasks currently in a the database. 
-async function getIssuesFromDatabse() {
+async function getIssuesFromDatabase() {
 
     const issues = {}; 
 
