@@ -81,6 +81,7 @@ export class APIResponseError extends HTTPResponseError implements APIErrorRespo
   readonly code: APIErrorCode;
 
   constructor(response: GotResponse, body: APIErrorResponseBody) {
+    console.log('building the error');
     super(response, body.message);
     this.name = 'APIResponseError';
     this.code = body.code;
@@ -103,36 +104,41 @@ export function buildRequestError(error: unknown): RequestError | undefined {
     return new RequestTimeoutError();
   }
   if (isGotHTTPError(error)) {
-    if (isAPIErrorResponseBody(error.response.body)) {
-      return new APIResponseError(error.response, error.response.body);
+    const apiErrorResponseBody = parseAPIErrorResponseBody(error.response.body);
+    if (apiErrorResponseBody !== undefined) {
+      return new APIResponseError(error.response, apiErrorResponseBody);
     }
     return new HTTPResponseError(error.response);
   }
   return;
 }
 
-/*
- * Type guards
- */
-
-function isAPIErrorResponseBody(body: unknown): body is APIErrorResponseBody {
+function parseAPIErrorResponseBody(body: unknown): APIErrorResponseBody | undefined {
   if (typeof body !== 'string') {
-    return false;
+    return;
   }
 
   let parsed;
   try {
     parsed = JSON.parse(body);
   } catch (parseError) {
-    return false;
+    return;
   }
 
-  return (
-    isObject(parsed) &&
-    typeof parsed['message'] === 'string' &&
-    isAPIErrorCode(parsed['code'])
-  );
+  if (!isObject(parsed) || typeof parsed['message'] !== 'string' || !isAPIErrorCode(parsed['code'])) {
+    return;
+  }
+
+  return {
+    ...parsed,
+    code: parsed['code'],
+    message: parsed['message'],
+  };
 }
+
+/*
+ * Type guards
+ */
 
 function isAPIErrorCode(code: unknown): code is APIErrorCode {
   return typeof code === 'string' && Object.values<string>(APIErrorCode).includes(code);
