@@ -1,6 +1,6 @@
 const {Octokit} = require("octokit")
 const dotenv = require("dotenv")
-const {Client} = require("@notion/client");
+const {Client} = require("@notionhq/client");
 dotenv.config();
 
 const octokit = new Octokit({auth: process.env.GITHUB_KEY})

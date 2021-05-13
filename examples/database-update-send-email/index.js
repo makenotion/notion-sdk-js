@@ -1,4 +1,4 @@
-const {Client} = require("@notion/client")
+const {Client} = require("@notionhq/client")
 const dotenv = require("dotenv")
 const sgMail = require('@sendgrid/mail')
 dotenv.config();

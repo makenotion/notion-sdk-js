@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "@notionhq/client": "latest",
     "@sendgrid/mail": "^7.4.2",
-    "dotenv": "^8.2.0",
-    "@notion/client": "file:../.."
+    "dotenv": "^8.2.0"
   },
   "devDependencies": {},
   "scripts": {
