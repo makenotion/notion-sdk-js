@@ -12,7 +12,7 @@ export function assertNever(_x: never): never { // eslint-disable-line @typescri
 
 
 export function pick<O extends unknown, K extends keyof O> (base: O, keys: readonly K[]): Pick<O, K> {
-  const entries = keys.map(key => ([key, base[key]]));
+  const entries = keys.map(key => ([key, base?.[key]]));
   return Object.fromEntries(entries);
 }
 

@@ -126,7 +126,7 @@ export default class Client {
           method: blocksChildrenAppend.method,
           query: pick(args, blocksChildrenAppend.queryParams),
           body: pick(args, blocksChildrenAppend.bodyParams),
-          auth: args.auth,
+          auth: args?.auth,
         });
       },
 
@@ -139,7 +139,7 @@ export default class Client {
           method: blocksChildrenList.method,
           query: pick(args, blocksChildrenList.queryParams),
           body: pick(args, blocksChildrenList.bodyParams),
-          auth: args.auth,
+          auth: args?.auth,
         });
       },
     }
@@ -155,7 +155,7 @@ export default class Client {
         method: databasesList.method,
         query: pick(args, databasesList.queryParams),
         body: pick(args, databasesList.bodyParams),
-        auth: args.auth,
+        auth: args?.auth,
       });
     },
 
@@ -168,7 +168,7 @@ export default class Client {
         method: databasesRetrieve.method,
         query: pick(args, databasesRetrieve.queryParams),
         body: pick(args, databasesRetrieve.bodyParams),
-        auth: args.auth,
+        auth: args?.auth,
       });
     },
 
@@ -181,7 +181,7 @@ export default class Client {
         method: databasesQuery.method,
         query: pick(args, databasesQuery.queryParams),
         body: pick(args, databasesQuery.bodyParams),
-        auth: args.auth,
+        auth: args?.auth,
       });
     },
   };
@@ -196,7 +196,7 @@ export default class Client {
         method: pagesCreate.method,
         query: pick(args, pagesCreate.queryParams),
         body: pick(args, pagesCreate.bodyParams),
-        auth: args.auth,
+        auth: args?.auth,
       });
     },
 
@@ -209,7 +209,7 @@ export default class Client {
         method: pagesRetrieve.method,
         query: pick(args, pagesRetrieve.queryParams),
         body: pick(args, pagesRetrieve.bodyParams),
-        auth: args.auth,
+        auth: args?.auth,
       });
     },
 
@@ -222,7 +222,7 @@ export default class Client {
         method: pagesUpdate.method,
         query: pick(args, pagesUpdate.queryParams),
         body: pick(args, pagesUpdate.bodyParams),
-        auth: args.auth,
+        auth: args?.auth,
       });
     },
   };
@@ -237,7 +237,7 @@ export default class Client {
         method: usersRetrieve.method,
         query: pick(args, usersRetrieve.queryParams),
         body: pick(args, usersRetrieve.bodyParams),
-        auth: args.auth,
+        auth: args?.auth,
       });
     },
 
@@ -250,7 +250,7 @@ export default class Client {
         method: usersList.method,
         query: pick(args, usersList.queryParams),
         body: pick(args, usersList.bodyParams),
-        auth: args.auth,
+        auth: args?.auth,
       });
     },
   };
@@ -264,7 +264,7 @@ export default class Client {
       method: search.method,
       query: pick(args, search.queryParams),
       body: pick(args, search.bodyParams),
-      auth: args.auth,
+      auth: args?.auth,
     });
   }
 
