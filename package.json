@@ -1,10 +1,11 @@
 {
   "name": "@notionhq/client",
   "version": "0.1.0",
-  "description": "",
+  "description": "A simple and easy to use client for the Notion API",
   "engines": {
     "node": ">=14.15.0"
   },
+  "keywords": ["notion", "notionapi", "rest", "notion-api"],
   "main": "./build/src",
   "scripts": {
     "prepare": "npm run build",
