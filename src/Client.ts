@@ -4,8 +4,17 @@ import { Logger, LogLevel, logLevelSeverity, makeConsoleLogger } from './logging
 import { buildRequestError, HTTPResponseError } from './errors'
 import { pick } from './helpers';
 import {
-  DatabasesRetrieveParameters, DatabasesRetrieveResponse, databasesRetrieve,
+  BlocksChildrenAppendParameters, BlocksChildrenAppendResponse, blocksChildrenAppend,
+  BlocksChildrenListParameters, BlocksChildrenListResponse, blocksChildrenList,
+  DatabasesListParameters, DatabasesListResponse, databasesList,
   DatabasesQueryResponse, DatabasesQueryParameters, databasesQuery,
+  DatabasesRetrieveParameters, DatabasesRetrieveResponse, databasesRetrieve,
+  PagesCreateParameters, PagesCreateResponse, pagesCreate,
+  PagesRetrieveParameters, PagesRetrieveResponse, pagesRetrieve,
+  PagesUpdateParameters, PagesUpdateResponse, pagesUpdate,
+  UsersListParameters, UsersListResponse, usersList,
+  UsersRetrieveParameters, UsersRetrieveResponse, usersRetrieve,
+  SearchParameters, SearchResponse, search,
 } from './api-endpoints';
 
 import got, { Got, Options as GotOptions, Headers as GotHeaders, Agents as GotAgents } from 'got';
@@ -52,7 +61,7 @@ export default class Client {
       headers: {
         'Notion-Version': notionVersion,
         // TODO: update with format appropriate for telemetry, use version from package.json
-        'user-agent': 'notion:client/v0.1.0',
+        'user-agent': 'notionhq-client/0.1.0',
       },
       retry: 0,
       agent: makeAgentOption(prefixUrl, options?.agent),
@@ -106,7 +115,50 @@ export default class Client {
    * Notion API endpoints
    */
 
+  public readonly blocks = {
+    children: {
+      /**
+       * Append block children
+       */
+      append: (args: WithAuth<BlocksChildrenAppendParameters>): Promise<BlocksChildrenAppendResponse> => {
+        return this.request<BlocksChildrenAppendResponse>({
+          path: blocksChildrenAppend.path(args),
+          method: blocksChildrenAppend.method,
+          query: pick(args, blocksChildrenAppend.queryParams),
+          body: pick(args, blocksChildrenAppend.bodyParams),
+          auth: args.auth,
+        });
+      },
+
+      /**
+       * Retrieve block children
+       */
+      list: (args: WithAuth<BlocksChildrenListParameters>): Promise<BlocksChildrenListResponse> => {
+        return this.request<BlocksChildrenListResponse>({
+          path: blocksChildrenList.path(args),
+          method: blocksChildrenList.method,
+          query: pick(args, blocksChildrenList.queryParams),
+          body: pick(args, blocksChildrenList.bodyParams),
+          auth: args.auth,
+        });
+      },
+    }
+  }
+
   public readonly databases = {
+    /**
+     * List databases
+     */
+    list: (args: WithAuth<DatabasesListParameters>): Promise<DatabasesListResponse> => {
+      return this.request<DatabasesListResponse>({
+        path: databasesList.path(),
+        method: databasesList.method,
+        query: pick(args, databasesList.queryParams),
+        body: pick(args, databasesList.bodyParams),
+        auth: args.auth,
+      });
+    },
+
     /**
      * Retrieve a database
      */
@@ -133,6 +185,88 @@ export default class Client {
       });
     },
   };
+
+  public readonly pages = {
+    /**
+     * Create a page
+     */
+    create: (args: WithAuth<PagesCreateParameters>): Promise<PagesCreateResponse> => {
+      return this.request<PagesCreateResponse>({
+        path: pagesCreate.path(),
+        method: pagesCreate.method,
+        query: pick(args, pagesCreate.queryParams),
+        body: pick(args, pagesCreate.bodyParams),
+        auth: args.auth,
+      });
+    },
+
+    /**
+     * Retrieve a page
+     */
+    retrieve: (args: WithAuth<PagesRetrieveParameters>): Promise<PagesRetrieveResponse> => {
+      return this.request<PagesRetrieveResponse>({
+        path: pagesRetrieve.path(args),
+        method: pagesRetrieve.method,
+        query: pick(args, pagesRetrieve.queryParams),
+        body: pick(args, pagesRetrieve.bodyParams),
+        auth: args.auth,
+      });
+    },
+
+    /**
+     * Update page properties
+     */
+    update: (args: WithAuth<PagesUpdateParameters>): Promise<PagesUpdateResponse> => {
+      return this.request<PagesUpdateResponse>({
+        path: pagesUpdate.path(args),
+        method: pagesUpdate.method,
+        query: pick(args, pagesUpdate.queryParams),
+        body: pick(args, pagesUpdate.bodyParams),
+        auth: args.auth,
+      });
+    },
+  };
+
+  public readonly users = {
+    /**
+     * Retrieve a user
+     */
+    retrieve: (args: WithAuth<UsersRetrieveParameters>): Promise<UsersRetrieveResponse> => {
+      return this.request<UsersRetrieveResponse>({
+        path: usersRetrieve.path(args),
+        method: usersRetrieve.method,
+        query: pick(args, usersRetrieve.queryParams),
+        body: pick(args, usersRetrieve.bodyParams),
+        auth: args.auth,
+      });
+    },
+
+    /**
+     * List all users
+     */
+    list: (args: WithAuth<UsersListParameters>): Promise<UsersListResponse> => {
+      return this.request<UsersListResponse>({
+        path: usersList.path(),
+        method: usersList.method,
+        query: pick(args, usersList.queryParams),
+        body: pick(args, usersList.bodyParams),
+        auth: args.auth,
+      });
+    },
+  };
+
+  /**
+   * Search
+   */
+  public search(args: WithAuth<SearchParameters>): Promise<SearchResponse> {
+    return this.request<SearchResponse>({
+      path: search.path(),
+      method: search.method,
+      query: pick(args, search.queryParams),
+      body: pick(args, search.bodyParams),
+      auth: args.auth,
+    });
+  }
 
   /**
    * Emits a log message to the console.
