@@ -149,7 +149,7 @@ export default class Client {
     /**
      * List databases
      */
-    list: (args: WithAuth<DatabasesListParameters>): Promise<DatabasesListResponse> => {
+    list: (args: WithAuth<DatabasesListParameters> = {}): Promise<DatabasesListResponse> => {
       return this.request<DatabasesListResponse>({
         path: databasesList.path(),
         method: databasesList.method,
@@ -244,7 +244,7 @@ export default class Client {
     /**
      * List all users
      */
-    list: (args: WithAuth<UsersListParameters>): Promise<UsersListResponse> => {
+    list: (args: WithAuth<UsersListParameters> = {}): Promise<UsersListResponse> => {
       return this.request<UsersListResponse>({
         path: usersList.path(),
         method: usersList.method,
