@@ -541,7 +541,7 @@ export interface MultiSelectPropertyValue extends PropertyValueBase {
     id: string;
     name: string;
     color: Color;
-  };
+  }[];
 }
 
 export interface DatePropertyValue extends PropertyValueBase {
