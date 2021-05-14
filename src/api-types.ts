@@ -450,6 +450,9 @@ export interface Sort {
 export interface Page {
   object: 'page',
   id: string;
+  created_time: string;
+  last_edited_time: string;
+  archived: boolean;
   parent: Parent;
   properties: { [propertyName: string]: PropertyValue };
 }
