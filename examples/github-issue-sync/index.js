@@ -82,7 +82,7 @@ async function getIssuesFromDatabse() {
 
     async function getPageOfIssues(cursor){
         let request_payload = "";
-        //Create the request payload based on the presense of a start_cursor
+        //Create the request payload based on the presence of a start_cursor
         if(cursor == undefined){
             request_payload = {
                 path:'databases/' + database_id + '/query', 

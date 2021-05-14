@@ -20,7 +20,7 @@ cd notion-sdk-js/examples/github-issue-sync
 npm install
 ```
 
-### 2. Set your enviornment variables in a `.env` file
+### 2. Set your environment variables in a `.env` file
 ```zsh
 GITHUB_KEY=<your-github-personal-access-token>
 NOTION_KEY=<your-notion-api-key>
