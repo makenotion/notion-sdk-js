@@ -29,7 +29,7 @@ GITHUB_REPO_OWNER=<github-owner-username>
 GITHUB_REPO_NAME=<github-repo-name>
 ```
 
-You can create your Notion API key [here](www.notion.com/integrations).
+You can create your Notion API key [here](https://www.notion.so/my-integrations).
 
 You can create your GitHub Personal Access token by following the guide [here](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token).
 
