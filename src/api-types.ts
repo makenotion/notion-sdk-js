@@ -77,7 +77,7 @@ export interface HeadingTwoBlock extends BlockBase {
 
 export interface HeadingThreeBlock extends BlockBase {
   type: 'heading_3';
-  heading_2: { text: RichText[] };
+  heading_3: { text: RichText[] };
   has_children: false;
 }
 
