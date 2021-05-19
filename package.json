@@ -1,30 +1,39 @@
 {
-  "name": "@notionhq/client",
-  "version": "0.1.3",
-  "description": "A simple and easy to use client for the Notion API",
-  "engines": {
-    "node": ">=14.15.0"
-  },
-  "keywords": ["notion", "notionapi", "rest", "notion-api"],
-  "main": "./build/src",
-  "scripts": {
-    "prepare": "npm run build",
-    "build": "tsc",
-    "lint": "eslint . --ext .ts",
-    "test": "ava"
-  },
-  "author": "",
-  "license": "MIT",
-  "files": ["build/src/**"],
-  "dependencies": {
-    "got": "^11.8.2"
-  },
-  "devDependencies": {
-    "@ava/typescript": "^2.0.0",
-    "@typescript-eslint/eslint-plugin": "^4.22.0",
-    "@typescript-eslint/parser": "^4.22.0",
-    "ava": "^3.15.0",
-    "eslint": "^7.24.0",
-    "typescript": "^4.2.4"
-  }
+	"name": "@notionhq/client",
+	"version": "0.1.3",
+	"description": "A simple and easy to use client for the Notion API",
+	"engines": {
+		"node": ">=12.21.0"
+	},
+	"keywords": [
+		"notion",
+		"notionapi",
+		"rest",
+		"notion-api"
+	],
+	"main": "./build/src",
+	"scripts": {
+		"prepare": "npm run build",
+		"build": "tsc",
+		"lint": "eslint . --ext .ts",
+		"test": "ava",
+		"format": "prettier --write ."
+	},
+	"author": "",
+	"license": "MIT",
+	"files": [
+		"build/src/**"
+	],
+	"dependencies": {
+		"got": "^11.8.2"
+	},
+	"devDependencies": {
+		"prettier": "^2.3.0",
+		"@ava/typescript": "^2.0.0",
+		"@typescript-eslint/eslint-plugin": "^4.22.0",
+		"@typescript-eslint/parser": "^4.22.0",
+		"ava": "^3.15.0",
+		"eslint": "^7.24.0",
+		"typescript": "^4.2.4"
+	}
 }
