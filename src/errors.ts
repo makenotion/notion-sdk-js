@@ -88,7 +88,6 @@ export class APIResponseError
 	readonly code: APIErrorCode
 
 	constructor(response: GotResponse, body: APIErrorResponseBody) {
-		console.log("building the error")
 		super(response, body.message)
 		this.name = "APIResponseError"
 		this.code = body.code

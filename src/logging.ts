@@ -13,6 +13,7 @@ export interface Logger {
 
 export function makeConsoleLogger(name: string): Logger {
 	return (level, message, extraInfo) => {
+		// eslint-disable-next-line no-console
 		console[level](`${name} ${level}:`, message, extraInfo)
 	}
 }

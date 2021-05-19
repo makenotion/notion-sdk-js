@@ -82,7 +82,7 @@ export default class Client {
 		this.#logLevel = options?.logLevel ?? LogLevel.WARN
 		this.#logger = options?.logger ?? makeConsoleLogger(this.constructor.name)
 
-		const prefixUrl = (options?.baseUrl ?? "https://api.notion.com") + "/v1/"
+		const prefixUrl = `${options?.baseUrl ?? "https://api.notion.com"}/v1/`
 		const timeout = options?.timeoutMs ?? 60_000
 		const notionVersion = options?.notionVersion ?? Client.defaultNotionVersion
 
