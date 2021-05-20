@@ -13,9 +13,10 @@
   ],
   "main": "./build/src",
   "scripts": {
-    "prepare": "npm run build",
+    "prepare": "npm run lint && npm run build",
     "build": "tsc",
-    "lint": "prettier -w . && eslint . --ext .ts",
+    "prettier": "prettier --write .",
+    "lint": "prettier --check . && eslint . --ext .ts",
     "test": "ava"
   },
   "author": "",
