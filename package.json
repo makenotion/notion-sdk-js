@@ -15,7 +15,7 @@
   "scripts": {
     "prepare": "npm run build",
     "build": "tsc",
-    "lint": "eslint . --ext .ts",
+    "lint": "prettier -w . && eslint . --ext .ts",
     "test": "ava"
   },
   "author": "",
