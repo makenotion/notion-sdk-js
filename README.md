@@ -171,7 +171,7 @@ try {
 ## Requirements
 
 This package supports the following minimum versions:
-* Runtime: `node >= 14`
+* Runtime: `node >= 12`
 * Type definitions (optional): `typescript >= 4.2`
 
 Earlier versions may still work, but we encourage people building new applications to upgrade to the current stable.
