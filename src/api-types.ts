@@ -5,6 +5,8 @@
  * In the future, the contents of this file will be generated from an API definition.
  */
 
+import { RequiredBy } from "./type-utils"
+
 /*
  * Pagination
  */
@@ -562,15 +564,6 @@ export type PropertyValue =
 // given that it has a named key in the input functions, but in practice the API seems to
 // require it. Investigate this. Commented out code is good at doing what we want.
 //
-// from: https://stackoverflow.com/questions/57103834/typescript-omit-a-property-from-all-interfaces-in-a-union-but-keep-the-union-s
-// // eslint-disable-next-line @typescript-eslint/no-explicit-any
-// type DistributiveOmit<T, K extends keyof any> = T extends any
-//   ? Omit<T, K>
-//   : never
-
-// // eslint-disable-next-line @typescript-eslint/no-explicit-any
-// type DistributiveExtend<T, K extends any> = T extends any ? T & K : never
-
 // export type InputPropertyValue = DistributiveExtend<
 //   DistributiveOmit<InputPropertyValueWithRequiredId, "id">,
 //   { id?: string }
@@ -763,9 +756,6 @@ export interface RichTextTextInput extends RichTextBaseInput {
     link?: { type: "url"; url: string }
   }
 }
-
-type RequiredBy<T, K extends keyof T> = Omit<T, K> & Required<Pick<T, K>>
-// type PartialBy<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>
 
 export type RichTextBase = RequiredBy<
   RichTextBaseInput,
