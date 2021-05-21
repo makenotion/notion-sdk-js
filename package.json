@@ -1,21 +1,37 @@
 {
   "name": "@notionhq/client",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "A simple and easy to use client for the Notion API",
   "engines": {
-    "node": ">=14.15.0"
+    "node": ">=12"
   },
-  "keywords": ["notion", "notionapi", "rest", "notion-api"],
+  "homepage": "https://developers.notion.com/docs/getting-started",
+  "bugs": {
+    "url": "https://github.com/makenotion/notion-sdk-js/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/makenotion/notion-sdk-js/"
+  },
+  "keywords": [
+    "notion",
+    "notionapi",
+    "rest",
+    "notion-api"
+  ],
   "main": "./build/src",
   "scripts": {
-    "prepare": "npm run build",
+    "prepare": "npm run lint && npm run build",
     "build": "tsc",
-    "lint": "eslint . --ext .ts",
+    "prettier": "prettier --write .",
+    "lint": "prettier --check . && eslint . --ext .ts",
     "test": "ava"
   },
   "author": "",
   "license": "MIT",
-  "files": ["build/src/**"],
+  "files": [
+    "build/src/**"
+  ],
   "dependencies": {
     "got": "^11.8.2"
   },
@@ -25,6 +41,7 @@
     "@typescript-eslint/parser": "^4.22.0",
     "ava": "^3.15.0",
     "eslint": "^7.24.0",
+    "prettier": "^2.3.0",
     "typescript": "^4.2.4"
   }
 }

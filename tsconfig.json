@@ -32,11 +32,8 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedIndexedAccess": true,
     "noPropertyAccessFromIndexSignature": true,
-    "forceConsistentCasingInFileNames": true,
+    "forceConsistentCasingInFileNames": true
   },
 
-  "include": [
-    "src/**/*",
-    "test/**/*",
-  ],
+  "include": ["src/**/*", "test/**/*"]
 }
