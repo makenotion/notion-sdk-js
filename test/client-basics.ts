@@ -1,7 +1,7 @@
-import test from 'ava';
-import { Client } from '../src';
+import test from "ava"
+import { Client } from "../src"
 
-test('initialize client', t => {
-  new Client({ auth: 'foo' });
-  t.pass();
-});
+test("initialize client", t => {
+  new Client({ auth: "foo" })
+  t.pass()
+})
