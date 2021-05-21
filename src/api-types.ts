@@ -58,67 +58,67 @@ export interface BlockBase {
 }
 
 export interface ParagraphBlock extends BlockBase {
-  type: 'paragraph';
+  type: "paragraph"
   paragraph: {
-    text: RichText[];
-    children?: BlockBase[];
-  };  
+    text: RichText[]
+    children?: BlockBase[]
+  }
 }
 
 export interface HeadingOneBlock extends BlockBase {
-  type: 'heading_1';
-  heading_1: { text: RichText[] };
-  has_children: false;
+  type: "heading_1"
+  heading_1: { text: RichText[] }
+  has_children: false
 }
 
 export interface HeadingTwoBlock extends BlockBase {
-  type: 'heading_2';
-  heading_2: { text: RichText[] };
-  has_children: false;
+  type: "heading_2"
+  heading_2: { text: RichText[] }
+  has_children: false
 }
 
 export interface HeadingThreeBlock extends BlockBase {
-  type: 'heading_3';
-  heading_3: { text: RichText[] };
-  has_children: false;
+  type: "heading_3"
+  heading_3: { text: RichText[] }
+  has_children: false
 }
 
 export interface BulletedListItemBlock extends BlockBase {
-  type: 'bulleted_list_item';
+  type: "bulleted_list_item"
   bulleted_list_item: {
-    text: RichText[];
-    children?: BlockBase[];
-  };
+    text: RichText[]
+    children?: BlockBase[]
+  }
 }
 
 export interface NumberedListItemBlock extends BlockBase {
-  type: 'numbered_list_item';
+  type: "numbered_list_item"
   numbered_list_item: {
-    text: RichText[];
-    children?: BlockBase[];
-  };
+    text: RichText[]
+    children?: BlockBase[]
+  }
 }
 
 export interface ToDoBlock extends BlockBase {
-  type: 'to_do';
+  type: "to_do"
   to_do: {
-    text: RichText[];
-    checked: boolean;
-    children?: BlockBase[];
-  };
+    text: RichText[]
+    checked: boolean
+    children?: BlockBase[]
+  }
 }
 
 export interface ToggleBlock extends BlockBase {
-  type: 'toggle';
+  type: "toggle"
   toggle: {
-    text: RichText[];
-    children?: BlockBase[];
-  };
+    text: RichText[]
+    children?: BlockBase[]
+  }
 }
 
 export interface ChildPageBlock extends BlockBase {
-  type: 'child_page';
-  child_page: { title: string };
+  type: "child_page"
+  child_page: { title: string }
 }
 
 export interface UnsupportedBlock extends BlockBase {
