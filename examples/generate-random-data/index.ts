@@ -4,9 +4,8 @@ import { Client } from "@notionhq/client"
 
 import * as _ from "lodash"
 
-// TODO(blackmad): fix this import
-import { Property } from "../../build/src/api-types"
-import { InputPropertyValueMap } from "../../build/src/api-endpoints"
+// TODO(blackmad): fix this import to be from the package itself
+import { InputPropertyValueMap, PropertyValueMap } from "../../build/src/api-endpoints"
 
 import { config } from "dotenv"
 config()
@@ -15,8 +14,10 @@ import * as faker from "faker"
 
 const notion = new Client({ auth: process.env["NOTION_KEY"] })
 
+// Given the properties of a database, generate an object full of
+// random data that can be used to generate new rows in our Notion database.
 function makeFakePropertiesData(
-  properties: Record<string, Property>
+  properties: PropertyValueMap
 ): InputPropertyValueMap {
   const propertyValues: InputPropertyValueMap = {}
   Object.entries(properties).forEach(([name, property]) => {
