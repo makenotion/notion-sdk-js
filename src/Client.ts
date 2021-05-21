@@ -195,9 +195,11 @@ export default class Client {
   public readonly databases = {
     /**
      * List databases
+     *
+     * @deprecated Please use `search`
      */
     list: (
-      args: WithAuth<DatabasesListParameters>
+      args: WithAuth<DatabasesListParameters> = {}
     ): Promise<DatabasesListResponse> => {
       return this.request<DatabasesListResponse>({
         path: databasesList.path(),
@@ -305,7 +307,9 @@ export default class Client {
     /**
      * List all users
      */
-    list: (args: WithAuth<UsersListParameters>): Promise<UsersListResponse> => {
+    list: (
+      args: WithAuth<UsersListParameters> = {}
+    ): Promise<UsersListResponse> => {
       return this.request<UsersListResponse>({
         path: usersList.path(),
         method: usersList.method,
