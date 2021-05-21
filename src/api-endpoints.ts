@@ -22,6 +22,7 @@ import {
   SearchSort,
   SearchFilter,
   InputPropertyValue,
+  Property,
 } from "./api-types"
 
 // TODO: type assertions to verify that each interface is synchronized to the list of keys in the runtime value below.
@@ -161,6 +162,8 @@ export const databasesRetrieve = {
 interface PagesCreatePathParameters {}
 interface PagesCreateQueryParameters {}
 
+
+export type PropertyMap = { [propertyName: string]: Property }
 export type PropertyValueMap = { [propertyName: string]: PropertyValue }
 export type InputPropertyValueMap = {
   [propertyName: string]: InputPropertyValue
