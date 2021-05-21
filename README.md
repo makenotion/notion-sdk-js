@@ -4,9 +4,9 @@
 		<b>A simple and easy to use client for the <a href="https://developers.notion.com">Notion API</a></b>
 	</p>
 	<br>
-	<br>
-	<br>
 </div>
+
+![Build status](https://github.com/makenotion/notion-sdk-js/actions/workflows/ci.yml/badge.svg)
 
 ## Installation
 
