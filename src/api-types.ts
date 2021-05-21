@@ -59,56 +59,66 @@ export interface BlockBase {
 
 export interface ParagraphBlock extends BlockBase {
   type: "paragraph"
-  text: RichText[]
-  children?: BlockBase[]
+  paragraph: {
+    text: RichText[]
+    children?: BlockBase[]
+  }
 }
 
 export interface HeadingOneBlock extends BlockBase {
   type: "heading_1"
-  text: RichText[]
+  heading_1: { text: RichText[] }
   has_children: false
 }
 
 export interface HeadingTwoBlock extends BlockBase {
   type: "heading_2"
-  text: RichText[]
+  heading_2: { text: RichText[] }
   has_children: false
 }
 
 export interface HeadingThreeBlock extends BlockBase {
   type: "heading_3"
-  text: RichText[]
+  heading_3: { text: RichText[] }
   has_children: false
 }
 
 export interface BulletedListItemBlock extends BlockBase {
   type: "bulleted_list_item"
-  text: RichText[]
-  children?: BlockBase[]
+  bulleted_list_item: {
+    text: RichText[]
+    children?: BlockBase[]
+  }
 }
 
 export interface NumberedListItemBlock extends BlockBase {
   type: "numbered_list_item"
-  text: RichText[]
-  children?: BlockBase[]
+  numbered_list_item: {
+    text: RichText[]
+    children?: BlockBase[]
+  }
 }
 
 export interface ToDoBlock extends BlockBase {
   type: "to_do"
-  text: RichText[]
-  checked: boolean
-  children?: BlockBase[]
+  to_do: {
+    text: RichText[]
+    checked: boolean
+    children?: BlockBase[]
+  }
 }
 
 export interface ToggleBlock extends BlockBase {
   type: "toggle"
-  text: RichText[]
-  children?: BlockBase[]
+  toggle: {
+    text: RichText[]
+    children?: BlockBase[]
+  }
 }
 
 export interface ChildPageBlock extends BlockBase {
   type: "child_page"
-  title: string
+  child_page: { title: string }
 }
 
 export interface UnsupportedBlock extends BlockBase {
