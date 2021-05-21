@@ -9,6 +9,7 @@ This Notion integration sends an email whenever the Status of a page in a databa
 ## Running Locally
 
 ### 1. Setup your local project
+
 ```zsh
 # Clone this repository locally
 git clone https://github.com/makenotion/notion-sdk-js.git
@@ -21,6 +22,7 @@ npm install
 ```
 
 ### 2. Set your enviornment variables in a `.env` file
+
 ```zsh
 NOTION_KEY= <your-notion-api-key>
 SENDGRID_KEY=<your-sendgrid-api-key>
