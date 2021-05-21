@@ -5,6 +5,14 @@
   "engines": {
     "node": ">=12"
   },
+  "homepage": "https://developers.notion.com/docs/getting-started",
+  "bugs": {
+    "url": "https://github.com/makenotion/notion-sdk-js/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/makenotion/notion-sdk-js/"
+  },
   "keywords": [
     "notion",
     "notionapi",
