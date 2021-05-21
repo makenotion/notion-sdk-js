@@ -198,12 +198,21 @@ export interface NumberProperty extends PropertyBase {
 
 export interface SelectProperty extends PropertyBase {
   type: "select"
-  select: SelectOption[]
+  select: { options: SelectOption[] }
 }
 
 export interface MultiSelectProperty extends PropertyBase {
   type: "multi_select"
-  multi_select: MultiSelectOption[]
+  multi_select: {
+    options: MultiSelectOption[]
+  }
+}
+
+export interface MultiSelectProperty extends PropertyBase {
+  type: "multi_select"
+  multi_select: {
+    options: MultiSelectOption[]
+  }
 }
 
 export interface DateProperty extends PropertyBase {
@@ -336,11 +345,7 @@ export interface SelectOption {
   color: Color
 }
 
-export interface MultiSelectOption {
-  name: string
-  id: string
-  color: Color
-}
+export type MultiSelectOption = SelectOption
 
 export interface SearchSort {
   direction: "ascending" | "descending"
@@ -533,14 +538,43 @@ export interface WorkspaceParent {
  * PropertyValue
  */
 
-// TODO: use the following type to omit id properties and create an input version of this type?
-// type DistributiveOmit<T, K extends keyof T> = T extends unknown
-//     ? Omit<T, K>
-//     : never;
-
 export type PropertyValue =
   | TitlePropertyValue
   | RichTextPropertyValue
+  | NumberPropertyValue
+  | SelectPropertyValue
+  | MultiSelectPropertyValue
+  | DatePropertyValue
+  | FormulaPropertyValue
+  | RollupPropertyValue
+  | PeoplePropertyValue
+  | FilesPropertyValue
+  | CheckboxPropertyValue
+  | URLPropertyValue
+  | EmailPropertyValue
+  | PhoneNumberPropertyValue
+  | CreatedTimePropertyValue
+  | CreatedByPropertyValue
+  | LastEditedTimePropertyValue
+  | LastEditedByPropertyValue
+
+// from: https://stackoverflow.com/questions/57103834/typescript-omit-a-property-from-all-interfaces-in-a-union-but-keep-the-union-s
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type DistributiveOmit<T, K extends keyof any> = T extends any
+  ? Omit<T, K>
+  : never
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type DistributiveExtend<T, K extends any> = T extends any ? T & K : never
+
+export type InputPropertyValue = DistributiveExtend<
+  DistributiveOmit<InputPropertyValueWithRequiredId, "id">,
+  { id?: string }
+>
+
+type InputPropertyValueWithRequiredId =
+  | TitleInputPropertyValue
+  | RichTextInputPropertyValue
   | NumberPropertyValue
   | SelectPropertyValue
   | MultiSelectPropertyValue
@@ -573,6 +607,16 @@ export interface RichTextPropertyValue extends PropertyValueBase {
   rich_text: RichText[]
 }
 
+export interface TitleInputPropertyValue extends PropertyValueBase {
+  type: "title"
+  title: RichTextInput[]
+}
+
+export interface RichTextInputPropertyValue extends PropertyValueBase {
+  type: "rich_text"
+  rich_text: RichTextInput[]
+}
+
 export interface NumberPropertyValue extends PropertyValueBase {
   type: "number"
   number: number
@@ -580,20 +624,12 @@ export interface NumberPropertyValue extends PropertyValueBase {
 
 export interface SelectPropertyValue extends PropertyValueBase {
   type: "select"
-  select: {
-    id: string
-    name: string
-    color: Color
-  }
+  select: SelectOption
 }
 
 export interface MultiSelectPropertyValue extends PropertyValueBase {
   type: "multi_select"
-  multi_select: {
-    id: string
-    name: string
-    color: Color
-  }
+  multi_select: MultiSelectOption[]
 }
 
 export interface DatePropertyValue extends PropertyValueBase {
@@ -702,15 +738,19 @@ export interface LastEditedByPropertyValue extends PropertyValueBase {
  * Rich text object (output)
  */
 export type RichText = RichTextText | RichTextMention | RichTextEquation
+export type RichTextInput =
+  | RichTextTextInput
+  | RichTextMention
+  | RichTextEquation
 
-export interface RichTextBase {
-  plain_text: string
+export interface RichTextBaseInput {
+  plain_text?: string
   href?: string
-  annotations: Annotations
+  annotations?: Annotations
   type: string
 }
 
-export interface RichTextText extends RichTextBase {
+export interface RichTextTextInput extends RichTextBaseInput {
   type: "text"
   text: {
     content: string
@@ -718,6 +758,17 @@ export interface RichTextText extends RichTextBase {
   }
 }
 
+type RequiredBy<T, K extends keyof T> = Omit<T, K> & Required<Pick<T, K>>
+// type PartialBy<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>
+
+export type RichTextBase = RequiredBy<
+  RichTextBaseInput,
+  "plain_text" | "annotations"
+>
+export type RichTextText = RequiredBy<
+  RichTextTextInput,
+  "plain_text" | "annotations"
+>
 export interface RichTextMention extends RichTextBase {
   type: "mention"
   mention: UserMention | PageMention | DatabaseMention | DateMention

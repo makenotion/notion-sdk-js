@@ -21,6 +21,7 @@ import {
   Sort,
   SearchSort,
   SearchFilter,
+  InputPropertyValue,
 } from "./api-types"
 
 // TODO: type assertions to verify that each interface is synchronized to the list of keys in the runtime value below.
@@ -159,9 +160,14 @@ export const databasesRetrieve = {
 
 interface PagesCreatePathParameters {}
 interface PagesCreateQueryParameters {}
+
+export type PropertyValueMap = { [propertyName: string]: PropertyValue }
+export type InputPropertyValueMap = {
+  [propertyName: string]: InputPropertyValue
+}
 interface PagesCreateBodyParameters {
   parent: ParentInput
-  properties: { [propertyName: string]: PropertyValue }
+  properties: InputPropertyValueMap
   children?: Block[]
 }
 
@@ -211,8 +217,9 @@ interface PagesUpdatePathParameters {
   page_id: string
 }
 interface PagesUpdateQueryParameters {}
+
 interface PagesUpdateBodyParameters {
-  properties: { [propertyNameOrId: string]: PropertyValue }
+  properties: InputPropertyValueMap
 }
 
 export interface PagesUpdateParameters
