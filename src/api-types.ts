@@ -558,21 +558,27 @@ export type PropertyValue =
   | LastEditedTimePropertyValue
   | LastEditedByPropertyValue
 
+// NOTE(blackmad): We imply in the docs id is not required in property input dictionary
+// given that it has a named key in the input functions, but in practice the API seems to
+// require it. Investigate this. Commented out code is good at doing what we want.
+//
 // from: https://stackoverflow.com/questions/57103834/typescript-omit-a-property-from-all-interfaces-in-a-union-but-keep-the-union-s
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type DistributiveOmit<T, K extends keyof any> = T extends any
-  ? Omit<T, K>
-  : never
+// // eslint-disable-next-line @typescript-eslint/no-explicit-any
+// type DistributiveOmit<T, K extends keyof any> = T extends any
+//   ? Omit<T, K>
+//   : never
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type DistributiveExtend<T, K extends any> = T extends any ? T & K : never
+// // eslint-disable-next-line @typescript-eslint/no-explicit-any
+// type DistributiveExtend<T, K extends any> = T extends any ? T & K : never
 
-export type InputPropertyValue = DistributiveExtend<
-  DistributiveOmit<InputPropertyValueWithRequiredId, "id">,
-  { id?: string }
->
+// export type InputPropertyValue = DistributiveExtend<
+//   DistributiveOmit<InputPropertyValueWithRequiredId, "id">,
+//   { id?: string }
+// >
 
-type InputPropertyValueWithRequiredId =
+// NOTE(blackmad): there are probably still sub-types in here that need to be made
+// more permissive when used for input
+export type InputPropertyValue =
   | TitleInputPropertyValue
   | RichTextInputPropertyValue
   | NumberPropertyValue
