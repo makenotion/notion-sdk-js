@@ -162,7 +162,6 @@ export const databasesRetrieve = {
 interface PagesCreatePathParameters {}
 interface PagesCreateQueryParameters {}
 
-
 export type PropertyMap = { [propertyName: string]: Property }
 export type PropertyValueMap = { [propertyName: string]: PropertyValue }
 export type InputPropertyValueMap = {

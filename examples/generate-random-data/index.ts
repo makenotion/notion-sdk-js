@@ -5,7 +5,10 @@ import { Client } from "@notionhq/client"
 import * as _ from "lodash"
 
 // TODO(blackmad): fix this import to be from the package itself
-import { InputPropertyValueMap, PropertyValueMap } from "../../build/src/api-endpoints"
+import {
+  InputPropertyValueMap,
+  PropertyValueMap,
+} from "../../build/src/api-endpoints"
 
 import { config } from "dotenv"
 config()
