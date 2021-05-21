@@ -9,4 +9,19 @@ module.exports = {
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
   ],
+  env: {
+    node: true,
+    commonjs: true,
+  },
+  rules: {
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        args: "none",
+        argsIgnorePattern: "^_",
+        caughtErrors: "none",
+        ignoreRestSiblings: true,
+      },
+    ],
+  },
 }

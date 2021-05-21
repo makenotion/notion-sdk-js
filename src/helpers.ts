@@ -6,7 +6,6 @@
  * @param _x The variable with no remaining values
  */
 export function assertNever(_x: never): never {
-  // eslint-disable-line @typescript-eslint/no-unused-vars
   throw new Error("Unexpected value. Should have been never.")
 }
 
