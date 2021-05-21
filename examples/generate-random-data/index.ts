@@ -17,7 +17,7 @@ const notion = new Client({ auth: process.env["NOTION_KEY"] })
 // Given the properties of a database, generate an object full of
 // random data that can be used to generate new rows in our Notion database.
 function makeFakePropertiesData(
-  properties: PropertyValueMap
+  properties: PropertyMap
 ): InputPropertyValueMap {
   const propertyValues: InputPropertyValueMap = {}
   Object.entries(properties).forEach(([name, property]) => {
