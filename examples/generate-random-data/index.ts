@@ -157,9 +157,9 @@ function extractValueToString(property: PropertyValueWithoutId): string {
       return property.files.map(file => file.name).join(", ")
     case "formula":
       if (property.formula.type === "string") {
-        return property.formula.string || '???'
+        return property.formula.string || "???"
       } else if (property.formula.type === "number") {
-        return property.formula.number?.toString() || '???'
+        return property.formula.number?.toString() || "???"
       } else if (property.formula.type === "boolean") {
         return property.formula.boolean.toString()
       } else if (property.formula.type === "date") {

@@ -36,7 +36,6 @@
     "build/src/**"
   ],
   "dependencies": {
-    "cspell": "^5.4.1",
     "got": "^11.8.2"
   },
   "devDependencies": {
@@ -44,6 +43,7 @@
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/parser": "^4.22.0",
     "ava": "^3.15.0",
+    "cspell": "^5.4.1",
     "eslint": "^7.24.0",
     "markdown-link-check": "^3.8.7",
     "prettier": "^2.3.0",
