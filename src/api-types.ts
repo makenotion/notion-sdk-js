@@ -36,7 +36,7 @@ export type APISingularObject = Database | Page | User | Block
  * Block (outputs)
  */
 
-// TODO: need an input version of this type. maybe reuse distributiveomit. but what about richtext id's?
+// TODO: need an input version of this type. maybe reuse DistributiveOmit. but what about RichText id's?
 
 export type Block =
   | ParagraphBlock
@@ -520,7 +520,7 @@ export type Parent = DatabaseParent | PageParent | WorkspaceParent
 export type ParentInput =
   | Omit<DatabaseParent, "type">
   | Omit<PageParent, "type">
-// TODO: use distributiveomit?
+// TODO: use DistributiveOmit?
 
 export interface DatabaseParent {
   type: "database_id"

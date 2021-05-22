@@ -21,13 +21,13 @@ cd notion-sdk-js/examples/database-update-send-email
 npm install
 ```
 
-### 2. Set your enviornment variables in a `.env` file
+### 2. Set your environment variables in a `.env` file
 
 ```zsh
 NOTION_KEY= <your-notion-api-key>
 SENDGRID_KEY=<your-sendgrid-api-key>
 NOTION_DATABASE_ID=<your-notion-database-id>
-EMAIL_TO_FIELD=<email-receipients>
+EMAIL_TO_FIELD=<email-recipients>
 EMAIL_FROM_FIELD=<email-from-field>
 ```
 
