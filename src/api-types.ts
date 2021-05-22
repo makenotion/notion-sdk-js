@@ -5,6 +5,7 @@
  * In the future, the contents of this file will be generated from an API definition.
  */
 
+import { PropertyValueMap } from "./api-endpoints"
 import { RequiredBy } from "./type-utils"
 
 /*
@@ -509,7 +510,10 @@ export interface Page {
   object: "page"
   id: string
   parent: Parent
-  properties: { [propertyName: string]: PropertyValue }
+  created_time: string
+  last_edited_time: string
+  archived: boolean
+  properties: PropertyValueMap
 }
 
 /*
