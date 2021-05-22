@@ -9,12 +9,12 @@
   "author": "David Blackman",
   "license": "MIT",
   "dependencies": {
-    "@notionhq/client": "file:../..",
-    "@types/lodash": "^4.14.170",
+    "@notionhq/client": "^0.1.5",
     "@types/faker": "^5.5.5",
-    "ts-node": "^9.1.1",
+    "@types/lodash": "^4.14.170",
     "dotenv": "^8.2.0",
     "faker": "^5.5.3",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "ts-node": "^9.1.1"
   }
 }

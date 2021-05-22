@@ -4,16 +4,14 @@ import { Client } from "@notionhq/client"
 
 import * as _ from "lodash"
 
-// TODO(blackmad): fix this import to be from the package itself
-import {
-  InputPropertyValueMap,
-  PropertyMap,
-} from "../../build/src/api-endpoints"
-
 import { config } from "dotenv"
 config()
 
 import * as faker from "faker"
+import {
+  InputPropertyValueMap,
+  PropertyMap,
+} from "@notionhq/client/build/src/api-endpoints"
 
 const notion = new Client({ auth: process.env["NOTION_KEY"] })
 
