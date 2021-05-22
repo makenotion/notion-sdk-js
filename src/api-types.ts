@@ -355,7 +355,7 @@ export interface SearchSort {
 }
 
 export interface SearchFilter {
-  value: "object"
+  value: "page" | "database"
   property: "object"
 }
 
