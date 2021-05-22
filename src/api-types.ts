@@ -458,12 +458,12 @@ export interface DateFilter extends SinglePropertyFilterBase {
   is_empty?: true
   is_not_empty?: true
   on_or_after?: string
-  past_week: Record<string, never>
-  past_month: Record<string, never>
-  past_year: Record<string, never>
-  next_week: Record<string, never>
-  next_month: Record<string, never>
-  next_year: Record<string, never>
+  past_week?: Record<string, never>
+  past_month?: Record<string, never>
+  past_year?: Record<string, never>
+  next_week?: Record<string, never>
+  next_month?: Record<string, never>
+  next_year?: Record<string, never>
 }
 
 export interface PeopleFilter extends SinglePropertyFilterBase {
