@@ -397,9 +397,6 @@ export default class Client {
   }
 }
 
-const u = new URL("https://example.com")
-u.searchParams.append
-
 /*
  * Type aliases to support the generic request interface.
  */
