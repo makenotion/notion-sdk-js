@@ -182,4 +182,4 @@ Earlier versions may still work, but we encourage people building new applicatio
 
 If you have a question about the library, or are having difficulty using it, chat with the community in [GitHub Discussions](https://github.com/makenotion/notion-sdk-js/discussions).
 
-If you're experiencing issues with the Notion API, such as a service interruption or a potential bug in the platform, reach out to [Notion help](https://www.notion.so/Help-Support-e040febf70a94950b8620e6f00005004?target=intercom).
+If you're experiencing issues with the Notion API, such as a service interruption or a potential bug in the platform, reach out to [Notion help](https://www.notion.com/Help-Support-e040febf70a94950b8620e6f00005004?target=intercom).

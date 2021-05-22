@@ -1,10 +1,10 @@
 # Sample Integration: Notion to Email
 
-<img src="https://dev.notion.so/front-static/external/readme/images/notion-email-example@2x.png" alt="drawing" width="500"/>
+<img src="https://dev.notion.com/front-static/external/readme/images/notion-email-example@2x.png" alt="drawing" width="500"/>
 
 ## About the Integration
 
-This Notion integration sends an email whenever the Status of a page in a database is updated. This sample was built using [this database template](https://www.notion.so/5b593126d3eb401db62c83cbe362d2d5?v=a44397b3675545f389a6f28282c402ae) and emails are sent using [SendGrid's API](https://sendgrid.com).
+This Notion integration sends an email whenever the Status of a page in a database is updated. This sample was built using [this database template](https://www.notion.com/5b593126d3eb401db62c83cbe362d2d5?v=a44397b3675545f389a6f28282c402ae) and emails are sent using [SendGrid's API](https://sendgrid.com).
 
 ## Running Locally
 
@@ -31,11 +31,11 @@ EMAIL_TO_FIELD=<email-recipients>
 EMAIL_FROM_FIELD=<email-from-field>
 ```
 
-You can create your Notion API key [here](www.notion.com/integrations).
+You can create your Notion API key [here](https://www.notion.com/my-integrations).
 
 You can create your SendGrid API key [here](https://signup.sendgrid.com).
 
-To create a Notion database that will work with this example, duplicate [this template](https://www.notion.so/5b593126d3eb401db62c83cbe362d2d5?v=a44397b3675545f389a6f28282c402ae).
+To create a Notion database that will work with this example, duplicate [this template](https://www.notion.com/5b593126d3eb401db62c83cbe362d2d5?v=a44397b3675545f389a6f28282c402ae).
 
 ### 3. Run code
 

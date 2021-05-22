@@ -26,9 +26,9 @@ npm install
 NOTION_KEY=<your-notion-api-key>
 ```
 
-You can create your Notion API key [here](www.notion.com/integrations).
+You can create your Notion API key [here](https://www.notion.com/my-integrations).
 
-To create a Notion database that will work with this example, duplicate [this empty database template](https://www.notion.so/367cd67cfe8f49bfaf0ac21305ebb9bf?v=bc79ca62b36e4c54b655ceed4ef06ebd).
+To create a Notion database that will work with this example, duplicate [this empty database template](https://www.notion.com/367cd67cfe8f49bfaf0ac21305ebb9bf?v=bc79ca62b36e4c54b655ceed4ef06ebd).
 
 ### 3. Run code
 
