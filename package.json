@@ -33,6 +33,7 @@
   "author": "",
   "license": "MIT",
   "files": [
+    "build/package.json",
     "build/src/**"
   ],
   "dependencies": {
