@@ -25,7 +25,8 @@
     "build": "tsc",
     "prettier": "prettier --write .",
     "lint": "prettier --check . && eslint . --ext .ts && cspell '**/*' ",
-    "test": "ava"
+    "test": "ava",
+    "check-links": "git ls-files | grep md$ | xargs -n 1 markdown-link-check"
   },
   "author": "",
   "license": "MIT",
@@ -42,6 +43,7 @@
     "@typescript-eslint/parser": "^4.22.0",
     "ava": "^3.15.0",
     "eslint": "^7.24.0",
+    "markdown-link-check": "^3.8.7",
     "prettier": "^2.3.0",
     "typescript": "^4.2.4"
   }
