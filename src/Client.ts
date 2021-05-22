@@ -138,7 +138,6 @@ export default class Client {
     try {
       const response = await new Promise<CrossResponse>((resolve, reject) => {
         const timeoutId = setTimeout(() => {
-          // TODO: log?
           reject(new RequestTimeoutError())
         }, this.#timeout)
 
