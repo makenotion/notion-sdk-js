@@ -24,7 +24,7 @@
     "prepare": "npm run lint && npm run build",
     "build": "tsc",
     "prettier": "prettier --write .",
-    "lint": "prettier --check . && eslint . --ext .ts",
+    "lint": "prettier --check . && eslint . --ext .ts && cspell '**/*' ",
     "test": "ava"
   },
   "author": "",
@@ -33,6 +33,7 @@
     "build/src/**"
   ],
   "dependencies": {
+    "cspell": "^5.4.1",
     "got": "^11.8.2"
   },
   "devDependencies": {
