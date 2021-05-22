@@ -80,6 +80,7 @@ export default class Client {
   #timeout: number
   #notionVersion: string
   #fetch: SupportedFetch
+  #agent: Agent | undefined
   #userAgent: string
 
   static readonly defaultNotionVersion = "2021-05-13"
@@ -92,6 +93,7 @@ export default class Client {
     this.#timeout = options?.timeoutMs ?? 60_000
     this.#notionVersion = options?.notionVersion ?? Client.defaultNotionVersion
     this.#fetch = options?.fetch ?? crossFetch
+    this.#agent = options?.agent
     this.#userAgent = `notionhq-client/${PACKAGE_VERSION}`
   }
 
@@ -145,6 +147,7 @@ export default class Client {
           method,
           headers,
           body: bodyAsJsonString,
+          agent: this.#agent,
         })
           .then(resolve)
           .catch(reject)
