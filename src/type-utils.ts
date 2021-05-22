@@ -19,3 +19,9 @@ export type DistributiveOmit<T, K extends keyof any> = T extends any
 // Given a type union, add a field to every member of it
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type DistributiveExtend<T, K extends any> = T extends any ? T & K : never
+
+export type Await<T> = T extends {
+  then(onfulfilled?: (value: infer U) => unknown): unknown
+}
+  ? U
+  : T

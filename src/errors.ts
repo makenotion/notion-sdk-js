@@ -1,12 +1,20 @@
-import type { IncomingHttpHeaders } from "http"
-import type {
-  HTTPError as GotHTTPError,
-  TimeoutError as GotTimeoutError,
-  Response as GotResponse,
-} from "got"
+import { CrossResponse } from "./fetch-types"
 import { isObject } from "./helpers"
 
-export class RequestTimeoutError extends Error {
+// Root type
+class NotionClientErrorBase extends Error {}
+
+export type NotionClientError =
+  | RequestTimeoutError
+  | HTTPResponseError
+  | APIResponseError
+export function isNotionClientError(
+  error: unknown
+): error is NotionClientError {
+  return error instanceof NotionClientErrorBase
+}
+
+export class RequestTimeoutError extends NotionClientErrorBase {
   readonly code = "notionhq_client_request_timeout"
 
   constructor(message = "Request to Notion API has timed out") {
@@ -24,21 +32,20 @@ export class RequestTimeoutError extends Error {
   }
 }
 
-export class HTTPResponseError extends Error {
+export class HTTPResponseError extends NotionClientErrorBase {
   readonly code: string = "notionhq_client_response_error"
   readonly status: number
-  readonly headers: IncomingHttpHeaders
+  readonly headers: Headers
   readonly body: string
 
-  constructor(response: GotResponse, message?: string) {
+  constructor(response: CrossResponse, bodyText: string, message?: string) {
     super(
-      message ??
-        `Request to Notion API failed with status: ${response.statusCode}`
+      message ?? `Request to Notion API failed with status: ${response.status}`
     )
     this.name = "HTTPResponseError"
-    this.status = response.statusCode
+    this.status = response.status
     this.headers = response.headers
-    this.body = response.rawBody.toString()
+    this.body = bodyText
   }
 
   static isHTTPResponseError(error: unknown): error is HTTPResponseError {
@@ -87,7 +94,7 @@ export class APIResponseError
 {
   readonly code: APIErrorCode
 
-  constructor(response: GotResponse, body: APIErrorResponseBody) {
+  constructor(response: CrossResponse, body: APIErrorResponseBody) {
     super(response, body.message)
     this.name = "APIResponseError"
     this.code = body.code
@@ -105,18 +112,15 @@ export class APIResponseError
 
 type RequestError = RequestTimeoutError | HTTPResponseError
 
-export function buildRequestError(error: unknown): RequestError | undefined {
-  if (isGotTimeoutError(error)) {
-    return new RequestTimeoutError()
+export function buildRequestError(
+  response: CrossResponse,
+  bodyText: string
+): RequestError | undefined {
+  const apiErrorResponseBody = parseAPIErrorResponseBody(bodyText)
+  if (apiErrorResponseBody !== undefined) {
+    return new APIResponseError(response, apiErrorResponseBody)
   }
-  if (isGotHTTPError(error)) {
-    const apiErrorResponseBody = parseAPIErrorResponseBody(error.response.body)
-    if (apiErrorResponseBody !== undefined) {
-      return new APIResponseError(error.response, apiErrorResponseBody)
-    }
-    return new HTTPResponseError(error.response)
-  }
-  return
+  return new HTTPResponseError(response, bodyText)
 }
 
 function parseAPIErrorResponseBody(
@@ -156,29 +160,5 @@ function isAPIErrorCode(code: unknown): code is APIErrorCode {
   return (
     typeof code === "string" &&
     Object.values<string>(APIErrorCode).includes(code)
-  )
-}
-
-function isGotTimeoutError(error: unknown): error is GotTimeoutError {
-  return (
-    error instanceof Error &&
-    error.name === "TimeoutError" &&
-    "event" in error &&
-    typeof error["event"] === "string" &&
-    isObject(error["request"]) &&
-    isObject(error["timings"])
-  )
-}
-
-function isGotHTTPError(error: unknown): error is GotHTTPError {
-  return (
-    error instanceof Error &&
-    error.name === "HTTPError" &&
-    "request" in error &&
-    isObject(error["request"]) &&
-    "response" in error &&
-    isObject(error["response"]) &&
-    "timings" in error &&
-    isObject(error["timings"])
   )
 }
