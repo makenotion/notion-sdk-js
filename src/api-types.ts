@@ -6,7 +6,7 @@
  */
 
 import { PropertyValueMap } from "./api-endpoints"
-import { RequiredBy } from "./type-utils"
+import { DistributiveOmit, RequiredBy } from "./type-utils"
 
 /*
  * Pagination
@@ -564,6 +564,8 @@ export type PropertyValue =
   | LastEditedTimePropertyValue
   | LastEditedByPropertyValue
 
+export type PropertyValueWithoutId = DistributiveOmit<PropertyValue, "id">
+
 // NOTE(blackmad): We imply in the docs id is not required in property input dictionary
 // given that it has a named key in the input functions, but in practice the API seems to
 // require it. Investigate this. Commented out code is good at doing what we want.
@@ -684,7 +686,7 @@ export interface DateRollupValue {
 }
 export interface ArrayRollupValue {
   type: "array"
-  array: unknown[] // TODO: this is exactly like PropertyValue but without the `id`
+  array: PropertyValueWithoutId[]
 }
 
 export interface PeoplePropertyValue extends PropertyValueBase {

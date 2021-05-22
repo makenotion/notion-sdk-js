@@ -12,6 +12,10 @@ import {
   InputPropertyValueMap,
   PropertyMap,
 } from "@notionhq/client/build/src/api-endpoints"
+import {
+  PropertyValueWithoutId,
+  UserBase,
+} from "@notionhq/client/build/src/api-types"
 
 const notion = new Client({ auth: process.env["NOTION_KEY"] })
 
@@ -40,7 +44,6 @@ function makeFakePropertiesData(
         }
       }
     } else if (property.type === "select") {
-      console.dir({ property }, { depth: 10 })
       const selectOption = _.sample(property.select.options)
       if (selectOption) {
         propertyValues[name] = {
@@ -108,6 +111,76 @@ function makeFakePropertiesData(
   return propertyValues
 }
 
+function assertUnreachable(_x: never): never {
+  throw new Error("Didn't expect to get here")
+}
+
+function userToString(userBase: UserBase) {
+  return `${userBase.id}: ${userBase.name || "Unknown Name"}`
+}
+
+function extractValueToString(property: PropertyValueWithoutId): string {
+  switch (property.type) {
+    case "checkbox":
+      return property.checkbox.toString()
+    case "created_by":
+      return userToString(property.created_by)
+    case "created_time":
+      return new Date(property.created_time).toISOString()
+    case "date":
+      return new Date(property.date.start).toISOString()
+    case "email":
+      return property.email
+    case "url":
+      return property.url
+    case "number":
+      return property.number.toString()
+    case "phone_number":
+      return property.phone_number
+    case "select":
+      return `${property.select.id} ${property.select.name}`
+    case "multi_select":
+      return property.multi_select
+        .map(select => `${select.id} ${select.name}`)
+        .join(", ")
+    case "people":
+      return property.people.map(person => userToString(person)).join(", ")
+    case "last_edited_by":
+      return userToString(property.last_edited_by)
+    case "last_edited_time":
+      return new Date(property.last_edited_time).toISOString()
+    case "title":
+      return property.title.map(t => t.plain_text).join(", ")
+    case "rich_text":
+      return property.rich_text.map(t => t.plain_text).join(", ")
+    case "files":
+      return property.files.map(file => file.name).join(", ")
+    case "formula":
+      if (property.formula.type === "string") {
+        return property.formula.string || '???'
+      } else if (property.formula.type === "number") {
+        return property.formula.number?.toString() || '???'
+      } else if (property.formula.type === "boolean") {
+        return property.formula.boolean.toString()
+      } else if (property.formula.type === "date") {
+        return new Date(property.formula.date.date.start).toISOString()
+      } else {
+        return assertUnreachable(property.formula)
+      }
+    case "rollup":
+      if (property.rollup.type === "number") {
+        return property.rollup.number.toString()
+      } else if (property.rollup.type === "date") {
+        return new Date(property.rollup.date.date.start).toISOString()
+      } else if (property.rollup.type === "array") {
+        return JSON.stringify(property.rollup.array)
+      } else {
+        return assertUnreachable(property.rollup)
+      }
+  }
+  return assertUnreachable(property)
+}
+
 async function main() {
   // Find the first database this bot has access to
   // TODO(blackmad): move to notion.search()
@@ -128,8 +201,10 @@ async function main() {
   })
 
   // generate a bunch of fake pages with fake data
+  const startTime = new Date()
   for (let i = 0; i < 10; i++) {
     const propertiesData = makeFakePropertiesData(properties)
+
     await notion.pages.create({
       parent: {
         database_id: database.id,
@@ -137,6 +212,29 @@ async function main() {
       properties: propertiesData,
     })
   }
+
+  // and read back what we just did
+  const queryResponse = await notion.databases.query({
+    database_id: database.id,
+  })
+  let numOldRows = 0
+  queryResponse.results.map(page => {
+    const createdTime = new Date(page.created_time)
+    if (createdTime <= startTime) {
+      numOldRows++
+      return
+    }
+
+    console.log(`New page: ${page.id}`)
+
+    Object.entries(page.properties).forEach(([name, property]) => {
+      console.log(
+        ` - ${name} ${property.id} - ${extractValueToString(property)}`
+      )
+    })
+  })
+
+  console.log(`did not print ${numOldRows} old rows`)
 }
 
 main()
