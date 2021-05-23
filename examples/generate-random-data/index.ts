@@ -14,10 +14,14 @@ import {
 } from "@notionhq/client/build/src/api-endpoints"
 import {
   PropertyValueWithoutId,
+  SelectFilter,
+  TextFilter,
   UserBase,
 } from "@notionhq/client/build/src/api-types"
 
 const notion = new Client({ auth: process.env["NOTION_KEY"] })
+
+const startTime = new Date()
 
 // Given the properties of a database, generate an object full of
 // random data that can be used to generate new rows in our Notion database.
@@ -119,6 +123,26 @@ function userToString(userBase: UserBase) {
   return `${userBase.id}: ${userBase.name || "Unknown Name"}`
 }
 
+function findRandomSelectColumnNameAndValue(properties: PropertyMap): {
+  name: string
+  value: string | undefined
+} {
+  const options = Object.entries(properties).flatMap(([name, property]) => {
+    if (property.type === "select") {
+      return [
+        { name, value: _.sample(property.select.options.map(o => o.name)) },
+      ]
+    }
+    return []
+  })
+
+  if (options.length > 0) {
+    return _.sample(options) || { name: "", value: undefined }
+  }
+
+  return { name: "", value: undefined }
+}
+
 function extractValueToString(property: PropertyValueWithoutId): string {
   switch (property.type) {
     case "checkbox":
@@ -181,6 +205,114 @@ function extractValueToString(property: PropertyValueWithoutId): string {
   return assertUnreachable(property)
 }
 
+async function exerciseWriting(databaseId: string, properties: PropertyMap) {
+  console.log("\n\n********* Exercising Writing *********\n\n")
+
+  const RowsToWrite = 10
+
+  // generate a bunch of fake pages with fake data
+  for (let i = 0; i < RowsToWrite; i++) {
+    const propertiesData = makeFakePropertiesData(properties)
+
+    await notion.pages.create({
+      parent: {
+        database_id: databaseId,
+      },
+      properties: propertiesData,
+    })
+  }
+
+  console.log(`Wrote ${RowsToWrite} rows after ${startTime}`)
+}
+
+async function exerciseReading(databaseId: string, _properties: PropertyMap) {
+  console.log("\n\n********* Exercising Reading *********\n\n")
+  // and read back what we just did
+  const queryResponse = await notion.databases.query({
+    database_id: databaseId,
+  })
+  let numOldRows = 0
+  queryResponse.results.map(page => {
+    const createdTime = new Date(page.created_time)
+    if (createdTime <= startTime) {
+      numOldRows++
+      return
+    }
+
+    console.log(`New page: ${page.id}`)
+
+    Object.entries(page.properties).forEach(([name, property]) => {
+      console.log(
+        ` - ${name} ${property.id} - ${extractValueToString(property)}`
+      )
+    })
+  })
+  console.log(
+    `Skipped printing ${numOldRows} rows that were written before this test`
+  )
+}
+
+async function exerciseFilters(databaseId: string, properties: PropertyMap) {
+  console.log("\n\n********* Exercising Filters *********\n\n")
+
+  // get a random select or multi-select column from the collection with a random value for it
+  const { name: selectColumnName, value: selectColumnValue } =
+    findRandomSelectColumnNameAndValue(properties)
+
+  if (!selectColumnName || !selectColumnValue) {
+    throw new Error("need a select column to run this part of the example")
+  }
+
+  console.log(`Looking for ${selectColumnName}=${selectColumnValue}`)
+
+  // Check we can search by name
+  const queryFilterSelectFilterTypeBased: SelectFilter = {
+    property: selectColumnName,
+    select: { equals: selectColumnValue },
+  }
+
+  const matchingSelectResults = await notion.databases.query({
+    database_id: databaseId,
+    filter: queryFilterSelectFilterTypeBased,
+  })
+
+  console.log(
+    `had ${matchingSelectResults.results.length} matching rows for ${selectColumnName}=${selectColumnValue}`
+  )
+
+  // Let's do it again for text
+
+  const textColumn = _.sample(
+    Object.values(properties).filter(p => p.type === "rich_text")
+  )
+  if (!textColumn) {
+    throw new Error(
+      "Need a rich_text column for this part of the test, could not find one"
+    )
+  }
+  const textColumnId = textColumn.id
+  const letterToFind = faker.lorem.word(1)
+
+  console.log(
+    `\n\nLooking for text column with id ${textColumnId} contains letter ${letterToFind}`
+  )
+
+  const textFilter: TextFilter = {
+    property: textColumnId,
+    text: { contains: letterToFind },
+  }
+
+  // Check we can search by id
+  const matchingTextResults = await notion.databases.query({
+    database_id: databaseId,
+    filter: textFilter,
+  })
+
+  console.log(
+    `Had ${matchingTextResults.results.length} matching rows in column with ID ${textColumnId} containing letter ${letterToFind}`
+  )
+}
+
 async function main() {
   // Find the first database this bot has access to
   // TODO(blackmad): move to notion.search()
@@ -200,41 +332,9 @@ async function main() {
     database_id: database.id,
   })
 
-  // generate a bunch of fake pages with fake data
-  const startTime = new Date()
-  for (let i = 0; i < 10; i++) {
-    const propertiesData = makeFakePropertiesData(properties)
-
-    await notion.pages.create({
-      parent: {
-        database_id: database.id,
-      },
-      properties: propertiesData,
-    })
-  }
-
-  // and read back what we just did
-  const queryResponse = await notion.databases.query({
-    database_id: database.id,
-  })
-  let numOldRows = 0
-  queryResponse.results.map(page => {
-    const createdTime = new Date(page.created_time)
-    if (createdTime <= startTime) {
-      numOldRows++
-      return
-    }
-
-    console.log(`New page: ${page.id}`)
-
-    Object.entries(page.properties).forEach(([name, property]) => {
-      console.log(
-        ` - ${name} ${property.id} - ${extractValueToString(property)}`
-      )
-    })
-  })
-
-  console.log(`did not print ${numOldRows} old rows`)
+  await exerciseWriting(database.id, properties)
+  await exerciseReading(database.id, properties)
+  await exerciseFilters(database.id, properties)
 }
 
 main()
