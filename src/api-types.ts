@@ -409,87 +409,108 @@ export interface SinglePropertyFilterBase {
   property: string
 }
 
+/** A text filter condition applies to database properties of types "title", "rich_text", "url", "email", and "phone". */
 export interface TextFilter extends SinglePropertyFilterBase {
-  equals?: string
-  does_not_equal?: string
-  contains?: string
-  does_not_contain?: string
-  starts_with?: string
-  ends_with?: string
-  is_empty?: true
-  is_not_empty?: true
+  text: {
+    equals?: string
+    does_not_equal?: string
+    contains?: string
+    does_not_contain?: string
+    starts_with?: string
+    ends_with?: string
+    is_empty?: true
+    is_not_empty?: true
+  }
 }
 
 export interface NumberFilter extends SinglePropertyFilterBase {
-  equals?: number
-  does_not_equal?: number
-  greater_than?: number
-  less_than?: number
-  greater_than_or_equal_to?: number
-  less_than_or_equal_to?: number
-  is_empty?: true
-  is_not_empty?: true
+  number: {
+    equals?: number
+    does_not_equal?: number
+    greater_than?: number
+    less_than?: number
+    greater_than_or_equal_to?: number
+    less_than_or_equal_to?: number
+    is_empty?: true
+    is_not_empty?: true
+  }
 }
 
 export interface CheckboxFilter extends SinglePropertyFilterBase {
-  equals?: boolean
-  does_not_equal?: boolean
+  checkbox: {
+    equals?: boolean
+    does_not_equal?: boolean
+  }
 }
 
 export interface SelectFilter extends SinglePropertyFilterBase {
-  equals?: string
-  does_not_equal?: string
-  is_empty?: true
-  is_not_empty?: true
+  select: {
+    equals?: string
+    does_not_equal?: string
+    is_empty?: true
+    is_not_empty?: true
+  }
 }
 
 export interface MultiSelectFilter extends SinglePropertyFilterBase {
-  contains?: string
-  does_not_contain?: string
-  is_empty?: true
-  is_not_empty?: true
+  multi_select: {
+    contains?: string
+    does_not_contain?: string
+    is_empty?: true
+    is_not_empty?: true
+  }
 }
 
 export interface DateFilter extends SinglePropertyFilterBase {
-  equals?: string
-  before?: string
-  after?: string
-  on_or_before?: string
-  is_empty?: true
-  is_not_empty?: true
-  on_or_after?: string
-  past_week?: Record<string, never>
-  past_month?: Record<string, never>
-  past_year?: Record<string, never>
-  next_week?: Record<string, never>
-  next_month?: Record<string, never>
-  next_year?: Record<string, never>
+  date: {
+    equals?: string
+    before?: string
+    after?: string
+    on_or_before?: string
+    is_empty?: true
+    is_not_empty?: true
+    on_or_after?: string
+    past_week?: Record<string, never>
+    past_month?: Record<string, never>
+    past_year?: Record<string, never>
+    next_week?: Record<string, never>
+    next_month?: Record<string, never>
+    next_year?: Record<string, never>
+  }
 }
 
 export interface PeopleFilter extends SinglePropertyFilterBase {
-  contains?: string
-  does_not_contain?: string
-  is_empty?: true
-  is_not_empty?: true
+  people: {
+    contains?: string
+    does_not_contain?: string
+    is_empty?: true
+    is_not_empty?: true
+  }
 }
 
 export interface FilesFilter extends SinglePropertyFilterBase {
-  is_empty?: true
-  is_not_empty?: true
+  files: {
+    is_empty?: true
+    is_not_empty?: true
+  }
 }
 
 export interface RelationFilter extends SinglePropertyFilterBase {
-  contains?: string
-  does_not_contain?: string
-  is_empty?: true
-  is_not_empty?: true
+  relation: {
+    contains?: string
+    does_not_contain?: string
+    is_empty?: true
+    is_not_empty?: true
+  }
 }
 
 export interface FormulaFilter extends SinglePropertyFilterBase {
-  text?: Omit<TextFilter, "property">
-  checkbox?: Omit<CheckboxFilter, "property">
-  number?: Omit<NumberFilter, "property">
-  date?: Omit<DateFilter, "property">
+  formula: {
+    text?: Omit<TextFilter, "property">
+    checkbox?: Omit<CheckboxFilter, "property">
+    number?: Omit<NumberFilter, "property">
+    date?: Omit<DateFilter, "property">
+  }
 }
 
 /*
