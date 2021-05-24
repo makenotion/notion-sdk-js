@@ -36,7 +36,7 @@ function makeFakePropertiesData(
         date: {
           start: faker.date.past().toISOString(),
         },
-       }
+      }
     } else if (property.type === "multi_select") {
       const multiSelectOption = _.sample(property.multi_select.options)
       if (multiSelectOption) {
