@@ -32,18 +32,16 @@ function makeFakePropertiesData(
   Object.entries(properties).forEach(([name, property]) => {
     if (property.type === "date") {
       propertyValues[name] = {
-        id: property.id,
         type: "date",
         date: {
           start: faker.date.past().toISOString(),
         },
-      }
+       }
     } else if (property.type === "multi_select") {
       const multiSelectOption = _.sample(property.multi_select.options)
       if (multiSelectOption) {
         propertyValues[name] = {
           type: "multi_select",
-          id: property.id,
           multi_select: [multiSelectOption],
         }
       }

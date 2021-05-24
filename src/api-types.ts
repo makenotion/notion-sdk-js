@@ -6,7 +6,7 @@
  */
 
 import { PropertyValueMap } from "./api-endpoints"
-import { DistributiveOmit, RequiredBy } from "./type-utils"
+import { DistributiveExtend, DistributiveOmit, RequiredBy } from "./type-utils"
 
 /*
  * Pagination
@@ -587,18 +587,14 @@ export type PropertyValue =
 
 export type PropertyValueWithoutId = DistributiveOmit<PropertyValue, "id">
 
-// NOTE(blackmad): We imply in the docs id is not required in property input dictionary
-// given that it has a named key in the input functions, but in practice the API seems to
-// require it. Investigate this. Commented out code is good at doing what we want.
-//
-// export type InputPropertyValue = DistributiveExtend<
-//   DistributiveOmit<InputPropertyValueWithRequiredId, "id">,
-//   { id?: string }
-// >
+export type InputPropertyValue = DistributiveExtend<
+  DistributiveOmit<InputPropertyValueWithRequiredId, "id">,
+  { id?: string }
+>
 
 // NOTE(blackmad): there are probably still sub-types in here that need to be made
 // more permissive when used for input
-export type InputPropertyValue =
+export type InputPropertyValueWithRequiredId =
   | TitleInputPropertyValue
   | RichTextInputPropertyValue
   | NumberPropertyValue
