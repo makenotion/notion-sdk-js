@@ -9,7 +9,7 @@
   "author": "David Blackman",
   "license": "MIT",
   "dependencies": {
-    "@notionhq/client": "^0.1.7",
+    "@notionhq/client": "file:../../",
     "@types/faker": "^5.5.5",
     "@types/lodash": "^4.14.170",
     "dotenv": "^8.2.0",
