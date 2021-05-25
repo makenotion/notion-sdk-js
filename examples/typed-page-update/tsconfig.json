@@ -1,0 +1,39 @@
+{
+  "compilerOptions": {
+    /* Visit https://aka.ms/tsconfig.json to read more about this file */
+    // Recommended Node options have been incorporated from https://github.com/tsconfig/bases/blob/master/bases/node14.json
+
+    // Node LTS Fermium (14.x) has mostly complete support for ES2019 (as reported by https://node.green/)
+    "target": "ES2019",
+    "module": "commonjs",
+    // "esModuleInterop": true,
+
+    // Overrides default in order to remove "dom" because this package shouldn't assume the presence of browser APIs
+    "lib": ["ES2019"],
+
+    // Emit location
+    "outDir": "build",
+
+    // Emit sourcemaps
+    "declarationMap": true,
+    "sourceMap": true,
+    "inlineSources": true,
+
+    // Emit type definitions
+    "declaration": true,
+
+    // Strict mode
+    "strict": true,
+
+    // Linter style rules
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "forceConsistentCasingInFileNames": true
+  },
+
+  "include": ["./index.ts"]
+}

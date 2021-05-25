@@ -1,0 +1,24 @@
+{
+  "name": "get-typed-page",
+  "version": "1.0.0",
+  "description": "**TODO**",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sc0ra",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "@notionhq/client": "file:../.."
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.22.0",
+    "@typescript-eslint/parser": "^4.22.0",
+    "eslint": "^7.24.0",
+    "markdown-link-check": "^3.8.7",
+    "prettier": "^2.3.0",
+    "typescript": "^4.2.4",
+    "ts-node": "^9.1.1"
+  }
+}
