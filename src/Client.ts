@@ -50,6 +50,7 @@ import got, {
   Headers as GotHeaders,
   Agents as GotAgents,
 } from "got"
+import { Page } from "./api-types"
 
 export interface ClientOptions {
   auth?: string
@@ -275,8 +276,8 @@ export default class Client {
     /**
      * Update page properties
      */
-    update: (
-      args: WithAuth<PagesUpdateParameters>
+    update: <PageType extends Page | void = void>(
+      args: WithAuth<PagesUpdateParameters<PageType>>
     ): Promise<PagesUpdateResponse> => {
       return this.request<PagesUpdateResponse>({
         path: pagesUpdate.path(args),

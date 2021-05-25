@@ -614,6 +614,19 @@ export type InputPropertyValueWithRequiredId =
   | LastEditedTimePropertyValue
   | LastEditedByPropertyValue
 
+type InputPropertyValueFromPropertyValue<T extends PropertyValue> =
+  T extends TitlePropertyValue
+    ? TitleInputPropertyValue
+    : T extends RichTextPropertyValue
+    ? RichTextInputPropertyValue
+    : T
+
+export type InputValueMapFromPage<PageType extends Page> = {
+  [property in keyof PageType["properties"]]: InputPropertyValueFromPropertyValue<
+    PageType["properties"][property]
+  >
+}
+
 export interface PropertyValueBase {
   id: string
   type: string

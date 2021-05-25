@@ -23,6 +23,7 @@ import {
   SearchFilter,
   InputPropertyValue,
   Property,
+  InputValueMapFromPage,
 } from "./api-types"
 
 // TODO: type assertions to verify that each interface is synchronized to the list of keys in the runtime value below.
@@ -220,14 +221,16 @@ interface PagesUpdatePathParameters {
 }
 interface PagesUpdateQueryParameters {}
 
-interface PagesUpdateBodyParameters {
-  properties: InputPropertyValueMap
+interface PagesUpdateBodyParameters<PageType extends Page | void = void> {
+  properties: PageType extends Page
+    ? InputValueMapFromPage<PageType>
+    : InputPropertyValueMap
 }
 
-export interface PagesUpdateParameters
+export interface PagesUpdateParameters<PageType extends Page | void = void>
   extends PagesUpdatePathParameters,
     PagesUpdateQueryParameters,
-    PagesUpdateBodyParameters {}
+    PagesUpdateBodyParameters<PageType> {}
 export interface PagesUpdateResponse extends Page {}
 
 export const pagesUpdate = {
