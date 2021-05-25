@@ -650,7 +650,7 @@ export type RichText = RichTextText | RichTextMention | RichTextEquation;
 export interface RichTextBase {
   plain_text: string;
   href?: string;
-  annotations: Annotations;
+  annotations: Annotations[];
   type: string;
 }
 
