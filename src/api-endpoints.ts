@@ -9,19 +9,21 @@
 import {
   PaginatedList,
   PaginationParameters,
-
   Database,
   Page,
   ParentInput,
   PropertyValue,
-  Block, BlockBase,
-  User, UserBase,
-
+  Block,
+  BlockBase,
+  User,
+  UserBase,
   Filter,
   Sort,
   SearchSort,
   SearchFilter,
-} from './api-types';
+  InputPropertyValue,
+  Property,
+} from "./api-types"
 
 // TODO: type assertions to verify that each interface is synchronized to the list of keys in the runtime value below.
 
@@ -33,44 +35,52 @@ import {
  */
 
 interface BlocksChildrenAppendPathParameters {
-  block_id: string;
+  block_id: string
 }
 interface BlocksChildrenAppendQueryParameters {}
 interface BlocksChildrenAppendBodyParameters {
-  children: Block[];
+  children: Block[]
 }
 
-export interface BlocksChildrenAppendParameters extends BlocksChildrenAppendPathParameters, BlocksChildrenAppendQueryParameters, BlocksChildrenAppendBodyParameters {}
+export interface BlocksChildrenAppendParameters
+  extends BlocksChildrenAppendPathParameters,
+    BlocksChildrenAppendQueryParameters,
+    BlocksChildrenAppendBodyParameters {}
 export interface BlocksChildrenAppendResponse extends BlockBase {}
 
 export const blocksChildrenAppend = {
-  method: 'patch',
-  pathParams: ['block_id'],
+  method: "patch",
+  pathParams: ["block_id"],
   queryParams: [],
-  bodyParams: ['children'],
-  path: (p: BlocksChildrenAppendPathParameters) => `blocks/${p.block_id}/children`,
-} as const;
+  bodyParams: ["children"],
+  path: (p: BlocksChildrenAppendPathParameters) =>
+    `blocks/${p.block_id}/children`,
+} as const
 
 /*
  * blocks.children.list()
  */
 
 interface BlocksChildrenListPathParameters {
-  block_id: string;
+  block_id: string
 }
 interface BlocksChildrenListQueryParameters extends PaginationParameters {}
 interface BlocksChildrenListBodyParameters {}
 
-export interface BlocksChildrenListParameters extends BlocksChildrenListPathParameters, BlocksChildrenListQueryParameters, BlocksChildrenListBodyParameters {}
+export interface BlocksChildrenListParameters
+  extends BlocksChildrenListPathParameters,
+    BlocksChildrenListQueryParameters,
+    BlocksChildrenListBodyParameters {}
 export interface BlocksChildrenListResponse extends PaginatedList<Block> {}
 
 export const blocksChildrenList = {
-  method: 'get',
-  pathParams: ['block_id'],
-  queryParams: ['start_cursor', 'page_size'],
+  method: "get",
+  pathParams: ["block_id"],
+  queryParams: ["start_cursor", "page_size"],
   bodyParams: [],
-  path: (p: BlocksChildrenListPathParameters) => `blocks/${p.block_id}/children`,
-} as const;
+  path: (p: BlocksChildrenListPathParameters) =>
+    `blocks/${p.block_id}/children`,
+} as const
 
 /*
  * databases.list()
@@ -80,61 +90,70 @@ interface DatabasesListPathParameters {}
 interface DatabasesListQueryParameters extends PaginationParameters {}
 interface DatabasesListBodyParameters {}
 
-export interface DatabasesListParameters extends DatabasesListPathParameters, DatabasesListQueryParameters, DatabasesListBodyParameters {}
+export interface DatabasesListParameters
+  extends DatabasesListPathParameters,
+    DatabasesListQueryParameters,
+    DatabasesListBodyParameters {}
 export interface DatabasesListResponse extends PaginatedList<Database> {}
 
 export const databasesList = {
-  method: 'get',
+  method: "get",
   pathParams: [],
-  queryParams: ['start_cursor', 'page_size'],
+  queryParams: ["start_cursor", "page_size"],
   bodyParams: [],
   path: () => `databases`,
-} as const;
+} as const
 
 /*
  * databases.query()
  */
 
 interface DatabasesQueryPathParameters {
-  database_id: string;
+  database_id: string
 }
 interface DatabasesQueryQueryParameters {}
 interface DatabasesQueryBodyParameters extends PaginationParameters {
-  filter?: Filter;
-  sorts?: Sort[];
+  filter?: Filter
+  sorts?: Sort[]
 }
 
-export interface DatabasesQueryParameters extends DatabasesQueryPathParameters, DatabasesQueryQueryParameters, DatabasesQueryBodyParameters {}
+export interface DatabasesQueryParameters
+  extends DatabasesQueryPathParameters,
+    DatabasesQueryQueryParameters,
+    DatabasesQueryBodyParameters {}
 export interface DatabasesQueryResponse extends PaginatedList<Page> {}
 
 export const databasesQuery = {
-  method: 'post',
-  pathParams: ['database_id'],
+  method: "post",
+  pathParams: ["database_id"],
   queryParams: [],
-  bodyParams: ['filter', 'sorts', 'start_cursor', 'page_size'],
+  bodyParams: ["filter", "sorts", "start_cursor", "page_size"],
   path: (p: DatabasesQueryPathParameters) => `databases/${p.database_id}/query`,
-} as const;
+} as const
 
 /*
  * databases.retrieve()
  */
 
 interface DatabasesRetrievePathParameters {
-  database_id: string;
+  database_id: string
 }
 interface DatabasesRetrieveQueryParameters {}
 interface DatabasesRetrieveBodyParameters {}
 
-export interface DatabasesRetrieveParameters extends DatabasesRetrievePathParameters, DatabasesRetrieveQueryParameters, DatabasesRetrieveBodyParameters {}
+export interface DatabasesRetrieveParameters
+  extends DatabasesRetrievePathParameters,
+    DatabasesRetrieveQueryParameters,
+    DatabasesRetrieveBodyParameters {}
 export interface DatabasesRetrieveResponse extends Database {}
 
 export const databasesRetrieve = {
-  method: 'get',
-  pathParams: ['database_id'],
+  method: "get",
+  pathParams: ["database_id"],
   queryParams: [],
   bodyParams: [],
   path: (p: DatabasesRetrievePathParameters) => `databases/${p.database_id}`,
-} as const;
+} as const
 
 /*
  * pages.create()
@@ -142,20 +161,29 @@ export const databasesRetrieve = {
 
 interface PagesCreatePathParameters {}
 interface PagesCreateQueryParameters {}
+
+export type PropertyMap = { [propertyName: string]: Property }
+export type PropertyValueMap = { [propertyName: string]: PropertyValue }
+export type InputPropertyValueMap = {
+  [propertyName: string]: InputPropertyValue
+}
 interface PagesCreateBodyParameters {
-  parent: ParentInput;
-  properties: { [propertyName: string]: PropertyValue; };
-  children?: Block[];
+  parent: ParentInput
+  properties: InputPropertyValueMap
+  children?: Block[]
 }
 
-export interface PagesCreateParameters extends PagesCreatePathParameters, PagesCreateQueryParameters, PagesCreateBodyParameters {}
+export interface PagesCreateParameters
+  extends PagesCreatePathParameters,
+    PagesCreateQueryParameters,
+    PagesCreateBodyParameters {}
 export interface PagesCreateResponse extends BlockBase {}
 
 export const pagesCreate = {
-  method: 'post',
+  method: "post",
   pathParams: [],
   queryParams: [],
-  bodyParams: ['parent', 'properties', 'children'],
+  bodyParams: ["parent", "properties", "children"],
   path: () => `pages`,
 } as const
 
@@ -164,65 +192,75 @@ export const pagesCreate = {
  */
 
 interface PagesRetrievePathParameters {
-  page_id: string;
+  page_id: string
 }
 interface PagesRetrieveQueryParameters {}
 interface PagesRetrieveBodyParameters {}
 
-export interface PagesRetrieveParameters extends PagesRetrievePathParameters, PagesRetrieveQueryParameters, PagesRetrieveBodyParameters {}
+export interface PagesRetrieveParameters
+  extends PagesRetrievePathParameters,
+    PagesRetrieveQueryParameters,
+    PagesRetrieveBodyParameters {}
 export interface PagesRetrieveResponse extends Page {}
 
 export const pagesRetrieve = {
-  method: 'get',
-  pathParams: ['page_id'],
+  method: "get",
+  pathParams: ["page_id"],
   queryParams: [],
   bodyParams: [],
   path: (p: PagesRetrievePathParameters) => `pages/${p.page_id}`,
-} as const;
+} as const
 
 /*
  * pages.update()
  */
 
 interface PagesUpdatePathParameters {
-  page_id: string;
+  page_id: string
 }
 interface PagesUpdateQueryParameters {}
+
 interface PagesUpdateBodyParameters {
-  properties: { [propertyNameOrId: string]: PropertyValue; };
+  properties: InputPropertyValueMap
 }
 
-export interface PagesUpdateParameters extends PagesUpdatePathParameters, PagesUpdateQueryParameters, PagesUpdateBodyParameters {}
+export interface PagesUpdateParameters
+  extends PagesUpdatePathParameters,
+    PagesUpdateQueryParameters,
+    PagesUpdateBodyParameters {}
 export interface PagesUpdateResponse extends Page {}
 
 export const pagesUpdate = {
-  method: 'patch',
-  pathParams: ['page_id'],
+  method: "patch",
+  pathParams: ["page_id"],
   queryParams: [],
-  bodyParams: ['properties'],
+  bodyParams: ["properties"],
   path: (p: PagesUpdatePathParameters) => `pages/${p.page_id}`,
-} as const;
+} as const
 
 /*
  * users.retrieve()
  */
 
 interface UsersRetrievePathParameters {
-  user_id: string;
+  user_id: string
 }
 interface UsersRetrieveQueryParameters {}
 interface UsersRetrieveBodyParameters {}
 
-export interface UsersRetrieveParameters extends UsersRetrievePathParameters, UsersRetrieveQueryParameters, UsersRetrieveBodyParameters {}
+export interface UsersRetrieveParameters
+  extends UsersRetrievePathParameters,
+    UsersRetrieveQueryParameters,
+    UsersRetrieveBodyParameters {}
 export interface UsersRetrieveResponse extends UserBase {}
 
 export const usersRetrieve = {
-  method: 'get',
-  pathParams: ['user_id'],
+  method: "get",
+  pathParams: ["user_id"],
   queryParams: [],
   bodyParams: [],
   path: (p: UsersRetrievePathParameters) => `users/${p.user_id}`,
-} as const;
+} as const
 
 /*
  * users.list()
@@ -232,16 +270,19 @@ interface UsersListPathParameters {}
 interface UsersListQueryParameters extends PaginationParameters {}
 interface UsersListBodyParameters {}
 
-export interface UsersListParameters extends UsersListPathParameters, UsersListQueryParameters, UsersListBodyParameters {}
+export interface UsersListParameters
+  extends UsersListPathParameters,
+    UsersListQueryParameters,
+    UsersListBodyParameters {}
 export interface UsersListResponse extends PaginatedList<User> {}
 
 export const usersList = {
-  method: 'get',
+  method: "get",
   pathParams: [],
-  queryParams: ['start_cursor', 'page_size'],
+  queryParams: ["start_cursor", "page_size"],
   bodyParams: [],
   path: () => `users`,
-} as const;
+} as const
 
 /*
  * search()
@@ -250,18 +291,21 @@ export const usersList = {
 interface SearchPathParameters {}
 interface SearchQueryParameters {}
 interface SearchBodyParameters extends PaginationParameters {
-  query?: string;
-  sort?: SearchSort;
-  filter?: SearchFilter;
+  query?: string
+  sort?: SearchSort
+  filter?: SearchFilter
 }
 
-export interface SearchParameters extends SearchPathParameters, SearchQueryParameters, SearchBodyParameters {}
+export interface SearchParameters
+  extends SearchPathParameters,
+    SearchQueryParameters,
+    SearchBodyParameters {}
 export interface SearchResponse extends PaginatedList<Page | Database> {}
 
 export const search = {
-  method: 'post',
+  method: "post",
   pathParams: [],
   queryParams: [],
-  bodyParams: ['query', 'sort', 'filter', 'start_cursor', 'page_size'],
+  bodyParams: ["query", "sort", "filter", "start_cursor", "page_size"],
   path: () => `search`,
-} as const;
+} as const

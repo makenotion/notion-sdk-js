@@ -1,0 +1,20 @@
+{
+  "name": "generate-random-data",
+  "version": "1.0.0",
+  "description": "**TODO**",
+  "main": "index.js",
+  "scripts": {
+    "ts-run": "node --loader ts-node/esm index.ts"
+  },
+  "author": "David Blackman",
+  "license": "MIT",
+  "dependencies": {
+    "@notionhq/client": "file:../../",
+    "@types/faker": "^5.5.5",
+    "@types/lodash": "^4.14.170",
+    "dotenv": "^8.2.0",
+    "faker": "^5.5.3",
+    "lodash": "^4.17.21",
+    "ts-node": "^9.1.1"
+  }
+}

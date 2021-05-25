@@ -11,6 +11,6 @@
   "dependencies": {
     "dotenv": "^8.2.0",
     "octokit": "^1.0.3",
-    "@notionhq/client": "latest"
+    "@notionhq/client": "file:../.."
   }
 }
