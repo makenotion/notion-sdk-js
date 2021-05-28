@@ -38,14 +38,18 @@ export class HTTPResponseError extends NotionClientErrorBase {
   readonly headers: Headers
   readonly body: string
 
-  constructor(response: CrossResponse, bodyText: string, message?: string) {
+  constructor(
+    response: CrossResponse,
+    message: string | undefined,
+    rawBodyText: string
+  ) {
     super(
       message ?? `Request to Notion API failed with status: ${response.status}`
     )
     this.name = "HTTPResponseError"
     this.status = response.status
     this.headers = response.headers
-    this.body = bodyText
+    this.body = rawBodyText
   }
 
   static isHTTPResponseError(error: unknown): error is HTTPResponseError {
@@ -94,8 +98,12 @@ export class APIResponseError
 {
   readonly code: APIErrorCode
 
-  constructor(response: CrossResponse, body: APIErrorResponseBody) {
-    super(response, body.message)
+  constructor(
+    response: CrossResponse,
+    body: APIErrorResponseBody,
+    rawBodyText: string
+  ) {
+    super(response, body.message, rawBodyText)
     this.name = "APIResponseError"
     this.code = body.code
   }
@@ -110,17 +118,15 @@ export class APIResponseError
   }
 }
 
-type RequestError = RequestTimeoutError | HTTPResponseError
-
 export function buildRequestError(
   response: CrossResponse,
   bodyText: string
-): RequestError | undefined {
+): APIResponseError | HTTPResponseError | undefined {
   const apiErrorResponseBody = parseAPIErrorResponseBody(bodyText)
   if (apiErrorResponseBody !== undefined) {
-    return new APIResponseError(response, apiErrorResponseBody)
+    return new APIResponseError(response, apiErrorResponseBody, bodyText)
   }
-  return new HTTPResponseError(response, bodyText)
+  return new HTTPResponseError(response, undefined, bodyText)
 }
 
 function parseAPIErrorResponseBody(
