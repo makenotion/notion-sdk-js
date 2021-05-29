@@ -8,7 +8,7 @@ import {
 } from "./logging"
 import {
   buildRequestError,
-  HTTPResponseError,
+  isHTTPResponseError,
   isNotionClientError,
   RequestTimeoutError,
 } from "./errors"
@@ -156,10 +156,7 @@ export default class Client {
 
       const responseText = await response.text()
       if (!response.ok) {
-        const error = buildRequestError(response, responseText)
-        if (error) {
-          throw error
-        }
+        throw buildRequestError(response, responseText)
       }
 
       const responseJson: ResponseBody = JSON.parse(responseText)
@@ -175,7 +172,8 @@ export default class Client {
         code: error.code,
         message: error.message,
       })
-      if (HTTPResponseError.isHTTPResponseError(error)) {
+
+      if (isHTTPResponseError(error)) {
         // The response body may contain sensitive information so it is logged separately at the DEBUG level
         this.log(LogLevel.DEBUG, `failed response body`, {
           body: error.body,

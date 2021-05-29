@@ -1,67 +1,6 @@
 import { CrossResponse } from "./fetch-types"
 import { isObject } from "./helpers"
 
-// Root type
-class NotionClientErrorBase extends Error {}
-
-export type NotionClientError =
-  | RequestTimeoutError
-  | HTTPResponseError
-  | APIResponseError
-export function isNotionClientError(
-  error: unknown
-): error is NotionClientError {
-  return error instanceof NotionClientErrorBase
-}
-
-export class RequestTimeoutError extends NotionClientErrorBase {
-  readonly code = "notionhq_client_request_timeout"
-
-  constructor(message = "Request to Notion API has timed out") {
-    super(message)
-    this.name = "RequestTimeoutError"
-  }
-
-  static isRequestTimeoutError(error: unknown): error is RequestTimeoutError {
-    return (
-      error instanceof Error &&
-      error.name === "RequestTimeoutError" &&
-      "code" in error &&
-      error["code"] === RequestTimeoutError.prototype.code
-    )
-  }
-}
-
-export class HTTPResponseError extends NotionClientErrorBase {
-  readonly code: string = "notionhq_client_response_error"
-  readonly status: number
-  readonly headers: Headers
-  readonly body: string
-
-  constructor(
-    response: CrossResponse,
-    message: string | undefined,
-    rawBodyText: string
-  ) {
-    super(
-      message ?? `Request to Notion API failed with status: ${response.status}`
-    )
-    this.name = "HTTPResponseError"
-    this.status = response.status
-    this.headers = response.headers
-    this.body = rawBodyText
-  }
-
-  static isHTTPResponseError(error: unknown): error is HTTPResponseError {
-    return (
-      error instanceof Error &&
-      error.name === "HTTPResponseError" &&
-      "code" in error &&
-      error["code"] === HTTPResponseError.prototype.code
-    )
-  }
-}
-
 /**
  * Error codes for responses from the API.
  */
@@ -80,11 +19,111 @@ export enum APIErrorCode {
 }
 
 /**
- * Body of an error response from the API.
+ * Error codes generated for client errors.
  */
-interface APIErrorResponseBody {
-  code: APIErrorCode
-  message: string
+export enum ClientErrorCode {
+  RequestTimeout = "notionhq_client_request_timeout",
+  ResponseError = "notionhq_client_response_error",
+}
+
+/**
+ * Error codes on errors thrown by the Client.
+ */
+export type NotionErrorCode = APIErrorCode | ClientErrorCode
+
+/**
+ * Base error type.
+ */
+abstract class NotionClientErrorBase<
+  Code extends NotionErrorCode
+> extends Error {
+  abstract code: Code
+}
+
+/**
+ * Error type that encompases all the kinds of errors that the Notion client will throw.
+ */
+export type NotionClientError =
+  | RequestTimeoutError
+  | UnknownHTTPResponseError
+  | APIResponseError
+
+export function isNotionClientError(
+  error: unknown
+): error is NotionClientError {
+  return isObject(error) && error instanceof NotionClientErrorBase
+}
+
+export function isHTTPResponseError(
+  error: unknown
+): error is UnknownHTTPResponseError | APIResponseError {
+  if (!isNotionClientError(error)) {
+    return false
+  }
+  return (
+    error.code === ClientErrorCode.ResponseError || isAPIErrorCode(error.code)
+  )
+}
+
+export class RequestTimeoutError extends NotionClientErrorBase<ClientErrorCode.RequestTimeout> {
+  readonly code = ClientErrorCode.RequestTimeout
+  readonly name = "RequestTimeoutError"
+
+  constructor(message = "Request to Notion API has timed out") {
+    super(message)
+  }
+
+  static isRequestTimeoutError(error: unknown): error is RequestTimeoutError {
+    return (
+      error instanceof Error &&
+      error.name === "RequestTimeoutError" &&
+      "code" in error &&
+      error["code"] === RequestTimeoutError.prototype.code
+    )
+  }
+}
+
+class HTTPResponseError<
+  Code extends ClientErrorCode.ResponseError | APIErrorCode
+> extends NotionClientErrorBase<Code> {
+  readonly name: string = "HTTPResponseError"
+  readonly code: Code
+  readonly status: number
+  readonly headers: Headers
+  readonly body: string
+
+  constructor(args: {
+    code: Code
+    status: number
+    message: string
+    headers: CrossResponse["headers"]
+    rawBodyText: string
+  }) {
+    super(args.message)
+    const { code, status, headers, rawBodyText } = args
+    this.code = code
+    this.status = status
+    this.headers = headers
+    this.body = rawBodyText
+  }
+}
+
+export class UnknownHTTPResponseError extends HTTPResponseError<ClientErrorCode.ResponseError> {
+  readonly name = "UnkownHTTPResponseError"
+  constructor(args: {
+    status: number
+    message: string | undefined
+    headers: CrossResponse["headers"]
+    rawBodyText: string
+  }) {
+    super({
+      ...args,
+      code: ClientErrorCode.ResponseError,
+      message:
+        args.message ??
+        `Request to Notion API failed with status: ${args.status}`,
+    })
+  }
 }
 
 /**
@@ -92,21 +131,8 @@ interface APIErrorResponseBody {
  *
  * Use the `code` property to handle various kinds of errors. All its possible values are in `APIErrorCode`.
  */
-export class APIResponseError
-  extends HTTPResponseError
-  implements APIErrorResponseBody
-{
-  readonly code: APIErrorCode
-
-  constructor(
-    response: CrossResponse,
-    body: APIErrorResponseBody,
-    rawBodyText: string
-  ) {
-    super(response, body.message, rawBodyText)
-    this.name = "APIResponseError"
-    this.code = body.code
-  }
+export class APIResponseError extends HTTPResponseError<APIErrorCode> {
+  readonly name = "APIResponseError"
 
   static isAPIResponseError(error: unknown): error is APIResponseError {
     return (
@@ -121,22 +147,33 @@ export class APIResponseError
 export function buildRequestError(
   response: CrossResponse,
   bodyText: string
-): APIResponseError | HTTPResponseError | undefined {
+): APIResponseError | UnknownHTTPResponseError {
   const apiErrorResponseBody = parseAPIErrorResponseBody(bodyText)
   if (apiErrorResponseBody !== undefined) {
-    return new APIResponseError(response, apiErrorResponseBody, bodyText)
+    return new APIResponseError({
+      code: apiErrorResponseBody.code,
+      message: apiErrorResponseBody.message,
+      headers: response.headers,
+      status: response.status,
+      rawBodyText: bodyText,
+    })
   }
-  return new HTTPResponseError(response, undefined, bodyText)
+  return new UnknownHTTPResponseError({
+    message: undefined,
+    headers: response.headers,
+    status: response.status,
+    rawBodyText: bodyText,
+  })
 }
 
 function parseAPIErrorResponseBody(
-  body: unknown
-): APIErrorResponseBody | undefined {
+  body: string
+): { code: APIErrorCode; message: string } | undefined {
   if (typeof body !== "string") {
     return
   }
 
-  let parsed
+  let parsed: unknown
   try {
     parsed = JSON.parse(body)
   } catch (parseError) {
