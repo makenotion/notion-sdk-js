@@ -1,5 +1,4 @@
 import type { Agent } from "http"
-import { URL } from "url"
 import {
   Logger,
   LogLevel,
@@ -117,14 +116,16 @@ export default class Client {
 
     // If the body is empty, don't send the body in the HTTP request
     const bodyAsJsonString =
-      body !== undefined && Object.entries(body).length === 0
+      !body || Object.entries(body).length === 0
         ? undefined
         : JSON.stringify(body)
 
     const url = new URL(`${this.#prefixUrl}${path}`)
     if (query) {
       for (const [key, value] of Object.entries(query)) {
-        url.searchParams.append(key, String(value))
+        if (value !== undefined) {
+          url.searchParams.append(key, String(value))
+        }
       }
     }
 
