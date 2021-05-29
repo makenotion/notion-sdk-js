@@ -41,7 +41,7 @@ abstract class NotionClientErrorBase<
 }
 
 /**
- * Error type that encompases all the kinds of errors that the Notion client will throw.
+ * Error type that encompasses all the kinds of errors that the Notion client will throw.
  */
 export type NotionClientError =
   | RequestTimeoutError
