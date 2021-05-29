@@ -3,10 +3,10 @@
  *
  * @see https://basarat.gitbook.io/typescript/type-system/discriminated-unions#throw-in-exhaustive-checks
  *
- * @param _x The variable with no remaining values
+ * @param value The variable with no remaining values
  */
-export function assertNever(_x: never): never {
-  throw new Error("Unexpected value. Should have been never.")
+export function assertNever(value: never): never {
+  throw new Error(`Unexpected value should never occur: ${value}`)
 }
 
 export function pick<O extends unknown, K extends keyof O>(
@@ -20,3 +20,8 @@ export function pick<O extends unknown, K extends keyof O>(
 export function isObject(o: unknown): o is Record<PropertyKey, unknown> {
   return typeof o === "object" && o !== null
 }
+
+/**
+ * Assert U is assignable to T.
+ */
+export type Assert<T, U extends T> = U

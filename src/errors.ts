@@ -1,8 +1,8 @@
 import { CrossResponse } from "./fetch-types"
-import { isObject } from "./helpers"
+import { Assert, isObject } from "./helpers"
 
 /**
- * Error codes for responses from the API.
+ * Error codes returned in responses from the API.
  */
 export enum APIErrorCode {
   Unauthorized = "unauthorized",
@@ -27,7 +27,7 @@ export enum ClientErrorCode {
 }
 
 /**
- * Error codes on errors thrown by the Client.
+ * Error codes on errors thrown by the [[Client]].
  */
 export type NotionErrorCode = APIErrorCode | ClientErrorCode
 
@@ -48,21 +48,38 @@ export type NotionClientError =
   | UnknownHTTPResponseError
   | APIResponseError
 
+// Assert that NotionClientError's `code` property is a narrow type.
+// This prevents us from accidentally regressing to `string`-typed name field.
+type _assertCodeIsNarrow = Assert<NotionErrorCode, NotionClientError["code"]>
+
+// Assert that the type of `name` in NotionErrorCode is a narrow type.
+// This prevents us from accidentally regressing to `string`-typed name field.
+type _assertNameIsNarrow = Assert<
+  "RequestTimeoutError" | "UnknownHTTPResponseError" | "APIResponseError",
+  NotionClientError["name"]
+>
+
+/**
+ * @param error any value, usually a caught error.
+ * @returns `true` if error is a `NotionClientError`.
+ */
 export function isNotionClientError(
   error: unknown
 ): error is NotionClientError {
   return isObject(error) && error instanceof NotionClientErrorBase
 }
 
-export function isHTTPResponseError(
-  error: unknown
-): error is UnknownHTTPResponseError | APIResponseError {
-  if (!isNotionClientError(error)) {
-    return false
-  }
-  return (
-    error.code === ClientErrorCode.ResponseError || isAPIErrorCode(error.code)
-  )
+/**
+ * Narrows down the types of a NotionClientError.
+ * @param error any value, usually a caught error.
+ * @param codes an object mapping from possible error codes to `true`
+ * @returns `true` if error is a `NotionClientError` with a code in `codes`.
+ */
+export function isNotionClientErrorWithCode<Code extends NotionErrorCode>(
+  error: unknown,
+  codes: { [C in Code]: true }
+): error is NotionClientError & { code: Code } {
+  return isNotionClientError(error) && error.code in codes
 }
 
 export class RequestTimeoutError extends NotionClientErrorBase<ClientErrorCode.RequestTimeout> {
@@ -74,17 +91,16 @@ export class RequestTimeoutError extends NotionClientErrorBase<ClientErrorCode.R
   }
 
   static isRequestTimeoutError(error: unknown): error is RequestTimeoutError {
-    return (
-      error instanceof Error &&
-      error.name === "RequestTimeoutError" &&
-      "code" in error &&
-      error["code"] === RequestTimeoutError.prototype.code
-    )
+    return isNotionClientErrorWithCode(error, {
+      [ClientErrorCode.RequestTimeout]: true,
+    })
   }
 }
 
+type HTTPResponseErrorCode = ClientErrorCode.ResponseError | APIErrorCode
+
 class HTTPResponseError<
-  Code extends ClientErrorCode.ResponseError | APIErrorCode
+  Code extends HTTPResponseErrorCode
 > extends NotionClientErrorBase<Code> {
   readonly name: string = "HTTPResponseError"
   readonly code: Code
@@ -108,8 +124,42 @@ class HTTPResponseError<
   }
 }
 
+const httpResponseErrorCodes: { [C in HTTPResponseErrorCode]: true } = {
+  [ClientErrorCode.ResponseError]: true,
+  [APIErrorCode.Unauthorized]: true,
+  [APIErrorCode.RestrictedResource]: true,
+  [APIErrorCode.ObjectNotFound]: true,
+  [APIErrorCode.RateLimited]: true,
+  [APIErrorCode.InvalidJSON]: true,
+  [APIErrorCode.InvalidRequestURL]: true,
+  [APIErrorCode.InvalidRequest]: true,
+  [APIErrorCode.ValidationError]: true,
+  [APIErrorCode.ConflictError]: true,
+  [APIErrorCode.InternalServerError]: true,
+  [APIErrorCode.ServiceUnavailable]: true,
+}
+
+export function isHTTPResponseError(
+  error: unknown
+): error is UnknownHTTPResponseError | APIResponseError {
+  if (!isNotionClientErrorWithCode(error, httpResponseErrorCodes)) {
+    return false
+  }
+
+  type _assert = Assert<
+    UnknownHTTPResponseError | APIResponseError,
+    typeof error
+  >
+  return true
+}
+
+/**
+ * Error thrown if an API call responds with an unknown error code, or does not respond with
+ * a property-formatted error.
+ */
 export class UnknownHTTPResponseError extends HTTPResponseError<ClientErrorCode.ResponseError> {
-  readonly name = "UnkownHTTPResponseError"
+  readonly name = "UnknownHTTPResponseError"
+
   constructor(args: {
     status: number
     message: string | undefined
@@ -124,23 +174,39 @@ export class UnknownHTTPResponseError extends HTTPResponseError<ClientErrorCode.
         `Request to Notion API failed with status: ${args.status}`,
     })
   }
+
+  static isUnknownHTTPResponseError(
+    error: unknown
+  ): error is UnknownHTTPResponseError {
+    return isNotionClientErrorWithCode(error, {
+      [ClientErrorCode.ResponseError]: true,
+    })
+  }
+}
+
+const apiErrorCodes: { [C in APIErrorCode]: true } = {
+  [APIErrorCode.Unauthorized]: true,
+  [APIErrorCode.RestrictedResource]: true,
+  [APIErrorCode.ObjectNotFound]: true,
+  [APIErrorCode.RateLimited]: true,
+  [APIErrorCode.InvalidJSON]: true,
+  [APIErrorCode.InvalidRequestURL]: true,
+  [APIErrorCode.InvalidRequest]: true,
+  [APIErrorCode.ValidationError]: true,
+  [APIErrorCode.ConflictError]: true,
+  [APIErrorCode.InternalServerError]: true,
+  [APIErrorCode.ServiceUnavailable]: true,
 }
 
 /**
  * A response from the API indicating a problem.
- *
  * Use the `code` property to handle various kinds of errors. All its possible values are in `APIErrorCode`.
  */
 export class APIResponseError extends HTTPResponseError<APIErrorCode> {
   readonly name = "APIResponseError"
 
   static isAPIResponseError(error: unknown): error is APIResponseError {
-    return (
-      error instanceof Error &&
-      error.name === "APIResponseError" &&
-      "code" in error &&
-      isAPIErrorCode(error["code"])
-    )
+    return isNotionClientErrorWithCode(error, apiErrorCodes)
   }
 }
 
@@ -195,13 +261,6 @@ function parseAPIErrorResponseBody(
   }
 }
 
-/*
- * Type guards
- */
-
 function isAPIErrorCode(code: unknown): code is APIErrorCode {
-  return (
-    typeof code === "string" &&
-    Object.values<string>(APIErrorCode).includes(code)
-  )
+  return typeof code === "string" && code in apiErrorCodes
 }
