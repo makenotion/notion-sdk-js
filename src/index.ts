@@ -1,8 +1,16 @@
 export { default as Client } from "./Client"
 export { LogLevel, Logger } from "./logging"
 export {
+  // Error codes
+  NotionErrorCode,
   APIErrorCode,
+  ClientErrorCode,
+  // Error types
+  NotionClientError,
   APIResponseError,
-  HTTPResponseError,
+  UnknownHTTPResponseError,
   RequestTimeoutError,
+  // Error helpers
+  isNotionClientError,
+  isNotionClientErrorWithCode,
 } from "./errors"
