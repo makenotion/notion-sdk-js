@@ -27,7 +27,7 @@ export enum ClientErrorCode {
 }
 
 /**
- * Error codes on errors thrown by the [[Client]].
+ * Error codes on errors thrown by the `Client`.
  */
 export type NotionErrorCode = APIErrorCode | ClientErrorCode
 
@@ -82,6 +82,9 @@ export function isNotionClientErrorWithCode<Code extends NotionErrorCode>(
   return isNotionClientError(error) && error.code in codes
 }
 
+/**
+ * Error thrown by the client if a request times out.
+ */
 export class RequestTimeoutError extends NotionClientErrorBase<ClientErrorCode.RequestTimeout> {
   readonly code = ClientErrorCode.RequestTimeout
   readonly name = "RequestTimeoutError"
@@ -150,6 +153,7 @@ export function isHTTPResponseError(
     UnknownHTTPResponseError | APIResponseError,
     typeof error
   >
+
   return true
 }
 
