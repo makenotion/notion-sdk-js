@@ -48,7 +48,10 @@ import {
   search,
 } from "./api-endpoints"
 import crossFetch from "cross-fetch"
-import { version as PACKAGE_VERSION } from "../package.json"
+import {
+  version as PACKAGE_VERSION,
+  name as PACKAGE_NAME,
+} from "../package.json"
 import { CrossResponse, SupportedFetch } from "./fetch-types"
 
 export interface ClientOptions {
@@ -87,7 +90,7 @@ export default class Client {
   public constructor(options?: ClientOptions) {
     this.#auth = options?.auth
     this.#logLevel = options?.logLevel ?? LogLevel.WARN
-    this.#logger = options?.logger ?? makeConsoleLogger(this.constructor.name)
+    this.#logger = options?.logger ?? makeConsoleLogger(PACKAGE_NAME)
     this.#prefixUrl = (options?.baseUrl ?? "https://api.notion.com") + "/v1/"
     this.#timeoutMs = options?.timeoutMs ?? 60_000
     this.#notionVersion = options?.notionVersion ?? Client.defaultNotionVersion
