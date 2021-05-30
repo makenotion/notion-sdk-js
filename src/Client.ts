@@ -76,7 +76,7 @@ export default class Client {
   #logLevel: LogLevel
   #logger: Logger
   #prefixUrl: string
-  #timeout: number
+  #timeoutMs: number
   #notionVersion: string
   #fetch: SupportedFetch
   #agent: Agent | undefined
@@ -89,7 +89,7 @@ export default class Client {
     this.#logLevel = options?.logLevel ?? LogLevel.WARN
     this.#logger = options?.logger ?? makeConsoleLogger(this.constructor.name)
     this.#prefixUrl = (options?.baseUrl ?? "https://api.notion.com") + "/v1/"
-    this.#timeout = options?.timeoutMs ?? 60_000
+    this.#timeoutMs = options?.timeoutMs ?? 60_000
     this.#notionVersion = options?.notionVersion ?? Client.defaultNotionVersion
     this.#fetch = options?.fetch ?? crossFetch
     this.#agent = options?.agent
@@ -139,21 +139,15 @@ export default class Client {
       headers["content-type"] = "application/json"
     }
     try {
-      const response = await new Promise<CrossResponse>((resolve, reject) => {
-        const timeoutId = setTimeout(() => {
-          reject(new RequestTimeoutError())
-        }, this.#timeout)
-
+      const response = await RequestTimeoutError.rejectAfterTimeout(
         this.#fetch(url.toString(), {
           method,
           headers,
           body: bodyAsJsonString,
           agent: this.#agent,
-        })
-          .then(resolve)
-          .catch(reject)
-          .then(() => clearTimeout(timeoutId))
-      })
+        }),
+        this.#timeoutMs
+      )
 
       const responseText = await response.text()
       if (!response.ok) {

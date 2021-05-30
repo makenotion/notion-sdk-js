@@ -99,6 +99,22 @@ export class RequestTimeoutError extends NotionClientErrorBase<ClientErrorCode.R
       [ClientErrorCode.RequestTimeout]: true,
     })
   }
+
+  static rejectAfterTimeout<T>(
+    promise: Promise<T>,
+    timeoutMS: number
+  ): Promise<T> {
+    return new Promise<T>((resolve, reject) => {
+      const timeoutId = setTimeout(() => {
+        reject(new RequestTimeoutError())
+      }, timeoutMS)
+
+      promise
+        .then(resolve)
+        .catch(reject)
+        .then(() => clearTimeout(timeoutId))
+    })
+  }
 }
 
 type HTTPResponseErrorCode = ClientErrorCode.ResponseError | APIErrorCode
