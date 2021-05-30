@@ -20,8 +20,3 @@ export function pick<O extends unknown, K extends keyof O>(
 export function isObject(o: unknown): o is Record<PropertyKey, unknown> {
   return typeof o === "object" && o !== null
 }
-
-/**
- * Assert U is assignable to T.
- */
-export type Assert<T, U extends T> = U

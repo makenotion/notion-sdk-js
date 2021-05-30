@@ -1,5 +1,6 @@
 import { CrossResponse } from "./fetch-types"
-import { Assert, isObject } from "./helpers"
+import { isObject } from "./helpers"
+import { Assert } from "./type-utils"
 
 /**
  * Error codes returned in responses from the API.
