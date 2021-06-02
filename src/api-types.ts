@@ -211,13 +211,6 @@ export interface MultiSelectProperty extends PropertyBase {
   }
 }
 
-export interface MultiSelectProperty extends PropertyBase {
-  type: "multi_select"
-  multi_select: {
-    options: MultiSelectOption[]
-  }
-}
-
 export interface DateProperty extends PropertyBase {
   type: "date"
   date: Record<string, never>
