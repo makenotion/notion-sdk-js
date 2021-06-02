@@ -64,7 +64,7 @@ export interface ParagraphBlock extends BlockBase {
   type: "paragraph"
   paragraph: {
     text: RichText[]
-    children?: BlockBase[]
+    children?: Block[]
   }
 }
 
@@ -90,7 +90,7 @@ export interface BulletedListItemBlock extends BlockBase {
   type: "bulleted_list_item"
   bulleted_list_item: {
     text: RichText[]
-    children?: BlockBase[]
+    children?: Block[]
   }
 }
 
@@ -98,7 +98,7 @@ export interface NumberedListItemBlock extends BlockBase {
   type: "numbered_list_item"
   numbered_list_item: {
     text: RichText[]
-    children?: BlockBase[]
+    children?: Block[]
   }
 }
 
@@ -107,7 +107,7 @@ export interface ToDoBlock extends BlockBase {
   to_do: {
     text: RichText[]
     checked: boolean
-    children?: BlockBase[]
+    children?: Block[]
   }
 }
 
@@ -115,7 +115,7 @@ export interface ToggleBlock extends BlockBase {
   type: "toggle"
   toggle: {
     text: RichText[]
-    children?: BlockBase[]
+    children?: Block[]
   }
 }
 
