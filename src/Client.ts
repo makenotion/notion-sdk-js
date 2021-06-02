@@ -52,7 +52,7 @@ import {
   version as PACKAGE_VERSION,
   name as PACKAGE_NAME,
 } from "../package.json"
-import { CrossResponse, SupportedFetch } from "./fetch-types"
+import { SupportedFetch } from "./fetch-types"
 
 export interface ClientOptions {
   auth?: string
