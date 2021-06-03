@@ -47,7 +47,7 @@ import {
   SearchResponse,
   search,
 } from "./api-endpoints"
-import crossFetch from "cross-fetch"
+import nodeFetch from "node-fetch"
 import {
   version as PACKAGE_VERSION,
   name as PACKAGE_NAME,
@@ -94,7 +94,7 @@ export default class Client {
     this.#prefixUrl = (options?.baseUrl ?? "https://api.notion.com") + "/v1/"
     this.#timeoutMs = options?.timeoutMs ?? 60_000
     this.#notionVersion = options?.notionVersion ?? Client.defaultNotionVersion
-    this.#fetch = options?.fetch ?? crossFetch
+    this.#fetch = options?.fetch ?? nodeFetch
     this.#agent = options?.agent
     this.#userAgent = `notionhq-client/${PACKAGE_VERSION}`
   }
