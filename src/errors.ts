@@ -1,4 +1,4 @@
-import { CrossResponse } from "./fetch-types"
+import { SupportedResponse } from "./fetch-types"
 import { isObject } from "./helpers"
 import { Assert } from "./type-utils"
 
@@ -125,14 +125,14 @@ class HTTPResponseError<
   readonly name: string = "HTTPResponseError"
   readonly code: Code
   readonly status: number
-  readonly headers: Headers
+  readonly headers: SupportedResponse["headers"]
   readonly body: string
 
   constructor(args: {
     code: Code
     status: number
     message: string
-    headers: CrossResponse["headers"]
+    headers: SupportedResponse["headers"]
     rawBodyText: string
   }) {
     super(args.message)
@@ -184,7 +184,7 @@ export class UnknownHTTPResponseError extends HTTPResponseError<ClientErrorCode.
   constructor(args: {
     status: number
     message: string | undefined
-    headers: CrossResponse["headers"]
+    headers: SupportedResponse["headers"]
     rawBodyText: string
   }) {
     super({
@@ -232,7 +232,7 @@ export class APIResponseError extends HTTPResponseError<APIErrorCode> {
 }
 
 export function buildRequestError(
-  response: CrossResponse,
+  response: SupportedResponse,
   bodyText: string
 ): APIResponseError | UnknownHTTPResponseError {
   const apiErrorResponseBody = parseAPIErrorResponseBody(bodyText)
