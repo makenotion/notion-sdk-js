@@ -76,7 +76,7 @@ export function isNotionClientError(
  * @param codes an object mapping from possible error codes to `true`
  * @returns `true` if error is a `NotionClientError` with a code in `codes`.
  */
-export function isNotionClientErrorWithCode<Code extends NotionErrorCode>(
+function isNotionClientErrorWithCode<Code extends NotionErrorCode>(
   error: unknown,
   codes: { [C in Code]: true }
 ): error is NotionClientError & { code: Code } {
