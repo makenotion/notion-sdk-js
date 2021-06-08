@@ -83,7 +83,8 @@ interface APIErrorResponseBody {
  */
 export class APIResponseError
   extends HTTPResponseError
-  implements APIErrorResponseBody {
+  implements APIErrorResponseBody
+{
   readonly code: APIErrorCode
 
   constructor(response: GotResponse, body: APIErrorResponseBody) {
