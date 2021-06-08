@@ -121,7 +121,9 @@ function userToString(userBase: UserBase) {
   return `${userBase.id}: ${userBase.name || "Unknown Name"}`
 }
 
-function findRandomSelectColumnNameAndValue(properties: PropertyMap): {
+function findRandomSelectColumnNameAndValue(
+  properties: PropertyMap
+): {
   name: string
   value: string | undefined
 } {
@@ -254,8 +256,10 @@ async function exerciseFilters(databaseId: string, properties: PropertyMap) {
   console.log("\n\n********* Exercising Filters *********\n\n")
 
   // get a random select or multi-select column from the collection with a random value for it
-  const { name: selectColumnName, value: selectColumnValue } =
-    findRandomSelectColumnNameAndValue(properties)
+  const {
+    name: selectColumnName,
+    value: selectColumnValue,
+  } = findRandomSelectColumnNameAndValue(properties)
 
   if (!selectColumnName || !selectColumnValue) {
     throw new Error("need a select column to run this part of the example")
