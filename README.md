@@ -143,7 +143,11 @@ The `Client` supports the following options on initialization. These options are
 
 This package contains type definitions for **all request parameters and responses**.
 
-Error classes, such as `RequestTimeoutError` and `APIResponseError`, contain type guards as static methods which can be useful for narrowing the type of a thrown error. TypeScript infers all thrown errors to be `any` or `unknown`. These type guards will allow you to handle errors with better type support.
+Because errors in TypeScript start with type `any` or `unknown`, you should use
+the `isNotionClientError` type guard to handle them in a type-safe way. Each
+`NotionClientError` type is uniquely identified by its `error.code`. Codes in
+the `APIErrorCode` enum are returned from the server. Codes in the
+`ClientErrorCode` enum are produced on the client.
 
 ```ts
 try {
@@ -151,9 +155,12 @@ try {
     /* ... */
   })
 } catch (error: unknown) {
-  if (APIResponseError.isAPIResponseError(error)) {
-    // error is now strongly typed to APIResponseError
+  if (isNotionClientError(error)) {
+    // error is now strongly typed to NotionClientError
     switch (error.code) {
+      case ClientErrorCode.RequestTimeout:
+        // ...
+        break
       case APIErrorCode.ObjectNotFound:
         // ...
         break
