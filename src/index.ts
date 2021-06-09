@@ -12,5 +12,4 @@ export {
   RequestTimeoutError,
   // Error helpers
   isNotionClientError,
-  isNotionClientErrorWithCode,
 } from "./errors"
