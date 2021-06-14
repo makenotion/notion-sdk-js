@@ -39,27 +39,27 @@ async function syncIssuesWithDatabase() {
   for (const [issue_number, issues_details] of Object.entries(github_issues)) {
     // If the issue does not exist in the database yet, add it to the database
     if (!(issue_number in issues_in_db)) {
-        await notion.pages.create({
-            parent: { database_id },
-            properties: {
-                State: { name: issues_details.state },
-                "Issue Number": parseInt(issue_number),
-                Name: [{ text: { content: issues_details.title } }],
-                Comments: parseInt(issues_details.comments),
-              },
-        })
+      await notion.pages.create({
+        parent: { database_id },
+        properties: {
+          State: { name: issues_details.state },
+          "Issue Number": parseInt(issue_number),
+          Name: [{ text: { content: issues_details.title } }],
+          Comments: parseInt(issues_details.comments),
+        },
+      })
     }
     // This issue already exists in the database so we want to update the page
     else {
-        await notion.pages.update({
-            page_id: issues_in_db[issue_number].page_id,
-            properties: {
-                State: { name: issues_details.state },
-                "Issue Number": parseInt(issue_number),
-                Name: [{ text: { content: issues_details.title } }],
-                Comments: parseInt(issues_details.comments),
-              },
-            })
+      await notion.pages.update({
+        page_id: issues_in_db[issue_number].page_id,
+        properties: {
+          State: { name: issues_details.state },
+          "Issue Number": parseInt(issue_number),
+          Name: [{ text: { content: issues_details.title } }],
+          Comments: parseInt(issues_details.comments),
+        },
+      })
     }
   }
   // Run this function every five minutes
@@ -72,17 +72,17 @@ async function getIssuesFromDatabase() {
 
   async function getPageOfIssues(cursor) {
     const db = await notion.databases.query({
-        database_id,
-        start_cursor: cursor
+      database_id,
+      start_cursor: cursor,
     })
     for (const page of db.results) {
-        issues[page.properties["Issue Number"].number] = {
-          page_id: page.id,
-        }
+      issues[page.properties["Issue Number"].number] = {
+        page_id: page.id,
+      }
     }
     if (db.has_more) {
-        await getPageOfIssues(db.next_cursor)
-      }
+      await getPageOfIssues(db.next_cursor)
+    }
   }
   await getPageOfIssues()
   return issues
