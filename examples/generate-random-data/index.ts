@@ -253,12 +253,9 @@ async function exerciseReading(databaseId: string, _properties: PropertyMap) {
 async function exerciseFilters(databaseId: string, properties: PropertyMap) {
   console.log("\n\n********* Exercising Filters *********\n\n")
 
-  console.log({ properties })
   // get a random select or multi-select column from the collection with a random value for it
   const { name: selectColumnName, value: selectColumnValue } =
     findRandomSelectColumnNameAndValue(properties)
-
-  console.log({ selectColumnName, selectColumnValue })
 
   if (!selectColumnName || !selectColumnValue) {
     throw new Error("need a select column to run this part of the example")
