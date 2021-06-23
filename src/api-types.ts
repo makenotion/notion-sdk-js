@@ -135,6 +135,7 @@ export interface UnsupportedBlock extends BlockBase {
 export interface Database {
   object: "database"
   id: string
+  parent: ParentPage | ParentWorkspace
   created_time: string
   last_edited_time: string
   title: RichText[]
@@ -523,7 +524,7 @@ export interface Sort {
 export interface Page {
   object: "page"
   id: string
-  parent: Parent
+  parent: ParentDatabase | ParentPage | ParentWorkspace
   created_time: string
   last_edited_time: string
   archived: boolean
@@ -533,24 +534,22 @@ export interface Page {
 /*
  * Parent
  */
-
-export type Parent = DatabaseParent | PageParent | WorkspaceParent
 export type ParentInput =
-  | Omit<DatabaseParent, "type">
-  | Omit<PageParent, "type">
+  | Omit<ParentDatabase, "type">
+  | Omit<ParentPage, "type">
 // TODO: use DistributiveOmit?
 
-export interface DatabaseParent {
+interface ParentDatabase {
   type: "database_id"
   database_id: string
 }
 
-export interface PageParent {
+interface ParentPage {
   type: "page_id"
   page_id: string
 }
 
-export interface WorkspaceParent {
+interface ParentWorkspace {
   type: "workspace"
 }
 
