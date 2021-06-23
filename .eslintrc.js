@@ -17,8 +17,10 @@ module.exports = {
     "@typescript-eslint/no-unused-vars": [
       "error",
       {
-        args: "none",
+        args: "all",
         argsIgnorePattern: "^_",
+        // Allow assertion types.
+        varsIgnorePattern: "^_assert",
         caughtErrors: "none",
         ignoreRestSiblings: true,
       },
