@@ -223,7 +223,7 @@ export interface PeopleProperty extends PropertyBase {
 }
 
 export interface FileProperty extends PropertyBase {
-  type: "file"
+  type: "files"
   file: Record<string, never>
 }
 
