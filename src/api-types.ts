@@ -342,9 +342,11 @@ export interface SelectOptionBase {
 
 export interface SelectOptionWithName extends SelectOptionBase {
   name: string
+  id?: never
 }
 
 export interface SelectOptionWithId extends SelectOptionBase {
+  name?: never
   id: string
 }
 
