@@ -154,7 +154,7 @@ export type Property =
   | MultiSelectProperty
   | DateProperty
   | PeopleProperty
-  | FileProperty
+  | FilesProperty
   | CheckboxProperty
   | URLProperty
   | EmailProperty
@@ -222,7 +222,7 @@ export interface PeopleProperty extends PropertyBase {
   people: Record<string, never>
 }
 
-export interface FileProperty extends PropertyBase {
+export interface FilesProperty extends PropertyBase {
   type: "files"
   file: Record<string, never>
 }
