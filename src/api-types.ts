@@ -348,7 +348,7 @@ export interface SelectOptionWithId extends SelectOptionBase {
   id: string
 }
 
-type SelectOption = SelectOptionWithName | SelectOptionWithId
+export type SelectOption = SelectOptionWithName | SelectOptionWithId
 
 export type MultiSelectOption = SelectOption
 
