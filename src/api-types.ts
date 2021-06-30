@@ -529,6 +529,7 @@ export interface Page {
   last_edited_time: string
   archived: boolean
   properties: PropertyValueMap
+  url: string
 }
 
 /*
