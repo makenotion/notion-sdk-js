@@ -338,8 +338,8 @@ export interface BotUser extends UserBase {
 
 export interface SelectOption {
   name: string
-  id: string
-  color: Color
+  id?: string
+  color?: Color
 }
 
 export type MultiSelectOption = SelectOption
