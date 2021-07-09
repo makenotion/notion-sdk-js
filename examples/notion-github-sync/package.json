@@ -1,0 +1,20 @@
+{
+  "name": "github-issue-sync",
+  "version": "1.0.0",
+  "description": "Sync GitHub issues with Notion.",
+  "main": "index.js",
+  "engines": {
+    "node": "12.x"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": ""
+  },
+  "author": "Aman Gupta",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "octokit": "^1.1.0",
+    "@notionhq/client": "^0.2.1"
+  }
+}
