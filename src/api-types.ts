@@ -338,8 +338,8 @@ export interface BotUser extends UserBase {
 
 export interface SelectOption {
   name: string
-  id: string
-  color: Color
+  id?: string
+  color?: Color
 }
 
 export type MultiSelectOption = SelectOption
@@ -529,6 +529,7 @@ export interface Page {
   last_edited_time: string
   archived: boolean
   properties: PropertyValueMap
+  url: string
 }
 
 /*
