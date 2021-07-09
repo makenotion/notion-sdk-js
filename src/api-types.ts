@@ -336,11 +336,21 @@ export interface BotUser extends UserBase {
  * Misc (output)
  */
 
-export interface SelectOption {
-  name: string
-  id?: string
+export interface SelectOptionBase {
   color?: Color
 }
+
+export interface SelectOptionWithName extends SelectOptionBase {
+  name: string
+  id?: never
+}
+
+export interface SelectOptionWithId extends SelectOptionBase {
+  name?: never
+  id: string
+}
+
+export type SelectOption = SelectOptionWithName | SelectOptionWithId
 
 export type MultiSelectOption = SelectOption
 
