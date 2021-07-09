@@ -1,11 +1,14 @@
 {
   "name": "database-update-send-email",
   "version": "1.0.0",
-  "description": "",
+  "description": "Send an email with SendGrid when an update is made in Notion.",
   "main": "index.js",
+  "engines": {
+    "node": "12.x"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": ""
   },
   "dependencies": {
     "@sendgrid/mail": "^7.4.5",

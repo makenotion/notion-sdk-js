@@ -3,9 +3,12 @@
   "version": "1.0.0",
   "description": "Sync GitHub issues with Notion.",
   "main": "index.js",
+  "engines": {
+    "node": "12.x"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": ""
   },
   "author": "Aman Gupta",
   "license": "MIT",
