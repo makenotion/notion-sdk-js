@@ -1,14 +1,15 @@
 ---
 name: Bug report
 about: Create a report to help us improve
-title: ""
-labels: ""
-assignees: ""
+title: ''
+labels: ''
+assignees: ''
+
 ---
 
 Report bugs here only for the Node JavaScript library.
 
-If you're having problems using Notion's API, or have any other feedback about the API, please reach out to support by going to [developers.notion.com](https://developers.notion.com), scroll to the bottom and click on `Help`.
+If you're having problems using Notion's API, or have any other feedback about the API including feature requests for the JavaScript library, please email support at developers@notion.com.
 
 **Describe the bug**
 A clear and concise description of what the bug is.
