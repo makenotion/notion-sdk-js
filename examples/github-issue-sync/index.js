@@ -21,7 +21,7 @@ async function syncIssuesWithDatabase() {
   console.log("Syncing GitHub Issues with Notion Database")
   const issuesInDatabase = await getIssuesFromDatabse()
 
-  //Get a list of github issues and add them to a local store
+  // Get a list of github issues and add them to a local store.
   let gitHubIssues = {}
   const iterator = octokit.paginate.iterator(octokit.rest.issues.listForRepo, {
     owner: process.env.GITHUB_REPO_OWNER,
@@ -40,11 +40,11 @@ async function syncIssuesWithDatabase() {
     }
   }
 
-  //Create new issues or update existing in a Notion Database
+  // Create new issues or update existing in a Notion Database.
   for (const [key, value] of Object.entries(gitHubIssues)) {
     const issue_number = key
     const issues_details = value
-    //If the issue does not exist in the database yet, add it to the database
+    // If the issue does not exist in the database yet, add it to the database.
     if (!(issue_number in issuesInDatabase)) {
       await notion.request({
         path: "pages",
@@ -60,7 +60,7 @@ async function syncIssuesWithDatabase() {
         },
       })
     }
-    //This issue already exists in the database so we want to update the page
+    // This issue already exists in the database so we want to update the page.
     else {
       await notion.request({
         path: "pages/" + issuesInDatabase[issue_number].page_id,
@@ -76,7 +76,7 @@ async function syncIssuesWithDatabase() {
       })
     }
   }
-  //Run this function every five minutes
+  // Run this function every five minutes.
   setTimeout(syncIssuesWithDatabase, 5 * 60 * 1000)
 }
 
@@ -84,13 +84,13 @@ async function syncIssuesWithDatabase() {
   syncIssuesWithDatabase()
 })()
 
-//Get a paginated list of Tasks currently in a the database.
+// Get a paginated list of Tasks currently in a the database.
 async function getIssuesFromDatabse() {
   const issues = {}
 
   async function getPageOfIssues(cursor) {
     let request_payload = ""
-    //Create the request payload based on the presense of a start_cursor
+    // Create the request payload based on the presense of a start_cursor.
     if (cursor == undefined) {
       request_payload = {
         path: "databases/" + database_id + "/query",
@@ -105,7 +105,7 @@ async function getIssuesFromDatabse() {
         },
       }
     }
-    //While there are more pages left in the query, get pages from the database.
+    // While there are more pages left in the query, get pages from the database.
     const current_pages = await notion.request(request_payload)
 
     for (const page of current_pages.results) {
