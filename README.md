@@ -151,7 +151,7 @@ the `APIErrorCode` enum are returned from the server. Codes in the
 
 ```ts
 try {
-  const response = notion.databases.query({
+  const response = await notion.databases.query({
     /* ... */
   })
 } catch (error: unknown) {
