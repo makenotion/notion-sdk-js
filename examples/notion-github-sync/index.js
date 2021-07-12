@@ -1,7 +1,7 @@
 /* ================================================================================
 
 	notion-github-sync.
-  
+
   Glitch example: https://glitch.com/edit/#!/notion-github-sync
   Find the official Notion API client @ https://github.com/makenotion/notion-sdk-js/
 
@@ -48,7 +48,7 @@ async function syncIssuesWithDatabase() {
     if (!(issue_number in issuesInDatabase)) {
       await notion.request({
         path: "pages",
-        method: "POST",
+        method: "post",
         body: {
           parent: { database_id: database_id },
           properties: {
