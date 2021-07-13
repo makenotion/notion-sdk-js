@@ -67,31 +67,30 @@ async function syncIssuesWithDatabase() {
     const issue_number = key
     const issue_details = value
 
+    // properties of the database entry will stay the same no matter what
+    const properties = {
+      State: { name: issue_details.state },
+      "Issue Number": parseInt(issue_number),
+      Name: [{ text: { content: issue_details.title } }],
+      Comments: parseInt(issue_details.comments),
+    }
+
     // If the issue does not exist in the database yet, add it to the database
     if (!(issue_number in issues_in_db)) {
       await notion.pages.create({
         parent: { database_id },
-        properties: {
-          State: { name: issue_details.state },
-          "Issue Number": parseInt(issue_number),
-          Name: [{ text: { content: issue_details.title } }],
-          Comments: parseInt(issue_details.comments),
-        },
+        properties,
       })
     }
     // This issue already exists in the database so we want to update the page.
     else {
       await notion.pages.update({
         page_id: issues_in_db[issue_number].page_id,
-        properties: {
-          State: { name: issue_details.state },
-          "Issue Number": parseInt(issue_number),
-          Name: [{ text: { content: issue_details.title } }],
-          Comments: parseInt(issue_details.comments),
-        },
+        properties,
       })
     }
   }
+  
   // Run this function every five minutes.
   setTimeout(syncIssuesWithDatabase, 5 * 60 * 1000)
 }
