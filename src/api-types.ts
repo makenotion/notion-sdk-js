@@ -135,6 +135,7 @@ export interface UnsupportedBlock extends BlockBase {
 export interface Database {
   object: "database"
   id: string
+  parent: ParentPage | ParentWorkspace
   created_time: string
   last_edited_time: string
   title: RichText[]
@@ -153,7 +154,7 @@ export type Property =
   | MultiSelectProperty
   | DateProperty
   | PeopleProperty
-  | FileProperty
+  | FilesProperty
   | CheckboxProperty
   | URLProperty
   | EmailProperty
@@ -221,8 +222,8 @@ export interface PeopleProperty extends PropertyBase {
   people: Record<string, never>
 }
 
-export interface FileProperty extends PropertyBase {
-  type: "file"
+export interface FilesProperty extends PropertyBase {
+  type: "files"
   file: Record<string, never>
 }
 
@@ -335,11 +336,21 @@ export interface BotUser extends UserBase {
  * Misc (output)
  */
 
-export interface SelectOption {
-  name: string
-  id: string
-  color: Color
+export interface SelectOptionBase {
+  color?: Color
 }
+
+export interface SelectOptionWithName extends SelectOptionBase {
+  name: string
+  id?: never
+}
+
+export interface SelectOptionWithId extends SelectOptionBase {
+  name?: never
+  id: string
+}
+
+export type SelectOption = SelectOptionWithName | SelectOptionWithId
 
 export type MultiSelectOption = SelectOption
 
@@ -523,34 +534,33 @@ export interface Sort {
 export interface Page {
   object: "page"
   id: string
-  parent: Parent
+  parent: ParentDatabase | ParentPage | ParentWorkspace
   created_time: string
   last_edited_time: string
   archived: boolean
   properties: PropertyValueMap
+  url: string
 }
 
 /*
  * Parent
  */
-
-export type Parent = DatabaseParent | PageParent | WorkspaceParent
 export type ParentInput =
-  | Omit<DatabaseParent, "type">
-  | Omit<PageParent, "type">
+  | Omit<ParentDatabase, "type">
+  | Omit<ParentPage, "type">
 // TODO: use DistributiveOmit?
 
-export interface DatabaseParent {
+interface ParentDatabase {
   type: "database_id"
   database_id: string
 }
 
-export interface PageParent {
+interface ParentPage {
   type: "page_id"
   page_id: string
 }
 
-export interface WorkspaceParent {
+interface ParentWorkspace {
   type: "workspace"
 }
 

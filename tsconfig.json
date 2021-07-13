@@ -25,8 +25,11 @@
     // Strict mode
     "strict": true,
 
+    // Allow import package.json
+    "resolveJsonModule": true,
+
     // Linter style rules
-    "noUnusedLocals": true,
+    "noUnusedLocals": false, // Disabled because we use eslint for this.
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,

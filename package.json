@@ -1,6 +1,6 @@
 {
   "name": "@notionhq/client",
-  "version": "0.1.9",
+  "version": "0.2.2",
   "description": "A simple and easy to use client for the Notion API",
   "engines": {
     "node": ">=12"
@@ -21,7 +21,8 @@
   ],
   "main": "./build/src",
   "scripts": {
-    "prepare": "npm run lint && npm run build",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run lint && npm run test",
     "build": "tsc",
     "prettier": "prettier --write .",
     "lint": "prettier --check . && eslint . --ext .ts && cspell '**/*' ",
@@ -33,10 +34,12 @@
   "author": "",
   "license": "MIT",
   "files": [
+    "build/package.json",
     "build/src/**"
   ],
   "dependencies": {
-    "got": "^11.8.2"
+    "@types/node-fetch": "^2.5.10",
+    "node-fetch": "^2.6.1"
   },
   "devDependencies": {
     "@ava/typescript": "^2.0.0",

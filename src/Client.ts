@@ -1,12 +1,16 @@
 import type { Agent } from "http"
-import { URL } from "url"
 import {
   Logger,
   LogLevel,
   logLevelSeverity,
   makeConsoleLogger,
 } from "./logging"
-import { buildRequestError, HTTPResponseError } from "./errors"
+import {
+  buildRequestError,
+  isHTTPResponseError,
+  isNotionClientError,
+  RequestTimeoutError,
+} from "./errors"
 import { pick } from "./helpers"
 import {
   BlocksChildrenAppendParameters,
@@ -43,13 +47,12 @@ import {
   SearchResponse,
   search,
 } from "./api-endpoints"
-
-import got, {
-  Got,
-  Options as GotOptions,
-  Headers as GotHeaders,
-  Agents as GotAgents,
-} from "got"
+import nodeFetch from "node-fetch"
+import {
+  version as PACKAGE_VERSION,
+  name as PACKAGE_NAME,
+} from "../package.json"
+import { SupportedFetch } from "./fetch-types"
 
 export interface ClientOptions {
   auth?: string
@@ -57,8 +60,10 @@ export interface ClientOptions {
   baseUrl?: string
   logLevel?: LogLevel
   logger?: Logger
-  agent?: Agent
   notionVersion?: string
+  fetch?: SupportedFetch
+  /** Silently ignored in the browser */
+  agent?: Agent
 }
 
 export interface RequestParameters {
@@ -73,30 +78,25 @@ export default class Client {
   #auth?: string
   #logLevel: LogLevel
   #logger: Logger
-  #got: Got
+  #prefixUrl: string
+  #timeoutMs: number
+  #notionVersion: string
+  #fetch: SupportedFetch
+  #agent: Agent | undefined
+  #userAgent: string
 
   static readonly defaultNotionVersion = "2021-05-13"
 
   public constructor(options?: ClientOptions) {
     this.#auth = options?.auth
     this.#logLevel = options?.logLevel ?? LogLevel.WARN
-    this.#logger = options?.logger ?? makeConsoleLogger(this.constructor.name)
-
-    const prefixUrl = (options?.baseUrl ?? "https://api.notion.com") + "/v1/"
-    const timeout = options?.timeoutMs ?? 60_000
-    const notionVersion = options?.notionVersion ?? Client.defaultNotionVersion
-
-    this.#got = got.extend({
-      prefixUrl,
-      timeout,
-      headers: {
-        "Notion-Version": notionVersion,
-        // TODO: update with format appropriate for telemetry, use version from package.json
-        "user-agent": "notionhq-client/0.1.0",
-      },
-      retry: 0,
-      agent: makeAgentOption(prefixUrl, options?.agent),
-    })
+    this.#logger = options?.logger ?? makeConsoleLogger(PACKAGE_NAME)
+    this.#prefixUrl = (options?.baseUrl ?? "https://api.notion.com") + "/v1/"
+    this.#timeoutMs = options?.timeoutMs ?? 60_000
+    this.#notionVersion = options?.notionVersion ?? Client.defaultNotionVersion
+    this.#fetch = options?.fetch ?? nodeFetch
+    this.#agent = options?.agent
+    this.#userAgent = `notionhq-client/${PACKAGE_VERSION}`
   }
 
   /**
@@ -108,49 +108,77 @@ export default class Client {
    * @param body
    * @returns
    */
-  public async request<Response>({
+  public async request<ResponseBody>({
     path,
     method,
     query,
     body,
     auth,
-  }: RequestParameters): Promise<Response> {
+  }: RequestParameters): Promise<ResponseBody> {
     this.log(LogLevel.INFO, "request start", { method, path })
 
     // If the body is empty, don't send the body in the HTTP request
-    const json =
-      body !== undefined && Object.entries(body).length === 0 ? undefined : body
+    const bodyAsJsonString =
+      !body || Object.entries(body).length === 0
+        ? undefined
+        : JSON.stringify(body)
 
+    const url = new URL(`${this.#prefixUrl}${path}`)
+    if (query) {
+      for (const [key, value] of Object.entries(query)) {
+        if (value !== undefined) {
+          url.searchParams.append(key, String(value))
+        }
+      }
+    }
+
+    const headers: Record<string, string> = {
+      ...this.authAsHeaders(auth),
+      "Notion-Version": this.#notionVersion,
+      "user-agent": this.#userAgent,
+    }
+
+    if (bodyAsJsonString !== undefined) {
+      headers["content-type"] = "application/json"
+    }
     try {
-      const response = await this.#got(path, {
-        method,
-        searchParams: query,
-        json,
-        headers: this.authAsHeaders(auth),
-      }).json<Response>()
+      const response = await RequestTimeoutError.rejectAfterTimeout(
+        this.#fetch(url.toString(), {
+          method,
+          headers,
+          body: bodyAsJsonString,
+          agent: this.#agent,
+        }),
+        this.#timeoutMs
+      )
 
+      const responseText = await response.text()
+      if (!response.ok) {
+        throw buildRequestError(response, responseText)
+      }
+
+      const responseJson: ResponseBody = JSON.parse(responseText)
       this.log(LogLevel.INFO, `request success`, { method, path })
-      return response
-    } catch (error) {
-      // Build an error of a known type, otherwise throw unexpected errors
-      const requestError = buildRequestError(error)
-      if (requestError === undefined) {
+      return responseJson
+    } catch (error: unknown) {
+      if (!isNotionClientError(error)) {
         throw error
       }
 
+      // Log the error if it's one of our known error types
       this.log(LogLevel.WARN, `request fail`, {
-        code: requestError.code,
-        message: requestError.message,
+        code: error.code,
+        message: error.message,
       })
-      if (HTTPResponseError.isHTTPResponseError(requestError)) {
+
+      if (isHTTPResponseError(error)) {
         // The response body may contain sensitive information so it is logged separately at the DEBUG level
         this.log(LogLevel.DEBUG, `failed response body`, {
-          body: requestError.body,
+          body: error.body,
         })
       }
 
-      // Throw as a known error type
-      throw requestError
+      throw error
     }
   }
 
@@ -358,8 +386,8 @@ export default class Client {
    * @param auth API key or access token
    * @returns headers key-value object
    */
-  private authAsHeaders(auth?: string): GotHeaders {
-    const headers: GotHeaders = {}
+  private authAsHeaders(auth?: string): Record<string, string> {
+    const headers: Record<string, string> = {}
     const authHeaderValue = auth ?? this.#auth
     if (authHeaderValue !== undefined) {
       headers["authorization"] = `Bearer ${authHeaderValue}`
@@ -372,34 +400,6 @@ export default class Client {
  * Type aliases to support the generic request interface.
  */
 type Method = "get" | "post" | "patch"
-type QueryParams = GotOptions["searchParams"]
+type QueryParams = Record<string, string | number> | URLSearchParams
 
 type WithAuth<P> = P & { auth?: string }
-
-/*
- * Helper functions
- */
-
-function makeAgentOption(
-  prefixUrl: string,
-  agent: Agent | undefined
-): GotAgents | undefined {
-  if (agent === undefined) {
-    return undefined
-  }
-  return {
-    [selectProtocol(prefixUrl)]: agent,
-  }
-}
-
-function selectProtocol(prefixUrl: string): "http" | "https" {
-  const url = new URL(prefixUrl)
-
-  if (url.protocol === "https:") {
-    return "https"
-  } else if (url.protocol === "http:") {
-    return "http"
-  }
-
-  throw new TypeError(`baseUrl option must begin with "https://" or "http://"`)
-}

@@ -1,12 +1,17 @@
-// Find the official Notion API client @ https://github.com/makenotion/notion-sdk-js/
-// npm install @notionhq/client
-import { Client } from "@notionhq/client"
+/* ================================================================================
 
-import { config } from "dotenv"
+	notion-github-sync.
+
+  Glitch example: https://glitch.com/edit/#!/notion-github-sync
+  Find the official Notion API client @ https://github.com/makenotion/notion-sdk-js/
+
+================================================================================ */
+
+import { Client } from "@notionhq/client"
+import dotenv from "dotenv"
 import { Octokit } from "octokit"
 
-config()
-
+dotenv.config()
 const octokit = new Octokit({ auth: process.env.GITHUB_KEY })
 const notion = new Client({ auth: process.env.NOTION_KEY })
 
@@ -49,7 +54,7 @@ async function syncIssuesWithDatabase() {
         },
       })
     }
-    // This issue already exists in the database so we want to update the page
+    // This issue already exists in the database so we want to update the page.
     else {
       await notion.pages.update({
         page_id: issues_in_db[issue_number].page_id,
@@ -62,11 +67,11 @@ async function syncIssuesWithDatabase() {
       })
     }
   }
-  // Run this function every five minutes
+  // Run this function every five minutes.
   setTimeout(syncIssuesWithDatabase, 5 * 60 * 1000)
 }
 
-// Get a paginated list of issues currently in the database.
+// Get a paginated list of Tasks currently in a the database.
 async function getIssuesFromDatabase() {
   const issues = {}
 
@@ -88,4 +93,7 @@ async function getIssuesFromDatabase() {
   return issues
 }
 
-syncIssuesWithDatabase()
+// main
+;(async () => {
+  syncIssuesWithDatabase()
+})()
