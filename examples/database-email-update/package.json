@@ -3,19 +3,16 @@
   "version": "1.0.0",
   "description": "Send an email with SendGrid when an update is made in Notion.",
   "main": "index.js",
-  "engines": {
-    "node": "12.x"
-  },
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": ""
+    "start": "node index.js"
   },
   "dependencies": {
+    "@notionhq/client": "^0.2.1",
     "@sendgrid/mail": "^7.4.5",
-    "dotenv": "^10.0.0",
-    "@notionhq/client": "^0.2.1"
+    "dotenv": "^10.0.0"
   },
-  "devDependencies": {},
   "author": "Aman Gupta",
   "license": "MIT"
 }
