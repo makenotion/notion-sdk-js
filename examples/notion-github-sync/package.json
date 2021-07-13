@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Sync GitHub issues with Notion.",
   "main": "index.js",
+  "type": "module",
   "engines": {
     "node": "12.x"
   },
@@ -13,8 +14,8 @@
   "author": "Aman Gupta",
   "license": "MIT",
   "dependencies": {
+    "@notionhq/client": "^0.2.1",
     "dotenv": "^10.0.0",
-    "octokit": "^1.1.0",
-    "@notionhq/client": "^0.2.1"
+    "octokit": "^1.1.0"
   }
 }

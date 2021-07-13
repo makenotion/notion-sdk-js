@@ -96,5 +96,5 @@ async function getIssuesFromDatabase() {
 // main
 // eslint-disable-next-line -- ignore 'no-extra-semi' for glitch
 ;(async () => {
-  syncIssuesWithDatabase()
+  await syncIssuesWithDatabase()
 })()
