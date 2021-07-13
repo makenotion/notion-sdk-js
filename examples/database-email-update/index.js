@@ -27,30 +27,28 @@ async function findChangesAndSendEmails() {
   const currTasksInDatabase = await getTasksFromDatabase()
 
   // Iterate over the current tasks and compare them to tasks in our local store (tasksInDatabase).
-  for (const [key, value] of Object.entries(currTasksInDatabase)) {
-    const page_id = key
-    const current_status = value.Status
-
+  for (const [page_id, current_task] of Object.entries(currTasksInDatabase)) {
     // If this task hasn't been seen before.
     if (!(page_id in tasksInDatabase)) {
       // Add this task to the local store of all tasks.
       tasksInDatabase[page_id] = {
-        Status: current_status,
+        Title: current_task.Title,
+        Status: current_task.Status,
       }
     }
     // else if the current status is different from the status in the local store.
-    else if (current_status !== tasksInDatabase[page_id].Status) {
+    else if (current_task.Status !== tasksInDatabase[page_id].Status) {
       // Change the local store.
       tasksInDatabase[page_id] = {
-        Status: current_status,
+        Status: current_task.Status,
       }
 
-      // Send an email about this change..
+      // Send an email about this change.
       const msg = {
         to: process.env.EMAIL_TO_FIELD,
         from: process.env.EMAIL_FROM_FIELD,
         subject: "Notion Task Status Updated",
-        text: `A Notion task's: ${value.Title} status has been updated to ${current_status}.`
+        text: `Notion task "${current_task.Title}" has updated its status to ${current_task.Status}.`
       }
 
       sendgridMail
@@ -62,10 +60,7 @@ async function findChangesAndSendEmails() {
 
       console.log("Status Changed")
     }
-
   }
-  // Run this method every 5 seconds (5000 milliseconds).
-  setTimeout(main, 5000)
 }
 
 // Get a paginated list of Tasks currently in the database.
@@ -96,10 +91,12 @@ async function getTasksFromDatabase() {
 
 function main() {
   findChangesAndSendEmails().catch(console.error)
+  // Run this method every 5 seconds (5000 milliseconds).
+  setTimeout(main, 5000)
 }
 
 // run main
 // eslint-disable-next-line -- ignore 'no-extra-semi' for glitch
-;(() => {
+;(function () {
   main()
 })()
