@@ -46,6 +46,9 @@ import {
   SearchParameters,
   SearchResponse,
   search,
+  DatabasesCreateParameters,
+  DatabasesCreateResponse,
+  databasesCreate,
 } from "./api-endpoints"
 import nodeFetch from "node-fetch"
 import {
@@ -264,6 +267,21 @@ export default class Client {
         method: databasesQuery.method,
         query: pick(args, databasesQuery.queryParams),
         body: pick(args, databasesQuery.bodyParams),
+        auth: args?.auth,
+      })
+    },
+
+    /**
+     * Create a database
+     */
+    create: (
+      args: WithAuth<DatabasesCreateParameters>
+    ): Promise<DatabasesCreateResponse> => {
+      return this.request<DatabasesCreateResponse>({
+        path: databasesCreate.path(),
+        method: databasesCreate.method,
+        query: pick(args, databasesCreate.queryParams),
+        body: pick(args, databasesCreate.bodyParams),
         auth: args?.auth,
       })
     },
