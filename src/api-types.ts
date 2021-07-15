@@ -154,7 +154,7 @@ export type Property =
   | MultiSelectProperty
   | DateProperty
   | PeopleProperty
-  | FileProperty
+  | FilesProperty
   | CheckboxProperty
   | URLProperty
   | EmailProperty
@@ -222,8 +222,8 @@ export interface PeopleProperty extends PropertyBase {
   people: Record<string, never>
 }
 
-export interface FileProperty extends PropertyBase {
-  type: "file"
+export interface FilesProperty extends PropertyBase {
+  type: "files"
   file: Record<string, never>
 }
 
@@ -336,11 +336,21 @@ export interface BotUser extends UserBase {
  * Misc (output)
  */
 
-export interface SelectOption {
-  name: string
-  id: string
-  color: Color
+export interface SelectOptionBase {
+  color?: Color
 }
+
+export interface SelectOptionWithName extends SelectOptionBase {
+  name: string
+  id?: never
+}
+
+export interface SelectOptionWithId extends SelectOptionBase {
+  name?: never
+  id: string
+}
+
+export type SelectOption = SelectOptionWithName | SelectOptionWithId
 
 export type MultiSelectOption = SelectOption
 

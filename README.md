@@ -17,9 +17,7 @@ npm install @notionhq/client
 
 ## Usage
 
-> Before getting started, [create an integration](https://www.notion.com/my-integrations) and find the token.
->
-> [→ Learn more about authorization](https://developers.notion.com/docs/authorization).
+> Use Notion's [Getting Started Guide](https://developers.notion.com/docs/getting-started) to get set up to use Notion's API.
 
 Import and initialize a client using an **integration token** or an OAuth **access token**.
 
@@ -46,22 +44,24 @@ Each method returns a `Promise` which resolves the response.
 
 ```js
 console.log(listUsersResponse)
+```
 
-// {
-//   results: [
-//     {
-//       object: 'user',
-//       id: 'd40e767c-d7af-4b18-a86d-55c61f1e39a4',
-//       type: 'person',
-//       person: {
-//         email: 'avo@example.org',
-//       },
-//       name: 'Avocado Lovelace',
-//       avatar_url: 'https://secure.notion-static.com/e6a352a8-8381-44d0-a1dc-9ed80e62b53d.jpg',
-//     },
-//     ...
-//   ]
-// }
+```
+{
+  results: [
+    {
+      object: 'user',
+      id: 'd40e767c-d7af-4b18-a86d-55c61f1e39a4',
+      type: 'person',
+      person: {
+        email: 'avo@example.org',
+      },
+      name: 'Avocado Lovelace',
+      avatar_url: 'https://secure.notion-static.com/e6a352a8-8381-44d0-a1dc-9ed80e62b53d.jpg',
+    },
+    ...
+  ]
+}
 ```
 
 Endpoint parameters are grouped into a single object. You don't need to remember which parameters go in the path, query, or body.
@@ -151,7 +151,7 @@ the `APIErrorCode` enum are returned from the server. Codes in the
 
 ```ts
 try {
-  const response = notion.databases.query({
+  const response = await notion.databases.query({
     /* ... */
   })
 } catch (error: unknown) {
@@ -187,6 +187,6 @@ Earlier versions may still work, but we encourage people building new applicatio
 
 ## Getting help
 
-If you have a question about the library, or are having difficulty using it, chat with the community in [GitHub Discussions](https://github.com/makenotion/notion-sdk-js/discussions).
+If you want to submit a feature request for Notion's API, or are experiencing any issues with the API platform, please email us at `developers@makenotion.com`.
 
-If you're experiencing issues with the Notion API, such as a service interruption or a potential bug in the platform, reach out to [Notion help](https://www.notion.com/Help-Support-e040febf70a94950b8620e6f00005004?target=intercom).
+If you found a bug with the library, please [submit an issue](https://github.com/makenotion/notion-sdk-js/issues).

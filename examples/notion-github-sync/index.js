@@ -1,12 +1,17 @@
-// Find the official Notion API client @ https://  github.com/makenotion/notion-sdk-js/
-// npm install @notionhq/client
-import { Client } from "@notionhq/client"
+/* ================================================================================
 
-import { config } from "dotenv"
+	notion-github-sync.
+  
+  Glitch example: https://glitch.com/edit/#!/notion-github-sync
+  Find the official Notion API client @ https://github.com/makenotion/notion-sdk-js/
+
+================================================================================ */
+
+import { Client } from "@notionhq/client"
+import dotenv from "dotenv"
 import { Octokit } from "octokit"
 
-config()
-
+dotenv.config()
 const octokit = new Octokit({ auth: process.env.GITHUB_KEY })
 const notion = new Client({ auth: process.env.NOTION_KEY })
 
@@ -16,7 +21,7 @@ async function syncIssuesWithDatabase() {
   console.log("Syncing GitHub Issues with Notion Database")
   const issuesInDatabase = await getIssuesFromDatabase()
 
-  // Get a list of github issues and add them to a local store
+  // Get a list of github issues and add them to a local store.
   let gitHubIssues = {}
   const iterator = octokit.paginate.iterator(octokit.rest.issues.listForRepo, {
     owner: process.env.GITHUB_REPO_OWNER,
@@ -35,11 +40,11 @@ async function syncIssuesWithDatabase() {
     }
   }
 
-  // Create new issues or update existing in a Notion Database
+  // Create new issues or update existing in a Notion Database.
   for (const [key, value] of Object.entries(gitHubIssues)) {
     const issue_number = key
     const issues_details = value
-    // If the issue does not exist in the database yet, add it to the database
+    // If the issue does not exist in the database yet, add it to the database.
     if (!(issue_number in issuesInDatabase)) {
       await notion.request({
         path: "pages",
@@ -55,7 +60,7 @@ async function syncIssuesWithDatabase() {
         },
       })
     }
-    // This issue already exists in the database so we want to update the page
+    // This issue already exists in the database so we want to update the page.
     else {
       await notion.request({
         path: "pages/" + issuesInDatabase[issue_number].page_id,
@@ -71,9 +76,13 @@ async function syncIssuesWithDatabase() {
       })
     }
   }
-  // Run this function every five minutes
+  // Run this function every five minutes.
   setTimeout(syncIssuesWithDatabase, 5 * 60 * 1000)
 }
+
+;(async () => {
+  syncIssuesWithDatabase()
+})()
 
 // Get a paginated list of Tasks currently in a the database.
 async function getIssuesFromDatabase() {
@@ -81,7 +90,7 @@ async function getIssuesFromDatabase() {
 
   async function getPageOfIssues(cursor) {
     let request_payload = ""
-    // Create the request payload based on the presence of a start_cursor
+    // Create the request payload based on the presence of a start_cursor.
     if (cursor == undefined) {
       request_payload = {
         path: "databases/" + database_id + "/query",
@@ -111,5 +120,3 @@ async function getIssuesFromDatabase() {
   await getPageOfIssues()
   return issues
 }
-
-syncIssuesWithDatabase()

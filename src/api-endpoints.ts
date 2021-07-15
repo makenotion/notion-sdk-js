@@ -253,21 +253,25 @@ interface PagesUpdatePathParameters {
 }
 interface PagesUpdateQueryParameters {}
 
-interface PagesUpdateBodyParameters {
+interface PagesUpdateBodyArchiveParameter {
+  archived: boolean
+}
+interface PagesUpdateBodyPropertiesParameters {
   properties: InputPropertyValueMap
 }
 
 export interface PagesUpdateParameters
   extends PagesUpdatePathParameters,
     PagesUpdateQueryParameters,
-    PagesUpdateBodyParameters {}
+    PagesUpdateBodyArchiveParameter,
+    PagesUpdateBodyPropertiesParameters {}
 export interface PagesUpdateResponse extends Page {}
 
 export const pagesUpdate = {
   method: "patch",
   pathParams: ["page_id"],
   queryParams: [],
-  bodyParams: ["properties"],
+  bodyParams: ["archived", "properties"],
   path: (p: PagesUpdatePathParameters) => `pages/${p.page_id}`,
 } as const
 
