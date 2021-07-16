@@ -284,6 +284,7 @@ export interface RollupProperty extends PropertyBase {
       | "min"
       | "max"
       | "range"
+      | "show_original"
   }
 }
 
