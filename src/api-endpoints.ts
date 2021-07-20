@@ -23,6 +23,9 @@ import {
   SearchFilter,
   InputPropertyValue,
   Property,
+  ParentPageInput,
+  PropertySchema,
+  RichTextInput,
 } from "./api-types"
 
 // TODO: type assertions to verify that each interface is synchronized to the list of keys in the runtime value below.
@@ -185,6 +188,36 @@ export const pagesCreate = {
   queryParams: [],
   bodyParams: ["parent", "properties", "children"],
   path: () => `pages`,
+} as const
+
+/*
+ * databases.create()
+ */
+
+interface DatabasesCreatePathParameters {}
+interface DatabasesCreateQueryParameters {}
+
+export type InputPropertySchemaMap = {
+  [propertyName: string]: PropertySchema
+}
+interface DatabasesCreateBodyParameters {
+  parent: ParentPageInput
+  properties: InputPropertySchemaMap
+  title?: RichTextInput[]
+}
+
+export interface DatabasesCreateParameters
+  extends DatabasesCreatePathParameters,
+    DatabasesCreateQueryParameters,
+    DatabasesCreateBodyParameters {}
+export interface DatabasesCreateResponse extends BlockBase {}
+
+export const databasesCreate = {
+  method: "post",
+  pathParams: [],
+  queryParams: [],
+  bodyParams: ["parent", "properties", "title"],
+  path: () => `databases`,
 } as const
 
 /*

@@ -284,6 +284,7 @@ export interface RollupProperty extends PropertyBase {
       | "min"
       | "max"
       | "range"
+      | "show_original"
   }
 }
 
@@ -549,6 +550,8 @@ export type ParentInput =
   | Omit<ParentDatabase, "type">
   | Omit<ParentPage, "type">
 // TODO: use DistributiveOmit?
+
+export type ParentPageInput = Omit<ParentPage, "type">
 
 interface ParentDatabase {
   type: "database_id"
@@ -830,4 +833,109 @@ export interface Annotations {
   underline: boolean
   code: boolean
   color: Color | BackgroundColor
+}
+
+/*
+ * Database property schema (input)
+ */
+export type PropertySchema =
+  | TitlePropertySchema
+  | RichTextPropertySchema
+  | NumberPropertySchema
+  | SelectPropertySchema
+  | MultiSelectPropertySchema
+  | DatePropertySchema
+  | PeoplePropertySchema
+  | FilePropertySchema
+  | CheckboxPropertySchema
+  | URLPropertySchema
+  | EmailPropertySchema
+  | PhoneNumberPropertySchema
+  | CreatedTimePropertySchema
+  | CreatedByPropertySchema
+  | LastEditedTimePropertySchema
+  | LastEditedByPropertySchema
+
+export interface TitlePropertySchema {
+  title: Record<string, never>
+}
+
+export interface RichTextPropertySchema {
+  rich_text: Record<string, never>
+}
+
+export interface NumberPropertySchema {
+  number: {
+    format?:
+      | "number"
+      | "number_with_commas"
+      | "percent"
+      | "dollar"
+      | "euro"
+      | "pound"
+      | "yen"
+      | "ruble"
+      | "rupee"
+      | "won"
+      | "yuan"
+  }
+}
+
+interface SelectOptionSchema {
+  name: string
+  color?: Color
+}
+
+type MultiSelectOptionSchema = SelectOptionSchema
+
+export interface SelectPropertySchema {
+  select: { options?: SelectOptionSchema[] }
+}
+
+export interface MultiSelectPropertySchema {
+  multi_select: { options?: MultiSelectOptionSchema[] }
+}
+
+export interface DatePropertySchema {
+  date: Record<string, never>
+}
+
+export interface PeoplePropertySchema {
+  people: Record<string, never>
+}
+
+export interface FilePropertySchema {
+  files: Record<string, never>
+}
+
+export interface CheckboxPropertySchema {
+  checkbox: Record<string, never>
+}
+
+export interface URLPropertySchema {
+  url: Record<string, never>
+}
+
+export interface EmailPropertySchema {
+  email: Record<string, never>
+}
+
+export interface PhoneNumberPropertySchema {
+  phone_number: Record<string, never>
+}
+
+export interface CreatedTimePropertySchema {
+  created_time: Record<string, never>
+}
+
+export interface CreatedByPropertySchema {
+  created_by: Record<string, never>
+}
+
+export interface LastEditedTimePropertySchema {
+  last_edited_time: Record<string, never>
+}
+
+export interface LastEditedByPropertySchema {
+  last_edited_by: Record<string, never>
 }
