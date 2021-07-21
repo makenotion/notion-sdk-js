@@ -7,119 +7,132 @@
 
 ================================================================================ */
 
-import { Client } from "@notionhq/client"
-import dotenv from "dotenv"
-import sendgridMail from "@sendgrid/mail"
+const { Client } = require("@notionhq/client")
+const dotenv = require("dotenv")
+const sendgridMail = require("@sendgrid/mail")
 
 dotenv.config()
 sendgridMail.setApiKey(process.env.SENDGRID_KEY)
 const notion = new Client({ auth: process.env.NOTION_KEY })
 
-const database_id = process.env.NOTION_DATABASE_ID
+const databaseId = process.env.NOTION_DATABASE_ID
 
-// A JSON Object to hold all tasks in the Notion database.
-let tasksInDatabase = {}
+/**
+ * Local map to store task pageId to its last status.
+ * { [pageId: string]: string }
+ */
+const taskPageIdToStatusMap = {}
 
-async function findChangesAndSendEmails() {
-  console.log("Looking for changes in Notion database ")
+// Initialize local data store.
+// Then poll for changes every 5 seconds (5000 milliseconds).
+setInitialTaskPageIdToStatusMap().then(() => {
+  setInterval(pollForUpdatedTasks, 5000)
+})
+
+/**
+ * Get and set the initial data store with tasks currently in the database.
+ */
+async function setInitialTaskPageIdToStatusMap() {
+  const currentTasks = await getTasksFromNotionDatabase()
+  for (const { pageId, status } of currentTasks) {
+    taskPageIdToStatusMap[pageId] = status
+  }
+}
+
+async function pollForUpdatedTasks() {
   // Get the tasks currently in the database.
-  const currTasksInDatabase = await getTasksFromDatabase()
-
-  // Iterate over the current tasks and compare them to tasks in our local store (tasksInDatabase).
-  for (const [key, value] of Object.entries(currTasksInDatabase)) {
-    const page_id = key
-    const curr_status = value.Status
-    // If this task hasn't been seen before.
-    if (!page_id in tasksInDatabase) {
-      // Add this task to the local store of all tasks.
-      tasksInDatabase[page_id] = {
-        Status: curr_status,
-      }
-    } else {
-      // If the current status is different from the status in the local store.
-      if (curr_status !== tasksInDatabase[page_id].Status) {
-        // Change the local store.
-        tasksInDatabase[page_id] = {
-          Status: curr_status,
-        }
-        // Send an email about this change..
-        const msg = {
-          to: process.env.EMAIL_TO_FIELD,
-          from: process.env.EMAIL_FROM_FIELD,
-          subject: "Notion Task Status Updated",
-          text:
-            "A Notion task's: " +
-            value.Title +
-            " status has been updated to " +
-            curr_status +
-            ".",
-        }
-        sendgridMail
-          .send(msg)
-          .then(() => {
-            console.log("Email Sent")
-          })
-          .catch(error => {
-            console.error(error)
-          })
-        console.log("Status Changed")
-      }
-    }
+  const currentTasks = await getTasksFromNotionDatabase()
+  // Return any tasks that have had their status updated.
+  const updatedTasks = findUpdatedTasks(currentTasks)
+  console.log(`Found ${updatedTasks.length} updated tasks.`)
+  // For each updated task, update local db and send an email notification.
+  for (const task of updatedTasks) {
+    taskPageIdToStatusMap[task.pageId] = task.status
+    await sendUpdateEmailWithSendgrid(task)
   }
-  // Run this method every 5 seconds (5000 milliseconds).
-  setTimeout(main, 5000)
 }
 
-function main() {
-  findChangesAndSendEmails().catch(console.error)
+/**
+ * Gets tasks from the database.
+ *
+ * Returns array of objects with pageId, status, and task title.
+ * Array<{ pageId: string, status: string, title: string }>
+ */
+async function getTasksFromNotionDatabase() {
+  const pages = []
+  let cursor = undefined
+  while (true) {
+    console.log("\nFetching tasks from Notion DB...")
+    const { results, next_cursor } = await notion.databases.query({
+      database_id: databaseId,
+      start_cursor: cursor,
+    })
+    pages.push(...results)
+    if (!next_cursor) {
+      break
+    }
+    cursor = next_cursor
+  }
+  console.log(`${pages.length} pages successfully fetched.`)
+  return pages.map(page => {
+    const statusProperty = page.properties["Status"]
+    const status = statusProperty ? statusProperty.select.name : "No Status"
+    const title = page.properties["Name"].title
+      .map(({ plain_text }) => plain_text)
+      .join("")
+    return {
+      pageId: page.id,
+      status,
+      title,
+    }
+  })
 }
 
-;(async () => {
-  tasksInDatabase = await getTasksFromDatabase()
-  main()
-})()
+/**
+ * Compares task to most recent version of task stored in local store (tasksInDatabase).
+ *
+ * @param currentTasks Array<{ pageId: string, status: string, title: string }>
+ *
+ * Returns any tasks that have a different status than their last version.
+ * Array<{ pageId: string, status: string, title: string }>
+ */
+function findUpdatedTasks(currentTasks) {
+  return currentTasks.filter(currentTask => {
+    const previousStatus = getPreviousTaskStatus(currentTask)
+    return currentTask.status !== previousStatus
+  })
+}
 
-// Get a paginated list of Tasks currently in a the database.
-async function getTasksFromDatabase() {
-  const tasks = {}
+/**
+ * Sends task update notification using Sendgrid.
+ *
+ * @param task { status: string, title: string }
+ */
+async function sendUpdateEmailWithSendgrid({ title, status }) {
+  const message = `Status of Notion task ("${title}") has been updated to "${status}".`
+  console.log(message)
 
-  async function getPageOfTasks(cursor) {
-    let request_payload = ""
-    // Create the request payload based on the presence of a start_cursor.
-    if (cursor == undefined) {
-      request_payload = {
-        path: "databases/" + database_id + "/query",
-        method: "POST",
-      }
-    } else {
-      request_payload = {
-        path: "databases/" + database_id + "/query",
-        method: "POST",
-        body: {
-          start_cursor: cursor,
-        },
-      }
-    }
-    // While there are more pages left in the query, get pages from the database.
-    const current_pages = await notion.request(request_payload)
-
-    for (const page of current_pages.results) {
-      if (page.properties.Status) {
-        tasks[page.id] = {
-          Status: page.properties.Status.select.name,
-          Title: page.properties.Name.title[0].text.content,
-        }
-      } else {
-        tasks[page.id] = {
-          Status: "No Status",
-          Title: page.properties.Name.title[0].text.content,
-        }
-      }
-    }
-    if (current_pages.has_more) {
-      await getPageOfTasks(current_pages.next_cursor)
-    }
+  try {
+    // Send an email about this change.
+    await sendgridMail.send({
+      to: process.env.EMAIL_TO_FIELD,
+      from: process.env.EMAIL_FROM_FIELD,
+      subject: "Notion Task Status Updated",
+      text: message,
+    })
+    console.log("Email Sent")
+  } catch (error) {
+    console.error(error)
   }
-  await getPageOfTasks()
-  return tasks
+}
+
+/**
+ * Finds or creates task in local data store and returns its status.
+ */
+function getPreviousTaskStatus({ pageId, status }) {
+  // If this task hasn't been seen before, add to local pageId to status map.
+  if (!taskPageIdToStatusMap[pageId]) {
+    taskPageIdToStatusMap[pageId] = status
+  }
+  return taskPageIdToStatusMap[pageId]
 }
