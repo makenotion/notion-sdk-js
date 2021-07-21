@@ -23,10 +23,12 @@ const databaseId = process.env.NOTION_DATABASE_ID
  */
 const taskPageIdToStatusMap = {}
 
-// Initialize local data store.
-// Then poll for changes every 5 seconds (5000 milliseconds).
+/**
+ * Initialize local data store.
+ * Then poll for changes every 5 seconds (5000 milliseconds).
+ */
 setInitialTaskPageIdToStatusMap().then(() => {
-  setInterval(pollForUpdatedTasks, 5000)
+  setInterval(findAndSendEmailsForUpdatedTasks, 5000)
 })
 
 /**
@@ -39,7 +41,7 @@ async function setInitialTaskPageIdToStatusMap() {
   }
 }
 
-async function pollForUpdatedTasks() {
+async function findAndSendEmailsForUpdatedTasks() {
   // Get the tasks currently in the database.
   const currentTasks = await getTasksFromNotionDatabase()
   // Return any tasks that have had their status updated.
@@ -55,7 +57,7 @@ async function pollForUpdatedTasks() {
 /**
  * Gets tasks from the database.
  *
- * Returns array of objects with pageId, status, and task title.
+ * Returns array of task objects with pageId, status, and title.
  * Array<{ pageId: string, status: string, title: string }>
  */
 async function getTasksFromNotionDatabase() {

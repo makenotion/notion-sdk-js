@@ -15,6 +15,6 @@
   "dependencies": {
     "dotenv": "^10.0.0",
     "octokit": "^1.1.0",
-    "@notionhq/client": "^0.2.1"
+    "@notionhq/client": "^0.2.3"
   }
 }
