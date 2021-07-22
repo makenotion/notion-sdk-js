@@ -43,11 +43,14 @@ async function setInitialTaskPageIdToStatusMap() {
 
 async function findAndSendEmailsForUpdatedTasks() {
   // Get the tasks currently in the database.
+  console.log("\nFetching tasks from Notion DB...")
   const currentTasks = await getTasksFromNotionDatabase()
+
   // Return any tasks that have had their status updated.
   const updatedTasks = findUpdatedTasks(currentTasks)
   console.log(`Found ${updatedTasks.length} updated tasks.`)
-  // For each updated task, update local db and send an email notification.
+
+  // For each updated task, update taskPageIdToStatusMap and send an email notification.
   for (const task of updatedTasks) {
     taskPageIdToStatusMap[task.pageId] = task.status
     await sendUpdateEmailWithSendgrid(task)
@@ -57,14 +60,13 @@ async function findAndSendEmailsForUpdatedTasks() {
 /**
  * Gets tasks from the database.
  *
- * Returns array of task objects with pageId, status, and title.
- * Array<{ pageId: string, status: string, title: string }>
+ * @returns {Promise<Array<{ pageId: string, status: string, title: string }>>}
  */
 async function getTasksFromNotionDatabase() {
   const pages = []
   let cursor = undefined
+
   while (true) {
-    console.log("\nFetching tasks from Notion DB...")
     const { results, next_cursor } = await notion.databases.query({
       database_id: databaseId,
       start_cursor: cursor,
@@ -91,12 +93,11 @@ async function getTasksFromNotionDatabase() {
 }
 
 /**
- * Compares task to most recent version of task stored in local store (tasksInDatabase).
- *
- * @param currentTasks Array<{ pageId: string, status: string, title: string }>
- *
+ * Compares task to most recent version of task stored in taskPageIdToStatusMap.
  * Returns any tasks that have a different status than their last version.
- * Array<{ pageId: string, status: string, title: string }>
+ *
+ * @param {Array<{ pageId: string, status: string, title: string }>} currentTasks
+ * @returns {Array<{ pageId: string, status: string, title: string }>}
  */
 function findUpdatedTasks(currentTasks) {
   return currentTasks.filter(currentTask => {
@@ -108,7 +109,7 @@ function findUpdatedTasks(currentTasks) {
 /**
  * Sends task update notification using Sendgrid.
  *
- * @param task { status: string, title: string }
+ * @param {{ status: string, title: string }} task
  */
 async function sendUpdateEmailWithSendgrid({ title, status }) {
   const message = `Status of Notion task ("${title}") has been updated to "${status}".`
@@ -130,6 +131,8 @@ async function sendUpdateEmailWithSendgrid({ title, status }) {
 
 /**
  * Finds or creates task in local data store and returns its status.
+ * @param {{ pageId: string; status: string }} task
+ * @returns {string}
  */
 function getPreviousTaskStatus({ pageId, status }) {
   // If this task hasn't been seen before, add to local pageId to status map.

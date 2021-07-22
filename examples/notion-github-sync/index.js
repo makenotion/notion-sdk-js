@@ -45,29 +45,31 @@ async function syncNotionDatabaseWithGitHub() {
   console.log("\nFetching issues from Notion DB...")
   const issues = await getGitHubIssuesForRepository()
   console.log(`Fetched ${issues.length} issues from GitHub repository.`)
+
   // Group issues into those that need to be created or updated in the Notion database.
   const { pagesToCreate, pagesToUpdate } = getNotionOperations(issues)
+
   // Create pages for new issues.
   console.log(`\n${pagesToCreate.length} new issues to add to Notion.`)
   await createPages(pagesToCreate)
+
   // Updates pages for existing issues.
   console.log(`\n${pagesToUpdate.length} issues to update in Notion.`)
   await updatePages(pagesToUpdate)
+
   // Success!
   console.log("\n✅ Notion database is synced with GitHub.")
 }
 
 /**
- * Gets issues from the database.
+ * Gets pages from the Notion database.
  *
- * Returns array of objects with pageId and issueNumber
- * Array<{ pageId: string, issueNumber: number }>
+ * @returns {Promise<Array<{ pageId: string, issueNumber: number }>>}
  */
 async function getIssuesFromNotionDatabase() {
   const pages = []
   let cursor = undefined
   while (true) {
-    console.log("\nFetching issues from Notion DB...")
     const { results, next_cursor } = await notion.databases.query({
       database_id: databaseId,
       start_cursor: cursor,
@@ -90,13 +92,14 @@ async function getIssuesFromNotionDatabase() {
 /**
  * Gets issues from a GitHub repository. Pull requests are omitted.
  *
- * Returns array of issue objects with number, title, state, comment_count, and url.
- * Array<{ number: number, title: string, state: "open" | "closed", comment_count: number, url: string }>
+ * https://docs.github.com/en/rest/guides/traversing-with-pagination
+ * https://docs.github.com/en/rest/reference/issues
+ *
+ * @returns {Promise<Array<{ number: number, title: string, state: "open" | "closed", comment_count: number, url: string }>>}
  */
 async function getGitHubIssuesForRepository() {
   const issues = []
-  // https://docs.github.com/en/rest/guides/traversing-with-pagination
-  // https://docs.github.com/en/rest/reference/issues
+  //
   const iterator = octokit.paginate.iterator(octokit.rest.issues.listForRepo, {
     owner: process.env.GITHUB_REPO_OWNER,
     repo: process.env.GITHUB_REPO_NAME,
@@ -122,13 +125,11 @@ async function getGitHubIssuesForRepository() {
 /**
  * Determines which issues already exist in the Notion database.
  *
- * @param issues Array<{ number: number, title: string, state: "open" | "closed", comment_count: number, url: string }>
- *
- * Returns an object with keys for each operation grouping:
- * {
- *  pagesToCreate: Array<{ number: number, title: string, state: "open" | "closed", comment_count: number, url: string }>
- *  pagesToUpdate: Array<{ pageId: string, number: number, title: string, state: "open" | "closed", comment_count: number, url: string }>
- * }
+ * @param {Array<{ number: number, title: string, state: "open" | "closed", comment_count: number, url: string }>} issues
+ * @returns {{
+ *   pagesToCreate: Array<{ number: number, title: string, state: "open" | "closed", comment_count: number, url: string }>;
+ *   pagesToUpdate: Array<{ pageId: string, number: number, title: string, state: "open" | "closed", comment_count: number, url: string }>
+ * }}
  */
 function getNotionOperations(issues) {
   const pagesToCreate = []
@@ -150,7 +151,9 @@ function getNotionOperations(issues) {
 /**
  * Creates new pages in Notion.
  *
- * @param  Array<{ number: number, title: string, state: "open" | "closed", comment_count: number, url: string }>
+ * https://developers.notion.com/reference/post-page
+ *
+ * @param {Array<{ number: number, title: string, state: "open" | "closed", comment_count: number, url: string }>} pagesToCreate
  */
 async function createPages(pagesToCreate) {
   for (const pagesToCreateBatch of chunkItems(pagesToCreate)) {
@@ -169,10 +172,11 @@ async function createPages(pagesToCreate) {
 /**
  * Updates provided pages in Notion.
  *
- * @param  Array<{ pageId: string, number: number, title: string, state: "open" | "closed", comment_count: number, url: string }>
+ * https://developers.notion.com/reference/patch-page
+ *
+ * @param {Array<{ pageId: string, number: number, title: string, state: "open" | "closed", comment_count: number, url: string }>} pagesToUpdate
  */
 async function updatePages(pagesToUpdate) {
-  // https://developers.notion.com/reference/patch-page
   for (const pagesToUpdateBatch of chunkItems(pagesToUpdate)) {
     await Promise.all(
       pagesToUpdateBatch.map(({ pageId, ...issue }) =>
@@ -206,11 +210,9 @@ function* chunkItems(items) {
 }
 
 /**
- * Formats a GitHub issue to match Notion database fields.
+ * Returns the GitHub issue to conform to Notion database schema properties.
  *
- * @param issue { number: number, title: string, state: "open" | "closed", comment_count: number, url: string }
- *
- * Returns a Notion database request property object.
+ * @param {{ number: number, title: string, state: "open" | "closed", comment_count: number, url: string }} issue
  */
 function getPropertiesFromIssue(issue) {
   const { title, number, state, comment_count, url } = issue
