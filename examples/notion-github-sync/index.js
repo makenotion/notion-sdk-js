@@ -10,6 +10,7 @@
 const { Client } = require("@notionhq/client")
 const dotenv = require("dotenv")
 const { Octokit } = require("octokit")
+const _ = require("lodash")
 
 dotenv.config()
 const octokit = new Octokit({ auth: process.env.GITHUB_KEY })
@@ -99,7 +100,6 @@ async function getIssuesFromNotionDatabase() {
  */
 async function getGitHubIssuesForRepository() {
   const issues = []
-  //
   const iterator = octokit.paginate.iterator(octokit.rest.issues.listForRepo, {
     owner: process.env.GITHUB_REPO_OWNER,
     repo: process.env.GITHUB_REPO_NAME,
@@ -156,7 +156,8 @@ function getNotionOperations(issues) {
  * @param {Array<{ number: number, title: string, state: "open" | "closed", comment_count: number, url: string }>} pagesToCreate
  */
 async function createPages(pagesToCreate) {
-  for (const pagesToCreateBatch of chunkItems(pagesToCreate)) {
+  const pagesToCreateChunks = _.chunk(pagesToCreate, OPERATION_BATCH_SIZE)
+  for (const pagesToCreateBatch of pagesToCreateChunks) {
     await Promise.all(
       pagesToCreateBatch.map(issue =>
         notion.pages.create({
@@ -177,7 +178,8 @@ async function createPages(pagesToCreate) {
  * @param {Array<{ pageId: string, number: number, title: string, state: "open" | "closed", comment_count: number, url: string }>} pagesToUpdate
  */
 async function updatePages(pagesToUpdate) {
-  for (const pagesToUpdateBatch of chunkItems(pagesToUpdate)) {
+  const pagesToUpdateChunks = _.chunk(pagesToUpdate, OPERATION_BATCH_SIZE)
+  for (const pagesToUpdateBatch of pagesToUpdateChunks) {
     await Promise.all(
       pagesToUpdateBatch.map(({ pageId, ...issue }) =>
         notion.pages.update({
@@ -195,22 +197,7 @@ async function updatePages(pagesToUpdate) {
 //*========================================================================
 
 /**
- * An iterator that batches out a list of items into smaller chunks.
- */
-function* chunkItems(items) {
-  let startIndex = 0
-  while (true) {
-    const itemChunk = items.slice(startIndex, startIndex + OPERATION_BATCH_SIZE)
-    yield itemChunk
-    if (itemChunk.length < OPERATION_BATCH_SIZE) {
-      break
-    }
-    startIndex += OPERATION_BATCH_SIZE
-  }
-}
-
-/**
- * Returns the GitHub issue to conform to Notion database schema properties.
+ * Returns the GitHub issue to conform to this database's schema properties.
  *
  * @param {{ number: number, title: string, state: "open" | "closed", comment_count: number, url: string }} issue
  */
