@@ -170,6 +170,7 @@ export type Property =
 export interface PropertyBase {
   id: string
   type: string
+  name: string
 }
 
 export interface TitleProperty extends PropertyBase {
