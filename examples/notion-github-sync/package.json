@@ -13,8 +13,9 @@
   "author": "Aman Gupta",
   "license": "MIT",
   "dependencies": {
+    "@notionhq/client": "^0.2.3",
     "dotenv": "^10.0.0",
-    "octokit": "^1.1.0",
-    "@notionhq/client": "^0.2.1"
+    "lodash": "^4.17.21",
+    "octokit": "^1.1.0"
   }
 }
