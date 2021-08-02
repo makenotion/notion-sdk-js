@@ -26,12 +26,68 @@ import {
   ParentPageInput,
   PropertySchema,
   RichTextInput,
+  UpdateBlock,
 } from "./api-types"
 
 // TODO: type assertions to verify that each interface is synchronized to the list of keys in the runtime value below.
 
 // TODO: instead of importing interfaces like BlockBase, should i use a type alias to Block?
 // TODO: need an input version of Block
+
+/*
+ * blocks.retrieve()
+ */
+
+interface BlocksRetrievePathParameters {
+  block_id: string
+}
+interface BlocksRetrieveQueryParameters {}
+interface BlocksRetrieveBodyParameters {}
+
+export interface BlocksRetrieveParameters
+  extends BlocksRetrievePathParameters,
+    BlocksRetrieveQueryParameters,
+    BlocksRetrieveBodyParameters {}
+export interface BlocksRetrieveResponse extends BlockBase {}
+
+export const blocksRetrieve = {
+  method: "get",
+  pathParams: ["block_id"],
+  queryParams: [],
+  bodyParams: [],
+  path: (p: BlocksRetrievePathParameters) => `blocks/${p.block_id}`,
+} as const
+
+/*
+ * blocks.update()
+ */
+
+interface BlocksUpdatePathParameters {
+  block_id: string
+}
+interface BlocksUpdateQueryParameters {}
+type BlocksUpdateBodyParameters = UpdateBlock
+
+export type BlocksUpdateParameters = BlocksUpdatePathParameters &
+  BlocksUpdateQueryParameters &
+  BlocksUpdateBodyParameters
+export interface BlocksUpdateResponse extends BlockBase {}
+
+export const blocksUpdate = {
+  method: "patch",
+  pathParams: ["block_id"],
+  queryParams: [],
+  bodyParams: [
+    "paragraph",
+    "heading_1",
+    "heading_2",
+    "heading_3",
+    "bulleted_list_item",
+    "numbered_list_item",
+    "to_do",
+  ],
+  path: (p: BlocksUpdatePathParameters) => `blocks/${p.block_id}`,
+} as const
 
 /*
  * blocks.children.append()

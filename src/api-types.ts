@@ -569,6 +569,52 @@ export interface Page {
   url: string
 }
 
+/**
+ * Update Block (input)
+ */
+
+export type UpdateBlock =
+  | ParagraphUpdateBlock
+  | HeadingOneUpdateBlock
+  | HeadingTwoUpdateBlock
+  | HeadingThreeUpdateBlock
+  | BulletedListItemUpdateBlock
+  | NumberedListItemUpdateBlock
+  | ToDoUpdateBlock
+
+interface TextContentUpdate {
+  text: RichTextInput[]
+}
+
+interface ParagraphUpdateBlock {
+  paragraph: TextContentUpdate
+}
+
+interface HeadingOneUpdateBlock {
+  heading_1: TextContentUpdate
+}
+
+interface HeadingTwoUpdateBlock {
+  heading_2: TextContentUpdate
+}
+interface HeadingThreeUpdateBlock {
+  heading_3: TextContentUpdate
+}
+
+interface BulletedListItemUpdateBlock {
+  bulleted_list_item: TextContentUpdate
+}
+interface NumberedListItemUpdateBlock {
+  numbered_list_item: TextContentUpdate
+}
+
+interface ToDoUpdateBlock {
+  to_do: {
+    text?: RichTextInput[]
+    checked?: boolean
+  }
+}
+
 /*
  * Parent
  */
