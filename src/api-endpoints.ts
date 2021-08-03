@@ -84,6 +84,7 @@ export const blocksUpdate = {
     "heading_3",
     "bulleted_list_item",
     "numbered_list_item",
+    "toggle",
     "to_do",
   ],
   path: (p: BlocksUpdatePathParameters) => `blocks/${p.block_id}`,

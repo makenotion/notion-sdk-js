@@ -580,6 +580,7 @@ export type UpdateBlock =
   | HeadingThreeUpdateBlock
   | BulletedListItemUpdateBlock
   | NumberedListItemUpdateBlock
+  | ToggleUpdateBlock
   | ToDoUpdateBlock
 
 interface TextContentUpdate {
@@ -606,6 +607,9 @@ interface BulletedListItemUpdateBlock {
 }
 interface NumberedListItemUpdateBlock {
   numbered_list_item: TextContentUpdate
+}
+interface ToggleUpdateBlock {
+  toggle: TextContentUpdate
 }
 
 interface ToDoUpdateBlock {
