@@ -9,7 +9,9 @@ export function assertNever(value: never): never {
   throw new Error(`Unexpected value should never occur: ${value}`)
 }
 
-export function pick<O extends unknown, K extends keyof O>(
+type AllKeys<T> = T extends unknown ? keyof T : never
+
+export function pick<O extends unknown, K extends AllKeys<O>>(
   base: O,
   keys: readonly K[]
 ): Pick<O, K> {
