@@ -49,6 +49,12 @@ import {
   DatabasesCreateParameters,
   DatabasesCreateResponse,
   databasesCreate,
+  BlocksRetrieveParameters,
+  BlocksRetrieveResponse,
+  blocksRetrieve,
+  BlocksUpdateParameters,
+  BlocksUpdateResponse,
+  blocksUpdate,
 } from "./api-endpoints"
 import nodeFetch from "node-fetch"
 import {
@@ -190,6 +196,35 @@ export default class Client {
    */
 
   public readonly blocks = {
+    /**
+     * Retrieve block
+     */
+    retrieve: (
+      args: WithAuth<BlocksRetrieveParameters>
+    ): Promise<BlocksRetrieveResponse> => {
+      return this.request<BlocksRetrieveResponse>({
+        path: blocksRetrieve.path(args),
+        method: blocksRetrieve.method,
+        query: pick(args, blocksRetrieve.queryParams),
+        body: pick(args, blocksRetrieve.bodyParams),
+        auth: args?.auth,
+      })
+    },
+
+    /**
+     * Update block
+     */
+    update: (
+      args: WithAuth<BlocksUpdateParameters>
+    ): Promise<BlocksUpdateResponse> => {
+      return this.request<BlocksUpdateResponse>({
+        path: blocksUpdate.path(args),
+        method: blocksUpdate.method,
+        query: pick(args, blocksUpdate.queryParams),
+        body: pick(args, blocksUpdate.bodyParams),
+        auth: args?.auth,
+      })
+    },
     children: {
       /**
        * Append block children
