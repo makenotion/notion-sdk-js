@@ -656,6 +656,7 @@ export type PropertyValue =
   | DatePropertyValue
   | FormulaPropertyValue
   | RollupPropertyValue
+  | RelationPropertyValue
   | PeoplePropertyValue
   | FilesPropertyValue
   | CheckboxPropertyValue
@@ -768,6 +769,14 @@ export interface BooleanFormulaValue {
 export interface DateFormulaValue {
   type: "date"
   date: DatePropertyValue
+}
+
+export interface RelationPropertyValue extends PropertyValueBase {
+  type: "relation"
+  relation: RelationValue[]
+}
+export interface RelationValue {
+  id: string
 }
 
 export interface RollupPropertyValue extends PropertyValueBase {
