@@ -106,7 +106,7 @@ export interface BlocksChildrenAppendParameters
   extends BlocksChildrenAppendPathParameters,
     BlocksChildrenAppendQueryParameters,
     BlocksChildrenAppendBodyParameters {}
-export interface BlocksChildrenAppendResponse extends BlockBase {}
+export interface BlocksChildrenAppendResponse extends PaginatedList<Block> {}
 
 export const blocksChildrenAppend = {
   method: "patch",
