@@ -27,6 +27,7 @@ import {
   PropertySchema,
   RichTextInput,
   UpdateBlock,
+  UpdatePropertySchema,
 } from "./api-types"
 
 // TODO: type assertions to verify that each interface is synchronized to the list of keys in the runtime value below.
@@ -267,7 +268,7 @@ export interface DatabasesCreateParameters
   extends DatabasesCreatePathParameters,
     DatabasesCreateQueryParameters,
     DatabasesCreateBodyParameters {}
-export interface DatabasesCreateResponse extends BlockBase {}
+export interface DatabasesCreateResponse extends Database {}
 
 export const databasesCreate = {
   method: "post",
@@ -275,6 +276,37 @@ export const databasesCreate = {
   queryParams: [],
   bodyParams: ["parent", "properties", "title"],
   path: () => `databases`,
+} as const
+
+/*
+ * databases.update()
+ */
+
+interface DatabasesUpdatePathParameters {
+  database_id: string
+}
+interface DatabasesUpdateQueryParameters {}
+
+export type UpdatePropertySchemaMap = {
+  [propertyName: string]: UpdatePropertySchema
+}
+interface DatabasesUpdateBodyParameters {
+  properties?: UpdatePropertySchemaMap
+  title?: RichTextInput[]
+}
+
+export interface DatabasesUpdateParameters
+  extends DatabasesUpdatePathParameters,
+    DatabasesUpdateQueryParameters,
+    DatabasesUpdateBodyParameters {}
+export interface DatabasesUpdateResponse extends Database {}
+
+export const databasesUpdate = {
+  method: "patch",
+  pathParams: ["database_id"],
+  queryParams: [],
+  bodyParams: ["properties", "title"],
+  path: (d: DatabasesUpdatePathParameters) => `databases/${d.database_id}`,
 } as const
 
 /*
