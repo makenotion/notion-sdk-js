@@ -1050,13 +1050,12 @@ export interface RenamePropertySchema {
 
 type UpdateSelectOptionSchema = SelectOptionSchema | SelectOption
 
-type UpdateMultiSelectOptionSchema = UpdateSelectOptionSchema
 export interface UpdateSelectPropertySchema {
   select: { options?: UpdateSelectOptionSchema[] }
 }
 
 export interface UpdateMultiSelectPropertySchema {
-  multi_select: { options?: UpdateMultiSelectOptionSchema[] }
+  multi_select: { options?: UpdateSelectOptionSchema[] }
 }
 
 export type UpdatePropertySchema =
