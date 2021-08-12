@@ -268,7 +268,7 @@ export interface DatabasesCreateParameters
   extends DatabasesCreatePathParameters,
     DatabasesCreateQueryParameters,
     DatabasesCreateBodyParameters {}
-export interface DatabasesCreateResponse extends BlockBase {}
+export interface DatabasesCreateResponse extends Database {}
 
 export const databasesCreate = {
   method: "post",
@@ -299,7 +299,7 @@ export interface DatabasesUpdateParameters
   extends DatabasesUpdatePathParameters,
     DatabasesUpdateQueryParameters,
     DatabasesUpdateBodyParameters {}
-export interface DatabasesUpdateResponse extends BlockBase {}
+export interface DatabasesUpdateResponse extends Database {}
 
 export const databasesUpdate = {
   method: "patch",
