@@ -256,7 +256,7 @@ interface DatabasesCreatePathParameters {}
 interface DatabasesCreateQueryParameters {}
 
 export type InputPropertySchemaMap = {
-  [propertyName: string]: UpdatePropertySchemaMap
+  [propertyName: string]: PropertySchema
 }
 interface DatabasesCreateBodyParameters {
   parent: ParentPageInput
