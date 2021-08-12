@@ -1040,3 +1040,28 @@ export interface LastEditedTimePropertySchema {
 export interface LastEditedByPropertySchema {
   last_edited_by: Record<string, never>
 }
+
+/*
+ * Update database property schema (input)
+ */
+export interface RenamePropertySchema {
+  name: string
+}
+
+type UpdateSelectOptionSchema = SelectOptionSchema | SelectOption
+
+type UpdateMultiSelectOptionSchema = UpdateSelectOptionSchema
+export interface UpdateSelectPropertySchema {
+  select: { options?: UpdateSelectOptionSchema[] }
+}
+
+export interface UpdateMultiSelectPropertySchema {
+  multi_select: { options?: UpdateMultiSelectOptionSchema[] }
+}
+
+export type UpdatePropertySchema =
+  | PropertySchema
+  | UpdateSelectPropertySchema
+  | UpdateMultiSelectPropertySchema
+  | RenamePropertySchema
+  | null

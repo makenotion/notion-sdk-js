@@ -55,6 +55,9 @@ import {
   BlocksUpdateParameters,
   BlocksUpdateResponse,
   blocksUpdate,
+  databasesUpdate,
+  DatabasesUpdateParameters,
+  DatabasesUpdateResponse,
 } from "./api-endpoints"
 import nodeFetch from "node-fetch"
 import {
@@ -317,6 +320,21 @@ export default class Client {
         method: databasesCreate.method,
         query: pick(args, databasesCreate.queryParams),
         body: pick(args, databasesCreate.bodyParams),
+        auth: args?.auth,
+      })
+    },
+
+    /**
+     * Update a database
+     */
+    update: (
+      args: WithAuth<DatabasesUpdateParameters>
+    ): Promise<DatabasesUpdateResponse> => {
+      return this.request<DatabasesUpdateResponse>({
+        path: databasesUpdate.path(args),
+        method: databasesUpdate.method,
+        query: pick(args, databasesUpdate.queryParams),
+        body: pick(args, databasesUpdate.bodyParams),
         auth: args?.auth,
       })
     },
