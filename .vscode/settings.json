@@ -1,3 +1,4 @@
 {
-  "cSpell.words": ["notionhq"]
+  "cSpell.words": ["notionhq"],
+  "deno.enable": true,
 }

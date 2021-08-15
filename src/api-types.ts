@@ -5,8 +5,8 @@
  * In the future, the contents of this file will be generated from an API definition.
  */
 
-import { PropertyValueMap } from "./api-endpoints"
-import { DistributiveExtend, DistributiveOmit, RequiredBy } from "./type-utils"
+import { PropertyValueMap } from "./api-endpoints.ts"
+import { DistributiveExtend, DistributiveOmit, RequiredBy } from "./type-utils.ts"
 
 /*
  * Pagination

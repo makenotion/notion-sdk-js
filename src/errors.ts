@@ -1,6 +1,6 @@
-import { SupportedResponse } from "./fetch-types"
-import { isObject } from "./helpers"
-import { Assert } from "./type-utils"
+import { SupportedResponse } from "./fetch-types.ts"
+import { isObject } from "./helpers.ts"
+import { Assert } from "./type-utils.ts"
 
 /**
  * Error codes returned in responses from the API.

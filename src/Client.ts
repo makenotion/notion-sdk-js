@@ -1,17 +1,16 @@
-import type { Agent } from "http"
 import {
   Logger,
   LogLevel,
   logLevelSeverity,
   makeConsoleLogger,
-} from "./logging"
+} from "./logging.ts"
 import {
   buildRequestError,
   isHTTPResponseError,
   isNotionClientError,
   RequestTimeoutError,
-} from "./errors"
-import { pick } from "./helpers"
+} from "./errors.ts"
+import { pick } from "./helpers.ts"
 import {
   BlocksChildrenAppendParameters,
   BlocksChildrenAppendResponse,
@@ -58,13 +57,15 @@ import {
   databasesUpdate,
   DatabasesUpdateParameters,
   DatabasesUpdateResponse,
-} from "./api-endpoints"
-import nodeFetch from "node-fetch"
-import {
-  version as PACKAGE_VERSION,
-  name as PACKAGE_NAME,
-} from "../package.json"
-import { SupportedFetch } from "./fetch-types"
+} from "./api-endpoints.ts"
+// import {
+//   version as PACKAGE_VERSION,
+//   name as PACKAGE_NAME,
+// } from "../package.json"
+import { SupportedFetch } from "./fetch-types.ts"
+
+const PACKAGE_NAME = "cloudydeno/deno-notion_sdk";
+const PACKAGE_VERSION = "0.2.4";
 
 export interface ClientOptions {
   auth?: string
@@ -74,8 +75,6 @@ export interface ClientOptions {
   logger?: Logger
   notionVersion?: string
   fetch?: SupportedFetch
-  /** Silently ignored in the browser */
-  agent?: Agent
 }
 
 export interface RequestParameters {
@@ -94,7 +93,6 @@ export default class Client {
   #timeoutMs: number
   #notionVersion: string
   #fetch: SupportedFetch
-  #agent: Agent | undefined
   #userAgent: string
 
   static readonly defaultNotionVersion = "2021-08-02"
@@ -106,8 +104,7 @@ export default class Client {
     this.#prefixUrl = (options?.baseUrl ?? "https://api.notion.com") + "/v1/"
     this.#timeoutMs = options?.timeoutMs ?? 60_000
     this.#notionVersion = options?.notionVersion ?? Client.defaultNotionVersion
-    this.#fetch = options?.fetch ?? nodeFetch
-    this.#agent = options?.agent
+    this.#fetch = options?.fetch ?? fetch
     this.#userAgent = `notionhq-client/${PACKAGE_VERSION}`
   }
 
@@ -159,7 +156,6 @@ export default class Client {
           method,
           headers,
           body: bodyAsJsonString,
-          agent: this.#agent,
         }),
         this.#timeoutMs
       )

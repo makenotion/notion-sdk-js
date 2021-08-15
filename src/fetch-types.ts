@@ -1,9 +1,4 @@
-/// <reference lib="dom" />
-import type { Assert, Await } from "./type-utils"
-import type {
-  RequestInit as NodeRequestInit,
-  Response as NodeResponse,
-} from "node-fetch"
+import type { Assert, Await } from "./type-utils.ts"
 
 type FetchFn = typeof fetch
 type FetchResponse = Await<ReturnType<FetchFn>>
@@ -14,16 +9,14 @@ export type SupportedRequestInfo = string
 type _assertSupportedInfoIsSubtype = Assert<RequestInfo, SupportedRequestInfo>
 
 export type SupportedRequestInit = {
-  agent?: NodeRequestInit["agent"]
-  body?: NonNullable<RequestInit["body"]> & NonNullable<NodeRequestInit["body"]>
-  headers?: NonNullable<RequestInit["headers"]> &
-    NonNullable<NodeRequestInit["headers"]>
+  body?: NonNullable<RequestInit["body"]>
+  headers?: NonNullable<RequestInit["headers"]>
   method?: RequestInit["method"]
   redirect?: RequestInit["redirect"]
 }
 type _assertSupportedInitIsSubtype = Assert<RequestInit, SupportedRequestInit>
 
-export type SupportedResponse = FetchResponse | NodeResponse
+export type SupportedResponse = FetchResponse
 
 export type SupportedFetch = (
   url: SupportedRequestInfo,

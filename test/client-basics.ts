@@ -1,7 +1,5 @@
-import test from "ava"
-import { Client } from "../src"
+import { Client } from "../src/index.ts"
 
-test("initialize client", t => {
+Deno.test("initialize client", () => {
   new Client({ auth: "foo" })
-  t.pass()
 })

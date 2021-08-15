@@ -1,25 +1,26 @@
-// Find the official Notion API client @ https://  github.com/makenotion/notion-sdk-js/
-// npm install @notionhq/client
-import { Client } from "@notionhq/client"
+#!/usr/bin/env -S deno run --allow-env=NOTION_KEY --allow-net=api.notion.com
+import { Client } from "../../src/index.ts"
 
-import * as _ from "lodash"
+function sample<T>(items: T[]): T {
+  return items[Math.floor(Math.random() * items.length)];
+}
 
-import { config } from "dotenv"
-config()
+import {
+  faker
+} from "https://deno.land/x/deno_faker@v1.0.3/locale/en_US.ts"
 
-import * as faker from "faker"
 import {
   InputPropertyValueMap,
   PropertyMap,
-} from "@notionhq/client/build/src/api-endpoints"
+} from "../../src/api-endpoints.ts"
 import {
   PropertyValueWithoutId,
   SelectFilter,
   TextFilter,
   UserBase,
-} from "@notionhq/client/build/src/api-types"
+} from "../../src/api-types.ts"
 
-const notion = new Client({ auth: process.env["NOTION_KEY"] })
+const notion = new Client({ auth: Deno.env.get("NOTION_KEY") })
 
 const startTime = new Date()
 
@@ -38,7 +39,7 @@ function makeFakePropertiesData(
         },
       }
     } else if (property.type === "multi_select") {
-      const multiSelectOption = _.sample(property.multi_select.options)
+      const multiSelectOption = sample(property.multi_select.options)
       if (multiSelectOption) {
         propertyValues[name] = {
           type: "multi_select",
@@ -46,7 +47,7 @@ function makeFakePropertiesData(
         }
       }
     } else if (property.type === "select") {
-      const selectOption = _.sample(property.select.options)
+      const selectOption = sample(property.select.options)
       if (selectOption) {
         propertyValues[name] = {
           type: "select",
@@ -128,14 +129,14 @@ function findRandomSelectColumnNameAndValue(properties: PropertyMap): {
   const options = Object.entries(properties).flatMap(([name, property]) => {
     if (property.type === "select") {
       return [
-        { name, value: _.sample(property.select.options.map(o => o.name)) },
+        { name, value: sample(property.select.options.map(o => o.name)) },
       ]
     }
     return []
   })
 
   if (options.length > 0) {
-    return _.sample(options) || { name: "", value: undefined }
+    return sample(options) || { name: "", value: undefined }
   }
 
   return { name: "", value: undefined }
@@ -280,7 +281,7 @@ async function exerciseFilters(databaseId: string, properties: PropertyMap) {
 
   // Let's do it again for text
 
-  const textColumn = _.sample(
+  const textColumn = sample(
     Object.values(properties).filter(p => p.type === "rich_text")
   )
   if (!textColumn) {

@@ -28,7 +28,7 @@ import {
   RichTextInput,
   UpdateBlock,
   UpdatePropertySchema,
-} from "./api-types"
+} from "./api-types.ts"
 
 // TODO: type assertions to verify that each interface is synchronized to the list of keys in the runtime value below.
 

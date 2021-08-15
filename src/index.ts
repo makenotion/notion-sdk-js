@@ -1,15 +1,20 @@
-export { default as Client } from "./Client"
-export { LogLevel, Logger } from "./logging"
+export { default as Client } from "./Client.ts"
+export { LogLevel } from "./logging.ts"
+export type { Logger } from "./logging.ts"
 export {
   // Error codes
-  NotionErrorCode,
   APIErrorCode,
   ClientErrorCode,
   // Error types
-  NotionClientError,
   APIResponseError,
   UnknownHTTPResponseError,
   RequestTimeoutError,
   // Error helpers
   isNotionClientError,
-} from "./errors"
+} from "./errors.ts"
+export type {
+  // Error codes
+  NotionErrorCode,
+  // Error types
+  NotionClientError,
+} from "./errors.ts"

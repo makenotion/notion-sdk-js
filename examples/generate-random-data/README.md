@@ -11,19 +11,16 @@ It is designed to show and exercise the full types of the Notion API and the typ
 
 ```zsh
 # Clone this repository locally
-git clone https://github.com/makenotion/notion-sdk-js.git
+git clone https://github.com/cloudydeno/deno-notion_sdk
 
 # Switch into this project
-cd notion-sdk-js/examples/generate-random-data
-
-# Install the dependencies
-npm install
+cd deno-notion_sdk/examples/generate-random-data
 ```
 
-### 2. Set your environment variables in a `.env` file
+### 2. Export your environment variables in your terminal
 
 ```zsh
-NOTION_KEY=<your-notion-api-key>
+export NOTION_KEY=<your-notion-api-key>
 ```
 
 You can create your Notion API key [here](https://www.notion.com/my-integrations).
@@ -33,5 +30,7 @@ To create a Notion database that will work with this example, duplicate [this em
 ### 3. Run code
 
 ```zsh
-npm run ts-run
+./index.ts
+# or
+deno run --allow-env=NOTION_KEY --allow-net=api.notion.com index.ts
 ```

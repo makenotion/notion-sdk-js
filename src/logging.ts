@@ -1,4 +1,4 @@
-import { assertNever } from "./helpers"
+import { assertNever } from "./helpers.ts"
 
 export enum LogLevel {
   DEBUG = "debug",
