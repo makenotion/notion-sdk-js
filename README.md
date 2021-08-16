@@ -1,7 +1,10 @@
 <div align="center">
 	<h1>Notion SDK for Deno</h1>
 	<p>
-		<b>An unofficial port of the [Notion SDK for Javascript](https://github.com/makenotion/notion-sdk-js) for the Deno Typescript runtime. A simple and easy to use client for the <a href="https://developers.notion.com">Notion API</a></b>
+		<b>An unofficial port</b> of the <a href="https://github.com/makenotion/notion-sdk-js">Notion SDK for Javascript</a> for the <a href="https://deno.land/">Deno JS/Typescript runtime</a>
+	</p>
+	<p>
+		<b>A simple and easy to use client for the <a href="https://developers.notion.com">Notion API</a></b>
 	</p>
 	<br>
 </div>
