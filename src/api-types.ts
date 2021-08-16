@@ -941,8 +941,8 @@ export interface RichTextPropertySchema {
 }
 
 export interface NumberPropertySchema {
-  number: {
-    format?:
+  number: number;
+  format?:
       | "number"
       | "number_with_commas"
       | "percent"
@@ -979,7 +979,6 @@ export interface NumberPropertySchema {
       | "riyal"
       | "ringgit"
       | "leu"
-  }
 }
 
 interface SelectOptionSchema {
