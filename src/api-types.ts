@@ -723,12 +723,12 @@ export interface RichTextInputPropertyValue extends PropertyValueBase {
 
 export interface NumberPropertyValue extends PropertyValueBase {
   type: "number"
-  number: number
+  number: number | null
 }
 
 export interface SelectPropertyValue extends PropertyValueBase {
   type: "select"
-  select: SelectOption
+  select: SelectOption | null
 }
 
 export interface MultiSelectPropertyValue extends PropertyValueBase {
@@ -741,7 +741,7 @@ export interface DatePropertyValue extends PropertyValueBase {
   date: {
     start: string
     end?: string
-  }
+  } | null
 }
 
 export interface FormulaPropertyValue extends PropertyValueBase {
@@ -777,11 +777,11 @@ export interface RollupPropertyValue extends PropertyValueBase {
 
 export interface NumberRollupValue {
   type: "number"
-  number: number
+  number: number | null
 }
 export interface DateRollupValue {
   type: "date"
-  date: DatePropertyValue
+  date: DatePropertyValue | null
 }
 export interface ArrayRollupValue {
   type: "array"
@@ -805,17 +805,17 @@ export interface CheckboxPropertyValue extends PropertyValueBase {
 
 export interface URLPropertyValue extends PropertyValueBase {
   type: "url"
-  url: string
+  url: string | null
 }
 
 export interface EmailPropertyValue extends PropertyValueBase {
   type: "email"
-  email: string
+  email: string | null
 }
 
 export interface PhoneNumberPropertyValue extends PropertyValueBase {
   type: "phone_number"
-  phone_number: string
+  phone_number: string | null
 }
 
 export interface CreatedTimePropertyValue extends PropertyValueBase {
