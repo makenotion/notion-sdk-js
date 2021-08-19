@@ -6,7 +6,12 @@
  */
 
 import { PropertyValueMap } from "./api-endpoints"
-import { DistributiveExtend, DistributiveOmit, RequiredBy } from "./type-utils"
+import {
+  DistributiveExtend,
+  DistributiveOmit,
+  PartialBy,
+  RequiredBy,
+} from "./type-utils"
 
 /*
  * Pagination
@@ -49,6 +54,12 @@ export type Block =
   | ToDoBlock
   | ToggleBlock
   | ChildPageBlock
+  | EmbedBlock
+  | ImageBlock
+  | VideoBlock
+  | FileBlock
+  | PDFBlock
+  | AudioBlock
   | UnsupportedBlock
 
 export interface BlockBase {
@@ -124,6 +135,47 @@ export interface ChildPageBlock extends BlockBase {
   child_page: { title: string }
 }
 
+export interface EmbedBlock extends BlockBase {
+  type: "embed"
+  embed: {
+    url: string
+    caption?: RichText[]
+  }
+}
+
+export interface ExternalFileWithCaption extends ExternalFile {
+  caption?: RichText[]
+}
+
+export interface FileWithCaption extends File {
+  caption?: RichText[]
+}
+
+export interface ImageBlock extends BlockBase {
+  type: "image"
+  image: ExternalFileWithCaption | FileWithCaption
+}
+
+export interface VideoBlock extends BlockBase {
+  type: "video"
+  video: ExternalFileWithCaption | FileWithCaption
+}
+
+export interface FileBlock extends BlockBase {
+  type: "file"
+  file: ExternalFileWithCaption | FileWithCaption
+}
+
+export interface PDFBlock extends BlockBase {
+  type: "pdf"
+  pdf: ExternalFileWithCaption | FileWithCaption
+}
+
+export interface AudioBlock extends BlockBase {
+  type: "audio"
+  audio: ExternalFileWithCaption | FileWithCaption
+}
+
 export interface UnsupportedBlock extends BlockBase {
   type: "unsupported"
 }
@@ -139,6 +191,8 @@ export interface Database {
   created_time: string
   last_edited_time: string
   title: RichText[]
+  icon: File | ExternalFile | Emoji | null
+  cover: File | ExternalFile | null
   properties: { [propertyName: string]: Property }
 }
 
@@ -565,6 +619,8 @@ export interface Page {
   created_time: string
   last_edited_time: string
   archived: boolean
+  icon: File | ExternalFile | Emoji | null
+  cover: File | ExternalFile | null
   properties: PropertyValueMap
   url: string
 }
@@ -686,7 +742,7 @@ export type InputPropertyValueWithRequiredId =
   | FormulaPropertyValue
   | RollupPropertyValue
   | PeoplePropertyValue
-  | FilesPropertyValue
+  | FilesPropertyInputValue
   | CheckboxPropertyValue
   | URLPropertyValue
   | EmailPropertyValue
@@ -793,9 +849,23 @@ export interface PeoplePropertyValue extends PropertyValueBase {
   people: User[]
 }
 
+type FileWithName = {
+  name: string
+} & (File | ExternalFile)
+
+type ExternalFileWithName = {
+  name: string
+} & ExternalFile
+
 export interface FilesPropertyValue extends PropertyValueBase {
   type: "files"
-  files: { name: string }[]
+  files: FileWithName[]
+}
+
+// When writing, we don't allow S3 hosted files
+export interface FilesPropertyInputValue extends PropertyValueBase {
+  type: "files"
+  files: ExternalFileWithName[]
 }
 
 export interface CheckboxPropertyValue extends PropertyValueBase {
@@ -1064,3 +1134,34 @@ export type UpdatePropertySchema =
   | UpdateMultiSelectPropertySchema
   | RenamePropertySchema
   | null
+
+/*
+ * Files
+ */
+
+interface FileBase {
+  type: "file"
+  file: {
+    url: string
+  }
+}
+
+export type File = FileBase & { file: { expiry_time: string } }
+
+export type FileInput = PartialBy<FileBase, "type">
+
+export interface ExternalFile {
+  type: "external"
+  external: {
+    url: string
+  }
+}
+
+export type ExternalFileInput = PartialBy<ExternalFile, "type">
+
+export interface Emoji {
+  type: "emoji"
+  emoji: string
+}
+
+export type EmojiInput = PartialBy<Emoji, "type">
