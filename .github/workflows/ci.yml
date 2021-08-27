@@ -30,6 +30,6 @@ jobs:
           key: deno/${{ matrix.deno-version }}-https/v1-${{ github.sha }}
           restore-keys: deno/${{ matrix.deno-version }}-https/v1-
 
-      - run: time deno cache src/index.ts
+      - run: time deno cache src/mod.ts
       - run: time deno test test/*.ts
       - run: time deno cache examples/*/index.ts

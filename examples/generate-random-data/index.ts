@@ -1,5 +1,5 @@
 #!/usr/bin/env -S deno run --allow-env=NOTION_KEY --allow-net=api.notion.com
-import { Client } from "../../src/index.ts"
+import { Client } from "../../src/mod.ts"
 
 function sample<T>(items: T[]): T {
   return items[Math.floor(Math.random() * items.length)];

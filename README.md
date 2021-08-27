@@ -18,7 +18,7 @@
 Import and initialize a client using an **integration token** or an OAuth **access token**.
 
 ```js
-import { Client } from "https://raw.githubusercontent.com/cloudydeno/deno-notion_sdk/v0.2.4-0/src/index.ts";
+import { Client } from "https://deno.land/x/notion_sdk/src/mod.ts";
 
 // Initializing a client
 const notion = new Client({
@@ -79,7 +79,7 @@ If the API returns an unsuccessful response, the returned `Promise` rejects with
 The error contains properties from the response, and the most helpful is `code`. You can compare `code` to the values in the `APIErrorCode` object to avoid misspelling error codes.
 
 ```js
-import { Client, APIErrorCode } from "https://raw.githubusercontent.com/cloudydeno/deno-notion_sdk/9a3f8c3/src/index.ts";
+import { Client, APIErrorCode } from "https://deno.land/x/notion_sdk/src/mod.ts";
 
 try {
   const myPage = await notion.databases.query({
@@ -110,7 +110,7 @@ The client emits useful information to a logger. By default, it only emits warni
 If you're debugging an application, and would like the client to log response bodies, set the `logLevel` option to `LogLevel.DEBUG`.
 
 ```js
-import { Client, LogLevel } from "https://raw.githubusercontent.com/cloudydeno/deno-notion_sdk/9a3f8c3/src/index.ts";
+import { Client, LogLevel } from "https://deno.land/x/notion_sdk/src/mod.ts";
 
 const notion = new Client({
   auth: Deno.env.get("NOTION_TOKEN"),
