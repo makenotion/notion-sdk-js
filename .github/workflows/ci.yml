@@ -11,15 +11,25 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
+      fail-fast: false
       matrix:
         deno-version: [v1.10, v1.11, v1.12, v1.13, canary]
 
     steps:
       - uses: actions/checkout@v2
+
       - name: Use Deno ${{ matrix.deno-version }}
-        uses: denoland/setup-deno@main
+        uses: denoland/setup-deno@v1
         with:
           deno-version: ${{ matrix.deno-version }}
+
+      - name: Cache https:// deps
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/deno/deps/https
+          key: deno/${{ matrix.deno-version }}-https/v1-${{ github.sha }}
+          restore-keys: deno/${{ matrix.deno-version }}-https/v1-
+
       - run: time deno cache src/index.ts
       - run: time deno test test/*.ts
       - run: time deno cache examples/*/index.ts
