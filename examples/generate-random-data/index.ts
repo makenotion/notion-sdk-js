@@ -142,7 +142,7 @@ function findRandomSelectColumnNameAndValue(properties: PropertyMap): {
   return { name: "", value: undefined }
 }
 
-function extractValueToString(property: PropertyValueWithoutId): string {
+function extractValueToString(property: PropertyValueWithoutId): string | null {
   switch (property.type) {
     case "checkbox":
       return property.checkbox.toString()
@@ -151,16 +151,19 @@ function extractValueToString(property: PropertyValueWithoutId): string {
     case "created_time":
       return new Date(property.created_time).toISOString()
     case "date":
+      if (property.date == null) return null;
       return new Date(property.date.start).toISOString()
     case "email":
       return property.email
     case "url":
       return property.url
     case "number":
+      if (property.number == null) return null;
       return property.number.toString()
     case "phone_number":
       return property.phone_number
     case "select":
+      if (property.select == null) return null;
       return `${property.select.id} ${property.select.name}`
     case "multi_select":
       return property.multi_select
@@ -186,14 +189,17 @@ function extractValueToString(property: PropertyValueWithoutId): string {
       } else if (property.formula.type === "boolean") {
         return property.formula.boolean.toString()
       } else if (property.formula.type === "date") {
+        if (property.formula.date.date == null) return null;
         return new Date(property.formula.date.date.start).toISOString()
       } else {
         return assertUnreachable(property.formula)
       }
     case "rollup":
       if (property.rollup.type === "number") {
+        if (property.rollup.number == null) return null;
         return property.rollup.number.toString()
       } else if (property.rollup.type === "date") {
+        if (property.rollup.date?.date == null) return null;
         return new Date(property.rollup.date.date.start).toISOString()
       } else if (property.rollup.type === "array") {
         return JSON.stringify(property.rollup.array)
