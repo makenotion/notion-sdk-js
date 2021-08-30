@@ -261,7 +261,7 @@ export interface PagesCreateParameters
   extends PagesCreatePathParameters,
     PagesCreateQueryParameters,
     PagesCreateBodyParameters {}
-export interface PagesCreateResponse extends BlockBase {}
+export interface PagesCreateResponse extends Page {}
 
 export const pagesCreate = {
   method: "post",
