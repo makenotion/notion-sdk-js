@@ -467,6 +467,11 @@ export type BackgroundColor =
   | "pink_background"
   | "red_background"
 
+export interface Date {
+  start: string
+  end?: string
+}
+
 /*
  * Filter (input)
  */
@@ -794,10 +799,7 @@ export interface MultiSelectPropertyValue extends PropertyValueBase {
 
 export interface DatePropertyValue extends PropertyValueBase {
   type: "date"
-  date: {
-    start: string
-    end?: string
-  } | null
+  date: Date | null
 }
 
 export interface FormulaPropertyValue extends PropertyValueBase {
@@ -823,7 +825,7 @@ export interface BooleanFormulaValue {
 }
 export interface DateFormulaValue {
   type: "date"
-  date: DatePropertyValue
+  date: Date
 }
 
 export interface RollupPropertyValue extends PropertyValueBase {
@@ -837,7 +839,7 @@ export interface NumberRollupValue {
 }
 export interface DateRollupValue {
   type: "date"
-  date: DatePropertyValue | null
+  date: Date | null
 }
 export interface ArrayRollupValue {
   type: "array"
