@@ -726,6 +726,7 @@ export type PropertyValue =
   | DatePropertyValue
   | FormulaPropertyValue
   | RollupPropertyValue
+  | RelationPropertyValue
   | PeoplePropertyValue
   | FilesPropertyValue
   | CheckboxPropertyValue
@@ -840,6 +841,11 @@ export interface DateFormulaValue {
 export interface RollupPropertyValue extends PropertyValueBase {
   type: "rollup"
   rollup: NumberRollupValue | DateRollupValue | ArrayRollupValue
+}
+
+export interface RelationPropertyValue extends PropertyValueBase {
+  type: "relation"
+  relation: { id: string }[]
 }
 
 export interface NumberRollupValue {
