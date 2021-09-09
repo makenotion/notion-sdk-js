@@ -6,7 +6,12 @@
  */
 
 import { PropertyValueMap } from "./api-endpoints"
-import { DistributiveExtend, DistributiveOmit, RequiredBy } from "./type-utils"
+import {
+  DistributiveExtend,
+  DistributiveOmit,
+  PartialBy,
+  RequiredBy,
+} from "./type-utils"
 
 /*
  * Pagination
@@ -49,6 +54,13 @@ export type Block =
   | ToDoBlock
   | ToggleBlock
   | ChildPageBlock
+  | EmbedBlock
+  | BookmarkBlock
+  | ImageBlock
+  | VideoBlock
+  | FileBlock
+  | PDFBlock
+  | AudioBlock
   | UnsupportedBlock
 
 export interface BlockBase {
@@ -58,6 +70,7 @@ export interface BlockBase {
   created_time: string
   last_edited_time: string
   has_children: boolean
+  archived: boolean
 }
 
 export interface ParagraphBlock extends BlockBase {
@@ -124,6 +137,55 @@ export interface ChildPageBlock extends BlockBase {
   child_page: { title: string }
 }
 
+export interface EmbedBlock extends BlockBase {
+  type: "embed"
+  embed: {
+    url: string
+    caption?: RichText[]
+  }
+}
+
+export interface BookmarkBlock extends BlockBase {
+  type: "bookmark"
+  bookmark: {
+    url: string
+    caption?: RichText[]
+  }
+}
+
+export interface ExternalFileWithCaption extends ExternalFile {
+  caption?: RichText[]
+}
+
+export interface FileWithCaption extends File {
+  caption?: RichText[]
+}
+
+export interface ImageBlock extends BlockBase {
+  type: "image"
+  image: ExternalFileWithCaption | FileWithCaption
+}
+
+export interface VideoBlock extends BlockBase {
+  type: "video"
+  video: ExternalFileWithCaption | FileWithCaption
+}
+
+export interface FileBlock extends BlockBase {
+  type: "file"
+  file: ExternalFileWithCaption | FileWithCaption
+}
+
+export interface PDFBlock extends BlockBase {
+  type: "pdf"
+  pdf: ExternalFileWithCaption | FileWithCaption
+}
+
+export interface AudioBlock extends BlockBase {
+  type: "audio"
+  audio: ExternalFileWithCaption | FileWithCaption
+}
+
 export interface UnsupportedBlock extends BlockBase {
   type: "unsupported"
 }
@@ -139,6 +201,8 @@ export interface Database {
   created_time: string
   last_edited_time: string
   title: RichText[]
+  icon: File | ExternalFile | Emoji | null
+  cover: File | ExternalFile | null
   properties: { [propertyName: string]: Property }
 }
 
@@ -413,6 +477,11 @@ export type BackgroundColor =
   | "pink_background"
   | "red_background"
 
+export interface Date {
+  start: string
+  end?: string
+}
+
 /*
  * Filter (input)
  */
@@ -565,6 +634,8 @@ export interface Page {
   created_time: string
   last_edited_time: string
   archived: boolean
+  icon: File | ExternalFile | Emoji | null
+  cover: File | ExternalFile | null
   properties: PropertyValueMap
   url: string
 }
@@ -574,6 +645,7 @@ export interface Page {
  */
 
 export type UpdateBlock =
+  | UpdateBlockBase
   | ParagraphUpdateBlock
   | HeadingOneUpdateBlock
   | HeadingTwoUpdateBlock
@@ -583,36 +655,40 @@ export type UpdateBlock =
   | ToggleUpdateBlock
   | ToDoUpdateBlock
 
-interface TextContentUpdate {
+interface UpdateBlockBase {
+  archived?: boolean
+}
+
+interface TextContentUpdate extends UpdateBlockBase {
   text: RichTextInput[]
 }
 
-interface ParagraphUpdateBlock {
+interface ParagraphUpdateBlock extends UpdateBlockBase {
   paragraph: TextContentUpdate
 }
 
-interface HeadingOneUpdateBlock {
+interface HeadingOneUpdateBlock extends UpdateBlockBase {
   heading_1: TextContentUpdate
 }
 
-interface HeadingTwoUpdateBlock {
+interface HeadingTwoUpdateBlock extends UpdateBlockBase {
   heading_2: TextContentUpdate
 }
-interface HeadingThreeUpdateBlock {
+interface HeadingThreeUpdateBlock extends UpdateBlockBase {
   heading_3: TextContentUpdate
 }
 
-interface BulletedListItemUpdateBlock {
+interface BulletedListItemUpdateBlock extends UpdateBlockBase {
   bulleted_list_item: TextContentUpdate
 }
-interface NumberedListItemUpdateBlock {
+interface NumberedListItemUpdateBlock extends UpdateBlockBase {
   numbered_list_item: TextContentUpdate
 }
-interface ToggleUpdateBlock {
+interface ToggleUpdateBlock extends UpdateBlockBase {
   toggle: TextContentUpdate
 }
 
-interface ToDoUpdateBlock {
+interface ToDoUpdateBlock extends UpdateBlockBase {
   to_do: {
     text?: RichTextInput[]
     checked?: boolean
@@ -687,7 +763,7 @@ export type InputPropertyValueWithRequiredId =
   | FormulaPropertyValue
   | RollupPropertyValue
   | PeoplePropertyValue
-  | FilesPropertyValue
+  | FilesPropertyInputValue
   | CheckboxPropertyValue
   | URLPropertyValue
   | EmailPropertyValue
@@ -724,12 +800,12 @@ export interface RichTextInputPropertyValue extends PropertyValueBase {
 
 export interface NumberPropertyValue extends PropertyValueBase {
   type: "number"
-  number: number
+  number: number | null
 }
 
 export interface SelectPropertyValue extends PropertyValueBase {
   type: "select"
-  select: SelectOption
+  select: SelectOption | null
 }
 
 export interface MultiSelectPropertyValue extends PropertyValueBase {
@@ -739,10 +815,7 @@ export interface MultiSelectPropertyValue extends PropertyValueBase {
 
 export interface DatePropertyValue extends PropertyValueBase {
   type: "date"
-  date: {
-    start: string
-    end?: string
-  }
+  date: Date | null
 }
 
 export interface FormulaPropertyValue extends PropertyValueBase {
@@ -768,7 +841,7 @@ export interface BooleanFormulaValue {
 }
 export interface DateFormulaValue {
   type: "date"
-  date: DatePropertyValue
+  date: Date
 }
 
 export interface RelationPropertyValue extends PropertyValueBase {
@@ -784,13 +857,18 @@ export interface RollupPropertyValue extends PropertyValueBase {
   rollup: NumberRollupValue | DateRollupValue | ArrayRollupValue
 }
 
+export interface RelationPropertyValue extends PropertyValueBase {
+  type: "relation"
+  relation: { id: string }[]
+}
+
 export interface NumberRollupValue {
   type: "number"
-  number: number
+  number: number | null
 }
 export interface DateRollupValue {
   type: "date"
-  date: DatePropertyValue
+  date: Date | null
 }
 export interface ArrayRollupValue {
   type: "array"
@@ -802,9 +880,23 @@ export interface PeoplePropertyValue extends PropertyValueBase {
   people: User[]
 }
 
+type FileWithName = {
+  name: string
+} & (File | ExternalFile)
+
+type ExternalFileWithName = {
+  name: string
+} & ExternalFile
+
 export interface FilesPropertyValue extends PropertyValueBase {
   type: "files"
-  files: { name: string }[]
+  files: FileWithName[]
+}
+
+// When writing, we don't allow S3 hosted files
+export interface FilesPropertyInputValue extends PropertyValueBase {
+  type: "files"
+  files: ExternalFileWithName[]
 }
 
 export interface CheckboxPropertyValue extends PropertyValueBase {
@@ -814,17 +906,17 @@ export interface CheckboxPropertyValue extends PropertyValueBase {
 
 export interface URLPropertyValue extends PropertyValueBase {
   type: "url"
-  url: string
+  url: string | null
 }
 
 export interface EmailPropertyValue extends PropertyValueBase {
   type: "email"
-  email: string
+  email: string | null
 }
 
 export interface PhoneNumberPropertyValue extends PropertyValueBase {
   type: "phone_number"
-  phone_number: string
+  phone_number: string | null
 }
 
 export interface CreatedTimePropertyValue extends PropertyValueBase {
@@ -1049,3 +1141,58 @@ export interface LastEditedTimePropertySchema {
 export interface LastEditedByPropertySchema {
   last_edited_by: Record<string, never>
 }
+
+/*
+ * Update database property schema (input)
+ */
+export interface RenamePropertySchema {
+  name: string
+}
+
+type UpdateSelectOptionSchema = SelectOptionSchema | SelectOption
+
+export interface UpdateSelectPropertySchema {
+  select: { options?: UpdateSelectOptionSchema[] }
+}
+
+export interface UpdateMultiSelectPropertySchema {
+  multi_select: { options?: UpdateSelectOptionSchema[] }
+}
+
+export type UpdatePropertySchema =
+  | PropertySchema
+  | UpdateSelectPropertySchema
+  | UpdateMultiSelectPropertySchema
+  | RenamePropertySchema
+  | null
+
+/*
+ * Files
+ */
+
+interface FileBase {
+  type: "file"
+  file: {
+    url: string
+  }
+}
+
+export type File = FileBase & { file: { expiry_time: string } }
+
+export type FileInput = PartialBy<FileBase, "type">
+
+export interface ExternalFile {
+  type: "external"
+  external: {
+    url: string
+  }
+}
+
+export type ExternalFileInput = PartialBy<ExternalFile, "type">
+
+export interface Emoji {
+  type: "emoji"
+  emoji: string
+}
+
+export type EmojiInput = PartialBy<Emoji, "type">

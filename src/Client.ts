@@ -55,6 +55,12 @@ import {
   BlocksUpdateParameters,
   BlocksUpdateResponse,
   blocksUpdate,
+  databasesUpdate,
+  DatabasesUpdateParameters,
+  DatabasesUpdateResponse,
+  blocksDelete,
+  BlocksDeleteParameters,
+  BlocksDeleteResponse,
 } from "./api-endpoints"
 import nodeFetch from "node-fetch"
 import {
@@ -94,7 +100,7 @@ export default class Client {
   #agent: Agent | undefined
   #userAgent: string
 
-  static readonly defaultNotionVersion = "2021-05-13"
+  static readonly defaultNotionVersion = "2021-08-16"
 
   public constructor(options?: ClientOptions) {
     this.#auth = options?.auth
@@ -225,6 +231,21 @@ export default class Client {
         auth: args?.auth,
       })
     },
+
+    /**
+     * Delete block
+     */
+    delete: (
+      args: WithAuth<BlocksDeleteParameters>
+    ): Promise<BlocksDeleteResponse> => {
+      return this.request<BlocksRetrieveResponse>({
+        path: blocksDelete.path(args),
+        method: blocksDelete.method,
+        query: pick(args, blocksDelete.queryParams),
+        body: pick(args, blocksDelete.bodyParams),
+        auth: args?.auth,
+      })
+    },
     children: {
       /**
        * Append block children
@@ -317,6 +338,21 @@ export default class Client {
         method: databasesCreate.method,
         query: pick(args, databasesCreate.queryParams),
         body: pick(args, databasesCreate.bodyParams),
+        auth: args?.auth,
+      })
+    },
+
+    /**
+     * Update a database
+     */
+    update: (
+      args: WithAuth<DatabasesUpdateParameters>
+    ): Promise<DatabasesUpdateResponse> => {
+      return this.request<DatabasesUpdateResponse>({
+        path: databasesUpdate.path(args),
+        method: databasesUpdate.method,
+        query: pick(args, databasesUpdate.queryParams),
+        body: pick(args, databasesUpdate.bodyParams),
         auth: args?.auth,
       })
     },
@@ -452,7 +488,7 @@ export default class Client {
 /*
  * Type aliases to support the generic request interface.
  */
-type Method = "get" | "post" | "patch"
+type Method = "get" | "post" | "patch" | "delete"
 type QueryParams = Record<string, string | number> | URLSearchParams
 
 type WithAuth<P> = P & { auth?: string }

@@ -27,7 +27,12 @@ import {
   PropertySchema,
   RichTextInput,
   UpdateBlock,
+  UpdatePropertySchema,
+  ExternalFileInput,
+  EmojiInput,
+  FileInput,
 } from "./api-types"
+import { DistributiveOmit } from "./type-utils"
 
 // TODO: type assertions to verify that each interface is synchronized to the list of keys in the runtime value below.
 
@@ -86,8 +91,33 @@ export const blocksUpdate = {
     "numbered_list_item",
     "toggle",
     "to_do",
+    "archived",
   ],
   path: (p: BlocksUpdatePathParameters) => `blocks/${p.block_id}`,
+} as const
+
+/*
+ * blocks.delete()
+ */
+
+interface BlocksDeletePathParameters {
+  block_id: string
+}
+interface BlocksDeleteQueryParameters {}
+interface BlocksDeleteBodyParameters {}
+
+export interface BlocksDeleteParameters
+  extends BlocksDeletePathParameters,
+    BlocksDeleteQueryParameters,
+    BlocksDeleteBodyParameters {}
+export interface BlocksDeleteResponse extends BlockBase {}
+
+export const blocksDelete = {
+  method: "delete",
+  pathParams: ["block_id"],
+  queryParams: [],
+  bodyParams: [],
+  path: (p: BlocksDeletePathParameters) => `blocks/${p.block_id}`,
 } as const
 
 /*
@@ -106,7 +136,7 @@ export interface BlocksChildrenAppendParameters
   extends BlocksChildrenAppendPathParameters,
     BlocksChildrenAppendQueryParameters,
     BlocksChildrenAppendBodyParameters {}
-export interface BlocksChildrenAppendResponse extends BlockBase {}
+export interface BlocksChildrenAppendResponse extends PaginatedList<Block> {}
 
 export const blocksChildrenAppend = {
   method: "patch",
@@ -227,23 +257,42 @@ export type PropertyValueMap = { [propertyName: string]: PropertyValue }
 export type InputPropertyValueMap = {
   [propertyName: string]: InputPropertyValue
 }
+
+export type PageIcon = FileInput | ExternalFileInput | EmojiInput
+
+export type PageIconInput =
+  | (DistributiveOmit<Exclude<PageIcon, FileInput>, "type"> & {
+      type?: string
+    })
+  | null
+
+export type PageCover = FileInput | ExternalFileInput
+
+export type PageCoverInput =
+  | (DistributiveOmit<Exclude<PageCover, FileInput>, "type"> & {
+      type?: string
+    })
+  | null
+
 interface PagesCreateBodyParameters {
   parent: ParentInput
   properties: InputPropertyValueMap
   children?: Block[]
+  icon?: PageIconInput
+  cover?: PageCoverInput
 }
 
 export interface PagesCreateParameters
   extends PagesCreatePathParameters,
     PagesCreateQueryParameters,
     PagesCreateBodyParameters {}
-export interface PagesCreateResponse extends BlockBase {}
+export interface PagesCreateResponse extends Page {}
 
 export const pagesCreate = {
   method: "post",
   pathParams: [],
   queryParams: [],
-  bodyParams: ["parent", "properties", "children"],
+  bodyParams: ["parent", "properties", "children", "icon", "cover"],
   path: () => `pages`,
 } as const
 
@@ -261,20 +310,55 @@ interface DatabasesCreateBodyParameters {
   parent: ParentPageInput
   properties: InputPropertySchemaMap
   title?: RichTextInput[]
+  icon?: PageIconInput
+  cover?: PageCoverInput
 }
 
 export interface DatabasesCreateParameters
   extends DatabasesCreatePathParameters,
     DatabasesCreateQueryParameters,
     DatabasesCreateBodyParameters {}
-export interface DatabasesCreateResponse extends BlockBase {}
+export interface DatabasesCreateResponse extends Database {}
 
 export const databasesCreate = {
   method: "post",
   pathParams: [],
   queryParams: [],
-  bodyParams: ["parent", "properties", "title"],
+  bodyParams: ["parent", "properties", "title", "icon", "cover"],
   path: () => `databases`,
+} as const
+
+/*
+ * databases.update()
+ */
+
+interface DatabasesUpdatePathParameters {
+  database_id: string
+}
+interface DatabasesUpdateQueryParameters {}
+
+export type UpdatePropertySchemaMap = {
+  [propertyName: string]: UpdatePropertySchema
+}
+interface DatabasesUpdateBodyParameters {
+  properties?: UpdatePropertySchemaMap
+  title?: RichTextInput[]
+  icon?: PageIconInput
+  cover?: PageCoverInput
+}
+
+export interface DatabasesUpdateParameters
+  extends DatabasesUpdatePathParameters,
+    DatabasesUpdateQueryParameters,
+    DatabasesUpdateBodyParameters {}
+export interface DatabasesUpdateResponse extends Database {}
+
+export const databasesUpdate = {
+  method: "patch",
+  pathParams: ["database_id"],
+  queryParams: [],
+  bodyParams: ["properties", "title", "icon", "cover"],
+  path: (d: DatabasesUpdatePathParameters) => `databases/${d.database_id}`,
 } as const
 
 /*
@@ -313,22 +397,24 @@ interface PagesUpdateQueryParameters {}
 interface PagesUpdateBodyArchiveParameter {
   archived: boolean
 }
-interface PagesUpdateBodyPropertiesParameters {
+interface PagesUpdateBodyParameters {
   properties: InputPropertyValueMap
+  icon?: PageIconInput
+  cover?: PageCoverInput
 }
 
 export interface PagesUpdateParameters
   extends PagesUpdatePathParameters,
     PagesUpdateQueryParameters,
     PagesUpdateBodyArchiveParameter,
-    PagesUpdateBodyPropertiesParameters {}
+    PagesUpdateBodyParameters {}
 export interface PagesUpdateResponse extends Page {}
 
 export const pagesUpdate = {
   method: "patch",
   pathParams: ["page_id"],
   queryParams: [],
-  bodyParams: ["archived", "properties"],
+  bodyParams: ["archived", "properties", "cover", "icon"],
   path: (p: PagesUpdatePathParameters) => `pages/${p.page_id}`,
 } as const
 
