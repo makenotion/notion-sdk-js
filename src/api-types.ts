@@ -1014,6 +1014,9 @@ export type PropertySchema =
   | URLPropertySchema
   | EmailPropertySchema
   | PhoneNumberPropertySchema
+  | FormulaPropertySchema
+  | RollupPropertySchema
+  | RelationPropertySchema
   | CreatedTimePropertySchema
   | CreatedByPropertySchema
   | LastEditedTimePropertySchema
@@ -1110,6 +1113,41 @@ export interface EmailPropertySchema {
 
 export interface PhoneNumberPropertySchema {
   phone_number: Record<string, never>
+}
+
+export interface FormulaPropertySchema {
+  formula: {
+    expression: string
+  }
+}
+
+export interface RollupPropertySchema {
+  rollup: {
+    relation_property_name?: string
+    relation_property_id?: string
+    rollup_property_name?: string
+    rollup_property_id?: string
+    function:
+      | "count_all"
+      | "count_values"
+      | "count_unique_values"
+      | "count_empty"
+      | "count_not_empty"
+      | "percent_empty"
+      | "percent_not_empty"
+      | "sum"
+      | "average"
+      | "median"
+      | "min"
+      | "max"
+      | "range"
+      | "show_original"
+  }
+}
+export interface RelationPropertySchema {
+  relation: {
+    database_id: string
+  }
 }
 
 export interface CreatedTimePropertySchema {
