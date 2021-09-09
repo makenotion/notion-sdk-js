@@ -55,6 +55,7 @@ export type Block =
   | ToggleBlock
   | ChildPageBlock
   | EmbedBlock
+  | BookmarkBlock
   | ImageBlock
   | VideoBlock
   | FileBlock
@@ -139,6 +140,14 @@ export interface ChildPageBlock extends BlockBase {
 export interface EmbedBlock extends BlockBase {
   type: "embed"
   embed: {
+    url: string
+    caption?: RichText[]
+  }
+}
+
+export interface BookmarkBlock extends BlockBase {
+  type: "bookmark"
+  bookmark: {
     url: string
     caption?: RichText[]
   }
@@ -723,6 +732,7 @@ export type PropertyValue =
   | DatePropertyValue
   | FormulaPropertyValue
   | RollupPropertyValue
+  | RelationPropertyValue
   | PeoplePropertyValue
   | FilesPropertyValue
   | CheckboxPropertyValue
@@ -837,6 +847,11 @@ export interface DateFormulaValue {
 export interface RollupPropertyValue extends PropertyValueBase {
   type: "rollup"
   rollup: NumberRollupValue | DateRollupValue | ArrayRollupValue
+}
+
+export interface RelationPropertyValue extends PropertyValueBase {
+  type: "relation"
+  relation: { id: string }[]
 }
 
 export interface NumberRollupValue {
