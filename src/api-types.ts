@@ -70,6 +70,7 @@ export interface BlockBase {
   created_time: string
   last_edited_time: string
   has_children: boolean
+  archived: boolean
 }
 
 export interface ParagraphBlock extends BlockBase {
@@ -644,6 +645,7 @@ export interface Page {
  */
 
 export type UpdateBlock =
+  | UpdateBlockBase
   | ParagraphUpdateBlock
   | HeadingOneUpdateBlock
   | HeadingTwoUpdateBlock
@@ -653,36 +655,40 @@ export type UpdateBlock =
   | ToggleUpdateBlock
   | ToDoUpdateBlock
 
-interface TextContentUpdate {
+interface UpdateBlockBase {
+  archived?: boolean
+}
+
+interface TextContentUpdate extends UpdateBlockBase {
   text: RichTextInput[]
 }
 
-interface ParagraphUpdateBlock {
+interface ParagraphUpdateBlock extends UpdateBlockBase {
   paragraph: TextContentUpdate
 }
 
-interface HeadingOneUpdateBlock {
+interface HeadingOneUpdateBlock extends UpdateBlockBase {
   heading_1: TextContentUpdate
 }
 
-interface HeadingTwoUpdateBlock {
+interface HeadingTwoUpdateBlock extends UpdateBlockBase {
   heading_2: TextContentUpdate
 }
-interface HeadingThreeUpdateBlock {
+interface HeadingThreeUpdateBlock extends UpdateBlockBase {
   heading_3: TextContentUpdate
 }
 
-interface BulletedListItemUpdateBlock {
+interface BulletedListItemUpdateBlock extends UpdateBlockBase {
   bulleted_list_item: TextContentUpdate
 }
-interface NumberedListItemUpdateBlock {
+interface NumberedListItemUpdateBlock extends UpdateBlockBase {
   numbered_list_item: TextContentUpdate
 }
-interface ToggleUpdateBlock {
+interface ToggleUpdateBlock extends UpdateBlockBase {
   toggle: TextContentUpdate
 }
 
-interface ToDoUpdateBlock {
+interface ToDoUpdateBlock extends UpdateBlockBase {
   to_do: {
     text?: RichTextInput[]
     checked?: boolean
