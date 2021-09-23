@@ -55,6 +55,7 @@ export type Block =
   | ToggleBlock
   | ChildPageBlock
   | EmbedBlock
+  | BookmarkBlock
   | ImageBlock
   | VideoBlock
   | FileBlock
@@ -69,6 +70,7 @@ export interface BlockBase {
   created_time: string
   last_edited_time: string
   has_children: boolean
+  archived: boolean
 }
 
 export interface ParagraphBlock extends BlockBase {
@@ -138,6 +140,14 @@ export interface ChildPageBlock extends BlockBase {
 export interface EmbedBlock extends BlockBase {
   type: "embed"
   embed: {
+    url: string
+    caption?: RichText[]
+  }
+}
+
+export interface BookmarkBlock extends BlockBase {
+  type: "bookmark"
+  bookmark: {
     url: string
     caption?: RichText[]
   }
@@ -467,6 +477,11 @@ export type BackgroundColor =
   | "pink_background"
   | "red_background"
 
+export interface Date {
+  start: string
+  end?: string
+}
+
 /*
  * Filter (input)
  */
@@ -630,6 +645,7 @@ export interface Page {
  */
 
 export type UpdateBlock =
+  | UpdateBlockBase
   | ParagraphUpdateBlock
   | HeadingOneUpdateBlock
   | HeadingTwoUpdateBlock
@@ -639,36 +655,40 @@ export type UpdateBlock =
   | ToggleUpdateBlock
   | ToDoUpdateBlock
 
-interface TextContentUpdate {
+interface UpdateBlockBase {
+  archived?: boolean
+}
+
+interface TextContentUpdate extends UpdateBlockBase {
   text: RichTextInput[]
 }
 
-interface ParagraphUpdateBlock {
+interface ParagraphUpdateBlock extends UpdateBlockBase {
   paragraph: TextContentUpdate
 }
 
-interface HeadingOneUpdateBlock {
+interface HeadingOneUpdateBlock extends UpdateBlockBase {
   heading_1: TextContentUpdate
 }
 
-interface HeadingTwoUpdateBlock {
+interface HeadingTwoUpdateBlock extends UpdateBlockBase {
   heading_2: TextContentUpdate
 }
-interface HeadingThreeUpdateBlock {
+interface HeadingThreeUpdateBlock extends UpdateBlockBase {
   heading_3: TextContentUpdate
 }
 
-interface BulletedListItemUpdateBlock {
+interface BulletedListItemUpdateBlock extends UpdateBlockBase {
   bulleted_list_item: TextContentUpdate
 }
-interface NumberedListItemUpdateBlock {
+interface NumberedListItemUpdateBlock extends UpdateBlockBase {
   numbered_list_item: TextContentUpdate
 }
-interface ToggleUpdateBlock {
+interface ToggleUpdateBlock extends UpdateBlockBase {
   toggle: TextContentUpdate
 }
 
-interface ToDoUpdateBlock {
+interface ToDoUpdateBlock extends UpdateBlockBase {
   to_do: {
     text?: RichTextInput[]
     checked?: boolean
@@ -712,6 +732,7 @@ export type PropertyValue =
   | DatePropertyValue
   | FormulaPropertyValue
   | RollupPropertyValue
+  | RelationPropertyValue
   | PeoplePropertyValue
   | FilesPropertyValue
   | CheckboxPropertyValue
@@ -794,10 +815,7 @@ export interface MultiSelectPropertyValue extends PropertyValueBase {
 
 export interface DatePropertyValue extends PropertyValueBase {
   type: "date"
-  date: {
-    start: string
-    end?: string
-  } | null
+  date: Date | null
 }
 
 export interface FormulaPropertyValue extends PropertyValueBase {
@@ -823,12 +841,17 @@ export interface BooleanFormulaValue {
 }
 export interface DateFormulaValue {
   type: "date"
-  date: DatePropertyValue
+  date: Date
 }
 
 export interface RollupPropertyValue extends PropertyValueBase {
   type: "rollup"
   rollup: NumberRollupValue | DateRollupValue | ArrayRollupValue
+}
+
+export interface RelationPropertyValue extends PropertyValueBase {
+  type: "relation"
+  relation: { id: string }[]
 }
 
 export interface NumberRollupValue {
@@ -837,7 +860,7 @@ export interface NumberRollupValue {
 }
 export interface DateRollupValue {
   type: "date"
-  date: DatePropertyValue | null
+  date: Date | null
 }
 export interface ArrayRollupValue {
   type: "array"
@@ -997,6 +1020,9 @@ export type PropertySchema =
   | URLPropertySchema
   | EmailPropertySchema
   | PhoneNumberPropertySchema
+  | FormulaPropertySchema
+  | RollupPropertySchema
+  | RelationPropertySchema
   | CreatedTimePropertySchema
   | CreatedByPropertySchema
   | LastEditedTimePropertySchema
@@ -1093,6 +1119,41 @@ export interface EmailPropertySchema {
 
 export interface PhoneNumberPropertySchema {
   phone_number: Record<string, never>
+}
+
+export interface FormulaPropertySchema {
+  formula: {
+    expression: string
+  }
+}
+
+export interface RollupPropertySchema {
+  rollup: {
+    relation_property_name?: string
+    relation_property_id?: string
+    rollup_property_name?: string
+    rollup_property_id?: string
+    function:
+      | "count_all"
+      | "count_values"
+      | "count_unique_values"
+      | "count_empty"
+      | "count_not_empty"
+      | "percent_empty"
+      | "percent_not_empty"
+      | "sum"
+      | "average"
+      | "median"
+      | "min"
+      | "max"
+      | "range"
+      | "show_original"
+  }
+}
+export interface RelationPropertySchema {
+  relation: {
+    database_id: string
+  }
 }
 
 export interface CreatedTimePropertySchema {

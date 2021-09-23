@@ -91,8 +91,33 @@ export const blocksUpdate = {
     "numbered_list_item",
     "toggle",
     "to_do",
+    "archived",
   ],
   path: (p: BlocksUpdatePathParameters) => `blocks/${p.block_id}`,
+} as const
+
+/*
+ * blocks.delete()
+ */
+
+interface BlocksDeletePathParameters {
+  block_id: string
+}
+interface BlocksDeleteQueryParameters {}
+interface BlocksDeleteBodyParameters {}
+
+export interface BlocksDeleteParameters
+  extends BlocksDeletePathParameters,
+    BlocksDeleteQueryParameters,
+    BlocksDeleteBodyParameters {}
+export interface BlocksDeleteResponse extends BlockBase {}
+
+export const blocksDelete = {
+  method: "delete",
+  pathParams: ["block_id"],
+  queryParams: [],
+  bodyParams: [],
+  path: (p: BlocksDeletePathParameters) => `blocks/${p.block_id}`,
 } as const
 
 /*
@@ -261,7 +286,7 @@ export interface PagesCreateParameters
   extends PagesCreatePathParameters,
     PagesCreateQueryParameters,
     PagesCreateBodyParameters {}
-export interface PagesCreateResponse extends BlockBase {}
+export interface PagesCreateResponse extends Page {}
 
 export const pagesCreate = {
   method: "post",

@@ -57,6 +57,9 @@ import {
   databasesUpdate,
   DatabasesUpdateParameters,
   DatabasesUpdateResponse,
+  blocksDelete,
+  BlocksDeleteParameters,
+  BlocksDeleteResponse,
 } from "./api-endpoints.ts"
 // import {
 //   version as PACKAGE_VERSION,
@@ -221,6 +224,21 @@ export default class Client {
         method: blocksUpdate.method,
         query: pick(args, blocksUpdate.queryParams),
         body: pick(args, blocksUpdate.bodyParams),
+        auth: args?.auth,
+      })
+    },
+
+    /**
+     * Delete block
+     */
+    delete: (
+      args: WithAuth<BlocksDeleteParameters>
+    ): Promise<BlocksDeleteResponse> => {
+      return this.request<BlocksRetrieveResponse>({
+        path: blocksDelete.path(args),
+        method: blocksDelete.method,
+        query: pick(args, blocksDelete.queryParams),
+        body: pick(args, blocksDelete.bodyParams),
         auth: args?.auth,
       })
     },
@@ -466,7 +484,7 @@ export default class Client {
 /*
  * Type aliases to support the generic request interface.
  */
-type Method = "get" | "post" | "patch"
+type Method = "get" | "post" | "patch" | "delete"
 type QueryParams = Record<string, string | number> | URLSearchParams
 
 type WithAuth<P> = P & { auth?: string }
