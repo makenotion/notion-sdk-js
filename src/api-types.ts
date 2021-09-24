@@ -54,6 +54,7 @@ export type Block =
   | ToDoBlock
   | ToggleBlock
   | ChildPageBlock
+  | ChildDatabaseBlock
   | EmbedBlock
   | BookmarkBlock
   | ImageBlock
@@ -135,6 +136,11 @@ export interface ToggleBlock extends BlockBase {
 export interface ChildPageBlock extends BlockBase {
   type: "child_page"
   child_page: { title: string }
+}
+
+export interface ChildDatabaseBlock extends BlockBase {
+  type: "child_database"
+  child_database: { title: string }
 }
 
 export interface EmbedBlock extends BlockBase {
