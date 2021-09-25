@@ -12,12 +12,6 @@ import {
   RequestTimeoutError,
 } from "./errors"
 import { pick } from "./helpers"
-import nodeFetch from "node-fetch"
-import {
-  version as PACKAGE_VERSION,
-  name as PACKAGE_NAME,
-} from "../package.json"
-import { SupportedFetch } from "./fetch-types"
 import {
   GetBlockParameters,
   GetBlockResponse,
@@ -68,6 +62,12 @@ import {
   SearchResponse,
   search,
 } from "./api-endpoints"
+import nodeFetch from "node-fetch"
+import {
+  version as PACKAGE_VERSION,
+  name as PACKAGE_NAME,
+} from "../package.json"
+import { SupportedFetch } from "./fetch-types"
 
 export interface ClientOptions {
   auth?: string
