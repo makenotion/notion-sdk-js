@@ -12,54 +12,54 @@ import {
 } from "./errors.ts"
 import { pick } from "./helpers.ts"
 import {
-  BlocksChildrenAppendParameters,
-  BlocksChildrenAppendResponse,
-  blocksChildrenAppend,
-  BlocksChildrenListParameters,
-  BlocksChildrenListResponse,
-  blocksChildrenList,
-  DatabasesListParameters,
-  DatabasesListResponse,
-  databasesList,
-  DatabasesQueryResponse,
-  DatabasesQueryParameters,
-  databasesQuery,
-  DatabasesRetrieveParameters,
-  DatabasesRetrieveResponse,
-  databasesRetrieve,
-  PagesCreateParameters,
-  PagesCreateResponse,
-  pagesCreate,
-  PagesRetrieveParameters,
-  PagesRetrieveResponse,
-  pagesRetrieve,
-  PagesUpdateParameters,
-  PagesUpdateResponse,
-  pagesUpdate,
-  UsersListParameters,
-  UsersListResponse,
-  usersList,
-  UsersRetrieveParameters,
-  UsersRetrieveResponse,
-  usersRetrieve,
+  GetBlockParameters,
+  GetBlockResponse,
+  getBlock,
+  UpdateBlockParameters,
+  UpdateBlockResponse,
+  updateBlock,
+  DeleteBlockParameters,
+  DeleteBlockResponse,
+  deleteBlock,
+  AppendBlockChildrenParameters,
+  AppendBlockChildrenResponse,
+  appendBlockChildren,
+  ListBlockChildrenParameters,
+  ListBlockChildrenResponse,
+  listBlockChildren,
+  ListDatabasesParameters,
+  ListDatabasesResponse,
+  listDatabases,
+  GetDatabaseParameters,
+  GetDatabaseResponse,
+  getDatabase,
+  QueryDatabaseParameters,
+  QueryDatabaseResponse,
+  queryDatabase,
+  CreateDatabaseParameters,
+  CreateDatabaseResponse,
+  createDatabase,
+  UpdateDatabaseParameters,
+  UpdateDatabaseResponse,
+  updateDatabase,
+  CreatePageParameters,
+  CreatePageResponse,
+  createPage,
+  GetPageParameters,
+  GetPageResponse,
+  getPage,
+  UpdatePageParameters,
+  UpdatePageResponse,
+  updatePage,
+  GetUserParameters,
+  GetUserResponse,
+  getUser,
+  ListUsersParameters,
+  ListUsersResponse,
+  listUsers,
   SearchParameters,
   SearchResponse,
   search,
-  DatabasesCreateParameters,
-  DatabasesCreateResponse,
-  databasesCreate,
-  BlocksRetrieveParameters,
-  BlocksRetrieveResponse,
-  blocksRetrieve,
-  BlocksUpdateParameters,
-  BlocksUpdateResponse,
-  blocksUpdate,
-  databasesUpdate,
-  DatabasesUpdateParameters,
-  DatabasesUpdateResponse,
-  blocksDelete,
-  BlocksDeleteParameters,
-  BlocksDeleteResponse,
 } from "./api-endpoints.ts"
 // import {
 //   version as PACKAGE_VERSION,
@@ -68,7 +68,7 @@ import {
 import { SupportedFetch } from "./fetch-types.ts"
 
 const PACKAGE_NAME = "cloudydeno/deno-notion_sdk";
-const PACKAGE_VERSION = "0.3.3";
+const PACKAGE_VERSION = "0.4.0";
 
 export interface ClientOptions {
   auth?: string
@@ -202,13 +202,13 @@ export default class Client {
      * Retrieve block
      */
     retrieve: (
-      args: WithAuth<BlocksRetrieveParameters>
-    ): Promise<BlocksRetrieveResponse> => {
-      return this.request<BlocksRetrieveResponse>({
-        path: blocksRetrieve.path(args),
-        method: blocksRetrieve.method,
-        query: pick(args, blocksRetrieve.queryParams),
-        body: pick(args, blocksRetrieve.bodyParams),
+      args: WithAuth<GetBlockParameters>
+    ): Promise<GetBlockResponse> => {
+      return this.request<GetBlockResponse>({
+        path: getBlock.path(args),
+        method: getBlock.method,
+        query: pick(args, getBlock.queryParams),
+        body: pick(args, getBlock.bodyParams),
         auth: args?.auth,
       })
     },
@@ -217,13 +217,13 @@ export default class Client {
      * Update block
      */
     update: (
-      args: WithAuth<BlocksUpdateParameters>
-    ): Promise<BlocksUpdateResponse> => {
-      return this.request<BlocksUpdateResponse>({
-        path: blocksUpdate.path(args),
-        method: blocksUpdate.method,
-        query: pick(args, blocksUpdate.queryParams),
-        body: pick(args, blocksUpdate.bodyParams),
+      args: WithAuth<UpdateBlockParameters>
+    ): Promise<UpdateBlockResponse> => {
+      return this.request<UpdateBlockResponse>({
+        path: updateBlock.path(args),
+        method: updateBlock.method,
+        query: pick(args, updateBlock.queryParams),
+        body: pick(args, updateBlock.bodyParams),
         auth: args?.auth,
       })
     },
@@ -232,13 +232,13 @@ export default class Client {
      * Delete block
      */
     delete: (
-      args: WithAuth<BlocksDeleteParameters>
-    ): Promise<BlocksDeleteResponse> => {
-      return this.request<BlocksRetrieveResponse>({
-        path: blocksDelete.path(args),
-        method: blocksDelete.method,
-        query: pick(args, blocksDelete.queryParams),
-        body: pick(args, blocksDelete.bodyParams),
+      args: WithAuth<DeleteBlockParameters>
+    ): Promise<DeleteBlockResponse> => {
+      return this.request<DeleteBlockResponse>({
+        path: deleteBlock.path(args),
+        method: deleteBlock.method,
+        query: pick(args, deleteBlock.queryParams),
+        body: pick(args, deleteBlock.bodyParams),
         auth: args?.auth,
       })
     },
@@ -247,13 +247,13 @@ export default class Client {
        * Append block children
        */
       append: (
-        args: WithAuth<BlocksChildrenAppendParameters>
-      ): Promise<BlocksChildrenAppendResponse> => {
-        return this.request<BlocksChildrenAppendResponse>({
-          path: blocksChildrenAppend.path(args),
-          method: blocksChildrenAppend.method,
-          query: pick(args, blocksChildrenAppend.queryParams),
-          body: pick(args, blocksChildrenAppend.bodyParams),
+        args: WithAuth<AppendBlockChildrenParameters>
+      ): Promise<AppendBlockChildrenResponse> => {
+        return this.request<AppendBlockChildrenResponse>({
+          path: appendBlockChildren.path(args),
+          method: appendBlockChildren.method,
+          query: pick(args, appendBlockChildren.queryParams),
+          body: pick(args, appendBlockChildren.bodyParams),
           auth: args?.auth,
         })
       },
@@ -262,13 +262,13 @@ export default class Client {
        * Retrieve block children
        */
       list: (
-        args: WithAuth<BlocksChildrenListParameters>
-      ): Promise<BlocksChildrenListResponse> => {
-        return this.request<BlocksChildrenListResponse>({
-          path: blocksChildrenList.path(args),
-          method: blocksChildrenList.method,
-          query: pick(args, blocksChildrenList.queryParams),
-          body: pick(args, blocksChildrenList.bodyParams),
+        args: WithAuth<ListBlockChildrenParameters>
+      ): Promise<ListBlockChildrenResponse> => {
+        return this.request<ListBlockChildrenResponse>({
+          path: listBlockChildren.path(args),
+          method: listBlockChildren.method,
+          query: pick(args, listBlockChildren.queryParams),
+          body: pick(args, listBlockChildren.bodyParams),
           auth: args?.auth,
         })
       },
@@ -282,13 +282,13 @@ export default class Client {
      * @deprecated Please use `search`
      */
     list: (
-      args: WithAuth<DatabasesListParameters> = {}
-    ): Promise<DatabasesListResponse> => {
-      return this.request<DatabasesListResponse>({
-        path: databasesList.path(),
-        method: databasesList.method,
-        query: pick(args, databasesList.queryParams),
-        body: pick(args, databasesList.bodyParams),
+      args: WithAuth<ListDatabasesParameters>
+    ): Promise<ListDatabasesResponse> => {
+      return this.request<ListDatabasesResponse>({
+        path: listDatabases.path(),
+        method: listDatabases.method,
+        query: pick(args, listDatabases.queryParams),
+        body: pick(args, listDatabases.bodyParams),
         auth: args?.auth,
       })
     },
@@ -297,13 +297,13 @@ export default class Client {
      * Retrieve a database
      */
     retrieve: (
-      args: WithAuth<DatabasesRetrieveParameters>
-    ): Promise<DatabasesRetrieveResponse> => {
-      return this.request<DatabasesRetrieveResponse>({
-        path: databasesRetrieve.path(args),
-        method: databasesRetrieve.method,
-        query: pick(args, databasesRetrieve.queryParams),
-        body: pick(args, databasesRetrieve.bodyParams),
+      args: WithAuth<GetDatabaseParameters>
+    ): Promise<GetDatabaseResponse> => {
+      return this.request<GetDatabaseResponse>({
+        path: getDatabase.path(args),
+        method: getDatabase.method,
+        query: pick(args, getDatabase.queryParams),
+        body: pick(args, getDatabase.bodyParams),
         auth: args?.auth,
       })
     },
@@ -312,13 +312,13 @@ export default class Client {
      * Query a database
      */
     query: (
-      args: WithAuth<DatabasesQueryParameters>
-    ): Promise<DatabasesQueryResponse> => {
-      return this.request<DatabasesQueryResponse>({
-        path: databasesQuery.path(args),
-        method: databasesQuery.method,
-        query: pick(args, databasesQuery.queryParams),
-        body: pick(args, databasesQuery.bodyParams),
+      args: WithAuth<QueryDatabaseParameters>
+    ): Promise<QueryDatabaseResponse> => {
+      return this.request<QueryDatabaseResponse>({
+        path: queryDatabase.path(args),
+        method: queryDatabase.method,
+        query: pick(args, queryDatabase.queryParams),
+        body: pick(args, queryDatabase.bodyParams),
         auth: args?.auth,
       })
     },
@@ -327,13 +327,13 @@ export default class Client {
      * Create a database
      */
     create: (
-      args: WithAuth<DatabasesCreateParameters>
-    ): Promise<DatabasesCreateResponse> => {
-      return this.request<DatabasesCreateResponse>({
-        path: databasesCreate.path(),
-        method: databasesCreate.method,
-        query: pick(args, databasesCreate.queryParams),
-        body: pick(args, databasesCreate.bodyParams),
+      args: WithAuth<CreateDatabaseParameters>
+    ): Promise<CreateDatabaseResponse> => {
+      return this.request<CreateDatabaseResponse>({
+        path: createDatabase.path(),
+        method: createDatabase.method,
+        query: pick(args, createDatabase.queryParams),
+        body: pick(args, createDatabase.bodyParams),
         auth: args?.auth,
       })
     },
@@ -342,13 +342,13 @@ export default class Client {
      * Update a database
      */
     update: (
-      args: WithAuth<DatabasesUpdateParameters>
-    ): Promise<DatabasesUpdateResponse> => {
-      return this.request<DatabasesUpdateResponse>({
-        path: databasesUpdate.path(args),
-        method: databasesUpdate.method,
-        query: pick(args, databasesUpdate.queryParams),
-        body: pick(args, databasesUpdate.bodyParams),
+      args: WithAuth<UpdateDatabaseParameters>
+    ): Promise<UpdateDatabaseResponse> => {
+      return this.request<UpdateDatabaseResponse>({
+        path: updateDatabase.path(args),
+        method: updateDatabase.method,
+        query: pick(args, updateDatabase.queryParams),
+        body: pick(args, updateDatabase.bodyParams),
         auth: args?.auth,
       })
     },
@@ -359,13 +359,13 @@ export default class Client {
      * Create a page
      */
     create: (
-      args: WithAuth<PagesCreateParameters>
-    ): Promise<PagesCreateResponse> => {
-      return this.request<PagesCreateResponse>({
-        path: pagesCreate.path(),
-        method: pagesCreate.method,
-        query: pick(args, pagesCreate.queryParams),
-        body: pick(args, pagesCreate.bodyParams),
+      args: WithAuth<CreatePageParameters>
+    ): Promise<CreatePageResponse> => {
+      return this.request<CreatePageResponse>({
+        path: createPage.path(),
+        method: createPage.method,
+        query: pick(args, createPage.queryParams),
+        body: pick(args, createPage.bodyParams),
         auth: args?.auth,
       })
     },
@@ -373,14 +373,12 @@ export default class Client {
     /**
      * Retrieve a page
      */
-    retrieve: (
-      args: WithAuth<PagesRetrieveParameters>
-    ): Promise<PagesRetrieveResponse> => {
-      return this.request<PagesRetrieveResponse>({
-        path: pagesRetrieve.path(args),
-        method: pagesRetrieve.method,
-        query: pick(args, pagesRetrieve.queryParams),
-        body: pick(args, pagesRetrieve.bodyParams),
+    retrieve: (args: WithAuth<GetPageParameters>): Promise<GetPageResponse> => {
+      return this.request<GetPageResponse>({
+        path: getPage.path(args),
+        method: getPage.method,
+        query: pick(args, getPage.queryParams),
+        body: pick(args, getPage.bodyParams),
         auth: args?.auth,
       })
     },
@@ -389,13 +387,13 @@ export default class Client {
      * Update page properties
      */
     update: (
-      args: WithAuth<PagesUpdateParameters>
-    ): Promise<PagesUpdateResponse> => {
-      return this.request<PagesUpdateResponse>({
-        path: pagesUpdate.path(args),
-        method: pagesUpdate.method,
-        query: pick(args, pagesUpdate.queryParams),
-        body: pick(args, pagesUpdate.bodyParams),
+      args: WithAuth<UpdatePageParameters>
+    ): Promise<UpdatePageResponse> => {
+      return this.request<UpdatePageResponse>({
+        path: updatePage.path(args),
+        method: updatePage.method,
+        query: pick(args, updatePage.queryParams),
+        body: pick(args, updatePage.bodyParams),
         auth: args?.auth,
       })
     },
@@ -405,14 +403,12 @@ export default class Client {
     /**
      * Retrieve a user
      */
-    retrieve: (
-      args: WithAuth<UsersRetrieveParameters>
-    ): Promise<UsersRetrieveResponse> => {
-      return this.request<UsersRetrieveResponse>({
-        path: usersRetrieve.path(args),
-        method: usersRetrieve.method,
-        query: pick(args, usersRetrieve.queryParams),
-        body: pick(args, usersRetrieve.bodyParams),
+    retrieve: (args: WithAuth<GetUserParameters>): Promise<GetUserResponse> => {
+      return this.request<GetUserResponse>({
+        path: getUser.path(args),
+        method: getUser.method,
+        query: pick(args, getUser.queryParams),
+        body: pick(args, getUser.bodyParams),
         auth: args?.auth,
       })
     },
@@ -420,14 +416,12 @@ export default class Client {
     /**
      * List all users
      */
-    list: (
-      args: WithAuth<UsersListParameters> = {}
-    ): Promise<UsersListResponse> => {
-      return this.request<UsersListResponse>({
-        path: usersList.path(),
-        method: usersList.method,
-        query: pick(args, usersList.queryParams),
-        body: pick(args, usersList.bodyParams),
+    list: (args: WithAuth<ListUsersParameters>): Promise<ListUsersResponse> => {
+      return this.request<ListUsersResponse>({
+        path: listUsers.path(),
+        method: listUsers.method,
+        query: pick(args, listUsers.queryParams),
+        body: pick(args, listUsers.bodyParams),
         auth: args?.auth,
       })
     },

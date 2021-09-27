@@ -1,5 +1,11 @@
 #!/usr/bin/env -S deno run --allow-env=NOTION_KEY --allow-net=api.notion.com
 import { Client } from "../../src/mod.ts"
+import {
+  CreatePageBodyParameters,
+  CreatePageParameters,
+  GetDatabaseResponse,
+  GetPageResponse,
+} from "../../src/api-endpoints.ts"
 
 function sample<T>(items: T[]): T {
   return items[Math.floor(Math.random() * items.length)];
@@ -9,28 +15,18 @@ import {
   faker
 } from "https://deno.land/x/deno_faker@v1.0.3/locale/en_US.ts"
 
-import {
-  InputPropertyValueMap,
-  PropertyMap,
-} from "../../src/api-endpoints.ts"
-import {
-  PropertyValueWithoutId,
-  SelectFilter,
-  TextFilter,
-  UserBase,
-} from "../../src/api-types.ts"
-
 const notion = new Client({ auth: Deno.env.get("NOTION_KEY") })
 
 const startTime = new Date()
-startTime.setSeconds(-1) // just before the current minute
+startTime.setSeconds(0, 0)
 
 // Given the properties of a database, generate an object full of
 // random data that can be used to generate new rows in our Notion database.
 function makeFakePropertiesData(
-  properties: PropertyMap
-): InputPropertyValueMap {
-  const propertyValues: InputPropertyValueMap = {}
+  properties: GetDatabaseResponse["properties"]
+): Record<string, CreatePageBodyParameters["properties"]> {
+  const propertyValues: Record<string, CreatePageBodyParameters["properties"]> =
+    {}
   Object.entries(properties).forEach(([name, property]) => {
     if (property.type === "date") {
       propertyValues[name] = {
@@ -119,11 +115,13 @@ function assertUnreachable(_x: never): never {
   throw new Error("Didn't expect to get here")
 }
 
-function userToString(userBase: UserBase) {
+function userToString(userBase: { id: string; name?: string | null }) {
   return `${userBase.id}: ${userBase.name || "Unknown Name"}`
 }
 
-function findRandomSelectColumnNameAndValue(properties: PropertyMap): {
+function findRandomSelectColumnNameAndValue(
+  properties: GetDatabaseResponse["properties"]
+): {
   name: string
   value: string | undefined
 } {
@@ -143,7 +141,9 @@ function findRandomSelectColumnNameAndValue(properties: PropertyMap): {
   return { name: "", value: undefined }
 }
 
-function extractValueToString(property: PropertyValueWithoutId): string | null {
+function extractValueToString(
+  property: GetPageResponse["properties"][string]
+): string {
   switch (property.type) {
     case "checkbox":
       return property.checkbox.toString()
@@ -152,21 +152,24 @@ function extractValueToString(property: PropertyValueWithoutId): string | null {
     case "created_time":
       return new Date(property.created_time).toISOString()
     case "date":
-      if (property.date == null) return null;
       return new Date(property.date.start).toISOString()
     case "email":
       return property.email
     case "url":
       return property.url
     case "number":
-      if (property.number == null) return null;
       return property.number.toString()
     case "phone_number":
       return property.phone_number
     case "select":
-      if (property.select == null) return null;
+      if (!property.select) {
+        return ""
+      }
       return `${property.select.id} ${property.select.name}`
     case "multi_select":
+      if (!property.multi_select) {
+        return ""
+      }
       return property.multi_select
         .map(select => `${select.id} ${select.name}`)
         .join(", ")
@@ -188,32 +191,43 @@ function extractValueToString(property: PropertyValueWithoutId): string | null {
       } else if (property.formula.type === "number") {
         return property.formula.number?.toString() || "???"
       } else if (property.formula.type === "boolean") {
-        return property.formula.boolean.toString()
+        return property.formula.boolean?.toString() || "???"
       } else if (property.formula.type === "date") {
-        if (property.formula.date == null) return null;
-        return new Date(property.formula.date.start).toISOString()
+        return (
+          (property.formula.date?.start &&
+            new Date(property.formula.date.start).toISOString()) ||
+          "???"
+        )
       } else {
         return assertUnreachable(property.formula)
       }
     case "rollup":
       if (property.rollup.type === "number") {
-        if (property.rollup.number == null) return null;
-        return property.rollup.number.toString()
+        return property.rollup.number?.toString() || "???"
       } else if (property.rollup.type === "date") {
-        if (property.rollup.date == null) return null;
-        return new Date(property.rollup.date.start).toISOString()
+        return (
+          (property.rollup.date?.start &&
+            new Date(property.rollup.date?.start).toISOString()) ||
+          "???"
+        )
       } else if (property.rollup.type === "array") {
         return JSON.stringify(property.rollup.array)
       } else {
         return assertUnreachable(property.rollup)
       }
     case "relation":
-      throw new Error("TODO: generation of 'relation' property")
+      if (property.relation) {
+        return property.relation.join(",")
+      }
+      return "???"
   }
   return assertUnreachable(property)
 }
 
-async function exerciseWriting(databaseId: string, properties: PropertyMap) {
+async function exerciseWriting(
+  databaseId: string,
+  properties: GetDatabaseResponse["properties"]
+) {
   console.log("\n\n********* Exercising Writing *********\n\n")
 
   const RowsToWrite = 10
@@ -222,18 +236,23 @@ async function exerciseWriting(databaseId: string, properties: PropertyMap) {
   for (let i = 0; i < RowsToWrite; i++) {
     const propertiesData = makeFakePropertiesData(properties)
 
-    await notion.pages.create({
+    const parameters: CreatePageParameters = {
       parent: {
         database_id: databaseId,
       },
       properties: propertiesData,
-    })
+    } as CreatePageParameters
+
+    await notion.pages.create(parameters)
   }
 
   console.log(`Wrote ${RowsToWrite} rows after ${startTime}`)
 }
 
-async function exerciseReading(databaseId: string, _properties: PropertyMap) {
+async function exerciseReading(
+  databaseId: string,
+  _properties: GetDatabaseResponse["properties"]
+) {
   console.log("\n\n********* Exercising Reading *********\n\n")
   // and read back what we just did
   const queryResponse = await notion.databases.query({
@@ -242,7 +261,7 @@ async function exerciseReading(databaseId: string, _properties: PropertyMap) {
   let numOldRows = 0
   queryResponse.results.map(page => {
     const createdTime = new Date(page.created_time)
-    if (createdTime <= startTime) {
+    if (startTime > createdTime) {
       numOldRows++
       return
     }
@@ -256,11 +275,14 @@ async function exerciseReading(databaseId: string, _properties: PropertyMap) {
     })
   })
   console.log(
-    `Skipped printing ${numOldRows} rows that were written before this test`
+    `Skipped printing ${numOldRows} rows that were written before ${startTime}`
   )
 }
 
-async function exerciseFilters(databaseId: string, properties: PropertyMap) {
+async function exerciseFilters(
+  databaseId: string,
+  properties: GetDatabaseResponse["properties"]
+) {
   console.log("\n\n********* Exercising Filters *********\n\n")
 
   // get a random select or multi-select column from the collection with a random value for it
@@ -274,7 +296,7 @@ async function exerciseFilters(databaseId: string, properties: PropertyMap) {
   console.log(`Looking for ${selectColumnName}=${selectColumnValue}`)
 
   // Check we can search by name
-  const queryFilterSelectFilterTypeBased: SelectFilter = {
+  const queryFilterSelectFilterTypeBased = {
     property: selectColumnName,
     select: { equals: selectColumnValue },
   }
@@ -298,14 +320,14 @@ async function exerciseFilters(databaseId: string, properties: PropertyMap) {
       "Need a rich_text column for this part of the test, could not find one"
     )
   }
-  const textColumnId = textColumn.id
+  const textColumnId = decodeURIComponent(textColumn.id)
   const letterToFind = faker.lorem.word(1)
 
   console.log(
-    `\n\nLooking for text column with id ${textColumnId} contains letter ${letterToFind}`
+    `\n\nLooking for text column with id "${textColumnId}" contains letter "${letterToFind}"`
   )
 
-  const textFilter: TextFilter = {
+  const textFilter = {
     property: textColumnId,
     text: { contains: letterToFind },
   }
@@ -317,7 +339,7 @@ async function exerciseFilters(databaseId: string, properties: PropertyMap) {
   })
 
   console.log(
-    `Had ${matchingTextResults.results.length} matching rows in column with ID ${textColumnId} containing letter ${letterToFind}`
+    `Had ${matchingTextResults.results.length} matching rows in column with ID "${textColumnId}" containing letter "${letterToFind}"`
   )
 }
 
