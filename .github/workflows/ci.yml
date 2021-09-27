@@ -33,3 +33,25 @@ jobs:
       - run: time deno cache src/mod.ts
       - run: time deno test test/*.ts
       - run: time deno cache examples/*/index.ts
+
+  integration-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Use Deno v1.13
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.13
+
+      - name: Cache https:// deps
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/deno/deps/https
+          key: deno/v1.13-https/v1-${{ github.sha }}
+          restore-keys: deno/v1.13-https/v1-
+
+      - run: ./examples/generate-random-data/index.ts
+        env:
+          NOTION_KEY: ${{ secrets.NOTION_KEY_SDKEXAMPLES }}
