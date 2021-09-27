@@ -68,7 +68,7 @@ import {
 import { SupportedFetch } from "./fetch-types.ts"
 
 const PACKAGE_NAME = "cloudydeno/deno-notion_sdk";
-const PACKAGE_VERSION = "0.2.4";
+const PACKAGE_VERSION = "0.3.3";
 
 export interface ClientOptions {
   auth?: string

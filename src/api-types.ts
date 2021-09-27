@@ -201,6 +201,7 @@ export interface Database {
   created_time: string
   last_edited_time: string
   title: RichText[]
+  url: string
   icon: File | ExternalFile | Emoji | null
   cover: File | ExternalFile | null
   properties: { [propertyName: string]: Property }
