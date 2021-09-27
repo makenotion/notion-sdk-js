@@ -23,6 +23,7 @@ import {
 const notion = new Client({ auth: Deno.env.get("NOTION_KEY") })
 
 const startTime = new Date()
+startTime.setSeconds(-1) // just before the current minute
 
 // Given the properties of a database, generate an object full of
 // random data that can be used to generate new rows in our Notion database.
@@ -189,8 +190,8 @@ function extractValueToString(property: PropertyValueWithoutId): string | null {
       } else if (property.formula.type === "boolean") {
         return property.formula.boolean.toString()
       } else if (property.formula.type === "date") {
-        if (property.formula.date.date == null) return null;
-        return new Date(property.formula.date.date.start).toISOString()
+        if (property.formula.date == null) return null;
+        return new Date(property.formula.date.start).toISOString()
       } else {
         return assertUnreachable(property.formula)
       }
@@ -199,13 +200,15 @@ function extractValueToString(property: PropertyValueWithoutId): string | null {
         if (property.rollup.number == null) return null;
         return property.rollup.number.toString()
       } else if (property.rollup.type === "date") {
-        if (property.rollup.date?.date == null) return null;
-        return new Date(property.rollup.date.date.start).toISOString()
+        if (property.rollup.date == null) return null;
+        return new Date(property.rollup.date.start).toISOString()
       } else if (property.rollup.type === "array") {
         return JSON.stringify(property.rollup.array)
       } else {
         return assertUnreachable(property.rollup)
       }
+    case "relation":
+      throw new Error("TODO: generation of 'relation' property")
   }
   return assertUnreachable(property)
 }
