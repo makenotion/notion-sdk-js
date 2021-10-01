@@ -61,6 +61,9 @@ import {
   SearchParameters,
   SearchResponse,
   search,
+	GetSelfParameters,
+	GetSelfResponse,
+	getSelf,
 } from "./api-endpoints"
 import nodeFetch from "node-fetch"
 import {
@@ -429,6 +432,19 @@ export default class Client {
         auth: args?.auth,
       })
     },
+
+		/**
+     * Get details about bot
+     */
+			me: (args: WithAuth<GetSelfParameters>): Promise<GetSelfResponse> => {
+			return this.request<GetSelfResponse>({
+				path: getSelf.path(),
+				method: getSelf.method,
+				query: pick(args, getSelf.queryParams),
+				body: pick(args, getSelf.bodyParams),
+				auth: args?.auth,
+			})
+		},
   }
 
   /**
