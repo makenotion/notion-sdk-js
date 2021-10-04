@@ -13,7 +13,7 @@
   "dependencies": {
     "@sendgrid/mail": "^7.4.5",
     "dotenv": "^10.0.0",
-    "@notionhq/client": "^0.4.0"
+    "@notionhq/client": "^0.4.1"
   },
   "author": "Aman Gupta",
   "license": "MIT"
