@@ -2,56 +2,72 @@ name: CI
 
 on:
   push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+    branches: [ main ]
+  pull_request: {}
 
 jobs:
-  build-and-test:
-    runs-on: ubuntu-latest
 
+  check:
+    runs-on: ubuntu-latest
+    name: Check w/ ${{ matrix.deno-version }}
     strategy:
-      fail-fast: false
       matrix:
-        deno-version: [v1.10, v1.11, v1.12, v1.13, canary]
+        deno-version:
+        - v1.10
+        - v1.11
+        - v1.12
+        - v1.13
+        - v1.14
+        - canary
+      fail-fast: false # run each branch to completion
 
     steps:
-      - uses: actions/checkout@v2
+    - name: Checkout source
+      uses: actions/checkout@v2
 
-      - name: Use Deno ${{ matrix.deno-version }}
-        uses: denoland/setup-deno@v1
-        with:
-          deno-version: ${{ matrix.deno-version }}
+    - name: Use Deno ${{ matrix.deno-version }}
+      uses: denoland/setup-deno@v1
+      with:
+        deno-version: ${{ matrix.deno-version }}
 
-      - name: Cache https:// deps
-        uses: actions/cache@v2
-        with:
-          path: ~/.cache/deno/deps/https
-          key: deno/${{ matrix.deno-version }}-https/v1-${{ github.sha }}
-          restore-keys: deno/${{ matrix.deno-version }}-https/v1-
+    # "https" cache: code from the Internet
+    # External sources won't change much so we use less precise keys
+    - name: Cache https://
+      uses: actions/cache@v2
+      with:
+        path: ~/.cache/deno/deps/https
+        key: deno-https/v1-${{ github.sha }}
+        restore-keys: deno-https/v1-
 
-      - run: time deno cache src/mod.ts
-      - run: time deno test test/*.ts
-      - run: time deno cache examples/*/index.ts
+    - name: Check src/mod.ts
+      run: time deno cache src/mod.ts
+
+    - name: Run tests
+      run: time deno test test/*.ts
+
+    - name: Check all examples
+      run: time deno cache examples/*/index.ts
 
   integration-test:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+    - name: Checkout source
+      uses: actions/checkout@v2
 
-      - name: Use Deno v1.13
-        uses: denoland/setup-deno@v1
-        with:
-          deno-version: v1.13
+    - name: Use Deno v1.13
+      uses: denoland/setup-deno@v1
+      with:
+        deno-version: v1.13
 
-      - name: Cache https:// deps
-        uses: actions/cache@v2
-        with:
-          path: ~/.cache/deno/deps/https
-          key: deno/v1.13-https/v1-${{ github.sha }}
-          restore-keys: deno/v1.13-https/v1-
+    - name: Cache https:// deps
+      uses: actions/cache@v2
+      with:
+        path: ~/.cache/deno/deps/https
+        key: deno/v1.13-https/v1-${{ github.sha }}
+        restore-keys: deno/v1.13-https/v1-
 
-      - run: ./examples/generate-random-data/index.ts
-        env:
-          NOTION_KEY: ${{ secrets.NOTION_KEY_SDKEXAMPLES }}
+    - name: Run 'generate-random-data' example
+      run: ./examples/generate-random-data/index.ts
+      env:
+        NOTION_KEY: ${{ secrets.NOTION_KEY_SDKEXAMPLES }}

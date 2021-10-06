@@ -60,6 +60,9 @@ import {
   SearchParameters,
   SearchResponse,
   search,
+  GetSelfParameters,
+  GetSelfResponse,
+  getSelf,
 } from "./api-endpoints.ts"
 // import {
 //   version as PACKAGE_VERSION,
@@ -68,7 +71,7 @@ import {
 import { SupportedFetch } from "./fetch-types.ts"
 
 const PACKAGE_NAME = "cloudydeno/deno-notion_sdk";
-const PACKAGE_VERSION = "0.4.0";
+const PACKAGE_VERSION = "0.4.1";
 
 export interface ClientOptions {
   auth?: string
@@ -422,6 +425,19 @@ export default class Client {
         method: listUsers.method,
         query: pick(args, listUsers.queryParams),
         body: pick(args, listUsers.bodyParams),
+        auth: args?.auth,
+      })
+    },
+
+    /**
+     * Get details about bot
+     */
+    me: (args: WithAuth<GetSelfParameters>): Promise<GetSelfResponse> => {
+      return this.request<GetSelfResponse>({
+        path: getSelf.path(),
+        method: getSelf.method,
+        query: pick(args, getSelf.queryParams),
+        body: pick(args, getSelf.bodyParams),
         auth: args?.auth,
       })
     },
