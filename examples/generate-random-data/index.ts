@@ -212,6 +212,8 @@ function extractValueToString(
         )
       } else if (property.rollup.type === "array") {
         return JSON.stringify(property.rollup.array)
+      } else if (property.rollup.type === "unsupported") {
+        return "???"
       } else {
         return assertUnreachable(property.rollup)
       }
