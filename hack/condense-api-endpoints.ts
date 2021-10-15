@@ -75,7 +75,7 @@ function beginLookup(prefix: string, key: string) {
 }
 
 const lookups = new Map<string, Lookup>();
-const lookupKeys = /^( +)(emoji|language|function|format|color|mention|bot|image|video|pdf|file|audio)\??:( {)?$/;
+const lookupKeys = /^( +)(emoji|language|function|format|annotations|color|mention|bot|image|video|pdf|file|audio)\??:( {)?$/;
 const queryLookupKeys = /^( +)(title|text|rich_text|url|email|phone|phone_number|number|date|people|select|multi_select|relation|created_time|last_edited_time):$/;
 let inLookup: LookupCapture | LookupCheck | null = null;
 let firstMention = true;
@@ -108,6 +108,9 @@ for await (let line of readLines(Deno.stdin)) {
     }
     if (groupName === 'mention' && firstMention) {
       firstMention = false;
+      groupName = '';
+    }
+    if (groupName === 'annotations' && line.includes('?')) {
       groupName = '';
     }
     if (['image','video','pdf','file','audio'].includes(groupName)) {

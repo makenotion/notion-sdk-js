@@ -8022,42 +8022,21 @@ export type CreatePageResponse = {
           | {
               type: "text"
               text: { content: string; link: { url: TextRequest } | null }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "mention"
               mention: mentionLookup
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "equation"
               equation: { expression: TextRequest }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
@@ -8070,42 +8049,21 @@ export type CreatePageResponse = {
           | {
               type: "text"
               text: { content: string; link: { url: TextRequest } | null }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "mention"
               mention: mentionLookup
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "equation"
               equation: { expression: TextRequest }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
@@ -8368,42 +8326,21 @@ export type GetPageResponse = {
           | {
               type: "text"
               text: { content: string; link: { url: TextRequest } | null }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "mention"
               mention: mentionLookup
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "equation"
               equation: { expression: TextRequest }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
@@ -8416,42 +8353,21 @@ export type GetPageResponse = {
           | {
               type: "text"
               text: { content: string; link: { url: TextRequest } | null }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "mention"
               mention: mentionLookup
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "equation"
               equation: { expression: TextRequest }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
@@ -8873,42 +8789,21 @@ export type UpdatePageResponse = {
           | {
               type: "text"
               text: { content: string; link: { url: TextRequest } | null }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "mention"
               mention: mentionLookup
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "equation"
               equation: { expression: TextRequest }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
@@ -8921,42 +8816,21 @@ export type UpdatePageResponse = {
           | {
               type: "text"
               text: { content: string; link: { url: TextRequest } | null }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "mention"
               mention: mentionLookup
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "equation"
               equation: { expression: TextRequest }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
@@ -9337,42 +9211,21 @@ export type GetPagePropertyResponse =
         | {
             type: "text"
             text: { content: string; link: { url: TextRequest } | null }
-            annotations: {
-              bold: boolean
-              italic: boolean
-              strikethrough: boolean
-              underline: boolean
-              code: boolean
-              color: annotationColorLookup
-            }
+            annotations: annotationsLookup
             plain_text: string
             href: string | null
           }
         | {
             type: "mention"
             mention: mentionLookup
-            annotations: {
-              bold: boolean
-              italic: boolean
-              strikethrough: boolean
-              underline: boolean
-              code: boolean
-              color: annotationColorLookup
-            }
+            annotations: annotationsLookup
             plain_text: string
             href: string | null
           }
         | {
             type: "equation"
             equation: { expression: TextRequest }
-            annotations: {
-              bold: boolean
-              italic: boolean
-              strikethrough: boolean
-              underline: boolean
-              code: boolean
-              color: annotationColorLookup
-            }
+            annotations: annotationsLookup
             plain_text: string
             href: string | null
           }
@@ -9384,42 +9237,21 @@ export type GetPagePropertyResponse =
         | {
             type: "text"
             text: { content: string; link: { url: TextRequest } | null }
-            annotations: {
-              bold: boolean
-              italic: boolean
-              strikethrough: boolean
-              underline: boolean
-              code: boolean
-              color: annotationColorLookup
-            }
+            annotations: annotationsLookup
             plain_text: string
             href: string | null
           }
         | {
             type: "mention"
             mention: mentionLookup
-            annotations: {
-              bold: boolean
-              italic: boolean
-              strikethrough: boolean
-              underline: boolean
-              code: boolean
-              color: annotationColorLookup
-            }
+            annotations: annotationsLookup
             plain_text: string
             href: string | null
           }
         | {
             type: "equation"
             equation: { expression: TextRequest }
-            annotations: {
-              bold: boolean
-              italic: boolean
-              strikethrough: boolean
-              underline: boolean
-              code: boolean
-              color: annotationColorLookup
-            }
+            annotations: annotationsLookup
             plain_text: string
             href: string | null
           }
@@ -9668,42 +9500,21 @@ export type GetPagePropertyResponse =
               | {
                   type: "text"
                   text: { content: string; link: { url: TextRequest } | null }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "mention"
                   mention: mentionLookup
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "equation"
                   equation: { expression: TextRequest }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
@@ -9715,42 +9526,21 @@ export type GetPagePropertyResponse =
               | {
                   type: "text"
                   text: { content: string; link: { url: TextRequest } | null }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "mention"
                   mention: mentionLookup
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "equation"
                   equation: { expression: TextRequest }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
@@ -9920,42 +9710,21 @@ export type GetPagePropertyResponse =
               | {
                   type: "text"
                   text: { content: string; link: { url: TextRequest } | null }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "mention"
                   mention: mentionLookup
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "equation"
                   equation: { expression: TextRequest }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
@@ -9967,42 +9736,21 @@ export type GetPagePropertyResponse =
               | {
                   type: "text"
                   text: { content: string; link: { url: TextRequest } | null }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "mention"
                   mention: mentionLookup
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "equation"
                   equation: { expression: TextRequest }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
@@ -10063,42 +9811,21 @@ export type GetBlockResponse =
           | {
               type: "text"
               text: { content: string; link: { url: TextRequest } | null }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "mention"
               mention: mentionLookup
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "equation"
               equation: { expression: TextRequest }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
@@ -10118,42 +9845,21 @@ export type GetBlockResponse =
           | {
               type: "text"
               text: { content: string; link: { url: TextRequest } | null }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "mention"
               mention: mentionLookup
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "equation"
               equation: { expression: TextRequest }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
@@ -10173,42 +9879,21 @@ export type GetBlockResponse =
           | {
               type: "text"
               text: { content: string; link: { url: TextRequest } | null }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "mention"
               mention: mentionLookup
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "equation"
               equation: { expression: TextRequest }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
@@ -10228,42 +9913,21 @@ export type GetBlockResponse =
           | {
               type: "text"
               text: { content: string; link: { url: TextRequest } | null }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "mention"
               mention: mentionLookup
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "equation"
               equation: { expression: TextRequest }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
@@ -10283,42 +9947,21 @@ export type GetBlockResponse =
           | {
               type: "text"
               text: { content: string; link: { url: TextRequest } | null }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "mention"
               mention: mentionLookup
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "equation"
               equation: { expression: TextRequest }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
@@ -10338,42 +9981,21 @@ export type GetBlockResponse =
           | {
               type: "text"
               text: { content: string; link: { url: TextRequest } | null }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "mention"
               mention: mentionLookup
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "equation"
               equation: { expression: TextRequest }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
@@ -10393,42 +10015,21 @@ export type GetBlockResponse =
           | {
               type: "text"
               text: { content: string; link: { url: TextRequest } | null }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "mention"
               mention: mentionLookup
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "equation"
               equation: { expression: TextRequest }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
@@ -10448,42 +10049,21 @@ export type GetBlockResponse =
           | {
               type: "text"
               text: { content: string; link: { url: TextRequest } | null }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "mention"
               mention: mentionLookup
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "equation"
               equation: { expression: TextRequest }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
@@ -10504,42 +10084,21 @@ export type GetBlockResponse =
           | {
               type: "text"
               text: { content: string; link: { url: TextRequest } | null }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "mention"
               mention: mentionLookup
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "equation"
               equation: { expression: TextRequest }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
@@ -10589,42 +10148,21 @@ export type GetBlockResponse =
           | {
               type: "text"
               text: { content: string; link: { url: TextRequest } | null }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "mention"
               mention: mentionLookup
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "equation"
               equation: { expression: TextRequest }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
@@ -10645,42 +10183,21 @@ export type GetBlockResponse =
           | {
               type: "text"
               text: { content: string; link: { url: TextRequest } | null }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "mention"
               mention: mentionLookup
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "equation"
               equation: { expression: TextRequest }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
@@ -10741,42 +10258,21 @@ export type GetBlockResponse =
           | {
               type: "text"
               text: { content: string; link: { url: TextRequest } | null }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "mention"
               mention: mentionLookup
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "equation"
               equation: { expression: TextRequest }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
@@ -10797,42 +10293,21 @@ export type GetBlockResponse =
           | {
               type: "text"
               text: { content: string; link: { url: TextRequest } | null }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "mention"
               mention: mentionLookup
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "equation"
               equation: { expression: TextRequest }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
@@ -10855,42 +10330,21 @@ export type GetBlockResponse =
               | {
                   type: "text"
                   text: { content: string; link: { url: TextRequest } | null }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "mention"
                   mention: mentionLookup
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "equation"
                   equation: { expression: TextRequest }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
@@ -10903,42 +10357,21 @@ export type GetBlockResponse =
               | {
                   type: "text"
                   text: { content: string; link: { url: TextRequest } | null }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "mention"
                   mention: mentionLookup
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "equation"
                   equation: { expression: TextRequest }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
@@ -10961,42 +10394,21 @@ export type GetBlockResponse =
               | {
                   type: "text"
                   text: { content: string; link: { url: TextRequest } | null }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "mention"
                   mention: mentionLookup
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "equation"
                   equation: { expression: TextRequest }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
@@ -11009,42 +10421,21 @@ export type GetBlockResponse =
               | {
                   type: "text"
                   text: { content: string; link: { url: TextRequest } | null }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "mention"
                   mention: mentionLookup
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "equation"
                   equation: { expression: TextRequest }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
@@ -11067,42 +10458,21 @@ export type GetBlockResponse =
               | {
                   type: "text"
                   text: { content: string; link: { url: TextRequest } | null }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "mention"
                   mention: mentionLookup
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "equation"
                   equation: { expression: TextRequest }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
@@ -11115,42 +10485,21 @@ export type GetBlockResponse =
               | {
                   type: "text"
                   text: { content: string; link: { url: TextRequest } | null }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "mention"
                   mention: mentionLookup
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "equation"
                   equation: { expression: TextRequest }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
@@ -11173,42 +10522,21 @@ export type GetBlockResponse =
               | {
                   type: "text"
                   text: { content: string; link: { url: TextRequest } | null }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "mention"
                   mention: mentionLookup
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "equation"
                   equation: { expression: TextRequest }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
@@ -11221,42 +10549,21 @@ export type GetBlockResponse =
               | {
                   type: "text"
                   text: { content: string; link: { url: TextRequest } | null }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "mention"
                   mention: mentionLookup
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "equation"
                   equation: { expression: TextRequest }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
@@ -11279,42 +10586,21 @@ export type GetBlockResponse =
               | {
                   type: "text"
                   text: { content: string; link: { url: TextRequest } | null }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "mention"
                   mention: mentionLookup
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "equation"
                   equation: { expression: TextRequest }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
@@ -11327,42 +10613,21 @@ export type GetBlockResponse =
               | {
                   type: "text"
                   text: { content: string; link: { url: TextRequest } | null }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "mention"
                   mention: mentionLookup
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "equation"
                   equation: { expression: TextRequest }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
@@ -11534,42 +10799,21 @@ export type UpdateBlockResponse =
           | {
               type: "text"
               text: { content: string; link: { url: TextRequest } | null }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "mention"
               mention: mentionLookup
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "equation"
               equation: { expression: TextRequest }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
@@ -11589,42 +10833,21 @@ export type UpdateBlockResponse =
           | {
               type: "text"
               text: { content: string; link: { url: TextRequest } | null }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "mention"
               mention: mentionLookup
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "equation"
               equation: { expression: TextRequest }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
@@ -11644,42 +10867,21 @@ export type UpdateBlockResponse =
           | {
               type: "text"
               text: { content: string; link: { url: TextRequest } | null }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "mention"
               mention: mentionLookup
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "equation"
               equation: { expression: TextRequest }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
@@ -11699,42 +10901,21 @@ export type UpdateBlockResponse =
           | {
               type: "text"
               text: { content: string; link: { url: TextRequest } | null }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "mention"
               mention: mentionLookup
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "equation"
               equation: { expression: TextRequest }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
@@ -11754,42 +10935,21 @@ export type UpdateBlockResponse =
           | {
               type: "text"
               text: { content: string; link: { url: TextRequest } | null }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "mention"
               mention: mentionLookup
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "equation"
               equation: { expression: TextRequest }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
@@ -11809,42 +10969,21 @@ export type UpdateBlockResponse =
           | {
               type: "text"
               text: { content: string; link: { url: TextRequest } | null }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "mention"
               mention: mentionLookup
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "equation"
               equation: { expression: TextRequest }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
@@ -11864,42 +11003,21 @@ export type UpdateBlockResponse =
           | {
               type: "text"
               text: { content: string; link: { url: TextRequest } | null }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "mention"
               mention: mentionLookup
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "equation"
               equation: { expression: TextRequest }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
@@ -11919,42 +11037,21 @@ export type UpdateBlockResponse =
           | {
               type: "text"
               text: { content: string; link: { url: TextRequest } | null }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "mention"
               mention: mentionLookup
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "equation"
               equation: { expression: TextRequest }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
@@ -11975,42 +11072,21 @@ export type UpdateBlockResponse =
           | {
               type: "text"
               text: { content: string; link: { url: TextRequest } | null }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "mention"
               mention: mentionLookup
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "equation"
               equation: { expression: TextRequest }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
@@ -12060,42 +11136,21 @@ export type UpdateBlockResponse =
           | {
               type: "text"
               text: { content: string; link: { url: TextRequest } | null }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "mention"
               mention: mentionLookup
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "equation"
               equation: { expression: TextRequest }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
@@ -12116,42 +11171,21 @@ export type UpdateBlockResponse =
           | {
               type: "text"
               text: { content: string; link: { url: TextRequest } | null }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "mention"
               mention: mentionLookup
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "equation"
               equation: { expression: TextRequest }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
@@ -12212,42 +11246,21 @@ export type UpdateBlockResponse =
           | {
               type: "text"
               text: { content: string; link: { url: TextRequest } | null }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "mention"
               mention: mentionLookup
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "equation"
               equation: { expression: TextRequest }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
@@ -12268,42 +11281,21 @@ export type UpdateBlockResponse =
           | {
               type: "text"
               text: { content: string; link: { url: TextRequest } | null }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "mention"
               mention: mentionLookup
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "equation"
               equation: { expression: TextRequest }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
@@ -12326,42 +11318,21 @@ export type UpdateBlockResponse =
               | {
                   type: "text"
                   text: { content: string; link: { url: TextRequest } | null }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "mention"
                   mention: mentionLookup
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "equation"
                   equation: { expression: TextRequest }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
@@ -12374,42 +11345,21 @@ export type UpdateBlockResponse =
               | {
                   type: "text"
                   text: { content: string; link: { url: TextRequest } | null }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "mention"
                   mention: mentionLookup
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "equation"
                   equation: { expression: TextRequest }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
@@ -12432,42 +11382,21 @@ export type UpdateBlockResponse =
               | {
                   type: "text"
                   text: { content: string; link: { url: TextRequest } | null }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "mention"
                   mention: mentionLookup
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "equation"
                   equation: { expression: TextRequest }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
@@ -12480,42 +11409,21 @@ export type UpdateBlockResponse =
               | {
                   type: "text"
                   text: { content: string; link: { url: TextRequest } | null }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "mention"
                   mention: mentionLookup
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "equation"
                   equation: { expression: TextRequest }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
@@ -12538,42 +11446,21 @@ export type UpdateBlockResponse =
               | {
                   type: "text"
                   text: { content: string; link: { url: TextRequest } | null }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "mention"
                   mention: mentionLookup
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "equation"
                   equation: { expression: TextRequest }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
@@ -12586,42 +11473,21 @@ export type UpdateBlockResponse =
               | {
                   type: "text"
                   text: { content: string; link: { url: TextRequest } | null }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "mention"
                   mention: mentionLookup
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "equation"
                   equation: { expression: TextRequest }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
@@ -12644,42 +11510,21 @@ export type UpdateBlockResponse =
               | {
                   type: "text"
                   text: { content: string; link: { url: TextRequest } | null }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "mention"
                   mention: mentionLookup
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "equation"
                   equation: { expression: TextRequest }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
@@ -12692,42 +11537,21 @@ export type UpdateBlockResponse =
               | {
                   type: "text"
                   text: { content: string; link: { url: TextRequest } | null }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "mention"
                   mention: mentionLookup
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "equation"
                   equation: { expression: TextRequest }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
@@ -12750,42 +11574,21 @@ export type UpdateBlockResponse =
               | {
                   type: "text"
                   text: { content: string; link: { url: TextRequest } | null }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "mention"
                   mention: mentionLookup
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "equation"
                   equation: { expression: TextRequest }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
@@ -12798,42 +11601,21 @@ export type UpdateBlockResponse =
               | {
                   type: "text"
                   text: { content: string; link: { url: TextRequest } | null }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "mention"
                   mention: mentionLookup
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "equation"
                   equation: { expression: TextRequest }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
@@ -12904,42 +11686,21 @@ export type DeleteBlockResponse =
           | {
               type: "text"
               text: { content: string; link: { url: TextRequest } | null }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "mention"
               mention: mentionLookup
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "equation"
               equation: { expression: TextRequest }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
@@ -12959,42 +11720,21 @@ export type DeleteBlockResponse =
           | {
               type: "text"
               text: { content: string; link: { url: TextRequest } | null }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "mention"
               mention: mentionLookup
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "equation"
               equation: { expression: TextRequest }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
@@ -13014,42 +11754,21 @@ export type DeleteBlockResponse =
           | {
               type: "text"
               text: { content: string; link: { url: TextRequest } | null }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "mention"
               mention: mentionLookup
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "equation"
               equation: { expression: TextRequest }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
@@ -13069,42 +11788,21 @@ export type DeleteBlockResponse =
           | {
               type: "text"
               text: { content: string; link: { url: TextRequest } | null }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "mention"
               mention: mentionLookup
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "equation"
               equation: { expression: TextRequest }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
@@ -13124,42 +11822,21 @@ export type DeleteBlockResponse =
           | {
               type: "text"
               text: { content: string; link: { url: TextRequest } | null }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "mention"
               mention: mentionLookup
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "equation"
               equation: { expression: TextRequest }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
@@ -13179,42 +11856,21 @@ export type DeleteBlockResponse =
           | {
               type: "text"
               text: { content: string; link: { url: TextRequest } | null }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "mention"
               mention: mentionLookup
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "equation"
               equation: { expression: TextRequest }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
@@ -13234,42 +11890,21 @@ export type DeleteBlockResponse =
           | {
               type: "text"
               text: { content: string; link: { url: TextRequest } | null }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "mention"
               mention: mentionLookup
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "equation"
               equation: { expression: TextRequest }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
@@ -13289,42 +11924,21 @@ export type DeleteBlockResponse =
           | {
               type: "text"
               text: { content: string; link: { url: TextRequest } | null }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "mention"
               mention: mentionLookup
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "equation"
               equation: { expression: TextRequest }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
@@ -13345,42 +11959,21 @@ export type DeleteBlockResponse =
           | {
               type: "text"
               text: { content: string; link: { url: TextRequest } | null }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "mention"
               mention: mentionLookup
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "equation"
               equation: { expression: TextRequest }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
@@ -13430,42 +12023,21 @@ export type DeleteBlockResponse =
           | {
               type: "text"
               text: { content: string; link: { url: TextRequest } | null }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "mention"
               mention: mentionLookup
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "equation"
               equation: { expression: TextRequest }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
@@ -13486,42 +12058,21 @@ export type DeleteBlockResponse =
           | {
               type: "text"
               text: { content: string; link: { url: TextRequest } | null }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "mention"
               mention: mentionLookup
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "equation"
               equation: { expression: TextRequest }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
@@ -13582,42 +12133,21 @@ export type DeleteBlockResponse =
           | {
               type: "text"
               text: { content: string; link: { url: TextRequest } | null }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "mention"
               mention: mentionLookup
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "equation"
               equation: { expression: TextRequest }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
@@ -13638,42 +12168,21 @@ export type DeleteBlockResponse =
           | {
               type: "text"
               text: { content: string; link: { url: TextRequest } | null }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "mention"
               mention: mentionLookup
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "equation"
               equation: { expression: TextRequest }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
@@ -13696,42 +12205,21 @@ export type DeleteBlockResponse =
               | {
                   type: "text"
                   text: { content: string; link: { url: TextRequest } | null }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "mention"
                   mention: mentionLookup
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "equation"
                   equation: { expression: TextRequest }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
@@ -13744,42 +12232,21 @@ export type DeleteBlockResponse =
               | {
                   type: "text"
                   text: { content: string; link: { url: TextRequest } | null }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "mention"
                   mention: mentionLookup
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "equation"
                   equation: { expression: TextRequest }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
@@ -13802,42 +12269,21 @@ export type DeleteBlockResponse =
               | {
                   type: "text"
                   text: { content: string; link: { url: TextRequest } | null }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "mention"
                   mention: mentionLookup
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "equation"
                   equation: { expression: TextRequest }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
@@ -13850,42 +12296,21 @@ export type DeleteBlockResponse =
               | {
                   type: "text"
                   text: { content: string; link: { url: TextRequest } | null }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "mention"
                   mention: mentionLookup
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "equation"
                   equation: { expression: TextRequest }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
@@ -13908,42 +12333,21 @@ export type DeleteBlockResponse =
               | {
                   type: "text"
                   text: { content: string; link: { url: TextRequest } | null }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "mention"
                   mention: mentionLookup
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "equation"
                   equation: { expression: TextRequest }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
@@ -13956,42 +12360,21 @@ export type DeleteBlockResponse =
               | {
                   type: "text"
                   text: { content: string; link: { url: TextRequest } | null }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "mention"
                   mention: mentionLookup
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "equation"
                   equation: { expression: TextRequest }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
@@ -14014,42 +12397,21 @@ export type DeleteBlockResponse =
               | {
                   type: "text"
                   text: { content: string; link: { url: TextRequest } | null }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "mention"
                   mention: mentionLookup
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "equation"
                   equation: { expression: TextRequest }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
@@ -14062,42 +12424,21 @@ export type DeleteBlockResponse =
               | {
                   type: "text"
                   text: { content: string; link: { url: TextRequest } | null }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "mention"
                   mention: mentionLookup
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "equation"
                   equation: { expression: TextRequest }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
@@ -14120,42 +12461,21 @@ export type DeleteBlockResponse =
               | {
                   type: "text"
                   text: { content: string; link: { url: TextRequest } | null }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "mention"
                   mention: mentionLookup
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "equation"
                   equation: { expression: TextRequest }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
@@ -14168,42 +12488,21 @@ export type DeleteBlockResponse =
               | {
                   type: "text"
                   text: { content: string; link: { url: TextRequest } | null }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "mention"
                   mention: mentionLookup
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "equation"
                   equation: { expression: TextRequest }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
@@ -14345,42 +12644,21 @@ export type ListBlockChildrenResponse =
                 | {
                     type: "text"
                     text: { content: string; link: { url: TextRequest } | null }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "mention"
                     mention: mentionLookup
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "equation"
                     equation: { expression: TextRequest }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
@@ -14400,42 +12678,21 @@ export type ListBlockChildrenResponse =
                 | {
                     type: "text"
                     text: { content: string; link: { url: TextRequest } | null }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "mention"
                     mention: mentionLookup
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "equation"
                     equation: { expression: TextRequest }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
@@ -14455,42 +12712,21 @@ export type ListBlockChildrenResponse =
                 | {
                     type: "text"
                     text: { content: string; link: { url: TextRequest } | null }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "mention"
                     mention: mentionLookup
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "equation"
                     equation: { expression: TextRequest }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
@@ -14510,42 +12746,21 @@ export type ListBlockChildrenResponse =
                 | {
                     type: "text"
                     text: { content: string; link: { url: TextRequest } | null }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "mention"
                     mention: mentionLookup
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "equation"
                     equation: { expression: TextRequest }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
@@ -14565,42 +12780,21 @@ export type ListBlockChildrenResponse =
                 | {
                     type: "text"
                     text: { content: string; link: { url: TextRequest } | null }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "mention"
                     mention: mentionLookup
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "equation"
                     equation: { expression: TextRequest }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
@@ -14620,42 +12814,21 @@ export type ListBlockChildrenResponse =
                 | {
                     type: "text"
                     text: { content: string; link: { url: TextRequest } | null }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "mention"
                     mention: mentionLookup
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "equation"
                     equation: { expression: TextRequest }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
@@ -14675,42 +12848,21 @@ export type ListBlockChildrenResponse =
                 | {
                     type: "text"
                     text: { content: string; link: { url: TextRequest } | null }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "mention"
                     mention: mentionLookup
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "equation"
                     equation: { expression: TextRequest }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
@@ -14730,42 +12882,21 @@ export type ListBlockChildrenResponse =
                 | {
                     type: "text"
                     text: { content: string; link: { url: TextRequest } | null }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "mention"
                     mention: mentionLookup
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "equation"
                     equation: { expression: TextRequest }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
@@ -14786,42 +12917,21 @@ export type ListBlockChildrenResponse =
                 | {
                     type: "text"
                     text: { content: string; link: { url: TextRequest } | null }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "mention"
                     mention: mentionLookup
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "equation"
                     equation: { expression: TextRequest }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
@@ -14871,42 +12981,21 @@ export type ListBlockChildrenResponse =
                 | {
                     type: "text"
                     text: { content: string; link: { url: TextRequest } | null }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "mention"
                     mention: mentionLookup
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "equation"
                     equation: { expression: TextRequest }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
@@ -14927,42 +13016,21 @@ export type ListBlockChildrenResponse =
                 | {
                     type: "text"
                     text: { content: string; link: { url: TextRequest } | null }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "mention"
                     mention: mentionLookup
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "equation"
                     equation: { expression: TextRequest }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
@@ -15023,42 +13091,21 @@ export type ListBlockChildrenResponse =
                 | {
                     type: "text"
                     text: { content: string; link: { url: TextRequest } | null }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "mention"
                     mention: mentionLookup
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "equation"
                     equation: { expression: TextRequest }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
@@ -15079,42 +13126,21 @@ export type ListBlockChildrenResponse =
                 | {
                     type: "text"
                     text: { content: string; link: { url: TextRequest } | null }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "mention"
                     mention: mentionLookup
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "equation"
                     equation: { expression: TextRequest }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
@@ -15140,42 +13166,21 @@ export type ListBlockChildrenResponse =
                           content: string
                           link: { url: TextRequest } | null
                         }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "mention"
                         mention: mentionLookup
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "equation"
                         equation: { expression: TextRequest }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
@@ -15191,42 +13196,21 @@ export type ListBlockChildrenResponse =
                           content: string
                           link: { url: TextRequest } | null
                         }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "mention"
                         mention: mentionLookup
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "equation"
                         equation: { expression: TextRequest }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
@@ -15252,42 +13236,21 @@ export type ListBlockChildrenResponse =
                           content: string
                           link: { url: TextRequest } | null
                         }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "mention"
                         mention: mentionLookup
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "equation"
                         equation: { expression: TextRequest }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
@@ -15303,42 +13266,21 @@ export type ListBlockChildrenResponse =
                           content: string
                           link: { url: TextRequest } | null
                         }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "mention"
                         mention: mentionLookup
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "equation"
                         equation: { expression: TextRequest }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
@@ -15364,42 +13306,21 @@ export type ListBlockChildrenResponse =
                           content: string
                           link: { url: TextRequest } | null
                         }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "mention"
                         mention: mentionLookup
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "equation"
                         equation: { expression: TextRequest }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
@@ -15415,42 +13336,21 @@ export type ListBlockChildrenResponse =
                           content: string
                           link: { url: TextRequest } | null
                         }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "mention"
                         mention: mentionLookup
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "equation"
                         equation: { expression: TextRequest }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
@@ -15476,42 +13376,21 @@ export type ListBlockChildrenResponse =
                           content: string
                           link: { url: TextRequest } | null
                         }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "mention"
                         mention: mentionLookup
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "equation"
                         equation: { expression: TextRequest }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
@@ -15527,42 +13406,21 @@ export type ListBlockChildrenResponse =
                           content: string
                           link: { url: TextRequest } | null
                         }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "mention"
                         mention: mentionLookup
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "equation"
                         equation: { expression: TextRequest }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
@@ -15588,42 +13446,21 @@ export type ListBlockChildrenResponse =
                           content: string
                           link: { url: TextRequest } | null
                         }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "mention"
                         mention: mentionLookup
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "equation"
                         equation: { expression: TextRequest }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
@@ -15639,42 +13476,21 @@ export type ListBlockChildrenResponse =
                           content: string
                           link: { url: TextRequest } | null
                         }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "mention"
                         mention: mentionLookup
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "equation"
                         equation: { expression: TextRequest }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
@@ -15711,42 +13527,21 @@ export type ListBlockChildrenResponse =
                 | {
                     type: "text"
                     text: { content: string; link: { url: TextRequest } | null }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "mention"
                     mention: mentionLookup
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "equation"
                     equation: { expression: TextRequest }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
@@ -15766,42 +13561,21 @@ export type ListBlockChildrenResponse =
                 | {
                     type: "text"
                     text: { content: string; link: { url: TextRequest } | null }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "mention"
                     mention: mentionLookup
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "equation"
                     equation: { expression: TextRequest }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
@@ -15821,42 +13595,21 @@ export type ListBlockChildrenResponse =
                 | {
                     type: "text"
                     text: { content: string; link: { url: TextRequest } | null }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "mention"
                     mention: mentionLookup
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "equation"
                     equation: { expression: TextRequest }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
@@ -15876,42 +13629,21 @@ export type ListBlockChildrenResponse =
                 | {
                     type: "text"
                     text: { content: string; link: { url: TextRequest } | null }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "mention"
                     mention: mentionLookup
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "equation"
                     equation: { expression: TextRequest }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
@@ -15931,42 +13663,21 @@ export type ListBlockChildrenResponse =
                 | {
                     type: "text"
                     text: { content: string; link: { url: TextRequest } | null }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "mention"
                     mention: mentionLookup
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "equation"
                     equation: { expression: TextRequest }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
@@ -15986,42 +13697,21 @@ export type ListBlockChildrenResponse =
                 | {
                     type: "text"
                     text: { content: string; link: { url: TextRequest } | null }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "mention"
                     mention: mentionLookup
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "equation"
                     equation: { expression: TextRequest }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
@@ -16041,42 +13731,21 @@ export type ListBlockChildrenResponse =
                 | {
                     type: "text"
                     text: { content: string; link: { url: TextRequest } | null }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "mention"
                     mention: mentionLookup
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "equation"
                     equation: { expression: TextRequest }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
@@ -16096,42 +13765,21 @@ export type ListBlockChildrenResponse =
                 | {
                     type: "text"
                     text: { content: string; link: { url: TextRequest } | null }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "mention"
                     mention: mentionLookup
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "equation"
                     equation: { expression: TextRequest }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
@@ -16152,42 +13800,21 @@ export type ListBlockChildrenResponse =
                 | {
                     type: "text"
                     text: { content: string; link: { url: TextRequest } | null }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "mention"
                     mention: mentionLookup
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "equation"
                     equation: { expression: TextRequest }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
@@ -16237,42 +13864,21 @@ export type ListBlockChildrenResponse =
                 | {
                     type: "text"
                     text: { content: string; link: { url: TextRequest } | null }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "mention"
                     mention: mentionLookup
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "equation"
                     equation: { expression: TextRequest }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
@@ -16293,42 +13899,21 @@ export type ListBlockChildrenResponse =
                 | {
                     type: "text"
                     text: { content: string; link: { url: TextRequest } | null }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "mention"
                     mention: mentionLookup
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "equation"
                     equation: { expression: TextRequest }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
@@ -16389,42 +13974,21 @@ export type ListBlockChildrenResponse =
                 | {
                     type: "text"
                     text: { content: string; link: { url: TextRequest } | null }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "mention"
                     mention: mentionLookup
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "equation"
                     equation: { expression: TextRequest }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
@@ -16445,42 +14009,21 @@ export type ListBlockChildrenResponse =
                 | {
                     type: "text"
                     text: { content: string; link: { url: TextRequest } | null }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "mention"
                     mention: mentionLookup
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "equation"
                     equation: { expression: TextRequest }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
@@ -16506,42 +14049,21 @@ export type ListBlockChildrenResponse =
                           content: string
                           link: { url: TextRequest } | null
                         }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "mention"
                         mention: mentionLookup
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "equation"
                         equation: { expression: TextRequest }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
@@ -16557,42 +14079,21 @@ export type ListBlockChildrenResponse =
                           content: string
                           link: { url: TextRequest } | null
                         }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "mention"
                         mention: mentionLookup
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "equation"
                         equation: { expression: TextRequest }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
@@ -16618,42 +14119,21 @@ export type ListBlockChildrenResponse =
                           content: string
                           link: { url: TextRequest } | null
                         }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "mention"
                         mention: mentionLookup
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "equation"
                         equation: { expression: TextRequest }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
@@ -16669,42 +14149,21 @@ export type ListBlockChildrenResponse =
                           content: string
                           link: { url: TextRequest } | null
                         }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "mention"
                         mention: mentionLookup
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "equation"
                         equation: { expression: TextRequest }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
@@ -16730,42 +14189,21 @@ export type ListBlockChildrenResponse =
                           content: string
                           link: { url: TextRequest } | null
                         }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "mention"
                         mention: mentionLookup
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "equation"
                         equation: { expression: TextRequest }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
@@ -16781,42 +14219,21 @@ export type ListBlockChildrenResponse =
                           content: string
                           link: { url: TextRequest } | null
                         }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "mention"
                         mention: mentionLookup
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "equation"
                         equation: { expression: TextRequest }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
@@ -16842,42 +14259,21 @@ export type ListBlockChildrenResponse =
                           content: string
                           link: { url: TextRequest } | null
                         }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "mention"
                         mention: mentionLookup
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "equation"
                         equation: { expression: TextRequest }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
@@ -16893,42 +14289,21 @@ export type ListBlockChildrenResponse =
                           content: string
                           link: { url: TextRequest } | null
                         }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "mention"
                         mention: mentionLookup
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "equation"
                         equation: { expression: TextRequest }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
@@ -16954,42 +14329,21 @@ export type ListBlockChildrenResponse =
                           content: string
                           link: { url: TextRequest } | null
                         }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "mention"
                         mention: mentionLookup
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "equation"
                         equation: { expression: TextRequest }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
@@ -17005,42 +14359,21 @@ export type ListBlockChildrenResponse =
                           content: string
                           link: { url: TextRequest } | null
                         }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "mention"
                         mention: mentionLookup
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "equation"
                         equation: { expression: TextRequest }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
@@ -17184,42 +14517,21 @@ export type AppendBlockChildrenResponse =
                 | {
                     type: "text"
                     text: { content: string; link: { url: TextRequest } | null }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "mention"
                     mention: mentionLookup
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "equation"
                     equation: { expression: TextRequest }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
@@ -17239,42 +14551,21 @@ export type AppendBlockChildrenResponse =
                 | {
                     type: "text"
                     text: { content: string; link: { url: TextRequest } | null }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "mention"
                     mention: mentionLookup
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "equation"
                     equation: { expression: TextRequest }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
@@ -17294,42 +14585,21 @@ export type AppendBlockChildrenResponse =
                 | {
                     type: "text"
                     text: { content: string; link: { url: TextRequest } | null }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "mention"
                     mention: mentionLookup
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "equation"
                     equation: { expression: TextRequest }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
@@ -17349,42 +14619,21 @@ export type AppendBlockChildrenResponse =
                 | {
                     type: "text"
                     text: { content: string; link: { url: TextRequest } | null }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "mention"
                     mention: mentionLookup
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "equation"
                     equation: { expression: TextRequest }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
@@ -17404,42 +14653,21 @@ export type AppendBlockChildrenResponse =
                 | {
                     type: "text"
                     text: { content: string; link: { url: TextRequest } | null }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "mention"
                     mention: mentionLookup
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "equation"
                     equation: { expression: TextRequest }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
@@ -17459,42 +14687,21 @@ export type AppendBlockChildrenResponse =
                 | {
                     type: "text"
                     text: { content: string; link: { url: TextRequest } | null }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "mention"
                     mention: mentionLookup
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "equation"
                     equation: { expression: TextRequest }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
@@ -17514,42 +14721,21 @@ export type AppendBlockChildrenResponse =
                 | {
                     type: "text"
                     text: { content: string; link: { url: TextRequest } | null }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "mention"
                     mention: mentionLookup
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "equation"
                     equation: { expression: TextRequest }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
@@ -17569,42 +14755,21 @@ export type AppendBlockChildrenResponse =
                 | {
                     type: "text"
                     text: { content: string; link: { url: TextRequest } | null }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "mention"
                     mention: mentionLookup
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "equation"
                     equation: { expression: TextRequest }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
@@ -17625,42 +14790,21 @@ export type AppendBlockChildrenResponse =
                 | {
                     type: "text"
                     text: { content: string; link: { url: TextRequest } | null }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "mention"
                     mention: mentionLookup
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "equation"
                     equation: { expression: TextRequest }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
@@ -17710,42 +14854,21 @@ export type AppendBlockChildrenResponse =
                 | {
                     type: "text"
                     text: { content: string; link: { url: TextRequest } | null }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "mention"
                     mention: mentionLookup
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "equation"
                     equation: { expression: TextRequest }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
@@ -17766,42 +14889,21 @@ export type AppendBlockChildrenResponse =
                 | {
                     type: "text"
                     text: { content: string; link: { url: TextRequest } | null }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "mention"
                     mention: mentionLookup
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "equation"
                     equation: { expression: TextRequest }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
@@ -17862,42 +14964,21 @@ export type AppendBlockChildrenResponse =
                 | {
                     type: "text"
                     text: { content: string; link: { url: TextRequest } | null }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "mention"
                     mention: mentionLookup
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "equation"
                     equation: { expression: TextRequest }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
@@ -17918,42 +14999,21 @@ export type AppendBlockChildrenResponse =
                 | {
                     type: "text"
                     text: { content: string; link: { url: TextRequest } | null }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "mention"
                     mention: mentionLookup
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "equation"
                     equation: { expression: TextRequest }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
@@ -17979,42 +15039,21 @@ export type AppendBlockChildrenResponse =
                           content: string
                           link: { url: TextRequest } | null
                         }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "mention"
                         mention: mentionLookup
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "equation"
                         equation: { expression: TextRequest }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
@@ -18030,42 +15069,21 @@ export type AppendBlockChildrenResponse =
                           content: string
                           link: { url: TextRequest } | null
                         }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "mention"
                         mention: mentionLookup
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "equation"
                         equation: { expression: TextRequest }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
@@ -18091,42 +15109,21 @@ export type AppendBlockChildrenResponse =
                           content: string
                           link: { url: TextRequest } | null
                         }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "mention"
                         mention: mentionLookup
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "equation"
                         equation: { expression: TextRequest }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
@@ -18142,42 +15139,21 @@ export type AppendBlockChildrenResponse =
                           content: string
                           link: { url: TextRequest } | null
                         }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "mention"
                         mention: mentionLookup
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "equation"
                         equation: { expression: TextRequest }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
@@ -18203,42 +15179,21 @@ export type AppendBlockChildrenResponse =
                           content: string
                           link: { url: TextRequest } | null
                         }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "mention"
                         mention: mentionLookup
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "equation"
                         equation: { expression: TextRequest }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
@@ -18254,42 +15209,21 @@ export type AppendBlockChildrenResponse =
                           content: string
                           link: { url: TextRequest } | null
                         }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "mention"
                         mention: mentionLookup
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "equation"
                         equation: { expression: TextRequest }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
@@ -18315,42 +15249,21 @@ export type AppendBlockChildrenResponse =
                           content: string
                           link: { url: TextRequest } | null
                         }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "mention"
                         mention: mentionLookup
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "equation"
                         equation: { expression: TextRequest }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
@@ -18366,42 +15279,21 @@ export type AppendBlockChildrenResponse =
                           content: string
                           link: { url: TextRequest } | null
                         }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "mention"
                         mention: mentionLookup
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "equation"
                         equation: { expression: TextRequest }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
@@ -18427,42 +15319,21 @@ export type AppendBlockChildrenResponse =
                           content: string
                           link: { url: TextRequest } | null
                         }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "mention"
                         mention: mentionLookup
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "equation"
                         equation: { expression: TextRequest }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
@@ -18478,42 +15349,21 @@ export type AppendBlockChildrenResponse =
                           content: string
                           link: { url: TextRequest } | null
                         }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "mention"
                         mention: mentionLookup
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "equation"
                         equation: { expression: TextRequest }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
@@ -18550,42 +15400,21 @@ export type AppendBlockChildrenResponse =
                 | {
                     type: "text"
                     text: { content: string; link: { url: TextRequest } | null }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "mention"
                     mention: mentionLookup
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "equation"
                     equation: { expression: TextRequest }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
@@ -18605,42 +15434,21 @@ export type AppendBlockChildrenResponse =
                 | {
                     type: "text"
                     text: { content: string; link: { url: TextRequest } | null }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "mention"
                     mention: mentionLookup
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "equation"
                     equation: { expression: TextRequest }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
@@ -18660,42 +15468,21 @@ export type AppendBlockChildrenResponse =
                 | {
                     type: "text"
                     text: { content: string; link: { url: TextRequest } | null }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "mention"
                     mention: mentionLookup
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "equation"
                     equation: { expression: TextRequest }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
@@ -18715,42 +15502,21 @@ export type AppendBlockChildrenResponse =
                 | {
                     type: "text"
                     text: { content: string; link: { url: TextRequest } | null }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "mention"
                     mention: mentionLookup
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "equation"
                     equation: { expression: TextRequest }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
@@ -18770,42 +15536,21 @@ export type AppendBlockChildrenResponse =
                 | {
                     type: "text"
                     text: { content: string; link: { url: TextRequest } | null }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "mention"
                     mention: mentionLookup
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "equation"
                     equation: { expression: TextRequest }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
@@ -18825,42 +15570,21 @@ export type AppendBlockChildrenResponse =
                 | {
                     type: "text"
                     text: { content: string; link: { url: TextRequest } | null }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "mention"
                     mention: mentionLookup
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "equation"
                     equation: { expression: TextRequest }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
@@ -18880,42 +15604,21 @@ export type AppendBlockChildrenResponse =
                 | {
                     type: "text"
                     text: { content: string; link: { url: TextRequest } | null }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "mention"
                     mention: mentionLookup
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "equation"
                     equation: { expression: TextRequest }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
@@ -18935,42 +15638,21 @@ export type AppendBlockChildrenResponse =
                 | {
                     type: "text"
                     text: { content: string; link: { url: TextRequest } | null }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "mention"
                     mention: mentionLookup
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "equation"
                     equation: { expression: TextRequest }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
@@ -18991,42 +15673,21 @@ export type AppendBlockChildrenResponse =
                 | {
                     type: "text"
                     text: { content: string; link: { url: TextRequest } | null }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "mention"
                     mention: mentionLookup
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "equation"
                     equation: { expression: TextRequest }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
@@ -19076,42 +15737,21 @@ export type AppendBlockChildrenResponse =
                 | {
                     type: "text"
                     text: { content: string; link: { url: TextRequest } | null }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "mention"
                     mention: mentionLookup
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "equation"
                     equation: { expression: TextRequest }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
@@ -19132,42 +15772,21 @@ export type AppendBlockChildrenResponse =
                 | {
                     type: "text"
                     text: { content: string; link: { url: TextRequest } | null }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "mention"
                     mention: mentionLookup
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "equation"
                     equation: { expression: TextRequest }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
@@ -19228,42 +15847,21 @@ export type AppendBlockChildrenResponse =
                 | {
                     type: "text"
                     text: { content: string; link: { url: TextRequest } | null }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "mention"
                     mention: mentionLookup
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "equation"
                     equation: { expression: TextRequest }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
@@ -19284,42 +15882,21 @@ export type AppendBlockChildrenResponse =
                 | {
                     type: "text"
                     text: { content: string; link: { url: TextRequest } | null }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "mention"
                     mention: mentionLookup
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "equation"
                     equation: { expression: TextRequest }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
@@ -19345,42 +15922,21 @@ export type AppendBlockChildrenResponse =
                           content: string
                           link: { url: TextRequest } | null
                         }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "mention"
                         mention: mentionLookup
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "equation"
                         equation: { expression: TextRequest }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
@@ -19396,42 +15952,21 @@ export type AppendBlockChildrenResponse =
                           content: string
                           link: { url: TextRequest } | null
                         }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "mention"
                         mention: mentionLookup
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "equation"
                         equation: { expression: TextRequest }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
@@ -19457,42 +15992,21 @@ export type AppendBlockChildrenResponse =
                           content: string
                           link: { url: TextRequest } | null
                         }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "mention"
                         mention: mentionLookup
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "equation"
                         equation: { expression: TextRequest }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
@@ -19508,42 +16022,21 @@ export type AppendBlockChildrenResponse =
                           content: string
                           link: { url: TextRequest } | null
                         }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "mention"
                         mention: mentionLookup
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "equation"
                         equation: { expression: TextRequest }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
@@ -19569,42 +16062,21 @@ export type AppendBlockChildrenResponse =
                           content: string
                           link: { url: TextRequest } | null
                         }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "mention"
                         mention: mentionLookup
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "equation"
                         equation: { expression: TextRequest }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
@@ -19620,42 +16092,21 @@ export type AppendBlockChildrenResponse =
                           content: string
                           link: { url: TextRequest } | null
                         }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "mention"
                         mention: mentionLookup
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "equation"
                         equation: { expression: TextRequest }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
@@ -19681,42 +16132,21 @@ export type AppendBlockChildrenResponse =
                           content: string
                           link: { url: TextRequest } | null
                         }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "mention"
                         mention: mentionLookup
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "equation"
                         equation: { expression: TextRequest }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
@@ -19732,42 +16162,21 @@ export type AppendBlockChildrenResponse =
                           content: string
                           link: { url: TextRequest } | null
                         }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "mention"
                         mention: mentionLookup
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "equation"
                         equation: { expression: TextRequest }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
@@ -19793,42 +16202,21 @@ export type AppendBlockChildrenResponse =
                           content: string
                           link: { url: TextRequest } | null
                         }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "mention"
                         mention: mentionLookup
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "equation"
                         equation: { expression: TextRequest }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
@@ -19844,42 +16232,21 @@ export type AppendBlockChildrenResponse =
                           content: string
                           link: { url: TextRequest } | null
                         }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "mention"
                         mention: mentionLookup
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "equation"
                         equation: { expression: TextRequest }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
@@ -19927,42 +16294,21 @@ export type GetDatabaseResponse = {
     | {
         type: "text"
         text: { content: string; link: { url: TextRequest } | null }
-        annotations: {
-          bold: boolean
-          italic: boolean
-          strikethrough: boolean
-          underline: boolean
-          code: boolean
-          color: annotationColorLookup
-        }
+        annotations: annotationsLookup
         plain_text: string
         href: string | null
       }
     | {
         type: "mention"
         mention: mentionLookup
-        annotations: {
-          bold: boolean
-          italic: boolean
-          strikethrough: boolean
-          underline: boolean
-          code: boolean
-          color: annotationColorLookup
-        }
+        annotations: annotationsLookup
         plain_text: string
         href: string | null
       }
     | {
         type: "equation"
         equation: { expression: TextRequest }
-        annotations: {
-          bold: boolean
-          italic: boolean
-          strikethrough: boolean
-          underline: boolean
-          code: boolean
-          color: annotationColorLookup
-        }
+        annotations: annotationsLookup
         plain_text: string
         href: string | null
       }
@@ -20280,42 +16626,21 @@ export type UpdateDatabaseResponse = {
     | {
         type: "text"
         text: { content: string; link: { url: TextRequest } | null }
-        annotations: {
-          bold: boolean
-          italic: boolean
-          strikethrough: boolean
-          underline: boolean
-          code: boolean
-          color: annotationColorLookup
-        }
+        annotations: annotationsLookup
         plain_text: string
         href: string | null
       }
     | {
         type: "mention"
         mention: mentionLookup
-        annotations: {
-          bold: boolean
-          italic: boolean
-          strikethrough: boolean
-          underline: boolean
-          code: boolean
-          color: annotationColorLookup
-        }
+        annotations: annotationsLookup
         plain_text: string
         href: string | null
       }
     | {
         type: "equation"
         equation: { expression: TextRequest }
-        annotations: {
-          bold: boolean
-          italic: boolean
-          strikethrough: boolean
-          underline: boolean
-          code: boolean
-          color: annotationColorLookup
-        }
+        annotations: annotationsLookup
         plain_text: string
         href: string | null
       }
@@ -22213,42 +18538,21 @@ export type QueryDatabaseResponse =
                 | {
                     type: "text"
                     text: { content: string; link: { url: TextRequest } | null }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "mention"
                     mention: mentionLookup
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "equation"
                     equation: { expression: TextRequest }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
@@ -22261,42 +18565,21 @@ export type QueryDatabaseResponse =
                 | {
                     type: "text"
                     text: { content: string; link: { url: TextRequest } | null }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "mention"
                     mention: mentionLookup
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "equation"
                     equation: { expression: TextRequest }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
@@ -22565,42 +18848,21 @@ export type QueryDatabaseResponse =
                 | {
                     type: "text"
                     text: { content: string; link: { url: TextRequest } | null }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "mention"
                     mention: mentionLookup
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "equation"
                     equation: { expression: TextRequest }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
@@ -22613,42 +18875,21 @@ export type QueryDatabaseResponse =
                 | {
                     type: "text"
                     text: { content: string; link: { url: TextRequest } | null }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "mention"
                     mention: mentionLookup
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
                 | {
                     type: "equation"
                     equation: { expression: TextRequest }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color: annotationColorLookup
-                    }
+                    annotations: annotationsLookup
                     plain_text: string
                     href: string | null
                   }
@@ -23014,42 +19255,21 @@ export type ListDatabasesResponse =
           | {
               type: "text"
               text: { content: string; link: { url: TextRequest } | null }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "mention"
               mention: mentionLookup
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "equation"
               equation: { expression: TextRequest }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
@@ -23229,42 +19449,21 @@ export type ListDatabasesResponse =
           | {
               type: "text"
               text: { content: string; link: { url: TextRequest } | null }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "mention"
               mention: mentionLookup
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
           | {
               type: "equation"
               equation: { expression: TextRequest }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color: annotationColorLookup
-              }
+              annotations: annotationsLookup
               plain_text: string
               href: string | null
             }
@@ -23550,42 +19749,21 @@ export type CreateDatabaseResponse = {
     | {
         type: "text"
         text: { content: string; link: { url: TextRequest } | null }
-        annotations: {
-          bold: boolean
-          italic: boolean
-          strikethrough: boolean
-          underline: boolean
-          code: boolean
-          color: annotationColorLookup
-        }
+        annotations: annotationsLookup
         plain_text: string
         href: string | null
       }
     | {
         type: "mention"
         mention: mentionLookup
-        annotations: {
-          bold: boolean
-          italic: boolean
-          strikethrough: boolean
-          underline: boolean
-          code: boolean
-          color: annotationColorLookup
-        }
+        annotations: annotationsLookup
         plain_text: string
         href: string | null
       }
     | {
         type: "equation"
         equation: { expression: TextRequest }
-        annotations: {
-          bold: boolean
-          italic: boolean
-          strikethrough: boolean
-          underline: boolean
-          code: boolean
-          color: annotationColorLookup
-        }
+        annotations: annotationsLookup
         plain_text: string
         href: string | null
       }
@@ -23859,42 +20037,21 @@ export type SearchResponse =
                           content: string
                           link: { url: TextRequest } | null
                         }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "mention"
                         mention: mentionLookup
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "equation"
                         equation: { expression: TextRequest }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
@@ -23910,42 +20067,21 @@ export type SearchResponse =
                           content: string
                           link: { url: TextRequest } | null
                         }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "mention"
                         mention: mentionLookup
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "equation"
                         equation: { expression: TextRequest }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
@@ -24219,42 +20355,21 @@ export type SearchResponse =
               | {
                   type: "text"
                   text: { content: string; link: { url: TextRequest } | null }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "mention"
                   mention: mentionLookup
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "equation"
                   equation: { expression: TextRequest }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
@@ -24447,42 +20562,21 @@ export type SearchResponse =
                           content: string
                           link: { url: TextRequest } | null
                         }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "mention"
                         mention: mentionLookup
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "equation"
                         equation: { expression: TextRequest }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
@@ -24498,42 +20592,21 @@ export type SearchResponse =
                           content: string
                           link: { url: TextRequest } | null
                         }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "mention"
                         mention: mentionLookup
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
                     | {
                         type: "equation"
                         equation: { expression: TextRequest }
-                        annotations: {
-                          bold: boolean
-                          italic: boolean
-                          strikethrough: boolean
-                          underline: boolean
-                          code: boolean
-                          color: annotationColorLookup
-                        }
+                        annotations: annotationsLookup
                         plain_text: string
                         href: string | null
                       }
@@ -24807,42 +20880,21 @@ export type SearchResponse =
               | {
                   type: "text"
                   text: { content: string; link: { url: TextRequest } | null }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "mention"
                   mention: mentionLookup
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
               | {
                   type: "equation"
                   equation: { expression: TextRequest }
-                  annotations: {
-                    bold: boolean
-                    italic: boolean
-                    strikethrough: boolean
-                    underline: boolean
-                    code: boolean
-                    color: annotationColorLookup
-                  }
+                  annotations: annotationsLookup
                   plain_text: string
                   href: string | null
                 }
@@ -28782,6 +24834,34 @@ export type selectColorLookup =
 | "yellow"
 | "blue"
 
+export type annotationsLookup = {
+  bold: boolean
+  italic: boolean
+  strikethrough: boolean
+  underline: boolean
+  code: boolean
+  color:
+    | "default"
+    | "gray"
+    | "brown"
+    | "orange"
+    | "yellow"
+    | "green"
+    | "blue"
+    | "purple"
+    | "pink"
+    | "red"
+    | "gray_background"
+    | "brown_background"
+    | "orange_background"
+    | "yellow_background"
+    | "green_background"
+    | "blue_background"
+    | "purple_background"
+    | "pink_background"
+    | "red_background"
+}
+
 export type mentionLookup =
 | {
     type: "user"
@@ -28884,3 +24964,4 @@ export type relationQueryLookup =
 | { does_not_contain: IdRequest }
 | { is_empty: true }
 | { is_not_empty: true }
+
