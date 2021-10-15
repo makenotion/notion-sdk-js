@@ -63,6 +63,9 @@ import {
   GetSelfParameters,
   GetSelfResponse,
   getSelf,
+  GetPagePropertyParameters,
+  GetPagePropertyResponse,
+  getPageProperty,
 } from "./api-endpoints.ts"
 // import {
 //   version as PACKAGE_VERSION,
@@ -399,6 +402,22 @@ export default class Client {
         body: pick(args, updatePage.bodyParams),
         auth: args?.auth,
       })
+    },
+    properties: {
+      /**
+       * Retrieve page property
+       */
+      retrieve: (
+        args: WithAuth<GetPagePropertyParameters>
+      ): Promise<GetPagePropertyResponse> => {
+        return this.request<GetPagePropertyResponse>({
+          path: getPageProperty.path(args),
+          method: getPageProperty.method,
+          query: pick(args, getPageProperty.queryParams),
+          body: pick(args, getPageProperty.bodyParams),
+          auth: args?.auth,
+        })
+      },
     },
   }
 
