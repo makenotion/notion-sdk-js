@@ -32,25 +32,7 @@ export type RichTextItemRequest =
                   object?: "user"
                 }
               | {
-                  bot:
-                    | Record<string, never>
-                    | {
-                        owner:
-                          | {
-                              type: "user"
-                              user:
-                                | {
-                                    type: "person"
-                                    person: { email: string }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                                | { id: IdRequest; object: "user" }
-                            }
-                          | { type: "workspace"; workspace: true }
-                      }
+                  bot: botLookup
                   id: IdRequest
                   type?: "bot"
                   name?: string | null
@@ -113,47 +95,27 @@ export type BlockObjectRequest =
       object?: "block"
     }
   | {
-      image: {
-        external: { url: string }
-        type?: "external"
-        caption?: Array<RichTextItemRequest>
-      }
+      image: mediaBlockLookup
       type?: "image"
       object?: "block"
     }
   | {
-      video: {
-        external: { url: string }
-        type?: "external"
-        caption?: Array<RichTextItemRequest>
-      }
+      video: mediaBlockLookup
       type?: "video"
       object?: "block"
     }
   | {
-      pdf: {
-        external: { url: string }
-        type?: "external"
-        caption?: Array<RichTextItemRequest>
-      }
+      pdf: mediaBlockLookup
       type?: "pdf"
       object?: "block"
     }
   | {
-      file: {
-        external: { url: string }
-        type?: "external"
-        caption?: Array<RichTextItemRequest>
-      }
+      file: mediaBlockLookup
       type?: "file"
       object?: "block"
     }
   | {
-      audio: {
-        external: { url: string }
-        type?: "external"
-        caption?: Array<RichTextItemRequest>
-      }
+      audio: mediaBlockLookup
       type?: "audio"
       object?: "block"
     }
@@ -203,47 +165,27 @@ export type BlockObjectRequest =
               object?: "block"
             }
           | {
-              image: {
-                external: { url: string }
-                type?: "external"
-                caption?: Array<RichTextItemRequest>
-              }
+              image: mediaBlockLookup
               type?: "image"
               object?: "block"
             }
           | {
-              video: {
-                external: { url: string }
-                type?: "external"
-                caption?: Array<RichTextItemRequest>
-              }
+              video: mediaBlockLookup
               type?: "video"
               object?: "block"
             }
           | {
-              pdf: {
-                external: { url: string }
-                type?: "external"
-                caption?: Array<RichTextItemRequest>
-              }
+              pdf: mediaBlockLookup
               type?: "pdf"
               object?: "block"
             }
           | {
-              file: {
-                external: { url: string }
-                type?: "external"
-                caption?: Array<RichTextItemRequest>
-              }
+              file: mediaBlockLookup
               type?: "file"
               object?: "block"
             }
           | {
-              audio: {
-                external: { url: string }
-                type?: "external"
-                caption?: Array<RichTextItemRequest>
-              }
+              audio: mediaBlockLookup
               type?: "audio"
               object?: "block"
             }
@@ -311,47 +253,27 @@ export type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
-                      image: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      image: mediaBlockLookup
                       type?: "image"
                       object?: "block"
                     }
                   | {
-                      video: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      video: mediaBlockLookup
                       type?: "video"
                       object?: "block"
                     }
                   | {
-                      pdf: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      pdf: mediaBlockLookup
                       type?: "pdf"
                       object?: "block"
                     }
                   | {
-                      file: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      file: mediaBlockLookup
                       type?: "file"
                       object?: "block"
                     }
                   | {
-                      audio: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      audio: mediaBlockLookup
                       type?: "audio"
                       object?: "block"
                     }
@@ -470,47 +392,27 @@ export type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
-                      image: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      image: mediaBlockLookup
                       type?: "image"
                       object?: "block"
                     }
                   | {
-                      video: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      video: mediaBlockLookup
                       type?: "video"
                       object?: "block"
                     }
                   | {
-                      pdf: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      pdf: mediaBlockLookup
                       type?: "pdf"
                       object?: "block"
                     }
                   | {
-                      file: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      file: mediaBlockLookup
                       type?: "file"
                       object?: "block"
                     }
                   | {
-                      audio: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      audio: mediaBlockLookup
                       type?: "audio"
                       object?: "block"
                     }
@@ -629,47 +531,27 @@ export type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
-                      image: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      image: mediaBlockLookup
                       type?: "image"
                       object?: "block"
                     }
                   | {
-                      video: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      video: mediaBlockLookup
                       type?: "video"
                       object?: "block"
                     }
                   | {
-                      pdf: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      pdf: mediaBlockLookup
                       type?: "pdf"
                       object?: "block"
                     }
                   | {
-                      file: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      file: mediaBlockLookup
                       type?: "file"
                       object?: "block"
                     }
                   | {
-                      audio: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      audio: mediaBlockLookup
                       type?: "audio"
                       object?: "block"
                     }
@@ -788,47 +670,27 @@ export type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
-                      image: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      image: mediaBlockLookup
                       type?: "image"
                       object?: "block"
                     }
                   | {
-                      video: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      video: mediaBlockLookup
                       type?: "video"
                       object?: "block"
                     }
                   | {
-                      pdf: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      pdf: mediaBlockLookup
                       type?: "pdf"
                       object?: "block"
                     }
                   | {
-                      file: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      file: mediaBlockLookup
                       type?: "file"
                       object?: "block"
                     }
                   | {
-                      audio: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      audio: mediaBlockLookup
                       type?: "audio"
                       object?: "block"
                     }
@@ -947,47 +809,27 @@ export type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
-                      image: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      image: mediaBlockLookup
                       type?: "image"
                       object?: "block"
                     }
                   | {
-                      video: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      video: mediaBlockLookup
                       type?: "video"
                       object?: "block"
                     }
                   | {
-                      pdf: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      pdf: mediaBlockLookup
                       type?: "pdf"
                       object?: "block"
                     }
                   | {
-                      file: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      file: mediaBlockLookup
                       type?: "file"
                       object?: "block"
                     }
                   | {
-                      audio: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      audio: mediaBlockLookup
                       type?: "audio"
                       object?: "block"
                     }
@@ -1107,47 +949,27 @@ export type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
-                      image: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      image: mediaBlockLookup
                       type?: "image"
                       object?: "block"
                     }
                   | {
-                      video: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      video: mediaBlockLookup
                       type?: "video"
                       object?: "block"
                     }
                   | {
-                      pdf: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      pdf: mediaBlockLookup
                       type?: "pdf"
                       object?: "block"
                     }
                   | {
-                      file: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      file: mediaBlockLookup
                       type?: "file"
                       object?: "block"
                     }
                   | {
-                      audio: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      audio: mediaBlockLookup
                       type?: "audio"
                       object?: "block"
                     }
@@ -1266,47 +1088,27 @@ export type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
-                      image: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      image: mediaBlockLookup
                       type?: "image"
                       object?: "block"
                     }
                   | {
-                      video: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      video: mediaBlockLookup
                       type?: "video"
                       object?: "block"
                     }
                   | {
-                      pdf: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      pdf: mediaBlockLookup
                       type?: "pdf"
                       object?: "block"
                     }
                   | {
-                      file: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      file: mediaBlockLookup
                       type?: "file"
                       object?: "block"
                     }
                   | {
-                      audio: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      audio: mediaBlockLookup
                       type?: "audio"
                       object?: "block"
                     }
@@ -1430,47 +1232,27 @@ export type BlockObjectRequest =
               object?: "block"
             }
           | {
-              image: {
-                external: { url: string }
-                type?: "external"
-                caption?: Array<RichTextItemRequest>
-              }
+              image: mediaBlockLookup
               type?: "image"
               object?: "block"
             }
           | {
-              video: {
-                external: { url: string }
-                type?: "external"
-                caption?: Array<RichTextItemRequest>
-              }
+              video: mediaBlockLookup
               type?: "video"
               object?: "block"
             }
           | {
-              pdf: {
-                external: { url: string }
-                type?: "external"
-                caption?: Array<RichTextItemRequest>
-              }
+              pdf: mediaBlockLookup
               type?: "pdf"
               object?: "block"
             }
           | {
-              file: {
-                external: { url: string }
-                type?: "external"
-                caption?: Array<RichTextItemRequest>
-              }
+              file: mediaBlockLookup
               type?: "file"
               object?: "block"
             }
           | {
-              audio: {
-                external: { url: string }
-                type?: "external"
-                caption?: Array<RichTextItemRequest>
-              }
+              audio: mediaBlockLookup
               type?: "audio"
               object?: "block"
             }
@@ -1538,47 +1320,27 @@ export type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
-                      image: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      image: mediaBlockLookup
                       type?: "image"
                       object?: "block"
                     }
                   | {
-                      video: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      video: mediaBlockLookup
                       type?: "video"
                       object?: "block"
                     }
                   | {
-                      pdf: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      pdf: mediaBlockLookup
                       type?: "pdf"
                       object?: "block"
                     }
                   | {
-                      file: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      file: mediaBlockLookup
                       type?: "file"
                       object?: "block"
                     }
                   | {
-                      audio: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      audio: mediaBlockLookup
                       type?: "audio"
                       object?: "block"
                     }
@@ -1697,47 +1459,27 @@ export type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
-                      image: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      image: mediaBlockLookup
                       type?: "image"
                       object?: "block"
                     }
                   | {
-                      video: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      video: mediaBlockLookup
                       type?: "video"
                       object?: "block"
                     }
                   | {
-                      pdf: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      pdf: mediaBlockLookup
                       type?: "pdf"
                       object?: "block"
                     }
                   | {
-                      file: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      file: mediaBlockLookup
                       type?: "file"
                       object?: "block"
                     }
                   | {
-                      audio: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      audio: mediaBlockLookup
                       type?: "audio"
                       object?: "block"
                     }
@@ -1856,47 +1598,27 @@ export type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
-                      image: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      image: mediaBlockLookup
                       type?: "image"
                       object?: "block"
                     }
                   | {
-                      video: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      video: mediaBlockLookup
                       type?: "video"
                       object?: "block"
                     }
                   | {
-                      pdf: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      pdf: mediaBlockLookup
                       type?: "pdf"
                       object?: "block"
                     }
                   | {
-                      file: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      file: mediaBlockLookup
                       type?: "file"
                       object?: "block"
                     }
                   | {
-                      audio: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      audio: mediaBlockLookup
                       type?: "audio"
                       object?: "block"
                     }
@@ -2015,47 +1737,27 @@ export type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
-                      image: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      image: mediaBlockLookup
                       type?: "image"
                       object?: "block"
                     }
                   | {
-                      video: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      video: mediaBlockLookup
                       type?: "video"
                       object?: "block"
                     }
                   | {
-                      pdf: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      pdf: mediaBlockLookup
                       type?: "pdf"
                       object?: "block"
                     }
                   | {
-                      file: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      file: mediaBlockLookup
                       type?: "file"
                       object?: "block"
                     }
                   | {
-                      audio: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      audio: mediaBlockLookup
                       type?: "audio"
                       object?: "block"
                     }
@@ -2174,47 +1876,27 @@ export type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
-                      image: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      image: mediaBlockLookup
                       type?: "image"
                       object?: "block"
                     }
                   | {
-                      video: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      video: mediaBlockLookup
                       type?: "video"
                       object?: "block"
                     }
                   | {
-                      pdf: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      pdf: mediaBlockLookup
                       type?: "pdf"
                       object?: "block"
                     }
                   | {
-                      file: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      file: mediaBlockLookup
                       type?: "file"
                       object?: "block"
                     }
                   | {
-                      audio: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      audio: mediaBlockLookup
                       type?: "audio"
                       object?: "block"
                     }
@@ -2334,47 +2016,27 @@ export type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
-                      image: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      image: mediaBlockLookup
                       type?: "image"
                       object?: "block"
                     }
                   | {
-                      video: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      video: mediaBlockLookup
                       type?: "video"
                       object?: "block"
                     }
                   | {
-                      pdf: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      pdf: mediaBlockLookup
                       type?: "pdf"
                       object?: "block"
                     }
                   | {
-                      file: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      file: mediaBlockLookup
                       type?: "file"
                       object?: "block"
                     }
                   | {
-                      audio: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      audio: mediaBlockLookup
                       type?: "audio"
                       object?: "block"
                     }
@@ -2493,47 +2155,27 @@ export type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
-                      image: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      image: mediaBlockLookup
                       type?: "image"
                       object?: "block"
                     }
                   | {
-                      video: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      video: mediaBlockLookup
                       type?: "video"
                       object?: "block"
                     }
                   | {
-                      pdf: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      pdf: mediaBlockLookup
                       type?: "pdf"
                       object?: "block"
                     }
                   | {
-                      file: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      file: mediaBlockLookup
                       type?: "file"
                       object?: "block"
                     }
                   | {
-                      audio: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      audio: mediaBlockLookup
                       type?: "audio"
                       object?: "block"
                     }
@@ -2657,47 +2299,27 @@ export type BlockObjectRequest =
               object?: "block"
             }
           | {
-              image: {
-                external: { url: string }
-                type?: "external"
-                caption?: Array<RichTextItemRequest>
-              }
+              image: mediaBlockLookup
               type?: "image"
               object?: "block"
             }
           | {
-              video: {
-                external: { url: string }
-                type?: "external"
-                caption?: Array<RichTextItemRequest>
-              }
+              video: mediaBlockLookup
               type?: "video"
               object?: "block"
             }
           | {
-              pdf: {
-                external: { url: string }
-                type?: "external"
-                caption?: Array<RichTextItemRequest>
-              }
+              pdf: mediaBlockLookup
               type?: "pdf"
               object?: "block"
             }
           | {
-              file: {
-                external: { url: string }
-                type?: "external"
-                caption?: Array<RichTextItemRequest>
-              }
+              file: mediaBlockLookup
               type?: "file"
               object?: "block"
             }
           | {
-              audio: {
-                external: { url: string }
-                type?: "external"
-                caption?: Array<RichTextItemRequest>
-              }
+              audio: mediaBlockLookup
               type?: "audio"
               object?: "block"
             }
@@ -2765,47 +2387,27 @@ export type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
-                      image: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      image: mediaBlockLookup
                       type?: "image"
                       object?: "block"
                     }
                   | {
-                      video: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      video: mediaBlockLookup
                       type?: "video"
                       object?: "block"
                     }
                   | {
-                      pdf: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      pdf: mediaBlockLookup
                       type?: "pdf"
                       object?: "block"
                     }
                   | {
-                      file: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      file: mediaBlockLookup
                       type?: "file"
                       object?: "block"
                     }
                   | {
-                      audio: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      audio: mediaBlockLookup
                       type?: "audio"
                       object?: "block"
                     }
@@ -2924,47 +2526,27 @@ export type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
-                      image: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      image: mediaBlockLookup
                       type?: "image"
                       object?: "block"
                     }
                   | {
-                      video: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      video: mediaBlockLookup
                       type?: "video"
                       object?: "block"
                     }
                   | {
-                      pdf: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      pdf: mediaBlockLookup
                       type?: "pdf"
                       object?: "block"
                     }
                   | {
-                      file: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      file: mediaBlockLookup
                       type?: "file"
                       object?: "block"
                     }
                   | {
-                      audio: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      audio: mediaBlockLookup
                       type?: "audio"
                       object?: "block"
                     }
@@ -3083,47 +2665,27 @@ export type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
-                      image: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      image: mediaBlockLookup
                       type?: "image"
                       object?: "block"
                     }
                   | {
-                      video: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      video: mediaBlockLookup
                       type?: "video"
                       object?: "block"
                     }
                   | {
-                      pdf: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      pdf: mediaBlockLookup
                       type?: "pdf"
                       object?: "block"
                     }
                   | {
-                      file: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      file: mediaBlockLookup
                       type?: "file"
                       object?: "block"
                     }
                   | {
-                      audio: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      audio: mediaBlockLookup
                       type?: "audio"
                       object?: "block"
                     }
@@ -3242,47 +2804,27 @@ export type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
-                      image: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      image: mediaBlockLookup
                       type?: "image"
                       object?: "block"
                     }
                   | {
-                      video: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      video: mediaBlockLookup
                       type?: "video"
                       object?: "block"
                     }
                   | {
-                      pdf: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      pdf: mediaBlockLookup
                       type?: "pdf"
                       object?: "block"
                     }
                   | {
-                      file: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      file: mediaBlockLookup
                       type?: "file"
                       object?: "block"
                     }
                   | {
-                      audio: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      audio: mediaBlockLookup
                       type?: "audio"
                       object?: "block"
                     }
@@ -3401,47 +2943,27 @@ export type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
-                      image: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      image: mediaBlockLookup
                       type?: "image"
                       object?: "block"
                     }
                   | {
-                      video: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      video: mediaBlockLookup
                       type?: "video"
                       object?: "block"
                     }
                   | {
-                      pdf: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      pdf: mediaBlockLookup
                       type?: "pdf"
                       object?: "block"
                     }
                   | {
-                      file: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      file: mediaBlockLookup
                       type?: "file"
                       object?: "block"
                     }
                   | {
-                      audio: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      audio: mediaBlockLookup
                       type?: "audio"
                       object?: "block"
                     }
@@ -3561,47 +3083,27 @@ export type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
-                      image: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      image: mediaBlockLookup
                       type?: "image"
                       object?: "block"
                     }
                   | {
-                      video: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      video: mediaBlockLookup
                       type?: "video"
                       object?: "block"
                     }
                   | {
-                      pdf: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      pdf: mediaBlockLookup
                       type?: "pdf"
                       object?: "block"
                     }
                   | {
-                      file: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      file: mediaBlockLookup
                       type?: "file"
                       object?: "block"
                     }
                   | {
-                      audio: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      audio: mediaBlockLookup
                       type?: "audio"
                       object?: "block"
                     }
@@ -3720,47 +3222,27 @@ export type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
-                      image: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      image: mediaBlockLookup
                       type?: "image"
                       object?: "block"
                     }
                   | {
-                      video: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      video: mediaBlockLookup
                       type?: "video"
                       object?: "block"
                     }
                   | {
-                      pdf: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      pdf: mediaBlockLookup
                       type?: "pdf"
                       object?: "block"
                     }
                   | {
-                      file: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      file: mediaBlockLookup
                       type?: "file"
                       object?: "block"
                     }
                   | {
-                      audio: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      audio: mediaBlockLookup
                       type?: "audio"
                       object?: "block"
                     }
@@ -3884,47 +3366,27 @@ export type BlockObjectRequest =
               object?: "block"
             }
           | {
-              image: {
-                external: { url: string }
-                type?: "external"
-                caption?: Array<RichTextItemRequest>
-              }
+              image: mediaBlockLookup
               type?: "image"
               object?: "block"
             }
           | {
-              video: {
-                external: { url: string }
-                type?: "external"
-                caption?: Array<RichTextItemRequest>
-              }
+              video: mediaBlockLookup
               type?: "video"
               object?: "block"
             }
           | {
-              pdf: {
-                external: { url: string }
-                type?: "external"
-                caption?: Array<RichTextItemRequest>
-              }
+              pdf: mediaBlockLookup
               type?: "pdf"
               object?: "block"
             }
           | {
-              file: {
-                external: { url: string }
-                type?: "external"
-                caption?: Array<RichTextItemRequest>
-              }
+              file: mediaBlockLookup
               type?: "file"
               object?: "block"
             }
           | {
-              audio: {
-                external: { url: string }
-                type?: "external"
-                caption?: Array<RichTextItemRequest>
-              }
+              audio: mediaBlockLookup
               type?: "audio"
               object?: "block"
             }
@@ -3992,47 +3454,27 @@ export type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
-                      image: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      image: mediaBlockLookup
                       type?: "image"
                       object?: "block"
                     }
                   | {
-                      video: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      video: mediaBlockLookup
                       type?: "video"
                       object?: "block"
                     }
                   | {
-                      pdf: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      pdf: mediaBlockLookup
                       type?: "pdf"
                       object?: "block"
                     }
                   | {
-                      file: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      file: mediaBlockLookup
                       type?: "file"
                       object?: "block"
                     }
                   | {
-                      audio: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      audio: mediaBlockLookup
                       type?: "audio"
                       object?: "block"
                     }
@@ -4151,47 +3593,27 @@ export type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
-                      image: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      image: mediaBlockLookup
                       type?: "image"
                       object?: "block"
                     }
                   | {
-                      video: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      video: mediaBlockLookup
                       type?: "video"
                       object?: "block"
                     }
                   | {
-                      pdf: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      pdf: mediaBlockLookup
                       type?: "pdf"
                       object?: "block"
                     }
                   | {
-                      file: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      file: mediaBlockLookup
                       type?: "file"
                       object?: "block"
                     }
                   | {
-                      audio: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      audio: mediaBlockLookup
                       type?: "audio"
                       object?: "block"
                     }
@@ -4310,47 +3732,27 @@ export type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
-                      image: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      image: mediaBlockLookup
                       type?: "image"
                       object?: "block"
                     }
                   | {
-                      video: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      video: mediaBlockLookup
                       type?: "video"
                       object?: "block"
                     }
                   | {
-                      pdf: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      pdf: mediaBlockLookup
                       type?: "pdf"
                       object?: "block"
                     }
                   | {
-                      file: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      file: mediaBlockLookup
                       type?: "file"
                       object?: "block"
                     }
                   | {
-                      audio: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      audio: mediaBlockLookup
                       type?: "audio"
                       object?: "block"
                     }
@@ -4469,47 +3871,27 @@ export type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
-                      image: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      image: mediaBlockLookup
                       type?: "image"
                       object?: "block"
                     }
                   | {
-                      video: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      video: mediaBlockLookup
                       type?: "video"
                       object?: "block"
                     }
                   | {
-                      pdf: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      pdf: mediaBlockLookup
                       type?: "pdf"
                       object?: "block"
                     }
                   | {
-                      file: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      file: mediaBlockLookup
                       type?: "file"
                       object?: "block"
                     }
                   | {
-                      audio: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      audio: mediaBlockLookup
                       type?: "audio"
                       object?: "block"
                     }
@@ -4628,47 +4010,27 @@ export type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
-                      image: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      image: mediaBlockLookup
                       type?: "image"
                       object?: "block"
                     }
                   | {
-                      video: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      video: mediaBlockLookup
                       type?: "video"
                       object?: "block"
                     }
                   | {
-                      pdf: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      pdf: mediaBlockLookup
                       type?: "pdf"
                       object?: "block"
                     }
                   | {
-                      file: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      file: mediaBlockLookup
                       type?: "file"
                       object?: "block"
                     }
                   | {
-                      audio: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      audio: mediaBlockLookup
                       type?: "audio"
                       object?: "block"
                     }
@@ -4788,47 +4150,27 @@ export type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
-                      image: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      image: mediaBlockLookup
                       type?: "image"
                       object?: "block"
                     }
                   | {
-                      video: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      video: mediaBlockLookup
                       type?: "video"
                       object?: "block"
                     }
                   | {
-                      pdf: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      pdf: mediaBlockLookup
                       type?: "pdf"
                       object?: "block"
                     }
                   | {
-                      file: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      file: mediaBlockLookup
                       type?: "file"
                       object?: "block"
                     }
                   | {
-                      audio: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      audio: mediaBlockLookup
                       type?: "audio"
                       object?: "block"
                     }
@@ -4947,47 +4289,27 @@ export type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
-                      image: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      image: mediaBlockLookup
                       type?: "image"
                       object?: "block"
                     }
                   | {
-                      video: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      video: mediaBlockLookup
                       type?: "video"
                       object?: "block"
                     }
                   | {
-                      pdf: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      pdf: mediaBlockLookup
                       type?: "pdf"
                       object?: "block"
                     }
                   | {
-                      file: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      file: mediaBlockLookup
                       type?: "file"
                       object?: "block"
                     }
                   | {
-                      audio: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      audio: mediaBlockLookup
                       type?: "audio"
                       object?: "block"
                     }
@@ -5111,47 +4433,27 @@ export type BlockObjectRequest =
               object?: "block"
             }
           | {
-              image: {
-                external: { url: string }
-                type?: "external"
-                caption?: Array<RichTextItemRequest>
-              }
+              image: mediaBlockLookup
               type?: "image"
               object?: "block"
             }
           | {
-              video: {
-                external: { url: string }
-                type?: "external"
-                caption?: Array<RichTextItemRequest>
-              }
+              video: mediaBlockLookup
               type?: "video"
               object?: "block"
             }
           | {
-              pdf: {
-                external: { url: string }
-                type?: "external"
-                caption?: Array<RichTextItemRequest>
-              }
+              pdf: mediaBlockLookup
               type?: "pdf"
               object?: "block"
             }
           | {
-              file: {
-                external: { url: string }
-                type?: "external"
-                caption?: Array<RichTextItemRequest>
-              }
+              file: mediaBlockLookup
               type?: "file"
               object?: "block"
             }
           | {
-              audio: {
-                external: { url: string }
-                type?: "external"
-                caption?: Array<RichTextItemRequest>
-              }
+              audio: mediaBlockLookup
               type?: "audio"
               object?: "block"
             }
@@ -5219,47 +4521,27 @@ export type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
-                      image: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      image: mediaBlockLookup
                       type?: "image"
                       object?: "block"
                     }
                   | {
-                      video: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      video: mediaBlockLookup
                       type?: "video"
                       object?: "block"
                     }
                   | {
-                      pdf: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      pdf: mediaBlockLookup
                       type?: "pdf"
                       object?: "block"
                     }
                   | {
-                      file: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      file: mediaBlockLookup
                       type?: "file"
                       object?: "block"
                     }
                   | {
-                      audio: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      audio: mediaBlockLookup
                       type?: "audio"
                       object?: "block"
                     }
@@ -5378,47 +4660,27 @@ export type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
-                      image: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      image: mediaBlockLookup
                       type?: "image"
                       object?: "block"
                     }
                   | {
-                      video: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      video: mediaBlockLookup
                       type?: "video"
                       object?: "block"
                     }
                   | {
-                      pdf: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      pdf: mediaBlockLookup
                       type?: "pdf"
                       object?: "block"
                     }
                   | {
-                      file: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      file: mediaBlockLookup
                       type?: "file"
                       object?: "block"
                     }
                   | {
-                      audio: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      audio: mediaBlockLookup
                       type?: "audio"
                       object?: "block"
                     }
@@ -5537,47 +4799,27 @@ export type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
-                      image: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      image: mediaBlockLookup
                       type?: "image"
                       object?: "block"
                     }
                   | {
-                      video: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      video: mediaBlockLookup
                       type?: "video"
                       object?: "block"
                     }
                   | {
-                      pdf: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      pdf: mediaBlockLookup
                       type?: "pdf"
                       object?: "block"
                     }
                   | {
-                      file: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      file: mediaBlockLookup
                       type?: "file"
                       object?: "block"
                     }
                   | {
-                      audio: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      audio: mediaBlockLookup
                       type?: "audio"
                       object?: "block"
                     }
@@ -5696,47 +4938,27 @@ export type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
-                      image: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      image: mediaBlockLookup
                       type?: "image"
                       object?: "block"
                     }
                   | {
-                      video: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      video: mediaBlockLookup
                       type?: "video"
                       object?: "block"
                     }
                   | {
-                      pdf: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      pdf: mediaBlockLookup
                       type?: "pdf"
                       object?: "block"
                     }
                   | {
-                      file: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      file: mediaBlockLookup
                       type?: "file"
                       object?: "block"
                     }
                   | {
-                      audio: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      audio: mediaBlockLookup
                       type?: "audio"
                       object?: "block"
                     }
@@ -5855,47 +5077,27 @@ export type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
-                      image: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      image: mediaBlockLookup
                       type?: "image"
                       object?: "block"
                     }
                   | {
-                      video: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      video: mediaBlockLookup
                       type?: "video"
                       object?: "block"
                     }
                   | {
-                      pdf: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      pdf: mediaBlockLookup
                       type?: "pdf"
                       object?: "block"
                     }
                   | {
-                      file: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      file: mediaBlockLookup
                       type?: "file"
                       object?: "block"
                     }
                   | {
-                      audio: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      audio: mediaBlockLookup
                       type?: "audio"
                       object?: "block"
                     }
@@ -6015,47 +5217,27 @@ export type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
-                      image: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      image: mediaBlockLookup
                       type?: "image"
                       object?: "block"
                     }
                   | {
-                      video: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      video: mediaBlockLookup
                       type?: "video"
                       object?: "block"
                     }
                   | {
-                      pdf: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      pdf: mediaBlockLookup
                       type?: "pdf"
                       object?: "block"
                     }
                   | {
-                      file: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      file: mediaBlockLookup
                       type?: "file"
                       object?: "block"
                     }
                   | {
-                      audio: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      audio: mediaBlockLookup
                       type?: "audio"
                       object?: "block"
                     }
@@ -6174,47 +5356,27 @@ export type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
-                      image: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      image: mediaBlockLookup
                       type?: "image"
                       object?: "block"
                     }
                   | {
-                      video: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      video: mediaBlockLookup
                       type?: "video"
                       object?: "block"
                     }
                   | {
-                      pdf: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      pdf: mediaBlockLookup
                       type?: "pdf"
                       object?: "block"
                     }
                   | {
-                      file: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      file: mediaBlockLookup
                       type?: "file"
                       object?: "block"
                     }
                   | {
-                      audio: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      audio: mediaBlockLookup
                       type?: "audio"
                       object?: "block"
                     }
@@ -6339,47 +5501,27 @@ export type BlockObjectRequest =
               object?: "block"
             }
           | {
-              image: {
-                external: { url: string }
-                type?: "external"
-                caption?: Array<RichTextItemRequest>
-              }
+              image: mediaBlockLookup
               type?: "image"
               object?: "block"
             }
           | {
-              video: {
-                external: { url: string }
-                type?: "external"
-                caption?: Array<RichTextItemRequest>
-              }
+              video: mediaBlockLookup
               type?: "video"
               object?: "block"
             }
           | {
-              pdf: {
-                external: { url: string }
-                type?: "external"
-                caption?: Array<RichTextItemRequest>
-              }
+              pdf: mediaBlockLookup
               type?: "pdf"
               object?: "block"
             }
           | {
-              file: {
-                external: { url: string }
-                type?: "external"
-                caption?: Array<RichTextItemRequest>
-              }
+              file: mediaBlockLookup
               type?: "file"
               object?: "block"
             }
           | {
-              audio: {
-                external: { url: string }
-                type?: "external"
-                caption?: Array<RichTextItemRequest>
-              }
+              audio: mediaBlockLookup
               type?: "audio"
               object?: "block"
             }
@@ -6447,47 +5589,27 @@ export type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
-                      image: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      image: mediaBlockLookup
                       type?: "image"
                       object?: "block"
                     }
                   | {
-                      video: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      video: mediaBlockLookup
                       type?: "video"
                       object?: "block"
                     }
                   | {
-                      pdf: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      pdf: mediaBlockLookup
                       type?: "pdf"
                       object?: "block"
                     }
                   | {
-                      file: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      file: mediaBlockLookup
                       type?: "file"
                       object?: "block"
                     }
                   | {
-                      audio: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      audio: mediaBlockLookup
                       type?: "audio"
                       object?: "block"
                     }
@@ -6606,47 +5728,27 @@ export type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
-                      image: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      image: mediaBlockLookup
                       type?: "image"
                       object?: "block"
                     }
                   | {
-                      video: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      video: mediaBlockLookup
                       type?: "video"
                       object?: "block"
                     }
                   | {
-                      pdf: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      pdf: mediaBlockLookup
                       type?: "pdf"
                       object?: "block"
                     }
                   | {
-                      file: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      file: mediaBlockLookup
                       type?: "file"
                       object?: "block"
                     }
                   | {
-                      audio: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      audio: mediaBlockLookup
                       type?: "audio"
                       object?: "block"
                     }
@@ -6765,47 +5867,27 @@ export type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
-                      image: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      image: mediaBlockLookup
                       type?: "image"
                       object?: "block"
                     }
                   | {
-                      video: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      video: mediaBlockLookup
                       type?: "video"
                       object?: "block"
                     }
                   | {
-                      pdf: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      pdf: mediaBlockLookup
                       type?: "pdf"
                       object?: "block"
                     }
                   | {
-                      file: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      file: mediaBlockLookup
                       type?: "file"
                       object?: "block"
                     }
                   | {
-                      audio: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      audio: mediaBlockLookup
                       type?: "audio"
                       object?: "block"
                     }
@@ -6924,47 +6006,27 @@ export type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
-                      image: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      image: mediaBlockLookup
                       type?: "image"
                       object?: "block"
                     }
                   | {
-                      video: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      video: mediaBlockLookup
                       type?: "video"
                       object?: "block"
                     }
                   | {
-                      pdf: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      pdf: mediaBlockLookup
                       type?: "pdf"
                       object?: "block"
                     }
                   | {
-                      file: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      file: mediaBlockLookup
                       type?: "file"
                       object?: "block"
                     }
                   | {
-                      audio: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      audio: mediaBlockLookup
                       type?: "audio"
                       object?: "block"
                     }
@@ -7083,47 +6145,27 @@ export type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
-                      image: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      image: mediaBlockLookup
                       type?: "image"
                       object?: "block"
                     }
                   | {
-                      video: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      video: mediaBlockLookup
                       type?: "video"
                       object?: "block"
                     }
                   | {
-                      pdf: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      pdf: mediaBlockLookup
                       type?: "pdf"
                       object?: "block"
                     }
                   | {
-                      file: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      file: mediaBlockLookup
                       type?: "file"
                       object?: "block"
                     }
                   | {
-                      audio: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      audio: mediaBlockLookup
                       type?: "audio"
                       object?: "block"
                     }
@@ -7243,47 +6285,27 @@ export type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
-                      image: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      image: mediaBlockLookup
                       type?: "image"
                       object?: "block"
                     }
                   | {
-                      video: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      video: mediaBlockLookup
                       type?: "video"
                       object?: "block"
                     }
                   | {
-                      pdf: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      pdf: mediaBlockLookup
                       type?: "pdf"
                       object?: "block"
                     }
                   | {
-                      file: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      file: mediaBlockLookup
                       type?: "file"
                       object?: "block"
                     }
                   | {
-                      audio: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      audio: mediaBlockLookup
                       type?: "audio"
                       object?: "block"
                     }
@@ -7402,47 +6424,27 @@ export type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
-                      image: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      image: mediaBlockLookup
                       type?: "image"
                       object?: "block"
                     }
                   | {
-                      video: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      video: mediaBlockLookup
                       type?: "video"
                       object?: "block"
                     }
                   | {
-                      pdf: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      pdf: mediaBlockLookup
                       type?: "pdf"
                       object?: "block"
                     }
                   | {
-                      file: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      file: mediaBlockLookup
                       type?: "file"
                       object?: "block"
                     }
                   | {
-                      audio: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      audio: mediaBlockLookup
                       type?: "audio"
                       object?: "block"
                     }
@@ -7566,47 +6568,27 @@ export type BlockObjectRequest =
               object?: "block"
             }
           | {
-              image: {
-                external: { url: string }
-                type?: "external"
-                caption?: Array<RichTextItemRequest>
-              }
+              image: mediaBlockLookup
               type?: "image"
               object?: "block"
             }
           | {
-              video: {
-                external: { url: string }
-                type?: "external"
-                caption?: Array<RichTextItemRequest>
-              }
+              video: mediaBlockLookup
               type?: "video"
               object?: "block"
             }
           | {
-              pdf: {
-                external: { url: string }
-                type?: "external"
-                caption?: Array<RichTextItemRequest>
-              }
+              pdf: mediaBlockLookup
               type?: "pdf"
               object?: "block"
             }
           | {
-              file: {
-                external: { url: string }
-                type?: "external"
-                caption?: Array<RichTextItemRequest>
-              }
+              file: mediaBlockLookup
               type?: "file"
               object?: "block"
             }
           | {
-              audio: {
-                external: { url: string }
-                type?: "external"
-                caption?: Array<RichTextItemRequest>
-              }
+              audio: mediaBlockLookup
               type?: "audio"
               object?: "block"
             }
@@ -7674,47 +6656,27 @@ export type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
-                      image: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      image: mediaBlockLookup
                       type?: "image"
                       object?: "block"
                     }
                   | {
-                      video: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      video: mediaBlockLookup
                       type?: "video"
                       object?: "block"
                     }
                   | {
-                      pdf: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      pdf: mediaBlockLookup
                       type?: "pdf"
                       object?: "block"
                     }
                   | {
-                      file: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      file: mediaBlockLookup
                       type?: "file"
                       object?: "block"
                     }
                   | {
-                      audio: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      audio: mediaBlockLookup
                       type?: "audio"
                       object?: "block"
                     }
@@ -7833,47 +6795,27 @@ export type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
-                      image: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      image: mediaBlockLookup
                       type?: "image"
                       object?: "block"
                     }
                   | {
-                      video: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      video: mediaBlockLookup
                       type?: "video"
                       object?: "block"
                     }
                   | {
-                      pdf: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      pdf: mediaBlockLookup
                       type?: "pdf"
                       object?: "block"
                     }
                   | {
-                      file: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      file: mediaBlockLookup
                       type?: "file"
                       object?: "block"
                     }
                   | {
-                      audio: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      audio: mediaBlockLookup
                       type?: "audio"
                       object?: "block"
                     }
@@ -7992,47 +6934,27 @@ export type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
-                      image: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      image: mediaBlockLookup
                       type?: "image"
                       object?: "block"
                     }
                   | {
-                      video: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      video: mediaBlockLookup
                       type?: "video"
                       object?: "block"
                     }
                   | {
-                      pdf: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      pdf: mediaBlockLookup
                       type?: "pdf"
                       object?: "block"
                     }
                   | {
-                      file: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      file: mediaBlockLookup
                       type?: "file"
                       object?: "block"
                     }
                   | {
-                      audio: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      audio: mediaBlockLookup
                       type?: "audio"
                       object?: "block"
                     }
@@ -8151,47 +7073,27 @@ export type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
-                      image: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      image: mediaBlockLookup
                       type?: "image"
                       object?: "block"
                     }
                   | {
-                      video: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      video: mediaBlockLookup
                       type?: "video"
                       object?: "block"
                     }
                   | {
-                      pdf: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      pdf: mediaBlockLookup
                       type?: "pdf"
                       object?: "block"
                     }
                   | {
-                      file: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      file: mediaBlockLookup
                       type?: "file"
                       object?: "block"
                     }
                   | {
-                      audio: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      audio: mediaBlockLookup
                       type?: "audio"
                       object?: "block"
                     }
@@ -8310,47 +7212,27 @@ export type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
-                      image: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      image: mediaBlockLookup
                       type?: "image"
                       object?: "block"
                     }
                   | {
-                      video: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      video: mediaBlockLookup
                       type?: "video"
                       object?: "block"
                     }
                   | {
-                      pdf: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      pdf: mediaBlockLookup
                       type?: "pdf"
                       object?: "block"
                     }
                   | {
-                      file: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      file: mediaBlockLookup
                       type?: "file"
                       object?: "block"
                     }
                   | {
-                      audio: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      audio: mediaBlockLookup
                       type?: "audio"
                       object?: "block"
                     }
@@ -8470,47 +7352,27 @@ export type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
-                      image: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      image: mediaBlockLookup
                       type?: "image"
                       object?: "block"
                     }
                   | {
-                      video: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      video: mediaBlockLookup
                       type?: "video"
                       object?: "block"
                     }
                   | {
-                      pdf: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      pdf: mediaBlockLookup
                       type?: "pdf"
                       object?: "block"
                     }
                   | {
-                      file: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      file: mediaBlockLookup
                       type?: "file"
                       object?: "block"
                     }
                   | {
-                      audio: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      audio: mediaBlockLookup
                       type?: "audio"
                       object?: "block"
                     }
@@ -8629,47 +7491,27 @@ export type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
-                      image: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      image: mediaBlockLookup
                       type?: "image"
                       object?: "block"
                     }
                   | {
-                      video: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      video: mediaBlockLookup
                       type?: "video"
                       object?: "block"
                     }
                   | {
-                      pdf: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      pdf: mediaBlockLookup
                       type?: "pdf"
                       object?: "block"
                     }
                   | {
-                      file: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      file: mediaBlockLookup
                       type?: "file"
                       object?: "block"
                     }
                   | {
-                      audio: {
-                        external: { url: string }
-                        type?: "external"
-                        caption?: Array<RichTextItemRequest>
-                      }
+                      audio: mediaBlockLookup
                       type?: "audio"
                       object?: "block"
                     }
@@ -8782,25 +7624,7 @@ export type GetSelfResponse =
     }
   | {
       type: "bot"
-      bot:
-        | Record<string, never>
-        | {
-            owner:
-              | {
-                  type: "user"
-                  user:
-                    | {
-                        type: "person"
-                        person: { email: string }
-                        name: string | null
-                        avatar_url: string | null
-                        id: IdRequest
-                        object: "user"
-                      }
-                    | { id: IdRequest; object: "user" }
-                }
-              | { type: "workspace"; workspace: true }
-          }
+      bot: botLookup
       name: string | null
       avatar_url: string | null
       id: IdRequest
@@ -8832,25 +7656,7 @@ export type GetUserResponse =
     }
   | {
       type: "bot"
-      bot:
-        | Record<string, never>
-        | {
-            owner:
-              | {
-                  type: "user"
-                  user:
-                    | {
-                        type: "person"
-                        person: { email: string }
-                        name: string | null
-                        avatar_url: string | null
-                        id: IdRequest
-                        object: "user"
-                      }
-                    | { id: IdRequest; object: "user" }
-                }
-              | { type: "workspace"; workspace: true }
-          }
+      bot: botLookup
       name: string | null
       avatar_url: string | null
       id: IdRequest
@@ -8973,25 +7779,7 @@ export type ListUsersResponse =
           }
         | {
             type: "bot"
-            bot:
-              | Record<string, never>
-              | {
-                  owner:
-                    | {
-                        type: "user"
-                        user:
-                          | {
-                              type: "person"
-                              person: { email: string }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                          | { id: IdRequest; object: "user" }
-                      }
-                    | { type: "workspace"; workspace: true }
-                }
+            bot: botLookup
             name: string | null
             avatar_url: string | null
             id: IdRequest
@@ -9014,25 +7802,7 @@ export type ListUsersResponse =
           }
         | {
             type: "bot"
-            bot:
-              | Record<string, never>
-              | {
-                  owner:
-                    | {
-                        type: "user"
-                        user:
-                          | {
-                              type: "person"
-                              person: { email: string }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                          | { id: IdRequest; object: "user" }
-                      }
-                    | { type: "workspace"; workspace: true }
-                }
+            bot: botLookup
             name: string | null
             avatar_url: string | null
             id: IdRequest
@@ -9104,25 +7874,7 @@ export type CreatePageBodyParameters =
                       object?: "user"
                     }
                   | {
-                      bot:
-                        | Record<string, never>
-                        | {
-                            owner:
-                              | {
-                                  type: "user"
-                                  user:
-                                    | {
-                                        type: "person"
-                                        person: { email: string }
-                                        name: string | null
-                                        avatar_url: string | null
-                                        id: IdRequest
-                                        object: "user"
-                                      }
-                                    | { id: IdRequest; object: "user" }
-                                }
-                              | { type: "workspace"; workspace: true }
-                          }
+                      bot: botLookup
                       id: IdRequest
                       type?: "bot"
                       name?: string | null
@@ -9199,25 +7951,7 @@ export type CreatePageBodyParameters =
                     object?: "user"
                   }
                 | {
-                    bot:
-                      | Record<string, never>
-                      | {
-                          owner:
-                            | {
-                                type: "user"
-                                user:
-                                  | {
-                                      type: "person"
-                                      person: { email: string }
-                                      name: string | null
-                                      avatar_url: string | null
-                                      id: IdRequest
-                                      object: "user"
-                                    }
-                                  | { id: IdRequest; object: "user" }
-                              }
-                            | { type: "workspace"; workspace: true }
-                        }
+                    bot: botLookup
                     id: IdRequest
                     type?: "bot"
                     name?: string | null
@@ -9301,49 +8035,7 @@ export type CreatePageResponse = {
             }
           | {
               type: "mention"
-              mention:
-                | {
-                    type: "user"
-                    user:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | Record<string, never>
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                  }
-                | { type: "date"; date: { start: string; end: string | null } }
-                | { type: "page"; page: { id: IdRequest } }
-                | { type: "database"; database: { id: IdRequest } }
+              mention: mentionLookup
               annotations: {
                 bold: boolean
                 italic: boolean
@@ -9391,49 +8083,7 @@ export type CreatePageResponse = {
             }
           | {
               type: "mention"
-              mention:
-                | {
-                    type: "user"
-                    user:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | Record<string, never>
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                  }
-                | { type: "date"; date: { start: string; end: string | null } }
-                | { type: "page"; page: { id: IdRequest } }
-                | { type: "database"; database: { id: IdRequest } }
+              mention: mentionLookup
               annotations: {
                 bold: boolean
                 italic: boolean
@@ -9496,25 +8146,7 @@ export type CreatePageResponse = {
             }
           | {
               type: "bot"
-              bot:
-                | Record<string, never>
-                | {
-                    owner:
-                      | {
-                          type: "user"
-                          user:
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | { id: IdRequest; object: "user" }
-                        }
-                      | { type: "workspace"; workspace: true }
-                  }
+              bot: botLookup
               name: string | null
               avatar_url: string | null
               id: IdRequest
@@ -9654,25 +8286,7 @@ export type CreatePageResponse = {
             }
           | {
               type: "bot"
-              bot:
-                | Record<string, never>
-                | {
-                    owner:
-                      | {
-                          type: "user"
-                          user:
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | { id: IdRequest; object: "user" }
-                        }
-                      | { type: "workspace"; workspace: true }
-                  }
+              bot: botLookup
               name: string | null
               avatar_url: string | null
               id: IdRequest
@@ -9695,25 +8309,7 @@ export type CreatePageResponse = {
             }
           | {
               type: "bot"
-              bot:
-                | Record<string, never>
-                | {
-                    owner:
-                      | {
-                          type: "user"
-                          user:
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | { id: IdRequest; object: "user" }
-                        }
-                      | { type: "workspace"; workspace: true }
-                  }
+              bot: botLookup
               name: string | null
               avatar_url: string | null
               id: IdRequest
@@ -9785,49 +8381,7 @@ export type GetPageResponse = {
             }
           | {
               type: "mention"
-              mention:
-                | {
-                    type: "user"
-                    user:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | Record<string, never>
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                  }
-                | { type: "date"; date: { start: string; end: string | null } }
-                | { type: "page"; page: { id: IdRequest } }
-                | { type: "database"; database: { id: IdRequest } }
+              mention: mentionLookup
               annotations: {
                 bold: boolean
                 italic: boolean
@@ -9875,49 +8429,7 @@ export type GetPageResponse = {
             }
           | {
               type: "mention"
-              mention:
-                | {
-                    type: "user"
-                    user:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | Record<string, never>
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                  }
-                | { type: "date"; date: { start: string; end: string | null } }
-                | { type: "page"; page: { id: IdRequest } }
-                | { type: "database"; database: { id: IdRequest } }
+              mention: mentionLookup
               annotations: {
                 bold: boolean
                 italic: boolean
@@ -9980,25 +8492,7 @@ export type GetPageResponse = {
             }
           | {
               type: "bot"
-              bot:
-                | Record<string, never>
-                | {
-                    owner:
-                      | {
-                          type: "user"
-                          user:
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | { id: IdRequest; object: "user" }
-                        }
-                      | { type: "workspace"; workspace: true }
-                  }
+              bot: botLookup
               name: string | null
               avatar_url: string | null
               id: IdRequest
@@ -10138,25 +8632,7 @@ export type GetPageResponse = {
             }
           | {
               type: "bot"
-              bot:
-                | Record<string, never>
-                | {
-                    owner:
-                      | {
-                          type: "user"
-                          user:
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | { id: IdRequest; object: "user" }
-                        }
-                      | { type: "workspace"; workspace: true }
-                  }
+              bot: botLookup
               name: string | null
               avatar_url: string | null
               id: IdRequest
@@ -10179,25 +8655,7 @@ export type GetPageResponse = {
             }
           | {
               type: "bot"
-              bot:
-                | Record<string, never>
-                | {
-                    owner:
-                      | {
-                          type: "user"
-                          user:
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | { id: IdRequest; object: "user" }
-                        }
-                      | { type: "workspace"; workspace: true }
-                  }
+              bot: botLookup
               name: string | null
               avatar_url: string | null
               id: IdRequest
@@ -10292,25 +8750,7 @@ export type UpdatePageBodyParameters = {
                   object?: "user"
                 }
               | {
-                  bot:
-                    | Record<string, never>
-                    | {
-                        owner:
-                          | {
-                              type: "user"
-                              user:
-                                | {
-                                    type: "person"
-                                    person: { email: string }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                                | { id: IdRequest; object: "user" }
-                            }
-                          | { type: "workspace"; workspace: true }
-                      }
+                  bot: botLookup
                   id: IdRequest
                   type?: "bot"
                   name?: string | null
@@ -10380,25 +8820,7 @@ export type UpdatePageBodyParameters = {
                 object?: "user"
               }
             | {
-                bot:
-                  | Record<string, never>
-                  | {
-                      owner:
-                        | {
-                            type: "user"
-                            user:
-                              | {
-                                  type: "person"
-                                  person: { email: string }
-                                  name: string | null
-                                  avatar_url: string | null
-                                  id: IdRequest
-                                  object: "user"
-                                }
-                              | { id: IdRequest; object: "user" }
-                          }
-                        | { type: "workspace"; workspace: true }
-                    }
+                bot: botLookup
                 id: IdRequest
                 type?: "bot"
                 name?: string | null
@@ -10464,49 +8886,7 @@ export type UpdatePageResponse = {
             }
           | {
               type: "mention"
-              mention:
-                | {
-                    type: "user"
-                    user:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | Record<string, never>
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                  }
-                | { type: "date"; date: { start: string; end: string | null } }
-                | { type: "page"; page: { id: IdRequest } }
-                | { type: "database"; database: { id: IdRequest } }
+              mention: mentionLookup
               annotations: {
                 bold: boolean
                 italic: boolean
@@ -10554,49 +8934,7 @@ export type UpdatePageResponse = {
             }
           | {
               type: "mention"
-              mention:
-                | {
-                    type: "user"
-                    user:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | Record<string, never>
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                  }
-                | { type: "date"; date: { start: string; end: string | null } }
-                | { type: "page"; page: { id: IdRequest } }
-                | { type: "database"; database: { id: IdRequest } }
+              mention: mentionLookup
               annotations: {
                 bold: boolean
                 italic: boolean
@@ -10659,25 +8997,7 @@ export type UpdatePageResponse = {
             }
           | {
               type: "bot"
-              bot:
-                | Record<string, never>
-                | {
-                    owner:
-                      | {
-                          type: "user"
-                          user:
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | { id: IdRequest; object: "user" }
-                        }
-                      | { type: "workspace"; workspace: true }
-                  }
+              bot: botLookup
               name: string | null
               avatar_url: string | null
               id: IdRequest
@@ -10817,25 +9137,7 @@ export type UpdatePageResponse = {
             }
           | {
               type: "bot"
-              bot:
-                | Record<string, never>
-                | {
-                    owner:
-                      | {
-                          type: "user"
-                          user:
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | { id: IdRequest; object: "user" }
-                        }
-                      | { type: "workspace"; workspace: true }
-                  }
+              bot: botLookup
               name: string | null
               avatar_url: string | null
               id: IdRequest
@@ -10858,25 +9160,7 @@ export type UpdatePageResponse = {
             }
           | {
               type: "bot"
-              bot:
-                | Record<string, never>
-                | {
-                    owner:
-                      | {
-                          type: "user"
-                          user:
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | { id: IdRequest; object: "user" }
-                        }
-                      | { type: "workspace"; workspace: true }
-                  }
+              bot: botLookup
               name: string | null
               avatar_url: string | null
               id: IdRequest
@@ -10990,25 +9274,7 @@ export type GetPagePropertyResponse =
         | null
         | {
             type: "bot"
-            bot:
-              | Record<string, never>
-              | {
-                  owner:
-                    | {
-                        type: "user"
-                        user:
-                          | {
-                              type: "person"
-                              person: { email: string }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                          | { id: IdRequest; object: "user" }
-                      }
-                    | { type: "workspace"; workspace: true }
-                }
+            bot: botLookup
             name: string | null
             avatar_url: string | null
             id: IdRequest
@@ -11038,25 +9304,7 @@ export type GetPagePropertyResponse =
         | null
         | {
             type: "bot"
-            bot:
-              | Record<string, never>
-              | {
-                  owner:
-                    | {
-                        type: "user"
-                        user:
-                          | {
-                              type: "person"
-                              person: { email: string }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                          | { id: IdRequest; object: "user" }
-                      }
-                    | { type: "workspace"; workspace: true }
-                }
+            bot: botLookup
             name: string | null
             avatar_url: string | null
             id: IdRequest
@@ -11102,49 +9350,7 @@ export type GetPagePropertyResponse =
           }
         | {
             type: "mention"
-            mention:
-              | {
-                  type: "user"
-                  user:
-                    | { id: IdRequest; object: "user" }
-                    | {
-                        type: "person"
-                        person: { email: string }
-                        name: string | null
-                        avatar_url: string | null
-                        id: IdRequest
-                        object: "user"
-                      }
-                    | {
-                        type: "bot"
-                        bot:
-                          | Record<string, never>
-                          | {
-                              owner:
-                                | {
-                                    type: "user"
-                                    user:
-                                      | {
-                                          type: "person"
-                                          person: { email: string }
-                                          name: string | null
-                                          avatar_url: string | null
-                                          id: IdRequest
-                                          object: "user"
-                                        }
-                                      | { id: IdRequest; object: "user" }
-                                  }
-                                | { type: "workspace"; workspace: true }
-                            }
-                        name: string | null
-                        avatar_url: string | null
-                        id: IdRequest
-                        object: "user"
-                      }
-                }
-              | { type: "date"; date: { start: string; end: string | null } }
-              | { type: "page"; page: { id: IdRequest } }
-              | { type: "database"; database: { id: IdRequest } }
+            mention: mentionLookup
             annotations: {
               bold: boolean
               italic: boolean
@@ -11191,49 +9397,7 @@ export type GetPagePropertyResponse =
           }
         | {
             type: "mention"
-            mention:
-              | {
-                  type: "user"
-                  user:
-                    | { id: IdRequest; object: "user" }
-                    | {
-                        type: "person"
-                        person: { email: string }
-                        name: string | null
-                        avatar_url: string | null
-                        id: IdRequest
-                        object: "user"
-                      }
-                    | {
-                        type: "bot"
-                        bot:
-                          | Record<string, never>
-                          | {
-                              owner:
-                                | {
-                                    type: "user"
-                                    user:
-                                      | {
-                                          type: "person"
-                                          person: { email: string }
-                                          name: string | null
-                                          avatar_url: string | null
-                                          id: IdRequest
-                                          object: "user"
-                                        }
-                                      | { id: IdRequest; object: "user" }
-                                  }
-                                | { type: "workspace"; workspace: true }
-                            }
-                        name: string | null
-                        avatar_url: string | null
-                        id: IdRequest
-                        object: "user"
-                      }
-                }
-              | { type: "date"; date: { start: string; end: string | null } }
-              | { type: "page"; page: { id: IdRequest } }
-              | { type: "database"; database: { id: IdRequest } }
+            mention: mentionLookup
             annotations: {
               bold: boolean
               italic: boolean
@@ -11275,25 +9439,7 @@ export type GetPagePropertyResponse =
           }
         | {
             type: "bot"
-            bot:
-              | Record<string, never>
-              | {
-                  owner:
-                    | {
-                        type: "user"
-                        user:
-                          | {
-                              type: "person"
-                              person: { email: string }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                          | { id: IdRequest; object: "user" }
-                      }
-                    | { type: "workspace"; workspace: true }
-                }
+            bot: botLookup
             name: string | null
             avatar_url: string | null
             id: IdRequest
@@ -11456,25 +9602,7 @@ export type GetPagePropertyResponse =
               | null
               | {
                   type: "bot"
-                  bot:
-                    | Record<string, never>
-                    | {
-                        owner:
-                          | {
-                              type: "user"
-                              user:
-                                | {
-                                    type: "person"
-                                    person: { email: string }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                                | { id: IdRequest; object: "user" }
-                            }
-                          | { type: "workspace"; workspace: true }
-                      }
+                  bot: botLookup
                   name: string | null
                   avatar_url: string | null
                   id: IdRequest
@@ -11504,25 +9632,7 @@ export type GetPagePropertyResponse =
               | null
               | {
                   type: "bot"
-                  bot:
-                    | Record<string, never>
-                    | {
-                        owner:
-                          | {
-                              type: "user"
-                              user:
-                                | {
-                                    type: "person"
-                                    person: { email: string }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                                | { id: IdRequest; object: "user" }
-                            }
-                          | { type: "workspace"; workspace: true }
-                      }
+                  bot: botLookup
                   name: string | null
                   avatar_url: string | null
                   id: IdRequest
@@ -11571,52 +9681,7 @@ export type GetPagePropertyResponse =
                 }
               | {
                   type: "mention"
-                  mention:
-                    | {
-                        type: "user"
-                        user:
-                          | { id: IdRequest; object: "user" }
-                          | {
-                              type: "person"
-                              person: { email: string }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                          | {
-                              type: "bot"
-                              bot:
-                                | Record<string, never>
-                                | {
-                                    owner:
-                                      | {
-                                          type: "user"
-                                          user:
-                                            | {
-                                                type: "person"
-                                                person: { email: string }
-                                                name: string | null
-                                                avatar_url: string | null
-                                                id: IdRequest
-                                                object: "user"
-                                              }
-                                            | { id: IdRequest; object: "user" }
-                                        }
-                                      | { type: "workspace"; workspace: true }
-                                  }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                      }
-                    | {
-                        type: "date"
-                        date: { start: string; end: string | null }
-                      }
-                    | { type: "page"; page: { id: IdRequest } }
-                    | { type: "database"; database: { id: IdRequest } }
+                  mention: mentionLookup
                   annotations: {
                     bold: boolean
                     italic: boolean
@@ -11663,52 +9728,7 @@ export type GetPagePropertyResponse =
                 }
               | {
                   type: "mention"
-                  mention:
-                    | {
-                        type: "user"
-                        user:
-                          | { id: IdRequest; object: "user" }
-                          | {
-                              type: "person"
-                              person: { email: string }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                          | {
-                              type: "bot"
-                              bot:
-                                | Record<string, never>
-                                | {
-                                    owner:
-                                      | {
-                                          type: "user"
-                                          user:
-                                            | {
-                                                type: "person"
-                                                person: { email: string }
-                                                name: string | null
-                                                avatar_url: string | null
-                                                id: IdRequest
-                                                object: "user"
-                                              }
-                                            | { id: IdRequest; object: "user" }
-                                        }
-                                      | { type: "workspace"; workspace: true }
-                                  }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                      }
-                    | {
-                        type: "date"
-                        date: { start: string; end: string | null }
-                      }
-                    | { type: "page"; page: { id: IdRequest } }
-                    | { type: "database"; database: { id: IdRequest } }
+                  mention: mentionLookup
                   annotations: {
                     bold: boolean
                     italic: boolean
@@ -11750,25 +9770,7 @@ export type GetPagePropertyResponse =
                 }
               | {
                   type: "bot"
-                  bot:
-                    | Record<string, never>
-                    | {
-                        owner:
-                          | {
-                              type: "user"
-                              user:
-                                | {
-                                    type: "person"
-                                    person: { email: string }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                                | { id: IdRequest; object: "user" }
-                            }
-                          | { type: "workspace"; workspace: true }
-                      }
+                  bot: botLookup
                   name: string | null
                   avatar_url: string | null
                   id: IdRequest
@@ -11852,25 +9854,7 @@ export type GetPagePropertyResponse =
               | null
               | {
                   type: "bot"
-                  bot:
-                    | Record<string, never>
-                    | {
-                        owner:
-                          | {
-                              type: "user"
-                              user:
-                                | {
-                                    type: "person"
-                                    person: { email: string }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                                | { id: IdRequest; object: "user" }
-                            }
-                          | { type: "workspace"; workspace: true }
-                      }
+                  bot: botLookup
                   name: string | null
                   avatar_url: string | null
                   id: IdRequest
@@ -11900,25 +9884,7 @@ export type GetPagePropertyResponse =
               | null
               | {
                   type: "bot"
-                  bot:
-                    | Record<string, never>
-                    | {
-                        owner:
-                          | {
-                              type: "user"
-                              user:
-                                | {
-                                    type: "person"
-                                    person: { email: string }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                                | { id: IdRequest; object: "user" }
-                            }
-                          | { type: "workspace"; workspace: true }
-                      }
+                  bot: botLookup
                   name: string | null
                   avatar_url: string | null
                   id: IdRequest
@@ -11967,52 +9933,7 @@ export type GetPagePropertyResponse =
                 }
               | {
                   type: "mention"
-                  mention:
-                    | {
-                        type: "user"
-                        user:
-                          | { id: IdRequest; object: "user" }
-                          | {
-                              type: "person"
-                              person: { email: string }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                          | {
-                              type: "bot"
-                              bot:
-                                | Record<string, never>
-                                | {
-                                    owner:
-                                      | {
-                                          type: "user"
-                                          user:
-                                            | {
-                                                type: "person"
-                                                person: { email: string }
-                                                name: string | null
-                                                avatar_url: string | null
-                                                id: IdRequest
-                                                object: "user"
-                                              }
-                                            | { id: IdRequest; object: "user" }
-                                        }
-                                      | { type: "workspace"; workspace: true }
-                                  }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                      }
-                    | {
-                        type: "date"
-                        date: { start: string; end: string | null }
-                      }
-                    | { type: "page"; page: { id: IdRequest } }
-                    | { type: "database"; database: { id: IdRequest } }
+                  mention: mentionLookup
                   annotations: {
                     bold: boolean
                     italic: boolean
@@ -12059,52 +9980,7 @@ export type GetPagePropertyResponse =
                 }
               | {
                   type: "mention"
-                  mention:
-                    | {
-                        type: "user"
-                        user:
-                          | { id: IdRequest; object: "user" }
-                          | {
-                              type: "person"
-                              person: { email: string }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                          | {
-                              type: "bot"
-                              bot:
-                                | Record<string, never>
-                                | {
-                                    owner:
-                                      | {
-                                          type: "user"
-                                          user:
-                                            | {
-                                                type: "person"
-                                                person: { email: string }
-                                                name: string | null
-                                                avatar_url: string | null
-                                                id: IdRequest
-                                                object: "user"
-                                              }
-                                            | { id: IdRequest; object: "user" }
-                                        }
-                                      | { type: "workspace"; workspace: true }
-                                  }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                      }
-                    | {
-                        type: "date"
-                        date: { start: string; end: string | null }
-                      }
-                    | { type: "page"; page: { id: IdRequest } }
-                    | { type: "database"; database: { id: IdRequest } }
+                  mention: mentionLookup
                   annotations: {
                     bold: boolean
                     italic: boolean
@@ -12146,25 +10022,7 @@ export type GetPagePropertyResponse =
                 }
               | {
                   type: "bot"
-                  bot:
-                    | Record<string, never>
-                    | {
-                        owner:
-                          | {
-                              type: "user"
-                              user:
-                                | {
-                                    type: "person"
-                                    person: { email: string }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                                | { id: IdRequest; object: "user" }
-                            }
-                          | { type: "workspace"; workspace: true }
-                      }
+                  bot: botLookup
                   name: string | null
                   avatar_url: string | null
                   id: IdRequest
@@ -12218,49 +10076,7 @@ export type GetBlockResponse =
             }
           | {
               type: "mention"
-              mention:
-                | {
-                    type: "user"
-                    user:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | Record<string, never>
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                  }
-                | { type: "date"; date: { start: string; end: string | null } }
-                | { type: "page"; page: { id: IdRequest } }
-                | { type: "database"; database: { id: IdRequest } }
+              mention: mentionLookup
               annotations: {
                 bold: boolean
                 italic: boolean
@@ -12315,49 +10131,7 @@ export type GetBlockResponse =
             }
           | {
               type: "mention"
-              mention:
-                | {
-                    type: "user"
-                    user:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | Record<string, never>
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                  }
-                | { type: "date"; date: { start: string; end: string | null } }
-                | { type: "page"; page: { id: IdRequest } }
-                | { type: "database"; database: { id: IdRequest } }
+              mention: mentionLookup
               annotations: {
                 bold: boolean
                 italic: boolean
@@ -12412,49 +10186,7 @@ export type GetBlockResponse =
             }
           | {
               type: "mention"
-              mention:
-                | {
-                    type: "user"
-                    user:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | Record<string, never>
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                  }
-                | { type: "date"; date: { start: string; end: string | null } }
-                | { type: "page"; page: { id: IdRequest } }
-                | { type: "database"; database: { id: IdRequest } }
+              mention: mentionLookup
               annotations: {
                 bold: boolean
                 italic: boolean
@@ -12509,49 +10241,7 @@ export type GetBlockResponse =
             }
           | {
               type: "mention"
-              mention:
-                | {
-                    type: "user"
-                    user:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | Record<string, never>
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                  }
-                | { type: "date"; date: { start: string; end: string | null } }
-                | { type: "page"; page: { id: IdRequest } }
-                | { type: "database"; database: { id: IdRequest } }
+              mention: mentionLookup
               annotations: {
                 bold: boolean
                 italic: boolean
@@ -12606,49 +10296,7 @@ export type GetBlockResponse =
             }
           | {
               type: "mention"
-              mention:
-                | {
-                    type: "user"
-                    user:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | Record<string, never>
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                  }
-                | { type: "date"; date: { start: string; end: string | null } }
-                | { type: "page"; page: { id: IdRequest } }
-                | { type: "database"; database: { id: IdRequest } }
+              mention: mentionLookup
               annotations: {
                 bold: boolean
                 italic: boolean
@@ -12703,49 +10351,7 @@ export type GetBlockResponse =
             }
           | {
               type: "mention"
-              mention:
-                | {
-                    type: "user"
-                    user:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | Record<string, never>
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                  }
-                | { type: "date"; date: { start: string; end: string | null } }
-                | { type: "page"; page: { id: IdRequest } }
-                | { type: "database"; database: { id: IdRequest } }
+              mention: mentionLookup
               annotations: {
                 bold: boolean
                 italic: boolean
@@ -12800,49 +10406,7 @@ export type GetBlockResponse =
             }
           | {
               type: "mention"
-              mention:
-                | {
-                    type: "user"
-                    user:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | Record<string, never>
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                  }
-                | { type: "date"; date: { start: string; end: string | null } }
-                | { type: "page"; page: { id: IdRequest } }
-                | { type: "database"; database: { id: IdRequest } }
+              mention: mentionLookup
               annotations: {
                 bold: boolean
                 italic: boolean
@@ -12897,49 +10461,7 @@ export type GetBlockResponse =
             }
           | {
               type: "mention"
-              mention:
-                | {
-                    type: "user"
-                    user:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | Record<string, never>
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                  }
-                | { type: "date"; date: { start: string; end: string | null } }
-                | { type: "page"; page: { id: IdRequest } }
-                | { type: "database"; database: { id: IdRequest } }
+              mention: mentionLookup
               annotations: {
                 bold: boolean
                 italic: boolean
@@ -12995,49 +10517,7 @@ export type GetBlockResponse =
             }
           | {
               type: "mention"
-              mention:
-                | {
-                    type: "user"
-                    user:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | Record<string, never>
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                  }
-                | { type: "date"; date: { start: string; end: string | null } }
-                | { type: "page"; page: { id: IdRequest } }
-                | { type: "database"; database: { id: IdRequest } }
+              mention: mentionLookup
               annotations: {
                 bold: boolean
                 italic: boolean
@@ -13122,49 +10602,7 @@ export type GetBlockResponse =
             }
           | {
               type: "mention"
-              mention:
-                | {
-                    type: "user"
-                    user:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | Record<string, never>
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                  }
-                | { type: "date"; date: { start: string; end: string | null } }
-                | { type: "page"; page: { id: IdRequest } }
-                | { type: "database"; database: { id: IdRequest } }
+              mention: mentionLookup
               annotations: {
                 bold: boolean
                 italic: boolean
@@ -13220,49 +10658,7 @@ export type GetBlockResponse =
             }
           | {
               type: "mention"
-              mention:
-                | {
-                    type: "user"
-                    user:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | Record<string, never>
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                  }
-                | { type: "date"; date: { start: string; end: string | null } }
-                | { type: "page"; page: { id: IdRequest } }
-                | { type: "database"; database: { id: IdRequest } }
+              mention: mentionLookup
               annotations: {
                 bold: boolean
                 italic: boolean
@@ -13358,49 +10754,7 @@ export type GetBlockResponse =
             }
           | {
               type: "mention"
-              mention:
-                | {
-                    type: "user"
-                    user:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | Record<string, never>
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                  }
-                | { type: "date"; date: { start: string; end: string | null } }
-                | { type: "page"; page: { id: IdRequest } }
-                | { type: "database"; database: { id: IdRequest } }
+              mention: mentionLookup
               annotations: {
                 bold: boolean
                 italic: boolean
@@ -13456,49 +10810,7 @@ export type GetBlockResponse =
             }
           | {
               type: "mention"
-              mention:
-                | {
-                    type: "user"
-                    user:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | Record<string, never>
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                  }
-                | { type: "date"; date: { start: string; end: string | null } }
-                | { type: "page"; page: { id: IdRequest } }
-                | { type: "database"; database: { id: IdRequest } }
+              mention: mentionLookup
               annotations: {
                 bold: boolean
                 italic: boolean
@@ -13556,52 +10868,7 @@ export type GetBlockResponse =
                 }
               | {
                   type: "mention"
-                  mention:
-                    | {
-                        type: "user"
-                        user:
-                          | { id: IdRequest; object: "user" }
-                          | {
-                              type: "person"
-                              person: { email: string }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                          | {
-                              type: "bot"
-                              bot:
-                                | Record<string, never>
-                                | {
-                                    owner:
-                                      | {
-                                          type: "user"
-                                          user:
-                                            | {
-                                                type: "person"
-                                                person: { email: string }
-                                                name: string | null
-                                                avatar_url: string | null
-                                                id: IdRequest
-                                                object: "user"
-                                              }
-                                            | { id: IdRequest; object: "user" }
-                                        }
-                                      | { type: "workspace"; workspace: true }
-                                  }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                      }
-                    | {
-                        type: "date"
-                        date: { start: string; end: string | null }
-                      }
-                    | { type: "page"; page: { id: IdRequest } }
-                    | { type: "database"; database: { id: IdRequest } }
+                  mention: mentionLookup
                   annotations: {
                     bold: boolean
                     italic: boolean
@@ -13649,52 +10916,7 @@ export type GetBlockResponse =
                 }
               | {
                   type: "mention"
-                  mention:
-                    | {
-                        type: "user"
-                        user:
-                          | { id: IdRequest; object: "user" }
-                          | {
-                              type: "person"
-                              person: { email: string }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                          | {
-                              type: "bot"
-                              bot:
-                                | Record<string, never>
-                                | {
-                                    owner:
-                                      | {
-                                          type: "user"
-                                          user:
-                                            | {
-                                                type: "person"
-                                                person: { email: string }
-                                                name: string | null
-                                                avatar_url: string | null
-                                                id: IdRequest
-                                                object: "user"
-                                              }
-                                            | { id: IdRequest; object: "user" }
-                                        }
-                                      | { type: "workspace"; workspace: true }
-                                  }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                      }
-                    | {
-                        type: "date"
-                        date: { start: string; end: string | null }
-                      }
-                    | { type: "page"; page: { id: IdRequest } }
-                    | { type: "database"; database: { id: IdRequest } }
+                  mention: mentionLookup
                   annotations: {
                     bold: boolean
                     italic: boolean
@@ -13752,52 +10974,7 @@ export type GetBlockResponse =
                 }
               | {
                   type: "mention"
-                  mention:
-                    | {
-                        type: "user"
-                        user:
-                          | { id: IdRequest; object: "user" }
-                          | {
-                              type: "person"
-                              person: { email: string }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                          | {
-                              type: "bot"
-                              bot:
-                                | Record<string, never>
-                                | {
-                                    owner:
-                                      | {
-                                          type: "user"
-                                          user:
-                                            | {
-                                                type: "person"
-                                                person: { email: string }
-                                                name: string | null
-                                                avatar_url: string | null
-                                                id: IdRequest
-                                                object: "user"
-                                              }
-                                            | { id: IdRequest; object: "user" }
-                                        }
-                                      | { type: "workspace"; workspace: true }
-                                  }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                      }
-                    | {
-                        type: "date"
-                        date: { start: string; end: string | null }
-                      }
-                    | { type: "page"; page: { id: IdRequest } }
-                    | { type: "database"; database: { id: IdRequest } }
+                  mention: mentionLookup
                   annotations: {
                     bold: boolean
                     italic: boolean
@@ -13845,52 +11022,7 @@ export type GetBlockResponse =
                 }
               | {
                   type: "mention"
-                  mention:
-                    | {
-                        type: "user"
-                        user:
-                          | { id: IdRequest; object: "user" }
-                          | {
-                              type: "person"
-                              person: { email: string }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                          | {
-                              type: "bot"
-                              bot:
-                                | Record<string, never>
-                                | {
-                                    owner:
-                                      | {
-                                          type: "user"
-                                          user:
-                                            | {
-                                                type: "person"
-                                                person: { email: string }
-                                                name: string | null
-                                                avatar_url: string | null
-                                                id: IdRequest
-                                                object: "user"
-                                              }
-                                            | { id: IdRequest; object: "user" }
-                                        }
-                                      | { type: "workspace"; workspace: true }
-                                  }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                      }
-                    | {
-                        type: "date"
-                        date: { start: string; end: string | null }
-                      }
-                    | { type: "page"; page: { id: IdRequest } }
-                    | { type: "database"; database: { id: IdRequest } }
+                  mention: mentionLookup
                   annotations: {
                     bold: boolean
                     italic: boolean
@@ -13948,52 +11080,7 @@ export type GetBlockResponse =
                 }
               | {
                   type: "mention"
-                  mention:
-                    | {
-                        type: "user"
-                        user:
-                          | { id: IdRequest; object: "user" }
-                          | {
-                              type: "person"
-                              person: { email: string }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                          | {
-                              type: "bot"
-                              bot:
-                                | Record<string, never>
-                                | {
-                                    owner:
-                                      | {
-                                          type: "user"
-                                          user:
-                                            | {
-                                                type: "person"
-                                                person: { email: string }
-                                                name: string | null
-                                                avatar_url: string | null
-                                                id: IdRequest
-                                                object: "user"
-                                              }
-                                            | { id: IdRequest; object: "user" }
-                                        }
-                                      | { type: "workspace"; workspace: true }
-                                  }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                      }
-                    | {
-                        type: "date"
-                        date: { start: string; end: string | null }
-                      }
-                    | { type: "page"; page: { id: IdRequest } }
-                    | { type: "database"; database: { id: IdRequest } }
+                  mention: mentionLookup
                   annotations: {
                     bold: boolean
                     italic: boolean
@@ -14041,52 +11128,7 @@ export type GetBlockResponse =
                 }
               | {
                   type: "mention"
-                  mention:
-                    | {
-                        type: "user"
-                        user:
-                          | { id: IdRequest; object: "user" }
-                          | {
-                              type: "person"
-                              person: { email: string }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                          | {
-                              type: "bot"
-                              bot:
-                                | Record<string, never>
-                                | {
-                                    owner:
-                                      | {
-                                          type: "user"
-                                          user:
-                                            | {
-                                                type: "person"
-                                                person: { email: string }
-                                                name: string | null
-                                                avatar_url: string | null
-                                                id: IdRequest
-                                                object: "user"
-                                              }
-                                            | { id: IdRequest; object: "user" }
-                                        }
-                                      | { type: "workspace"; workspace: true }
-                                  }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                      }
-                    | {
-                        type: "date"
-                        date: { start: string; end: string | null }
-                      }
-                    | { type: "page"; page: { id: IdRequest } }
-                    | { type: "database"; database: { id: IdRequest } }
+                  mention: mentionLookup
                   annotations: {
                     bold: boolean
                     italic: boolean
@@ -14144,52 +11186,7 @@ export type GetBlockResponse =
                 }
               | {
                   type: "mention"
-                  mention:
-                    | {
-                        type: "user"
-                        user:
-                          | { id: IdRequest; object: "user" }
-                          | {
-                              type: "person"
-                              person: { email: string }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                          | {
-                              type: "bot"
-                              bot:
-                                | Record<string, never>
-                                | {
-                                    owner:
-                                      | {
-                                          type: "user"
-                                          user:
-                                            | {
-                                                type: "person"
-                                                person: { email: string }
-                                                name: string | null
-                                                avatar_url: string | null
-                                                id: IdRequest
-                                                object: "user"
-                                              }
-                                            | { id: IdRequest; object: "user" }
-                                        }
-                                      | { type: "workspace"; workspace: true }
-                                  }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                      }
-                    | {
-                        type: "date"
-                        date: { start: string; end: string | null }
-                      }
-                    | { type: "page"; page: { id: IdRequest } }
-                    | { type: "database"; database: { id: IdRequest } }
+                  mention: mentionLookup
                   annotations: {
                     bold: boolean
                     italic: boolean
@@ -14237,52 +11234,7 @@ export type GetBlockResponse =
                 }
               | {
                   type: "mention"
-                  mention:
-                    | {
-                        type: "user"
-                        user:
-                          | { id: IdRequest; object: "user" }
-                          | {
-                              type: "person"
-                              person: { email: string }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                          | {
-                              type: "bot"
-                              bot:
-                                | Record<string, never>
-                                | {
-                                    owner:
-                                      | {
-                                          type: "user"
-                                          user:
-                                            | {
-                                                type: "person"
-                                                person: { email: string }
-                                                name: string | null
-                                                avatar_url: string | null
-                                                id: IdRequest
-                                                object: "user"
-                                              }
-                                            | { id: IdRequest; object: "user" }
-                                        }
-                                      | { type: "workspace"; workspace: true }
-                                  }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                      }
-                    | {
-                        type: "date"
-                        date: { start: string; end: string | null }
-                      }
-                    | { type: "page"; page: { id: IdRequest } }
-                    | { type: "database"; database: { id: IdRequest } }
+                  mention: mentionLookup
                   annotations: {
                     bold: boolean
                     italic: boolean
@@ -14340,52 +11292,7 @@ export type GetBlockResponse =
                 }
               | {
                   type: "mention"
-                  mention:
-                    | {
-                        type: "user"
-                        user:
-                          | { id: IdRequest; object: "user" }
-                          | {
-                              type: "person"
-                              person: { email: string }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                          | {
-                              type: "bot"
-                              bot:
-                                | Record<string, never>
-                                | {
-                                    owner:
-                                      | {
-                                          type: "user"
-                                          user:
-                                            | {
-                                                type: "person"
-                                                person: { email: string }
-                                                name: string | null
-                                                avatar_url: string | null
-                                                id: IdRequest
-                                                object: "user"
-                                              }
-                                            | { id: IdRequest; object: "user" }
-                                        }
-                                      | { type: "workspace"; workspace: true }
-                                  }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                      }
-                    | {
-                        type: "date"
-                        date: { start: string; end: string | null }
-                      }
-                    | { type: "page"; page: { id: IdRequest } }
-                    | { type: "database"; database: { id: IdRequest } }
+                  mention: mentionLookup
                   annotations: {
                     bold: boolean
                     italic: boolean
@@ -14433,52 +11340,7 @@ export type GetBlockResponse =
                 }
               | {
                   type: "mention"
-                  mention:
-                    | {
-                        type: "user"
-                        user:
-                          | { id: IdRequest; object: "user" }
-                          | {
-                              type: "person"
-                              person: { email: string }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                          | {
-                              type: "bot"
-                              bot:
-                                | Record<string, never>
-                                | {
-                                    owner:
-                                      | {
-                                          type: "user"
-                                          user:
-                                            | {
-                                                type: "person"
-                                                person: { email: string }
-                                                name: string | null
-                                                avatar_url: string | null
-                                                id: IdRequest
-                                                object: "user"
-                                              }
-                                            | { id: IdRequest; object: "user" }
-                                        }
-                                      | { type: "workspace"; workspace: true }
-                                  }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                      }
-                    | {
-                        type: "date"
-                        date: { start: string; end: string | null }
-                      }
-                    | { type: "page"; page: { id: IdRequest } }
-                    | { type: "database"; database: { id: IdRequest } }
+                  mention: mentionLookup
                   annotations: {
                     bold: boolean
                     italic: boolean
@@ -14685,49 +11547,7 @@ export type UpdateBlockResponse =
             }
           | {
               type: "mention"
-              mention:
-                | {
-                    type: "user"
-                    user:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | Record<string, never>
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                  }
-                | { type: "date"; date: { start: string; end: string | null } }
-                | { type: "page"; page: { id: IdRequest } }
-                | { type: "database"; database: { id: IdRequest } }
+              mention: mentionLookup
               annotations: {
                 bold: boolean
                 italic: boolean
@@ -14782,49 +11602,7 @@ export type UpdateBlockResponse =
             }
           | {
               type: "mention"
-              mention:
-                | {
-                    type: "user"
-                    user:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | Record<string, never>
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                  }
-                | { type: "date"; date: { start: string; end: string | null } }
-                | { type: "page"; page: { id: IdRequest } }
-                | { type: "database"; database: { id: IdRequest } }
+              mention: mentionLookup
               annotations: {
                 bold: boolean
                 italic: boolean
@@ -14879,49 +11657,7 @@ export type UpdateBlockResponse =
             }
           | {
               type: "mention"
-              mention:
-                | {
-                    type: "user"
-                    user:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | Record<string, never>
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                  }
-                | { type: "date"; date: { start: string; end: string | null } }
-                | { type: "page"; page: { id: IdRequest } }
-                | { type: "database"; database: { id: IdRequest } }
+              mention: mentionLookup
               annotations: {
                 bold: boolean
                 italic: boolean
@@ -14976,49 +11712,7 @@ export type UpdateBlockResponse =
             }
           | {
               type: "mention"
-              mention:
-                | {
-                    type: "user"
-                    user:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | Record<string, never>
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                  }
-                | { type: "date"; date: { start: string; end: string | null } }
-                | { type: "page"; page: { id: IdRequest } }
-                | { type: "database"; database: { id: IdRequest } }
+              mention: mentionLookup
               annotations: {
                 bold: boolean
                 italic: boolean
@@ -15073,49 +11767,7 @@ export type UpdateBlockResponse =
             }
           | {
               type: "mention"
-              mention:
-                | {
-                    type: "user"
-                    user:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | Record<string, never>
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                  }
-                | { type: "date"; date: { start: string; end: string | null } }
-                | { type: "page"; page: { id: IdRequest } }
-                | { type: "database"; database: { id: IdRequest } }
+              mention: mentionLookup
               annotations: {
                 bold: boolean
                 italic: boolean
@@ -15170,49 +11822,7 @@ export type UpdateBlockResponse =
             }
           | {
               type: "mention"
-              mention:
-                | {
-                    type: "user"
-                    user:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | Record<string, never>
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                  }
-                | { type: "date"; date: { start: string; end: string | null } }
-                | { type: "page"; page: { id: IdRequest } }
-                | { type: "database"; database: { id: IdRequest } }
+              mention: mentionLookup
               annotations: {
                 bold: boolean
                 italic: boolean
@@ -15267,49 +11877,7 @@ export type UpdateBlockResponse =
             }
           | {
               type: "mention"
-              mention:
-                | {
-                    type: "user"
-                    user:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | Record<string, never>
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                  }
-                | { type: "date"; date: { start: string; end: string | null } }
-                | { type: "page"; page: { id: IdRequest } }
-                | { type: "database"; database: { id: IdRequest } }
+              mention: mentionLookup
               annotations: {
                 bold: boolean
                 italic: boolean
@@ -15364,49 +11932,7 @@ export type UpdateBlockResponse =
             }
           | {
               type: "mention"
-              mention:
-                | {
-                    type: "user"
-                    user:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | Record<string, never>
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                  }
-                | { type: "date"; date: { start: string; end: string | null } }
-                | { type: "page"; page: { id: IdRequest } }
-                | { type: "database"; database: { id: IdRequest } }
+              mention: mentionLookup
               annotations: {
                 bold: boolean
                 italic: boolean
@@ -15462,49 +11988,7 @@ export type UpdateBlockResponse =
             }
           | {
               type: "mention"
-              mention:
-                | {
-                    type: "user"
-                    user:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | Record<string, never>
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                  }
-                | { type: "date"; date: { start: string; end: string | null } }
-                | { type: "page"; page: { id: IdRequest } }
-                | { type: "database"; database: { id: IdRequest } }
+              mention: mentionLookup
               annotations: {
                 bold: boolean
                 italic: boolean
@@ -15589,49 +12073,7 @@ export type UpdateBlockResponse =
             }
           | {
               type: "mention"
-              mention:
-                | {
-                    type: "user"
-                    user:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | Record<string, never>
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                  }
-                | { type: "date"; date: { start: string; end: string | null } }
-                | { type: "page"; page: { id: IdRequest } }
-                | { type: "database"; database: { id: IdRequest } }
+              mention: mentionLookup
               annotations: {
                 bold: boolean
                 italic: boolean
@@ -15687,49 +12129,7 @@ export type UpdateBlockResponse =
             }
           | {
               type: "mention"
-              mention:
-                | {
-                    type: "user"
-                    user:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | Record<string, never>
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                  }
-                | { type: "date"; date: { start: string; end: string | null } }
-                | { type: "page"; page: { id: IdRequest } }
-                | { type: "database"; database: { id: IdRequest } }
+              mention: mentionLookup
               annotations: {
                 bold: boolean
                 italic: boolean
@@ -15825,49 +12225,7 @@ export type UpdateBlockResponse =
             }
           | {
               type: "mention"
-              mention:
-                | {
-                    type: "user"
-                    user:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | Record<string, never>
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                  }
-                | { type: "date"; date: { start: string; end: string | null } }
-                | { type: "page"; page: { id: IdRequest } }
-                | { type: "database"; database: { id: IdRequest } }
+              mention: mentionLookup
               annotations: {
                 bold: boolean
                 italic: boolean
@@ -15923,49 +12281,7 @@ export type UpdateBlockResponse =
             }
           | {
               type: "mention"
-              mention:
-                | {
-                    type: "user"
-                    user:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | Record<string, never>
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                  }
-                | { type: "date"; date: { start: string; end: string | null } }
-                | { type: "page"; page: { id: IdRequest } }
-                | { type: "database"; database: { id: IdRequest } }
+              mention: mentionLookup
               annotations: {
                 bold: boolean
                 italic: boolean
@@ -16023,52 +12339,7 @@ export type UpdateBlockResponse =
                 }
               | {
                   type: "mention"
-                  mention:
-                    | {
-                        type: "user"
-                        user:
-                          | { id: IdRequest; object: "user" }
-                          | {
-                              type: "person"
-                              person: { email: string }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                          | {
-                              type: "bot"
-                              bot:
-                                | Record<string, never>
-                                | {
-                                    owner:
-                                      | {
-                                          type: "user"
-                                          user:
-                                            | {
-                                                type: "person"
-                                                person: { email: string }
-                                                name: string | null
-                                                avatar_url: string | null
-                                                id: IdRequest
-                                                object: "user"
-                                              }
-                                            | { id: IdRequest; object: "user" }
-                                        }
-                                      | { type: "workspace"; workspace: true }
-                                  }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                      }
-                    | {
-                        type: "date"
-                        date: { start: string; end: string | null }
-                      }
-                    | { type: "page"; page: { id: IdRequest } }
-                    | { type: "database"; database: { id: IdRequest } }
+                  mention: mentionLookup
                   annotations: {
                     bold: boolean
                     italic: boolean
@@ -16116,52 +12387,7 @@ export type UpdateBlockResponse =
                 }
               | {
                   type: "mention"
-                  mention:
-                    | {
-                        type: "user"
-                        user:
-                          | { id: IdRequest; object: "user" }
-                          | {
-                              type: "person"
-                              person: { email: string }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                          | {
-                              type: "bot"
-                              bot:
-                                | Record<string, never>
-                                | {
-                                    owner:
-                                      | {
-                                          type: "user"
-                                          user:
-                                            | {
-                                                type: "person"
-                                                person: { email: string }
-                                                name: string | null
-                                                avatar_url: string | null
-                                                id: IdRequest
-                                                object: "user"
-                                              }
-                                            | { id: IdRequest; object: "user" }
-                                        }
-                                      | { type: "workspace"; workspace: true }
-                                  }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                      }
-                    | {
-                        type: "date"
-                        date: { start: string; end: string | null }
-                      }
-                    | { type: "page"; page: { id: IdRequest } }
-                    | { type: "database"; database: { id: IdRequest } }
+                  mention: mentionLookup
                   annotations: {
                     bold: boolean
                     italic: boolean
@@ -16219,52 +12445,7 @@ export type UpdateBlockResponse =
                 }
               | {
                   type: "mention"
-                  mention:
-                    | {
-                        type: "user"
-                        user:
-                          | { id: IdRequest; object: "user" }
-                          | {
-                              type: "person"
-                              person: { email: string }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                          | {
-                              type: "bot"
-                              bot:
-                                | Record<string, never>
-                                | {
-                                    owner:
-                                      | {
-                                          type: "user"
-                                          user:
-                                            | {
-                                                type: "person"
-                                                person: { email: string }
-                                                name: string | null
-                                                avatar_url: string | null
-                                                id: IdRequest
-                                                object: "user"
-                                              }
-                                            | { id: IdRequest; object: "user" }
-                                        }
-                                      | { type: "workspace"; workspace: true }
-                                  }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                      }
-                    | {
-                        type: "date"
-                        date: { start: string; end: string | null }
-                      }
-                    | { type: "page"; page: { id: IdRequest } }
-                    | { type: "database"; database: { id: IdRequest } }
+                  mention: mentionLookup
                   annotations: {
                     bold: boolean
                     italic: boolean
@@ -16312,52 +12493,7 @@ export type UpdateBlockResponse =
                 }
               | {
                   type: "mention"
-                  mention:
-                    | {
-                        type: "user"
-                        user:
-                          | { id: IdRequest; object: "user" }
-                          | {
-                              type: "person"
-                              person: { email: string }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                          | {
-                              type: "bot"
-                              bot:
-                                | Record<string, never>
-                                | {
-                                    owner:
-                                      | {
-                                          type: "user"
-                                          user:
-                                            | {
-                                                type: "person"
-                                                person: { email: string }
-                                                name: string | null
-                                                avatar_url: string | null
-                                                id: IdRequest
-                                                object: "user"
-                                              }
-                                            | { id: IdRequest; object: "user" }
-                                        }
-                                      | { type: "workspace"; workspace: true }
-                                  }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                      }
-                    | {
-                        type: "date"
-                        date: { start: string; end: string | null }
-                      }
-                    | { type: "page"; page: { id: IdRequest } }
-                    | { type: "database"; database: { id: IdRequest } }
+                  mention: mentionLookup
                   annotations: {
                     bold: boolean
                     italic: boolean
@@ -16415,52 +12551,7 @@ export type UpdateBlockResponse =
                 }
               | {
                   type: "mention"
-                  mention:
-                    | {
-                        type: "user"
-                        user:
-                          | { id: IdRequest; object: "user" }
-                          | {
-                              type: "person"
-                              person: { email: string }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                          | {
-                              type: "bot"
-                              bot:
-                                | Record<string, never>
-                                | {
-                                    owner:
-                                      | {
-                                          type: "user"
-                                          user:
-                                            | {
-                                                type: "person"
-                                                person: { email: string }
-                                                name: string | null
-                                                avatar_url: string | null
-                                                id: IdRequest
-                                                object: "user"
-                                              }
-                                            | { id: IdRequest; object: "user" }
-                                        }
-                                      | { type: "workspace"; workspace: true }
-                                  }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                      }
-                    | {
-                        type: "date"
-                        date: { start: string; end: string | null }
-                      }
-                    | { type: "page"; page: { id: IdRequest } }
-                    | { type: "database"; database: { id: IdRequest } }
+                  mention: mentionLookup
                   annotations: {
                     bold: boolean
                     italic: boolean
@@ -16508,52 +12599,7 @@ export type UpdateBlockResponse =
                 }
               | {
                   type: "mention"
-                  mention:
-                    | {
-                        type: "user"
-                        user:
-                          | { id: IdRequest; object: "user" }
-                          | {
-                              type: "person"
-                              person: { email: string }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                          | {
-                              type: "bot"
-                              bot:
-                                | Record<string, never>
-                                | {
-                                    owner:
-                                      | {
-                                          type: "user"
-                                          user:
-                                            | {
-                                                type: "person"
-                                                person: { email: string }
-                                                name: string | null
-                                                avatar_url: string | null
-                                                id: IdRequest
-                                                object: "user"
-                                              }
-                                            | { id: IdRequest; object: "user" }
-                                        }
-                                      | { type: "workspace"; workspace: true }
-                                  }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                      }
-                    | {
-                        type: "date"
-                        date: { start: string; end: string | null }
-                      }
-                    | { type: "page"; page: { id: IdRequest } }
-                    | { type: "database"; database: { id: IdRequest } }
+                  mention: mentionLookup
                   annotations: {
                     bold: boolean
                     italic: boolean
@@ -16611,52 +12657,7 @@ export type UpdateBlockResponse =
                 }
               | {
                   type: "mention"
-                  mention:
-                    | {
-                        type: "user"
-                        user:
-                          | { id: IdRequest; object: "user" }
-                          | {
-                              type: "person"
-                              person: { email: string }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                          | {
-                              type: "bot"
-                              bot:
-                                | Record<string, never>
-                                | {
-                                    owner:
-                                      | {
-                                          type: "user"
-                                          user:
-                                            | {
-                                                type: "person"
-                                                person: { email: string }
-                                                name: string | null
-                                                avatar_url: string | null
-                                                id: IdRequest
-                                                object: "user"
-                                              }
-                                            | { id: IdRequest; object: "user" }
-                                        }
-                                      | { type: "workspace"; workspace: true }
-                                  }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                      }
-                    | {
-                        type: "date"
-                        date: { start: string; end: string | null }
-                      }
-                    | { type: "page"; page: { id: IdRequest } }
-                    | { type: "database"; database: { id: IdRequest } }
+                  mention: mentionLookup
                   annotations: {
                     bold: boolean
                     italic: boolean
@@ -16704,52 +12705,7 @@ export type UpdateBlockResponse =
                 }
               | {
                   type: "mention"
-                  mention:
-                    | {
-                        type: "user"
-                        user:
-                          | { id: IdRequest; object: "user" }
-                          | {
-                              type: "person"
-                              person: { email: string }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                          | {
-                              type: "bot"
-                              bot:
-                                | Record<string, never>
-                                | {
-                                    owner:
-                                      | {
-                                          type: "user"
-                                          user:
-                                            | {
-                                                type: "person"
-                                                person: { email: string }
-                                                name: string | null
-                                                avatar_url: string | null
-                                                id: IdRequest
-                                                object: "user"
-                                              }
-                                            | { id: IdRequest; object: "user" }
-                                        }
-                                      | { type: "workspace"; workspace: true }
-                                  }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                      }
-                    | {
-                        type: "date"
-                        date: { start: string; end: string | null }
-                      }
-                    | { type: "page"; page: { id: IdRequest } }
-                    | { type: "database"; database: { id: IdRequest } }
+                  mention: mentionLookup
                   annotations: {
                     bold: boolean
                     italic: boolean
@@ -16807,52 +12763,7 @@ export type UpdateBlockResponse =
                 }
               | {
                   type: "mention"
-                  mention:
-                    | {
-                        type: "user"
-                        user:
-                          | { id: IdRequest; object: "user" }
-                          | {
-                              type: "person"
-                              person: { email: string }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                          | {
-                              type: "bot"
-                              bot:
-                                | Record<string, never>
-                                | {
-                                    owner:
-                                      | {
-                                          type: "user"
-                                          user:
-                                            | {
-                                                type: "person"
-                                                person: { email: string }
-                                                name: string | null
-                                                avatar_url: string | null
-                                                id: IdRequest
-                                                object: "user"
-                                              }
-                                            | { id: IdRequest; object: "user" }
-                                        }
-                                      | { type: "workspace"; workspace: true }
-                                  }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                      }
-                    | {
-                        type: "date"
-                        date: { start: string; end: string | null }
-                      }
-                    | { type: "page"; page: { id: IdRequest } }
-                    | { type: "database"; database: { id: IdRequest } }
+                  mention: mentionLookup
                   annotations: {
                     bold: boolean
                     italic: boolean
@@ -16900,52 +12811,7 @@ export type UpdateBlockResponse =
                 }
               | {
                   type: "mention"
-                  mention:
-                    | {
-                        type: "user"
-                        user:
-                          | { id: IdRequest; object: "user" }
-                          | {
-                              type: "person"
-                              person: { email: string }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                          | {
-                              type: "bot"
-                              bot:
-                                | Record<string, never>
-                                | {
-                                    owner:
-                                      | {
-                                          type: "user"
-                                          user:
-                                            | {
-                                                type: "person"
-                                                person: { email: string }
-                                                name: string | null
-                                                avatar_url: string | null
-                                                id: IdRequest
-                                                object: "user"
-                                              }
-                                            | { id: IdRequest; object: "user" }
-                                        }
-                                      | { type: "workspace"; workspace: true }
-                                  }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                      }
-                    | {
-                        type: "date"
-                        date: { start: string; end: string | null }
-                      }
-                    | { type: "page"; page: { id: IdRequest } }
-                    | { type: "database"; database: { id: IdRequest } }
+                  mention: mentionLookup
                   annotations: {
                     bold: boolean
                     italic: boolean
@@ -17051,49 +12917,7 @@ export type DeleteBlockResponse =
             }
           | {
               type: "mention"
-              mention:
-                | {
-                    type: "user"
-                    user:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | Record<string, never>
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                  }
-                | { type: "date"; date: { start: string; end: string | null } }
-                | { type: "page"; page: { id: IdRequest } }
-                | { type: "database"; database: { id: IdRequest } }
+              mention: mentionLookup
               annotations: {
                 bold: boolean
                 italic: boolean
@@ -17148,49 +12972,7 @@ export type DeleteBlockResponse =
             }
           | {
               type: "mention"
-              mention:
-                | {
-                    type: "user"
-                    user:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | Record<string, never>
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                  }
-                | { type: "date"; date: { start: string; end: string | null } }
-                | { type: "page"; page: { id: IdRequest } }
-                | { type: "database"; database: { id: IdRequest } }
+              mention: mentionLookup
               annotations: {
                 bold: boolean
                 italic: boolean
@@ -17245,49 +13027,7 @@ export type DeleteBlockResponse =
             }
           | {
               type: "mention"
-              mention:
-                | {
-                    type: "user"
-                    user:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | Record<string, never>
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                  }
-                | { type: "date"; date: { start: string; end: string | null } }
-                | { type: "page"; page: { id: IdRequest } }
-                | { type: "database"; database: { id: IdRequest } }
+              mention: mentionLookup
               annotations: {
                 bold: boolean
                 italic: boolean
@@ -17342,49 +13082,7 @@ export type DeleteBlockResponse =
             }
           | {
               type: "mention"
-              mention:
-                | {
-                    type: "user"
-                    user:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | Record<string, never>
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                  }
-                | { type: "date"; date: { start: string; end: string | null } }
-                | { type: "page"; page: { id: IdRequest } }
-                | { type: "database"; database: { id: IdRequest } }
+              mention: mentionLookup
               annotations: {
                 bold: boolean
                 italic: boolean
@@ -17439,49 +13137,7 @@ export type DeleteBlockResponse =
             }
           | {
               type: "mention"
-              mention:
-                | {
-                    type: "user"
-                    user:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | Record<string, never>
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                  }
-                | { type: "date"; date: { start: string; end: string | null } }
-                | { type: "page"; page: { id: IdRequest } }
-                | { type: "database"; database: { id: IdRequest } }
+              mention: mentionLookup
               annotations: {
                 bold: boolean
                 italic: boolean
@@ -17536,49 +13192,7 @@ export type DeleteBlockResponse =
             }
           | {
               type: "mention"
-              mention:
-                | {
-                    type: "user"
-                    user:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | Record<string, never>
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                  }
-                | { type: "date"; date: { start: string; end: string | null } }
-                | { type: "page"; page: { id: IdRequest } }
-                | { type: "database"; database: { id: IdRequest } }
+              mention: mentionLookup
               annotations: {
                 bold: boolean
                 italic: boolean
@@ -17633,49 +13247,7 @@ export type DeleteBlockResponse =
             }
           | {
               type: "mention"
-              mention:
-                | {
-                    type: "user"
-                    user:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | Record<string, never>
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                  }
-                | { type: "date"; date: { start: string; end: string | null } }
-                | { type: "page"; page: { id: IdRequest } }
-                | { type: "database"; database: { id: IdRequest } }
+              mention: mentionLookup
               annotations: {
                 bold: boolean
                 italic: boolean
@@ -17730,49 +13302,7 @@ export type DeleteBlockResponse =
             }
           | {
               type: "mention"
-              mention:
-                | {
-                    type: "user"
-                    user:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | Record<string, never>
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                  }
-                | { type: "date"; date: { start: string; end: string | null } }
-                | { type: "page"; page: { id: IdRequest } }
-                | { type: "database"; database: { id: IdRequest } }
+              mention: mentionLookup
               annotations: {
                 bold: boolean
                 italic: boolean
@@ -17828,49 +13358,7 @@ export type DeleteBlockResponse =
             }
           | {
               type: "mention"
-              mention:
-                | {
-                    type: "user"
-                    user:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | Record<string, never>
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                  }
-                | { type: "date"; date: { start: string; end: string | null } }
-                | { type: "page"; page: { id: IdRequest } }
-                | { type: "database"; database: { id: IdRequest } }
+              mention: mentionLookup
               annotations: {
                 bold: boolean
                 italic: boolean
@@ -17955,49 +13443,7 @@ export type DeleteBlockResponse =
             }
           | {
               type: "mention"
-              mention:
-                | {
-                    type: "user"
-                    user:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | Record<string, never>
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                  }
-                | { type: "date"; date: { start: string; end: string | null } }
-                | { type: "page"; page: { id: IdRequest } }
-                | { type: "database"; database: { id: IdRequest } }
+              mention: mentionLookup
               annotations: {
                 bold: boolean
                 italic: boolean
@@ -18053,49 +13499,7 @@ export type DeleteBlockResponse =
             }
           | {
               type: "mention"
-              mention:
-                | {
-                    type: "user"
-                    user:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | Record<string, never>
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                  }
-                | { type: "date"; date: { start: string; end: string | null } }
-                | { type: "page"; page: { id: IdRequest } }
-                | { type: "database"; database: { id: IdRequest } }
+              mention: mentionLookup
               annotations: {
                 bold: boolean
                 italic: boolean
@@ -18191,49 +13595,7 @@ export type DeleteBlockResponse =
             }
           | {
               type: "mention"
-              mention:
-                | {
-                    type: "user"
-                    user:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | Record<string, never>
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                  }
-                | { type: "date"; date: { start: string; end: string | null } }
-                | { type: "page"; page: { id: IdRequest } }
-                | { type: "database"; database: { id: IdRequest } }
+              mention: mentionLookup
               annotations: {
                 bold: boolean
                 italic: boolean
@@ -18289,49 +13651,7 @@ export type DeleteBlockResponse =
             }
           | {
               type: "mention"
-              mention:
-                | {
-                    type: "user"
-                    user:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | Record<string, never>
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                  }
-                | { type: "date"; date: { start: string; end: string | null } }
-                | { type: "page"; page: { id: IdRequest } }
-                | { type: "database"; database: { id: IdRequest } }
+              mention: mentionLookup
               annotations: {
                 bold: boolean
                 italic: boolean
@@ -18389,52 +13709,7 @@ export type DeleteBlockResponse =
                 }
               | {
                   type: "mention"
-                  mention:
-                    | {
-                        type: "user"
-                        user:
-                          | { id: IdRequest; object: "user" }
-                          | {
-                              type: "person"
-                              person: { email: string }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                          | {
-                              type: "bot"
-                              bot:
-                                | Record<string, never>
-                                | {
-                                    owner:
-                                      | {
-                                          type: "user"
-                                          user:
-                                            | {
-                                                type: "person"
-                                                person: { email: string }
-                                                name: string | null
-                                                avatar_url: string | null
-                                                id: IdRequest
-                                                object: "user"
-                                              }
-                                            | { id: IdRequest; object: "user" }
-                                        }
-                                      | { type: "workspace"; workspace: true }
-                                  }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                      }
-                    | {
-                        type: "date"
-                        date: { start: string; end: string | null }
-                      }
-                    | { type: "page"; page: { id: IdRequest } }
-                    | { type: "database"; database: { id: IdRequest } }
+                  mention: mentionLookup
                   annotations: {
                     bold: boolean
                     italic: boolean
@@ -18482,52 +13757,7 @@ export type DeleteBlockResponse =
                 }
               | {
                   type: "mention"
-                  mention:
-                    | {
-                        type: "user"
-                        user:
-                          | { id: IdRequest; object: "user" }
-                          | {
-                              type: "person"
-                              person: { email: string }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                          | {
-                              type: "bot"
-                              bot:
-                                | Record<string, never>
-                                | {
-                                    owner:
-                                      | {
-                                          type: "user"
-                                          user:
-                                            | {
-                                                type: "person"
-                                                person: { email: string }
-                                                name: string | null
-                                                avatar_url: string | null
-                                                id: IdRequest
-                                                object: "user"
-                                              }
-                                            | { id: IdRequest; object: "user" }
-                                        }
-                                      | { type: "workspace"; workspace: true }
-                                  }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                      }
-                    | {
-                        type: "date"
-                        date: { start: string; end: string | null }
-                      }
-                    | { type: "page"; page: { id: IdRequest } }
-                    | { type: "database"; database: { id: IdRequest } }
+                  mention: mentionLookup
                   annotations: {
                     bold: boolean
                     italic: boolean
@@ -18585,52 +13815,7 @@ export type DeleteBlockResponse =
                 }
               | {
                   type: "mention"
-                  mention:
-                    | {
-                        type: "user"
-                        user:
-                          | { id: IdRequest; object: "user" }
-                          | {
-                              type: "person"
-                              person: { email: string }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                          | {
-                              type: "bot"
-                              bot:
-                                | Record<string, never>
-                                | {
-                                    owner:
-                                      | {
-                                          type: "user"
-                                          user:
-                                            | {
-                                                type: "person"
-                                                person: { email: string }
-                                                name: string | null
-                                                avatar_url: string | null
-                                                id: IdRequest
-                                                object: "user"
-                                              }
-                                            | { id: IdRequest; object: "user" }
-                                        }
-                                      | { type: "workspace"; workspace: true }
-                                  }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                      }
-                    | {
-                        type: "date"
-                        date: { start: string; end: string | null }
-                      }
-                    | { type: "page"; page: { id: IdRequest } }
-                    | { type: "database"; database: { id: IdRequest } }
+                  mention: mentionLookup
                   annotations: {
                     bold: boolean
                     italic: boolean
@@ -18678,52 +13863,7 @@ export type DeleteBlockResponse =
                 }
               | {
                   type: "mention"
-                  mention:
-                    | {
-                        type: "user"
-                        user:
-                          | { id: IdRequest; object: "user" }
-                          | {
-                              type: "person"
-                              person: { email: string }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                          | {
-                              type: "bot"
-                              bot:
-                                | Record<string, never>
-                                | {
-                                    owner:
-                                      | {
-                                          type: "user"
-                                          user:
-                                            | {
-                                                type: "person"
-                                                person: { email: string }
-                                                name: string | null
-                                                avatar_url: string | null
-                                                id: IdRequest
-                                                object: "user"
-                                              }
-                                            | { id: IdRequest; object: "user" }
-                                        }
-                                      | { type: "workspace"; workspace: true }
-                                  }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                      }
-                    | {
-                        type: "date"
-                        date: { start: string; end: string | null }
-                      }
-                    | { type: "page"; page: { id: IdRequest } }
-                    | { type: "database"; database: { id: IdRequest } }
+                  mention: mentionLookup
                   annotations: {
                     bold: boolean
                     italic: boolean
@@ -18781,52 +13921,7 @@ export type DeleteBlockResponse =
                 }
               | {
                   type: "mention"
-                  mention:
-                    | {
-                        type: "user"
-                        user:
-                          | { id: IdRequest; object: "user" }
-                          | {
-                              type: "person"
-                              person: { email: string }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                          | {
-                              type: "bot"
-                              bot:
-                                | Record<string, never>
-                                | {
-                                    owner:
-                                      | {
-                                          type: "user"
-                                          user:
-                                            | {
-                                                type: "person"
-                                                person: { email: string }
-                                                name: string | null
-                                                avatar_url: string | null
-                                                id: IdRequest
-                                                object: "user"
-                                              }
-                                            | { id: IdRequest; object: "user" }
-                                        }
-                                      | { type: "workspace"; workspace: true }
-                                  }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                      }
-                    | {
-                        type: "date"
-                        date: { start: string; end: string | null }
-                      }
-                    | { type: "page"; page: { id: IdRequest } }
-                    | { type: "database"; database: { id: IdRequest } }
+                  mention: mentionLookup
                   annotations: {
                     bold: boolean
                     italic: boolean
@@ -18874,52 +13969,7 @@ export type DeleteBlockResponse =
                 }
               | {
                   type: "mention"
-                  mention:
-                    | {
-                        type: "user"
-                        user:
-                          | { id: IdRequest; object: "user" }
-                          | {
-                              type: "person"
-                              person: { email: string }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                          | {
-                              type: "bot"
-                              bot:
-                                | Record<string, never>
-                                | {
-                                    owner:
-                                      | {
-                                          type: "user"
-                                          user:
-                                            | {
-                                                type: "person"
-                                                person: { email: string }
-                                                name: string | null
-                                                avatar_url: string | null
-                                                id: IdRequest
-                                                object: "user"
-                                              }
-                                            | { id: IdRequest; object: "user" }
-                                        }
-                                      | { type: "workspace"; workspace: true }
-                                  }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                      }
-                    | {
-                        type: "date"
-                        date: { start: string; end: string | null }
-                      }
-                    | { type: "page"; page: { id: IdRequest } }
-                    | { type: "database"; database: { id: IdRequest } }
+                  mention: mentionLookup
                   annotations: {
                     bold: boolean
                     italic: boolean
@@ -18977,52 +14027,7 @@ export type DeleteBlockResponse =
                 }
               | {
                   type: "mention"
-                  mention:
-                    | {
-                        type: "user"
-                        user:
-                          | { id: IdRequest; object: "user" }
-                          | {
-                              type: "person"
-                              person: { email: string }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                          | {
-                              type: "bot"
-                              bot:
-                                | Record<string, never>
-                                | {
-                                    owner:
-                                      | {
-                                          type: "user"
-                                          user:
-                                            | {
-                                                type: "person"
-                                                person: { email: string }
-                                                name: string | null
-                                                avatar_url: string | null
-                                                id: IdRequest
-                                                object: "user"
-                                              }
-                                            | { id: IdRequest; object: "user" }
-                                        }
-                                      | { type: "workspace"; workspace: true }
-                                  }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                      }
-                    | {
-                        type: "date"
-                        date: { start: string; end: string | null }
-                      }
-                    | { type: "page"; page: { id: IdRequest } }
-                    | { type: "database"; database: { id: IdRequest } }
+                  mention: mentionLookup
                   annotations: {
                     bold: boolean
                     italic: boolean
@@ -19070,52 +14075,7 @@ export type DeleteBlockResponse =
                 }
               | {
                   type: "mention"
-                  mention:
-                    | {
-                        type: "user"
-                        user:
-                          | { id: IdRequest; object: "user" }
-                          | {
-                              type: "person"
-                              person: { email: string }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                          | {
-                              type: "bot"
-                              bot:
-                                | Record<string, never>
-                                | {
-                                    owner:
-                                      | {
-                                          type: "user"
-                                          user:
-                                            | {
-                                                type: "person"
-                                                person: { email: string }
-                                                name: string | null
-                                                avatar_url: string | null
-                                                id: IdRequest
-                                                object: "user"
-                                              }
-                                            | { id: IdRequest; object: "user" }
-                                        }
-                                      | { type: "workspace"; workspace: true }
-                                  }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                      }
-                    | {
-                        type: "date"
-                        date: { start: string; end: string | null }
-                      }
-                    | { type: "page"; page: { id: IdRequest } }
-                    | { type: "database"; database: { id: IdRequest } }
+                  mention: mentionLookup
                   annotations: {
                     bold: boolean
                     italic: boolean
@@ -19173,52 +14133,7 @@ export type DeleteBlockResponse =
                 }
               | {
                   type: "mention"
-                  mention:
-                    | {
-                        type: "user"
-                        user:
-                          | { id: IdRequest; object: "user" }
-                          | {
-                              type: "person"
-                              person: { email: string }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                          | {
-                              type: "bot"
-                              bot:
-                                | Record<string, never>
-                                | {
-                                    owner:
-                                      | {
-                                          type: "user"
-                                          user:
-                                            | {
-                                                type: "person"
-                                                person: { email: string }
-                                                name: string | null
-                                                avatar_url: string | null
-                                                id: IdRequest
-                                                object: "user"
-                                              }
-                                            | { id: IdRequest; object: "user" }
-                                        }
-                                      | { type: "workspace"; workspace: true }
-                                  }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                      }
-                    | {
-                        type: "date"
-                        date: { start: string; end: string | null }
-                      }
-                    | { type: "page"; page: { id: IdRequest } }
-                    | { type: "database"; database: { id: IdRequest } }
+                  mention: mentionLookup
                   annotations: {
                     bold: boolean
                     italic: boolean
@@ -19266,52 +14181,7 @@ export type DeleteBlockResponse =
                 }
               | {
                   type: "mention"
-                  mention:
-                    | {
-                        type: "user"
-                        user:
-                          | { id: IdRequest; object: "user" }
-                          | {
-                              type: "person"
-                              person: { email: string }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                          | {
-                              type: "bot"
-                              bot:
-                                | Record<string, never>
-                                | {
-                                    owner:
-                                      | {
-                                          type: "user"
-                                          user:
-                                            | {
-                                                type: "person"
-                                                person: { email: string }
-                                                name: string | null
-                                                avatar_url: string | null
-                                                id: IdRequest
-                                                object: "user"
-                                              }
-                                            | { id: IdRequest; object: "user" }
-                                        }
-                                      | { type: "workspace"; workspace: true }
-                                  }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                      }
-                    | {
-                        type: "date"
-                        date: { start: string; end: string | null }
-                      }
-                    | { type: "page"; page: { id: IdRequest } }
-                    | { type: "database"; database: { id: IdRequest } }
+                  mention: mentionLookup
                   annotations: {
                     bold: boolean
                     italic: boolean
@@ -19488,55 +14358,7 @@ export type ListBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention:
-                      | {
-                          type: "user"
-                          user:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | Record<string, never>
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                      | {
-                          type: "date"
-                          date: { start: string; end: string | null }
-                        }
-                      | { type: "page"; page: { id: IdRequest } }
-                      | { type: "database"; database: { id: IdRequest } }
+                    mention: mentionLookup
                     annotations: {
                       bold: boolean
                       italic: boolean
@@ -19591,55 +14413,7 @@ export type ListBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention:
-                      | {
-                          type: "user"
-                          user:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | Record<string, never>
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                      | {
-                          type: "date"
-                          date: { start: string; end: string | null }
-                        }
-                      | { type: "page"; page: { id: IdRequest } }
-                      | { type: "database"; database: { id: IdRequest } }
+                    mention: mentionLookup
                     annotations: {
                       bold: boolean
                       italic: boolean
@@ -19694,55 +14468,7 @@ export type ListBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention:
-                      | {
-                          type: "user"
-                          user:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | Record<string, never>
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                      | {
-                          type: "date"
-                          date: { start: string; end: string | null }
-                        }
-                      | { type: "page"; page: { id: IdRequest } }
-                      | { type: "database"; database: { id: IdRequest } }
+                    mention: mentionLookup
                     annotations: {
                       bold: boolean
                       italic: boolean
@@ -19797,55 +14523,7 @@ export type ListBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention:
-                      | {
-                          type: "user"
-                          user:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | Record<string, never>
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                      | {
-                          type: "date"
-                          date: { start: string; end: string | null }
-                        }
-                      | { type: "page"; page: { id: IdRequest } }
-                      | { type: "database"; database: { id: IdRequest } }
+                    mention: mentionLookup
                     annotations: {
                       bold: boolean
                       italic: boolean
@@ -19900,55 +14578,7 @@ export type ListBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention:
-                      | {
-                          type: "user"
-                          user:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | Record<string, never>
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                      | {
-                          type: "date"
-                          date: { start: string; end: string | null }
-                        }
-                      | { type: "page"; page: { id: IdRequest } }
-                      | { type: "database"; database: { id: IdRequest } }
+                    mention: mentionLookup
                     annotations: {
                       bold: boolean
                       italic: boolean
@@ -20003,55 +14633,7 @@ export type ListBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention:
-                      | {
-                          type: "user"
-                          user:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | Record<string, never>
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                      | {
-                          type: "date"
-                          date: { start: string; end: string | null }
-                        }
-                      | { type: "page"; page: { id: IdRequest } }
-                      | { type: "database"; database: { id: IdRequest } }
+                    mention: mentionLookup
                     annotations: {
                       bold: boolean
                       italic: boolean
@@ -20106,55 +14688,7 @@ export type ListBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention:
-                      | {
-                          type: "user"
-                          user:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | Record<string, never>
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                      | {
-                          type: "date"
-                          date: { start: string; end: string | null }
-                        }
-                      | { type: "page"; page: { id: IdRequest } }
-                      | { type: "database"; database: { id: IdRequest } }
+                    mention: mentionLookup
                     annotations: {
                       bold: boolean
                       italic: boolean
@@ -20209,55 +14743,7 @@ export type ListBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention:
-                      | {
-                          type: "user"
-                          user:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | Record<string, never>
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                      | {
-                          type: "date"
-                          date: { start: string; end: string | null }
-                        }
-                      | { type: "page"; page: { id: IdRequest } }
-                      | { type: "database"; database: { id: IdRequest } }
+                    mention: mentionLookup
                     annotations: {
                       bold: boolean
                       italic: boolean
@@ -20313,55 +14799,7 @@ export type ListBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention:
-                      | {
-                          type: "user"
-                          user:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | Record<string, never>
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                      | {
-                          type: "date"
-                          date: { start: string; end: string | null }
-                        }
-                      | { type: "page"; page: { id: IdRequest } }
-                      | { type: "database"; database: { id: IdRequest } }
+                    mention: mentionLookup
                     annotations: {
                       bold: boolean
                       italic: boolean
@@ -20446,55 +14884,7 @@ export type ListBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention:
-                      | {
-                          type: "user"
-                          user:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | Record<string, never>
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                      | {
-                          type: "date"
-                          date: { start: string; end: string | null }
-                        }
-                      | { type: "page"; page: { id: IdRequest } }
-                      | { type: "database"; database: { id: IdRequest } }
+                    mention: mentionLookup
                     annotations: {
                       bold: boolean
                       italic: boolean
@@ -20550,55 +14940,7 @@ export type ListBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention:
-                      | {
-                          type: "user"
-                          user:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | Record<string, never>
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                      | {
-                          type: "date"
-                          date: { start: string; end: string | null }
-                        }
-                      | { type: "page"; page: { id: IdRequest } }
-                      | { type: "database"; database: { id: IdRequest } }
+                    mention: mentionLookup
                     annotations: {
                       bold: boolean
                       italic: boolean
@@ -20694,55 +15036,7 @@ export type ListBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention:
-                      | {
-                          type: "user"
-                          user:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | Record<string, never>
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                      | {
-                          type: "date"
-                          date: { start: string; end: string | null }
-                        }
-                      | { type: "page"; page: { id: IdRequest } }
-                      | { type: "database"; database: { id: IdRequest } }
+                    mention: mentionLookup
                     annotations: {
                       bold: boolean
                       italic: boolean
@@ -20798,55 +15092,7 @@ export type ListBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention:
-                      | {
-                          type: "user"
-                          user:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | Record<string, never>
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                      | {
-                          type: "date"
-                          date: { start: string; end: string | null }
-                        }
-                      | { type: "page"; page: { id: IdRequest } }
-                      | { type: "database"; database: { id: IdRequest } }
+                    mention: mentionLookup
                     annotations: {
                       bold: boolean
                       italic: boolean
@@ -20907,58 +15153,7 @@ export type ListBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention:
-                          | {
-                              type: "user"
-                              user:
-                                | { id: IdRequest; object: "user" }
-                                | {
-                                    type: "person"
-                                    person: { email: string }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                                | {
-                                    type: "bot"
-                                    bot:
-                                      | Record<string, never>
-                                      | {
-                                          owner:
-                                            | {
-                                                type: "user"
-                                                user:
-                                                  | {
-                                                      type: "person"
-                                                      person: { email: string }
-                                                      name: string | null
-                                                      avatar_url: string | null
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                                  | {
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                              }
-                                            | {
-                                                type: "workspace"
-                                                workspace: true
-                                              }
-                                        }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                            }
-                          | {
-                              type: "date"
-                              date: { start: string; end: string | null }
-                            }
-                          | { type: "page"; page: { id: IdRequest } }
-                          | { type: "database"; database: { id: IdRequest } }
+                        mention: mentionLookup
                         annotations: {
                           bold: boolean
                           italic: boolean
@@ -21009,58 +15204,7 @@ export type ListBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention:
-                          | {
-                              type: "user"
-                              user:
-                                | { id: IdRequest; object: "user" }
-                                | {
-                                    type: "person"
-                                    person: { email: string }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                                | {
-                                    type: "bot"
-                                    bot:
-                                      | Record<string, never>
-                                      | {
-                                          owner:
-                                            | {
-                                                type: "user"
-                                                user:
-                                                  | {
-                                                      type: "person"
-                                                      person: { email: string }
-                                                      name: string | null
-                                                      avatar_url: string | null
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                                  | {
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                              }
-                                            | {
-                                                type: "workspace"
-                                                workspace: true
-                                              }
-                                        }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                            }
-                          | {
-                              type: "date"
-                              date: { start: string; end: string | null }
-                            }
-                          | { type: "page"; page: { id: IdRequest } }
-                          | { type: "database"; database: { id: IdRequest } }
+                        mention: mentionLookup
                         annotations: {
                           bold: boolean
                           italic: boolean
@@ -21121,58 +15265,7 @@ export type ListBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention:
-                          | {
-                              type: "user"
-                              user:
-                                | { id: IdRequest; object: "user" }
-                                | {
-                                    type: "person"
-                                    person: { email: string }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                                | {
-                                    type: "bot"
-                                    bot:
-                                      | Record<string, never>
-                                      | {
-                                          owner:
-                                            | {
-                                                type: "user"
-                                                user:
-                                                  | {
-                                                      type: "person"
-                                                      person: { email: string }
-                                                      name: string | null
-                                                      avatar_url: string | null
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                                  | {
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                              }
-                                            | {
-                                                type: "workspace"
-                                                workspace: true
-                                              }
-                                        }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                            }
-                          | {
-                              type: "date"
-                              date: { start: string; end: string | null }
-                            }
-                          | { type: "page"; page: { id: IdRequest } }
-                          | { type: "database"; database: { id: IdRequest } }
+                        mention: mentionLookup
                         annotations: {
                           bold: boolean
                           italic: boolean
@@ -21223,58 +15316,7 @@ export type ListBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention:
-                          | {
-                              type: "user"
-                              user:
-                                | { id: IdRequest; object: "user" }
-                                | {
-                                    type: "person"
-                                    person: { email: string }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                                | {
-                                    type: "bot"
-                                    bot:
-                                      | Record<string, never>
-                                      | {
-                                          owner:
-                                            | {
-                                                type: "user"
-                                                user:
-                                                  | {
-                                                      type: "person"
-                                                      person: { email: string }
-                                                      name: string | null
-                                                      avatar_url: string | null
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                                  | {
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                              }
-                                            | {
-                                                type: "workspace"
-                                                workspace: true
-                                              }
-                                        }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                            }
-                          | {
-                              type: "date"
-                              date: { start: string; end: string | null }
-                            }
-                          | { type: "page"; page: { id: IdRequest } }
-                          | { type: "database"; database: { id: IdRequest } }
+                        mention: mentionLookup
                         annotations: {
                           bold: boolean
                           italic: boolean
@@ -21335,58 +15377,7 @@ export type ListBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention:
-                          | {
-                              type: "user"
-                              user:
-                                | { id: IdRequest; object: "user" }
-                                | {
-                                    type: "person"
-                                    person: { email: string }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                                | {
-                                    type: "bot"
-                                    bot:
-                                      | Record<string, never>
-                                      | {
-                                          owner:
-                                            | {
-                                                type: "user"
-                                                user:
-                                                  | {
-                                                      type: "person"
-                                                      person: { email: string }
-                                                      name: string | null
-                                                      avatar_url: string | null
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                                  | {
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                              }
-                                            | {
-                                                type: "workspace"
-                                                workspace: true
-                                              }
-                                        }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                            }
-                          | {
-                              type: "date"
-                              date: { start: string; end: string | null }
-                            }
-                          | { type: "page"; page: { id: IdRequest } }
-                          | { type: "database"; database: { id: IdRequest } }
+                        mention: mentionLookup
                         annotations: {
                           bold: boolean
                           italic: boolean
@@ -21437,58 +15428,7 @@ export type ListBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention:
-                          | {
-                              type: "user"
-                              user:
-                                | { id: IdRequest; object: "user" }
-                                | {
-                                    type: "person"
-                                    person: { email: string }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                                | {
-                                    type: "bot"
-                                    bot:
-                                      | Record<string, never>
-                                      | {
-                                          owner:
-                                            | {
-                                                type: "user"
-                                                user:
-                                                  | {
-                                                      type: "person"
-                                                      person: { email: string }
-                                                      name: string | null
-                                                      avatar_url: string | null
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                                  | {
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                              }
-                                            | {
-                                                type: "workspace"
-                                                workspace: true
-                                              }
-                                        }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                            }
-                          | {
-                              type: "date"
-                              date: { start: string; end: string | null }
-                            }
-                          | { type: "page"; page: { id: IdRequest } }
-                          | { type: "database"; database: { id: IdRequest } }
+                        mention: mentionLookup
                         annotations: {
                           bold: boolean
                           italic: boolean
@@ -21549,58 +15489,7 @@ export type ListBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention:
-                          | {
-                              type: "user"
-                              user:
-                                | { id: IdRequest; object: "user" }
-                                | {
-                                    type: "person"
-                                    person: { email: string }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                                | {
-                                    type: "bot"
-                                    bot:
-                                      | Record<string, never>
-                                      | {
-                                          owner:
-                                            | {
-                                                type: "user"
-                                                user:
-                                                  | {
-                                                      type: "person"
-                                                      person: { email: string }
-                                                      name: string | null
-                                                      avatar_url: string | null
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                                  | {
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                              }
-                                            | {
-                                                type: "workspace"
-                                                workspace: true
-                                              }
-                                        }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                            }
-                          | {
-                              type: "date"
-                              date: { start: string; end: string | null }
-                            }
-                          | { type: "page"; page: { id: IdRequest } }
-                          | { type: "database"; database: { id: IdRequest } }
+                        mention: mentionLookup
                         annotations: {
                           bold: boolean
                           italic: boolean
@@ -21651,58 +15540,7 @@ export type ListBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention:
-                          | {
-                              type: "user"
-                              user:
-                                | { id: IdRequest; object: "user" }
-                                | {
-                                    type: "person"
-                                    person: { email: string }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                                | {
-                                    type: "bot"
-                                    bot:
-                                      | Record<string, never>
-                                      | {
-                                          owner:
-                                            | {
-                                                type: "user"
-                                                user:
-                                                  | {
-                                                      type: "person"
-                                                      person: { email: string }
-                                                      name: string | null
-                                                      avatar_url: string | null
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                                  | {
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                              }
-                                            | {
-                                                type: "workspace"
-                                                workspace: true
-                                              }
-                                        }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                            }
-                          | {
-                              type: "date"
-                              date: { start: string; end: string | null }
-                            }
-                          | { type: "page"; page: { id: IdRequest } }
-                          | { type: "database"; database: { id: IdRequest } }
+                        mention: mentionLookup
                         annotations: {
                           bold: boolean
                           italic: boolean
@@ -21763,58 +15601,7 @@ export type ListBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention:
-                          | {
-                              type: "user"
-                              user:
-                                | { id: IdRequest; object: "user" }
-                                | {
-                                    type: "person"
-                                    person: { email: string }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                                | {
-                                    type: "bot"
-                                    bot:
-                                      | Record<string, never>
-                                      | {
-                                          owner:
-                                            | {
-                                                type: "user"
-                                                user:
-                                                  | {
-                                                      type: "person"
-                                                      person: { email: string }
-                                                      name: string | null
-                                                      avatar_url: string | null
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                                  | {
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                              }
-                                            | {
-                                                type: "workspace"
-                                                workspace: true
-                                              }
-                                        }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                            }
-                          | {
-                              type: "date"
-                              date: { start: string; end: string | null }
-                            }
-                          | { type: "page"; page: { id: IdRequest } }
-                          | { type: "database"; database: { id: IdRequest } }
+                        mention: mentionLookup
                         annotations: {
                           bold: boolean
                           italic: boolean
@@ -21865,58 +15652,7 @@ export type ListBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention:
-                          | {
-                              type: "user"
-                              user:
-                                | { id: IdRequest; object: "user" }
-                                | {
-                                    type: "person"
-                                    person: { email: string }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                                | {
-                                    type: "bot"
-                                    bot:
-                                      | Record<string, never>
-                                      | {
-                                          owner:
-                                            | {
-                                                type: "user"
-                                                user:
-                                                  | {
-                                                      type: "person"
-                                                      person: { email: string }
-                                                      name: string | null
-                                                      avatar_url: string | null
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                                  | {
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                              }
-                                            | {
-                                                type: "workspace"
-                                                workspace: true
-                                              }
-                                        }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                            }
-                          | {
-                              type: "date"
-                              date: { start: string; end: string | null }
-                            }
-                          | { type: "page"; page: { id: IdRequest } }
-                          | { type: "database"; database: { id: IdRequest } }
+                        mention: mentionLookup
                         annotations: {
                           bold: boolean
                           italic: boolean
@@ -21988,55 +15724,7 @@ export type ListBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention:
-                      | {
-                          type: "user"
-                          user:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | Record<string, never>
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                      | {
-                          type: "date"
-                          date: { start: string; end: string | null }
-                        }
-                      | { type: "page"; page: { id: IdRequest } }
-                      | { type: "database"; database: { id: IdRequest } }
+                    mention: mentionLookup
                     annotations: {
                       bold: boolean
                       italic: boolean
@@ -22091,55 +15779,7 @@ export type ListBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention:
-                      | {
-                          type: "user"
-                          user:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | Record<string, never>
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                      | {
-                          type: "date"
-                          date: { start: string; end: string | null }
-                        }
-                      | { type: "page"; page: { id: IdRequest } }
-                      | { type: "database"; database: { id: IdRequest } }
+                    mention: mentionLookup
                     annotations: {
                       bold: boolean
                       italic: boolean
@@ -22194,55 +15834,7 @@ export type ListBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention:
-                      | {
-                          type: "user"
-                          user:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | Record<string, never>
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                      | {
-                          type: "date"
-                          date: { start: string; end: string | null }
-                        }
-                      | { type: "page"; page: { id: IdRequest } }
-                      | { type: "database"; database: { id: IdRequest } }
+                    mention: mentionLookup
                     annotations: {
                       bold: boolean
                       italic: boolean
@@ -22297,55 +15889,7 @@ export type ListBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention:
-                      | {
-                          type: "user"
-                          user:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | Record<string, never>
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                      | {
-                          type: "date"
-                          date: { start: string; end: string | null }
-                        }
-                      | { type: "page"; page: { id: IdRequest } }
-                      | { type: "database"; database: { id: IdRequest } }
+                    mention: mentionLookup
                     annotations: {
                       bold: boolean
                       italic: boolean
@@ -22400,55 +15944,7 @@ export type ListBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention:
-                      | {
-                          type: "user"
-                          user:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | Record<string, never>
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                      | {
-                          type: "date"
-                          date: { start: string; end: string | null }
-                        }
-                      | { type: "page"; page: { id: IdRequest } }
-                      | { type: "database"; database: { id: IdRequest } }
+                    mention: mentionLookup
                     annotations: {
                       bold: boolean
                       italic: boolean
@@ -22503,55 +15999,7 @@ export type ListBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention:
-                      | {
-                          type: "user"
-                          user:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | Record<string, never>
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                      | {
-                          type: "date"
-                          date: { start: string; end: string | null }
-                        }
-                      | { type: "page"; page: { id: IdRequest } }
-                      | { type: "database"; database: { id: IdRequest } }
+                    mention: mentionLookup
                     annotations: {
                       bold: boolean
                       italic: boolean
@@ -22606,55 +16054,7 @@ export type ListBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention:
-                      | {
-                          type: "user"
-                          user:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | Record<string, never>
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                      | {
-                          type: "date"
-                          date: { start: string; end: string | null }
-                        }
-                      | { type: "page"; page: { id: IdRequest } }
-                      | { type: "database"; database: { id: IdRequest } }
+                    mention: mentionLookup
                     annotations: {
                       bold: boolean
                       italic: boolean
@@ -22709,55 +16109,7 @@ export type ListBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention:
-                      | {
-                          type: "user"
-                          user:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | Record<string, never>
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                      | {
-                          type: "date"
-                          date: { start: string; end: string | null }
-                        }
-                      | { type: "page"; page: { id: IdRequest } }
-                      | { type: "database"; database: { id: IdRequest } }
+                    mention: mentionLookup
                     annotations: {
                       bold: boolean
                       italic: boolean
@@ -22813,55 +16165,7 @@ export type ListBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention:
-                      | {
-                          type: "user"
-                          user:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | Record<string, never>
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                      | {
-                          type: "date"
-                          date: { start: string; end: string | null }
-                        }
-                      | { type: "page"; page: { id: IdRequest } }
-                      | { type: "database"; database: { id: IdRequest } }
+                    mention: mentionLookup
                     annotations: {
                       bold: boolean
                       italic: boolean
@@ -22946,55 +16250,7 @@ export type ListBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention:
-                      | {
-                          type: "user"
-                          user:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | Record<string, never>
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                      | {
-                          type: "date"
-                          date: { start: string; end: string | null }
-                        }
-                      | { type: "page"; page: { id: IdRequest } }
-                      | { type: "database"; database: { id: IdRequest } }
+                    mention: mentionLookup
                     annotations: {
                       bold: boolean
                       italic: boolean
@@ -23050,55 +16306,7 @@ export type ListBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention:
-                      | {
-                          type: "user"
-                          user:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | Record<string, never>
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                      | {
-                          type: "date"
-                          date: { start: string; end: string | null }
-                        }
-                      | { type: "page"; page: { id: IdRequest } }
-                      | { type: "database"; database: { id: IdRequest } }
+                    mention: mentionLookup
                     annotations: {
                       bold: boolean
                       italic: boolean
@@ -23194,55 +16402,7 @@ export type ListBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention:
-                      | {
-                          type: "user"
-                          user:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | Record<string, never>
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                      | {
-                          type: "date"
-                          date: { start: string; end: string | null }
-                        }
-                      | { type: "page"; page: { id: IdRequest } }
-                      | { type: "database"; database: { id: IdRequest } }
+                    mention: mentionLookup
                     annotations: {
                       bold: boolean
                       italic: boolean
@@ -23298,55 +16458,7 @@ export type ListBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention:
-                      | {
-                          type: "user"
-                          user:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | Record<string, never>
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                      | {
-                          type: "date"
-                          date: { start: string; end: string | null }
-                        }
-                      | { type: "page"; page: { id: IdRequest } }
-                      | { type: "database"; database: { id: IdRequest } }
+                    mention: mentionLookup
                     annotations: {
                       bold: boolean
                       italic: boolean
@@ -23407,58 +16519,7 @@ export type ListBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention:
-                          | {
-                              type: "user"
-                              user:
-                                | { id: IdRequest; object: "user" }
-                                | {
-                                    type: "person"
-                                    person: { email: string }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                                | {
-                                    type: "bot"
-                                    bot:
-                                      | Record<string, never>
-                                      | {
-                                          owner:
-                                            | {
-                                                type: "user"
-                                                user:
-                                                  | {
-                                                      type: "person"
-                                                      person: { email: string }
-                                                      name: string | null
-                                                      avatar_url: string | null
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                                  | {
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                              }
-                                            | {
-                                                type: "workspace"
-                                                workspace: true
-                                              }
-                                        }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                            }
-                          | {
-                              type: "date"
-                              date: { start: string; end: string | null }
-                            }
-                          | { type: "page"; page: { id: IdRequest } }
-                          | { type: "database"; database: { id: IdRequest } }
+                        mention: mentionLookup
                         annotations: {
                           bold: boolean
                           italic: boolean
@@ -23509,58 +16570,7 @@ export type ListBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention:
-                          | {
-                              type: "user"
-                              user:
-                                | { id: IdRequest; object: "user" }
-                                | {
-                                    type: "person"
-                                    person: { email: string }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                                | {
-                                    type: "bot"
-                                    bot:
-                                      | Record<string, never>
-                                      | {
-                                          owner:
-                                            | {
-                                                type: "user"
-                                                user:
-                                                  | {
-                                                      type: "person"
-                                                      person: { email: string }
-                                                      name: string | null
-                                                      avatar_url: string | null
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                                  | {
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                              }
-                                            | {
-                                                type: "workspace"
-                                                workspace: true
-                                              }
-                                        }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                            }
-                          | {
-                              type: "date"
-                              date: { start: string; end: string | null }
-                            }
-                          | { type: "page"; page: { id: IdRequest } }
-                          | { type: "database"; database: { id: IdRequest } }
+                        mention: mentionLookup
                         annotations: {
                           bold: boolean
                           italic: boolean
@@ -23621,58 +16631,7 @@ export type ListBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention:
-                          | {
-                              type: "user"
-                              user:
-                                | { id: IdRequest; object: "user" }
-                                | {
-                                    type: "person"
-                                    person: { email: string }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                                | {
-                                    type: "bot"
-                                    bot:
-                                      | Record<string, never>
-                                      | {
-                                          owner:
-                                            | {
-                                                type: "user"
-                                                user:
-                                                  | {
-                                                      type: "person"
-                                                      person: { email: string }
-                                                      name: string | null
-                                                      avatar_url: string | null
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                                  | {
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                              }
-                                            | {
-                                                type: "workspace"
-                                                workspace: true
-                                              }
-                                        }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                            }
-                          | {
-                              type: "date"
-                              date: { start: string; end: string | null }
-                            }
-                          | { type: "page"; page: { id: IdRequest } }
-                          | { type: "database"; database: { id: IdRequest } }
+                        mention: mentionLookup
                         annotations: {
                           bold: boolean
                           italic: boolean
@@ -23723,58 +16682,7 @@ export type ListBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention:
-                          | {
-                              type: "user"
-                              user:
-                                | { id: IdRequest; object: "user" }
-                                | {
-                                    type: "person"
-                                    person: { email: string }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                                | {
-                                    type: "bot"
-                                    bot:
-                                      | Record<string, never>
-                                      | {
-                                          owner:
-                                            | {
-                                                type: "user"
-                                                user:
-                                                  | {
-                                                      type: "person"
-                                                      person: { email: string }
-                                                      name: string | null
-                                                      avatar_url: string | null
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                                  | {
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                              }
-                                            | {
-                                                type: "workspace"
-                                                workspace: true
-                                              }
-                                        }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                            }
-                          | {
-                              type: "date"
-                              date: { start: string; end: string | null }
-                            }
-                          | { type: "page"; page: { id: IdRequest } }
-                          | { type: "database"; database: { id: IdRequest } }
+                        mention: mentionLookup
                         annotations: {
                           bold: boolean
                           italic: boolean
@@ -23835,58 +16743,7 @@ export type ListBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention:
-                          | {
-                              type: "user"
-                              user:
-                                | { id: IdRequest; object: "user" }
-                                | {
-                                    type: "person"
-                                    person: { email: string }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                                | {
-                                    type: "bot"
-                                    bot:
-                                      | Record<string, never>
-                                      | {
-                                          owner:
-                                            | {
-                                                type: "user"
-                                                user:
-                                                  | {
-                                                      type: "person"
-                                                      person: { email: string }
-                                                      name: string | null
-                                                      avatar_url: string | null
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                                  | {
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                              }
-                                            | {
-                                                type: "workspace"
-                                                workspace: true
-                                              }
-                                        }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                            }
-                          | {
-                              type: "date"
-                              date: { start: string; end: string | null }
-                            }
-                          | { type: "page"; page: { id: IdRequest } }
-                          | { type: "database"; database: { id: IdRequest } }
+                        mention: mentionLookup
                         annotations: {
                           bold: boolean
                           italic: boolean
@@ -23937,58 +16794,7 @@ export type ListBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention:
-                          | {
-                              type: "user"
-                              user:
-                                | { id: IdRequest; object: "user" }
-                                | {
-                                    type: "person"
-                                    person: { email: string }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                                | {
-                                    type: "bot"
-                                    bot:
-                                      | Record<string, never>
-                                      | {
-                                          owner:
-                                            | {
-                                                type: "user"
-                                                user:
-                                                  | {
-                                                      type: "person"
-                                                      person: { email: string }
-                                                      name: string | null
-                                                      avatar_url: string | null
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                                  | {
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                              }
-                                            | {
-                                                type: "workspace"
-                                                workspace: true
-                                              }
-                                        }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                            }
-                          | {
-                              type: "date"
-                              date: { start: string; end: string | null }
-                            }
-                          | { type: "page"; page: { id: IdRequest } }
-                          | { type: "database"; database: { id: IdRequest } }
+                        mention: mentionLookup
                         annotations: {
                           bold: boolean
                           italic: boolean
@@ -24049,58 +16855,7 @@ export type ListBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention:
-                          | {
-                              type: "user"
-                              user:
-                                | { id: IdRequest; object: "user" }
-                                | {
-                                    type: "person"
-                                    person: { email: string }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                                | {
-                                    type: "bot"
-                                    bot:
-                                      | Record<string, never>
-                                      | {
-                                          owner:
-                                            | {
-                                                type: "user"
-                                                user:
-                                                  | {
-                                                      type: "person"
-                                                      person: { email: string }
-                                                      name: string | null
-                                                      avatar_url: string | null
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                                  | {
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                              }
-                                            | {
-                                                type: "workspace"
-                                                workspace: true
-                                              }
-                                        }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                            }
-                          | {
-                              type: "date"
-                              date: { start: string; end: string | null }
-                            }
-                          | { type: "page"; page: { id: IdRequest } }
-                          | { type: "database"; database: { id: IdRequest } }
+                        mention: mentionLookup
                         annotations: {
                           bold: boolean
                           italic: boolean
@@ -24151,58 +16906,7 @@ export type ListBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention:
-                          | {
-                              type: "user"
-                              user:
-                                | { id: IdRequest; object: "user" }
-                                | {
-                                    type: "person"
-                                    person: { email: string }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                                | {
-                                    type: "bot"
-                                    bot:
-                                      | Record<string, never>
-                                      | {
-                                          owner:
-                                            | {
-                                                type: "user"
-                                                user:
-                                                  | {
-                                                      type: "person"
-                                                      person: { email: string }
-                                                      name: string | null
-                                                      avatar_url: string | null
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                                  | {
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                              }
-                                            | {
-                                                type: "workspace"
-                                                workspace: true
-                                              }
-                                        }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                            }
-                          | {
-                              type: "date"
-                              date: { start: string; end: string | null }
-                            }
-                          | { type: "page"; page: { id: IdRequest } }
-                          | { type: "database"; database: { id: IdRequest } }
+                        mention: mentionLookup
                         annotations: {
                           bold: boolean
                           italic: boolean
@@ -24263,58 +16967,7 @@ export type ListBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention:
-                          | {
-                              type: "user"
-                              user:
-                                | { id: IdRequest; object: "user" }
-                                | {
-                                    type: "person"
-                                    person: { email: string }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                                | {
-                                    type: "bot"
-                                    bot:
-                                      | Record<string, never>
-                                      | {
-                                          owner:
-                                            | {
-                                                type: "user"
-                                                user:
-                                                  | {
-                                                      type: "person"
-                                                      person: { email: string }
-                                                      name: string | null
-                                                      avatar_url: string | null
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                                  | {
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                              }
-                                            | {
-                                                type: "workspace"
-                                                workspace: true
-                                              }
-                                        }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                            }
-                          | {
-                              type: "date"
-                              date: { start: string; end: string | null }
-                            }
-                          | { type: "page"; page: { id: IdRequest } }
-                          | { type: "database"; database: { id: IdRequest } }
+                        mention: mentionLookup
                         annotations: {
                           bold: boolean
                           italic: boolean
@@ -24365,58 +17018,7 @@ export type ListBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention:
-                          | {
-                              type: "user"
-                              user:
-                                | { id: IdRequest; object: "user" }
-                                | {
-                                    type: "person"
-                                    person: { email: string }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                                | {
-                                    type: "bot"
-                                    bot:
-                                      | Record<string, never>
-                                      | {
-                                          owner:
-                                            | {
-                                                type: "user"
-                                                user:
-                                                  | {
-                                                      type: "person"
-                                                      person: { email: string }
-                                                      name: string | null
-                                                      avatar_url: string | null
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                                  | {
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                              }
-                                            | {
-                                                type: "workspace"
-                                                workspace: true
-                                              }
-                                        }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                            }
-                          | {
-                              type: "date"
-                              date: { start: string; end: string | null }
-                            }
-                          | { type: "page"; page: { id: IdRequest } }
-                          | { type: "database"; database: { id: IdRequest } }
+                        mention: mentionLookup
                         annotations: {
                           bold: boolean
                           italic: boolean
@@ -24595,55 +17197,7 @@ export type AppendBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention:
-                      | {
-                          type: "user"
-                          user:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | Record<string, never>
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                      | {
-                          type: "date"
-                          date: { start: string; end: string | null }
-                        }
-                      | { type: "page"; page: { id: IdRequest } }
-                      | { type: "database"; database: { id: IdRequest } }
+                    mention: mentionLookup
                     annotations: {
                       bold: boolean
                       italic: boolean
@@ -24698,55 +17252,7 @@ export type AppendBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention:
-                      | {
-                          type: "user"
-                          user:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | Record<string, never>
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                      | {
-                          type: "date"
-                          date: { start: string; end: string | null }
-                        }
-                      | { type: "page"; page: { id: IdRequest } }
-                      | { type: "database"; database: { id: IdRequest } }
+                    mention: mentionLookup
                     annotations: {
                       bold: boolean
                       italic: boolean
@@ -24801,55 +17307,7 @@ export type AppendBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention:
-                      | {
-                          type: "user"
-                          user:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | Record<string, never>
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                      | {
-                          type: "date"
-                          date: { start: string; end: string | null }
-                        }
-                      | { type: "page"; page: { id: IdRequest } }
-                      | { type: "database"; database: { id: IdRequest } }
+                    mention: mentionLookup
                     annotations: {
                       bold: boolean
                       italic: boolean
@@ -24904,55 +17362,7 @@ export type AppendBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention:
-                      | {
-                          type: "user"
-                          user:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | Record<string, never>
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                      | {
-                          type: "date"
-                          date: { start: string; end: string | null }
-                        }
-                      | { type: "page"; page: { id: IdRequest } }
-                      | { type: "database"; database: { id: IdRequest } }
+                    mention: mentionLookup
                     annotations: {
                       bold: boolean
                       italic: boolean
@@ -25007,55 +17417,7 @@ export type AppendBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention:
-                      | {
-                          type: "user"
-                          user:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | Record<string, never>
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                      | {
-                          type: "date"
-                          date: { start: string; end: string | null }
-                        }
-                      | { type: "page"; page: { id: IdRequest } }
-                      | { type: "database"; database: { id: IdRequest } }
+                    mention: mentionLookup
                     annotations: {
                       bold: boolean
                       italic: boolean
@@ -25110,55 +17472,7 @@ export type AppendBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention:
-                      | {
-                          type: "user"
-                          user:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | Record<string, never>
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                      | {
-                          type: "date"
-                          date: { start: string; end: string | null }
-                        }
-                      | { type: "page"; page: { id: IdRequest } }
-                      | { type: "database"; database: { id: IdRequest } }
+                    mention: mentionLookup
                     annotations: {
                       bold: boolean
                       italic: boolean
@@ -25213,55 +17527,7 @@ export type AppendBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention:
-                      | {
-                          type: "user"
-                          user:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | Record<string, never>
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                      | {
-                          type: "date"
-                          date: { start: string; end: string | null }
-                        }
-                      | { type: "page"; page: { id: IdRequest } }
-                      | { type: "database"; database: { id: IdRequest } }
+                    mention: mentionLookup
                     annotations: {
                       bold: boolean
                       italic: boolean
@@ -25316,55 +17582,7 @@ export type AppendBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention:
-                      | {
-                          type: "user"
-                          user:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | Record<string, never>
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                      | {
-                          type: "date"
-                          date: { start: string; end: string | null }
-                        }
-                      | { type: "page"; page: { id: IdRequest } }
-                      | { type: "database"; database: { id: IdRequest } }
+                    mention: mentionLookup
                     annotations: {
                       bold: boolean
                       italic: boolean
@@ -25420,55 +17638,7 @@ export type AppendBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention:
-                      | {
-                          type: "user"
-                          user:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | Record<string, never>
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                      | {
-                          type: "date"
-                          date: { start: string; end: string | null }
-                        }
-                      | { type: "page"; page: { id: IdRequest } }
-                      | { type: "database"; database: { id: IdRequest } }
+                    mention: mentionLookup
                     annotations: {
                       bold: boolean
                       italic: boolean
@@ -25553,55 +17723,7 @@ export type AppendBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention:
-                      | {
-                          type: "user"
-                          user:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | Record<string, never>
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                      | {
-                          type: "date"
-                          date: { start: string; end: string | null }
-                        }
-                      | { type: "page"; page: { id: IdRequest } }
-                      | { type: "database"; database: { id: IdRequest } }
+                    mention: mentionLookup
                     annotations: {
                       bold: boolean
                       italic: boolean
@@ -25657,55 +17779,7 @@ export type AppendBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention:
-                      | {
-                          type: "user"
-                          user:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | Record<string, never>
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                      | {
-                          type: "date"
-                          date: { start: string; end: string | null }
-                        }
-                      | { type: "page"; page: { id: IdRequest } }
-                      | { type: "database"; database: { id: IdRequest } }
+                    mention: mentionLookup
                     annotations: {
                       bold: boolean
                       italic: boolean
@@ -25801,55 +17875,7 @@ export type AppendBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention:
-                      | {
-                          type: "user"
-                          user:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | Record<string, never>
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                      | {
-                          type: "date"
-                          date: { start: string; end: string | null }
-                        }
-                      | { type: "page"; page: { id: IdRequest } }
-                      | { type: "database"; database: { id: IdRequest } }
+                    mention: mentionLookup
                     annotations: {
                       bold: boolean
                       italic: boolean
@@ -25905,55 +17931,7 @@ export type AppendBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention:
-                      | {
-                          type: "user"
-                          user:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | Record<string, never>
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                      | {
-                          type: "date"
-                          date: { start: string; end: string | null }
-                        }
-                      | { type: "page"; page: { id: IdRequest } }
-                      | { type: "database"; database: { id: IdRequest } }
+                    mention: mentionLookup
                     annotations: {
                       bold: boolean
                       italic: boolean
@@ -26014,58 +17992,7 @@ export type AppendBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention:
-                          | {
-                              type: "user"
-                              user:
-                                | { id: IdRequest; object: "user" }
-                                | {
-                                    type: "person"
-                                    person: { email: string }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                                | {
-                                    type: "bot"
-                                    bot:
-                                      | Record<string, never>
-                                      | {
-                                          owner:
-                                            | {
-                                                type: "user"
-                                                user:
-                                                  | {
-                                                      type: "person"
-                                                      person: { email: string }
-                                                      name: string | null
-                                                      avatar_url: string | null
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                                  | {
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                              }
-                                            | {
-                                                type: "workspace"
-                                                workspace: true
-                                              }
-                                        }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                            }
-                          | {
-                              type: "date"
-                              date: { start: string; end: string | null }
-                            }
-                          | { type: "page"; page: { id: IdRequest } }
-                          | { type: "database"; database: { id: IdRequest } }
+                        mention: mentionLookup
                         annotations: {
                           bold: boolean
                           italic: boolean
@@ -26116,58 +18043,7 @@ export type AppendBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention:
-                          | {
-                              type: "user"
-                              user:
-                                | { id: IdRequest; object: "user" }
-                                | {
-                                    type: "person"
-                                    person: { email: string }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                                | {
-                                    type: "bot"
-                                    bot:
-                                      | Record<string, never>
-                                      | {
-                                          owner:
-                                            | {
-                                                type: "user"
-                                                user:
-                                                  | {
-                                                      type: "person"
-                                                      person: { email: string }
-                                                      name: string | null
-                                                      avatar_url: string | null
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                                  | {
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                              }
-                                            | {
-                                                type: "workspace"
-                                                workspace: true
-                                              }
-                                        }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                            }
-                          | {
-                              type: "date"
-                              date: { start: string; end: string | null }
-                            }
-                          | { type: "page"; page: { id: IdRequest } }
-                          | { type: "database"; database: { id: IdRequest } }
+                        mention: mentionLookup
                         annotations: {
                           bold: boolean
                           italic: boolean
@@ -26228,58 +18104,7 @@ export type AppendBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention:
-                          | {
-                              type: "user"
-                              user:
-                                | { id: IdRequest; object: "user" }
-                                | {
-                                    type: "person"
-                                    person: { email: string }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                                | {
-                                    type: "bot"
-                                    bot:
-                                      | Record<string, never>
-                                      | {
-                                          owner:
-                                            | {
-                                                type: "user"
-                                                user:
-                                                  | {
-                                                      type: "person"
-                                                      person: { email: string }
-                                                      name: string | null
-                                                      avatar_url: string | null
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                                  | {
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                              }
-                                            | {
-                                                type: "workspace"
-                                                workspace: true
-                                              }
-                                        }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                            }
-                          | {
-                              type: "date"
-                              date: { start: string; end: string | null }
-                            }
-                          | { type: "page"; page: { id: IdRequest } }
-                          | { type: "database"; database: { id: IdRequest } }
+                        mention: mentionLookup
                         annotations: {
                           bold: boolean
                           italic: boolean
@@ -26330,58 +18155,7 @@ export type AppendBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention:
-                          | {
-                              type: "user"
-                              user:
-                                | { id: IdRequest; object: "user" }
-                                | {
-                                    type: "person"
-                                    person: { email: string }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                                | {
-                                    type: "bot"
-                                    bot:
-                                      | Record<string, never>
-                                      | {
-                                          owner:
-                                            | {
-                                                type: "user"
-                                                user:
-                                                  | {
-                                                      type: "person"
-                                                      person: { email: string }
-                                                      name: string | null
-                                                      avatar_url: string | null
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                                  | {
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                              }
-                                            | {
-                                                type: "workspace"
-                                                workspace: true
-                                              }
-                                        }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                            }
-                          | {
-                              type: "date"
-                              date: { start: string; end: string | null }
-                            }
-                          | { type: "page"; page: { id: IdRequest } }
-                          | { type: "database"; database: { id: IdRequest } }
+                        mention: mentionLookup
                         annotations: {
                           bold: boolean
                           italic: boolean
@@ -26442,58 +18216,7 @@ export type AppendBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention:
-                          | {
-                              type: "user"
-                              user:
-                                | { id: IdRequest; object: "user" }
-                                | {
-                                    type: "person"
-                                    person: { email: string }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                                | {
-                                    type: "bot"
-                                    bot:
-                                      | Record<string, never>
-                                      | {
-                                          owner:
-                                            | {
-                                                type: "user"
-                                                user:
-                                                  | {
-                                                      type: "person"
-                                                      person: { email: string }
-                                                      name: string | null
-                                                      avatar_url: string | null
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                                  | {
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                              }
-                                            | {
-                                                type: "workspace"
-                                                workspace: true
-                                              }
-                                        }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                            }
-                          | {
-                              type: "date"
-                              date: { start: string; end: string | null }
-                            }
-                          | { type: "page"; page: { id: IdRequest } }
-                          | { type: "database"; database: { id: IdRequest } }
+                        mention: mentionLookup
                         annotations: {
                           bold: boolean
                           italic: boolean
@@ -26544,58 +18267,7 @@ export type AppendBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention:
-                          | {
-                              type: "user"
-                              user:
-                                | { id: IdRequest; object: "user" }
-                                | {
-                                    type: "person"
-                                    person: { email: string }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                                | {
-                                    type: "bot"
-                                    bot:
-                                      | Record<string, never>
-                                      | {
-                                          owner:
-                                            | {
-                                                type: "user"
-                                                user:
-                                                  | {
-                                                      type: "person"
-                                                      person: { email: string }
-                                                      name: string | null
-                                                      avatar_url: string | null
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                                  | {
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                              }
-                                            | {
-                                                type: "workspace"
-                                                workspace: true
-                                              }
-                                        }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                            }
-                          | {
-                              type: "date"
-                              date: { start: string; end: string | null }
-                            }
-                          | { type: "page"; page: { id: IdRequest } }
-                          | { type: "database"; database: { id: IdRequest } }
+                        mention: mentionLookup
                         annotations: {
                           bold: boolean
                           italic: boolean
@@ -26656,58 +18328,7 @@ export type AppendBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention:
-                          | {
-                              type: "user"
-                              user:
-                                | { id: IdRequest; object: "user" }
-                                | {
-                                    type: "person"
-                                    person: { email: string }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                                | {
-                                    type: "bot"
-                                    bot:
-                                      | Record<string, never>
-                                      | {
-                                          owner:
-                                            | {
-                                                type: "user"
-                                                user:
-                                                  | {
-                                                      type: "person"
-                                                      person: { email: string }
-                                                      name: string | null
-                                                      avatar_url: string | null
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                                  | {
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                              }
-                                            | {
-                                                type: "workspace"
-                                                workspace: true
-                                              }
-                                        }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                            }
-                          | {
-                              type: "date"
-                              date: { start: string; end: string | null }
-                            }
-                          | { type: "page"; page: { id: IdRequest } }
-                          | { type: "database"; database: { id: IdRequest } }
+                        mention: mentionLookup
                         annotations: {
                           bold: boolean
                           italic: boolean
@@ -26758,58 +18379,7 @@ export type AppendBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention:
-                          | {
-                              type: "user"
-                              user:
-                                | { id: IdRequest; object: "user" }
-                                | {
-                                    type: "person"
-                                    person: { email: string }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                                | {
-                                    type: "bot"
-                                    bot:
-                                      | Record<string, never>
-                                      | {
-                                          owner:
-                                            | {
-                                                type: "user"
-                                                user:
-                                                  | {
-                                                      type: "person"
-                                                      person: { email: string }
-                                                      name: string | null
-                                                      avatar_url: string | null
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                                  | {
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                              }
-                                            | {
-                                                type: "workspace"
-                                                workspace: true
-                                              }
-                                        }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                            }
-                          | {
-                              type: "date"
-                              date: { start: string; end: string | null }
-                            }
-                          | { type: "page"; page: { id: IdRequest } }
-                          | { type: "database"; database: { id: IdRequest } }
+                        mention: mentionLookup
                         annotations: {
                           bold: boolean
                           italic: boolean
@@ -26870,58 +18440,7 @@ export type AppendBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention:
-                          | {
-                              type: "user"
-                              user:
-                                | { id: IdRequest; object: "user" }
-                                | {
-                                    type: "person"
-                                    person: { email: string }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                                | {
-                                    type: "bot"
-                                    bot:
-                                      | Record<string, never>
-                                      | {
-                                          owner:
-                                            | {
-                                                type: "user"
-                                                user:
-                                                  | {
-                                                      type: "person"
-                                                      person: { email: string }
-                                                      name: string | null
-                                                      avatar_url: string | null
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                                  | {
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                              }
-                                            | {
-                                                type: "workspace"
-                                                workspace: true
-                                              }
-                                        }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                            }
-                          | {
-                              type: "date"
-                              date: { start: string; end: string | null }
-                            }
-                          | { type: "page"; page: { id: IdRequest } }
-                          | { type: "database"; database: { id: IdRequest } }
+                        mention: mentionLookup
                         annotations: {
                           bold: boolean
                           italic: boolean
@@ -26972,58 +18491,7 @@ export type AppendBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention:
-                          | {
-                              type: "user"
-                              user:
-                                | { id: IdRequest; object: "user" }
-                                | {
-                                    type: "person"
-                                    person: { email: string }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                                | {
-                                    type: "bot"
-                                    bot:
-                                      | Record<string, never>
-                                      | {
-                                          owner:
-                                            | {
-                                                type: "user"
-                                                user:
-                                                  | {
-                                                      type: "person"
-                                                      person: { email: string }
-                                                      name: string | null
-                                                      avatar_url: string | null
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                                  | {
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                              }
-                                            | {
-                                                type: "workspace"
-                                                workspace: true
-                                              }
-                                        }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                            }
-                          | {
-                              type: "date"
-                              date: { start: string; end: string | null }
-                            }
-                          | { type: "page"; page: { id: IdRequest } }
-                          | { type: "database"; database: { id: IdRequest } }
+                        mention: mentionLookup
                         annotations: {
                           bold: boolean
                           italic: boolean
@@ -27095,55 +18563,7 @@ export type AppendBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention:
-                      | {
-                          type: "user"
-                          user:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | Record<string, never>
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                      | {
-                          type: "date"
-                          date: { start: string; end: string | null }
-                        }
-                      | { type: "page"; page: { id: IdRequest } }
-                      | { type: "database"; database: { id: IdRequest } }
+                    mention: mentionLookup
                     annotations: {
                       bold: boolean
                       italic: boolean
@@ -27198,55 +18618,7 @@ export type AppendBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention:
-                      | {
-                          type: "user"
-                          user:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | Record<string, never>
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                      | {
-                          type: "date"
-                          date: { start: string; end: string | null }
-                        }
-                      | { type: "page"; page: { id: IdRequest } }
-                      | { type: "database"; database: { id: IdRequest } }
+                    mention: mentionLookup
                     annotations: {
                       bold: boolean
                       italic: boolean
@@ -27301,55 +18673,7 @@ export type AppendBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention:
-                      | {
-                          type: "user"
-                          user:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | Record<string, never>
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                      | {
-                          type: "date"
-                          date: { start: string; end: string | null }
-                        }
-                      | { type: "page"; page: { id: IdRequest } }
-                      | { type: "database"; database: { id: IdRequest } }
+                    mention: mentionLookup
                     annotations: {
                       bold: boolean
                       italic: boolean
@@ -27404,55 +18728,7 @@ export type AppendBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention:
-                      | {
-                          type: "user"
-                          user:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | Record<string, never>
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                      | {
-                          type: "date"
-                          date: { start: string; end: string | null }
-                        }
-                      | { type: "page"; page: { id: IdRequest } }
-                      | { type: "database"; database: { id: IdRequest } }
+                    mention: mentionLookup
                     annotations: {
                       bold: boolean
                       italic: boolean
@@ -27507,55 +18783,7 @@ export type AppendBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention:
-                      | {
-                          type: "user"
-                          user:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | Record<string, never>
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                      | {
-                          type: "date"
-                          date: { start: string; end: string | null }
-                        }
-                      | { type: "page"; page: { id: IdRequest } }
-                      | { type: "database"; database: { id: IdRequest } }
+                    mention: mentionLookup
                     annotations: {
                       bold: boolean
                       italic: boolean
@@ -27610,55 +18838,7 @@ export type AppendBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention:
-                      | {
-                          type: "user"
-                          user:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | Record<string, never>
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                      | {
-                          type: "date"
-                          date: { start: string; end: string | null }
-                        }
-                      | { type: "page"; page: { id: IdRequest } }
-                      | { type: "database"; database: { id: IdRequest } }
+                    mention: mentionLookup
                     annotations: {
                       bold: boolean
                       italic: boolean
@@ -27713,55 +18893,7 @@ export type AppendBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention:
-                      | {
-                          type: "user"
-                          user:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | Record<string, never>
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                      | {
-                          type: "date"
-                          date: { start: string; end: string | null }
-                        }
-                      | { type: "page"; page: { id: IdRequest } }
-                      | { type: "database"; database: { id: IdRequest } }
+                    mention: mentionLookup
                     annotations: {
                       bold: boolean
                       italic: boolean
@@ -27816,55 +18948,7 @@ export type AppendBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention:
-                      | {
-                          type: "user"
-                          user:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | Record<string, never>
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                      | {
-                          type: "date"
-                          date: { start: string; end: string | null }
-                        }
-                      | { type: "page"; page: { id: IdRequest } }
-                      | { type: "database"; database: { id: IdRequest } }
+                    mention: mentionLookup
                     annotations: {
                       bold: boolean
                       italic: boolean
@@ -27920,55 +19004,7 @@ export type AppendBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention:
-                      | {
-                          type: "user"
-                          user:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | Record<string, never>
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                      | {
-                          type: "date"
-                          date: { start: string; end: string | null }
-                        }
-                      | { type: "page"; page: { id: IdRequest } }
-                      | { type: "database"; database: { id: IdRequest } }
+                    mention: mentionLookup
                     annotations: {
                       bold: boolean
                       italic: boolean
@@ -28053,55 +19089,7 @@ export type AppendBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention:
-                      | {
-                          type: "user"
-                          user:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | Record<string, never>
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                      | {
-                          type: "date"
-                          date: { start: string; end: string | null }
-                        }
-                      | { type: "page"; page: { id: IdRequest } }
-                      | { type: "database"; database: { id: IdRequest } }
+                    mention: mentionLookup
                     annotations: {
                       bold: boolean
                       italic: boolean
@@ -28157,55 +19145,7 @@ export type AppendBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention:
-                      | {
-                          type: "user"
-                          user:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | Record<string, never>
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                      | {
-                          type: "date"
-                          date: { start: string; end: string | null }
-                        }
-                      | { type: "page"; page: { id: IdRequest } }
-                      | { type: "database"; database: { id: IdRequest } }
+                    mention: mentionLookup
                     annotations: {
                       bold: boolean
                       italic: boolean
@@ -28301,55 +19241,7 @@ export type AppendBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention:
-                      | {
-                          type: "user"
-                          user:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | Record<string, never>
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                      | {
-                          type: "date"
-                          date: { start: string; end: string | null }
-                        }
-                      | { type: "page"; page: { id: IdRequest } }
-                      | { type: "database"; database: { id: IdRequest } }
+                    mention: mentionLookup
                     annotations: {
                       bold: boolean
                       italic: boolean
@@ -28405,55 +19297,7 @@ export type AppendBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention:
-                      | {
-                          type: "user"
-                          user:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | Record<string, never>
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                      | {
-                          type: "date"
-                          date: { start: string; end: string | null }
-                        }
-                      | { type: "page"; page: { id: IdRequest } }
-                      | { type: "database"; database: { id: IdRequest } }
+                    mention: mentionLookup
                     annotations: {
                       bold: boolean
                       italic: boolean
@@ -28514,58 +19358,7 @@ export type AppendBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention:
-                          | {
-                              type: "user"
-                              user:
-                                | { id: IdRequest; object: "user" }
-                                | {
-                                    type: "person"
-                                    person: { email: string }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                                | {
-                                    type: "bot"
-                                    bot:
-                                      | Record<string, never>
-                                      | {
-                                          owner:
-                                            | {
-                                                type: "user"
-                                                user:
-                                                  | {
-                                                      type: "person"
-                                                      person: { email: string }
-                                                      name: string | null
-                                                      avatar_url: string | null
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                                  | {
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                              }
-                                            | {
-                                                type: "workspace"
-                                                workspace: true
-                                              }
-                                        }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                            }
-                          | {
-                              type: "date"
-                              date: { start: string; end: string | null }
-                            }
-                          | { type: "page"; page: { id: IdRequest } }
-                          | { type: "database"; database: { id: IdRequest } }
+                        mention: mentionLookup
                         annotations: {
                           bold: boolean
                           italic: boolean
@@ -28616,58 +19409,7 @@ export type AppendBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention:
-                          | {
-                              type: "user"
-                              user:
-                                | { id: IdRequest; object: "user" }
-                                | {
-                                    type: "person"
-                                    person: { email: string }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                                | {
-                                    type: "bot"
-                                    bot:
-                                      | Record<string, never>
-                                      | {
-                                          owner:
-                                            | {
-                                                type: "user"
-                                                user:
-                                                  | {
-                                                      type: "person"
-                                                      person: { email: string }
-                                                      name: string | null
-                                                      avatar_url: string | null
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                                  | {
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                              }
-                                            | {
-                                                type: "workspace"
-                                                workspace: true
-                                              }
-                                        }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                            }
-                          | {
-                              type: "date"
-                              date: { start: string; end: string | null }
-                            }
-                          | { type: "page"; page: { id: IdRequest } }
-                          | { type: "database"; database: { id: IdRequest } }
+                        mention: mentionLookup
                         annotations: {
                           bold: boolean
                           italic: boolean
@@ -28728,58 +19470,7 @@ export type AppendBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention:
-                          | {
-                              type: "user"
-                              user:
-                                | { id: IdRequest; object: "user" }
-                                | {
-                                    type: "person"
-                                    person: { email: string }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                                | {
-                                    type: "bot"
-                                    bot:
-                                      | Record<string, never>
-                                      | {
-                                          owner:
-                                            | {
-                                                type: "user"
-                                                user:
-                                                  | {
-                                                      type: "person"
-                                                      person: { email: string }
-                                                      name: string | null
-                                                      avatar_url: string | null
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                                  | {
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                              }
-                                            | {
-                                                type: "workspace"
-                                                workspace: true
-                                              }
-                                        }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                            }
-                          | {
-                              type: "date"
-                              date: { start: string; end: string | null }
-                            }
-                          | { type: "page"; page: { id: IdRequest } }
-                          | { type: "database"; database: { id: IdRequest } }
+                        mention: mentionLookup
                         annotations: {
                           bold: boolean
                           italic: boolean
@@ -28830,58 +19521,7 @@ export type AppendBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention:
-                          | {
-                              type: "user"
-                              user:
-                                | { id: IdRequest; object: "user" }
-                                | {
-                                    type: "person"
-                                    person: { email: string }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                                | {
-                                    type: "bot"
-                                    bot:
-                                      | Record<string, never>
-                                      | {
-                                          owner:
-                                            | {
-                                                type: "user"
-                                                user:
-                                                  | {
-                                                      type: "person"
-                                                      person: { email: string }
-                                                      name: string | null
-                                                      avatar_url: string | null
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                                  | {
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                              }
-                                            | {
-                                                type: "workspace"
-                                                workspace: true
-                                              }
-                                        }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                            }
-                          | {
-                              type: "date"
-                              date: { start: string; end: string | null }
-                            }
-                          | { type: "page"; page: { id: IdRequest } }
-                          | { type: "database"; database: { id: IdRequest } }
+                        mention: mentionLookup
                         annotations: {
                           bold: boolean
                           italic: boolean
@@ -28942,58 +19582,7 @@ export type AppendBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention:
-                          | {
-                              type: "user"
-                              user:
-                                | { id: IdRequest; object: "user" }
-                                | {
-                                    type: "person"
-                                    person: { email: string }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                                | {
-                                    type: "bot"
-                                    bot:
-                                      | Record<string, never>
-                                      | {
-                                          owner:
-                                            | {
-                                                type: "user"
-                                                user:
-                                                  | {
-                                                      type: "person"
-                                                      person: { email: string }
-                                                      name: string | null
-                                                      avatar_url: string | null
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                                  | {
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                              }
-                                            | {
-                                                type: "workspace"
-                                                workspace: true
-                                              }
-                                        }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                            }
-                          | {
-                              type: "date"
-                              date: { start: string; end: string | null }
-                            }
-                          | { type: "page"; page: { id: IdRequest } }
-                          | { type: "database"; database: { id: IdRequest } }
+                        mention: mentionLookup
                         annotations: {
                           bold: boolean
                           italic: boolean
@@ -29044,58 +19633,7 @@ export type AppendBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention:
-                          | {
-                              type: "user"
-                              user:
-                                | { id: IdRequest; object: "user" }
-                                | {
-                                    type: "person"
-                                    person: { email: string }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                                | {
-                                    type: "bot"
-                                    bot:
-                                      | Record<string, never>
-                                      | {
-                                          owner:
-                                            | {
-                                                type: "user"
-                                                user:
-                                                  | {
-                                                      type: "person"
-                                                      person: { email: string }
-                                                      name: string | null
-                                                      avatar_url: string | null
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                                  | {
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                              }
-                                            | {
-                                                type: "workspace"
-                                                workspace: true
-                                              }
-                                        }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                            }
-                          | {
-                              type: "date"
-                              date: { start: string; end: string | null }
-                            }
-                          | { type: "page"; page: { id: IdRequest } }
-                          | { type: "database"; database: { id: IdRequest } }
+                        mention: mentionLookup
                         annotations: {
                           bold: boolean
                           italic: boolean
@@ -29156,58 +19694,7 @@ export type AppendBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention:
-                          | {
-                              type: "user"
-                              user:
-                                | { id: IdRequest; object: "user" }
-                                | {
-                                    type: "person"
-                                    person: { email: string }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                                | {
-                                    type: "bot"
-                                    bot:
-                                      | Record<string, never>
-                                      | {
-                                          owner:
-                                            | {
-                                                type: "user"
-                                                user:
-                                                  | {
-                                                      type: "person"
-                                                      person: { email: string }
-                                                      name: string | null
-                                                      avatar_url: string | null
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                                  | {
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                              }
-                                            | {
-                                                type: "workspace"
-                                                workspace: true
-                                              }
-                                        }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                            }
-                          | {
-                              type: "date"
-                              date: { start: string; end: string | null }
-                            }
-                          | { type: "page"; page: { id: IdRequest } }
-                          | { type: "database"; database: { id: IdRequest } }
+                        mention: mentionLookup
                         annotations: {
                           bold: boolean
                           italic: boolean
@@ -29258,58 +19745,7 @@ export type AppendBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention:
-                          | {
-                              type: "user"
-                              user:
-                                | { id: IdRequest; object: "user" }
-                                | {
-                                    type: "person"
-                                    person: { email: string }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                                | {
-                                    type: "bot"
-                                    bot:
-                                      | Record<string, never>
-                                      | {
-                                          owner:
-                                            | {
-                                                type: "user"
-                                                user:
-                                                  | {
-                                                      type: "person"
-                                                      person: { email: string }
-                                                      name: string | null
-                                                      avatar_url: string | null
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                                  | {
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                              }
-                                            | {
-                                                type: "workspace"
-                                                workspace: true
-                                              }
-                                        }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                            }
-                          | {
-                              type: "date"
-                              date: { start: string; end: string | null }
-                            }
-                          | { type: "page"; page: { id: IdRequest } }
-                          | { type: "database"; database: { id: IdRequest } }
+                        mention: mentionLookup
                         annotations: {
                           bold: boolean
                           italic: boolean
@@ -29370,58 +19806,7 @@ export type AppendBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention:
-                          | {
-                              type: "user"
-                              user:
-                                | { id: IdRequest; object: "user" }
-                                | {
-                                    type: "person"
-                                    person: { email: string }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                                | {
-                                    type: "bot"
-                                    bot:
-                                      | Record<string, never>
-                                      | {
-                                          owner:
-                                            | {
-                                                type: "user"
-                                                user:
-                                                  | {
-                                                      type: "person"
-                                                      person: { email: string }
-                                                      name: string | null
-                                                      avatar_url: string | null
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                                  | {
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                              }
-                                            | {
-                                                type: "workspace"
-                                                workspace: true
-                                              }
-                                        }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                            }
-                          | {
-                              type: "date"
-                              date: { start: string; end: string | null }
-                            }
-                          | { type: "page"; page: { id: IdRequest } }
-                          | { type: "database"; database: { id: IdRequest } }
+                        mention: mentionLookup
                         annotations: {
                           bold: boolean
                           italic: boolean
@@ -29472,58 +19857,7 @@ export type AppendBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention:
-                          | {
-                              type: "user"
-                              user:
-                                | { id: IdRequest; object: "user" }
-                                | {
-                                    type: "person"
-                                    person: { email: string }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                                | {
-                                    type: "bot"
-                                    bot:
-                                      | Record<string, never>
-                                      | {
-                                          owner:
-                                            | {
-                                                type: "user"
-                                                user:
-                                                  | {
-                                                      type: "person"
-                                                      person: { email: string }
-                                                      name: string | null
-                                                      avatar_url: string | null
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                                  | {
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                              }
-                                            | {
-                                                type: "workspace"
-                                                workspace: true
-                                              }
-                                        }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                            }
-                          | {
-                              type: "date"
-                              date: { start: string; end: string | null }
-                            }
-                          | { type: "page"; page: { id: IdRequest } }
-                          | { type: "database"; database: { id: IdRequest } }
+                        mention: mentionLookup
                         annotations: {
                           bold: boolean
                           italic: boolean
@@ -29606,49 +19940,7 @@ export type GetDatabaseResponse = {
       }
     | {
         type: "mention"
-        mention:
-          | {
-              type: "user"
-              user:
-                | { id: IdRequest; object: "user" }
-                | {
-                    type: "person"
-                    person: { email: string }
-                    name: string | null
-                    avatar_url: string | null
-                    id: IdRequest
-                    object: "user"
-                  }
-                | {
-                    type: "bot"
-                    bot:
-                      | Record<string, never>
-                      | {
-                          owner:
-                            | {
-                                type: "user"
-                                user:
-                                  | {
-                                      type: "person"
-                                      person: { email: string }
-                                      name: string | null
-                                      avatar_url: string | null
-                                      id: IdRequest
-                                      object: "user"
-                                    }
-                                  | { id: IdRequest; object: "user" }
-                              }
-                            | { type: "workspace"; workspace: true }
-                        }
-                    name: string | null
-                    avatar_url: string | null
-                    id: IdRequest
-                    object: "user"
-                  }
-            }
-          | { type: "date"; date: { start: string; end: string | null } }
-          | { type: "page"; page: { id: IdRequest } }
-          | { type: "database"; database: { id: IdRequest } }
+        mention: mentionLookup
         annotations: {
           bold: boolean
           italic: boolean
@@ -30001,49 +20293,7 @@ export type UpdateDatabaseResponse = {
       }
     | {
         type: "mention"
-        mention:
-          | {
-              type: "user"
-              user:
-                | { id: IdRequest; object: "user" }
-                | {
-                    type: "person"
-                    person: { email: string }
-                    name: string | null
-                    avatar_url: string | null
-                    id: IdRequest
-                    object: "user"
-                  }
-                | {
-                    type: "bot"
-                    bot:
-                      | Record<string, never>
-                      | {
-                          owner:
-                            | {
-                                type: "user"
-                                user:
-                                  | {
-                                      type: "person"
-                                      person: { email: string }
-                                      name: string | null
-                                      avatar_url: string | null
-                                      id: IdRequest
-                                      object: "user"
-                                    }
-                                  | { id: IdRequest; object: "user" }
-                              }
-                            | { type: "workspace"; workspace: true }
-                        }
-                    name: string | null
-                    avatar_url: string | null
-                    id: IdRequest
-                    object: "user"
-                  }
-            }
-          | { type: "date"; date: { start: string; end: string | null } }
-          | { type: "page"; page: { id: IdRequest } }
-          | { type: "database"; database: { id: IdRequest } }
+        mention: mentionLookup
         annotations: {
           bold: boolean
           italic: boolean
@@ -30236,54 +20486,22 @@ export type QueryDatabaseBodyParameters = {
     | {
         or: Array<
           | {
-              title:
-                | { equals: string }
-                | { does_not_equal: string }
-                | { contains: string }
-                | { does_not_contain: string }
-                | { starts_with: string }
-                | { ends_with: string }
-                | { is_empty: true }
-                | { is_not_empty: true }
+              title: stringQueryLookup
               property: string
               type?: "title"
             }
           | {
-              text:
-                | { equals: string }
-                | { does_not_equal: string }
-                | { contains: string }
-                | { does_not_contain: string }
-                | { starts_with: string }
-                | { ends_with: string }
-                | { is_empty: true }
-                | { is_not_empty: true }
+              text: stringQueryLookup
               property: string
               type?: "text"
             }
           | {
-              rich_text:
-                | { equals: string }
-                | { does_not_equal: string }
-                | { contains: string }
-                | { does_not_contain: string }
-                | { starts_with: string }
-                | { ends_with: string }
-                | { is_empty: true }
-                | { is_not_empty: true }
+              rich_text: stringQueryLookup
               property: string
               type?: "rich_text"
             }
           | {
-              number:
-                | { equals: number }
-                | { does_not_equal: number }
-                | { greater_than: number }
-                | { less_than: number }
-                | { greater_than_or_equal_to: number }
-                | { less_than_or_equal_to: number }
-                | { is_empty: true }
-                | { is_not_empty: true }
+              number: numberQueryLookup
               property: string
               type?: "number"
             }
@@ -30293,47 +20511,22 @@ export type QueryDatabaseBodyParameters = {
               type?: "checkbox"
             }
           | {
-              select:
-                | { equals: string }
-                | { does_not_equal: string }
-                | { is_empty: true }
-                | { is_not_empty: true }
+              select: selectQueryLookup
               property: string
               type?: "select"
             }
           | {
-              multi_select:
-                | { contains: string }
-                | { does_not_contain: string }
-                | { is_empty: true }
-                | { is_not_empty: true }
+              multi_select: multiSelectQueryLookup
               property: string
               type?: "multi_select"
             }
           | {
-              date:
-                | { equals: string }
-                | { before: string }
-                | { after: string }
-                | { on_or_before: string }
-                | { on_or_after: string }
-                | { past_week: Record<string, never> }
-                | { past_month: Record<string, never> }
-                | { past_year: Record<string, never> }
-                | { next_week: Record<string, never> }
-                | { next_month: Record<string, never> }
-                | { next_year: Record<string, never> }
-                | { is_empty: true }
-                | { is_not_empty: true }
+              date: dateQueryLookup
               property: string
               type?: "date"
             }
           | {
-              people:
-                | { contains: IdRequest }
-                | { does_not_contain: IdRequest }
-                | { is_empty: true }
-                | { is_not_empty: true }
+              people: peopleQueryLookup
               property: string
               type?: "people"
             }
@@ -30343,63 +20536,27 @@ export type QueryDatabaseBodyParameters = {
               type?: "files"
             }
           | {
-              url:
-                | { equals: string }
-                | { does_not_equal: string }
-                | { contains: string }
-                | { does_not_contain: string }
-                | { starts_with: string }
-                | { ends_with: string }
-                | { is_empty: true }
-                | { is_not_empty: true }
+              url: stringQueryLookup
               property: string
               type?: "url"
             }
           | {
-              email:
-                | { equals: string }
-                | { does_not_equal: string }
-                | { contains: string }
-                | { does_not_contain: string }
-                | { starts_with: string }
-                | { ends_with: string }
-                | { is_empty: true }
-                | { is_not_empty: true }
+              email: stringQueryLookup
               property: string
               type?: "email"
             }
           | {
-              phone:
-                | { equals: string }
-                | { does_not_equal: string }
-                | { contains: string }
-                | { does_not_contain: string }
-                | { starts_with: string }
-                | { ends_with: string }
-                | { is_empty: true }
-                | { is_not_empty: true }
+              phone: stringQueryLookup
               property: string
               type?: "phone"
             }
           | {
-              phone_number:
-                | { equals: string }
-                | { does_not_equal: string }
-                | { contains: string }
-                | { does_not_contain: string }
-                | { starts_with: string }
-                | { ends_with: string }
-                | { is_empty: true }
-                | { is_not_empty: true }
+              phone_number: stringQueryLookup
               property: string
               type?: "phone_number"
             }
           | {
-              relation:
-                | { contains: IdRequest }
-                | { does_not_contain: IdRequest }
-                | { is_empty: true }
-                | { is_not_empty: true }
+              relation: relationQueryLookup
               property: string
               type?: "relation"
             }
@@ -30413,20 +20570,7 @@ export type QueryDatabaseBodyParameters = {
               type?: "created_by"
             }
           | {
-              created_time:
-                | { equals: string }
-                | { before: string }
-                | { after: string }
-                | { on_or_before: string }
-                | { on_or_after: string }
-                | { past_week: Record<string, never> }
-                | { past_month: Record<string, never> }
-                | { past_year: Record<string, never> }
-                | { next_week: Record<string, never> }
-                | { next_month: Record<string, never> }
-                | { next_year: Record<string, never> }
-                | { is_empty: true }
-                | { is_not_empty: true }
+              created_time: dateQueryLookup
               property: string
               type?: "created_time"
             }
@@ -30440,65 +20584,23 @@ export type QueryDatabaseBodyParameters = {
               type?: "last_edited_by"
             }
           | {
-              last_edited_time:
-                | { equals: string }
-                | { before: string }
-                | { after: string }
-                | { on_or_before: string }
-                | { on_or_after: string }
-                | { past_week: Record<string, never> }
-                | { past_month: Record<string, never> }
-                | { past_year: Record<string, never> }
-                | { next_week: Record<string, never> }
-                | { next_month: Record<string, never> }
-                | { next_year: Record<string, never> }
-                | { is_empty: true }
-                | { is_not_empty: true }
+              last_edited_time: dateQueryLookup
               property: string
               type?: "last_edited_time"
             }
           | {
               formula:
                 | {
-                    text:
-                      | { equals: string }
-                      | { does_not_equal: string }
-                      | { contains: string }
-                      | { does_not_contain: string }
-                      | { starts_with: string }
-                      | { ends_with: string }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    text: stringQueryLookup
                   }
                 | {
                     checkbox: { equals: boolean } | { does_not_equal: boolean }
                   }
                 | {
-                    number:
-                      | { equals: number }
-                      | { does_not_equal: number }
-                      | { greater_than: number }
-                      | { less_than: number }
-                      | { greater_than_or_equal_to: number }
-                      | { less_than_or_equal_to: number }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    number: numberQueryLookup
                   }
                 | {
-                    date:
-                      | { equals: string }
-                      | { before: string }
-                      | { after: string }
-                      | { on_or_before: string }
-                      | { on_or_after: string }
-                      | { past_week: Record<string, never> }
-                      | { past_month: Record<string, never> }
-                      | { past_year: Record<string, never> }
-                      | { next_week: Record<string, never> }
-                      | { next_month: Record<string, never> }
-                      | { next_year: Record<string, never> }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    date: dateQueryLookup
                   }
               property: string
               type?: "formula"
@@ -30508,26 +20610,10 @@ export type QueryDatabaseBodyParameters = {
                 | {
                     any:
                       | {
-                          text:
-                            | { equals: string }
-                            | { does_not_equal: string }
-                            | { contains: string }
-                            | { does_not_contain: string }
-                            | { starts_with: string }
-                            | { ends_with: string }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          text: stringQueryLookup
                         }
                       | {
-                          number:
-                            | { equals: number }
-                            | { does_not_equal: number }
-                            | { greater_than: number }
-                            | { less_than: number }
-                            | { greater_than_or_equal_to: number }
-                            | { less_than_or_equal_to: number }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          number: numberQueryLookup
                         }
                       | {
                           checkbox:
@@ -30535,74 +20621,29 @@ export type QueryDatabaseBodyParameters = {
                             | { does_not_equal: boolean }
                         }
                       | {
-                          select:
-                            | { equals: string }
-                            | { does_not_equal: string }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          select: selectQueryLookup
                         }
                       | {
-                          multi_select:
-                            | { contains: string }
-                            | { does_not_contain: string }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          multi_select: multiSelectQueryLookup
                         }
                       | {
-                          relation:
-                            | { contains: IdRequest }
-                            | { does_not_contain: IdRequest }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          relation: relationQueryLookup
                         }
                       | {
-                          date:
-                            | { equals: string }
-                            | { before: string }
-                            | { after: string }
-                            | { on_or_before: string }
-                            | { on_or_after: string }
-                            | { past_week: Record<string, never> }
-                            | { past_month: Record<string, never> }
-                            | { past_year: Record<string, never> }
-                            | { next_week: Record<string, never> }
-                            | { next_month: Record<string, never> }
-                            | { next_year: Record<string, never> }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          date: dateQueryLookup
                         }
                       | {
-                          people:
-                            | { contains: IdRequest }
-                            | { does_not_contain: IdRequest }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          people: peopleQueryLookup
                         }
                       | { files: { is_empty: true } | { is_not_empty: true } }
                   }
                 | {
                     none:
                       | {
-                          text:
-                            | { equals: string }
-                            | { does_not_equal: string }
-                            | { contains: string }
-                            | { does_not_contain: string }
-                            | { starts_with: string }
-                            | { ends_with: string }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          text: stringQueryLookup
                         }
                       | {
-                          number:
-                            | { equals: number }
-                            | { does_not_equal: number }
-                            | { greater_than: number }
-                            | { less_than: number }
-                            | { greater_than_or_equal_to: number }
-                            | { less_than_or_equal_to: number }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          number: numberQueryLookup
                         }
                       | {
                           checkbox:
@@ -30610,74 +20651,29 @@ export type QueryDatabaseBodyParameters = {
                             | { does_not_equal: boolean }
                         }
                       | {
-                          select:
-                            | { equals: string }
-                            | { does_not_equal: string }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          select: selectQueryLookup
                         }
                       | {
-                          multi_select:
-                            | { contains: string }
-                            | { does_not_contain: string }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          multi_select: multiSelectQueryLookup
                         }
                       | {
-                          relation:
-                            | { contains: IdRequest }
-                            | { does_not_contain: IdRequest }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          relation: relationQueryLookup
                         }
                       | {
-                          date:
-                            | { equals: string }
-                            | { before: string }
-                            | { after: string }
-                            | { on_or_before: string }
-                            | { on_or_after: string }
-                            | { past_week: Record<string, never> }
-                            | { past_month: Record<string, never> }
-                            | { past_year: Record<string, never> }
-                            | { next_week: Record<string, never> }
-                            | { next_month: Record<string, never> }
-                            | { next_year: Record<string, never> }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          date: dateQueryLookup
                         }
                       | {
-                          people:
-                            | { contains: IdRequest }
-                            | { does_not_contain: IdRequest }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          people: peopleQueryLookup
                         }
                       | { files: { is_empty: true } | { is_not_empty: true } }
                   }
                 | {
                     every:
                       | {
-                          text:
-                            | { equals: string }
-                            | { does_not_equal: string }
-                            | { contains: string }
-                            | { does_not_contain: string }
-                            | { starts_with: string }
-                            | { ends_with: string }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          text: stringQueryLookup
                         }
                       | {
-                          number:
-                            | { equals: number }
-                            | { does_not_equal: number }
-                            | { greater_than: number }
-                            | { less_than: number }
-                            | { greater_than_or_equal_to: number }
-                            | { less_than_or_equal_to: number }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          number: numberQueryLookup
                         }
                       | {
                           checkbox:
@@ -30685,77 +20681,27 @@ export type QueryDatabaseBodyParameters = {
                             | { does_not_equal: boolean }
                         }
                       | {
-                          select:
-                            | { equals: string }
-                            | { does_not_equal: string }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          select: selectQueryLookup
                         }
                       | {
-                          multi_select:
-                            | { contains: string }
-                            | { does_not_contain: string }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          multi_select: multiSelectQueryLookup
                         }
                       | {
-                          relation:
-                            | { contains: IdRequest }
-                            | { does_not_contain: IdRequest }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          relation: relationQueryLookup
                         }
                       | {
-                          date:
-                            | { equals: string }
-                            | { before: string }
-                            | { after: string }
-                            | { on_or_before: string }
-                            | { on_or_after: string }
-                            | { past_week: Record<string, never> }
-                            | { past_month: Record<string, never> }
-                            | { past_year: Record<string, never> }
-                            | { next_week: Record<string, never> }
-                            | { next_month: Record<string, never> }
-                            | { next_year: Record<string, never> }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          date: dateQueryLookup
                         }
                       | {
-                          people:
-                            | { contains: IdRequest }
-                            | { does_not_contain: IdRequest }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          people: peopleQueryLookup
                         }
                       | { files: { is_empty: true } | { is_not_empty: true } }
                   }
                 | {
-                    date:
-                      | { equals: string }
-                      | { before: string }
-                      | { after: string }
-                      | { on_or_before: string }
-                      | { on_or_after: string }
-                      | { past_week: Record<string, never> }
-                      | { past_month: Record<string, never> }
-                      | { past_year: Record<string, never> }
-                      | { next_week: Record<string, never> }
-                      | { next_month: Record<string, never> }
-                      | { next_year: Record<string, never> }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    date: dateQueryLookup
                   }
                 | {
-                    number:
-                      | { equals: number }
-                      | { does_not_equal: number }
-                      | { greater_than: number }
-                      | { less_than: number }
-                      | { greater_than_or_equal_to: number }
-                      | { less_than_or_equal_to: number }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    number: numberQueryLookup
                   }
               property: string
               type?: "rollup"
@@ -30763,54 +20709,22 @@ export type QueryDatabaseBodyParameters = {
           | {
               or: Array<
                 | {
-                    title:
-                      | { equals: string }
-                      | { does_not_equal: string }
-                      | { contains: string }
-                      | { does_not_contain: string }
-                      | { starts_with: string }
-                      | { ends_with: string }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    title: stringQueryLookup
                     property: string
                     type?: "title"
                   }
                 | {
-                    text:
-                      | { equals: string }
-                      | { does_not_equal: string }
-                      | { contains: string }
-                      | { does_not_contain: string }
-                      | { starts_with: string }
-                      | { ends_with: string }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    text: stringQueryLookup
                     property: string
                     type?: "text"
                   }
                 | {
-                    rich_text:
-                      | { equals: string }
-                      | { does_not_equal: string }
-                      | { contains: string }
-                      | { does_not_contain: string }
-                      | { starts_with: string }
-                      | { ends_with: string }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    rich_text: stringQueryLookup
                     property: string
                     type?: "rich_text"
                   }
                 | {
-                    number:
-                      | { equals: number }
-                      | { does_not_equal: number }
-                      | { greater_than: number }
-                      | { less_than: number }
-                      | { greater_than_or_equal_to: number }
-                      | { less_than_or_equal_to: number }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    number: numberQueryLookup
                     property: string
                     type?: "number"
                   }
@@ -30820,47 +20734,22 @@ export type QueryDatabaseBodyParameters = {
                     type?: "checkbox"
                   }
                 | {
-                    select:
-                      | { equals: string }
-                      | { does_not_equal: string }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    select: selectQueryLookup
                     property: string
                     type?: "select"
                   }
                 | {
-                    multi_select:
-                      | { contains: string }
-                      | { does_not_contain: string }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    multi_select: multiSelectQueryLookup
                     property: string
                     type?: "multi_select"
                   }
                 | {
-                    date:
-                      | { equals: string }
-                      | { before: string }
-                      | { after: string }
-                      | { on_or_before: string }
-                      | { on_or_after: string }
-                      | { past_week: Record<string, never> }
-                      | { past_month: Record<string, never> }
-                      | { past_year: Record<string, never> }
-                      | { next_week: Record<string, never> }
-                      | { next_month: Record<string, never> }
-                      | { next_year: Record<string, never> }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    date: dateQueryLookup
                     property: string
                     type?: "date"
                   }
                 | {
-                    people:
-                      | { contains: IdRequest }
-                      | { does_not_contain: IdRequest }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    people: peopleQueryLookup
                     property: string
                     type?: "people"
                   }
@@ -30870,63 +20759,27 @@ export type QueryDatabaseBodyParameters = {
                     type?: "files"
                   }
                 | {
-                    url:
-                      | { equals: string }
-                      | { does_not_equal: string }
-                      | { contains: string }
-                      | { does_not_contain: string }
-                      | { starts_with: string }
-                      | { ends_with: string }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    url: stringQueryLookup
                     property: string
                     type?: "url"
                   }
                 | {
-                    email:
-                      | { equals: string }
-                      | { does_not_equal: string }
-                      | { contains: string }
-                      | { does_not_contain: string }
-                      | { starts_with: string }
-                      | { ends_with: string }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    email: stringQueryLookup
                     property: string
                     type?: "email"
                   }
                 | {
-                    phone:
-                      | { equals: string }
-                      | { does_not_equal: string }
-                      | { contains: string }
-                      | { does_not_contain: string }
-                      | { starts_with: string }
-                      | { ends_with: string }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    phone: stringQueryLookup
                     property: string
                     type?: "phone"
                   }
                 | {
-                    phone_number:
-                      | { equals: string }
-                      | { does_not_equal: string }
-                      | { contains: string }
-                      | { does_not_contain: string }
-                      | { starts_with: string }
-                      | { ends_with: string }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    phone_number: stringQueryLookup
                     property: string
                     type?: "phone_number"
                   }
                 | {
-                    relation:
-                      | { contains: IdRequest }
-                      | { does_not_contain: IdRequest }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    relation: relationQueryLookup
                     property: string
                     type?: "relation"
                   }
@@ -30940,20 +20793,7 @@ export type QueryDatabaseBodyParameters = {
                     type?: "created_by"
                   }
                 | {
-                    created_time:
-                      | { equals: string }
-                      | { before: string }
-                      | { after: string }
-                      | { on_or_before: string }
-                      | { on_or_after: string }
-                      | { past_week: Record<string, never> }
-                      | { past_month: Record<string, never> }
-                      | { past_year: Record<string, never> }
-                      | { next_week: Record<string, never> }
-                      | { next_month: Record<string, never> }
-                      | { next_year: Record<string, never> }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    created_time: dateQueryLookup
                     property: string
                     type?: "created_time"
                   }
@@ -30967,35 +20807,14 @@ export type QueryDatabaseBodyParameters = {
                     type?: "last_edited_by"
                   }
                 | {
-                    last_edited_time:
-                      | { equals: string }
-                      | { before: string }
-                      | { after: string }
-                      | { on_or_before: string }
-                      | { on_or_after: string }
-                      | { past_week: Record<string, never> }
-                      | { past_month: Record<string, never> }
-                      | { past_year: Record<string, never> }
-                      | { next_week: Record<string, never> }
-                      | { next_month: Record<string, never> }
-                      | { next_year: Record<string, never> }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    last_edited_time: dateQueryLookup
                     property: string
                     type?: "last_edited_time"
                   }
                 | {
                     formula:
                       | {
-                          text:
-                            | { equals: string }
-                            | { does_not_equal: string }
-                            | { contains: string }
-                            | { does_not_contain: string }
-                            | { starts_with: string }
-                            | { ends_with: string }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          text: stringQueryLookup
                         }
                       | {
                           checkbox:
@@ -31003,31 +20822,10 @@ export type QueryDatabaseBodyParameters = {
                             | { does_not_equal: boolean }
                         }
                       | {
-                          number:
-                            | { equals: number }
-                            | { does_not_equal: number }
-                            | { greater_than: number }
-                            | { less_than: number }
-                            | { greater_than_or_equal_to: number }
-                            | { less_than_or_equal_to: number }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          number: numberQueryLookup
                         }
                       | {
-                          date:
-                            | { equals: string }
-                            | { before: string }
-                            | { after: string }
-                            | { on_or_before: string }
-                            | { on_or_after: string }
-                            | { past_week: Record<string, never> }
-                            | { past_month: Record<string, never> }
-                            | { past_year: Record<string, never> }
-                            | { next_week: Record<string, never> }
-                            | { next_month: Record<string, never> }
-                            | { next_year: Record<string, never> }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          date: dateQueryLookup
                         }
                     property: string
                     type?: "formula"
@@ -31037,26 +20835,10 @@ export type QueryDatabaseBodyParameters = {
                       | {
                           any:
                             | {
-                                text:
-                                  | { equals: string }
-                                  | { does_not_equal: string }
-                                  | { contains: string }
-                                  | { does_not_contain: string }
-                                  | { starts_with: string }
-                                  | { ends_with: string }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                text: stringQueryLookup
                               }
                             | {
-                                number:
-                                  | { equals: number }
-                                  | { does_not_equal: number }
-                                  | { greater_than: number }
-                                  | { less_than: number }
-                                  | { greater_than_or_equal_to: number }
-                                  | { less_than_or_equal_to: number }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                number: numberQueryLookup
                               }
                             | {
                                 checkbox:
@@ -31064,48 +20846,19 @@ export type QueryDatabaseBodyParameters = {
                                   | { does_not_equal: boolean }
                               }
                             | {
-                                select:
-                                  | { equals: string }
-                                  | { does_not_equal: string }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                select: selectQueryLookup
                               }
                             | {
-                                multi_select:
-                                  | { contains: string }
-                                  | { does_not_contain: string }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                multi_select: multiSelectQueryLookup
                               }
                             | {
-                                relation:
-                                  | { contains: IdRequest }
-                                  | { does_not_contain: IdRequest }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                relation: relationQueryLookup
                               }
                             | {
-                                date:
-                                  | { equals: string }
-                                  | { before: string }
-                                  | { after: string }
-                                  | { on_or_before: string }
-                                  | { on_or_after: string }
-                                  | { past_week: Record<string, never> }
-                                  | { past_month: Record<string, never> }
-                                  | { past_year: Record<string, never> }
-                                  | { next_week: Record<string, never> }
-                                  | { next_month: Record<string, never> }
-                                  | { next_year: Record<string, never> }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                date: dateQueryLookup
                               }
                             | {
-                                people:
-                                  | { contains: IdRequest }
-                                  | { does_not_contain: IdRequest }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                people: peopleQueryLookup
                               }
                             | {
                                 files:
@@ -31116,26 +20869,10 @@ export type QueryDatabaseBodyParameters = {
                       | {
                           none:
                             | {
-                                text:
-                                  | { equals: string }
-                                  | { does_not_equal: string }
-                                  | { contains: string }
-                                  | { does_not_contain: string }
-                                  | { starts_with: string }
-                                  | { ends_with: string }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                text: stringQueryLookup
                               }
                             | {
-                                number:
-                                  | { equals: number }
-                                  | { does_not_equal: number }
-                                  | { greater_than: number }
-                                  | { less_than: number }
-                                  | { greater_than_or_equal_to: number }
-                                  | { less_than_or_equal_to: number }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                number: numberQueryLookup
                               }
                             | {
                                 checkbox:
@@ -31143,48 +20880,19 @@ export type QueryDatabaseBodyParameters = {
                                   | { does_not_equal: boolean }
                               }
                             | {
-                                select:
-                                  | { equals: string }
-                                  | { does_not_equal: string }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                select: selectQueryLookup
                               }
                             | {
-                                multi_select:
-                                  | { contains: string }
-                                  | { does_not_contain: string }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                multi_select: multiSelectQueryLookup
                               }
                             | {
-                                relation:
-                                  | { contains: IdRequest }
-                                  | { does_not_contain: IdRequest }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                relation: relationQueryLookup
                               }
                             | {
-                                date:
-                                  | { equals: string }
-                                  | { before: string }
-                                  | { after: string }
-                                  | { on_or_before: string }
-                                  | { on_or_after: string }
-                                  | { past_week: Record<string, never> }
-                                  | { past_month: Record<string, never> }
-                                  | { past_year: Record<string, never> }
-                                  | { next_week: Record<string, never> }
-                                  | { next_month: Record<string, never> }
-                                  | { next_year: Record<string, never> }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                date: dateQueryLookup
                               }
                             | {
-                                people:
-                                  | { contains: IdRequest }
-                                  | { does_not_contain: IdRequest }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                people: peopleQueryLookup
                               }
                             | {
                                 files:
@@ -31195,26 +20903,10 @@ export type QueryDatabaseBodyParameters = {
                       | {
                           every:
                             | {
-                                text:
-                                  | { equals: string }
-                                  | { does_not_equal: string }
-                                  | { contains: string }
-                                  | { does_not_contain: string }
-                                  | { starts_with: string }
-                                  | { ends_with: string }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                text: stringQueryLookup
                               }
                             | {
-                                number:
-                                  | { equals: number }
-                                  | { does_not_equal: number }
-                                  | { greater_than: number }
-                                  | { less_than: number }
-                                  | { greater_than_or_equal_to: number }
-                                  | { less_than_or_equal_to: number }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                number: numberQueryLookup
                               }
                             | {
                                 checkbox:
@@ -31222,48 +20914,19 @@ export type QueryDatabaseBodyParameters = {
                                   | { does_not_equal: boolean }
                               }
                             | {
-                                select:
-                                  | { equals: string }
-                                  | { does_not_equal: string }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                select: selectQueryLookup
                               }
                             | {
-                                multi_select:
-                                  | { contains: string }
-                                  | { does_not_contain: string }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                multi_select: multiSelectQueryLookup
                               }
                             | {
-                                relation:
-                                  | { contains: IdRequest }
-                                  | { does_not_contain: IdRequest }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                relation: relationQueryLookup
                               }
                             | {
-                                date:
-                                  | { equals: string }
-                                  | { before: string }
-                                  | { after: string }
-                                  | { on_or_before: string }
-                                  | { on_or_after: string }
-                                  | { past_week: Record<string, never> }
-                                  | { past_month: Record<string, never> }
-                                  | { past_year: Record<string, never> }
-                                  | { next_week: Record<string, never> }
-                                  | { next_month: Record<string, never> }
-                                  | { next_year: Record<string, never> }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                date: dateQueryLookup
                               }
                             | {
-                                people:
-                                  | { contains: IdRequest }
-                                  | { does_not_contain: IdRequest }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                people: peopleQueryLookup
                               }
                             | {
                                 files:
@@ -31272,31 +20935,10 @@ export type QueryDatabaseBodyParameters = {
                               }
                         }
                       | {
-                          date:
-                            | { equals: string }
-                            | { before: string }
-                            | { after: string }
-                            | { on_or_before: string }
-                            | { on_or_after: string }
-                            | { past_week: Record<string, never> }
-                            | { past_month: Record<string, never> }
-                            | { past_year: Record<string, never> }
-                            | { next_week: Record<string, never> }
-                            | { next_month: Record<string, never> }
-                            | { next_year: Record<string, never> }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          date: dateQueryLookup
                         }
                       | {
-                          number:
-                            | { equals: number }
-                            | { does_not_equal: number }
-                            | { greater_than: number }
-                            | { less_than: number }
-                            | { greater_than_or_equal_to: number }
-                            | { less_than_or_equal_to: number }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          number: numberQueryLookup
                         }
                     property: string
                     type?: "rollup"
@@ -31306,54 +20948,22 @@ export type QueryDatabaseBodyParameters = {
           | {
               and: Array<
                 | {
-                    title:
-                      | { equals: string }
-                      | { does_not_equal: string }
-                      | { contains: string }
-                      | { does_not_contain: string }
-                      | { starts_with: string }
-                      | { ends_with: string }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    title: stringQueryLookup
                     property: string
                     type?: "title"
                   }
                 | {
-                    text:
-                      | { equals: string }
-                      | { does_not_equal: string }
-                      | { contains: string }
-                      | { does_not_contain: string }
-                      | { starts_with: string }
-                      | { ends_with: string }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    text: stringQueryLookup
                     property: string
                     type?: "text"
                   }
                 | {
-                    rich_text:
-                      | { equals: string }
-                      | { does_not_equal: string }
-                      | { contains: string }
-                      | { does_not_contain: string }
-                      | { starts_with: string }
-                      | { ends_with: string }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    rich_text: stringQueryLookup
                     property: string
                     type?: "rich_text"
                   }
                 | {
-                    number:
-                      | { equals: number }
-                      | { does_not_equal: number }
-                      | { greater_than: number }
-                      | { less_than: number }
-                      | { greater_than_or_equal_to: number }
-                      | { less_than_or_equal_to: number }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    number: numberQueryLookup
                     property: string
                     type?: "number"
                   }
@@ -31363,47 +20973,22 @@ export type QueryDatabaseBodyParameters = {
                     type?: "checkbox"
                   }
                 | {
-                    select:
-                      | { equals: string }
-                      | { does_not_equal: string }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    select: selectQueryLookup
                     property: string
                     type?: "select"
                   }
                 | {
-                    multi_select:
-                      | { contains: string }
-                      | { does_not_contain: string }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    multi_select: multiSelectQueryLookup
                     property: string
                     type?: "multi_select"
                   }
                 | {
-                    date:
-                      | { equals: string }
-                      | { before: string }
-                      | { after: string }
-                      | { on_or_before: string }
-                      | { on_or_after: string }
-                      | { past_week: Record<string, never> }
-                      | { past_month: Record<string, never> }
-                      | { past_year: Record<string, never> }
-                      | { next_week: Record<string, never> }
-                      | { next_month: Record<string, never> }
-                      | { next_year: Record<string, never> }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    date: dateQueryLookup
                     property: string
                     type?: "date"
                   }
                 | {
-                    people:
-                      | { contains: IdRequest }
-                      | { does_not_contain: IdRequest }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    people: peopleQueryLookup
                     property: string
                     type?: "people"
                   }
@@ -31413,63 +20998,27 @@ export type QueryDatabaseBodyParameters = {
                     type?: "files"
                   }
                 | {
-                    url:
-                      | { equals: string }
-                      | { does_not_equal: string }
-                      | { contains: string }
-                      | { does_not_contain: string }
-                      | { starts_with: string }
-                      | { ends_with: string }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    url: stringQueryLookup
                     property: string
                     type?: "url"
                   }
                 | {
-                    email:
-                      | { equals: string }
-                      | { does_not_equal: string }
-                      | { contains: string }
-                      | { does_not_contain: string }
-                      | { starts_with: string }
-                      | { ends_with: string }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    email: stringQueryLookup
                     property: string
                     type?: "email"
                   }
                 | {
-                    phone:
-                      | { equals: string }
-                      | { does_not_equal: string }
-                      | { contains: string }
-                      | { does_not_contain: string }
-                      | { starts_with: string }
-                      | { ends_with: string }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    phone: stringQueryLookup
                     property: string
                     type?: "phone"
                   }
                 | {
-                    phone_number:
-                      | { equals: string }
-                      | { does_not_equal: string }
-                      | { contains: string }
-                      | { does_not_contain: string }
-                      | { starts_with: string }
-                      | { ends_with: string }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    phone_number: stringQueryLookup
                     property: string
                     type?: "phone_number"
                   }
                 | {
-                    relation:
-                      | { contains: IdRequest }
-                      | { does_not_contain: IdRequest }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    relation: relationQueryLookup
                     property: string
                     type?: "relation"
                   }
@@ -31483,20 +21032,7 @@ export type QueryDatabaseBodyParameters = {
                     type?: "created_by"
                   }
                 | {
-                    created_time:
-                      | { equals: string }
-                      | { before: string }
-                      | { after: string }
-                      | { on_or_before: string }
-                      | { on_or_after: string }
-                      | { past_week: Record<string, never> }
-                      | { past_month: Record<string, never> }
-                      | { past_year: Record<string, never> }
-                      | { next_week: Record<string, never> }
-                      | { next_month: Record<string, never> }
-                      | { next_year: Record<string, never> }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    created_time: dateQueryLookup
                     property: string
                     type?: "created_time"
                   }
@@ -31510,35 +21046,14 @@ export type QueryDatabaseBodyParameters = {
                     type?: "last_edited_by"
                   }
                 | {
-                    last_edited_time:
-                      | { equals: string }
-                      | { before: string }
-                      | { after: string }
-                      | { on_or_before: string }
-                      | { on_or_after: string }
-                      | { past_week: Record<string, never> }
-                      | { past_month: Record<string, never> }
-                      | { past_year: Record<string, never> }
-                      | { next_week: Record<string, never> }
-                      | { next_month: Record<string, never> }
-                      | { next_year: Record<string, never> }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    last_edited_time: dateQueryLookup
                     property: string
                     type?: "last_edited_time"
                   }
                 | {
                     formula:
                       | {
-                          text:
-                            | { equals: string }
-                            | { does_not_equal: string }
-                            | { contains: string }
-                            | { does_not_contain: string }
-                            | { starts_with: string }
-                            | { ends_with: string }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          text: stringQueryLookup
                         }
                       | {
                           checkbox:
@@ -31546,31 +21061,10 @@ export type QueryDatabaseBodyParameters = {
                             | { does_not_equal: boolean }
                         }
                       | {
-                          number:
-                            | { equals: number }
-                            | { does_not_equal: number }
-                            | { greater_than: number }
-                            | { less_than: number }
-                            | { greater_than_or_equal_to: number }
-                            | { less_than_or_equal_to: number }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          number: numberQueryLookup
                         }
                       | {
-                          date:
-                            | { equals: string }
-                            | { before: string }
-                            | { after: string }
-                            | { on_or_before: string }
-                            | { on_or_after: string }
-                            | { past_week: Record<string, never> }
-                            | { past_month: Record<string, never> }
-                            | { past_year: Record<string, never> }
-                            | { next_week: Record<string, never> }
-                            | { next_month: Record<string, never> }
-                            | { next_year: Record<string, never> }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          date: dateQueryLookup
                         }
                     property: string
                     type?: "formula"
@@ -31580,26 +21074,10 @@ export type QueryDatabaseBodyParameters = {
                       | {
                           any:
                             | {
-                                text:
-                                  | { equals: string }
-                                  | { does_not_equal: string }
-                                  | { contains: string }
-                                  | { does_not_contain: string }
-                                  | { starts_with: string }
-                                  | { ends_with: string }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                text: stringQueryLookup
                               }
                             | {
-                                number:
-                                  | { equals: number }
-                                  | { does_not_equal: number }
-                                  | { greater_than: number }
-                                  | { less_than: number }
-                                  | { greater_than_or_equal_to: number }
-                                  | { less_than_or_equal_to: number }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                number: numberQueryLookup
                               }
                             | {
                                 checkbox:
@@ -31607,48 +21085,19 @@ export type QueryDatabaseBodyParameters = {
                                   | { does_not_equal: boolean }
                               }
                             | {
-                                select:
-                                  | { equals: string }
-                                  | { does_not_equal: string }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                select: selectQueryLookup
                               }
                             | {
-                                multi_select:
-                                  | { contains: string }
-                                  | { does_not_contain: string }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                multi_select: multiSelectQueryLookup
                               }
                             | {
-                                relation:
-                                  | { contains: IdRequest }
-                                  | { does_not_contain: IdRequest }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                relation: relationQueryLookup
                               }
                             | {
-                                date:
-                                  | { equals: string }
-                                  | { before: string }
-                                  | { after: string }
-                                  | { on_or_before: string }
-                                  | { on_or_after: string }
-                                  | { past_week: Record<string, never> }
-                                  | { past_month: Record<string, never> }
-                                  | { past_year: Record<string, never> }
-                                  | { next_week: Record<string, never> }
-                                  | { next_month: Record<string, never> }
-                                  | { next_year: Record<string, never> }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                date: dateQueryLookup
                               }
                             | {
-                                people:
-                                  | { contains: IdRequest }
-                                  | { does_not_contain: IdRequest }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                people: peopleQueryLookup
                               }
                             | {
                                 files:
@@ -31659,26 +21108,10 @@ export type QueryDatabaseBodyParameters = {
                       | {
                           none:
                             | {
-                                text:
-                                  | { equals: string }
-                                  | { does_not_equal: string }
-                                  | { contains: string }
-                                  | { does_not_contain: string }
-                                  | { starts_with: string }
-                                  | { ends_with: string }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                text: stringQueryLookup
                               }
                             | {
-                                number:
-                                  | { equals: number }
-                                  | { does_not_equal: number }
-                                  | { greater_than: number }
-                                  | { less_than: number }
-                                  | { greater_than_or_equal_to: number }
-                                  | { less_than_or_equal_to: number }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                number: numberQueryLookup
                               }
                             | {
                                 checkbox:
@@ -31686,48 +21119,19 @@ export type QueryDatabaseBodyParameters = {
                                   | { does_not_equal: boolean }
                               }
                             | {
-                                select:
-                                  | { equals: string }
-                                  | { does_not_equal: string }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                select: selectQueryLookup
                               }
                             | {
-                                multi_select:
-                                  | { contains: string }
-                                  | { does_not_contain: string }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                multi_select: multiSelectQueryLookup
                               }
                             | {
-                                relation:
-                                  | { contains: IdRequest }
-                                  | { does_not_contain: IdRequest }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                relation: relationQueryLookup
                               }
                             | {
-                                date:
-                                  | { equals: string }
-                                  | { before: string }
-                                  | { after: string }
-                                  | { on_or_before: string }
-                                  | { on_or_after: string }
-                                  | { past_week: Record<string, never> }
-                                  | { past_month: Record<string, never> }
-                                  | { past_year: Record<string, never> }
-                                  | { next_week: Record<string, never> }
-                                  | { next_month: Record<string, never> }
-                                  | { next_year: Record<string, never> }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                date: dateQueryLookup
                               }
                             | {
-                                people:
-                                  | { contains: IdRequest }
-                                  | { does_not_contain: IdRequest }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                people: peopleQueryLookup
                               }
                             | {
                                 files:
@@ -31738,26 +21142,10 @@ export type QueryDatabaseBodyParameters = {
                       | {
                           every:
                             | {
-                                text:
-                                  | { equals: string }
-                                  | { does_not_equal: string }
-                                  | { contains: string }
-                                  | { does_not_contain: string }
-                                  | { starts_with: string }
-                                  | { ends_with: string }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                text: stringQueryLookup
                               }
                             | {
-                                number:
-                                  | { equals: number }
-                                  | { does_not_equal: number }
-                                  | { greater_than: number }
-                                  | { less_than: number }
-                                  | { greater_than_or_equal_to: number }
-                                  | { less_than_or_equal_to: number }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                number: numberQueryLookup
                               }
                             | {
                                 checkbox:
@@ -31765,48 +21153,19 @@ export type QueryDatabaseBodyParameters = {
                                   | { does_not_equal: boolean }
                               }
                             | {
-                                select:
-                                  | { equals: string }
-                                  | { does_not_equal: string }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                select: selectQueryLookup
                               }
                             | {
-                                multi_select:
-                                  | { contains: string }
-                                  | { does_not_contain: string }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                multi_select: multiSelectQueryLookup
                               }
                             | {
-                                relation:
-                                  | { contains: IdRequest }
-                                  | { does_not_contain: IdRequest }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                relation: relationQueryLookup
                               }
                             | {
-                                date:
-                                  | { equals: string }
-                                  | { before: string }
-                                  | { after: string }
-                                  | { on_or_before: string }
-                                  | { on_or_after: string }
-                                  | { past_week: Record<string, never> }
-                                  | { past_month: Record<string, never> }
-                                  | { past_year: Record<string, never> }
-                                  | { next_week: Record<string, never> }
-                                  | { next_month: Record<string, never> }
-                                  | { next_year: Record<string, never> }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                date: dateQueryLookup
                               }
                             | {
-                                people:
-                                  | { contains: IdRequest }
-                                  | { does_not_contain: IdRequest }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                people: peopleQueryLookup
                               }
                             | {
                                 files:
@@ -31815,31 +21174,10 @@ export type QueryDatabaseBodyParameters = {
                               }
                         }
                       | {
-                          date:
-                            | { equals: string }
-                            | { before: string }
-                            | { after: string }
-                            | { on_or_before: string }
-                            | { on_or_after: string }
-                            | { past_week: Record<string, never> }
-                            | { past_month: Record<string, never> }
-                            | { past_year: Record<string, never> }
-                            | { next_week: Record<string, never> }
-                            | { next_month: Record<string, never> }
-                            | { next_year: Record<string, never> }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          date: dateQueryLookup
                         }
                       | {
-                          number:
-                            | { equals: number }
-                            | { does_not_equal: number }
-                            | { greater_than: number }
-                            | { less_than: number }
-                            | { greater_than_or_equal_to: number }
-                            | { less_than_or_equal_to: number }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          number: numberQueryLookup
                         }
                     property: string
                     type?: "rollup"
@@ -31851,54 +21189,22 @@ export type QueryDatabaseBodyParameters = {
     | {
         and: Array<
           | {
-              title:
-                | { equals: string }
-                | { does_not_equal: string }
-                | { contains: string }
-                | { does_not_contain: string }
-                | { starts_with: string }
-                | { ends_with: string }
-                | { is_empty: true }
-                | { is_not_empty: true }
+              title: stringQueryLookup
               property: string
               type?: "title"
             }
           | {
-              text:
-                | { equals: string }
-                | { does_not_equal: string }
-                | { contains: string }
-                | { does_not_contain: string }
-                | { starts_with: string }
-                | { ends_with: string }
-                | { is_empty: true }
-                | { is_not_empty: true }
+              text: stringQueryLookup
               property: string
               type?: "text"
             }
           | {
-              rich_text:
-                | { equals: string }
-                | { does_not_equal: string }
-                | { contains: string }
-                | { does_not_contain: string }
-                | { starts_with: string }
-                | { ends_with: string }
-                | { is_empty: true }
-                | { is_not_empty: true }
+              rich_text: stringQueryLookup
               property: string
               type?: "rich_text"
             }
           | {
-              number:
-                | { equals: number }
-                | { does_not_equal: number }
-                | { greater_than: number }
-                | { less_than: number }
-                | { greater_than_or_equal_to: number }
-                | { less_than_or_equal_to: number }
-                | { is_empty: true }
-                | { is_not_empty: true }
+              number: numberQueryLookup
               property: string
               type?: "number"
             }
@@ -31908,47 +21214,22 @@ export type QueryDatabaseBodyParameters = {
               type?: "checkbox"
             }
           | {
-              select:
-                | { equals: string }
-                | { does_not_equal: string }
-                | { is_empty: true }
-                | { is_not_empty: true }
+              select: selectQueryLookup
               property: string
               type?: "select"
             }
           | {
-              multi_select:
-                | { contains: string }
-                | { does_not_contain: string }
-                | { is_empty: true }
-                | { is_not_empty: true }
+              multi_select: multiSelectQueryLookup
               property: string
               type?: "multi_select"
             }
           | {
-              date:
-                | { equals: string }
-                | { before: string }
-                | { after: string }
-                | { on_or_before: string }
-                | { on_or_after: string }
-                | { past_week: Record<string, never> }
-                | { past_month: Record<string, never> }
-                | { past_year: Record<string, never> }
-                | { next_week: Record<string, never> }
-                | { next_month: Record<string, never> }
-                | { next_year: Record<string, never> }
-                | { is_empty: true }
-                | { is_not_empty: true }
+              date: dateQueryLookup
               property: string
               type?: "date"
             }
           | {
-              people:
-                | { contains: IdRequest }
-                | { does_not_contain: IdRequest }
-                | { is_empty: true }
-                | { is_not_empty: true }
+              people: peopleQueryLookup
               property: string
               type?: "people"
             }
@@ -31958,63 +21239,27 @@ export type QueryDatabaseBodyParameters = {
               type?: "files"
             }
           | {
-              url:
-                | { equals: string }
-                | { does_not_equal: string }
-                | { contains: string }
-                | { does_not_contain: string }
-                | { starts_with: string }
-                | { ends_with: string }
-                | { is_empty: true }
-                | { is_not_empty: true }
+              url: stringQueryLookup
               property: string
               type?: "url"
             }
           | {
-              email:
-                | { equals: string }
-                | { does_not_equal: string }
-                | { contains: string }
-                | { does_not_contain: string }
-                | { starts_with: string }
-                | { ends_with: string }
-                | { is_empty: true }
-                | { is_not_empty: true }
+              email: stringQueryLookup
               property: string
               type?: "email"
             }
           | {
-              phone:
-                | { equals: string }
-                | { does_not_equal: string }
-                | { contains: string }
-                | { does_not_contain: string }
-                | { starts_with: string }
-                | { ends_with: string }
-                | { is_empty: true }
-                | { is_not_empty: true }
+              phone: stringQueryLookup
               property: string
               type?: "phone"
             }
           | {
-              phone_number:
-                | { equals: string }
-                | { does_not_equal: string }
-                | { contains: string }
-                | { does_not_contain: string }
-                | { starts_with: string }
-                | { ends_with: string }
-                | { is_empty: true }
-                | { is_not_empty: true }
+              phone_number: stringQueryLookup
               property: string
               type?: "phone_number"
             }
           | {
-              relation:
-                | { contains: IdRequest }
-                | { does_not_contain: IdRequest }
-                | { is_empty: true }
-                | { is_not_empty: true }
+              relation: relationQueryLookup
               property: string
               type?: "relation"
             }
@@ -32028,20 +21273,7 @@ export type QueryDatabaseBodyParameters = {
               type?: "created_by"
             }
           | {
-              created_time:
-                | { equals: string }
-                | { before: string }
-                | { after: string }
-                | { on_or_before: string }
-                | { on_or_after: string }
-                | { past_week: Record<string, never> }
-                | { past_month: Record<string, never> }
-                | { past_year: Record<string, never> }
-                | { next_week: Record<string, never> }
-                | { next_month: Record<string, never> }
-                | { next_year: Record<string, never> }
-                | { is_empty: true }
-                | { is_not_empty: true }
+              created_time: dateQueryLookup
               property: string
               type?: "created_time"
             }
@@ -32055,65 +21287,23 @@ export type QueryDatabaseBodyParameters = {
               type?: "last_edited_by"
             }
           | {
-              last_edited_time:
-                | { equals: string }
-                | { before: string }
-                | { after: string }
-                | { on_or_before: string }
-                | { on_or_after: string }
-                | { past_week: Record<string, never> }
-                | { past_month: Record<string, never> }
-                | { past_year: Record<string, never> }
-                | { next_week: Record<string, never> }
-                | { next_month: Record<string, never> }
-                | { next_year: Record<string, never> }
-                | { is_empty: true }
-                | { is_not_empty: true }
+              last_edited_time: dateQueryLookup
               property: string
               type?: "last_edited_time"
             }
           | {
               formula:
                 | {
-                    text:
-                      | { equals: string }
-                      | { does_not_equal: string }
-                      | { contains: string }
-                      | { does_not_contain: string }
-                      | { starts_with: string }
-                      | { ends_with: string }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    text: stringQueryLookup
                   }
                 | {
                     checkbox: { equals: boolean } | { does_not_equal: boolean }
                   }
                 | {
-                    number:
-                      | { equals: number }
-                      | { does_not_equal: number }
-                      | { greater_than: number }
-                      | { less_than: number }
-                      | { greater_than_or_equal_to: number }
-                      | { less_than_or_equal_to: number }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    number: numberQueryLookup
                   }
                 | {
-                    date:
-                      | { equals: string }
-                      | { before: string }
-                      | { after: string }
-                      | { on_or_before: string }
-                      | { on_or_after: string }
-                      | { past_week: Record<string, never> }
-                      | { past_month: Record<string, never> }
-                      | { past_year: Record<string, never> }
-                      | { next_week: Record<string, never> }
-                      | { next_month: Record<string, never> }
-                      | { next_year: Record<string, never> }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    date: dateQueryLookup
                   }
               property: string
               type?: "formula"
@@ -32123,26 +21313,10 @@ export type QueryDatabaseBodyParameters = {
                 | {
                     any:
                       | {
-                          text:
-                            | { equals: string }
-                            | { does_not_equal: string }
-                            | { contains: string }
-                            | { does_not_contain: string }
-                            | { starts_with: string }
-                            | { ends_with: string }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          text: stringQueryLookup
                         }
                       | {
-                          number:
-                            | { equals: number }
-                            | { does_not_equal: number }
-                            | { greater_than: number }
-                            | { less_than: number }
-                            | { greater_than_or_equal_to: number }
-                            | { less_than_or_equal_to: number }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          number: numberQueryLookup
                         }
                       | {
                           checkbox:
@@ -32150,74 +21324,29 @@ export type QueryDatabaseBodyParameters = {
                             | { does_not_equal: boolean }
                         }
                       | {
-                          select:
-                            | { equals: string }
-                            | { does_not_equal: string }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          select: selectQueryLookup
                         }
                       | {
-                          multi_select:
-                            | { contains: string }
-                            | { does_not_contain: string }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          multi_select: multiSelectQueryLookup
                         }
                       | {
-                          relation:
-                            | { contains: IdRequest }
-                            | { does_not_contain: IdRequest }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          relation: relationQueryLookup
                         }
                       | {
-                          date:
-                            | { equals: string }
-                            | { before: string }
-                            | { after: string }
-                            | { on_or_before: string }
-                            | { on_or_after: string }
-                            | { past_week: Record<string, never> }
-                            | { past_month: Record<string, never> }
-                            | { past_year: Record<string, never> }
-                            | { next_week: Record<string, never> }
-                            | { next_month: Record<string, never> }
-                            | { next_year: Record<string, never> }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          date: dateQueryLookup
                         }
                       | {
-                          people:
-                            | { contains: IdRequest }
-                            | { does_not_contain: IdRequest }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          people: peopleQueryLookup
                         }
                       | { files: { is_empty: true } | { is_not_empty: true } }
                   }
                 | {
                     none:
                       | {
-                          text:
-                            | { equals: string }
-                            | { does_not_equal: string }
-                            | { contains: string }
-                            | { does_not_contain: string }
-                            | { starts_with: string }
-                            | { ends_with: string }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          text: stringQueryLookup
                         }
                       | {
-                          number:
-                            | { equals: number }
-                            | { does_not_equal: number }
-                            | { greater_than: number }
-                            | { less_than: number }
-                            | { greater_than_or_equal_to: number }
-                            | { less_than_or_equal_to: number }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          number: numberQueryLookup
                         }
                       | {
                           checkbox:
@@ -32225,74 +21354,29 @@ export type QueryDatabaseBodyParameters = {
                             | { does_not_equal: boolean }
                         }
                       | {
-                          select:
-                            | { equals: string }
-                            | { does_not_equal: string }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          select: selectQueryLookup
                         }
                       | {
-                          multi_select:
-                            | { contains: string }
-                            | { does_not_contain: string }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          multi_select: multiSelectQueryLookup
                         }
                       | {
-                          relation:
-                            | { contains: IdRequest }
-                            | { does_not_contain: IdRequest }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          relation: relationQueryLookup
                         }
                       | {
-                          date:
-                            | { equals: string }
-                            | { before: string }
-                            | { after: string }
-                            | { on_or_before: string }
-                            | { on_or_after: string }
-                            | { past_week: Record<string, never> }
-                            | { past_month: Record<string, never> }
-                            | { past_year: Record<string, never> }
-                            | { next_week: Record<string, never> }
-                            | { next_month: Record<string, never> }
-                            | { next_year: Record<string, never> }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          date: dateQueryLookup
                         }
                       | {
-                          people:
-                            | { contains: IdRequest }
-                            | { does_not_contain: IdRequest }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          people: peopleQueryLookup
                         }
                       | { files: { is_empty: true } | { is_not_empty: true } }
                   }
                 | {
                     every:
                       | {
-                          text:
-                            | { equals: string }
-                            | { does_not_equal: string }
-                            | { contains: string }
-                            | { does_not_contain: string }
-                            | { starts_with: string }
-                            | { ends_with: string }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          text: stringQueryLookup
                         }
                       | {
-                          number:
-                            | { equals: number }
-                            | { does_not_equal: number }
-                            | { greater_than: number }
-                            | { less_than: number }
-                            | { greater_than_or_equal_to: number }
-                            | { less_than_or_equal_to: number }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          number: numberQueryLookup
                         }
                       | {
                           checkbox:
@@ -32300,77 +21384,27 @@ export type QueryDatabaseBodyParameters = {
                             | { does_not_equal: boolean }
                         }
                       | {
-                          select:
-                            | { equals: string }
-                            | { does_not_equal: string }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          select: selectQueryLookup
                         }
                       | {
-                          multi_select:
-                            | { contains: string }
-                            | { does_not_contain: string }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          multi_select: multiSelectQueryLookup
                         }
                       | {
-                          relation:
-                            | { contains: IdRequest }
-                            | { does_not_contain: IdRequest }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          relation: relationQueryLookup
                         }
                       | {
-                          date:
-                            | { equals: string }
-                            | { before: string }
-                            | { after: string }
-                            | { on_or_before: string }
-                            | { on_or_after: string }
-                            | { past_week: Record<string, never> }
-                            | { past_month: Record<string, never> }
-                            | { past_year: Record<string, never> }
-                            | { next_week: Record<string, never> }
-                            | { next_month: Record<string, never> }
-                            | { next_year: Record<string, never> }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          date: dateQueryLookup
                         }
                       | {
-                          people:
-                            | { contains: IdRequest }
-                            | { does_not_contain: IdRequest }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          people: peopleQueryLookup
                         }
                       | { files: { is_empty: true } | { is_not_empty: true } }
                   }
                 | {
-                    date:
-                      | { equals: string }
-                      | { before: string }
-                      | { after: string }
-                      | { on_or_before: string }
-                      | { on_or_after: string }
-                      | { past_week: Record<string, never> }
-                      | { past_month: Record<string, never> }
-                      | { past_year: Record<string, never> }
-                      | { next_week: Record<string, never> }
-                      | { next_month: Record<string, never> }
-                      | { next_year: Record<string, never> }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    date: dateQueryLookup
                   }
                 | {
-                    number:
-                      | { equals: number }
-                      | { does_not_equal: number }
-                      | { greater_than: number }
-                      | { less_than: number }
-                      | { greater_than_or_equal_to: number }
-                      | { less_than_or_equal_to: number }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    number: numberQueryLookup
                   }
               property: string
               type?: "rollup"
@@ -32378,54 +21412,22 @@ export type QueryDatabaseBodyParameters = {
           | {
               or: Array<
                 | {
-                    title:
-                      | { equals: string }
-                      | { does_not_equal: string }
-                      | { contains: string }
-                      | { does_not_contain: string }
-                      | { starts_with: string }
-                      | { ends_with: string }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    title: stringQueryLookup
                     property: string
                     type?: "title"
                   }
                 | {
-                    text:
-                      | { equals: string }
-                      | { does_not_equal: string }
-                      | { contains: string }
-                      | { does_not_contain: string }
-                      | { starts_with: string }
-                      | { ends_with: string }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    text: stringQueryLookup
                     property: string
                     type?: "text"
                   }
                 | {
-                    rich_text:
-                      | { equals: string }
-                      | { does_not_equal: string }
-                      | { contains: string }
-                      | { does_not_contain: string }
-                      | { starts_with: string }
-                      | { ends_with: string }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    rich_text: stringQueryLookup
                     property: string
                     type?: "rich_text"
                   }
                 | {
-                    number:
-                      | { equals: number }
-                      | { does_not_equal: number }
-                      | { greater_than: number }
-                      | { less_than: number }
-                      | { greater_than_or_equal_to: number }
-                      | { less_than_or_equal_to: number }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    number: numberQueryLookup
                     property: string
                     type?: "number"
                   }
@@ -32435,47 +21437,22 @@ export type QueryDatabaseBodyParameters = {
                     type?: "checkbox"
                   }
                 | {
-                    select:
-                      | { equals: string }
-                      | { does_not_equal: string }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    select: selectQueryLookup
                     property: string
                     type?: "select"
                   }
                 | {
-                    multi_select:
-                      | { contains: string }
-                      | { does_not_contain: string }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    multi_select: multiSelectQueryLookup
                     property: string
                     type?: "multi_select"
                   }
                 | {
-                    date:
-                      | { equals: string }
-                      | { before: string }
-                      | { after: string }
-                      | { on_or_before: string }
-                      | { on_or_after: string }
-                      | { past_week: Record<string, never> }
-                      | { past_month: Record<string, never> }
-                      | { past_year: Record<string, never> }
-                      | { next_week: Record<string, never> }
-                      | { next_month: Record<string, never> }
-                      | { next_year: Record<string, never> }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    date: dateQueryLookup
                     property: string
                     type?: "date"
                   }
                 | {
-                    people:
-                      | { contains: IdRequest }
-                      | { does_not_contain: IdRequest }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    people: peopleQueryLookup
                     property: string
                     type?: "people"
                   }
@@ -32485,63 +21462,27 @@ export type QueryDatabaseBodyParameters = {
                     type?: "files"
                   }
                 | {
-                    url:
-                      | { equals: string }
-                      | { does_not_equal: string }
-                      | { contains: string }
-                      | { does_not_contain: string }
-                      | { starts_with: string }
-                      | { ends_with: string }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    url: stringQueryLookup
                     property: string
                     type?: "url"
                   }
                 | {
-                    email:
-                      | { equals: string }
-                      | { does_not_equal: string }
-                      | { contains: string }
-                      | { does_not_contain: string }
-                      | { starts_with: string }
-                      | { ends_with: string }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    email: stringQueryLookup
                     property: string
                     type?: "email"
                   }
                 | {
-                    phone:
-                      | { equals: string }
-                      | { does_not_equal: string }
-                      | { contains: string }
-                      | { does_not_contain: string }
-                      | { starts_with: string }
-                      | { ends_with: string }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    phone: stringQueryLookup
                     property: string
                     type?: "phone"
                   }
                 | {
-                    phone_number:
-                      | { equals: string }
-                      | { does_not_equal: string }
-                      | { contains: string }
-                      | { does_not_contain: string }
-                      | { starts_with: string }
-                      | { ends_with: string }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    phone_number: stringQueryLookup
                     property: string
                     type?: "phone_number"
                   }
                 | {
-                    relation:
-                      | { contains: IdRequest }
-                      | { does_not_contain: IdRequest }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    relation: relationQueryLookup
                     property: string
                     type?: "relation"
                   }
@@ -32555,20 +21496,7 @@ export type QueryDatabaseBodyParameters = {
                     type?: "created_by"
                   }
                 | {
-                    created_time:
-                      | { equals: string }
-                      | { before: string }
-                      | { after: string }
-                      | { on_or_before: string }
-                      | { on_or_after: string }
-                      | { past_week: Record<string, never> }
-                      | { past_month: Record<string, never> }
-                      | { past_year: Record<string, never> }
-                      | { next_week: Record<string, never> }
-                      | { next_month: Record<string, never> }
-                      | { next_year: Record<string, never> }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    created_time: dateQueryLookup
                     property: string
                     type?: "created_time"
                   }
@@ -32582,35 +21510,14 @@ export type QueryDatabaseBodyParameters = {
                     type?: "last_edited_by"
                   }
                 | {
-                    last_edited_time:
-                      | { equals: string }
-                      | { before: string }
-                      | { after: string }
-                      | { on_or_before: string }
-                      | { on_or_after: string }
-                      | { past_week: Record<string, never> }
-                      | { past_month: Record<string, never> }
-                      | { past_year: Record<string, never> }
-                      | { next_week: Record<string, never> }
-                      | { next_month: Record<string, never> }
-                      | { next_year: Record<string, never> }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    last_edited_time: dateQueryLookup
                     property: string
                     type?: "last_edited_time"
                   }
                 | {
                     formula:
                       | {
-                          text:
-                            | { equals: string }
-                            | { does_not_equal: string }
-                            | { contains: string }
-                            | { does_not_contain: string }
-                            | { starts_with: string }
-                            | { ends_with: string }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          text: stringQueryLookup
                         }
                       | {
                           checkbox:
@@ -32618,31 +21525,10 @@ export type QueryDatabaseBodyParameters = {
                             | { does_not_equal: boolean }
                         }
                       | {
-                          number:
-                            | { equals: number }
-                            | { does_not_equal: number }
-                            | { greater_than: number }
-                            | { less_than: number }
-                            | { greater_than_or_equal_to: number }
-                            | { less_than_or_equal_to: number }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          number: numberQueryLookup
                         }
                       | {
-                          date:
-                            | { equals: string }
-                            | { before: string }
-                            | { after: string }
-                            | { on_or_before: string }
-                            | { on_or_after: string }
-                            | { past_week: Record<string, never> }
-                            | { past_month: Record<string, never> }
-                            | { past_year: Record<string, never> }
-                            | { next_week: Record<string, never> }
-                            | { next_month: Record<string, never> }
-                            | { next_year: Record<string, never> }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          date: dateQueryLookup
                         }
                     property: string
                     type?: "formula"
@@ -32652,26 +21538,10 @@ export type QueryDatabaseBodyParameters = {
                       | {
                           any:
                             | {
-                                text:
-                                  | { equals: string }
-                                  | { does_not_equal: string }
-                                  | { contains: string }
-                                  | { does_not_contain: string }
-                                  | { starts_with: string }
-                                  | { ends_with: string }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                text: stringQueryLookup
                               }
                             | {
-                                number:
-                                  | { equals: number }
-                                  | { does_not_equal: number }
-                                  | { greater_than: number }
-                                  | { less_than: number }
-                                  | { greater_than_or_equal_to: number }
-                                  | { less_than_or_equal_to: number }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                number: numberQueryLookup
                               }
                             | {
                                 checkbox:
@@ -32679,48 +21549,19 @@ export type QueryDatabaseBodyParameters = {
                                   | { does_not_equal: boolean }
                               }
                             | {
-                                select:
-                                  | { equals: string }
-                                  | { does_not_equal: string }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                select: selectQueryLookup
                               }
                             | {
-                                multi_select:
-                                  | { contains: string }
-                                  | { does_not_contain: string }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                multi_select: multiSelectQueryLookup
                               }
                             | {
-                                relation:
-                                  | { contains: IdRequest }
-                                  | { does_not_contain: IdRequest }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                relation: relationQueryLookup
                               }
                             | {
-                                date:
-                                  | { equals: string }
-                                  | { before: string }
-                                  | { after: string }
-                                  | { on_or_before: string }
-                                  | { on_or_after: string }
-                                  | { past_week: Record<string, never> }
-                                  | { past_month: Record<string, never> }
-                                  | { past_year: Record<string, never> }
-                                  | { next_week: Record<string, never> }
-                                  | { next_month: Record<string, never> }
-                                  | { next_year: Record<string, never> }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                date: dateQueryLookup
                               }
                             | {
-                                people:
-                                  | { contains: IdRequest }
-                                  | { does_not_contain: IdRequest }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                people: peopleQueryLookup
                               }
                             | {
                                 files:
@@ -32731,26 +21572,10 @@ export type QueryDatabaseBodyParameters = {
                       | {
                           none:
                             | {
-                                text:
-                                  | { equals: string }
-                                  | { does_not_equal: string }
-                                  | { contains: string }
-                                  | { does_not_contain: string }
-                                  | { starts_with: string }
-                                  | { ends_with: string }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                text: stringQueryLookup
                               }
                             | {
-                                number:
-                                  | { equals: number }
-                                  | { does_not_equal: number }
-                                  | { greater_than: number }
-                                  | { less_than: number }
-                                  | { greater_than_or_equal_to: number }
-                                  | { less_than_or_equal_to: number }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                number: numberQueryLookup
                               }
                             | {
                                 checkbox:
@@ -32758,48 +21583,19 @@ export type QueryDatabaseBodyParameters = {
                                   | { does_not_equal: boolean }
                               }
                             | {
-                                select:
-                                  | { equals: string }
-                                  | { does_not_equal: string }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                select: selectQueryLookup
                               }
                             | {
-                                multi_select:
-                                  | { contains: string }
-                                  | { does_not_contain: string }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                multi_select: multiSelectQueryLookup
                               }
                             | {
-                                relation:
-                                  | { contains: IdRequest }
-                                  | { does_not_contain: IdRequest }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                relation: relationQueryLookup
                               }
                             | {
-                                date:
-                                  | { equals: string }
-                                  | { before: string }
-                                  | { after: string }
-                                  | { on_or_before: string }
-                                  | { on_or_after: string }
-                                  | { past_week: Record<string, never> }
-                                  | { past_month: Record<string, never> }
-                                  | { past_year: Record<string, never> }
-                                  | { next_week: Record<string, never> }
-                                  | { next_month: Record<string, never> }
-                                  | { next_year: Record<string, never> }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                date: dateQueryLookup
                               }
                             | {
-                                people:
-                                  | { contains: IdRequest }
-                                  | { does_not_contain: IdRequest }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                people: peopleQueryLookup
                               }
                             | {
                                 files:
@@ -32810,26 +21606,10 @@ export type QueryDatabaseBodyParameters = {
                       | {
                           every:
                             | {
-                                text:
-                                  | { equals: string }
-                                  | { does_not_equal: string }
-                                  | { contains: string }
-                                  | { does_not_contain: string }
-                                  | { starts_with: string }
-                                  | { ends_with: string }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                text: stringQueryLookup
                               }
                             | {
-                                number:
-                                  | { equals: number }
-                                  | { does_not_equal: number }
-                                  | { greater_than: number }
-                                  | { less_than: number }
-                                  | { greater_than_or_equal_to: number }
-                                  | { less_than_or_equal_to: number }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                number: numberQueryLookup
                               }
                             | {
                                 checkbox:
@@ -32837,48 +21617,19 @@ export type QueryDatabaseBodyParameters = {
                                   | { does_not_equal: boolean }
                               }
                             | {
-                                select:
-                                  | { equals: string }
-                                  | { does_not_equal: string }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                select: selectQueryLookup
                               }
                             | {
-                                multi_select:
-                                  | { contains: string }
-                                  | { does_not_contain: string }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                multi_select: multiSelectQueryLookup
                               }
                             | {
-                                relation:
-                                  | { contains: IdRequest }
-                                  | { does_not_contain: IdRequest }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                relation: relationQueryLookup
                               }
                             | {
-                                date:
-                                  | { equals: string }
-                                  | { before: string }
-                                  | { after: string }
-                                  | { on_or_before: string }
-                                  | { on_or_after: string }
-                                  | { past_week: Record<string, never> }
-                                  | { past_month: Record<string, never> }
-                                  | { past_year: Record<string, never> }
-                                  | { next_week: Record<string, never> }
-                                  | { next_month: Record<string, never> }
-                                  | { next_year: Record<string, never> }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                date: dateQueryLookup
                               }
                             | {
-                                people:
-                                  | { contains: IdRequest }
-                                  | { does_not_contain: IdRequest }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                people: peopleQueryLookup
                               }
                             | {
                                 files:
@@ -32887,31 +21638,10 @@ export type QueryDatabaseBodyParameters = {
                               }
                         }
                       | {
-                          date:
-                            | { equals: string }
-                            | { before: string }
-                            | { after: string }
-                            | { on_or_before: string }
-                            | { on_or_after: string }
-                            | { past_week: Record<string, never> }
-                            | { past_month: Record<string, never> }
-                            | { past_year: Record<string, never> }
-                            | { next_week: Record<string, never> }
-                            | { next_month: Record<string, never> }
-                            | { next_year: Record<string, never> }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          date: dateQueryLookup
                         }
                       | {
-                          number:
-                            | { equals: number }
-                            | { does_not_equal: number }
-                            | { greater_than: number }
-                            | { less_than: number }
-                            | { greater_than_or_equal_to: number }
-                            | { less_than_or_equal_to: number }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          number: numberQueryLookup
                         }
                     property: string
                     type?: "rollup"
@@ -32921,54 +21651,22 @@ export type QueryDatabaseBodyParameters = {
           | {
               and: Array<
                 | {
-                    title:
-                      | { equals: string }
-                      | { does_not_equal: string }
-                      | { contains: string }
-                      | { does_not_contain: string }
-                      | { starts_with: string }
-                      | { ends_with: string }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    title: stringQueryLookup
                     property: string
                     type?: "title"
                   }
                 | {
-                    text:
-                      | { equals: string }
-                      | { does_not_equal: string }
-                      | { contains: string }
-                      | { does_not_contain: string }
-                      | { starts_with: string }
-                      | { ends_with: string }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    text: stringQueryLookup
                     property: string
                     type?: "text"
                   }
                 | {
-                    rich_text:
-                      | { equals: string }
-                      | { does_not_equal: string }
-                      | { contains: string }
-                      | { does_not_contain: string }
-                      | { starts_with: string }
-                      | { ends_with: string }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    rich_text: stringQueryLookup
                     property: string
                     type?: "rich_text"
                   }
                 | {
-                    number:
-                      | { equals: number }
-                      | { does_not_equal: number }
-                      | { greater_than: number }
-                      | { less_than: number }
-                      | { greater_than_or_equal_to: number }
-                      | { less_than_or_equal_to: number }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    number: numberQueryLookup
                     property: string
                     type?: "number"
                   }
@@ -32978,47 +21676,22 @@ export type QueryDatabaseBodyParameters = {
                     type?: "checkbox"
                   }
                 | {
-                    select:
-                      | { equals: string }
-                      | { does_not_equal: string }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    select: selectQueryLookup
                     property: string
                     type?: "select"
                   }
                 | {
-                    multi_select:
-                      | { contains: string }
-                      | { does_not_contain: string }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    multi_select: multiSelectQueryLookup
                     property: string
                     type?: "multi_select"
                   }
                 | {
-                    date:
-                      | { equals: string }
-                      | { before: string }
-                      | { after: string }
-                      | { on_or_before: string }
-                      | { on_or_after: string }
-                      | { past_week: Record<string, never> }
-                      | { past_month: Record<string, never> }
-                      | { past_year: Record<string, never> }
-                      | { next_week: Record<string, never> }
-                      | { next_month: Record<string, never> }
-                      | { next_year: Record<string, never> }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    date: dateQueryLookup
                     property: string
                     type?: "date"
                   }
                 | {
-                    people:
-                      | { contains: IdRequest }
-                      | { does_not_contain: IdRequest }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    people: peopleQueryLookup
                     property: string
                     type?: "people"
                   }
@@ -33028,63 +21701,27 @@ export type QueryDatabaseBodyParameters = {
                     type?: "files"
                   }
                 | {
-                    url:
-                      | { equals: string }
-                      | { does_not_equal: string }
-                      | { contains: string }
-                      | { does_not_contain: string }
-                      | { starts_with: string }
-                      | { ends_with: string }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    url: stringQueryLookup
                     property: string
                     type?: "url"
                   }
                 | {
-                    email:
-                      | { equals: string }
-                      | { does_not_equal: string }
-                      | { contains: string }
-                      | { does_not_contain: string }
-                      | { starts_with: string }
-                      | { ends_with: string }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    email: stringQueryLookup
                     property: string
                     type?: "email"
                   }
                 | {
-                    phone:
-                      | { equals: string }
-                      | { does_not_equal: string }
-                      | { contains: string }
-                      | { does_not_contain: string }
-                      | { starts_with: string }
-                      | { ends_with: string }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    phone: stringQueryLookup
                     property: string
                     type?: "phone"
                   }
                 | {
-                    phone_number:
-                      | { equals: string }
-                      | { does_not_equal: string }
-                      | { contains: string }
-                      | { does_not_contain: string }
-                      | { starts_with: string }
-                      | { ends_with: string }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    phone_number: stringQueryLookup
                     property: string
                     type?: "phone_number"
                   }
                 | {
-                    relation:
-                      | { contains: IdRequest }
-                      | { does_not_contain: IdRequest }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    relation: relationQueryLookup
                     property: string
                     type?: "relation"
                   }
@@ -33098,20 +21735,7 @@ export type QueryDatabaseBodyParameters = {
                     type?: "created_by"
                   }
                 | {
-                    created_time:
-                      | { equals: string }
-                      | { before: string }
-                      | { after: string }
-                      | { on_or_before: string }
-                      | { on_or_after: string }
-                      | { past_week: Record<string, never> }
-                      | { past_month: Record<string, never> }
-                      | { past_year: Record<string, never> }
-                      | { next_week: Record<string, never> }
-                      | { next_month: Record<string, never> }
-                      | { next_year: Record<string, never> }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    created_time: dateQueryLookup
                     property: string
                     type?: "created_time"
                   }
@@ -33125,35 +21749,14 @@ export type QueryDatabaseBodyParameters = {
                     type?: "last_edited_by"
                   }
                 | {
-                    last_edited_time:
-                      | { equals: string }
-                      | { before: string }
-                      | { after: string }
-                      | { on_or_before: string }
-                      | { on_or_after: string }
-                      | { past_week: Record<string, never> }
-                      | { past_month: Record<string, never> }
-                      | { past_year: Record<string, never> }
-                      | { next_week: Record<string, never> }
-                      | { next_month: Record<string, never> }
-                      | { next_year: Record<string, never> }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    last_edited_time: dateQueryLookup
                     property: string
                     type?: "last_edited_time"
                   }
                 | {
                     formula:
                       | {
-                          text:
-                            | { equals: string }
-                            | { does_not_equal: string }
-                            | { contains: string }
-                            | { does_not_contain: string }
-                            | { starts_with: string }
-                            | { ends_with: string }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          text: stringQueryLookup
                         }
                       | {
                           checkbox:
@@ -33161,31 +21764,10 @@ export type QueryDatabaseBodyParameters = {
                             | { does_not_equal: boolean }
                         }
                       | {
-                          number:
-                            | { equals: number }
-                            | { does_not_equal: number }
-                            | { greater_than: number }
-                            | { less_than: number }
-                            | { greater_than_or_equal_to: number }
-                            | { less_than_or_equal_to: number }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          number: numberQueryLookup
                         }
                       | {
-                          date:
-                            | { equals: string }
-                            | { before: string }
-                            | { after: string }
-                            | { on_or_before: string }
-                            | { on_or_after: string }
-                            | { past_week: Record<string, never> }
-                            | { past_month: Record<string, never> }
-                            | { past_year: Record<string, never> }
-                            | { next_week: Record<string, never> }
-                            | { next_month: Record<string, never> }
-                            | { next_year: Record<string, never> }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          date: dateQueryLookup
                         }
                     property: string
                     type?: "formula"
@@ -33195,26 +21777,10 @@ export type QueryDatabaseBodyParameters = {
                       | {
                           any:
                             | {
-                                text:
-                                  | { equals: string }
-                                  | { does_not_equal: string }
-                                  | { contains: string }
-                                  | { does_not_contain: string }
-                                  | { starts_with: string }
-                                  | { ends_with: string }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                text: stringQueryLookup
                               }
                             | {
-                                number:
-                                  | { equals: number }
-                                  | { does_not_equal: number }
-                                  | { greater_than: number }
-                                  | { less_than: number }
-                                  | { greater_than_or_equal_to: number }
-                                  | { less_than_or_equal_to: number }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                number: numberQueryLookup
                               }
                             | {
                                 checkbox:
@@ -33222,48 +21788,19 @@ export type QueryDatabaseBodyParameters = {
                                   | { does_not_equal: boolean }
                               }
                             | {
-                                select:
-                                  | { equals: string }
-                                  | { does_not_equal: string }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                select: selectQueryLookup
                               }
                             | {
-                                multi_select:
-                                  | { contains: string }
-                                  | { does_not_contain: string }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                multi_select: multiSelectQueryLookup
                               }
                             | {
-                                relation:
-                                  | { contains: IdRequest }
-                                  | { does_not_contain: IdRequest }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                relation: relationQueryLookup
                               }
                             | {
-                                date:
-                                  | { equals: string }
-                                  | { before: string }
-                                  | { after: string }
-                                  | { on_or_before: string }
-                                  | { on_or_after: string }
-                                  | { past_week: Record<string, never> }
-                                  | { past_month: Record<string, never> }
-                                  | { past_year: Record<string, never> }
-                                  | { next_week: Record<string, never> }
-                                  | { next_month: Record<string, never> }
-                                  | { next_year: Record<string, never> }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                date: dateQueryLookup
                               }
                             | {
-                                people:
-                                  | { contains: IdRequest }
-                                  | { does_not_contain: IdRequest }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                people: peopleQueryLookup
                               }
                             | {
                                 files:
@@ -33274,26 +21811,10 @@ export type QueryDatabaseBodyParameters = {
                       | {
                           none:
                             | {
-                                text:
-                                  | { equals: string }
-                                  | { does_not_equal: string }
-                                  | { contains: string }
-                                  | { does_not_contain: string }
-                                  | { starts_with: string }
-                                  | { ends_with: string }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                text: stringQueryLookup
                               }
                             | {
-                                number:
-                                  | { equals: number }
-                                  | { does_not_equal: number }
-                                  | { greater_than: number }
-                                  | { less_than: number }
-                                  | { greater_than_or_equal_to: number }
-                                  | { less_than_or_equal_to: number }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                number: numberQueryLookup
                               }
                             | {
                                 checkbox:
@@ -33301,48 +21822,19 @@ export type QueryDatabaseBodyParameters = {
                                   | { does_not_equal: boolean }
                               }
                             | {
-                                select:
-                                  | { equals: string }
-                                  | { does_not_equal: string }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                select: selectQueryLookup
                               }
                             | {
-                                multi_select:
-                                  | { contains: string }
-                                  | { does_not_contain: string }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                multi_select: multiSelectQueryLookup
                               }
                             | {
-                                relation:
-                                  | { contains: IdRequest }
-                                  | { does_not_contain: IdRequest }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                relation: relationQueryLookup
                               }
                             | {
-                                date:
-                                  | { equals: string }
-                                  | { before: string }
-                                  | { after: string }
-                                  | { on_or_before: string }
-                                  | { on_or_after: string }
-                                  | { past_week: Record<string, never> }
-                                  | { past_month: Record<string, never> }
-                                  | { past_year: Record<string, never> }
-                                  | { next_week: Record<string, never> }
-                                  | { next_month: Record<string, never> }
-                                  | { next_year: Record<string, never> }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                date: dateQueryLookup
                               }
                             | {
-                                people:
-                                  | { contains: IdRequest }
-                                  | { does_not_contain: IdRequest }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                people: peopleQueryLookup
                               }
                             | {
                                 files:
@@ -33353,26 +21845,10 @@ export type QueryDatabaseBodyParameters = {
                       | {
                           every:
                             | {
-                                text:
-                                  | { equals: string }
-                                  | { does_not_equal: string }
-                                  | { contains: string }
-                                  | { does_not_contain: string }
-                                  | { starts_with: string }
-                                  | { ends_with: string }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                text: stringQueryLookup
                               }
                             | {
-                                number:
-                                  | { equals: number }
-                                  | { does_not_equal: number }
-                                  | { greater_than: number }
-                                  | { less_than: number }
-                                  | { greater_than_or_equal_to: number }
-                                  | { less_than_or_equal_to: number }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                number: numberQueryLookup
                               }
                             | {
                                 checkbox:
@@ -33380,48 +21856,19 @@ export type QueryDatabaseBodyParameters = {
                                   | { does_not_equal: boolean }
                               }
                             | {
-                                select:
-                                  | { equals: string }
-                                  | { does_not_equal: string }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                select: selectQueryLookup
                               }
                             | {
-                                multi_select:
-                                  | { contains: string }
-                                  | { does_not_contain: string }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                multi_select: multiSelectQueryLookup
                               }
                             | {
-                                relation:
-                                  | { contains: IdRequest }
-                                  | { does_not_contain: IdRequest }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                relation: relationQueryLookup
                               }
                             | {
-                                date:
-                                  | { equals: string }
-                                  | { before: string }
-                                  | { after: string }
-                                  | { on_or_before: string }
-                                  | { on_or_after: string }
-                                  | { past_week: Record<string, never> }
-                                  | { past_month: Record<string, never> }
-                                  | { past_year: Record<string, never> }
-                                  | { next_week: Record<string, never> }
-                                  | { next_month: Record<string, never> }
-                                  | { next_year: Record<string, never> }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                date: dateQueryLookup
                               }
                             | {
-                                people:
-                                  | { contains: IdRequest }
-                                  | { does_not_contain: IdRequest }
-                                  | { is_empty: true }
-                                  | { is_not_empty: true }
+                                people: peopleQueryLookup
                               }
                             | {
                                 files:
@@ -33430,31 +21877,10 @@ export type QueryDatabaseBodyParameters = {
                               }
                         }
                       | {
-                          date:
-                            | { equals: string }
-                            | { before: string }
-                            | { after: string }
-                            | { on_or_before: string }
-                            | { on_or_after: string }
-                            | { past_week: Record<string, never> }
-                            | { past_month: Record<string, never> }
-                            | { past_year: Record<string, never> }
-                            | { next_week: Record<string, never> }
-                            | { next_month: Record<string, never> }
-                            | { next_year: Record<string, never> }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          date: dateQueryLookup
                         }
                       | {
-                          number:
-                            | { equals: number }
-                            | { does_not_equal: number }
-                            | { greater_than: number }
-                            | { less_than: number }
-                            | { greater_than_or_equal_to: number }
-                            | { less_than_or_equal_to: number }
-                            | { is_empty: true }
-                            | { is_not_empty: true }
+                          number: numberQueryLookup
                         }
                     property: string
                     type?: "rollup"
@@ -33464,54 +21890,22 @@ export type QueryDatabaseBodyParameters = {
         >
       }
     | {
-        title:
-          | { equals: string }
-          | { does_not_equal: string }
-          | { contains: string }
-          | { does_not_contain: string }
-          | { starts_with: string }
-          | { ends_with: string }
-          | { is_empty: true }
-          | { is_not_empty: true }
+        title: stringQueryLookup
         property: string
         type?: "title"
       }
     | {
-        text:
-          | { equals: string }
-          | { does_not_equal: string }
-          | { contains: string }
-          | { does_not_contain: string }
-          | { starts_with: string }
-          | { ends_with: string }
-          | { is_empty: true }
-          | { is_not_empty: true }
+        text: stringQueryLookup
         property: string
         type?: "text"
       }
     | {
-        rich_text:
-          | { equals: string }
-          | { does_not_equal: string }
-          | { contains: string }
-          | { does_not_contain: string }
-          | { starts_with: string }
-          | { ends_with: string }
-          | { is_empty: true }
-          | { is_not_empty: true }
+        rich_text: stringQueryLookup
         property: string
         type?: "rich_text"
       }
     | {
-        number:
-          | { equals: number }
-          | { does_not_equal: number }
-          | { greater_than: number }
-          | { less_than: number }
-          | { greater_than_or_equal_to: number }
-          | { less_than_or_equal_to: number }
-          | { is_empty: true }
-          | { is_not_empty: true }
+        number: numberQueryLookup
         property: string
         type?: "number"
       }
@@ -33521,47 +21915,22 @@ export type QueryDatabaseBodyParameters = {
         type?: "checkbox"
       }
     | {
-        select:
-          | { equals: string }
-          | { does_not_equal: string }
-          | { is_empty: true }
-          | { is_not_empty: true }
+        select: selectQueryLookup
         property: string
         type?: "select"
       }
     | {
-        multi_select:
-          | { contains: string }
-          | { does_not_contain: string }
-          | { is_empty: true }
-          | { is_not_empty: true }
+        multi_select: multiSelectQueryLookup
         property: string
         type?: "multi_select"
       }
     | {
-        date:
-          | { equals: string }
-          | { before: string }
-          | { after: string }
-          | { on_or_before: string }
-          | { on_or_after: string }
-          | { past_week: Record<string, never> }
-          | { past_month: Record<string, never> }
-          | { past_year: Record<string, never> }
-          | { next_week: Record<string, never> }
-          | { next_month: Record<string, never> }
-          | { next_year: Record<string, never> }
-          | { is_empty: true }
-          | { is_not_empty: true }
+        date: dateQueryLookup
         property: string
         type?: "date"
       }
     | {
-        people:
-          | { contains: IdRequest }
-          | { does_not_contain: IdRequest }
-          | { is_empty: true }
-          | { is_not_empty: true }
+        people: peopleQueryLookup
         property: string
         type?: "people"
       }
@@ -33571,63 +21940,27 @@ export type QueryDatabaseBodyParameters = {
         type?: "files"
       }
     | {
-        url:
-          | { equals: string }
-          | { does_not_equal: string }
-          | { contains: string }
-          | { does_not_contain: string }
-          | { starts_with: string }
-          | { ends_with: string }
-          | { is_empty: true }
-          | { is_not_empty: true }
+        url: stringQueryLookup
         property: string
         type?: "url"
       }
     | {
-        email:
-          | { equals: string }
-          | { does_not_equal: string }
-          | { contains: string }
-          | { does_not_contain: string }
-          | { starts_with: string }
-          | { ends_with: string }
-          | { is_empty: true }
-          | { is_not_empty: true }
+        email: stringQueryLookup
         property: string
         type?: "email"
       }
     | {
-        phone:
-          | { equals: string }
-          | { does_not_equal: string }
-          | { contains: string }
-          | { does_not_contain: string }
-          | { starts_with: string }
-          | { ends_with: string }
-          | { is_empty: true }
-          | { is_not_empty: true }
+        phone: stringQueryLookup
         property: string
         type?: "phone"
       }
     | {
-        phone_number:
-          | { equals: string }
-          | { does_not_equal: string }
-          | { contains: string }
-          | { does_not_contain: string }
-          | { starts_with: string }
-          | { ends_with: string }
-          | { is_empty: true }
-          | { is_not_empty: true }
+        phone_number: stringQueryLookup
         property: string
         type?: "phone_number"
       }
     | {
-        relation:
-          | { contains: IdRequest }
-          | { does_not_contain: IdRequest }
-          | { is_empty: true }
-          | { is_not_empty: true }
+        relation: relationQueryLookup
         property: string
         type?: "relation"
       }
@@ -33641,20 +21974,7 @@ export type QueryDatabaseBodyParameters = {
         type?: "created_by"
       }
     | {
-        created_time:
-          | { equals: string }
-          | { before: string }
-          | { after: string }
-          | { on_or_before: string }
-          | { on_or_after: string }
-          | { past_week: Record<string, never> }
-          | { past_month: Record<string, never> }
-          | { past_year: Record<string, never> }
-          | { next_week: Record<string, never> }
-          | { next_month: Record<string, never> }
-          | { next_year: Record<string, never> }
-          | { is_empty: true }
-          | { is_not_empty: true }
+        created_time: dateQueryLookup
         property: string
         type?: "created_time"
       }
@@ -33668,63 +21988,21 @@ export type QueryDatabaseBodyParameters = {
         type?: "last_edited_by"
       }
     | {
-        last_edited_time:
-          | { equals: string }
-          | { before: string }
-          | { after: string }
-          | { on_or_before: string }
-          | { on_or_after: string }
-          | { past_week: Record<string, never> }
-          | { past_month: Record<string, never> }
-          | { past_year: Record<string, never> }
-          | { next_week: Record<string, never> }
-          | { next_month: Record<string, never> }
-          | { next_year: Record<string, never> }
-          | { is_empty: true }
-          | { is_not_empty: true }
+        last_edited_time: dateQueryLookup
         property: string
         type?: "last_edited_time"
       }
     | {
         formula:
           | {
-              text:
-                | { equals: string }
-                | { does_not_equal: string }
-                | { contains: string }
-                | { does_not_contain: string }
-                | { starts_with: string }
-                | { ends_with: string }
-                | { is_empty: true }
-                | { is_not_empty: true }
+              text: stringQueryLookup
             }
           | { checkbox: { equals: boolean } | { does_not_equal: boolean } }
           | {
-              number:
-                | { equals: number }
-                | { does_not_equal: number }
-                | { greater_than: number }
-                | { less_than: number }
-                | { greater_than_or_equal_to: number }
-                | { less_than_or_equal_to: number }
-                | { is_empty: true }
-                | { is_not_empty: true }
+              number: numberQueryLookup
             }
           | {
-              date:
-                | { equals: string }
-                | { before: string }
-                | { after: string }
-                | { on_or_before: string }
-                | { on_or_after: string }
-                | { past_week: Record<string, never> }
-                | { past_month: Record<string, never> }
-                | { past_year: Record<string, never> }
-                | { next_week: Record<string, never> }
-                | { next_month: Record<string, never> }
-                | { next_year: Record<string, never> }
-                | { is_empty: true }
-                | { is_not_empty: true }
+              date: dateQueryLookup
             }
         property: string
         type?: "formula"
@@ -33734,248 +22012,92 @@ export type QueryDatabaseBodyParameters = {
           | {
               any:
                 | {
-                    text:
-                      | { equals: string }
-                      | { does_not_equal: string }
-                      | { contains: string }
-                      | { does_not_contain: string }
-                      | { starts_with: string }
-                      | { ends_with: string }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    text: stringQueryLookup
                   }
                 | {
-                    number:
-                      | { equals: number }
-                      | { does_not_equal: number }
-                      | { greater_than: number }
-                      | { less_than: number }
-                      | { greater_than_or_equal_to: number }
-                      | { less_than_or_equal_to: number }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    number: numberQueryLookup
                   }
                 | {
                     checkbox: { equals: boolean } | { does_not_equal: boolean }
                   }
                 | {
-                    select:
-                      | { equals: string }
-                      | { does_not_equal: string }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    select: selectQueryLookup
                   }
                 | {
-                    multi_select:
-                      | { contains: string }
-                      | { does_not_contain: string }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    multi_select: multiSelectQueryLookup
                   }
                 | {
-                    relation:
-                      | { contains: IdRequest }
-                      | { does_not_contain: IdRequest }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    relation: relationQueryLookup
                   }
                 | {
-                    date:
-                      | { equals: string }
-                      | { before: string }
-                      | { after: string }
-                      | { on_or_before: string }
-                      | { on_or_after: string }
-                      | { past_week: Record<string, never> }
-                      | { past_month: Record<string, never> }
-                      | { past_year: Record<string, never> }
-                      | { next_week: Record<string, never> }
-                      | { next_month: Record<string, never> }
-                      | { next_year: Record<string, never> }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    date: dateQueryLookup
                   }
                 | {
-                    people:
-                      | { contains: IdRequest }
-                      | { does_not_contain: IdRequest }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    people: peopleQueryLookup
                   }
                 | { files: { is_empty: true } | { is_not_empty: true } }
             }
           | {
               none:
                 | {
-                    text:
-                      | { equals: string }
-                      | { does_not_equal: string }
-                      | { contains: string }
-                      | { does_not_contain: string }
-                      | { starts_with: string }
-                      | { ends_with: string }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    text: stringQueryLookup
                   }
                 | {
-                    number:
-                      | { equals: number }
-                      | { does_not_equal: number }
-                      | { greater_than: number }
-                      | { less_than: number }
-                      | { greater_than_or_equal_to: number }
-                      | { less_than_or_equal_to: number }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    number: numberQueryLookup
                   }
                 | {
                     checkbox: { equals: boolean } | { does_not_equal: boolean }
                   }
                 | {
-                    select:
-                      | { equals: string }
-                      | { does_not_equal: string }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    select: selectQueryLookup
                   }
                 | {
-                    multi_select:
-                      | { contains: string }
-                      | { does_not_contain: string }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    multi_select: multiSelectQueryLookup
                   }
                 | {
-                    relation:
-                      | { contains: IdRequest }
-                      | { does_not_contain: IdRequest }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    relation: relationQueryLookup
                   }
                 | {
-                    date:
-                      | { equals: string }
-                      | { before: string }
-                      | { after: string }
-                      | { on_or_before: string }
-                      | { on_or_after: string }
-                      | { past_week: Record<string, never> }
-                      | { past_month: Record<string, never> }
-                      | { past_year: Record<string, never> }
-                      | { next_week: Record<string, never> }
-                      | { next_month: Record<string, never> }
-                      | { next_year: Record<string, never> }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    date: dateQueryLookup
                   }
                 | {
-                    people:
-                      | { contains: IdRequest }
-                      | { does_not_contain: IdRequest }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    people: peopleQueryLookup
                   }
                 | { files: { is_empty: true } | { is_not_empty: true } }
             }
           | {
               every:
                 | {
-                    text:
-                      | { equals: string }
-                      | { does_not_equal: string }
-                      | { contains: string }
-                      | { does_not_contain: string }
-                      | { starts_with: string }
-                      | { ends_with: string }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    text: stringQueryLookup
                   }
                 | {
-                    number:
-                      | { equals: number }
-                      | { does_not_equal: number }
-                      | { greater_than: number }
-                      | { less_than: number }
-                      | { greater_than_or_equal_to: number }
-                      | { less_than_or_equal_to: number }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    number: numberQueryLookup
                   }
                 | {
                     checkbox: { equals: boolean } | { does_not_equal: boolean }
                   }
                 | {
-                    select:
-                      | { equals: string }
-                      | { does_not_equal: string }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    select: selectQueryLookup
                   }
                 | {
-                    multi_select:
-                      | { contains: string }
-                      | { does_not_contain: string }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    multi_select: multiSelectQueryLookup
                   }
                 | {
-                    relation:
-                      | { contains: IdRequest }
-                      | { does_not_contain: IdRequest }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    relation: relationQueryLookup
                   }
                 | {
-                    date:
-                      | { equals: string }
-                      | { before: string }
-                      | { after: string }
-                      | { on_or_before: string }
-                      | { on_or_after: string }
-                      | { past_week: Record<string, never> }
-                      | { past_month: Record<string, never> }
-                      | { past_year: Record<string, never> }
-                      | { next_week: Record<string, never> }
-                      | { next_month: Record<string, never> }
-                      | { next_year: Record<string, never> }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    date: dateQueryLookup
                   }
                 | {
-                    people:
-                      | { contains: IdRequest }
-                      | { does_not_contain: IdRequest }
-                      | { is_empty: true }
-                      | { is_not_empty: true }
+                    people: peopleQueryLookup
                   }
                 | { files: { is_empty: true } | { is_not_empty: true } }
             }
           | {
-              date:
-                | { equals: string }
-                | { before: string }
-                | { after: string }
-                | { on_or_before: string }
-                | { on_or_after: string }
-                | { past_week: Record<string, never> }
-                | { past_month: Record<string, never> }
-                | { past_year: Record<string, never> }
-                | { next_week: Record<string, never> }
-                | { next_month: Record<string, never> }
-                | { next_year: Record<string, never> }
-                | { is_empty: true }
-                | { is_not_empty: true }
+              date: dateQueryLookup
             }
           | {
-              number:
-                | { equals: number }
-                | { does_not_equal: number }
-                | { greater_than: number }
-                | { less_than: number }
-                | { greater_than_or_equal_to: number }
-                | { less_than_or_equal_to: number }
-                | { is_empty: true }
-                | { is_not_empty: true }
+              number: numberQueryLookup
             }
         property: string
         type?: "rollup"
@@ -34104,55 +22226,7 @@ export type QueryDatabaseResponse =
                   }
                 | {
                     type: "mention"
-                    mention:
-                      | {
-                          type: "user"
-                          user:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | Record<string, never>
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                      | {
-                          type: "date"
-                          date: { start: string; end: string | null }
-                        }
-                      | { type: "page"; page: { id: IdRequest } }
-                      | { type: "database"; database: { id: IdRequest } }
+                    mention: mentionLookup
                     annotations: {
                       bold: boolean
                       italic: boolean
@@ -34200,55 +22274,7 @@ export type QueryDatabaseResponse =
                   }
                 | {
                     type: "mention"
-                    mention:
-                      | {
-                          type: "user"
-                          user:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | Record<string, never>
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                      | {
-                          type: "date"
-                          date: { start: string; end: string | null }
-                        }
-                      | { type: "page"; page: { id: IdRequest } }
-                      | { type: "database"; database: { id: IdRequest } }
+                    mention: mentionLookup
                     annotations: {
                       bold: boolean
                       italic: boolean
@@ -34311,25 +22337,7 @@ export type QueryDatabaseResponse =
                   }
                 | {
                     type: "bot"
-                    bot:
-                      | Record<string, never>
-                      | {
-                          owner:
-                            | {
-                                type: "user"
-                                user:
-                                  | {
-                                      type: "person"
-                                      person: { email: string }
-                                      name: string | null
-                                      avatar_url: string | null
-                                      id: IdRequest
-                                      object: "user"
-                                    }
-                                  | { id: IdRequest; object: "user" }
-                              }
-                            | { type: "workspace"; workspace: true }
-                        }
+                    bot: botLookup
                     name: string | null
                     avatar_url: string | null
                     id: IdRequest
@@ -34485,25 +22493,7 @@ export type QueryDatabaseResponse =
                   }
                 | {
                     type: "bot"
-                    bot:
-                      | Record<string, never>
-                      | {
-                          owner:
-                            | {
-                                type: "user"
-                                user:
-                                  | {
-                                      type: "person"
-                                      person: { email: string }
-                                      name: string | null
-                                      avatar_url: string | null
-                                      id: IdRequest
-                                      object: "user"
-                                    }
-                                  | { id: IdRequest; object: "user" }
-                              }
-                            | { type: "workspace"; workspace: true }
-                        }
+                    bot: botLookup
                     name: string | null
                     avatar_url: string | null
                     id: IdRequest
@@ -34526,25 +22516,7 @@ export type QueryDatabaseResponse =
                   }
                 | {
                     type: "bot"
-                    bot:
-                      | Record<string, never>
-                      | {
-                          owner:
-                            | {
-                                type: "user"
-                                user:
-                                  | {
-                                      type: "person"
-                                      person: { email: string }
-                                      name: string | null
-                                      avatar_url: string | null
-                                      id: IdRequest
-                                      object: "user"
-                                    }
-                                  | { id: IdRequest; object: "user" }
-                              }
-                            | { type: "workspace"; workspace: true }
-                        }
+                    bot: botLookup
                     name: string | null
                     avatar_url: string | null
                     id: IdRequest
@@ -34606,55 +22578,7 @@ export type QueryDatabaseResponse =
                   }
                 | {
                     type: "mention"
-                    mention:
-                      | {
-                          type: "user"
-                          user:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | Record<string, never>
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                      | {
-                          type: "date"
-                          date: { start: string; end: string | null }
-                        }
-                      | { type: "page"; page: { id: IdRequest } }
-                      | { type: "database"; database: { id: IdRequest } }
+                    mention: mentionLookup
                     annotations: {
                       bold: boolean
                       italic: boolean
@@ -34702,55 +22626,7 @@ export type QueryDatabaseResponse =
                   }
                 | {
                     type: "mention"
-                    mention:
-                      | {
-                          type: "user"
-                          user:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | Record<string, never>
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                      | {
-                          type: "date"
-                          date: { start: string; end: string | null }
-                        }
-                      | { type: "page"; page: { id: IdRequest } }
-                      | { type: "database"; database: { id: IdRequest } }
+                    mention: mentionLookup
                     annotations: {
                       bold: boolean
                       italic: boolean
@@ -34813,25 +22689,7 @@ export type QueryDatabaseResponse =
                   }
                 | {
                     type: "bot"
-                    bot:
-                      | Record<string, never>
-                      | {
-                          owner:
-                            | {
-                                type: "user"
-                                user:
-                                  | {
-                                      type: "person"
-                                      person: { email: string }
-                                      name: string | null
-                                      avatar_url: string | null
-                                      id: IdRequest
-                                      object: "user"
-                                    }
-                                  | { id: IdRequest; object: "user" }
-                              }
-                            | { type: "workspace"; workspace: true }
-                        }
+                    bot: botLookup
                     name: string | null
                     avatar_url: string | null
                     id: IdRequest
@@ -34987,25 +22845,7 @@ export type QueryDatabaseResponse =
                   }
                 | {
                     type: "bot"
-                    bot:
-                      | Record<string, never>
-                      | {
-                          owner:
-                            | {
-                                type: "user"
-                                user:
-                                  | {
-                                      type: "person"
-                                      person: { email: string }
-                                      name: string | null
-                                      avatar_url: string | null
-                                      id: IdRequest
-                                      object: "user"
-                                    }
-                                  | { id: IdRequest; object: "user" }
-                              }
-                            | { type: "workspace"; workspace: true }
-                        }
+                    bot: botLookup
                     name: string | null
                     avatar_url: string | null
                     id: IdRequest
@@ -35028,25 +22868,7 @@ export type QueryDatabaseResponse =
                   }
                 | {
                     type: "bot"
-                    bot:
-                      | Record<string, never>
-                      | {
-                          owner:
-                            | {
-                                type: "user"
-                                user:
-                                  | {
-                                      type: "person"
-                                      person: { email: string }
-                                      name: string | null
-                                      avatar_url: string | null
-                                      id: IdRequest
-                                      object: "user"
-                                    }
-                                  | { id: IdRequest; object: "user" }
-                              }
-                            | { type: "workspace"; workspace: true }
-                        }
+                    bot: botLookup
                     name: string | null
                     avatar_url: string | null
                     id: IdRequest
@@ -35205,49 +23027,7 @@ export type ListDatabasesResponse =
             }
           | {
               type: "mention"
-              mention:
-                | {
-                    type: "user"
-                    user:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | Record<string, never>
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                  }
-                | { type: "date"; date: { start: string; end: string | null } }
-                | { type: "page"; page: { id: IdRequest } }
-                | { type: "database"; database: { id: IdRequest } }
+              mention: mentionLookup
               annotations: {
                 bold: boolean
                 italic: boolean
@@ -35462,49 +23242,7 @@ export type ListDatabasesResponse =
             }
           | {
               type: "mention"
-              mention:
-                | {
-                    type: "user"
-                    user:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | Record<string, never>
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                  }
-                | { type: "date"; date: { start: string; end: string | null } }
-                | { type: "page"; page: { id: IdRequest } }
-                | { type: "database"; database: { id: IdRequest } }
+              mention: mentionLookup
               annotations: {
                 bold: boolean
                 italic: boolean
@@ -35825,49 +23563,7 @@ export type CreateDatabaseResponse = {
       }
     | {
         type: "mention"
-        mention:
-          | {
-              type: "user"
-              user:
-                | { id: IdRequest; object: "user" }
-                | {
-                    type: "person"
-                    person: { email: string }
-                    name: string | null
-                    avatar_url: string | null
-                    id: IdRequest
-                    object: "user"
-                  }
-                | {
-                    type: "bot"
-                    bot:
-                      | Record<string, never>
-                      | {
-                          owner:
-                            | {
-                                type: "user"
-                                user:
-                                  | {
-                                      type: "person"
-                                      person: { email: string }
-                                      name: string | null
-                                      avatar_url: string | null
-                                      id: IdRequest
-                                      object: "user"
-                                    }
-                                  | { id: IdRequest; object: "user" }
-                              }
-                            | { type: "workspace"; workspace: true }
-                        }
-                    name: string | null
-                    avatar_url: string | null
-                    id: IdRequest
-                    object: "user"
-                  }
-            }
-          | { type: "date"; date: { start: string; end: string | null } }
-          | { type: "page"; page: { id: IdRequest } }
-          | { type: "database"; database: { id: IdRequest } }
+        mention: mentionLookup
         annotations: {
           bold: boolean
           italic: boolean
@@ -36176,58 +23872,7 @@ export type SearchResponse =
                       }
                     | {
                         type: "mention"
-                        mention:
-                          | {
-                              type: "user"
-                              user:
-                                | { id: IdRequest; object: "user" }
-                                | {
-                                    type: "person"
-                                    person: { email: string }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                                | {
-                                    type: "bot"
-                                    bot:
-                                      | Record<string, never>
-                                      | {
-                                          owner:
-                                            | {
-                                                type: "user"
-                                                user:
-                                                  | {
-                                                      type: "person"
-                                                      person: { email: string }
-                                                      name: string | null
-                                                      avatar_url: string | null
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                                  | {
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                              }
-                                            | {
-                                                type: "workspace"
-                                                workspace: true
-                                              }
-                                        }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                            }
-                          | {
-                              type: "date"
-                              date: { start: string; end: string | null }
-                            }
-                          | { type: "page"; page: { id: IdRequest } }
-                          | { type: "database"; database: { id: IdRequest } }
+                        mention: mentionLookup
                         annotations: {
                           bold: boolean
                           italic: boolean
@@ -36278,58 +23923,7 @@ export type SearchResponse =
                       }
                     | {
                         type: "mention"
-                        mention:
-                          | {
-                              type: "user"
-                              user:
-                                | { id: IdRequest; object: "user" }
-                                | {
-                                    type: "person"
-                                    person: { email: string }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                                | {
-                                    type: "bot"
-                                    bot:
-                                      | Record<string, never>
-                                      | {
-                                          owner:
-                                            | {
-                                                type: "user"
-                                                user:
-                                                  | {
-                                                      type: "person"
-                                                      person: { email: string }
-                                                      name: string | null
-                                                      avatar_url: string | null
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                                  | {
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                              }
-                                            | {
-                                                type: "workspace"
-                                                workspace: true
-                                              }
-                                        }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                            }
-                          | {
-                              type: "date"
-                              date: { start: string; end: string | null }
-                            }
-                          | { type: "page"; page: { id: IdRequest } }
-                          | { type: "database"; database: { id: IdRequest } }
+                        mention: mentionLookup
                         annotations: {
                           bold: boolean
                           italic: boolean
@@ -36392,25 +23986,7 @@ export type SearchResponse =
                       }
                     | {
                         type: "bot"
-                        bot:
-                          | Record<string, never>
-                          | {
-                              owner:
-                                | {
-                                    type: "user"
-                                    user:
-                                      | {
-                                          type: "person"
-                                          person: { email: string }
-                                          name: string | null
-                                          avatar_url: string | null
-                                          id: IdRequest
-                                          object: "user"
-                                        }
-                                      | { id: IdRequest; object: "user" }
-                                  }
-                                | { type: "workspace"; workspace: true }
-                            }
+                        bot: botLookup
                         name: string | null
                         avatar_url: string | null
                         id: IdRequest
@@ -36580,25 +24156,7 @@ export type SearchResponse =
                       }
                     | {
                         type: "bot"
-                        bot:
-                          | Record<string, never>
-                          | {
-                              owner:
-                                | {
-                                    type: "user"
-                                    user:
-                                      | {
-                                          type: "person"
-                                          person: { email: string }
-                                          name: string | null
-                                          avatar_url: string | null
-                                          id: IdRequest
-                                          object: "user"
-                                        }
-                                      | { id: IdRequest; object: "user" }
-                                  }
-                                | { type: "workspace"; workspace: true }
-                            }
+                        bot: botLookup
                         name: string | null
                         avatar_url: string | null
                         id: IdRequest
@@ -36625,25 +24183,7 @@ export type SearchResponse =
                       }
                     | {
                         type: "bot"
-                        bot:
-                          | Record<string, never>
-                          | {
-                              owner:
-                                | {
-                                    type: "user"
-                                    user:
-                                      | {
-                                          type: "person"
-                                          person: { email: string }
-                                          name: string | null
-                                          avatar_url: string | null
-                                          id: IdRequest
-                                          object: "user"
-                                        }
-                                      | { id: IdRequest; object: "user" }
-                                  }
-                                | { type: "workspace"; workspace: true }
-                            }
+                        bot: botLookup
                         name: string | null
                         avatar_url: string | null
                         id: IdRequest
@@ -36692,52 +24232,7 @@ export type SearchResponse =
                 }
               | {
                   type: "mention"
-                  mention:
-                    | {
-                        type: "user"
-                        user:
-                          | { id: IdRequest; object: "user" }
-                          | {
-                              type: "person"
-                              person: { email: string }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                          | {
-                              type: "bot"
-                              bot:
-                                | Record<string, never>
-                                | {
-                                    owner:
-                                      | {
-                                          type: "user"
-                                          user:
-                                            | {
-                                                type: "person"
-                                                person: { email: string }
-                                                name: string | null
-                                                avatar_url: string | null
-                                                id: IdRequest
-                                                object: "user"
-                                              }
-                                            | { id: IdRequest; object: "user" }
-                                        }
-                                      | { type: "workspace"; workspace: true }
-                                  }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                      }
-                    | {
-                        type: "date"
-                        date: { start: string; end: string | null }
-                      }
-                    | { type: "page"; page: { id: IdRequest } }
-                    | { type: "database"; database: { id: IdRequest } }
+                  mention: mentionLookup
                   annotations: {
                     bold: boolean
                     italic: boolean
@@ -36965,58 +24460,7 @@ export type SearchResponse =
                       }
                     | {
                         type: "mention"
-                        mention:
-                          | {
-                              type: "user"
-                              user:
-                                | { id: IdRequest; object: "user" }
-                                | {
-                                    type: "person"
-                                    person: { email: string }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                                | {
-                                    type: "bot"
-                                    bot:
-                                      | Record<string, never>
-                                      | {
-                                          owner:
-                                            | {
-                                                type: "user"
-                                                user:
-                                                  | {
-                                                      type: "person"
-                                                      person: { email: string }
-                                                      name: string | null
-                                                      avatar_url: string | null
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                                  | {
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                              }
-                                            | {
-                                                type: "workspace"
-                                                workspace: true
-                                              }
-                                        }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                            }
-                          | {
-                              type: "date"
-                              date: { start: string; end: string | null }
-                            }
-                          | { type: "page"; page: { id: IdRequest } }
-                          | { type: "database"; database: { id: IdRequest } }
+                        mention: mentionLookup
                         annotations: {
                           bold: boolean
                           italic: boolean
@@ -37067,58 +24511,7 @@ export type SearchResponse =
                       }
                     | {
                         type: "mention"
-                        mention:
-                          | {
-                              type: "user"
-                              user:
-                                | { id: IdRequest; object: "user" }
-                                | {
-                                    type: "person"
-                                    person: { email: string }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                                | {
-                                    type: "bot"
-                                    bot:
-                                      | Record<string, never>
-                                      | {
-                                          owner:
-                                            | {
-                                                type: "user"
-                                                user:
-                                                  | {
-                                                      type: "person"
-                                                      person: { email: string }
-                                                      name: string | null
-                                                      avatar_url: string | null
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                                  | {
-                                                      id: IdRequest
-                                                      object: "user"
-                                                    }
-                                              }
-                                            | {
-                                                type: "workspace"
-                                                workspace: true
-                                              }
-                                        }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                            }
-                          | {
-                              type: "date"
-                              date: { start: string; end: string | null }
-                            }
-                          | { type: "page"; page: { id: IdRequest } }
-                          | { type: "database"; database: { id: IdRequest } }
+                        mention: mentionLookup
                         annotations: {
                           bold: boolean
                           italic: boolean
@@ -37181,25 +24574,7 @@ export type SearchResponse =
                       }
                     | {
                         type: "bot"
-                        bot:
-                          | Record<string, never>
-                          | {
-                              owner:
-                                | {
-                                    type: "user"
-                                    user:
-                                      | {
-                                          type: "person"
-                                          person: { email: string }
-                                          name: string | null
-                                          avatar_url: string | null
-                                          id: IdRequest
-                                          object: "user"
-                                        }
-                                      | { id: IdRequest; object: "user" }
-                                  }
-                                | { type: "workspace"; workspace: true }
-                            }
+                        bot: botLookup
                         name: string | null
                         avatar_url: string | null
                         id: IdRequest
@@ -37369,25 +24744,7 @@ export type SearchResponse =
                       }
                     | {
                         type: "bot"
-                        bot:
-                          | Record<string, never>
-                          | {
-                              owner:
-                                | {
-                                    type: "user"
-                                    user:
-                                      | {
-                                          type: "person"
-                                          person: { email: string }
-                                          name: string | null
-                                          avatar_url: string | null
-                                          id: IdRequest
-                                          object: "user"
-                                        }
-                                      | { id: IdRequest; object: "user" }
-                                  }
-                                | { type: "workspace"; workspace: true }
-                            }
+                        bot: botLookup
                         name: string | null
                         avatar_url: string | null
                         id: IdRequest
@@ -37414,25 +24771,7 @@ export type SearchResponse =
                       }
                     | {
                         type: "bot"
-                        bot:
-                          | Record<string, never>
-                          | {
-                              owner:
-                                | {
-                                    type: "user"
-                                    user:
-                                      | {
-                                          type: "person"
-                                          person: { email: string }
-                                          name: string | null
-                                          avatar_url: string | null
-                                          id: IdRequest
-                                          object: "user"
-                                        }
-                                      | { id: IdRequest; object: "user" }
-                                  }
-                                | { type: "workspace"; workspace: true }
-                            }
+                        bot: botLookup
                         name: string | null
                         avatar_url: string | null
                         id: IdRequest
@@ -37481,52 +24820,7 @@ export type SearchResponse =
                 }
               | {
                   type: "mention"
-                  mention:
-                    | {
-                        type: "user"
-                        user:
-                          | { id: IdRequest; object: "user" }
-                          | {
-                              type: "person"
-                              person: { email: string }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                          | {
-                              type: "bot"
-                              bot:
-                                | Record<string, never>
-                                | {
-                                    owner:
-                                      | {
-                                          type: "user"
-                                          user:
-                                            | {
-                                                type: "person"
-                                                person: { email: string }
-                                                name: string | null
-                                                avatar_url: string | null
-                                                id: IdRequest
-                                                object: "user"
-                                              }
-                                            | { id: IdRequest; object: "user" }
-                                        }
-                                      | { type: "workspace"; workspace: true }
-                                  }
-                              name: string | null
-                              avatar_url: string | null
-                              id: IdRequest
-                              object: "user"
-                            }
-                      }
-                    | {
-                        type: "date"
-                        date: { start: string; end: string | null }
-                      }
-                    | { type: "page"; page: { id: IdRequest } }
-                    | { type: "database"; database: { id: IdRequest } }
+                  mention: mentionLookup
                   annotations: {
                     bold: boolean
                     italic: boolean
@@ -37752,7 +25046,32 @@ export type annotationColorLookup =
 | "purple_background"
 | "pink_background"
 | "red_background"
-;
+
+export type botLookup =
+| Record<string, never>
+| {
+    owner:
+      | {
+          type: "user"
+          user:
+            | {
+                type: "person"
+                person: { email: string }
+                name: string | null
+                avatar_url: string | null
+                id: IdRequest
+                object: "user"
+              }
+            | { id: IdRequest; object: "user" }
+        }
+      | { type: "workspace"; workspace: true }
+  }
+
+export type mediaBlockLookup = {
+  external: { url: string }
+  type?: "external"
+  caption?: Array<RichTextItemRequest>
+}
 
 export type languageLookup =
 | "abap"
@@ -37827,7 +25146,6 @@ export type languageLookup =
 | "xml"
 | "yaml"
 | "java/c/c++/c#"
-;
 
 export type emojiLookup =
 | "😀"
@@ -41389,7 +28707,6 @@ export type emojiLookup =
 | "🏴󠁧󠁢󠁥󠁮󠁧󠁿"
 | "🏴󠁧󠁢󠁳󠁣󠁴󠁿"
 | "🏴󠁧󠁢󠁷󠁬󠁳󠁿"
-;
 
 export type functionLookup =
 | "count"
@@ -41414,7 +28731,6 @@ export type functionLookup =
 | "percent_checked"
 | "percent_unchecked"
 | "show_original"
-;
 
 export type formatLookup =
 | "number"
@@ -41453,7 +28769,6 @@ export type formatLookup =
 | "riyal"
 | "ringgit"
 | "leu"
-;
 
 export type selectColorLookup =
 | "default"
@@ -41466,5 +28781,106 @@ export type selectColorLookup =
 | "red"
 | "yellow"
 | "blue"
-;
 
+export type mentionLookup =
+| {
+    type: "user"
+    user:
+      | { id: IdRequest; object: "user" }
+      | {
+          type: "person"
+          person: { email: string }
+          name: string | null
+          avatar_url: string | null
+          id: IdRequest
+          object: "user"
+        }
+      | {
+          type: "bot"
+          bot:
+            | Record<string, never>
+            | {
+                owner:
+                  | {
+                      type: "user"
+                      user:
+                        | {
+                            type: "person"
+                            person: { email: string }
+                            name: string | null
+                            avatar_url: string | null
+                            id: IdRequest
+                            object: "user"
+                          }
+                        | { id: IdRequest; object: "user" }
+                    }
+                  | { type: "workspace"; workspace: true }
+              }
+          name: string | null
+          avatar_url: string | null
+          id: IdRequest
+          object: "user"
+        }
+  }
+| { type: "date"; date: { start: string; end: string | null } }
+| { type: "page"; page: { id: IdRequest } }
+| { type: "database"; database: { id: IdRequest } }
+
+export type stringQueryLookup =
+| { equals: string }
+| { does_not_equal: string }
+| { contains: string }
+| { does_not_contain: string }
+| { starts_with: string }
+| { ends_with: string }
+| { is_empty: true }
+| { is_not_empty: true }
+
+export type numberQueryLookup =
+| { equals: number }
+| { does_not_equal: number }
+| { greater_than: number }
+| { less_than: number }
+| { greater_than_or_equal_to: number }
+| { less_than_or_equal_to: number }
+| { is_empty: true }
+| { is_not_empty: true }
+
+export type selectQueryLookup =
+| { equals: string }
+| { does_not_equal: string }
+| { is_empty: true }
+| { is_not_empty: true }
+
+export type multiSelectQueryLookup =
+| { contains: string }
+| { does_not_contain: string }
+| { is_empty: true }
+| { is_not_empty: true }
+
+export type dateQueryLookup =
+| { equals: string }
+| { before: string }
+| { after: string }
+| { on_or_before: string }
+| { on_or_after: string }
+| { past_week: Record<string, never> }
+| { past_month: Record<string, never> }
+| { past_year: Record<string, never> }
+| { next_week: Record<string, never> }
+| { next_month: Record<string, never> }
+| { next_year: Record<string, never> }
+| { is_empty: true }
+| { is_not_empty: true }
+
+export type peopleQueryLookup =
+| { contains: IdRequest }
+| { does_not_contain: IdRequest }
+| { is_empty: true }
+| { is_not_empty: true }
+
+export type relationQueryLookup =
+| { contains: IdRequest }
+| { does_not_contain: IdRequest }
+| { is_empty: true }
+| { is_not_empty: true }
