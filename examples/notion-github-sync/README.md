@@ -4,7 +4,7 @@
 
 ## About the Integration
 
-This Notion integration syncs GitHub Issues for a specific repo to a Notion Database. This integration was built using this [database template](https://www.notion.com/367cd67cfe8f49bfaf0ac21305ebb9bf?v=bc79ca62b36e4c54b655ceed4ef06ebd) and [GitHub's Octokit Library](https://github.com/octokit). Changes made to issues in the Notion database will not be reflected in GitHub. For an example which allows you to take actions based on changes in a database [go here.](https://github.com/makenotion/notion-sdk-js/tree/main/examples/database-update-send-email)
+This Notion integration syncs GitHub Issues for a specific repo to a Notion Database. This integration was built using this [database template](https://www.notion.com/367cd67cfe8f49bfaf0ac21305ebb9bf?v=bc79ca62b36e4c54b655ceed4ef06ebd) and [GitHub's Octokit Library](https://github.com/octokit). Changes made to issues in the Notion database will not be reflected in GitHub. For an example which allows you to take actions based on changes in a database [go here.](https://github.com/makenotion/notion-sdk-js/tree/main/examples/database-email-update)
 
 ## Running Locally
 
