@@ -136,6 +136,2175 @@ export type BlockObjectRequest =
       object?: "block"
     }
   | {
+      column_list: {
+        children: Array<{
+          column: {
+            children: Array<
+              | {
+                  heading_1: { text: Array<RichTextItemRequest> }
+                  type?: "heading_1"
+                  object?: "block"
+                }
+              | {
+                  heading_2: { text: Array<RichTextItemRequest> }
+                  type?: "heading_2"
+                  object?: "block"
+                }
+              | {
+                  heading_3: { text: Array<RichTextItemRequest> }
+                  type?: "heading_3"
+                  object?: "block"
+                }
+              | {
+                  embed: { url: string; caption?: Array<RichTextItemRequest> }
+                  type?: "embed"
+                  object?: "block"
+                }
+              | {
+                  bookmark: {
+                    url: string
+                    caption?: Array<RichTextItemRequest>
+                  }
+                  type?: "bookmark"
+                  object?: "block"
+                }
+              | {
+                  image: mediaBlockLookup
+                  type?: "image"
+                  object?: "block"
+                }
+              | {
+                  video: mediaBlockLookup
+                  type?: "video"
+                  object?: "block"
+                }
+              | {
+                  pdf: mediaBlockLookup
+                  type?: "pdf"
+                  object?: "block"
+                }
+              | {
+                  file: mediaBlockLookup
+                  type?: "file"
+                  object?: "block"
+                }
+              | {
+                  audio: mediaBlockLookup
+                  type?: "audio"
+                  object?: "block"
+                }
+              | {
+                  code: {
+                    text: Array<RichTextItemRequest>
+                    language: languageLookup
+                  }
+                  type?: "code"
+                  object?: "block"
+                }
+              | {
+                  equation: { expression: string }
+                  type?: "equation"
+                  object?: "block"
+                }
+              | {
+                  divider: Record<string, never>
+                  type?: "divider"
+                  object?: "block"
+                }
+              | {
+                  breadcrumb: Record<string, never>
+                  type?: "breadcrumb"
+                  object?: "block"
+                }
+              | {
+                  table_of_contents: Record<string, never>
+                  type?: "table_of_contents"
+                  object?: "block"
+                }
+              | {
+                  paragraph: {
+                    text: Array<RichTextItemRequest>
+                    children?: Array<
+                      | {
+                          heading_1: { text: Array<RichTextItemRequest> }
+                          type?: "heading_1"
+                          object?: "block"
+                        }
+                      | {
+                          heading_2: { text: Array<RichTextItemRequest> }
+                          type?: "heading_2"
+                          object?: "block"
+                        }
+                      | {
+                          heading_3: { text: Array<RichTextItemRequest> }
+                          type?: "heading_3"
+                          object?: "block"
+                        }
+                      | {
+                          embed: {
+                            url: string
+                            caption?: Array<RichTextItemRequest>
+                          }
+                          type?: "embed"
+                          object?: "block"
+                        }
+                      | {
+                          bookmark: {
+                            url: string
+                            caption?: Array<RichTextItemRequest>
+                          }
+                          type?: "bookmark"
+                          object?: "block"
+                        }
+                      | {
+                          image: mediaBlockLookup
+                          type?: "image"
+                          object?: "block"
+                        }
+                      | {
+                          video: mediaBlockLookup
+                          type?: "video"
+                          object?: "block"
+                        }
+                      | {
+                          pdf: mediaBlockLookup
+                          type?: "pdf"
+                          object?: "block"
+                        }
+                      | {
+                          file: mediaBlockLookup
+                          type?: "file"
+                          object?: "block"
+                        }
+                      | {
+                          audio: mediaBlockLookup
+                          type?: "audio"
+                          object?: "block"
+                        }
+                      | {
+                          code: {
+                            text: Array<RichTextItemRequest>
+                            language: languageLookup
+                          }
+                          type?: "code"
+                          object?: "block"
+                        }
+                      | {
+                          equation: { expression: string }
+                          type?: "equation"
+                          object?: "block"
+                        }
+                      | {
+                          divider: Record<string, never>
+                          type?: "divider"
+                          object?: "block"
+                        }
+                      | {
+                          breadcrumb: Record<string, never>
+                          type?: "breadcrumb"
+                          object?: "block"
+                        }
+                      | {
+                          table_of_contents: Record<string, never>
+                          type?: "table_of_contents"
+                          object?: "block"
+                        }
+                      | {
+                          paragraph: { text: Array<RichTextItemRequest> }
+                          type?: "paragraph"
+                          object?: "block"
+                        }
+                      | {
+                          bulleted_list_item: {
+                            text: Array<RichTextItemRequest>
+                          }
+                          type?: "bulleted_list_item"
+                          object?: "block"
+                        }
+                      | {
+                          numbered_list_item: {
+                            text: Array<RichTextItemRequest>
+                          }
+                          type?: "numbered_list_item"
+                          object?: "block"
+                        }
+                      | {
+                          quote: { text: Array<RichTextItemRequest> }
+                          type?: "quote"
+                          object?: "block"
+                        }
+                      | {
+                          to_do: {
+                            text: Array<RichTextItemRequest>
+                            checked?: boolean
+                          }
+                          type?: "to_do"
+                          object?: "block"
+                        }
+                      | {
+                          toggle: { text: Array<RichTextItemRequest> }
+                          type?: "toggle"
+                          object?: "block"
+                        }
+                      | {
+                          callout: {
+                            text: Array<RichTextItemRequest>
+                            icon?:
+                              | {
+                                  emoji: emojiLookup
+                                  type?: "emoji"
+                                }
+                              | { external: { url: string }; type?: "external" }
+                          }
+                          type?: "callout"
+                          object?: "block"
+                        }
+                    >
+                  }
+                  type?: "paragraph"
+                  object?: "block"
+                }
+              | {
+                  bulleted_list_item: {
+                    text: Array<RichTextItemRequest>
+                    children?: Array<
+                      | {
+                          heading_1: { text: Array<RichTextItemRequest> }
+                          type?: "heading_1"
+                          object?: "block"
+                        }
+                      | {
+                          heading_2: { text: Array<RichTextItemRequest> }
+                          type?: "heading_2"
+                          object?: "block"
+                        }
+                      | {
+                          heading_3: { text: Array<RichTextItemRequest> }
+                          type?: "heading_3"
+                          object?: "block"
+                        }
+                      | {
+                          embed: {
+                            url: string
+                            caption?: Array<RichTextItemRequest>
+                          }
+                          type?: "embed"
+                          object?: "block"
+                        }
+                      | {
+                          bookmark: {
+                            url: string
+                            caption?: Array<RichTextItemRequest>
+                          }
+                          type?: "bookmark"
+                          object?: "block"
+                        }
+                      | {
+                          image: mediaBlockLookup
+                          type?: "image"
+                          object?: "block"
+                        }
+                      | {
+                          video: mediaBlockLookup
+                          type?: "video"
+                          object?: "block"
+                        }
+                      | {
+                          pdf: mediaBlockLookup
+                          type?: "pdf"
+                          object?: "block"
+                        }
+                      | {
+                          file: mediaBlockLookup
+                          type?: "file"
+                          object?: "block"
+                        }
+                      | {
+                          audio: mediaBlockLookup
+                          type?: "audio"
+                          object?: "block"
+                        }
+                      | {
+                          code: {
+                            text: Array<RichTextItemRequest>
+                            language: languageLookup
+                          }
+                          type?: "code"
+                          object?: "block"
+                        }
+                      | {
+                          equation: { expression: string }
+                          type?: "equation"
+                          object?: "block"
+                        }
+                      | {
+                          divider: Record<string, never>
+                          type?: "divider"
+                          object?: "block"
+                        }
+                      | {
+                          breadcrumb: Record<string, never>
+                          type?: "breadcrumb"
+                          object?: "block"
+                        }
+                      | {
+                          table_of_contents: Record<string, never>
+                          type?: "table_of_contents"
+                          object?: "block"
+                        }
+                      | {
+                          paragraph: { text: Array<RichTextItemRequest> }
+                          type?: "paragraph"
+                          object?: "block"
+                        }
+                      | {
+                          bulleted_list_item: {
+                            text: Array<RichTextItemRequest>
+                          }
+                          type?: "bulleted_list_item"
+                          object?: "block"
+                        }
+                      | {
+                          numbered_list_item: {
+                            text: Array<RichTextItemRequest>
+                          }
+                          type?: "numbered_list_item"
+                          object?: "block"
+                        }
+                      | {
+                          quote: { text: Array<RichTextItemRequest> }
+                          type?: "quote"
+                          object?: "block"
+                        }
+                      | {
+                          to_do: {
+                            text: Array<RichTextItemRequest>
+                            checked?: boolean
+                          }
+                          type?: "to_do"
+                          object?: "block"
+                        }
+                      | {
+                          toggle: { text: Array<RichTextItemRequest> }
+                          type?: "toggle"
+                          object?: "block"
+                        }
+                      | {
+                          callout: {
+                            text: Array<RichTextItemRequest>
+                            icon?:
+                              | {
+                                  emoji: emojiLookup
+                                  type?: "emoji"
+                                }
+                              | { external: { url: string }; type?: "external" }
+                          }
+                          type?: "callout"
+                          object?: "block"
+                        }
+                    >
+                  }
+                  type?: "bulleted_list_item"
+                  object?: "block"
+                }
+              | {
+                  numbered_list_item: {
+                    text: Array<RichTextItemRequest>
+                    children?: Array<
+                      | {
+                          heading_1: { text: Array<RichTextItemRequest> }
+                          type?: "heading_1"
+                          object?: "block"
+                        }
+                      | {
+                          heading_2: { text: Array<RichTextItemRequest> }
+                          type?: "heading_2"
+                          object?: "block"
+                        }
+                      | {
+                          heading_3: { text: Array<RichTextItemRequest> }
+                          type?: "heading_3"
+                          object?: "block"
+                        }
+                      | {
+                          embed: {
+                            url: string
+                            caption?: Array<RichTextItemRequest>
+                          }
+                          type?: "embed"
+                          object?: "block"
+                        }
+                      | {
+                          bookmark: {
+                            url: string
+                            caption?: Array<RichTextItemRequest>
+                          }
+                          type?: "bookmark"
+                          object?: "block"
+                        }
+                      | {
+                          image: mediaBlockLookup
+                          type?: "image"
+                          object?: "block"
+                        }
+                      | {
+                          video: mediaBlockLookup
+                          type?: "video"
+                          object?: "block"
+                        }
+                      | {
+                          pdf: mediaBlockLookup
+                          type?: "pdf"
+                          object?: "block"
+                        }
+                      | {
+                          file: mediaBlockLookup
+                          type?: "file"
+                          object?: "block"
+                        }
+                      | {
+                          audio: mediaBlockLookup
+                          type?: "audio"
+                          object?: "block"
+                        }
+                      | {
+                          code: {
+                            text: Array<RichTextItemRequest>
+                            language: languageLookup
+                          }
+                          type?: "code"
+                          object?: "block"
+                        }
+                      | {
+                          equation: { expression: string }
+                          type?: "equation"
+                          object?: "block"
+                        }
+                      | {
+                          divider: Record<string, never>
+                          type?: "divider"
+                          object?: "block"
+                        }
+                      | {
+                          breadcrumb: Record<string, never>
+                          type?: "breadcrumb"
+                          object?: "block"
+                        }
+                      | {
+                          table_of_contents: Record<string, never>
+                          type?: "table_of_contents"
+                          object?: "block"
+                        }
+                      | {
+                          paragraph: { text: Array<RichTextItemRequest> }
+                          type?: "paragraph"
+                          object?: "block"
+                        }
+                      | {
+                          bulleted_list_item: {
+                            text: Array<RichTextItemRequest>
+                          }
+                          type?: "bulleted_list_item"
+                          object?: "block"
+                        }
+                      | {
+                          numbered_list_item: {
+                            text: Array<RichTextItemRequest>
+                          }
+                          type?: "numbered_list_item"
+                          object?: "block"
+                        }
+                      | {
+                          quote: { text: Array<RichTextItemRequest> }
+                          type?: "quote"
+                          object?: "block"
+                        }
+                      | {
+                          to_do: {
+                            text: Array<RichTextItemRequest>
+                            checked?: boolean
+                          }
+                          type?: "to_do"
+                          object?: "block"
+                        }
+                      | {
+                          toggle: { text: Array<RichTextItemRequest> }
+                          type?: "toggle"
+                          object?: "block"
+                        }
+                      | {
+                          callout: {
+                            text: Array<RichTextItemRequest>
+                            icon?:
+                              | {
+                                  emoji: emojiLookup
+                                  type?: "emoji"
+                                }
+                              | { external: { url: string }; type?: "external" }
+                          }
+                          type?: "callout"
+                          object?: "block"
+                        }
+                    >
+                  }
+                  type?: "numbered_list_item"
+                  object?: "block"
+                }
+              | {
+                  quote: {
+                    text: Array<RichTextItemRequest>
+                    children?: Array<
+                      | {
+                          heading_1: { text: Array<RichTextItemRequest> }
+                          type?: "heading_1"
+                          object?: "block"
+                        }
+                      | {
+                          heading_2: { text: Array<RichTextItemRequest> }
+                          type?: "heading_2"
+                          object?: "block"
+                        }
+                      | {
+                          heading_3: { text: Array<RichTextItemRequest> }
+                          type?: "heading_3"
+                          object?: "block"
+                        }
+                      | {
+                          embed: {
+                            url: string
+                            caption?: Array<RichTextItemRequest>
+                          }
+                          type?: "embed"
+                          object?: "block"
+                        }
+                      | {
+                          bookmark: {
+                            url: string
+                            caption?: Array<RichTextItemRequest>
+                          }
+                          type?: "bookmark"
+                          object?: "block"
+                        }
+                      | {
+                          image: mediaBlockLookup
+                          type?: "image"
+                          object?: "block"
+                        }
+                      | {
+                          video: mediaBlockLookup
+                          type?: "video"
+                          object?: "block"
+                        }
+                      | {
+                          pdf: mediaBlockLookup
+                          type?: "pdf"
+                          object?: "block"
+                        }
+                      | {
+                          file: mediaBlockLookup
+                          type?: "file"
+                          object?: "block"
+                        }
+                      | {
+                          audio: mediaBlockLookup
+                          type?: "audio"
+                          object?: "block"
+                        }
+                      | {
+                          code: {
+                            text: Array<RichTextItemRequest>
+                            language: languageLookup
+                          }
+                          type?: "code"
+                          object?: "block"
+                        }
+                      | {
+                          equation: { expression: string }
+                          type?: "equation"
+                          object?: "block"
+                        }
+                      | {
+                          divider: Record<string, never>
+                          type?: "divider"
+                          object?: "block"
+                        }
+                      | {
+                          breadcrumb: Record<string, never>
+                          type?: "breadcrumb"
+                          object?: "block"
+                        }
+                      | {
+                          table_of_contents: Record<string, never>
+                          type?: "table_of_contents"
+                          object?: "block"
+                        }
+                      | {
+                          paragraph: { text: Array<RichTextItemRequest> }
+                          type?: "paragraph"
+                          object?: "block"
+                        }
+                      | {
+                          bulleted_list_item: {
+                            text: Array<RichTextItemRequest>
+                          }
+                          type?: "bulleted_list_item"
+                          object?: "block"
+                        }
+                      | {
+                          numbered_list_item: {
+                            text: Array<RichTextItemRequest>
+                          }
+                          type?: "numbered_list_item"
+                          object?: "block"
+                        }
+                      | {
+                          quote: { text: Array<RichTextItemRequest> }
+                          type?: "quote"
+                          object?: "block"
+                        }
+                      | {
+                          to_do: {
+                            text: Array<RichTextItemRequest>
+                            checked?: boolean
+                          }
+                          type?: "to_do"
+                          object?: "block"
+                        }
+                      | {
+                          toggle: { text: Array<RichTextItemRequest> }
+                          type?: "toggle"
+                          object?: "block"
+                        }
+                      | {
+                          callout: {
+                            text: Array<RichTextItemRequest>
+                            icon?:
+                              | {
+                                  emoji: emojiLookup
+                                  type?: "emoji"
+                                }
+                              | { external: { url: string }; type?: "external" }
+                          }
+                          type?: "callout"
+                          object?: "block"
+                        }
+                    >
+                  }
+                  type?: "quote"
+                  object?: "block"
+                }
+              | {
+                  to_do: {
+                    text: Array<RichTextItemRequest>
+                    children?: Array<
+                      | {
+                          heading_1: { text: Array<RichTextItemRequest> }
+                          type?: "heading_1"
+                          object?: "block"
+                        }
+                      | {
+                          heading_2: { text: Array<RichTextItemRequest> }
+                          type?: "heading_2"
+                          object?: "block"
+                        }
+                      | {
+                          heading_3: { text: Array<RichTextItemRequest> }
+                          type?: "heading_3"
+                          object?: "block"
+                        }
+                      | {
+                          embed: {
+                            url: string
+                            caption?: Array<RichTextItemRequest>
+                          }
+                          type?: "embed"
+                          object?: "block"
+                        }
+                      | {
+                          bookmark: {
+                            url: string
+                            caption?: Array<RichTextItemRequest>
+                          }
+                          type?: "bookmark"
+                          object?: "block"
+                        }
+                      | {
+                          image: mediaBlockLookup
+                          type?: "image"
+                          object?: "block"
+                        }
+                      | {
+                          video: mediaBlockLookup
+                          type?: "video"
+                          object?: "block"
+                        }
+                      | {
+                          pdf: mediaBlockLookup
+                          type?: "pdf"
+                          object?: "block"
+                        }
+                      | {
+                          file: mediaBlockLookup
+                          type?: "file"
+                          object?: "block"
+                        }
+                      | {
+                          audio: mediaBlockLookup
+                          type?: "audio"
+                          object?: "block"
+                        }
+                      | {
+                          code: {
+                            text: Array<RichTextItemRequest>
+                            language: languageLookup
+                          }
+                          type?: "code"
+                          object?: "block"
+                        }
+                      | {
+                          equation: { expression: string }
+                          type?: "equation"
+                          object?: "block"
+                        }
+                      | {
+                          divider: Record<string, never>
+                          type?: "divider"
+                          object?: "block"
+                        }
+                      | {
+                          breadcrumb: Record<string, never>
+                          type?: "breadcrumb"
+                          object?: "block"
+                        }
+                      | {
+                          table_of_contents: Record<string, never>
+                          type?: "table_of_contents"
+                          object?: "block"
+                        }
+                      | {
+                          paragraph: { text: Array<RichTextItemRequest> }
+                          type?: "paragraph"
+                          object?: "block"
+                        }
+                      | {
+                          bulleted_list_item: {
+                            text: Array<RichTextItemRequest>
+                          }
+                          type?: "bulleted_list_item"
+                          object?: "block"
+                        }
+                      | {
+                          numbered_list_item: {
+                            text: Array<RichTextItemRequest>
+                          }
+                          type?: "numbered_list_item"
+                          object?: "block"
+                        }
+                      | {
+                          quote: { text: Array<RichTextItemRequest> }
+                          type?: "quote"
+                          object?: "block"
+                        }
+                      | {
+                          to_do: {
+                            text: Array<RichTextItemRequest>
+                            checked?: boolean
+                          }
+                          type?: "to_do"
+                          object?: "block"
+                        }
+                      | {
+                          toggle: { text: Array<RichTextItemRequest> }
+                          type?: "toggle"
+                          object?: "block"
+                        }
+                      | {
+                          callout: {
+                            text: Array<RichTextItemRequest>
+                            icon?:
+                              | {
+                                  emoji: emojiLookup
+                                  type?: "emoji"
+                                }
+                              | { external: { url: string }; type?: "external" }
+                          }
+                          type?: "callout"
+                          object?: "block"
+                        }
+                    >
+                    checked?: boolean
+                  }
+                  type?: "to_do"
+                  object?: "block"
+                }
+              | {
+                  toggle: {
+                    text: Array<RichTextItemRequest>
+                    children?: Array<
+                      | {
+                          heading_1: { text: Array<RichTextItemRequest> }
+                          type?: "heading_1"
+                          object?: "block"
+                        }
+                      | {
+                          heading_2: { text: Array<RichTextItemRequest> }
+                          type?: "heading_2"
+                          object?: "block"
+                        }
+                      | {
+                          heading_3: { text: Array<RichTextItemRequest> }
+                          type?: "heading_3"
+                          object?: "block"
+                        }
+                      | {
+                          embed: {
+                            url: string
+                            caption?: Array<RichTextItemRequest>
+                          }
+                          type?: "embed"
+                          object?: "block"
+                        }
+                      | {
+                          bookmark: {
+                            url: string
+                            caption?: Array<RichTextItemRequest>
+                          }
+                          type?: "bookmark"
+                          object?: "block"
+                        }
+                      | {
+                          image: mediaBlockLookup
+                          type?: "image"
+                          object?: "block"
+                        }
+                      | {
+                          video: mediaBlockLookup
+                          type?: "video"
+                          object?: "block"
+                        }
+                      | {
+                          pdf: mediaBlockLookup
+                          type?: "pdf"
+                          object?: "block"
+                        }
+                      | {
+                          file: mediaBlockLookup
+                          type?: "file"
+                          object?: "block"
+                        }
+                      | {
+                          audio: mediaBlockLookup
+                          type?: "audio"
+                          object?: "block"
+                        }
+                      | {
+                          code: {
+                            text: Array<RichTextItemRequest>
+                            language: languageLookup
+                          }
+                          type?: "code"
+                          object?: "block"
+                        }
+                      | {
+                          equation: { expression: string }
+                          type?: "equation"
+                          object?: "block"
+                        }
+                      | {
+                          divider: Record<string, never>
+                          type?: "divider"
+                          object?: "block"
+                        }
+                      | {
+                          breadcrumb: Record<string, never>
+                          type?: "breadcrumb"
+                          object?: "block"
+                        }
+                      | {
+                          table_of_contents: Record<string, never>
+                          type?: "table_of_contents"
+                          object?: "block"
+                        }
+                      | {
+                          paragraph: { text: Array<RichTextItemRequest> }
+                          type?: "paragraph"
+                          object?: "block"
+                        }
+                      | {
+                          bulleted_list_item: {
+                            text: Array<RichTextItemRequest>
+                          }
+                          type?: "bulleted_list_item"
+                          object?: "block"
+                        }
+                      | {
+                          numbered_list_item: {
+                            text: Array<RichTextItemRequest>
+                          }
+                          type?: "numbered_list_item"
+                          object?: "block"
+                        }
+                      | {
+                          quote: { text: Array<RichTextItemRequest> }
+                          type?: "quote"
+                          object?: "block"
+                        }
+                      | {
+                          to_do: {
+                            text: Array<RichTextItemRequest>
+                            checked?: boolean
+                          }
+                          type?: "to_do"
+                          object?: "block"
+                        }
+                      | {
+                          toggle: { text: Array<RichTextItemRequest> }
+                          type?: "toggle"
+                          object?: "block"
+                        }
+                      | {
+                          callout: {
+                            text: Array<RichTextItemRequest>
+                            icon?:
+                              | {
+                                  emoji: emojiLookup
+                                  type?: "emoji"
+                                }
+                              | { external: { url: string }; type?: "external" }
+                          }
+                          type?: "callout"
+                          object?: "block"
+                        }
+                    >
+                  }
+                  type?: "toggle"
+                  object?: "block"
+                }
+              | {
+                  callout: {
+                    text: Array<RichTextItemRequest>
+                    children?: Array<
+                      | {
+                          heading_1: { text: Array<RichTextItemRequest> }
+                          type?: "heading_1"
+                          object?: "block"
+                        }
+                      | {
+                          heading_2: { text: Array<RichTextItemRequest> }
+                          type?: "heading_2"
+                          object?: "block"
+                        }
+                      | {
+                          heading_3: { text: Array<RichTextItemRequest> }
+                          type?: "heading_3"
+                          object?: "block"
+                        }
+                      | {
+                          embed: {
+                            url: string
+                            caption?: Array<RichTextItemRequest>
+                          }
+                          type?: "embed"
+                          object?: "block"
+                        }
+                      | {
+                          bookmark: {
+                            url: string
+                            caption?: Array<RichTextItemRequest>
+                          }
+                          type?: "bookmark"
+                          object?: "block"
+                        }
+                      | {
+                          image: mediaBlockLookup
+                          type?: "image"
+                          object?: "block"
+                        }
+                      | {
+                          video: mediaBlockLookup
+                          type?: "video"
+                          object?: "block"
+                        }
+                      | {
+                          pdf: mediaBlockLookup
+                          type?: "pdf"
+                          object?: "block"
+                        }
+                      | {
+                          file: mediaBlockLookup
+                          type?: "file"
+                          object?: "block"
+                        }
+                      | {
+                          audio: mediaBlockLookup
+                          type?: "audio"
+                          object?: "block"
+                        }
+                      | {
+                          code: {
+                            text: Array<RichTextItemRequest>
+                            language: languageLookup
+                          }
+                          type?: "code"
+                          object?: "block"
+                        }
+                      | {
+                          equation: { expression: string }
+                          type?: "equation"
+                          object?: "block"
+                        }
+                      | {
+                          divider: Record<string, never>
+                          type?: "divider"
+                          object?: "block"
+                        }
+                      | {
+                          breadcrumb: Record<string, never>
+                          type?: "breadcrumb"
+                          object?: "block"
+                        }
+                      | {
+                          table_of_contents: Record<string, never>
+                          type?: "table_of_contents"
+                          object?: "block"
+                        }
+                      | {
+                          paragraph: { text: Array<RichTextItemRequest> }
+                          type?: "paragraph"
+                          object?: "block"
+                        }
+                      | {
+                          bulleted_list_item: {
+                            text: Array<RichTextItemRequest>
+                          }
+                          type?: "bulleted_list_item"
+                          object?: "block"
+                        }
+                      | {
+                          numbered_list_item: {
+                            text: Array<RichTextItemRequest>
+                          }
+                          type?: "numbered_list_item"
+                          object?: "block"
+                        }
+                      | {
+                          quote: { text: Array<RichTextItemRequest> }
+                          type?: "quote"
+                          object?: "block"
+                        }
+                      | {
+                          to_do: {
+                            text: Array<RichTextItemRequest>
+                            checked?: boolean
+                          }
+                          type?: "to_do"
+                          object?: "block"
+                        }
+                      | {
+                          toggle: { text: Array<RichTextItemRequest> }
+                          type?: "toggle"
+                          object?: "block"
+                        }
+                      | {
+                          callout: {
+                            text: Array<RichTextItemRequest>
+                            icon?:
+                              | {
+                                  emoji: emojiLookup
+                                  type?: "emoji"
+                                }
+                              | { external: { url: string }; type?: "external" }
+                          }
+                          type?: "callout"
+                          object?: "block"
+                        }
+                    >
+                    icon?:
+                      | {
+                          emoji: emojiLookup
+                          type?: "emoji"
+                        }
+                      | { external: { url: string }; type?: "external" }
+                  }
+                  type?: "callout"
+                  object?: "block"
+                }
+            >
+          }
+          type?: "column"
+          object?: "block"
+        }>
+      }
+      type?: "column_list"
+      object?: "block"
+    }
+  | {
+      column: {
+        children: Array<
+          | {
+              heading_1: { text: Array<RichTextItemRequest> }
+              type?: "heading_1"
+              object?: "block"
+            }
+          | {
+              heading_2: { text: Array<RichTextItemRequest> }
+              type?: "heading_2"
+              object?: "block"
+            }
+          | {
+              heading_3: { text: Array<RichTextItemRequest> }
+              type?: "heading_3"
+              object?: "block"
+            }
+          | {
+              embed: { url: string; caption?: Array<RichTextItemRequest> }
+              type?: "embed"
+              object?: "block"
+            }
+          | {
+              bookmark: { url: string; caption?: Array<RichTextItemRequest> }
+              type?: "bookmark"
+              object?: "block"
+            }
+          | {
+              image: mediaBlockLookup
+              type?: "image"
+              object?: "block"
+            }
+          | {
+              video: mediaBlockLookup
+              type?: "video"
+              object?: "block"
+            }
+          | {
+              pdf: mediaBlockLookup
+              type?: "pdf"
+              object?: "block"
+            }
+          | {
+              file: mediaBlockLookup
+              type?: "file"
+              object?: "block"
+            }
+          | {
+              audio: mediaBlockLookup
+              type?: "audio"
+              object?: "block"
+            }
+          | {
+              code: {
+                text: Array<RichTextItemRequest>
+                language: languageLookup
+              }
+              type?: "code"
+              object?: "block"
+            }
+          | {
+              equation: { expression: string }
+              type?: "equation"
+              object?: "block"
+            }
+          | {
+              divider: Record<string, never>
+              type?: "divider"
+              object?: "block"
+            }
+          | {
+              breadcrumb: Record<string, never>
+              type?: "breadcrumb"
+              object?: "block"
+            }
+          | {
+              table_of_contents: Record<string, never>
+              type?: "table_of_contents"
+              object?: "block"
+            }
+          | {
+              paragraph: {
+                text: Array<RichTextItemRequest>
+                children?: Array<
+                  | {
+                      heading_1: { text: Array<RichTextItemRequest> }
+                      type?: "heading_1"
+                      object?: "block"
+                    }
+                  | {
+                      heading_2: { text: Array<RichTextItemRequest> }
+                      type?: "heading_2"
+                      object?: "block"
+                    }
+                  | {
+                      heading_3: { text: Array<RichTextItemRequest> }
+                      type?: "heading_3"
+                      object?: "block"
+                    }
+                  | {
+                      embed: {
+                        url: string
+                        caption?: Array<RichTextItemRequest>
+                      }
+                      type?: "embed"
+                      object?: "block"
+                    }
+                  | {
+                      bookmark: {
+                        url: string
+                        caption?: Array<RichTextItemRequest>
+                      }
+                      type?: "bookmark"
+                      object?: "block"
+                    }
+                  | {
+                      image: mediaBlockLookup
+                      type?: "image"
+                      object?: "block"
+                    }
+                  | {
+                      video: mediaBlockLookup
+                      type?: "video"
+                      object?: "block"
+                    }
+                  | {
+                      pdf: mediaBlockLookup
+                      type?: "pdf"
+                      object?: "block"
+                    }
+                  | {
+                      file: mediaBlockLookup
+                      type?: "file"
+                      object?: "block"
+                    }
+                  | {
+                      audio: mediaBlockLookup
+                      type?: "audio"
+                      object?: "block"
+                    }
+                  | {
+                      code: {
+                        text: Array<RichTextItemRequest>
+                        language: languageLookup
+                      }
+                      type?: "code"
+                      object?: "block"
+                    }
+                  | {
+                      equation: { expression: string }
+                      type?: "equation"
+                      object?: "block"
+                    }
+                  | {
+                      divider: Record<string, never>
+                      type?: "divider"
+                      object?: "block"
+                    }
+                  | {
+                      breadcrumb: Record<string, never>
+                      type?: "breadcrumb"
+                      object?: "block"
+                    }
+                  | {
+                      table_of_contents: Record<string, never>
+                      type?: "table_of_contents"
+                      object?: "block"
+                    }
+                  | {
+                      paragraph: { text: Array<RichTextItemRequest> }
+                      type?: "paragraph"
+                      object?: "block"
+                    }
+                  | {
+                      bulleted_list_item: { text: Array<RichTextItemRequest> }
+                      type?: "bulleted_list_item"
+                      object?: "block"
+                    }
+                  | {
+                      numbered_list_item: { text: Array<RichTextItemRequest> }
+                      type?: "numbered_list_item"
+                      object?: "block"
+                    }
+                  | {
+                      quote: { text: Array<RichTextItemRequest> }
+                      type?: "quote"
+                      object?: "block"
+                    }
+                  | {
+                      to_do: {
+                        text: Array<RichTextItemRequest>
+                        checked?: boolean
+                      }
+                      type?: "to_do"
+                      object?: "block"
+                    }
+                  | {
+                      toggle: { text: Array<RichTextItemRequest> }
+                      type?: "toggle"
+                      object?: "block"
+                    }
+                  | {
+                      callout: {
+                        text: Array<RichTextItemRequest>
+                        icon?:
+                          | {
+                              emoji: emojiLookup
+                              type?: "emoji"
+                            }
+                          | { external: { url: string }; type?: "external" }
+                      }
+                      type?: "callout"
+                      object?: "block"
+                    }
+                >
+              }
+              type?: "paragraph"
+              object?: "block"
+            }
+          | {
+              bulleted_list_item: {
+                text: Array<RichTextItemRequest>
+                children?: Array<
+                  | {
+                      heading_1: { text: Array<RichTextItemRequest> }
+                      type?: "heading_1"
+                      object?: "block"
+                    }
+                  | {
+                      heading_2: { text: Array<RichTextItemRequest> }
+                      type?: "heading_2"
+                      object?: "block"
+                    }
+                  | {
+                      heading_3: { text: Array<RichTextItemRequest> }
+                      type?: "heading_3"
+                      object?: "block"
+                    }
+                  | {
+                      embed: {
+                        url: string
+                        caption?: Array<RichTextItemRequest>
+                      }
+                      type?: "embed"
+                      object?: "block"
+                    }
+                  | {
+                      bookmark: {
+                        url: string
+                        caption?: Array<RichTextItemRequest>
+                      }
+                      type?: "bookmark"
+                      object?: "block"
+                    }
+                  | {
+                      image: mediaBlockLookup
+                      type?: "image"
+                      object?: "block"
+                    }
+                  | {
+                      video: mediaBlockLookup
+                      type?: "video"
+                      object?: "block"
+                    }
+                  | {
+                      pdf: mediaBlockLookup
+                      type?: "pdf"
+                      object?: "block"
+                    }
+                  | {
+                      file: mediaBlockLookup
+                      type?: "file"
+                      object?: "block"
+                    }
+                  | {
+                      audio: mediaBlockLookup
+                      type?: "audio"
+                      object?: "block"
+                    }
+                  | {
+                      code: {
+                        text: Array<RichTextItemRequest>
+                        language: languageLookup
+                      }
+                      type?: "code"
+                      object?: "block"
+                    }
+                  | {
+                      equation: { expression: string }
+                      type?: "equation"
+                      object?: "block"
+                    }
+                  | {
+                      divider: Record<string, never>
+                      type?: "divider"
+                      object?: "block"
+                    }
+                  | {
+                      breadcrumb: Record<string, never>
+                      type?: "breadcrumb"
+                      object?: "block"
+                    }
+                  | {
+                      table_of_contents: Record<string, never>
+                      type?: "table_of_contents"
+                      object?: "block"
+                    }
+                  | {
+                      paragraph: { text: Array<RichTextItemRequest> }
+                      type?: "paragraph"
+                      object?: "block"
+                    }
+                  | {
+                      bulleted_list_item: { text: Array<RichTextItemRequest> }
+                      type?: "bulleted_list_item"
+                      object?: "block"
+                    }
+                  | {
+                      numbered_list_item: { text: Array<RichTextItemRequest> }
+                      type?: "numbered_list_item"
+                      object?: "block"
+                    }
+                  | {
+                      quote: { text: Array<RichTextItemRequest> }
+                      type?: "quote"
+                      object?: "block"
+                    }
+                  | {
+                      to_do: {
+                        text: Array<RichTextItemRequest>
+                        checked?: boolean
+                      }
+                      type?: "to_do"
+                      object?: "block"
+                    }
+                  | {
+                      toggle: { text: Array<RichTextItemRequest> }
+                      type?: "toggle"
+                      object?: "block"
+                    }
+                  | {
+                      callout: {
+                        text: Array<RichTextItemRequest>
+                        icon?:
+                          | {
+                              emoji: emojiLookup
+                              type?: "emoji"
+                            }
+                          | { external: { url: string }; type?: "external" }
+                      }
+                      type?: "callout"
+                      object?: "block"
+                    }
+                >
+              }
+              type?: "bulleted_list_item"
+              object?: "block"
+            }
+          | {
+              numbered_list_item: {
+                text: Array<RichTextItemRequest>
+                children?: Array<
+                  | {
+                      heading_1: { text: Array<RichTextItemRequest> }
+                      type?: "heading_1"
+                      object?: "block"
+                    }
+                  | {
+                      heading_2: { text: Array<RichTextItemRequest> }
+                      type?: "heading_2"
+                      object?: "block"
+                    }
+                  | {
+                      heading_3: { text: Array<RichTextItemRequest> }
+                      type?: "heading_3"
+                      object?: "block"
+                    }
+                  | {
+                      embed: {
+                        url: string
+                        caption?: Array<RichTextItemRequest>
+                      }
+                      type?: "embed"
+                      object?: "block"
+                    }
+                  | {
+                      bookmark: {
+                        url: string
+                        caption?: Array<RichTextItemRequest>
+                      }
+                      type?: "bookmark"
+                      object?: "block"
+                    }
+                  | {
+                      image: mediaBlockLookup
+                      type?: "image"
+                      object?: "block"
+                    }
+                  | {
+                      video: mediaBlockLookup
+                      type?: "video"
+                      object?: "block"
+                    }
+                  | {
+                      pdf: mediaBlockLookup
+                      type?: "pdf"
+                      object?: "block"
+                    }
+                  | {
+                      file: mediaBlockLookup
+                      type?: "file"
+                      object?: "block"
+                    }
+                  | {
+                      audio: mediaBlockLookup
+                      type?: "audio"
+                      object?: "block"
+                    }
+                  | {
+                      code: {
+                        text: Array<RichTextItemRequest>
+                        language: languageLookup
+                      }
+                      type?: "code"
+                      object?: "block"
+                    }
+                  | {
+                      equation: { expression: string }
+                      type?: "equation"
+                      object?: "block"
+                    }
+                  | {
+                      divider: Record<string, never>
+                      type?: "divider"
+                      object?: "block"
+                    }
+                  | {
+                      breadcrumb: Record<string, never>
+                      type?: "breadcrumb"
+                      object?: "block"
+                    }
+                  | {
+                      table_of_contents: Record<string, never>
+                      type?: "table_of_contents"
+                      object?: "block"
+                    }
+                  | {
+                      paragraph: { text: Array<RichTextItemRequest> }
+                      type?: "paragraph"
+                      object?: "block"
+                    }
+                  | {
+                      bulleted_list_item: { text: Array<RichTextItemRequest> }
+                      type?: "bulleted_list_item"
+                      object?: "block"
+                    }
+                  | {
+                      numbered_list_item: { text: Array<RichTextItemRequest> }
+                      type?: "numbered_list_item"
+                      object?: "block"
+                    }
+                  | {
+                      quote: { text: Array<RichTextItemRequest> }
+                      type?: "quote"
+                      object?: "block"
+                    }
+                  | {
+                      to_do: {
+                        text: Array<RichTextItemRequest>
+                        checked?: boolean
+                      }
+                      type?: "to_do"
+                      object?: "block"
+                    }
+                  | {
+                      toggle: { text: Array<RichTextItemRequest> }
+                      type?: "toggle"
+                      object?: "block"
+                    }
+                  | {
+                      callout: {
+                        text: Array<RichTextItemRequest>
+                        icon?:
+                          | {
+                              emoji: emojiLookup
+                              type?: "emoji"
+                            }
+                          | { external: { url: string }; type?: "external" }
+                      }
+                      type?: "callout"
+                      object?: "block"
+                    }
+                >
+              }
+              type?: "numbered_list_item"
+              object?: "block"
+            }
+          | {
+              quote: {
+                text: Array<RichTextItemRequest>
+                children?: Array<
+                  | {
+                      heading_1: { text: Array<RichTextItemRequest> }
+                      type?: "heading_1"
+                      object?: "block"
+                    }
+                  | {
+                      heading_2: { text: Array<RichTextItemRequest> }
+                      type?: "heading_2"
+                      object?: "block"
+                    }
+                  | {
+                      heading_3: { text: Array<RichTextItemRequest> }
+                      type?: "heading_3"
+                      object?: "block"
+                    }
+                  | {
+                      embed: {
+                        url: string
+                        caption?: Array<RichTextItemRequest>
+                      }
+                      type?: "embed"
+                      object?: "block"
+                    }
+                  | {
+                      bookmark: {
+                        url: string
+                        caption?: Array<RichTextItemRequest>
+                      }
+                      type?: "bookmark"
+                      object?: "block"
+                    }
+                  | {
+                      image: mediaBlockLookup
+                      type?: "image"
+                      object?: "block"
+                    }
+                  | {
+                      video: mediaBlockLookup
+                      type?: "video"
+                      object?: "block"
+                    }
+                  | {
+                      pdf: mediaBlockLookup
+                      type?: "pdf"
+                      object?: "block"
+                    }
+                  | {
+                      file: mediaBlockLookup
+                      type?: "file"
+                      object?: "block"
+                    }
+                  | {
+                      audio: mediaBlockLookup
+                      type?: "audio"
+                      object?: "block"
+                    }
+                  | {
+                      code: {
+                        text: Array<RichTextItemRequest>
+                        language: languageLookup
+                      }
+                      type?: "code"
+                      object?: "block"
+                    }
+                  | {
+                      equation: { expression: string }
+                      type?: "equation"
+                      object?: "block"
+                    }
+                  | {
+                      divider: Record<string, never>
+                      type?: "divider"
+                      object?: "block"
+                    }
+                  | {
+                      breadcrumb: Record<string, never>
+                      type?: "breadcrumb"
+                      object?: "block"
+                    }
+                  | {
+                      table_of_contents: Record<string, never>
+                      type?: "table_of_contents"
+                      object?: "block"
+                    }
+                  | {
+                      paragraph: { text: Array<RichTextItemRequest> }
+                      type?: "paragraph"
+                      object?: "block"
+                    }
+                  | {
+                      bulleted_list_item: { text: Array<RichTextItemRequest> }
+                      type?: "bulleted_list_item"
+                      object?: "block"
+                    }
+                  | {
+                      numbered_list_item: { text: Array<RichTextItemRequest> }
+                      type?: "numbered_list_item"
+                      object?: "block"
+                    }
+                  | {
+                      quote: { text: Array<RichTextItemRequest> }
+                      type?: "quote"
+                      object?: "block"
+                    }
+                  | {
+                      to_do: {
+                        text: Array<RichTextItemRequest>
+                        checked?: boolean
+                      }
+                      type?: "to_do"
+                      object?: "block"
+                    }
+                  | {
+                      toggle: { text: Array<RichTextItemRequest> }
+                      type?: "toggle"
+                      object?: "block"
+                    }
+                  | {
+                      callout: {
+                        text: Array<RichTextItemRequest>
+                        icon?:
+                          | {
+                              emoji: emojiLookup
+                              type?: "emoji"
+                            }
+                          | { external: { url: string }; type?: "external" }
+                      }
+                      type?: "callout"
+                      object?: "block"
+                    }
+                >
+              }
+              type?: "quote"
+              object?: "block"
+            }
+          | {
+              to_do: {
+                text: Array<RichTextItemRequest>
+                children?: Array<
+                  | {
+                      heading_1: { text: Array<RichTextItemRequest> }
+                      type?: "heading_1"
+                      object?: "block"
+                    }
+                  | {
+                      heading_2: { text: Array<RichTextItemRequest> }
+                      type?: "heading_2"
+                      object?: "block"
+                    }
+                  | {
+                      heading_3: { text: Array<RichTextItemRequest> }
+                      type?: "heading_3"
+                      object?: "block"
+                    }
+                  | {
+                      embed: {
+                        url: string
+                        caption?: Array<RichTextItemRequest>
+                      }
+                      type?: "embed"
+                      object?: "block"
+                    }
+                  | {
+                      bookmark: {
+                        url: string
+                        caption?: Array<RichTextItemRequest>
+                      }
+                      type?: "bookmark"
+                      object?: "block"
+                    }
+                  | {
+                      image: mediaBlockLookup
+                      type?: "image"
+                      object?: "block"
+                    }
+                  | {
+                      video: mediaBlockLookup
+                      type?: "video"
+                      object?: "block"
+                    }
+                  | {
+                      pdf: mediaBlockLookup
+                      type?: "pdf"
+                      object?: "block"
+                    }
+                  | {
+                      file: mediaBlockLookup
+                      type?: "file"
+                      object?: "block"
+                    }
+                  | {
+                      audio: mediaBlockLookup
+                      type?: "audio"
+                      object?: "block"
+                    }
+                  | {
+                      code: {
+                        text: Array<RichTextItemRequest>
+                        language: languageLookup
+                      }
+                      type?: "code"
+                      object?: "block"
+                    }
+                  | {
+                      equation: { expression: string }
+                      type?: "equation"
+                      object?: "block"
+                    }
+                  | {
+                      divider: Record<string, never>
+                      type?: "divider"
+                      object?: "block"
+                    }
+                  | {
+                      breadcrumb: Record<string, never>
+                      type?: "breadcrumb"
+                      object?: "block"
+                    }
+                  | {
+                      table_of_contents: Record<string, never>
+                      type?: "table_of_contents"
+                      object?: "block"
+                    }
+                  | {
+                      paragraph: { text: Array<RichTextItemRequest> }
+                      type?: "paragraph"
+                      object?: "block"
+                    }
+                  | {
+                      bulleted_list_item: { text: Array<RichTextItemRequest> }
+                      type?: "bulleted_list_item"
+                      object?: "block"
+                    }
+                  | {
+                      numbered_list_item: { text: Array<RichTextItemRequest> }
+                      type?: "numbered_list_item"
+                      object?: "block"
+                    }
+                  | {
+                      quote: { text: Array<RichTextItemRequest> }
+                      type?: "quote"
+                      object?: "block"
+                    }
+                  | {
+                      to_do: {
+                        text: Array<RichTextItemRequest>
+                        checked?: boolean
+                      }
+                      type?: "to_do"
+                      object?: "block"
+                    }
+                  | {
+                      toggle: { text: Array<RichTextItemRequest> }
+                      type?: "toggle"
+                      object?: "block"
+                    }
+                  | {
+                      callout: {
+                        text: Array<RichTextItemRequest>
+                        icon?:
+                          | {
+                              emoji: emojiLookup
+                              type?: "emoji"
+                            }
+                          | { external: { url: string }; type?: "external" }
+                      }
+                      type?: "callout"
+                      object?: "block"
+                    }
+                >
+                checked?: boolean
+              }
+              type?: "to_do"
+              object?: "block"
+            }
+          | {
+              toggle: {
+                text: Array<RichTextItemRequest>
+                children?: Array<
+                  | {
+                      heading_1: { text: Array<RichTextItemRequest> }
+                      type?: "heading_1"
+                      object?: "block"
+                    }
+                  | {
+                      heading_2: { text: Array<RichTextItemRequest> }
+                      type?: "heading_2"
+                      object?: "block"
+                    }
+                  | {
+                      heading_3: { text: Array<RichTextItemRequest> }
+                      type?: "heading_3"
+                      object?: "block"
+                    }
+                  | {
+                      embed: {
+                        url: string
+                        caption?: Array<RichTextItemRequest>
+                      }
+                      type?: "embed"
+                      object?: "block"
+                    }
+                  | {
+                      bookmark: {
+                        url: string
+                        caption?: Array<RichTextItemRequest>
+                      }
+                      type?: "bookmark"
+                      object?: "block"
+                    }
+                  | {
+                      image: mediaBlockLookup
+                      type?: "image"
+                      object?: "block"
+                    }
+                  | {
+                      video: mediaBlockLookup
+                      type?: "video"
+                      object?: "block"
+                    }
+                  | {
+                      pdf: mediaBlockLookup
+                      type?: "pdf"
+                      object?: "block"
+                    }
+                  | {
+                      file: mediaBlockLookup
+                      type?: "file"
+                      object?: "block"
+                    }
+                  | {
+                      audio: mediaBlockLookup
+                      type?: "audio"
+                      object?: "block"
+                    }
+                  | {
+                      code: {
+                        text: Array<RichTextItemRequest>
+                        language: languageLookup
+                      }
+                      type?: "code"
+                      object?: "block"
+                    }
+                  | {
+                      equation: { expression: string }
+                      type?: "equation"
+                      object?: "block"
+                    }
+                  | {
+                      divider: Record<string, never>
+                      type?: "divider"
+                      object?: "block"
+                    }
+                  | {
+                      breadcrumb: Record<string, never>
+                      type?: "breadcrumb"
+                      object?: "block"
+                    }
+                  | {
+                      table_of_contents: Record<string, never>
+                      type?: "table_of_contents"
+                      object?: "block"
+                    }
+                  | {
+                      paragraph: { text: Array<RichTextItemRequest> }
+                      type?: "paragraph"
+                      object?: "block"
+                    }
+                  | {
+                      bulleted_list_item: { text: Array<RichTextItemRequest> }
+                      type?: "bulleted_list_item"
+                      object?: "block"
+                    }
+                  | {
+                      numbered_list_item: { text: Array<RichTextItemRequest> }
+                      type?: "numbered_list_item"
+                      object?: "block"
+                    }
+                  | {
+                      quote: { text: Array<RichTextItemRequest> }
+                      type?: "quote"
+                      object?: "block"
+                    }
+                  | {
+                      to_do: {
+                        text: Array<RichTextItemRequest>
+                        checked?: boolean
+                      }
+                      type?: "to_do"
+                      object?: "block"
+                    }
+                  | {
+                      toggle: { text: Array<RichTextItemRequest> }
+                      type?: "toggle"
+                      object?: "block"
+                    }
+                  | {
+                      callout: {
+                        text: Array<RichTextItemRequest>
+                        icon?:
+                          | {
+                              emoji: emojiLookup
+                              type?: "emoji"
+                            }
+                          | { external: { url: string }; type?: "external" }
+                      }
+                      type?: "callout"
+                      object?: "block"
+                    }
+                >
+              }
+              type?: "toggle"
+              object?: "block"
+            }
+          | {
+              callout: {
+                text: Array<RichTextItemRequest>
+                children?: Array<
+                  | {
+                      heading_1: { text: Array<RichTextItemRequest> }
+                      type?: "heading_1"
+                      object?: "block"
+                    }
+                  | {
+                      heading_2: { text: Array<RichTextItemRequest> }
+                      type?: "heading_2"
+                      object?: "block"
+                    }
+                  | {
+                      heading_3: { text: Array<RichTextItemRequest> }
+                      type?: "heading_3"
+                      object?: "block"
+                    }
+                  | {
+                      embed: {
+                        url: string
+                        caption?: Array<RichTextItemRequest>
+                      }
+                      type?: "embed"
+                      object?: "block"
+                    }
+                  | {
+                      bookmark: {
+                        url: string
+                        caption?: Array<RichTextItemRequest>
+                      }
+                      type?: "bookmark"
+                      object?: "block"
+                    }
+                  | {
+                      image: mediaBlockLookup
+                      type?: "image"
+                      object?: "block"
+                    }
+                  | {
+                      video: mediaBlockLookup
+                      type?: "video"
+                      object?: "block"
+                    }
+                  | {
+                      pdf: mediaBlockLookup
+                      type?: "pdf"
+                      object?: "block"
+                    }
+                  | {
+                      file: mediaBlockLookup
+                      type?: "file"
+                      object?: "block"
+                    }
+                  | {
+                      audio: mediaBlockLookup
+                      type?: "audio"
+                      object?: "block"
+                    }
+                  | {
+                      code: {
+                        text: Array<RichTextItemRequest>
+                        language: languageLookup
+                      }
+                      type?: "code"
+                      object?: "block"
+                    }
+                  | {
+                      equation: { expression: string }
+                      type?: "equation"
+                      object?: "block"
+                    }
+                  | {
+                      divider: Record<string, never>
+                      type?: "divider"
+                      object?: "block"
+                    }
+                  | {
+                      breadcrumb: Record<string, never>
+                      type?: "breadcrumb"
+                      object?: "block"
+                    }
+                  | {
+                      table_of_contents: Record<string, never>
+                      type?: "table_of_contents"
+                      object?: "block"
+                    }
+                  | {
+                      paragraph: { text: Array<RichTextItemRequest> }
+                      type?: "paragraph"
+                      object?: "block"
+                    }
+                  | {
+                      bulleted_list_item: { text: Array<RichTextItemRequest> }
+                      type?: "bulleted_list_item"
+                      object?: "block"
+                    }
+                  | {
+                      numbered_list_item: { text: Array<RichTextItemRequest> }
+                      type?: "numbered_list_item"
+                      object?: "block"
+                    }
+                  | {
+                      quote: { text: Array<RichTextItemRequest> }
+                      type?: "quote"
+                      object?: "block"
+                    }
+                  | {
+                      to_do: {
+                        text: Array<RichTextItemRequest>
+                        checked?: boolean
+                      }
+                      type?: "to_do"
+                      object?: "block"
+                    }
+                  | {
+                      toggle: { text: Array<RichTextItemRequest> }
+                      type?: "toggle"
+                      object?: "block"
+                    }
+                  | {
+                      callout: {
+                        text: Array<RichTextItemRequest>
+                        icon?:
+                          | {
+                              emoji: emojiLookup
+                              type?: "emoji"
+                            }
+                          | { external: { url: string }; type?: "external" }
+                      }
+                      type?: "callout"
+                      object?: "block"
+                    }
+                >
+                icon?:
+                  | {
+                      emoji: emojiLookup
+                      type?: "emoji"
+                    }
+                  | { external: { url: string }; type?: "external" }
+              }
+              type?: "callout"
+              object?: "block"
+            }
+        >
+      }
+      type?: "column"
+      object?: "block"
+    }
+  | {
       paragraph: {
         text: Array<RichTextItemRequest>
         children?: Array<
@@ -7696,68 +9865,234 @@ export type ListUsersResponse =
             type: "array"
             array: Array<
               | {
-                  type: "number"
-                  number: {
-                    format: formatLookup
-                  }
+                  type: "title"
+                  title: Array<
+                    | {
+                        type: "text"
+                        text: {
+                          content: string
+                          link: { url: TextRequest } | null
+                        }
+                        annotations: annotationsLookup
+                        plain_text: string
+                        href: string | null
+                      }
+                    | {
+                        type: "mention"
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: { start: string; end: string | null }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
+                        annotations: annotationsLookup
+                        plain_text: string
+                        href: string | null
+                      }
+                    | {
+                        type: "equation"
+                        equation: { expression: TextRequest }
+                        annotations: annotationsLookup
+                        plain_text: string
+                        href: string | null
+                      }
+                  >
                 }
-              | { type: "formula"; formula: { expression: string } }
+              | {
+                  type: "rich_text"
+                  rich_text: Array<
+                    | {
+                        type: "text"
+                        text: {
+                          content: string
+                          link: { url: TextRequest } | null
+                        }
+                        annotations: annotationsLookup
+                        plain_text: string
+                        href: string | null
+                      }
+                    | {
+                        type: "mention"
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: { start: string; end: string | null }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
+                        annotations: annotationsLookup
+                        plain_text: string
+                        href: string | null
+                      }
+                    | {
+                        type: "equation"
+                        equation: { expression: TextRequest }
+                        annotations: annotationsLookup
+                        plain_text: string
+                        href: string | null
+                      }
+                  >
+                }
+              | { type: "number"; number: number | null }
+              | { type: "url"; url: string | null }
               | {
                   type: "select"
                   select: {
-                    options: Array<{
-                      name: StringRequest
-                      id?: StringRequest
-                      color?: selectColorLookup
-                    }>
-                  }
+                    id: StringRequest
+                    name: StringRequest
+                    color: selectColorLookup
+                  } | null
                 }
               | {
                   type: "multi_select"
-                  multi_select: {
-                    options: Array<{
-                      name: StringRequest
-                      id?: StringRequest
-                      color?: selectColorLookup
-                    }>
-                  }
+                  multi_select: Array<{
+                    id: StringRequest
+                    name: StringRequest
+                    color: selectColorLookup
+                  }>
                 }
               | {
-                  type: "relation"
-                  relation: {
-                    database_id: IdRequest
-                    synced_property_id: string
-                    synced_property_name: string
-                  }
+                  type: "people"
+                  people: Array<
+                    | { id: IdRequest; object: "user" }
+                    | {
+                        type: "person"
+                        person: { email: string }
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
+                    | {
+                        type: "bot"
+                        bot: botLookup
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
+                  >
+                }
+              | { type: "email"; email: string | null }
+              | { type: "phone_number"; phone_number: string | null }
+              | {
+                  type: "date"
+                  date: { start: string; end: string | null } | null
                 }
               | {
-                  type: "rollup"
-                  rollup: {
-                    rollup_property_name: string
-                    relation_property_name: string
-                    rollup_property_id: string
-                    relation_property_id: string
-                    function: functionLookup
-                  }
+                  type: "files"
+                  files: Array<
+                    | {
+                        file: { url: string; expiry_time: string }
+                        name: string
+                        type?: "file"
+                      }
+                    | {
+                        external: { url: string }
+                        name: string
+                        type?: "external"
+                      }
+                  >
                 }
-              | { type: "title"; title: Record<string, never> }
-              | { type: "rich_text"; rich_text: Record<string, never> }
-              | { type: "url"; url: Record<string, never> }
-              | { type: "people"; people: Record<string, never> }
-              | { type: "files"; files: Record<string, never> }
-              | { type: "email"; email: Record<string, never> }
-              | { type: "phone_number"; phone_number: Record<string, never> }
-              | { type: "date"; date: Record<string, never> }
-              | { type: "checkbox"; checkbox: Record<string, never> }
-              | { type: "created_by"; created_by: Record<string, never> }
-              | { type: "created_time"; created_time: Record<string, never> }
+              | { type: "checkbox"; checkbox: boolean }
+              | {
+                  type: "formula"
+                  formula:
+                    | { type: "string"; string: string | null }
+                    | {
+                        type: "date"
+                        date: { start: string; end: string | null } | null
+                      }
+                    | { type: "number"; number: number | null }
+                    | { type: "boolean"; boolean: boolean | null }
+                }
+              | { type: "relation"; relation: Array<{ id: string }> }
+              | { type: "created_time"; created_time: string }
+              | {
+                  type: "created_by"
+                  created_by:
+                    | { id: IdRequest; object: "user" }
+                    | {
+                        type: "person"
+                        person: { email: string }
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
+                    | {
+                        type: "bot"
+                        bot: botLookup
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
+                }
+              | { type: "last_edited_time"; last_edited_time: string }
               | {
                   type: "last_edited_by"
-                  last_edited_by: Record<string, never>
-                }
-              | {
-                  type: "last_edited_time"
-                  last_edited_time: Record<string, never>
+                  last_edited_by:
+                    | { id: IdRequest; object: "user" }
+                    | {
+                        type: "person"
+                        person: { email: string }
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
+                    | {
+                        type: "bot"
+                        bot: botLookup
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
                 }
             >
             function: functionLookup
@@ -8028,7 +10363,31 @@ export type CreatePageResponse = {
             }
           | {
               type: "mention"
-              mention: mentionLookup
+              mention:
+                | {
+                    type: "user"
+                    user:
+                      | { id: IdRequest; object: "user" }
+                      | {
+                          type: "person"
+                          person: { email: string }
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                      | {
+                          type: "bot"
+                          bot: botLookup
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                  }
+                | { type: "date"; date: { start: string; end: string | null } }
+                | { type: "page"; page: { id: IdRequest } }
+                | { type: "database"; database: { id: IdRequest } }
               annotations: annotationsLookup
               plain_text: string
               href: string | null
@@ -8055,7 +10414,31 @@ export type CreatePageResponse = {
             }
           | {
               type: "mention"
-              mention: mentionLookup
+              mention:
+                | {
+                    type: "user"
+                    user:
+                      | { id: IdRequest; object: "user" }
+                      | {
+                          type: "person"
+                          person: { email: string }
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                      | {
+                          type: "bot"
+                          bot: botLookup
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                  }
+                | { type: "date"; date: { start: string; end: string | null } }
+                | { type: "page"; page: { id: IdRequest } }
+                | { type: "database"; database: { id: IdRequest } }
               annotations: annotationsLookup
               plain_text: string
               href: string | null
@@ -8070,15 +10453,15 @@ export type CreatePageResponse = {
         >
         id: string
       }
-    | { type: "number"; number: number; id: string }
-    | { type: "url"; url: string; id: string }
+    | { type: "number"; number: number | null; id: string }
+    | { type: "url"; url: string | null; id: string }
     | {
         type: "select"
         select: {
           id: StringRequest
           name: StringRequest
           color: selectColorLookup
-        }
+        } | null
         id: string
       }
     | {
@@ -8113,9 +10496,13 @@ export type CreatePageResponse = {
         >
         id: string
       }
-    | { type: "email"; email: string; id: string }
-    | { type: "phone_number"; phone_number: string; id: string }
-    | { type: "date"; date: { start: string; end: string | null }; id: string }
+    | { type: "email"; email: string | null; id: string }
+    | { type: "phone_number"; phone_number: string | null; id: string }
+    | {
+        type: "date"
+        date: { start: string; end: string | null } | null
+        id: string
+      }
     | {
         type: "files"
         files: Array<
@@ -8139,96 +10526,6 @@ export type CreatePageResponse = {
         id: string
       }
     | { type: "relation"; relation: Array<{ id: string }>; id: string }
-    | {
-        type: "rollup"
-        rollup:
-          | {
-              type: "number"
-              number: number | null
-              function: functionLookup
-            }
-          | {
-              type: "date"
-              date: { start: string; end: string | null } | null
-              function: functionLookup
-            }
-          | {
-              type: "array"
-              array: Array<
-                | {
-                    type: "number"
-                    number: {
-                      format: formatLookup
-                    }
-                  }
-                | { type: "formula"; formula: { expression: string } }
-                | {
-                    type: "select"
-                    select: {
-                      options: Array<{
-                        name: StringRequest
-                        id?: StringRequest
-                        color?: selectColorLookup
-                      }>
-                    }
-                  }
-                | {
-                    type: "multi_select"
-                    multi_select: {
-                      options: Array<{
-                        name: StringRequest
-                        id?: StringRequest
-                        color?: selectColorLookup
-                      }>
-                    }
-                  }
-                | {
-                    type: "relation"
-                    relation: {
-                      database_id: IdRequest
-                      synced_property_id: string
-                      synced_property_name: string
-                    }
-                  }
-                | {
-                    type: "rollup"
-                    rollup: {
-                      rollup_property_name: string
-                      relation_property_name: string
-                      rollup_property_id: string
-                      relation_property_id: string
-                      function: functionLookup
-                    }
-                  }
-                | { type: "title"; title: Record<string, never> }
-                | { type: "rich_text"; rich_text: Record<string, never> }
-                | { type: "url"; url: Record<string, never> }
-                | { type: "people"; people: Record<string, never> }
-                | { type: "files"; files: Record<string, never> }
-                | { type: "email"; email: Record<string, never> }
-                | { type: "phone_number"; phone_number: Record<string, never> }
-                | { type: "date"; date: Record<string, never> }
-                | { type: "checkbox"; checkbox: Record<string, never> }
-                | { type: "created_by"; created_by: Record<string, never> }
-                | { type: "created_time"; created_time: Record<string, never> }
-                | {
-                    type: "last_edited_by"
-                    last_edited_by: Record<string, never>
-                  }
-                | {
-                    type: "last_edited_time"
-                    last_edited_time: Record<string, never>
-                  }
-              >
-              function: functionLookup
-            }
-          | {
-              type: "unsupported"
-              unsupported: Record<string, never>
-              function: functionLookup
-            }
-        id: string
-      }
     | { type: "created_time"; created_time: string; id: string }
     | {
         type: "created_by"
@@ -8272,6 +10569,262 @@ export type CreatePageResponse = {
               avatar_url: string | null
               id: IdRequest
               object: "user"
+            }
+        id: string
+      }
+    | {
+        type: "rollup"
+        rollup:
+          | {
+              type: "number"
+              number: number | null
+              function: functionLookup
+            }
+          | {
+              type: "date"
+              date: { start: string; end: string | null } | null
+              function: functionLookup
+            }
+          | {
+              type: "array"
+              array: Array<
+                | {
+                    type: "title"
+                    title: Array<
+                      | {
+                          type: "text"
+                          text: {
+                            content: string
+                            link: { url: TextRequest } | null
+                          }
+                          annotations: annotationsLookup
+                          plain_text: string
+                          href: string | null
+                        }
+                      | {
+                          type: "mention"
+                          mention:
+                            | {
+                                type: "user"
+                                user:
+                                  | { id: IdRequest; object: "user" }
+                                  | {
+                                      type: "person"
+                                      person: { email: string }
+                                      name: string | null
+                                      avatar_url: string | null
+                                      id: IdRequest
+                                      object: "user"
+                                    }
+                                  | {
+                                      type: "bot"
+                                      bot: botLookup
+                                      name: string | null
+                                      avatar_url: string | null
+                                      id: IdRequest
+                                      object: "user"
+                                    }
+                              }
+                            | {
+                                type: "date"
+                                date: { start: string; end: string | null }
+                              }
+                            | { type: "page"; page: { id: IdRequest } }
+                            | { type: "database"; database: { id: IdRequest } }
+                          annotations: annotationsLookup
+                          plain_text: string
+                          href: string | null
+                        }
+                      | {
+                          type: "equation"
+                          equation: { expression: TextRequest }
+                          annotations: annotationsLookup
+                          plain_text: string
+                          href: string | null
+                        }
+                    >
+                  }
+                | {
+                    type: "rich_text"
+                    rich_text: Array<
+                      | {
+                          type: "text"
+                          text: {
+                            content: string
+                            link: { url: TextRequest } | null
+                          }
+                          annotations: annotationsLookup
+                          plain_text: string
+                          href: string | null
+                        }
+                      | {
+                          type: "mention"
+                          mention:
+                            | {
+                                type: "user"
+                                user:
+                                  | { id: IdRequest; object: "user" }
+                                  | {
+                                      type: "person"
+                                      person: { email: string }
+                                      name: string | null
+                                      avatar_url: string | null
+                                      id: IdRequest
+                                      object: "user"
+                                    }
+                                  | {
+                                      type: "bot"
+                                      bot: botLookup
+                                      name: string | null
+                                      avatar_url: string | null
+                                      id: IdRequest
+                                      object: "user"
+                                    }
+                              }
+                            | {
+                                type: "date"
+                                date: { start: string; end: string | null }
+                              }
+                            | { type: "page"; page: { id: IdRequest } }
+                            | { type: "database"; database: { id: IdRequest } }
+                          annotations: annotationsLookup
+                          plain_text: string
+                          href: string | null
+                        }
+                      | {
+                          type: "equation"
+                          equation: { expression: TextRequest }
+                          annotations: annotationsLookup
+                          plain_text: string
+                          href: string | null
+                        }
+                    >
+                  }
+                | { type: "number"; number: number | null }
+                | { type: "url"; url: string | null }
+                | {
+                    type: "select"
+                    select: {
+                      id: StringRequest
+                      name: StringRequest
+                      color: selectColorLookup
+                    } | null
+                  }
+                | {
+                    type: "multi_select"
+                    multi_select: Array<{
+                      id: StringRequest
+                      name: StringRequest
+                      color: selectColorLookup
+                    }>
+                  }
+                | {
+                    type: "people"
+                    people: Array<
+                      | { id: IdRequest; object: "user" }
+                      | {
+                          type: "person"
+                          person: { email: string }
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                      | {
+                          type: "bot"
+                          bot: botLookup
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                    >
+                  }
+                | { type: "email"; email: string | null }
+                | { type: "phone_number"; phone_number: string | null }
+                | {
+                    type: "date"
+                    date: { start: string; end: string | null } | null
+                  }
+                | {
+                    type: "files"
+                    files: Array<
+                      | {
+                          file: { url: string; expiry_time: string }
+                          name: string
+                          type?: "file"
+                        }
+                      | {
+                          external: { url: string }
+                          name: string
+                          type?: "external"
+                        }
+                    >
+                  }
+                | { type: "checkbox"; checkbox: boolean }
+                | {
+                    type: "formula"
+                    formula:
+                      | { type: "string"; string: string | null }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null } | null
+                        }
+                      | { type: "number"; number: number | null }
+                      | { type: "boolean"; boolean: boolean | null }
+                  }
+                | { type: "relation"; relation: Array<{ id: string }> }
+                | { type: "created_time"; created_time: string }
+                | {
+                    type: "created_by"
+                    created_by:
+                      | { id: IdRequest; object: "user" }
+                      | {
+                          type: "person"
+                          person: { email: string }
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                      | {
+                          type: "bot"
+                          bot: botLookup
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                  }
+                | { type: "last_edited_time"; last_edited_time: string }
+                | {
+                    type: "last_edited_by"
+                    last_edited_by:
+                      | { id: IdRequest; object: "user" }
+                      | {
+                          type: "person"
+                          person: { email: string }
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                      | {
+                          type: "bot"
+                          bot: botLookup
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                  }
+              >
+              function: functionLookup
+            }
+          | {
+              type: "unsupported"
+              unsupported: Record<string, never>
+              function: functionLookup
             }
         id: string
       }
@@ -8332,7 +10885,31 @@ export type GetPageResponse = {
             }
           | {
               type: "mention"
-              mention: mentionLookup
+              mention:
+                | {
+                    type: "user"
+                    user:
+                      | { id: IdRequest; object: "user" }
+                      | {
+                          type: "person"
+                          person: { email: string }
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                      | {
+                          type: "bot"
+                          bot: botLookup
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                  }
+                | { type: "date"; date: { start: string; end: string | null } }
+                | { type: "page"; page: { id: IdRequest } }
+                | { type: "database"; database: { id: IdRequest } }
               annotations: annotationsLookup
               plain_text: string
               href: string | null
@@ -8359,7 +10936,31 @@ export type GetPageResponse = {
             }
           | {
               type: "mention"
-              mention: mentionLookup
+              mention:
+                | {
+                    type: "user"
+                    user:
+                      | { id: IdRequest; object: "user" }
+                      | {
+                          type: "person"
+                          person: { email: string }
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                      | {
+                          type: "bot"
+                          bot: botLookup
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                  }
+                | { type: "date"; date: { start: string; end: string | null } }
+                | { type: "page"; page: { id: IdRequest } }
+                | { type: "database"; database: { id: IdRequest } }
               annotations: annotationsLookup
               plain_text: string
               href: string | null
@@ -8374,15 +10975,15 @@ export type GetPageResponse = {
         >
         id: string
       }
-    | { type: "number"; number: number; id: string }
-    | { type: "url"; url: string; id: string }
+    | { type: "number"; number: number | null; id: string }
+    | { type: "url"; url: string | null; id: string }
     | {
         type: "select"
         select: {
           id: StringRequest
           name: StringRequest
           color: selectColorLookup
-        }
+        } | null
         id: string
       }
     | {
@@ -8417,9 +11018,13 @@ export type GetPageResponse = {
         >
         id: string
       }
-    | { type: "email"; email: string; id: string }
-    | { type: "phone_number"; phone_number: string; id: string }
-    | { type: "date"; date: { start: string; end: string | null }; id: string }
+    | { type: "email"; email: string | null; id: string }
+    | { type: "phone_number"; phone_number: string | null; id: string }
+    | {
+        type: "date"
+        date: { start: string; end: string | null } | null
+        id: string
+      }
     | {
         type: "files"
         files: Array<
@@ -8443,96 +11048,6 @@ export type GetPageResponse = {
         id: string
       }
     | { type: "relation"; relation: Array<{ id: string }>; id: string }
-    | {
-        type: "rollup"
-        rollup:
-          | {
-              type: "number"
-              number: number | null
-              function: functionLookup
-            }
-          | {
-              type: "date"
-              date: { start: string; end: string | null } | null
-              function: functionLookup
-            }
-          | {
-              type: "array"
-              array: Array<
-                | {
-                    type: "number"
-                    number: {
-                      format: formatLookup
-                    }
-                  }
-                | { type: "formula"; formula: { expression: string } }
-                | {
-                    type: "select"
-                    select: {
-                      options: Array<{
-                        name: StringRequest
-                        id?: StringRequest
-                        color?: selectColorLookup
-                      }>
-                    }
-                  }
-                | {
-                    type: "multi_select"
-                    multi_select: {
-                      options: Array<{
-                        name: StringRequest
-                        id?: StringRequest
-                        color?: selectColorLookup
-                      }>
-                    }
-                  }
-                | {
-                    type: "relation"
-                    relation: {
-                      database_id: IdRequest
-                      synced_property_id: string
-                      synced_property_name: string
-                    }
-                  }
-                | {
-                    type: "rollup"
-                    rollup: {
-                      rollup_property_name: string
-                      relation_property_name: string
-                      rollup_property_id: string
-                      relation_property_id: string
-                      function: functionLookup
-                    }
-                  }
-                | { type: "title"; title: Record<string, never> }
-                | { type: "rich_text"; rich_text: Record<string, never> }
-                | { type: "url"; url: Record<string, never> }
-                | { type: "people"; people: Record<string, never> }
-                | { type: "files"; files: Record<string, never> }
-                | { type: "email"; email: Record<string, never> }
-                | { type: "phone_number"; phone_number: Record<string, never> }
-                | { type: "date"; date: Record<string, never> }
-                | { type: "checkbox"; checkbox: Record<string, never> }
-                | { type: "created_by"; created_by: Record<string, never> }
-                | { type: "created_time"; created_time: Record<string, never> }
-                | {
-                    type: "last_edited_by"
-                    last_edited_by: Record<string, never>
-                  }
-                | {
-                    type: "last_edited_time"
-                    last_edited_time: Record<string, never>
-                  }
-              >
-              function: functionLookup
-            }
-          | {
-              type: "unsupported"
-              unsupported: Record<string, never>
-              function: functionLookup
-            }
-        id: string
-      }
     | { type: "created_time"; created_time: string; id: string }
     | {
         type: "created_by"
@@ -8576,6 +11091,262 @@ export type GetPageResponse = {
               avatar_url: string | null
               id: IdRequest
               object: "user"
+            }
+        id: string
+      }
+    | {
+        type: "rollup"
+        rollup:
+          | {
+              type: "number"
+              number: number | null
+              function: functionLookup
+            }
+          | {
+              type: "date"
+              date: { start: string; end: string | null } | null
+              function: functionLookup
+            }
+          | {
+              type: "array"
+              array: Array<
+                | {
+                    type: "title"
+                    title: Array<
+                      | {
+                          type: "text"
+                          text: {
+                            content: string
+                            link: { url: TextRequest } | null
+                          }
+                          annotations: annotationsLookup
+                          plain_text: string
+                          href: string | null
+                        }
+                      | {
+                          type: "mention"
+                          mention:
+                            | {
+                                type: "user"
+                                user:
+                                  | { id: IdRequest; object: "user" }
+                                  | {
+                                      type: "person"
+                                      person: { email: string }
+                                      name: string | null
+                                      avatar_url: string | null
+                                      id: IdRequest
+                                      object: "user"
+                                    }
+                                  | {
+                                      type: "bot"
+                                      bot: botLookup
+                                      name: string | null
+                                      avatar_url: string | null
+                                      id: IdRequest
+                                      object: "user"
+                                    }
+                              }
+                            | {
+                                type: "date"
+                                date: { start: string; end: string | null }
+                              }
+                            | { type: "page"; page: { id: IdRequest } }
+                            | { type: "database"; database: { id: IdRequest } }
+                          annotations: annotationsLookup
+                          plain_text: string
+                          href: string | null
+                        }
+                      | {
+                          type: "equation"
+                          equation: { expression: TextRequest }
+                          annotations: annotationsLookup
+                          plain_text: string
+                          href: string | null
+                        }
+                    >
+                  }
+                | {
+                    type: "rich_text"
+                    rich_text: Array<
+                      | {
+                          type: "text"
+                          text: {
+                            content: string
+                            link: { url: TextRequest } | null
+                          }
+                          annotations: annotationsLookup
+                          plain_text: string
+                          href: string | null
+                        }
+                      | {
+                          type: "mention"
+                          mention:
+                            | {
+                                type: "user"
+                                user:
+                                  | { id: IdRequest; object: "user" }
+                                  | {
+                                      type: "person"
+                                      person: { email: string }
+                                      name: string | null
+                                      avatar_url: string | null
+                                      id: IdRequest
+                                      object: "user"
+                                    }
+                                  | {
+                                      type: "bot"
+                                      bot: botLookup
+                                      name: string | null
+                                      avatar_url: string | null
+                                      id: IdRequest
+                                      object: "user"
+                                    }
+                              }
+                            | {
+                                type: "date"
+                                date: { start: string; end: string | null }
+                              }
+                            | { type: "page"; page: { id: IdRequest } }
+                            | { type: "database"; database: { id: IdRequest } }
+                          annotations: annotationsLookup
+                          plain_text: string
+                          href: string | null
+                        }
+                      | {
+                          type: "equation"
+                          equation: { expression: TextRequest }
+                          annotations: annotationsLookup
+                          plain_text: string
+                          href: string | null
+                        }
+                    >
+                  }
+                | { type: "number"; number: number | null }
+                | { type: "url"; url: string | null }
+                | {
+                    type: "select"
+                    select: {
+                      id: StringRequest
+                      name: StringRequest
+                      color: selectColorLookup
+                    } | null
+                  }
+                | {
+                    type: "multi_select"
+                    multi_select: Array<{
+                      id: StringRequest
+                      name: StringRequest
+                      color: selectColorLookup
+                    }>
+                  }
+                | {
+                    type: "people"
+                    people: Array<
+                      | { id: IdRequest; object: "user" }
+                      | {
+                          type: "person"
+                          person: { email: string }
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                      | {
+                          type: "bot"
+                          bot: botLookup
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                    >
+                  }
+                | { type: "email"; email: string | null }
+                | { type: "phone_number"; phone_number: string | null }
+                | {
+                    type: "date"
+                    date: { start: string; end: string | null } | null
+                  }
+                | {
+                    type: "files"
+                    files: Array<
+                      | {
+                          file: { url: string; expiry_time: string }
+                          name: string
+                          type?: "file"
+                        }
+                      | {
+                          external: { url: string }
+                          name: string
+                          type?: "external"
+                        }
+                    >
+                  }
+                | { type: "checkbox"; checkbox: boolean }
+                | {
+                    type: "formula"
+                    formula:
+                      | { type: "string"; string: string | null }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null } | null
+                        }
+                      | { type: "number"; number: number | null }
+                      | { type: "boolean"; boolean: boolean | null }
+                  }
+                | { type: "relation"; relation: Array<{ id: string }> }
+                | { type: "created_time"; created_time: string }
+                | {
+                    type: "created_by"
+                    created_by:
+                      | { id: IdRequest; object: "user" }
+                      | {
+                          type: "person"
+                          person: { email: string }
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                      | {
+                          type: "bot"
+                          bot: botLookup
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                  }
+                | { type: "last_edited_time"; last_edited_time: string }
+                | {
+                    type: "last_edited_by"
+                    last_edited_by:
+                      | { id: IdRequest; object: "user" }
+                      | {
+                          type: "person"
+                          person: { email: string }
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                      | {
+                          type: "bot"
+                          bot: botLookup
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                  }
+              >
+              function: functionLookup
+            }
+          | {
+              type: "unsupported"
+              unsupported: Record<string, never>
+              function: functionLookup
             }
         id: string
       }
@@ -8795,7 +11566,31 @@ export type UpdatePageResponse = {
             }
           | {
               type: "mention"
-              mention: mentionLookup
+              mention:
+                | {
+                    type: "user"
+                    user:
+                      | { id: IdRequest; object: "user" }
+                      | {
+                          type: "person"
+                          person: { email: string }
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                      | {
+                          type: "bot"
+                          bot: botLookup
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                  }
+                | { type: "date"; date: { start: string; end: string | null } }
+                | { type: "page"; page: { id: IdRequest } }
+                | { type: "database"; database: { id: IdRequest } }
               annotations: annotationsLookup
               plain_text: string
               href: string | null
@@ -8822,7 +11617,31 @@ export type UpdatePageResponse = {
             }
           | {
               type: "mention"
-              mention: mentionLookup
+              mention:
+                | {
+                    type: "user"
+                    user:
+                      | { id: IdRequest; object: "user" }
+                      | {
+                          type: "person"
+                          person: { email: string }
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                      | {
+                          type: "bot"
+                          bot: botLookup
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                  }
+                | { type: "date"; date: { start: string; end: string | null } }
+                | { type: "page"; page: { id: IdRequest } }
+                | { type: "database"; database: { id: IdRequest } }
               annotations: annotationsLookup
               plain_text: string
               href: string | null
@@ -8837,15 +11656,15 @@ export type UpdatePageResponse = {
         >
         id: string
       }
-    | { type: "number"; number: number; id: string }
-    | { type: "url"; url: string; id: string }
+    | { type: "number"; number: number | null; id: string }
+    | { type: "url"; url: string | null; id: string }
     | {
         type: "select"
         select: {
           id: StringRequest
           name: StringRequest
           color: selectColorLookup
-        }
+        } | null
         id: string
       }
     | {
@@ -8880,9 +11699,13 @@ export type UpdatePageResponse = {
         >
         id: string
       }
-    | { type: "email"; email: string; id: string }
-    | { type: "phone_number"; phone_number: string; id: string }
-    | { type: "date"; date: { start: string; end: string | null }; id: string }
+    | { type: "email"; email: string | null; id: string }
+    | { type: "phone_number"; phone_number: string | null; id: string }
+    | {
+        type: "date"
+        date: { start: string; end: string | null } | null
+        id: string
+      }
     | {
         type: "files"
         files: Array<
@@ -8906,96 +11729,6 @@ export type UpdatePageResponse = {
         id: string
       }
     | { type: "relation"; relation: Array<{ id: string }>; id: string }
-    | {
-        type: "rollup"
-        rollup:
-          | {
-              type: "number"
-              number: number | null
-              function: functionLookup
-            }
-          | {
-              type: "date"
-              date: { start: string; end: string | null } | null
-              function: functionLookup
-            }
-          | {
-              type: "array"
-              array: Array<
-                | {
-                    type: "number"
-                    number: {
-                      format: formatLookup
-                    }
-                  }
-                | { type: "formula"; formula: { expression: string } }
-                | {
-                    type: "select"
-                    select: {
-                      options: Array<{
-                        name: StringRequest
-                        id?: StringRequest
-                        color?: selectColorLookup
-                      }>
-                    }
-                  }
-                | {
-                    type: "multi_select"
-                    multi_select: {
-                      options: Array<{
-                        name: StringRequest
-                        id?: StringRequest
-                        color?: selectColorLookup
-                      }>
-                    }
-                  }
-                | {
-                    type: "relation"
-                    relation: {
-                      database_id: IdRequest
-                      synced_property_id: string
-                      synced_property_name: string
-                    }
-                  }
-                | {
-                    type: "rollup"
-                    rollup: {
-                      rollup_property_name: string
-                      relation_property_name: string
-                      rollup_property_id: string
-                      relation_property_id: string
-                      function: functionLookup
-                    }
-                  }
-                | { type: "title"; title: Record<string, never> }
-                | { type: "rich_text"; rich_text: Record<string, never> }
-                | { type: "url"; url: Record<string, never> }
-                | { type: "people"; people: Record<string, never> }
-                | { type: "files"; files: Record<string, never> }
-                | { type: "email"; email: Record<string, never> }
-                | { type: "phone_number"; phone_number: Record<string, never> }
-                | { type: "date"; date: Record<string, never> }
-                | { type: "checkbox"; checkbox: Record<string, never> }
-                | { type: "created_by"; created_by: Record<string, never> }
-                | { type: "created_time"; created_time: Record<string, never> }
-                | {
-                    type: "last_edited_by"
-                    last_edited_by: Record<string, never>
-                  }
-                | {
-                    type: "last_edited_time"
-                    last_edited_time: Record<string, never>
-                  }
-              >
-              function: functionLookup
-            }
-          | {
-              type: "unsupported"
-              unsupported: Record<string, never>
-              function: functionLookup
-            }
-        id: string
-      }
     | { type: "created_time"; created_time: string; id: string }
     | {
         type: "created_by"
@@ -9039,6 +11772,262 @@ export type UpdatePageResponse = {
               avatar_url: string | null
               id: IdRequest
               object: "user"
+            }
+        id: string
+      }
+    | {
+        type: "rollup"
+        rollup:
+          | {
+              type: "number"
+              number: number | null
+              function: functionLookup
+            }
+          | {
+              type: "date"
+              date: { start: string; end: string | null } | null
+              function: functionLookup
+            }
+          | {
+              type: "array"
+              array: Array<
+                | {
+                    type: "title"
+                    title: Array<
+                      | {
+                          type: "text"
+                          text: {
+                            content: string
+                            link: { url: TextRequest } | null
+                          }
+                          annotations: annotationsLookup
+                          plain_text: string
+                          href: string | null
+                        }
+                      | {
+                          type: "mention"
+                          mention:
+                            | {
+                                type: "user"
+                                user:
+                                  | { id: IdRequest; object: "user" }
+                                  | {
+                                      type: "person"
+                                      person: { email: string }
+                                      name: string | null
+                                      avatar_url: string | null
+                                      id: IdRequest
+                                      object: "user"
+                                    }
+                                  | {
+                                      type: "bot"
+                                      bot: botLookup
+                                      name: string | null
+                                      avatar_url: string | null
+                                      id: IdRequest
+                                      object: "user"
+                                    }
+                              }
+                            | {
+                                type: "date"
+                                date: { start: string; end: string | null }
+                              }
+                            | { type: "page"; page: { id: IdRequest } }
+                            | { type: "database"; database: { id: IdRequest } }
+                          annotations: annotationsLookup
+                          plain_text: string
+                          href: string | null
+                        }
+                      | {
+                          type: "equation"
+                          equation: { expression: TextRequest }
+                          annotations: annotationsLookup
+                          plain_text: string
+                          href: string | null
+                        }
+                    >
+                  }
+                | {
+                    type: "rich_text"
+                    rich_text: Array<
+                      | {
+                          type: "text"
+                          text: {
+                            content: string
+                            link: { url: TextRequest } | null
+                          }
+                          annotations: annotationsLookup
+                          plain_text: string
+                          href: string | null
+                        }
+                      | {
+                          type: "mention"
+                          mention:
+                            | {
+                                type: "user"
+                                user:
+                                  | { id: IdRequest; object: "user" }
+                                  | {
+                                      type: "person"
+                                      person: { email: string }
+                                      name: string | null
+                                      avatar_url: string | null
+                                      id: IdRequest
+                                      object: "user"
+                                    }
+                                  | {
+                                      type: "bot"
+                                      bot: botLookup
+                                      name: string | null
+                                      avatar_url: string | null
+                                      id: IdRequest
+                                      object: "user"
+                                    }
+                              }
+                            | {
+                                type: "date"
+                                date: { start: string; end: string | null }
+                              }
+                            | { type: "page"; page: { id: IdRequest } }
+                            | { type: "database"; database: { id: IdRequest } }
+                          annotations: annotationsLookup
+                          plain_text: string
+                          href: string | null
+                        }
+                      | {
+                          type: "equation"
+                          equation: { expression: TextRequest }
+                          annotations: annotationsLookup
+                          plain_text: string
+                          href: string | null
+                        }
+                    >
+                  }
+                | { type: "number"; number: number | null }
+                | { type: "url"; url: string | null }
+                | {
+                    type: "select"
+                    select: {
+                      id: StringRequest
+                      name: StringRequest
+                      color: selectColorLookup
+                    } | null
+                  }
+                | {
+                    type: "multi_select"
+                    multi_select: Array<{
+                      id: StringRequest
+                      name: StringRequest
+                      color: selectColorLookup
+                    }>
+                  }
+                | {
+                    type: "people"
+                    people: Array<
+                      | { id: IdRequest; object: "user" }
+                      | {
+                          type: "person"
+                          person: { email: string }
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                      | {
+                          type: "bot"
+                          bot: botLookup
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                    >
+                  }
+                | { type: "email"; email: string | null }
+                | { type: "phone_number"; phone_number: string | null }
+                | {
+                    type: "date"
+                    date: { start: string; end: string | null } | null
+                  }
+                | {
+                    type: "files"
+                    files: Array<
+                      | {
+                          file: { url: string; expiry_time: string }
+                          name: string
+                          type?: "file"
+                        }
+                      | {
+                          external: { url: string }
+                          name: string
+                          type?: "external"
+                        }
+                    >
+                  }
+                | { type: "checkbox"; checkbox: boolean }
+                | {
+                    type: "formula"
+                    formula:
+                      | { type: "string"; string: string | null }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null } | null
+                        }
+                      | { type: "number"; number: number | null }
+                      | { type: "boolean"; boolean: boolean | null }
+                  }
+                | { type: "relation"; relation: Array<{ id: string }> }
+                | { type: "created_time"; created_time: string }
+                | {
+                    type: "created_by"
+                    created_by:
+                      | { id: IdRequest; object: "user" }
+                      | {
+                          type: "person"
+                          person: { email: string }
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                      | {
+                          type: "bot"
+                          bot: botLookup
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                  }
+                | { type: "last_edited_time"; last_edited_time: string }
+                | {
+                    type: "last_edited_by"
+                    last_edited_by:
+                      | { id: IdRequest; object: "user" }
+                      | {
+                          type: "person"
+                          person: { email: string }
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                      | {
+                          type: "bot"
+                          bot: botLookup
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                  }
+              >
+              function: functionLookup
+            }
+          | {
+              type: "unsupported"
+              unsupported: Record<string, never>
+              function: functionLookup
             }
         id: string
       }
@@ -9105,7 +12094,7 @@ export type GetPagePropertyResponse =
         id: StringRequest
         name: StringRequest
         color: selectColorLookup
-      }> | null
+      }>
       object: "property_item"
     }
   | {
@@ -9119,7 +12108,7 @@ export type GetPagePropertyResponse =
       phone_number: string | null
       object: "property_item"
     }
-  | { type: "checkbox"; checkbox: boolean | null; object: "property_item" }
+  | { type: "checkbox"; checkbox: boolean; object: "property_item" }
   | {
       type: "files"
       files: Array<
@@ -9129,14 +12118,13 @@ export type GetPagePropertyResponse =
             type?: "file"
           }
         | { external: { url: string }; name: string; type?: "external" }
-      > | null
+      >
       object: "property_item"
     }
   | {
       type: "created_by"
       created_by:
         | { id: IdRequest; object: "user" }
-        | null
         | {
             type: "person"
             person: { email: string }
@@ -9145,7 +12133,6 @@ export type GetPagePropertyResponse =
             id: IdRequest
             object: "user"
           }
-        | null
         | {
             type: "bot"
             bot: botLookup
@@ -9154,19 +12141,13 @@ export type GetPagePropertyResponse =
             id: IdRequest
             object: "user"
           }
-        | null
       object: "property_item"
     }
-  | {
-      type: "created_time"
-      created_time: string | null
-      object: "property_item"
-    }
+  | { type: "created_time"; created_time: string; object: "property_item" }
   | {
       type: "last_edited_by"
       last_edited_by:
         | { id: IdRequest; object: "user" }
-        | null
         | {
             type: "person"
             person: { email: string }
@@ -9175,7 +12156,6 @@ export type GetPagePropertyResponse =
             id: IdRequest
             object: "user"
           }
-        | null
         | {
             type: "bot"
             bot: botLookup
@@ -9184,25 +12164,20 @@ export type GetPagePropertyResponse =
             id: IdRequest
             object: "user"
           }
-        | null
       object: "property_item"
     }
   | {
       type: "last_edited_time"
-      last_edited_time: string | null
+      last_edited_time: string
       object: "property_item"
     }
   | {
       type: "formula"
       formula:
         | { type: "string"; string: string | null }
-        | null
         | { type: "date"; date: { start: string; end: string | null } | null }
-        | null
         | { type: "number"; number: number | null }
-        | null
         | { type: "boolean"; boolean: boolean | null }
-        | null
       object: "property_item"
     }
   | {
@@ -9217,7 +12192,31 @@ export type GetPagePropertyResponse =
           }
         | {
             type: "mention"
-            mention: mentionLookup
+            mention:
+              | {
+                  type: "user"
+                  user:
+                    | { id: IdRequest; object: "user" }
+                    | {
+                        type: "person"
+                        person: { email: string }
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
+                    | {
+                        type: "bot"
+                        bot: botLookup
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
+                }
+              | { type: "date"; date: { start: string; end: string | null } }
+              | { type: "page"; page: { id: IdRequest } }
+              | { type: "database"; database: { id: IdRequest } }
             annotations: annotationsLookup
             plain_text: string
             href: string | null
@@ -9243,7 +12242,31 @@ export type GetPagePropertyResponse =
           }
         | {
             type: "mention"
-            mention: mentionLookup
+            mention:
+              | {
+                  type: "user"
+                  user:
+                    | { id: IdRequest; object: "user" }
+                    | {
+                        type: "person"
+                        person: { email: string }
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
+                    | {
+                        type: "bot"
+                        bot: botLookup
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
+                }
+              | { type: "date"; date: { start: string; end: string | null } }
+              | { type: "page"; page: { id: IdRequest } }
+              | { type: "database"; database: { id: IdRequest } }
             annotations: annotationsLookup
             plain_text: string
             href: string | null
@@ -9297,68 +12320,234 @@ export type GetPagePropertyResponse =
             type: "array"
             array: Array<
               | {
-                  type: "number"
-                  number: {
-                    format: formatLookup
-                  }
+                  type: "title"
+                  title: Array<
+                    | {
+                        type: "text"
+                        text: {
+                          content: string
+                          link: { url: TextRequest } | null
+                        }
+                        annotations: annotationsLookup
+                        plain_text: string
+                        href: string | null
+                      }
+                    | {
+                        type: "mention"
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: { start: string; end: string | null }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
+                        annotations: annotationsLookup
+                        plain_text: string
+                        href: string | null
+                      }
+                    | {
+                        type: "equation"
+                        equation: { expression: TextRequest }
+                        annotations: annotationsLookup
+                        plain_text: string
+                        href: string | null
+                      }
+                  >
                 }
-              | { type: "formula"; formula: { expression: string } }
+              | {
+                  type: "rich_text"
+                  rich_text: Array<
+                    | {
+                        type: "text"
+                        text: {
+                          content: string
+                          link: { url: TextRequest } | null
+                        }
+                        annotations: annotationsLookup
+                        plain_text: string
+                        href: string | null
+                      }
+                    | {
+                        type: "mention"
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: { start: string; end: string | null }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
+                        annotations: annotationsLookup
+                        plain_text: string
+                        href: string | null
+                      }
+                    | {
+                        type: "equation"
+                        equation: { expression: TextRequest }
+                        annotations: annotationsLookup
+                        plain_text: string
+                        href: string | null
+                      }
+                  >
+                }
+              | { type: "number"; number: number | null }
+              | { type: "url"; url: string | null }
               | {
                   type: "select"
                   select: {
-                    options: Array<{
-                      name: StringRequest
-                      id?: StringRequest
-                      color?: selectColorLookup
-                    }>
-                  }
+                    id: StringRequest
+                    name: StringRequest
+                    color: selectColorLookup
+                  } | null
                 }
               | {
                   type: "multi_select"
-                  multi_select: {
-                    options: Array<{
-                      name: StringRequest
-                      id?: StringRequest
-                      color?: selectColorLookup
-                    }>
-                  }
+                  multi_select: Array<{
+                    id: StringRequest
+                    name: StringRequest
+                    color: selectColorLookup
+                  }>
                 }
               | {
-                  type: "relation"
-                  relation: {
-                    database_id: IdRequest
-                    synced_property_id: string
-                    synced_property_name: string
-                  }
+                  type: "people"
+                  people: Array<
+                    | { id: IdRequest; object: "user" }
+                    | {
+                        type: "person"
+                        person: { email: string }
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
+                    | {
+                        type: "bot"
+                        bot: botLookup
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
+                  >
+                }
+              | { type: "email"; email: string | null }
+              | { type: "phone_number"; phone_number: string | null }
+              | {
+                  type: "date"
+                  date: { start: string; end: string | null } | null
                 }
               | {
-                  type: "rollup"
-                  rollup: {
-                    rollup_property_name: string
-                    relation_property_name: string
-                    rollup_property_id: string
-                    relation_property_id: string
-                    function: functionLookup
-                  }
+                  type: "files"
+                  files: Array<
+                    | {
+                        file: { url: string; expiry_time: string }
+                        name: string
+                        type?: "file"
+                      }
+                    | {
+                        external: { url: string }
+                        name: string
+                        type?: "external"
+                      }
+                  >
                 }
-              | { type: "title"; title: Record<string, never> }
-              | { type: "rich_text"; rich_text: Record<string, never> }
-              | { type: "url"; url: Record<string, never> }
-              | { type: "people"; people: Record<string, never> }
-              | { type: "files"; files: Record<string, never> }
-              | { type: "email"; email: Record<string, never> }
-              | { type: "phone_number"; phone_number: Record<string, never> }
-              | { type: "date"; date: Record<string, never> }
-              | { type: "checkbox"; checkbox: Record<string, never> }
-              | { type: "created_by"; created_by: Record<string, never> }
-              | { type: "created_time"; created_time: Record<string, never> }
+              | { type: "checkbox"; checkbox: boolean }
+              | {
+                  type: "formula"
+                  formula:
+                    | { type: "string"; string: string | null }
+                    | {
+                        type: "date"
+                        date: { start: string; end: string | null } | null
+                      }
+                    | { type: "number"; number: number | null }
+                    | { type: "boolean"; boolean: boolean | null }
+                }
+              | { type: "relation"; relation: Array<{ id: string }> }
+              | { type: "created_time"; created_time: string }
+              | {
+                  type: "created_by"
+                  created_by:
+                    | { id: IdRequest; object: "user" }
+                    | {
+                        type: "person"
+                        person: { email: string }
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
+                    | {
+                        type: "bot"
+                        bot: botLookup
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
+                }
+              | { type: "last_edited_time"; last_edited_time: string }
               | {
                   type: "last_edited_by"
-                  last_edited_by: Record<string, never>
-                }
-              | {
-                  type: "last_edited_time"
-                  last_edited_time: Record<string, never>
+                  last_edited_by:
+                    | { id: IdRequest; object: "user" }
+                    | {
+                        type: "person"
+                        person: { email: string }
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
+                    | {
+                        type: "bot"
+                        bot: botLookup
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
                 }
             >
             function: functionLookup
@@ -9387,7 +12576,7 @@ export type GetPagePropertyResponse =
               id: StringRequest
               name: StringRequest
               color: selectColorLookup
-            }> | null
+            }>
             object: "property_item"
           }
         | {
@@ -9401,11 +12590,7 @@ export type GetPagePropertyResponse =
             phone_number: string | null
             object: "property_item"
           }
-        | {
-            type: "checkbox"
-            checkbox: boolean | null
-            object: "property_item"
-          }
+        | { type: "checkbox"; checkbox: boolean; object: "property_item" }
         | {
             type: "files"
             files: Array<
@@ -9415,14 +12600,13 @@ export type GetPagePropertyResponse =
                   type?: "file"
                 }
               | { external: { url: string }; name: string; type?: "external" }
-            > | null
+            >
             object: "property_item"
           }
         | {
             type: "created_by"
             created_by:
               | { id: IdRequest; object: "user" }
-              | null
               | {
                   type: "person"
                   person: { email: string }
@@ -9431,7 +12615,6 @@ export type GetPagePropertyResponse =
                   id: IdRequest
                   object: "user"
                 }
-              | null
               | {
                   type: "bot"
                   bot: botLookup
@@ -9440,19 +12623,17 @@ export type GetPagePropertyResponse =
                   id: IdRequest
                   object: "user"
                 }
-              | null
             object: "property_item"
           }
         | {
             type: "created_time"
-            created_time: string | null
+            created_time: string
             object: "property_item"
           }
         | {
             type: "last_edited_by"
             last_edited_by:
               | { id: IdRequest; object: "user" }
-              | null
               | {
                   type: "person"
                   person: { email: string }
@@ -9461,7 +12642,6 @@ export type GetPagePropertyResponse =
                   id: IdRequest
                   object: "user"
                 }
-              | null
               | {
                   type: "bot"
                   bot: botLookup
@@ -9470,28 +12650,23 @@ export type GetPagePropertyResponse =
                   id: IdRequest
                   object: "user"
                 }
-              | null
             object: "property_item"
           }
         | {
             type: "last_edited_time"
-            last_edited_time: string | null
+            last_edited_time: string
             object: "property_item"
           }
         | {
             type: "formula"
             formula:
               | { type: "string"; string: string | null }
-              | null
               | {
                   type: "date"
                   date: { start: string; end: string | null } | null
                 }
-              | null
               | { type: "number"; number: number | null }
-              | null
               | { type: "boolean"; boolean: boolean | null }
-              | null
             object: "property_item"
           }
         | {
@@ -9506,7 +12681,34 @@ export type GetPagePropertyResponse =
                 }
               | {
                   type: "mention"
-                  mention: mentionLookup
+                  mention:
+                    | {
+                        type: "user"
+                        user:
+                          | { id: IdRequest; object: "user" }
+                          | {
+                              type: "person"
+                              person: { email: string }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                          | {
+                              type: "bot"
+                              bot: botLookup
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                      }
+                    | {
+                        type: "date"
+                        date: { start: string; end: string | null }
+                      }
+                    | { type: "page"; page: { id: IdRequest } }
+                    | { type: "database"; database: { id: IdRequest } }
                   annotations: annotationsLookup
                   plain_text: string
                   href: string | null
@@ -9532,7 +12734,34 @@ export type GetPagePropertyResponse =
                 }
               | {
                   type: "mention"
-                  mention: mentionLookup
+                  mention:
+                    | {
+                        type: "user"
+                        user:
+                          | { id: IdRequest; object: "user" }
+                          | {
+                              type: "person"
+                              person: { email: string }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                          | {
+                              type: "bot"
+                              bot: botLookup
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                      }
+                    | {
+                        type: "date"
+                        date: { start: string; end: string | null }
+                      }
+                    | { type: "page"; page: { id: IdRequest } }
+                    | { type: "database"; database: { id: IdRequest } }
                   annotations: annotationsLookup
                   plain_text: string
                   href: string | null
@@ -9597,7 +12826,7 @@ export type GetPagePropertyResponse =
               id: StringRequest
               name: StringRequest
               color: selectColorLookup
-            }> | null
+            }>
             object: "property_item"
           }
         | {
@@ -9611,11 +12840,7 @@ export type GetPagePropertyResponse =
             phone_number: string | null
             object: "property_item"
           }
-        | {
-            type: "checkbox"
-            checkbox: boolean | null
-            object: "property_item"
-          }
+        | { type: "checkbox"; checkbox: boolean; object: "property_item" }
         | {
             type: "files"
             files: Array<
@@ -9625,14 +12850,13 @@ export type GetPagePropertyResponse =
                   type?: "file"
                 }
               | { external: { url: string }; name: string; type?: "external" }
-            > | null
+            >
             object: "property_item"
           }
         | {
             type: "created_by"
             created_by:
               | { id: IdRequest; object: "user" }
-              | null
               | {
                   type: "person"
                   person: { email: string }
@@ -9641,7 +12865,6 @@ export type GetPagePropertyResponse =
                   id: IdRequest
                   object: "user"
                 }
-              | null
               | {
                   type: "bot"
                   bot: botLookup
@@ -9650,19 +12873,17 @@ export type GetPagePropertyResponse =
                   id: IdRequest
                   object: "user"
                 }
-              | null
             object: "property_item"
           }
         | {
             type: "created_time"
-            created_time: string | null
+            created_time: string
             object: "property_item"
           }
         | {
             type: "last_edited_by"
             last_edited_by:
               | { id: IdRequest; object: "user" }
-              | null
               | {
                   type: "person"
                   person: { email: string }
@@ -9671,7 +12892,6 @@ export type GetPagePropertyResponse =
                   id: IdRequest
                   object: "user"
                 }
-              | null
               | {
                   type: "bot"
                   bot: botLookup
@@ -9680,28 +12900,23 @@ export type GetPagePropertyResponse =
                   id: IdRequest
                   object: "user"
                 }
-              | null
             object: "property_item"
           }
         | {
             type: "last_edited_time"
-            last_edited_time: string | null
+            last_edited_time: string
             object: "property_item"
           }
         | {
             type: "formula"
             formula:
               | { type: "string"; string: string | null }
-              | null
               | {
                   type: "date"
                   date: { start: string; end: string | null } | null
                 }
-              | null
               | { type: "number"; number: number | null }
-              | null
               | { type: "boolean"; boolean: boolean | null }
-              | null
             object: "property_item"
           }
         | {
@@ -9716,7 +12931,34 @@ export type GetPagePropertyResponse =
                 }
               | {
                   type: "mention"
-                  mention: mentionLookup
+                  mention:
+                    | {
+                        type: "user"
+                        user:
+                          | { id: IdRequest; object: "user" }
+                          | {
+                              type: "person"
+                              person: { email: string }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                          | {
+                              type: "bot"
+                              bot: botLookup
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                      }
+                    | {
+                        type: "date"
+                        date: { start: string; end: string | null }
+                      }
+                    | { type: "page"; page: { id: IdRequest } }
+                    | { type: "database"; database: { id: IdRequest } }
                   annotations: annotationsLookup
                   plain_text: string
                   href: string | null
@@ -9742,7 +12984,34 @@ export type GetPagePropertyResponse =
                 }
               | {
                   type: "mention"
-                  mention: mentionLookup
+                  mention:
+                    | {
+                        type: "user"
+                        user:
+                          | { id: IdRequest; object: "user" }
+                          | {
+                              type: "person"
+                              person: { email: string }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                          | {
+                              type: "bot"
+                              bot: botLookup
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                      }
+                    | {
+                        type: "date"
+                        date: { start: string; end: string | null }
+                      }
+                    | { type: "page"; page: { id: IdRequest } }
+                    | { type: "database"; database: { id: IdRequest } }
                   annotations: annotationsLookup
                   plain_text: string
                   href: string | null
@@ -9817,7 +13086,31 @@ export type GetBlockResponse =
             }
           | {
               type: "mention"
-              mention: mentionLookup
+              mention:
+                | {
+                    type: "user"
+                    user:
+                      | { id: IdRequest; object: "user" }
+                      | {
+                          type: "person"
+                          person: { email: string }
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                      | {
+                          type: "bot"
+                          bot: botLookup
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                  }
+                | { type: "date"; date: { start: string; end: string | null } }
+                | { type: "page"; page: { id: IdRequest } }
+                | { type: "database"; database: { id: IdRequest } }
               annotations: annotationsLookup
               plain_text: string
               href: string | null
@@ -9851,7 +13144,31 @@ export type GetBlockResponse =
             }
           | {
               type: "mention"
-              mention: mentionLookup
+              mention:
+                | {
+                    type: "user"
+                    user:
+                      | { id: IdRequest; object: "user" }
+                      | {
+                          type: "person"
+                          person: { email: string }
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                      | {
+                          type: "bot"
+                          bot: botLookup
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                  }
+                | { type: "date"; date: { start: string; end: string | null } }
+                | { type: "page"; page: { id: IdRequest } }
+                | { type: "database"; database: { id: IdRequest } }
               annotations: annotationsLookup
               plain_text: string
               href: string | null
@@ -9885,7 +13202,31 @@ export type GetBlockResponse =
             }
           | {
               type: "mention"
-              mention: mentionLookup
+              mention:
+                | {
+                    type: "user"
+                    user:
+                      | { id: IdRequest; object: "user" }
+                      | {
+                          type: "person"
+                          person: { email: string }
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                      | {
+                          type: "bot"
+                          bot: botLookup
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                  }
+                | { type: "date"; date: { start: string; end: string | null } }
+                | { type: "page"; page: { id: IdRequest } }
+                | { type: "database"; database: { id: IdRequest } }
               annotations: annotationsLookup
               plain_text: string
               href: string | null
@@ -9919,7 +13260,31 @@ export type GetBlockResponse =
             }
           | {
               type: "mention"
-              mention: mentionLookup
+              mention:
+                | {
+                    type: "user"
+                    user:
+                      | { id: IdRequest; object: "user" }
+                      | {
+                          type: "person"
+                          person: { email: string }
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                      | {
+                          type: "bot"
+                          bot: botLookup
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                  }
+                | { type: "date"; date: { start: string; end: string | null } }
+                | { type: "page"; page: { id: IdRequest } }
+                | { type: "database"; database: { id: IdRequest } }
               annotations: annotationsLookup
               plain_text: string
               href: string | null
@@ -9953,7 +13318,31 @@ export type GetBlockResponse =
             }
           | {
               type: "mention"
-              mention: mentionLookup
+              mention:
+                | {
+                    type: "user"
+                    user:
+                      | { id: IdRequest; object: "user" }
+                      | {
+                          type: "person"
+                          person: { email: string }
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                      | {
+                          type: "bot"
+                          bot: botLookup
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                  }
+                | { type: "date"; date: { start: string; end: string | null } }
+                | { type: "page"; page: { id: IdRequest } }
+                | { type: "database"; database: { id: IdRequest } }
               annotations: annotationsLookup
               plain_text: string
               href: string | null
@@ -9987,7 +13376,31 @@ export type GetBlockResponse =
             }
           | {
               type: "mention"
-              mention: mentionLookup
+              mention:
+                | {
+                    type: "user"
+                    user:
+                      | { id: IdRequest; object: "user" }
+                      | {
+                          type: "person"
+                          person: { email: string }
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                      | {
+                          type: "bot"
+                          bot: botLookup
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                  }
+                | { type: "date"; date: { start: string; end: string | null } }
+                | { type: "page"; page: { id: IdRequest } }
+                | { type: "database"; database: { id: IdRequest } }
               annotations: annotationsLookup
               plain_text: string
               href: string | null
@@ -10021,7 +13434,31 @@ export type GetBlockResponse =
             }
           | {
               type: "mention"
-              mention: mentionLookup
+              mention:
+                | {
+                    type: "user"
+                    user:
+                      | { id: IdRequest; object: "user" }
+                      | {
+                          type: "person"
+                          person: { email: string }
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                      | {
+                          type: "bot"
+                          bot: botLookup
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                  }
+                | { type: "date"; date: { start: string; end: string | null } }
+                | { type: "page"; page: { id: IdRequest } }
+                | { type: "database"; database: { id: IdRequest } }
               annotations: annotationsLookup
               plain_text: string
               href: string | null
@@ -10055,7 +13492,31 @@ export type GetBlockResponse =
             }
           | {
               type: "mention"
-              mention: mentionLookup
+              mention:
+                | {
+                    type: "user"
+                    user:
+                      | { id: IdRequest; object: "user" }
+                      | {
+                          type: "person"
+                          person: { email: string }
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                      | {
+                          type: "bot"
+                          bot: botLookup
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                  }
+                | { type: "date"; date: { start: string; end: string | null } }
+                | { type: "page"; page: { id: IdRequest } }
+                | { type: "database"; database: { id: IdRequest } }
               annotations: annotationsLookup
               plain_text: string
               href: string | null
@@ -10090,7 +13551,31 @@ export type GetBlockResponse =
             }
           | {
               type: "mention"
-              mention: mentionLookup
+              mention:
+                | {
+                    type: "user"
+                    user:
+                      | { id: IdRequest; object: "user" }
+                      | {
+                          type: "person"
+                          person: { email: string }
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                      | {
+                          type: "bot"
+                          bot: botLookup
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                  }
+                | { type: "date"; date: { start: string; end: string | null } }
+                | { type: "page"; page: { id: IdRequest } }
+                | { type: "database"; database: { id: IdRequest } }
               annotations: annotationsLookup
               plain_text: string
               href: string | null
@@ -10154,7 +13639,31 @@ export type GetBlockResponse =
             }
           | {
               type: "mention"
-              mention: mentionLookup
+              mention:
+                | {
+                    type: "user"
+                    user:
+                      | { id: IdRequest; object: "user" }
+                      | {
+                          type: "person"
+                          person: { email: string }
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                      | {
+                          type: "bot"
+                          bot: botLookup
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                  }
+                | { type: "date"; date: { start: string; end: string | null } }
+                | { type: "page"; page: { id: IdRequest } }
+                | { type: "database"; database: { id: IdRequest } }
               annotations: annotationsLookup
               plain_text: string
               href: string | null
@@ -10189,7 +13698,31 @@ export type GetBlockResponse =
             }
           | {
               type: "mention"
-              mention: mentionLookup
+              mention:
+                | {
+                    type: "user"
+                    user:
+                      | { id: IdRequest; object: "user" }
+                      | {
+                          type: "person"
+                          person: { email: string }
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                      | {
+                          type: "bot"
+                          bot: botLookup
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                  }
+                | { type: "date"; date: { start: string; end: string | null } }
+                | { type: "page"; page: { id: IdRequest } }
+                | { type: "database"; database: { id: IdRequest } }
               annotations: annotationsLookup
               plain_text: string
               href: string | null
@@ -10251,6 +13784,26 @@ export type GetBlockResponse =
       archived: boolean
     }
   | {
+      type: "column_list"
+      column_list: Record<string, never>
+      object: "block"
+      id: string
+      created_time: string
+      last_edited_time: string
+      has_children: boolean
+      archived: boolean
+    }
+  | {
+      type: "column"
+      column: Record<string, never>
+      object: "block"
+      id: string
+      created_time: string
+      last_edited_time: string
+      has_children: boolean
+      archived: boolean
+    }
+  | {
       type: "embed"
       embed: {
         url: string
@@ -10264,7 +13817,31 @@ export type GetBlockResponse =
             }
           | {
               type: "mention"
-              mention: mentionLookup
+              mention:
+                | {
+                    type: "user"
+                    user:
+                      | { id: IdRequest; object: "user" }
+                      | {
+                          type: "person"
+                          person: { email: string }
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                      | {
+                          type: "bot"
+                          bot: botLookup
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                  }
+                | { type: "date"; date: { start: string; end: string | null } }
+                | { type: "page"; page: { id: IdRequest } }
+                | { type: "database"; database: { id: IdRequest } }
               annotations: annotationsLookup
               plain_text: string
               href: string | null
@@ -10299,7 +13876,31 @@ export type GetBlockResponse =
             }
           | {
               type: "mention"
-              mention: mentionLookup
+              mention:
+                | {
+                    type: "user"
+                    user:
+                      | { id: IdRequest; object: "user" }
+                      | {
+                          type: "person"
+                          person: { email: string }
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                      | {
+                          type: "bot"
+                          bot: botLookup
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                  }
+                | { type: "date"; date: { start: string; end: string | null } }
+                | { type: "page"; page: { id: IdRequest } }
+                | { type: "database"; database: { id: IdRequest } }
               annotations: annotationsLookup
               plain_text: string
               href: string | null
@@ -10336,7 +13937,34 @@ export type GetBlockResponse =
                 }
               | {
                   type: "mention"
-                  mention: mentionLookup
+                  mention:
+                    | {
+                        type: "user"
+                        user:
+                          | { id: IdRequest; object: "user" }
+                          | {
+                              type: "person"
+                              person: { email: string }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                          | {
+                              type: "bot"
+                              bot: botLookup
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                      }
+                    | {
+                        type: "date"
+                        date: { start: string; end: string | null }
+                      }
+                    | { type: "page"; page: { id: IdRequest } }
+                    | { type: "database"; database: { id: IdRequest } }
                   annotations: annotationsLookup
                   plain_text: string
                   href: string | null
@@ -10363,7 +13991,34 @@ export type GetBlockResponse =
                 }
               | {
                   type: "mention"
-                  mention: mentionLookup
+                  mention:
+                    | {
+                        type: "user"
+                        user:
+                          | { id: IdRequest; object: "user" }
+                          | {
+                              type: "person"
+                              person: { email: string }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                          | {
+                              type: "bot"
+                              bot: botLookup
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                      }
+                    | {
+                        type: "date"
+                        date: { start: string; end: string | null }
+                      }
+                    | { type: "page"; page: { id: IdRequest } }
+                    | { type: "database"; database: { id: IdRequest } }
                   annotations: annotationsLookup
                   plain_text: string
                   href: string | null
@@ -10400,7 +14055,34 @@ export type GetBlockResponse =
                 }
               | {
                   type: "mention"
-                  mention: mentionLookup
+                  mention:
+                    | {
+                        type: "user"
+                        user:
+                          | { id: IdRequest; object: "user" }
+                          | {
+                              type: "person"
+                              person: { email: string }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                          | {
+                              type: "bot"
+                              bot: botLookup
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                      }
+                    | {
+                        type: "date"
+                        date: { start: string; end: string | null }
+                      }
+                    | { type: "page"; page: { id: IdRequest } }
+                    | { type: "database"; database: { id: IdRequest } }
                   annotations: annotationsLookup
                   plain_text: string
                   href: string | null
@@ -10427,7 +14109,34 @@ export type GetBlockResponse =
                 }
               | {
                   type: "mention"
-                  mention: mentionLookup
+                  mention:
+                    | {
+                        type: "user"
+                        user:
+                          | { id: IdRequest; object: "user" }
+                          | {
+                              type: "person"
+                              person: { email: string }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                          | {
+                              type: "bot"
+                              bot: botLookup
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                      }
+                    | {
+                        type: "date"
+                        date: { start: string; end: string | null }
+                      }
+                    | { type: "page"; page: { id: IdRequest } }
+                    | { type: "database"; database: { id: IdRequest } }
                   annotations: annotationsLookup
                   plain_text: string
                   href: string | null
@@ -10464,7 +14173,34 @@ export type GetBlockResponse =
                 }
               | {
                   type: "mention"
-                  mention: mentionLookup
+                  mention:
+                    | {
+                        type: "user"
+                        user:
+                          | { id: IdRequest; object: "user" }
+                          | {
+                              type: "person"
+                              person: { email: string }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                          | {
+                              type: "bot"
+                              bot: botLookup
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                      }
+                    | {
+                        type: "date"
+                        date: { start: string; end: string | null }
+                      }
+                    | { type: "page"; page: { id: IdRequest } }
+                    | { type: "database"; database: { id: IdRequest } }
                   annotations: annotationsLookup
                   plain_text: string
                   href: string | null
@@ -10491,7 +14227,34 @@ export type GetBlockResponse =
                 }
               | {
                   type: "mention"
-                  mention: mentionLookup
+                  mention:
+                    | {
+                        type: "user"
+                        user:
+                          | { id: IdRequest; object: "user" }
+                          | {
+                              type: "person"
+                              person: { email: string }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                          | {
+                              type: "bot"
+                              bot: botLookup
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                      }
+                    | {
+                        type: "date"
+                        date: { start: string; end: string | null }
+                      }
+                    | { type: "page"; page: { id: IdRequest } }
+                    | { type: "database"; database: { id: IdRequest } }
                   annotations: annotationsLookup
                   plain_text: string
                   href: string | null
@@ -10528,7 +14291,34 @@ export type GetBlockResponse =
                 }
               | {
                   type: "mention"
-                  mention: mentionLookup
+                  mention:
+                    | {
+                        type: "user"
+                        user:
+                          | { id: IdRequest; object: "user" }
+                          | {
+                              type: "person"
+                              person: { email: string }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                          | {
+                              type: "bot"
+                              bot: botLookup
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                      }
+                    | {
+                        type: "date"
+                        date: { start: string; end: string | null }
+                      }
+                    | { type: "page"; page: { id: IdRequest } }
+                    | { type: "database"; database: { id: IdRequest } }
                   annotations: annotationsLookup
                   plain_text: string
                   href: string | null
@@ -10555,7 +14345,34 @@ export type GetBlockResponse =
                 }
               | {
                   type: "mention"
-                  mention: mentionLookup
+                  mention:
+                    | {
+                        type: "user"
+                        user:
+                          | { id: IdRequest; object: "user" }
+                          | {
+                              type: "person"
+                              person: { email: string }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                          | {
+                              type: "bot"
+                              bot: botLookup
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                      }
+                    | {
+                        type: "date"
+                        date: { start: string; end: string | null }
+                      }
+                    | { type: "page"; page: { id: IdRequest } }
+                    | { type: "database"; database: { id: IdRequest } }
                   annotations: annotationsLookup
                   plain_text: string
                   href: string | null
@@ -10592,7 +14409,34 @@ export type GetBlockResponse =
                 }
               | {
                   type: "mention"
-                  mention: mentionLookup
+                  mention:
+                    | {
+                        type: "user"
+                        user:
+                          | { id: IdRequest; object: "user" }
+                          | {
+                              type: "person"
+                              person: { email: string }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                          | {
+                              type: "bot"
+                              bot: botLookup
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                      }
+                    | {
+                        type: "date"
+                        date: { start: string; end: string | null }
+                      }
+                    | { type: "page"; page: { id: IdRequest } }
+                    | { type: "database"; database: { id: IdRequest } }
                   annotations: annotationsLookup
                   plain_text: string
                   href: string | null
@@ -10619,7 +14463,34 @@ export type GetBlockResponse =
                 }
               | {
                   type: "mention"
-                  mention: mentionLookup
+                  mention:
+                    | {
+                        type: "user"
+                        user:
+                          | { id: IdRequest; object: "user" }
+                          | {
+                              type: "person"
+                              person: { email: string }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                          | {
+                              type: "bot"
+                              bot: botLookup
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                      }
+                    | {
+                        type: "date"
+                        date: { start: string; end: string | null }
+                      }
+                    | { type: "page"; page: { id: IdRequest } }
+                    | { type: "database"; database: { id: IdRequest } }
                   annotations: annotationsLookup
                   plain_text: string
                   href: string | null
@@ -10805,7 +14676,31 @@ export type UpdateBlockResponse =
             }
           | {
               type: "mention"
-              mention: mentionLookup
+              mention:
+                | {
+                    type: "user"
+                    user:
+                      | { id: IdRequest; object: "user" }
+                      | {
+                          type: "person"
+                          person: { email: string }
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                      | {
+                          type: "bot"
+                          bot: botLookup
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                  }
+                | { type: "date"; date: { start: string; end: string | null } }
+                | { type: "page"; page: { id: IdRequest } }
+                | { type: "database"; database: { id: IdRequest } }
               annotations: annotationsLookup
               plain_text: string
               href: string | null
@@ -10839,7 +14734,31 @@ export type UpdateBlockResponse =
             }
           | {
               type: "mention"
-              mention: mentionLookup
+              mention:
+                | {
+                    type: "user"
+                    user:
+                      | { id: IdRequest; object: "user" }
+                      | {
+                          type: "person"
+                          person: { email: string }
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                      | {
+                          type: "bot"
+                          bot: botLookup
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                  }
+                | { type: "date"; date: { start: string; end: string | null } }
+                | { type: "page"; page: { id: IdRequest } }
+                | { type: "database"; database: { id: IdRequest } }
               annotations: annotationsLookup
               plain_text: string
               href: string | null
@@ -10873,7 +14792,31 @@ export type UpdateBlockResponse =
             }
           | {
               type: "mention"
-              mention: mentionLookup
+              mention:
+                | {
+                    type: "user"
+                    user:
+                      | { id: IdRequest; object: "user" }
+                      | {
+                          type: "person"
+                          person: { email: string }
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                      | {
+                          type: "bot"
+                          bot: botLookup
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                  }
+                | { type: "date"; date: { start: string; end: string | null } }
+                | { type: "page"; page: { id: IdRequest } }
+                | { type: "database"; database: { id: IdRequest } }
               annotations: annotationsLookup
               plain_text: string
               href: string | null
@@ -10907,7 +14850,31 @@ export type UpdateBlockResponse =
             }
           | {
               type: "mention"
-              mention: mentionLookup
+              mention:
+                | {
+                    type: "user"
+                    user:
+                      | { id: IdRequest; object: "user" }
+                      | {
+                          type: "person"
+                          person: { email: string }
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                      | {
+                          type: "bot"
+                          bot: botLookup
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                  }
+                | { type: "date"; date: { start: string; end: string | null } }
+                | { type: "page"; page: { id: IdRequest } }
+                | { type: "database"; database: { id: IdRequest } }
               annotations: annotationsLookup
               plain_text: string
               href: string | null
@@ -10941,7 +14908,31 @@ export type UpdateBlockResponse =
             }
           | {
               type: "mention"
-              mention: mentionLookup
+              mention:
+                | {
+                    type: "user"
+                    user:
+                      | { id: IdRequest; object: "user" }
+                      | {
+                          type: "person"
+                          person: { email: string }
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                      | {
+                          type: "bot"
+                          bot: botLookup
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                  }
+                | { type: "date"; date: { start: string; end: string | null } }
+                | { type: "page"; page: { id: IdRequest } }
+                | { type: "database"; database: { id: IdRequest } }
               annotations: annotationsLookup
               plain_text: string
               href: string | null
@@ -10975,7 +14966,31 @@ export type UpdateBlockResponse =
             }
           | {
               type: "mention"
-              mention: mentionLookup
+              mention:
+                | {
+                    type: "user"
+                    user:
+                      | { id: IdRequest; object: "user" }
+                      | {
+                          type: "person"
+                          person: { email: string }
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                      | {
+                          type: "bot"
+                          bot: botLookup
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                  }
+                | { type: "date"; date: { start: string; end: string | null } }
+                | { type: "page"; page: { id: IdRequest } }
+                | { type: "database"; database: { id: IdRequest } }
               annotations: annotationsLookup
               plain_text: string
               href: string | null
@@ -11009,7 +15024,31 @@ export type UpdateBlockResponse =
             }
           | {
               type: "mention"
-              mention: mentionLookup
+              mention:
+                | {
+                    type: "user"
+                    user:
+                      | { id: IdRequest; object: "user" }
+                      | {
+                          type: "person"
+                          person: { email: string }
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                      | {
+                          type: "bot"
+                          bot: botLookup
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                  }
+                | { type: "date"; date: { start: string; end: string | null } }
+                | { type: "page"; page: { id: IdRequest } }
+                | { type: "database"; database: { id: IdRequest } }
               annotations: annotationsLookup
               plain_text: string
               href: string | null
@@ -11043,7 +15082,31 @@ export type UpdateBlockResponse =
             }
           | {
               type: "mention"
-              mention: mentionLookup
+              mention:
+                | {
+                    type: "user"
+                    user:
+                      | { id: IdRequest; object: "user" }
+                      | {
+                          type: "person"
+                          person: { email: string }
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                      | {
+                          type: "bot"
+                          bot: botLookup
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                  }
+                | { type: "date"; date: { start: string; end: string | null } }
+                | { type: "page"; page: { id: IdRequest } }
+                | { type: "database"; database: { id: IdRequest } }
               annotations: annotationsLookup
               plain_text: string
               href: string | null
@@ -11078,7 +15141,31 @@ export type UpdateBlockResponse =
             }
           | {
               type: "mention"
-              mention: mentionLookup
+              mention:
+                | {
+                    type: "user"
+                    user:
+                      | { id: IdRequest; object: "user" }
+                      | {
+                          type: "person"
+                          person: { email: string }
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                      | {
+                          type: "bot"
+                          bot: botLookup
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                  }
+                | { type: "date"; date: { start: string; end: string | null } }
+                | { type: "page"; page: { id: IdRequest } }
+                | { type: "database"; database: { id: IdRequest } }
               annotations: annotationsLookup
               plain_text: string
               href: string | null
@@ -11142,7 +15229,31 @@ export type UpdateBlockResponse =
             }
           | {
               type: "mention"
-              mention: mentionLookup
+              mention:
+                | {
+                    type: "user"
+                    user:
+                      | { id: IdRequest; object: "user" }
+                      | {
+                          type: "person"
+                          person: { email: string }
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                      | {
+                          type: "bot"
+                          bot: botLookup
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                  }
+                | { type: "date"; date: { start: string; end: string | null } }
+                | { type: "page"; page: { id: IdRequest } }
+                | { type: "database"; database: { id: IdRequest } }
               annotations: annotationsLookup
               plain_text: string
               href: string | null
@@ -11177,7 +15288,31 @@ export type UpdateBlockResponse =
             }
           | {
               type: "mention"
-              mention: mentionLookup
+              mention:
+                | {
+                    type: "user"
+                    user:
+                      | { id: IdRequest; object: "user" }
+                      | {
+                          type: "person"
+                          person: { email: string }
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                      | {
+                          type: "bot"
+                          bot: botLookup
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                  }
+                | { type: "date"; date: { start: string; end: string | null } }
+                | { type: "page"; page: { id: IdRequest } }
+                | { type: "database"; database: { id: IdRequest } }
               annotations: annotationsLookup
               plain_text: string
               href: string | null
@@ -11239,6 +15374,26 @@ export type UpdateBlockResponse =
       archived: boolean
     }
   | {
+      type: "column_list"
+      column_list: Record<string, never>
+      object: "block"
+      id: string
+      created_time: string
+      last_edited_time: string
+      has_children: boolean
+      archived: boolean
+    }
+  | {
+      type: "column"
+      column: Record<string, never>
+      object: "block"
+      id: string
+      created_time: string
+      last_edited_time: string
+      has_children: boolean
+      archived: boolean
+    }
+  | {
       type: "embed"
       embed: {
         url: string
@@ -11252,7 +15407,31 @@ export type UpdateBlockResponse =
             }
           | {
               type: "mention"
-              mention: mentionLookup
+              mention:
+                | {
+                    type: "user"
+                    user:
+                      | { id: IdRequest; object: "user" }
+                      | {
+                          type: "person"
+                          person: { email: string }
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                      | {
+                          type: "bot"
+                          bot: botLookup
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                  }
+                | { type: "date"; date: { start: string; end: string | null } }
+                | { type: "page"; page: { id: IdRequest } }
+                | { type: "database"; database: { id: IdRequest } }
               annotations: annotationsLookup
               plain_text: string
               href: string | null
@@ -11287,7 +15466,31 @@ export type UpdateBlockResponse =
             }
           | {
               type: "mention"
-              mention: mentionLookup
+              mention:
+                | {
+                    type: "user"
+                    user:
+                      | { id: IdRequest; object: "user" }
+                      | {
+                          type: "person"
+                          person: { email: string }
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                      | {
+                          type: "bot"
+                          bot: botLookup
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                  }
+                | { type: "date"; date: { start: string; end: string | null } }
+                | { type: "page"; page: { id: IdRequest } }
+                | { type: "database"; database: { id: IdRequest } }
               annotations: annotationsLookup
               plain_text: string
               href: string | null
@@ -11324,7 +15527,34 @@ export type UpdateBlockResponse =
                 }
               | {
                   type: "mention"
-                  mention: mentionLookup
+                  mention:
+                    | {
+                        type: "user"
+                        user:
+                          | { id: IdRequest; object: "user" }
+                          | {
+                              type: "person"
+                              person: { email: string }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                          | {
+                              type: "bot"
+                              bot: botLookup
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                      }
+                    | {
+                        type: "date"
+                        date: { start: string; end: string | null }
+                      }
+                    | { type: "page"; page: { id: IdRequest } }
+                    | { type: "database"; database: { id: IdRequest } }
                   annotations: annotationsLookup
                   plain_text: string
                   href: string | null
@@ -11351,7 +15581,34 @@ export type UpdateBlockResponse =
                 }
               | {
                   type: "mention"
-                  mention: mentionLookup
+                  mention:
+                    | {
+                        type: "user"
+                        user:
+                          | { id: IdRequest; object: "user" }
+                          | {
+                              type: "person"
+                              person: { email: string }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                          | {
+                              type: "bot"
+                              bot: botLookup
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                      }
+                    | {
+                        type: "date"
+                        date: { start: string; end: string | null }
+                      }
+                    | { type: "page"; page: { id: IdRequest } }
+                    | { type: "database"; database: { id: IdRequest } }
                   annotations: annotationsLookup
                   plain_text: string
                   href: string | null
@@ -11388,7 +15645,34 @@ export type UpdateBlockResponse =
                 }
               | {
                   type: "mention"
-                  mention: mentionLookup
+                  mention:
+                    | {
+                        type: "user"
+                        user:
+                          | { id: IdRequest; object: "user" }
+                          | {
+                              type: "person"
+                              person: { email: string }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                          | {
+                              type: "bot"
+                              bot: botLookup
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                      }
+                    | {
+                        type: "date"
+                        date: { start: string; end: string | null }
+                      }
+                    | { type: "page"; page: { id: IdRequest } }
+                    | { type: "database"; database: { id: IdRequest } }
                   annotations: annotationsLookup
                   plain_text: string
                   href: string | null
@@ -11415,7 +15699,34 @@ export type UpdateBlockResponse =
                 }
               | {
                   type: "mention"
-                  mention: mentionLookup
+                  mention:
+                    | {
+                        type: "user"
+                        user:
+                          | { id: IdRequest; object: "user" }
+                          | {
+                              type: "person"
+                              person: { email: string }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                          | {
+                              type: "bot"
+                              bot: botLookup
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                      }
+                    | {
+                        type: "date"
+                        date: { start: string; end: string | null }
+                      }
+                    | { type: "page"; page: { id: IdRequest } }
+                    | { type: "database"; database: { id: IdRequest } }
                   annotations: annotationsLookup
                   plain_text: string
                   href: string | null
@@ -11452,7 +15763,34 @@ export type UpdateBlockResponse =
                 }
               | {
                   type: "mention"
-                  mention: mentionLookup
+                  mention:
+                    | {
+                        type: "user"
+                        user:
+                          | { id: IdRequest; object: "user" }
+                          | {
+                              type: "person"
+                              person: { email: string }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                          | {
+                              type: "bot"
+                              bot: botLookup
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                      }
+                    | {
+                        type: "date"
+                        date: { start: string; end: string | null }
+                      }
+                    | { type: "page"; page: { id: IdRequest } }
+                    | { type: "database"; database: { id: IdRequest } }
                   annotations: annotationsLookup
                   plain_text: string
                   href: string | null
@@ -11479,7 +15817,34 @@ export type UpdateBlockResponse =
                 }
               | {
                   type: "mention"
-                  mention: mentionLookup
+                  mention:
+                    | {
+                        type: "user"
+                        user:
+                          | { id: IdRequest; object: "user" }
+                          | {
+                              type: "person"
+                              person: { email: string }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                          | {
+                              type: "bot"
+                              bot: botLookup
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                      }
+                    | {
+                        type: "date"
+                        date: { start: string; end: string | null }
+                      }
+                    | { type: "page"; page: { id: IdRequest } }
+                    | { type: "database"; database: { id: IdRequest } }
                   annotations: annotationsLookup
                   plain_text: string
                   href: string | null
@@ -11516,7 +15881,34 @@ export type UpdateBlockResponse =
                 }
               | {
                   type: "mention"
-                  mention: mentionLookup
+                  mention:
+                    | {
+                        type: "user"
+                        user:
+                          | { id: IdRequest; object: "user" }
+                          | {
+                              type: "person"
+                              person: { email: string }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                          | {
+                              type: "bot"
+                              bot: botLookup
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                      }
+                    | {
+                        type: "date"
+                        date: { start: string; end: string | null }
+                      }
+                    | { type: "page"; page: { id: IdRequest } }
+                    | { type: "database"; database: { id: IdRequest } }
                   annotations: annotationsLookup
                   plain_text: string
                   href: string | null
@@ -11543,7 +15935,34 @@ export type UpdateBlockResponse =
                 }
               | {
                   type: "mention"
-                  mention: mentionLookup
+                  mention:
+                    | {
+                        type: "user"
+                        user:
+                          | { id: IdRequest; object: "user" }
+                          | {
+                              type: "person"
+                              person: { email: string }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                          | {
+                              type: "bot"
+                              bot: botLookup
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                      }
+                    | {
+                        type: "date"
+                        date: { start: string; end: string | null }
+                      }
+                    | { type: "page"; page: { id: IdRequest } }
+                    | { type: "database"; database: { id: IdRequest } }
                   annotations: annotationsLookup
                   plain_text: string
                   href: string | null
@@ -11580,7 +15999,34 @@ export type UpdateBlockResponse =
                 }
               | {
                   type: "mention"
-                  mention: mentionLookup
+                  mention:
+                    | {
+                        type: "user"
+                        user:
+                          | { id: IdRequest; object: "user" }
+                          | {
+                              type: "person"
+                              person: { email: string }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                          | {
+                              type: "bot"
+                              bot: botLookup
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                      }
+                    | {
+                        type: "date"
+                        date: { start: string; end: string | null }
+                      }
+                    | { type: "page"; page: { id: IdRequest } }
+                    | { type: "database"; database: { id: IdRequest } }
                   annotations: annotationsLookup
                   plain_text: string
                   href: string | null
@@ -11607,7 +16053,34 @@ export type UpdateBlockResponse =
                 }
               | {
                   type: "mention"
-                  mention: mentionLookup
+                  mention:
+                    | {
+                        type: "user"
+                        user:
+                          | { id: IdRequest; object: "user" }
+                          | {
+                              type: "person"
+                              person: { email: string }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                          | {
+                              type: "bot"
+                              bot: botLookup
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                      }
+                    | {
+                        type: "date"
+                        date: { start: string; end: string | null }
+                      }
+                    | { type: "page"; page: { id: IdRequest } }
+                    | { type: "database"; database: { id: IdRequest } }
                   annotations: annotationsLookup
                   plain_text: string
                   href: string | null
@@ -11692,7 +16165,31 @@ export type DeleteBlockResponse =
             }
           | {
               type: "mention"
-              mention: mentionLookup
+              mention:
+                | {
+                    type: "user"
+                    user:
+                      | { id: IdRequest; object: "user" }
+                      | {
+                          type: "person"
+                          person: { email: string }
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                      | {
+                          type: "bot"
+                          bot: botLookup
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                  }
+                | { type: "date"; date: { start: string; end: string | null } }
+                | { type: "page"; page: { id: IdRequest } }
+                | { type: "database"; database: { id: IdRequest } }
               annotations: annotationsLookup
               plain_text: string
               href: string | null
@@ -11726,7 +16223,31 @@ export type DeleteBlockResponse =
             }
           | {
               type: "mention"
-              mention: mentionLookup
+              mention:
+                | {
+                    type: "user"
+                    user:
+                      | { id: IdRequest; object: "user" }
+                      | {
+                          type: "person"
+                          person: { email: string }
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                      | {
+                          type: "bot"
+                          bot: botLookup
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                  }
+                | { type: "date"; date: { start: string; end: string | null } }
+                | { type: "page"; page: { id: IdRequest } }
+                | { type: "database"; database: { id: IdRequest } }
               annotations: annotationsLookup
               plain_text: string
               href: string | null
@@ -11760,7 +16281,31 @@ export type DeleteBlockResponse =
             }
           | {
               type: "mention"
-              mention: mentionLookup
+              mention:
+                | {
+                    type: "user"
+                    user:
+                      | { id: IdRequest; object: "user" }
+                      | {
+                          type: "person"
+                          person: { email: string }
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                      | {
+                          type: "bot"
+                          bot: botLookup
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                  }
+                | { type: "date"; date: { start: string; end: string | null } }
+                | { type: "page"; page: { id: IdRequest } }
+                | { type: "database"; database: { id: IdRequest } }
               annotations: annotationsLookup
               plain_text: string
               href: string | null
@@ -11794,7 +16339,31 @@ export type DeleteBlockResponse =
             }
           | {
               type: "mention"
-              mention: mentionLookup
+              mention:
+                | {
+                    type: "user"
+                    user:
+                      | { id: IdRequest; object: "user" }
+                      | {
+                          type: "person"
+                          person: { email: string }
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                      | {
+                          type: "bot"
+                          bot: botLookup
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                  }
+                | { type: "date"; date: { start: string; end: string | null } }
+                | { type: "page"; page: { id: IdRequest } }
+                | { type: "database"; database: { id: IdRequest } }
               annotations: annotationsLookup
               plain_text: string
               href: string | null
@@ -11828,7 +16397,31 @@ export type DeleteBlockResponse =
             }
           | {
               type: "mention"
-              mention: mentionLookup
+              mention:
+                | {
+                    type: "user"
+                    user:
+                      | { id: IdRequest; object: "user" }
+                      | {
+                          type: "person"
+                          person: { email: string }
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                      | {
+                          type: "bot"
+                          bot: botLookup
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                  }
+                | { type: "date"; date: { start: string; end: string | null } }
+                | { type: "page"; page: { id: IdRequest } }
+                | { type: "database"; database: { id: IdRequest } }
               annotations: annotationsLookup
               plain_text: string
               href: string | null
@@ -11862,7 +16455,31 @@ export type DeleteBlockResponse =
             }
           | {
               type: "mention"
-              mention: mentionLookup
+              mention:
+                | {
+                    type: "user"
+                    user:
+                      | { id: IdRequest; object: "user" }
+                      | {
+                          type: "person"
+                          person: { email: string }
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                      | {
+                          type: "bot"
+                          bot: botLookup
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                  }
+                | { type: "date"; date: { start: string; end: string | null } }
+                | { type: "page"; page: { id: IdRequest } }
+                | { type: "database"; database: { id: IdRequest } }
               annotations: annotationsLookup
               plain_text: string
               href: string | null
@@ -11896,7 +16513,31 @@ export type DeleteBlockResponse =
             }
           | {
               type: "mention"
-              mention: mentionLookup
+              mention:
+                | {
+                    type: "user"
+                    user:
+                      | { id: IdRequest; object: "user" }
+                      | {
+                          type: "person"
+                          person: { email: string }
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                      | {
+                          type: "bot"
+                          bot: botLookup
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                  }
+                | { type: "date"; date: { start: string; end: string | null } }
+                | { type: "page"; page: { id: IdRequest } }
+                | { type: "database"; database: { id: IdRequest } }
               annotations: annotationsLookup
               plain_text: string
               href: string | null
@@ -11930,7 +16571,31 @@ export type DeleteBlockResponse =
             }
           | {
               type: "mention"
-              mention: mentionLookup
+              mention:
+                | {
+                    type: "user"
+                    user:
+                      | { id: IdRequest; object: "user" }
+                      | {
+                          type: "person"
+                          person: { email: string }
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                      | {
+                          type: "bot"
+                          bot: botLookup
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                  }
+                | { type: "date"; date: { start: string; end: string | null } }
+                | { type: "page"; page: { id: IdRequest } }
+                | { type: "database"; database: { id: IdRequest } }
               annotations: annotationsLookup
               plain_text: string
               href: string | null
@@ -11965,7 +16630,31 @@ export type DeleteBlockResponse =
             }
           | {
               type: "mention"
-              mention: mentionLookup
+              mention:
+                | {
+                    type: "user"
+                    user:
+                      | { id: IdRequest; object: "user" }
+                      | {
+                          type: "person"
+                          person: { email: string }
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                      | {
+                          type: "bot"
+                          bot: botLookup
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                  }
+                | { type: "date"; date: { start: string; end: string | null } }
+                | { type: "page"; page: { id: IdRequest } }
+                | { type: "database"; database: { id: IdRequest } }
               annotations: annotationsLookup
               plain_text: string
               href: string | null
@@ -12029,7 +16718,31 @@ export type DeleteBlockResponse =
             }
           | {
               type: "mention"
-              mention: mentionLookup
+              mention:
+                | {
+                    type: "user"
+                    user:
+                      | { id: IdRequest; object: "user" }
+                      | {
+                          type: "person"
+                          person: { email: string }
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                      | {
+                          type: "bot"
+                          bot: botLookup
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                  }
+                | { type: "date"; date: { start: string; end: string | null } }
+                | { type: "page"; page: { id: IdRequest } }
+                | { type: "database"; database: { id: IdRequest } }
               annotations: annotationsLookup
               plain_text: string
               href: string | null
@@ -12064,7 +16777,31 @@ export type DeleteBlockResponse =
             }
           | {
               type: "mention"
-              mention: mentionLookup
+              mention:
+                | {
+                    type: "user"
+                    user:
+                      | { id: IdRequest; object: "user" }
+                      | {
+                          type: "person"
+                          person: { email: string }
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                      | {
+                          type: "bot"
+                          bot: botLookup
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                  }
+                | { type: "date"; date: { start: string; end: string | null } }
+                | { type: "page"; page: { id: IdRequest } }
+                | { type: "database"; database: { id: IdRequest } }
               annotations: annotationsLookup
               plain_text: string
               href: string | null
@@ -12126,6 +16863,26 @@ export type DeleteBlockResponse =
       archived: boolean
     }
   | {
+      type: "column_list"
+      column_list: Record<string, never>
+      object: "block"
+      id: string
+      created_time: string
+      last_edited_time: string
+      has_children: boolean
+      archived: boolean
+    }
+  | {
+      type: "column"
+      column: Record<string, never>
+      object: "block"
+      id: string
+      created_time: string
+      last_edited_time: string
+      has_children: boolean
+      archived: boolean
+    }
+  | {
       type: "embed"
       embed: {
         url: string
@@ -12139,7 +16896,31 @@ export type DeleteBlockResponse =
             }
           | {
               type: "mention"
-              mention: mentionLookup
+              mention:
+                | {
+                    type: "user"
+                    user:
+                      | { id: IdRequest; object: "user" }
+                      | {
+                          type: "person"
+                          person: { email: string }
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                      | {
+                          type: "bot"
+                          bot: botLookup
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                  }
+                | { type: "date"; date: { start: string; end: string | null } }
+                | { type: "page"; page: { id: IdRequest } }
+                | { type: "database"; database: { id: IdRequest } }
               annotations: annotationsLookup
               plain_text: string
               href: string | null
@@ -12174,7 +16955,31 @@ export type DeleteBlockResponse =
             }
           | {
               type: "mention"
-              mention: mentionLookup
+              mention:
+                | {
+                    type: "user"
+                    user:
+                      | { id: IdRequest; object: "user" }
+                      | {
+                          type: "person"
+                          person: { email: string }
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                      | {
+                          type: "bot"
+                          bot: botLookup
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                  }
+                | { type: "date"; date: { start: string; end: string | null } }
+                | { type: "page"; page: { id: IdRequest } }
+                | { type: "database"; database: { id: IdRequest } }
               annotations: annotationsLookup
               plain_text: string
               href: string | null
@@ -12211,7 +17016,34 @@ export type DeleteBlockResponse =
                 }
               | {
                   type: "mention"
-                  mention: mentionLookup
+                  mention:
+                    | {
+                        type: "user"
+                        user:
+                          | { id: IdRequest; object: "user" }
+                          | {
+                              type: "person"
+                              person: { email: string }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                          | {
+                              type: "bot"
+                              bot: botLookup
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                      }
+                    | {
+                        type: "date"
+                        date: { start: string; end: string | null }
+                      }
+                    | { type: "page"; page: { id: IdRequest } }
+                    | { type: "database"; database: { id: IdRequest } }
                   annotations: annotationsLookup
                   plain_text: string
                   href: string | null
@@ -12238,7 +17070,34 @@ export type DeleteBlockResponse =
                 }
               | {
                   type: "mention"
-                  mention: mentionLookup
+                  mention:
+                    | {
+                        type: "user"
+                        user:
+                          | { id: IdRequest; object: "user" }
+                          | {
+                              type: "person"
+                              person: { email: string }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                          | {
+                              type: "bot"
+                              bot: botLookup
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                      }
+                    | {
+                        type: "date"
+                        date: { start: string; end: string | null }
+                      }
+                    | { type: "page"; page: { id: IdRequest } }
+                    | { type: "database"; database: { id: IdRequest } }
                   annotations: annotationsLookup
                   plain_text: string
                   href: string | null
@@ -12275,7 +17134,34 @@ export type DeleteBlockResponse =
                 }
               | {
                   type: "mention"
-                  mention: mentionLookup
+                  mention:
+                    | {
+                        type: "user"
+                        user:
+                          | { id: IdRequest; object: "user" }
+                          | {
+                              type: "person"
+                              person: { email: string }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                          | {
+                              type: "bot"
+                              bot: botLookup
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                      }
+                    | {
+                        type: "date"
+                        date: { start: string; end: string | null }
+                      }
+                    | { type: "page"; page: { id: IdRequest } }
+                    | { type: "database"; database: { id: IdRequest } }
                   annotations: annotationsLookup
                   plain_text: string
                   href: string | null
@@ -12302,7 +17188,34 @@ export type DeleteBlockResponse =
                 }
               | {
                   type: "mention"
-                  mention: mentionLookup
+                  mention:
+                    | {
+                        type: "user"
+                        user:
+                          | { id: IdRequest; object: "user" }
+                          | {
+                              type: "person"
+                              person: { email: string }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                          | {
+                              type: "bot"
+                              bot: botLookup
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                      }
+                    | {
+                        type: "date"
+                        date: { start: string; end: string | null }
+                      }
+                    | { type: "page"; page: { id: IdRequest } }
+                    | { type: "database"; database: { id: IdRequest } }
                   annotations: annotationsLookup
                   plain_text: string
                   href: string | null
@@ -12339,7 +17252,34 @@ export type DeleteBlockResponse =
                 }
               | {
                   type: "mention"
-                  mention: mentionLookup
+                  mention:
+                    | {
+                        type: "user"
+                        user:
+                          | { id: IdRequest; object: "user" }
+                          | {
+                              type: "person"
+                              person: { email: string }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                          | {
+                              type: "bot"
+                              bot: botLookup
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                      }
+                    | {
+                        type: "date"
+                        date: { start: string; end: string | null }
+                      }
+                    | { type: "page"; page: { id: IdRequest } }
+                    | { type: "database"; database: { id: IdRequest } }
                   annotations: annotationsLookup
                   plain_text: string
                   href: string | null
@@ -12366,7 +17306,34 @@ export type DeleteBlockResponse =
                 }
               | {
                   type: "mention"
-                  mention: mentionLookup
+                  mention:
+                    | {
+                        type: "user"
+                        user:
+                          | { id: IdRequest; object: "user" }
+                          | {
+                              type: "person"
+                              person: { email: string }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                          | {
+                              type: "bot"
+                              bot: botLookup
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                      }
+                    | {
+                        type: "date"
+                        date: { start: string; end: string | null }
+                      }
+                    | { type: "page"; page: { id: IdRequest } }
+                    | { type: "database"; database: { id: IdRequest } }
                   annotations: annotationsLookup
                   plain_text: string
                   href: string | null
@@ -12403,7 +17370,34 @@ export type DeleteBlockResponse =
                 }
               | {
                   type: "mention"
-                  mention: mentionLookup
+                  mention:
+                    | {
+                        type: "user"
+                        user:
+                          | { id: IdRequest; object: "user" }
+                          | {
+                              type: "person"
+                              person: { email: string }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                          | {
+                              type: "bot"
+                              bot: botLookup
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                      }
+                    | {
+                        type: "date"
+                        date: { start: string; end: string | null }
+                      }
+                    | { type: "page"; page: { id: IdRequest } }
+                    | { type: "database"; database: { id: IdRequest } }
                   annotations: annotationsLookup
                   plain_text: string
                   href: string | null
@@ -12430,7 +17424,34 @@ export type DeleteBlockResponse =
                 }
               | {
                   type: "mention"
-                  mention: mentionLookup
+                  mention:
+                    | {
+                        type: "user"
+                        user:
+                          | { id: IdRequest; object: "user" }
+                          | {
+                              type: "person"
+                              person: { email: string }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                          | {
+                              type: "bot"
+                              bot: botLookup
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                      }
+                    | {
+                        type: "date"
+                        date: { start: string; end: string | null }
+                      }
+                    | { type: "page"; page: { id: IdRequest } }
+                    | { type: "database"; database: { id: IdRequest } }
                   annotations: annotationsLookup
                   plain_text: string
                   href: string | null
@@ -12467,7 +17488,34 @@ export type DeleteBlockResponse =
                 }
               | {
                   type: "mention"
-                  mention: mentionLookup
+                  mention:
+                    | {
+                        type: "user"
+                        user:
+                          | { id: IdRequest; object: "user" }
+                          | {
+                              type: "person"
+                              person: { email: string }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                          | {
+                              type: "bot"
+                              bot: botLookup
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                      }
+                    | {
+                        type: "date"
+                        date: { start: string; end: string | null }
+                      }
+                    | { type: "page"; page: { id: IdRequest } }
+                    | { type: "database"; database: { id: IdRequest } }
                   annotations: annotationsLookup
                   plain_text: string
                   href: string | null
@@ -12494,7 +17542,34 @@ export type DeleteBlockResponse =
                 }
               | {
                   type: "mention"
-                  mention: mentionLookup
+                  mention:
+                    | {
+                        type: "user"
+                        user:
+                          | { id: IdRequest; object: "user" }
+                          | {
+                              type: "person"
+                              person: { email: string }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                          | {
+                              type: "bot"
+                              bot: botLookup
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                      }
+                    | {
+                        type: "date"
+                        date: { start: string; end: string | null }
+                      }
+                    | { type: "page"; page: { id: IdRequest } }
+                    | { type: "database"; database: { id: IdRequest } }
                   annotations: annotationsLookup
                   plain_text: string
                   href: string | null
@@ -12564,68 +17639,234 @@ export type ListBlockChildrenResponse =
             type: "array"
             array: Array<
               | {
-                  type: "number"
-                  number: {
-                    format: formatLookup
-                  }
+                  type: "title"
+                  title: Array<
+                    | {
+                        type: "text"
+                        text: {
+                          content: string
+                          link: { url: TextRequest } | null
+                        }
+                        annotations: annotationsLookup
+                        plain_text: string
+                        href: string | null
+                      }
+                    | {
+                        type: "mention"
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: { start: string; end: string | null }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
+                        annotations: annotationsLookup
+                        plain_text: string
+                        href: string | null
+                      }
+                    | {
+                        type: "equation"
+                        equation: { expression: TextRequest }
+                        annotations: annotationsLookup
+                        plain_text: string
+                        href: string | null
+                      }
+                  >
                 }
-              | { type: "formula"; formula: { expression: string } }
+              | {
+                  type: "rich_text"
+                  rich_text: Array<
+                    | {
+                        type: "text"
+                        text: {
+                          content: string
+                          link: { url: TextRequest } | null
+                        }
+                        annotations: annotationsLookup
+                        plain_text: string
+                        href: string | null
+                      }
+                    | {
+                        type: "mention"
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: { start: string; end: string | null }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
+                        annotations: annotationsLookup
+                        plain_text: string
+                        href: string | null
+                      }
+                    | {
+                        type: "equation"
+                        equation: { expression: TextRequest }
+                        annotations: annotationsLookup
+                        plain_text: string
+                        href: string | null
+                      }
+                  >
+                }
+              | { type: "number"; number: number | null }
+              | { type: "url"; url: string | null }
               | {
                   type: "select"
                   select: {
-                    options: Array<{
-                      name: StringRequest
-                      id?: StringRequest
-                      color?: selectColorLookup
-                    }>
-                  }
+                    id: StringRequest
+                    name: StringRequest
+                    color: selectColorLookup
+                  } | null
                 }
               | {
                   type: "multi_select"
-                  multi_select: {
-                    options: Array<{
-                      name: StringRequest
-                      id?: StringRequest
-                      color?: selectColorLookup
-                    }>
-                  }
+                  multi_select: Array<{
+                    id: StringRequest
+                    name: StringRequest
+                    color: selectColorLookup
+                  }>
                 }
               | {
-                  type: "relation"
-                  relation: {
-                    database_id: IdRequest
-                    synced_property_id: string
-                    synced_property_name: string
-                  }
+                  type: "people"
+                  people: Array<
+                    | { id: IdRequest; object: "user" }
+                    | {
+                        type: "person"
+                        person: { email: string }
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
+                    | {
+                        type: "bot"
+                        bot: botLookup
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
+                  >
+                }
+              | { type: "email"; email: string | null }
+              | { type: "phone_number"; phone_number: string | null }
+              | {
+                  type: "date"
+                  date: { start: string; end: string | null } | null
                 }
               | {
-                  type: "rollup"
-                  rollup: {
-                    rollup_property_name: string
-                    relation_property_name: string
-                    rollup_property_id: string
-                    relation_property_id: string
-                    function: functionLookup
-                  }
+                  type: "files"
+                  files: Array<
+                    | {
+                        file: { url: string; expiry_time: string }
+                        name: string
+                        type?: "file"
+                      }
+                    | {
+                        external: { url: string }
+                        name: string
+                        type?: "external"
+                      }
+                  >
                 }
-              | { type: "title"; title: Record<string, never> }
-              | { type: "rich_text"; rich_text: Record<string, never> }
-              | { type: "url"; url: Record<string, never> }
-              | { type: "people"; people: Record<string, never> }
-              | { type: "files"; files: Record<string, never> }
-              | { type: "email"; email: Record<string, never> }
-              | { type: "phone_number"; phone_number: Record<string, never> }
-              | { type: "date"; date: Record<string, never> }
-              | { type: "checkbox"; checkbox: Record<string, never> }
-              | { type: "created_by"; created_by: Record<string, never> }
-              | { type: "created_time"; created_time: Record<string, never> }
+              | { type: "checkbox"; checkbox: boolean }
+              | {
+                  type: "formula"
+                  formula:
+                    | { type: "string"; string: string | null }
+                    | {
+                        type: "date"
+                        date: { start: string; end: string | null } | null
+                      }
+                    | { type: "number"; number: number | null }
+                    | { type: "boolean"; boolean: boolean | null }
+                }
+              | { type: "relation"; relation: Array<{ id: string }> }
+              | { type: "created_time"; created_time: string }
+              | {
+                  type: "created_by"
+                  created_by:
+                    | { id: IdRequest; object: "user" }
+                    | {
+                        type: "person"
+                        person: { email: string }
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
+                    | {
+                        type: "bot"
+                        bot: botLookup
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
+                }
+              | { type: "last_edited_time"; last_edited_time: string }
               | {
                   type: "last_edited_by"
-                  last_edited_by: Record<string, never>
-                }
-              | {
-                  type: "last_edited_time"
-                  last_edited_time: Record<string, never>
+                  last_edited_by:
+                    | { id: IdRequest; object: "user" }
+                    | {
+                        type: "person"
+                        person: { email: string }
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
+                    | {
+                        type: "bot"
+                        bot: botLookup
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
                 }
             >
             function: functionLookup
@@ -12650,7 +17891,34 @@ export type ListBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention: mentionLookup
+                    mention:
+                      | {
+                          type: "user"
+                          user:
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                        }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null }
+                        }
+                      | { type: "page"; page: { id: IdRequest } }
+                      | { type: "database"; database: { id: IdRequest } }
                     annotations: annotationsLookup
                     plain_text: string
                     href: string | null
@@ -12684,7 +17952,34 @@ export type ListBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention: mentionLookup
+                    mention:
+                      | {
+                          type: "user"
+                          user:
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                        }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null }
+                        }
+                      | { type: "page"; page: { id: IdRequest } }
+                      | { type: "database"; database: { id: IdRequest } }
                     annotations: annotationsLookup
                     plain_text: string
                     href: string | null
@@ -12718,7 +18013,34 @@ export type ListBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention: mentionLookup
+                    mention:
+                      | {
+                          type: "user"
+                          user:
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                        }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null }
+                        }
+                      | { type: "page"; page: { id: IdRequest } }
+                      | { type: "database"; database: { id: IdRequest } }
                     annotations: annotationsLookup
                     plain_text: string
                     href: string | null
@@ -12752,7 +18074,34 @@ export type ListBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention: mentionLookup
+                    mention:
+                      | {
+                          type: "user"
+                          user:
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                        }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null }
+                        }
+                      | { type: "page"; page: { id: IdRequest } }
+                      | { type: "database"; database: { id: IdRequest } }
                     annotations: annotationsLookup
                     plain_text: string
                     href: string | null
@@ -12786,7 +18135,34 @@ export type ListBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention: mentionLookup
+                    mention:
+                      | {
+                          type: "user"
+                          user:
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                        }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null }
+                        }
+                      | { type: "page"; page: { id: IdRequest } }
+                      | { type: "database"; database: { id: IdRequest } }
                     annotations: annotationsLookup
                     plain_text: string
                     href: string | null
@@ -12820,7 +18196,34 @@ export type ListBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention: mentionLookup
+                    mention:
+                      | {
+                          type: "user"
+                          user:
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                        }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null }
+                        }
+                      | { type: "page"; page: { id: IdRequest } }
+                      | { type: "database"; database: { id: IdRequest } }
                     annotations: annotationsLookup
                     plain_text: string
                     href: string | null
@@ -12854,7 +18257,34 @@ export type ListBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention: mentionLookup
+                    mention:
+                      | {
+                          type: "user"
+                          user:
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                        }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null }
+                        }
+                      | { type: "page"; page: { id: IdRequest } }
+                      | { type: "database"; database: { id: IdRequest } }
                     annotations: annotationsLookup
                     plain_text: string
                     href: string | null
@@ -12888,7 +18318,34 @@ export type ListBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention: mentionLookup
+                    mention:
+                      | {
+                          type: "user"
+                          user:
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                        }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null }
+                        }
+                      | { type: "page"; page: { id: IdRequest } }
+                      | { type: "database"; database: { id: IdRequest } }
                     annotations: annotationsLookup
                     plain_text: string
                     href: string | null
@@ -12923,7 +18380,34 @@ export type ListBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention: mentionLookup
+                    mention:
+                      | {
+                          type: "user"
+                          user:
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                        }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null }
+                        }
+                      | { type: "page"; page: { id: IdRequest } }
+                      | { type: "database"; database: { id: IdRequest } }
                     annotations: annotationsLookup
                     plain_text: string
                     href: string | null
@@ -12987,7 +18471,34 @@ export type ListBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention: mentionLookup
+                    mention:
+                      | {
+                          type: "user"
+                          user:
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                        }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null }
+                        }
+                      | { type: "page"; page: { id: IdRequest } }
+                      | { type: "database"; database: { id: IdRequest } }
                     annotations: annotationsLookup
                     plain_text: string
                     href: string | null
@@ -13022,7 +18533,34 @@ export type ListBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention: mentionLookup
+                    mention:
+                      | {
+                          type: "user"
+                          user:
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                        }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null }
+                        }
+                      | { type: "page"; page: { id: IdRequest } }
+                      | { type: "database"; database: { id: IdRequest } }
                     annotations: annotationsLookup
                     plain_text: string
                     href: string | null
@@ -13084,6 +18622,26 @@ export type ListBlockChildrenResponse =
             archived: boolean
           }
         | {
+            type: "column_list"
+            column_list: Record<string, never>
+            object: "block"
+            id: string
+            created_time: string
+            last_edited_time: string
+            has_children: boolean
+            archived: boolean
+          }
+        | {
+            type: "column"
+            column: Record<string, never>
+            object: "block"
+            id: string
+            created_time: string
+            last_edited_time: string
+            has_children: boolean
+            archived: boolean
+          }
+        | {
             type: "embed"
             embed: {
               url: string
@@ -13097,7 +18655,34 @@ export type ListBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention: mentionLookup
+                    mention:
+                      | {
+                          type: "user"
+                          user:
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                        }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null }
+                        }
+                      | { type: "page"; page: { id: IdRequest } }
+                      | { type: "database"; database: { id: IdRequest } }
                     annotations: annotationsLookup
                     plain_text: string
                     href: string | null
@@ -13132,7 +18717,34 @@ export type ListBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention: mentionLookup
+                    mention:
+                      | {
+                          type: "user"
+                          user:
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                        }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null }
+                        }
+                      | { type: "page"; page: { id: IdRequest } }
+                      | { type: "database"; database: { id: IdRequest } }
                     annotations: annotationsLookup
                     plain_text: string
                     href: string | null
@@ -13172,7 +18784,34 @@ export type ListBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention: mentionLookup
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: { start: string; end: string | null }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
                         annotations: annotationsLookup
                         plain_text: string
                         href: string | null
@@ -13202,7 +18841,34 @@ export type ListBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention: mentionLookup
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: { start: string; end: string | null }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
                         annotations: annotationsLookup
                         plain_text: string
                         href: string | null
@@ -13242,7 +18908,34 @@ export type ListBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention: mentionLookup
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: { start: string; end: string | null }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
                         annotations: annotationsLookup
                         plain_text: string
                         href: string | null
@@ -13272,7 +18965,34 @@ export type ListBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention: mentionLookup
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: { start: string; end: string | null }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
                         annotations: annotationsLookup
                         plain_text: string
                         href: string | null
@@ -13312,7 +19032,34 @@ export type ListBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention: mentionLookup
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: { start: string; end: string | null }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
                         annotations: annotationsLookup
                         plain_text: string
                         href: string | null
@@ -13342,7 +19089,34 @@ export type ListBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention: mentionLookup
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: { start: string; end: string | null }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
                         annotations: annotationsLookup
                         plain_text: string
                         href: string | null
@@ -13382,7 +19156,34 @@ export type ListBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention: mentionLookup
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: { start: string; end: string | null }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
                         annotations: annotationsLookup
                         plain_text: string
                         href: string | null
@@ -13412,7 +19213,34 @@ export type ListBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention: mentionLookup
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: { start: string; end: string | null }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
                         annotations: annotationsLookup
                         plain_text: string
                         href: string | null
@@ -13452,7 +19280,34 @@ export type ListBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention: mentionLookup
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: { start: string; end: string | null }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
                         annotations: annotationsLookup
                         plain_text: string
                         href: string | null
@@ -13482,7 +19337,34 @@ export type ListBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention: mentionLookup
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: { start: string; end: string | null }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
                         annotations: annotationsLookup
                         plain_text: string
                         href: string | null
@@ -13533,7 +19415,34 @@ export type ListBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention: mentionLookup
+                    mention:
+                      | {
+                          type: "user"
+                          user:
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                        }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null }
+                        }
+                      | { type: "page"; page: { id: IdRequest } }
+                      | { type: "database"; database: { id: IdRequest } }
                     annotations: annotationsLookup
                     plain_text: string
                     href: string | null
@@ -13567,7 +19476,34 @@ export type ListBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention: mentionLookup
+                    mention:
+                      | {
+                          type: "user"
+                          user:
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                        }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null }
+                        }
+                      | { type: "page"; page: { id: IdRequest } }
+                      | { type: "database"; database: { id: IdRequest } }
                     annotations: annotationsLookup
                     plain_text: string
                     href: string | null
@@ -13601,7 +19537,34 @@ export type ListBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention: mentionLookup
+                    mention:
+                      | {
+                          type: "user"
+                          user:
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                        }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null }
+                        }
+                      | { type: "page"; page: { id: IdRequest } }
+                      | { type: "database"; database: { id: IdRequest } }
                     annotations: annotationsLookup
                     plain_text: string
                     href: string | null
@@ -13635,7 +19598,34 @@ export type ListBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention: mentionLookup
+                    mention:
+                      | {
+                          type: "user"
+                          user:
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                        }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null }
+                        }
+                      | { type: "page"; page: { id: IdRequest } }
+                      | { type: "database"; database: { id: IdRequest } }
                     annotations: annotationsLookup
                     plain_text: string
                     href: string | null
@@ -13669,7 +19659,34 @@ export type ListBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention: mentionLookup
+                    mention:
+                      | {
+                          type: "user"
+                          user:
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                        }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null }
+                        }
+                      | { type: "page"; page: { id: IdRequest } }
+                      | { type: "database"; database: { id: IdRequest } }
                     annotations: annotationsLookup
                     plain_text: string
                     href: string | null
@@ -13703,7 +19720,34 @@ export type ListBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention: mentionLookup
+                    mention:
+                      | {
+                          type: "user"
+                          user:
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                        }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null }
+                        }
+                      | { type: "page"; page: { id: IdRequest } }
+                      | { type: "database"; database: { id: IdRequest } }
                     annotations: annotationsLookup
                     plain_text: string
                     href: string | null
@@ -13737,7 +19781,34 @@ export type ListBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention: mentionLookup
+                    mention:
+                      | {
+                          type: "user"
+                          user:
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                        }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null }
+                        }
+                      | { type: "page"; page: { id: IdRequest } }
+                      | { type: "database"; database: { id: IdRequest } }
                     annotations: annotationsLookup
                     plain_text: string
                     href: string | null
@@ -13771,7 +19842,34 @@ export type ListBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention: mentionLookup
+                    mention:
+                      | {
+                          type: "user"
+                          user:
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                        }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null }
+                        }
+                      | { type: "page"; page: { id: IdRequest } }
+                      | { type: "database"; database: { id: IdRequest } }
                     annotations: annotationsLookup
                     plain_text: string
                     href: string | null
@@ -13806,7 +19904,34 @@ export type ListBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention: mentionLookup
+                    mention:
+                      | {
+                          type: "user"
+                          user:
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                        }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null }
+                        }
+                      | { type: "page"; page: { id: IdRequest } }
+                      | { type: "database"; database: { id: IdRequest } }
                     annotations: annotationsLookup
                     plain_text: string
                     href: string | null
@@ -13870,7 +19995,34 @@ export type ListBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention: mentionLookup
+                    mention:
+                      | {
+                          type: "user"
+                          user:
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                        }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null }
+                        }
+                      | { type: "page"; page: { id: IdRequest } }
+                      | { type: "database"; database: { id: IdRequest } }
                     annotations: annotationsLookup
                     plain_text: string
                     href: string | null
@@ -13905,7 +20057,34 @@ export type ListBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention: mentionLookup
+                    mention:
+                      | {
+                          type: "user"
+                          user:
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                        }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null }
+                        }
+                      | { type: "page"; page: { id: IdRequest } }
+                      | { type: "database"; database: { id: IdRequest } }
                     annotations: annotationsLookup
                     plain_text: string
                     href: string | null
@@ -13967,6 +20146,26 @@ export type ListBlockChildrenResponse =
             archived: boolean
           }
         | {
+            type: "column_list"
+            column_list: Record<string, never>
+            object: "block"
+            id: string
+            created_time: string
+            last_edited_time: string
+            has_children: boolean
+            archived: boolean
+          }
+        | {
+            type: "column"
+            column: Record<string, never>
+            object: "block"
+            id: string
+            created_time: string
+            last_edited_time: string
+            has_children: boolean
+            archived: boolean
+          }
+        | {
             type: "embed"
             embed: {
               url: string
@@ -13980,7 +20179,34 @@ export type ListBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention: mentionLookup
+                    mention:
+                      | {
+                          type: "user"
+                          user:
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                        }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null }
+                        }
+                      | { type: "page"; page: { id: IdRequest } }
+                      | { type: "database"; database: { id: IdRequest } }
                     annotations: annotationsLookup
                     plain_text: string
                     href: string | null
@@ -14015,7 +20241,34 @@ export type ListBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention: mentionLookup
+                    mention:
+                      | {
+                          type: "user"
+                          user:
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                        }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null }
+                        }
+                      | { type: "page"; page: { id: IdRequest } }
+                      | { type: "database"; database: { id: IdRequest } }
                     annotations: annotationsLookup
                     plain_text: string
                     href: string | null
@@ -14055,7 +20308,34 @@ export type ListBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention: mentionLookup
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: { start: string; end: string | null }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
                         annotations: annotationsLookup
                         plain_text: string
                         href: string | null
@@ -14085,7 +20365,34 @@ export type ListBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention: mentionLookup
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: { start: string; end: string | null }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
                         annotations: annotationsLookup
                         plain_text: string
                         href: string | null
@@ -14125,7 +20432,34 @@ export type ListBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention: mentionLookup
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: { start: string; end: string | null }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
                         annotations: annotationsLookup
                         plain_text: string
                         href: string | null
@@ -14155,7 +20489,34 @@ export type ListBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention: mentionLookup
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: { start: string; end: string | null }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
                         annotations: annotationsLookup
                         plain_text: string
                         href: string | null
@@ -14195,7 +20556,34 @@ export type ListBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention: mentionLookup
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: { start: string; end: string | null }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
                         annotations: annotationsLookup
                         plain_text: string
                         href: string | null
@@ -14225,7 +20613,34 @@ export type ListBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention: mentionLookup
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: { start: string; end: string | null }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
                         annotations: annotationsLookup
                         plain_text: string
                         href: string | null
@@ -14265,7 +20680,34 @@ export type ListBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention: mentionLookup
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: { start: string; end: string | null }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
                         annotations: annotationsLookup
                         plain_text: string
                         href: string | null
@@ -14295,7 +20737,34 @@ export type ListBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention: mentionLookup
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: { start: string; end: string | null }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
                         annotations: annotationsLookup
                         plain_text: string
                         href: string | null
@@ -14335,7 +20804,34 @@ export type ListBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention: mentionLookup
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: { start: string; end: string | null }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
                         annotations: annotationsLookup
                         plain_text: string
                         href: string | null
@@ -14365,7 +20861,34 @@ export type ListBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention: mentionLookup
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: { start: string; end: string | null }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
                         annotations: annotationsLookup
                         plain_text: string
                         href: string | null
@@ -14437,68 +20960,234 @@ export type AppendBlockChildrenResponse =
             type: "array"
             array: Array<
               | {
-                  type: "number"
-                  number: {
-                    format: formatLookup
-                  }
+                  type: "title"
+                  title: Array<
+                    | {
+                        type: "text"
+                        text: {
+                          content: string
+                          link: { url: TextRequest } | null
+                        }
+                        annotations: annotationsLookup
+                        plain_text: string
+                        href: string | null
+                      }
+                    | {
+                        type: "mention"
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: { start: string; end: string | null }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
+                        annotations: annotationsLookup
+                        plain_text: string
+                        href: string | null
+                      }
+                    | {
+                        type: "equation"
+                        equation: { expression: TextRequest }
+                        annotations: annotationsLookup
+                        plain_text: string
+                        href: string | null
+                      }
+                  >
                 }
-              | { type: "formula"; formula: { expression: string } }
+              | {
+                  type: "rich_text"
+                  rich_text: Array<
+                    | {
+                        type: "text"
+                        text: {
+                          content: string
+                          link: { url: TextRequest } | null
+                        }
+                        annotations: annotationsLookup
+                        plain_text: string
+                        href: string | null
+                      }
+                    | {
+                        type: "mention"
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: { start: string; end: string | null }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
+                        annotations: annotationsLookup
+                        plain_text: string
+                        href: string | null
+                      }
+                    | {
+                        type: "equation"
+                        equation: { expression: TextRequest }
+                        annotations: annotationsLookup
+                        plain_text: string
+                        href: string | null
+                      }
+                  >
+                }
+              | { type: "number"; number: number | null }
+              | { type: "url"; url: string | null }
               | {
                   type: "select"
                   select: {
-                    options: Array<{
-                      name: StringRequest
-                      id?: StringRequest
-                      color?: selectColorLookup
-                    }>
-                  }
+                    id: StringRequest
+                    name: StringRequest
+                    color: selectColorLookup
+                  } | null
                 }
               | {
                   type: "multi_select"
-                  multi_select: {
-                    options: Array<{
-                      name: StringRequest
-                      id?: StringRequest
-                      color?: selectColorLookup
-                    }>
-                  }
+                  multi_select: Array<{
+                    id: StringRequest
+                    name: StringRequest
+                    color: selectColorLookup
+                  }>
                 }
               | {
-                  type: "relation"
-                  relation: {
-                    database_id: IdRequest
-                    synced_property_id: string
-                    synced_property_name: string
-                  }
+                  type: "people"
+                  people: Array<
+                    | { id: IdRequest; object: "user" }
+                    | {
+                        type: "person"
+                        person: { email: string }
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
+                    | {
+                        type: "bot"
+                        bot: botLookup
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
+                  >
+                }
+              | { type: "email"; email: string | null }
+              | { type: "phone_number"; phone_number: string | null }
+              | {
+                  type: "date"
+                  date: { start: string; end: string | null } | null
                 }
               | {
-                  type: "rollup"
-                  rollup: {
-                    rollup_property_name: string
-                    relation_property_name: string
-                    rollup_property_id: string
-                    relation_property_id: string
-                    function: functionLookup
-                  }
+                  type: "files"
+                  files: Array<
+                    | {
+                        file: { url: string; expiry_time: string }
+                        name: string
+                        type?: "file"
+                      }
+                    | {
+                        external: { url: string }
+                        name: string
+                        type?: "external"
+                      }
+                  >
                 }
-              | { type: "title"; title: Record<string, never> }
-              | { type: "rich_text"; rich_text: Record<string, never> }
-              | { type: "url"; url: Record<string, never> }
-              | { type: "people"; people: Record<string, never> }
-              | { type: "files"; files: Record<string, never> }
-              | { type: "email"; email: Record<string, never> }
-              | { type: "phone_number"; phone_number: Record<string, never> }
-              | { type: "date"; date: Record<string, never> }
-              | { type: "checkbox"; checkbox: Record<string, never> }
-              | { type: "created_by"; created_by: Record<string, never> }
-              | { type: "created_time"; created_time: Record<string, never> }
+              | { type: "checkbox"; checkbox: boolean }
+              | {
+                  type: "formula"
+                  formula:
+                    | { type: "string"; string: string | null }
+                    | {
+                        type: "date"
+                        date: { start: string; end: string | null } | null
+                      }
+                    | { type: "number"; number: number | null }
+                    | { type: "boolean"; boolean: boolean | null }
+                }
+              | { type: "relation"; relation: Array<{ id: string }> }
+              | { type: "created_time"; created_time: string }
+              | {
+                  type: "created_by"
+                  created_by:
+                    | { id: IdRequest; object: "user" }
+                    | {
+                        type: "person"
+                        person: { email: string }
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
+                    | {
+                        type: "bot"
+                        bot: botLookup
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
+                }
+              | { type: "last_edited_time"; last_edited_time: string }
               | {
                   type: "last_edited_by"
-                  last_edited_by: Record<string, never>
-                }
-              | {
-                  type: "last_edited_time"
-                  last_edited_time: Record<string, never>
+                  last_edited_by:
+                    | { id: IdRequest; object: "user" }
+                    | {
+                        type: "person"
+                        person: { email: string }
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
+                    | {
+                        type: "bot"
+                        bot: botLookup
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
                 }
             >
             function: functionLookup
@@ -14523,7 +21212,34 @@ export type AppendBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention: mentionLookup
+                    mention:
+                      | {
+                          type: "user"
+                          user:
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                        }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null }
+                        }
+                      | { type: "page"; page: { id: IdRequest } }
+                      | { type: "database"; database: { id: IdRequest } }
                     annotations: annotationsLookup
                     plain_text: string
                     href: string | null
@@ -14557,7 +21273,34 @@ export type AppendBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention: mentionLookup
+                    mention:
+                      | {
+                          type: "user"
+                          user:
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                        }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null }
+                        }
+                      | { type: "page"; page: { id: IdRequest } }
+                      | { type: "database"; database: { id: IdRequest } }
                     annotations: annotationsLookup
                     plain_text: string
                     href: string | null
@@ -14591,7 +21334,34 @@ export type AppendBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention: mentionLookup
+                    mention:
+                      | {
+                          type: "user"
+                          user:
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                        }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null }
+                        }
+                      | { type: "page"; page: { id: IdRequest } }
+                      | { type: "database"; database: { id: IdRequest } }
                     annotations: annotationsLookup
                     plain_text: string
                     href: string | null
@@ -14625,7 +21395,34 @@ export type AppendBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention: mentionLookup
+                    mention:
+                      | {
+                          type: "user"
+                          user:
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                        }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null }
+                        }
+                      | { type: "page"; page: { id: IdRequest } }
+                      | { type: "database"; database: { id: IdRequest } }
                     annotations: annotationsLookup
                     plain_text: string
                     href: string | null
@@ -14659,7 +21456,34 @@ export type AppendBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention: mentionLookup
+                    mention:
+                      | {
+                          type: "user"
+                          user:
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                        }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null }
+                        }
+                      | { type: "page"; page: { id: IdRequest } }
+                      | { type: "database"; database: { id: IdRequest } }
                     annotations: annotationsLookup
                     plain_text: string
                     href: string | null
@@ -14693,7 +21517,34 @@ export type AppendBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention: mentionLookup
+                    mention:
+                      | {
+                          type: "user"
+                          user:
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                        }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null }
+                        }
+                      | { type: "page"; page: { id: IdRequest } }
+                      | { type: "database"; database: { id: IdRequest } }
                     annotations: annotationsLookup
                     plain_text: string
                     href: string | null
@@ -14727,7 +21578,34 @@ export type AppendBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention: mentionLookup
+                    mention:
+                      | {
+                          type: "user"
+                          user:
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                        }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null }
+                        }
+                      | { type: "page"; page: { id: IdRequest } }
+                      | { type: "database"; database: { id: IdRequest } }
                     annotations: annotationsLookup
                     plain_text: string
                     href: string | null
@@ -14761,7 +21639,34 @@ export type AppendBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention: mentionLookup
+                    mention:
+                      | {
+                          type: "user"
+                          user:
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                        }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null }
+                        }
+                      | { type: "page"; page: { id: IdRequest } }
+                      | { type: "database"; database: { id: IdRequest } }
                     annotations: annotationsLookup
                     plain_text: string
                     href: string | null
@@ -14796,7 +21701,34 @@ export type AppendBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention: mentionLookup
+                    mention:
+                      | {
+                          type: "user"
+                          user:
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                        }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null }
+                        }
+                      | { type: "page"; page: { id: IdRequest } }
+                      | { type: "database"; database: { id: IdRequest } }
                     annotations: annotationsLookup
                     plain_text: string
                     href: string | null
@@ -14860,7 +21792,34 @@ export type AppendBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention: mentionLookup
+                    mention:
+                      | {
+                          type: "user"
+                          user:
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                        }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null }
+                        }
+                      | { type: "page"; page: { id: IdRequest } }
+                      | { type: "database"; database: { id: IdRequest } }
                     annotations: annotationsLookup
                     plain_text: string
                     href: string | null
@@ -14895,7 +21854,34 @@ export type AppendBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention: mentionLookup
+                    mention:
+                      | {
+                          type: "user"
+                          user:
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                        }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null }
+                        }
+                      | { type: "page"; page: { id: IdRequest } }
+                      | { type: "database"; database: { id: IdRequest } }
                     annotations: annotationsLookup
                     plain_text: string
                     href: string | null
@@ -14957,6 +21943,26 @@ export type AppendBlockChildrenResponse =
             archived: boolean
           }
         | {
+            type: "column_list"
+            column_list: Record<string, never>
+            object: "block"
+            id: string
+            created_time: string
+            last_edited_time: string
+            has_children: boolean
+            archived: boolean
+          }
+        | {
+            type: "column"
+            column: Record<string, never>
+            object: "block"
+            id: string
+            created_time: string
+            last_edited_time: string
+            has_children: boolean
+            archived: boolean
+          }
+        | {
             type: "embed"
             embed: {
               url: string
@@ -14970,7 +21976,34 @@ export type AppendBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention: mentionLookup
+                    mention:
+                      | {
+                          type: "user"
+                          user:
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                        }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null }
+                        }
+                      | { type: "page"; page: { id: IdRequest } }
+                      | { type: "database"; database: { id: IdRequest } }
                     annotations: annotationsLookup
                     plain_text: string
                     href: string | null
@@ -15005,7 +22038,34 @@ export type AppendBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention: mentionLookup
+                    mention:
+                      | {
+                          type: "user"
+                          user:
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                        }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null }
+                        }
+                      | { type: "page"; page: { id: IdRequest } }
+                      | { type: "database"; database: { id: IdRequest } }
                     annotations: annotationsLookup
                     plain_text: string
                     href: string | null
@@ -15045,7 +22105,34 @@ export type AppendBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention: mentionLookup
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: { start: string; end: string | null }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
                         annotations: annotationsLookup
                         plain_text: string
                         href: string | null
@@ -15075,7 +22162,34 @@ export type AppendBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention: mentionLookup
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: { start: string; end: string | null }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
                         annotations: annotationsLookup
                         plain_text: string
                         href: string | null
@@ -15115,7 +22229,34 @@ export type AppendBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention: mentionLookup
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: { start: string; end: string | null }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
                         annotations: annotationsLookup
                         plain_text: string
                         href: string | null
@@ -15145,7 +22286,34 @@ export type AppendBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention: mentionLookup
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: { start: string; end: string | null }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
                         annotations: annotationsLookup
                         plain_text: string
                         href: string | null
@@ -15185,7 +22353,34 @@ export type AppendBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention: mentionLookup
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: { start: string; end: string | null }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
                         annotations: annotationsLookup
                         plain_text: string
                         href: string | null
@@ -15215,7 +22410,34 @@ export type AppendBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention: mentionLookup
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: { start: string; end: string | null }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
                         annotations: annotationsLookup
                         plain_text: string
                         href: string | null
@@ -15255,7 +22477,34 @@ export type AppendBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention: mentionLookup
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: { start: string; end: string | null }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
                         annotations: annotationsLookup
                         plain_text: string
                         href: string | null
@@ -15285,7 +22534,34 @@ export type AppendBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention: mentionLookup
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: { start: string; end: string | null }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
                         annotations: annotationsLookup
                         plain_text: string
                         href: string | null
@@ -15325,7 +22601,34 @@ export type AppendBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention: mentionLookup
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: { start: string; end: string | null }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
                         annotations: annotationsLookup
                         plain_text: string
                         href: string | null
@@ -15355,7 +22658,34 @@ export type AppendBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention: mentionLookup
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: { start: string; end: string | null }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
                         annotations: annotationsLookup
                         plain_text: string
                         href: string | null
@@ -15406,7 +22736,34 @@ export type AppendBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention: mentionLookup
+                    mention:
+                      | {
+                          type: "user"
+                          user:
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                        }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null }
+                        }
+                      | { type: "page"; page: { id: IdRequest } }
+                      | { type: "database"; database: { id: IdRequest } }
                     annotations: annotationsLookup
                     plain_text: string
                     href: string | null
@@ -15440,7 +22797,34 @@ export type AppendBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention: mentionLookup
+                    mention:
+                      | {
+                          type: "user"
+                          user:
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                        }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null }
+                        }
+                      | { type: "page"; page: { id: IdRequest } }
+                      | { type: "database"; database: { id: IdRequest } }
                     annotations: annotationsLookup
                     plain_text: string
                     href: string | null
@@ -15474,7 +22858,34 @@ export type AppendBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention: mentionLookup
+                    mention:
+                      | {
+                          type: "user"
+                          user:
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                        }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null }
+                        }
+                      | { type: "page"; page: { id: IdRequest } }
+                      | { type: "database"; database: { id: IdRequest } }
                     annotations: annotationsLookup
                     plain_text: string
                     href: string | null
@@ -15508,7 +22919,34 @@ export type AppendBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention: mentionLookup
+                    mention:
+                      | {
+                          type: "user"
+                          user:
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                        }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null }
+                        }
+                      | { type: "page"; page: { id: IdRequest } }
+                      | { type: "database"; database: { id: IdRequest } }
                     annotations: annotationsLookup
                     plain_text: string
                     href: string | null
@@ -15542,7 +22980,34 @@ export type AppendBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention: mentionLookup
+                    mention:
+                      | {
+                          type: "user"
+                          user:
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                        }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null }
+                        }
+                      | { type: "page"; page: { id: IdRequest } }
+                      | { type: "database"; database: { id: IdRequest } }
                     annotations: annotationsLookup
                     plain_text: string
                     href: string | null
@@ -15576,7 +23041,34 @@ export type AppendBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention: mentionLookup
+                    mention:
+                      | {
+                          type: "user"
+                          user:
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                        }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null }
+                        }
+                      | { type: "page"; page: { id: IdRequest } }
+                      | { type: "database"; database: { id: IdRequest } }
                     annotations: annotationsLookup
                     plain_text: string
                     href: string | null
@@ -15610,7 +23102,34 @@ export type AppendBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention: mentionLookup
+                    mention:
+                      | {
+                          type: "user"
+                          user:
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                        }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null }
+                        }
+                      | { type: "page"; page: { id: IdRequest } }
+                      | { type: "database"; database: { id: IdRequest } }
                     annotations: annotationsLookup
                     plain_text: string
                     href: string | null
@@ -15644,7 +23163,34 @@ export type AppendBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention: mentionLookup
+                    mention:
+                      | {
+                          type: "user"
+                          user:
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                        }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null }
+                        }
+                      | { type: "page"; page: { id: IdRequest } }
+                      | { type: "database"; database: { id: IdRequest } }
                     annotations: annotationsLookup
                     plain_text: string
                     href: string | null
@@ -15679,7 +23225,34 @@ export type AppendBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention: mentionLookup
+                    mention:
+                      | {
+                          type: "user"
+                          user:
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                        }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null }
+                        }
+                      | { type: "page"; page: { id: IdRequest } }
+                      | { type: "database"; database: { id: IdRequest } }
                     annotations: annotationsLookup
                     plain_text: string
                     href: string | null
@@ -15743,7 +23316,34 @@ export type AppendBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention: mentionLookup
+                    mention:
+                      | {
+                          type: "user"
+                          user:
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                        }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null }
+                        }
+                      | { type: "page"; page: { id: IdRequest } }
+                      | { type: "database"; database: { id: IdRequest } }
                     annotations: annotationsLookup
                     plain_text: string
                     href: string | null
@@ -15778,7 +23378,34 @@ export type AppendBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention: mentionLookup
+                    mention:
+                      | {
+                          type: "user"
+                          user:
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                        }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null }
+                        }
+                      | { type: "page"; page: { id: IdRequest } }
+                      | { type: "database"; database: { id: IdRequest } }
                     annotations: annotationsLookup
                     plain_text: string
                     href: string | null
@@ -15840,6 +23467,26 @@ export type AppendBlockChildrenResponse =
             archived: boolean
           }
         | {
+            type: "column_list"
+            column_list: Record<string, never>
+            object: "block"
+            id: string
+            created_time: string
+            last_edited_time: string
+            has_children: boolean
+            archived: boolean
+          }
+        | {
+            type: "column"
+            column: Record<string, never>
+            object: "block"
+            id: string
+            created_time: string
+            last_edited_time: string
+            has_children: boolean
+            archived: boolean
+          }
+        | {
             type: "embed"
             embed: {
               url: string
@@ -15853,7 +23500,34 @@ export type AppendBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention: mentionLookup
+                    mention:
+                      | {
+                          type: "user"
+                          user:
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                        }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null }
+                        }
+                      | { type: "page"; page: { id: IdRequest } }
+                      | { type: "database"; database: { id: IdRequest } }
                     annotations: annotationsLookup
                     plain_text: string
                     href: string | null
@@ -15888,7 +23562,34 @@ export type AppendBlockChildrenResponse =
                   }
                 | {
                     type: "mention"
-                    mention: mentionLookup
+                    mention:
+                      | {
+                          type: "user"
+                          user:
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                        }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null }
+                        }
+                      | { type: "page"; page: { id: IdRequest } }
+                      | { type: "database"; database: { id: IdRequest } }
                     annotations: annotationsLookup
                     plain_text: string
                     href: string | null
@@ -15928,7 +23629,34 @@ export type AppendBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention: mentionLookup
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: { start: string; end: string | null }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
                         annotations: annotationsLookup
                         plain_text: string
                         href: string | null
@@ -15958,7 +23686,34 @@ export type AppendBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention: mentionLookup
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: { start: string; end: string | null }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
                         annotations: annotationsLookup
                         plain_text: string
                         href: string | null
@@ -15998,7 +23753,34 @@ export type AppendBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention: mentionLookup
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: { start: string; end: string | null }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
                         annotations: annotationsLookup
                         plain_text: string
                         href: string | null
@@ -16028,7 +23810,34 @@ export type AppendBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention: mentionLookup
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: { start: string; end: string | null }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
                         annotations: annotationsLookup
                         plain_text: string
                         href: string | null
@@ -16068,7 +23877,34 @@ export type AppendBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention: mentionLookup
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: { start: string; end: string | null }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
                         annotations: annotationsLookup
                         plain_text: string
                         href: string | null
@@ -16098,7 +23934,34 @@ export type AppendBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention: mentionLookup
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: { start: string; end: string | null }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
                         annotations: annotationsLookup
                         plain_text: string
                         href: string | null
@@ -16138,7 +24001,34 @@ export type AppendBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention: mentionLookup
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: { start: string; end: string | null }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
                         annotations: annotationsLookup
                         plain_text: string
                         href: string | null
@@ -16168,7 +24058,34 @@ export type AppendBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention: mentionLookup
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: { start: string; end: string | null }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
                         annotations: annotationsLookup
                         plain_text: string
                         href: string | null
@@ -16208,7 +24125,34 @@ export type AppendBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention: mentionLookup
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: { start: string; end: string | null }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
                         annotations: annotationsLookup
                         plain_text: string
                         href: string | null
@@ -16238,7 +24182,34 @@ export type AppendBlockChildrenResponse =
                       }
                     | {
                         type: "mention"
-                        mention: mentionLookup
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: { start: string; end: string | null }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
                         annotations: annotationsLookup
                         plain_text: string
                         href: string | null
@@ -16300,7 +24271,31 @@ export type GetDatabaseResponse = {
       }
     | {
         type: "mention"
-        mention: mentionLookup
+        mention:
+          | {
+              type: "user"
+              user:
+                | { id: IdRequest; object: "user" }
+                | {
+                    type: "person"
+                    person: { email: string }
+                    name: string | null
+                    avatar_url: string | null
+                    id: IdRequest
+                    object: "user"
+                  }
+                | {
+                    type: "bot"
+                    bot: botLookup
+                    name: string | null
+                    avatar_url: string | null
+                    id: IdRequest
+                    object: "user"
+                  }
+            }
+          | { type: "date"; date: { start: string; end: string | null } }
+          | { type: "page"; page: { id: IdRequest } }
+          | { type: "database"; database: { id: IdRequest } }
         annotations: annotationsLookup
         plain_text: string
         href: string | null
@@ -16632,7 +24627,31 @@ export type UpdateDatabaseResponse = {
       }
     | {
         type: "mention"
-        mention: mentionLookup
+        mention:
+          | {
+              type: "user"
+              user:
+                | { id: IdRequest; object: "user" }
+                | {
+                    type: "person"
+                    person: { email: string }
+                    name: string | null
+                    avatar_url: string | null
+                    id: IdRequest
+                    object: "user"
+                  }
+                | {
+                    type: "bot"
+                    bot: botLookup
+                    name: string | null
+                    avatar_url: string | null
+                    id: IdRequest
+                    object: "user"
+                  }
+            }
+          | { type: "date"; date: { start: string; end: string | null } }
+          | { type: "page"; page: { id: IdRequest } }
+          | { type: "database"; database: { id: IdRequest } }
         annotations: annotationsLookup
         plain_text: string
         href: string | null
@@ -18453,68 +26472,234 @@ export type QueryDatabaseResponse =
             type: "array"
             array: Array<
               | {
-                  type: "number"
-                  number: {
-                    format: formatLookup
-                  }
+                  type: "title"
+                  title: Array<
+                    | {
+                        type: "text"
+                        text: {
+                          content: string
+                          link: { url: TextRequest } | null
+                        }
+                        annotations: annotationsLookup
+                        plain_text: string
+                        href: string | null
+                      }
+                    | {
+                        type: "mention"
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: { start: string; end: string | null }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
+                        annotations: annotationsLookup
+                        plain_text: string
+                        href: string | null
+                      }
+                    | {
+                        type: "equation"
+                        equation: { expression: TextRequest }
+                        annotations: annotationsLookup
+                        plain_text: string
+                        href: string | null
+                      }
+                  >
                 }
-              | { type: "formula"; formula: { expression: string } }
+              | {
+                  type: "rich_text"
+                  rich_text: Array<
+                    | {
+                        type: "text"
+                        text: {
+                          content: string
+                          link: { url: TextRequest } | null
+                        }
+                        annotations: annotationsLookup
+                        plain_text: string
+                        href: string | null
+                      }
+                    | {
+                        type: "mention"
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: { start: string; end: string | null }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
+                        annotations: annotationsLookup
+                        plain_text: string
+                        href: string | null
+                      }
+                    | {
+                        type: "equation"
+                        equation: { expression: TextRequest }
+                        annotations: annotationsLookup
+                        plain_text: string
+                        href: string | null
+                      }
+                  >
+                }
+              | { type: "number"; number: number | null }
+              | { type: "url"; url: string | null }
               | {
                   type: "select"
                   select: {
-                    options: Array<{
-                      name: StringRequest
-                      id?: StringRequest
-                      color?: selectColorLookup
-                    }>
-                  }
+                    id: StringRequest
+                    name: StringRequest
+                    color: selectColorLookup
+                  } | null
                 }
               | {
                   type: "multi_select"
-                  multi_select: {
-                    options: Array<{
-                      name: StringRequest
-                      id?: StringRequest
-                      color?: selectColorLookup
-                    }>
-                  }
+                  multi_select: Array<{
+                    id: StringRequest
+                    name: StringRequest
+                    color: selectColorLookup
+                  }>
                 }
               | {
-                  type: "relation"
-                  relation: {
-                    database_id: IdRequest
-                    synced_property_id: string
-                    synced_property_name: string
-                  }
+                  type: "people"
+                  people: Array<
+                    | { id: IdRequest; object: "user" }
+                    | {
+                        type: "person"
+                        person: { email: string }
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
+                    | {
+                        type: "bot"
+                        bot: botLookup
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
+                  >
+                }
+              | { type: "email"; email: string | null }
+              | { type: "phone_number"; phone_number: string | null }
+              | {
+                  type: "date"
+                  date: { start: string; end: string | null } | null
                 }
               | {
-                  type: "rollup"
-                  rollup: {
-                    rollup_property_name: string
-                    relation_property_name: string
-                    rollup_property_id: string
-                    relation_property_id: string
-                    function: functionLookup
-                  }
+                  type: "files"
+                  files: Array<
+                    | {
+                        file: { url: string; expiry_time: string }
+                        name: string
+                        type?: "file"
+                      }
+                    | {
+                        external: { url: string }
+                        name: string
+                        type?: "external"
+                      }
+                  >
                 }
-              | { type: "title"; title: Record<string, never> }
-              | { type: "rich_text"; rich_text: Record<string, never> }
-              | { type: "url"; url: Record<string, never> }
-              | { type: "people"; people: Record<string, never> }
-              | { type: "files"; files: Record<string, never> }
-              | { type: "email"; email: Record<string, never> }
-              | { type: "phone_number"; phone_number: Record<string, never> }
-              | { type: "date"; date: Record<string, never> }
-              | { type: "checkbox"; checkbox: Record<string, never> }
-              | { type: "created_by"; created_by: Record<string, never> }
-              | { type: "created_time"; created_time: Record<string, never> }
+              | { type: "checkbox"; checkbox: boolean }
+              | {
+                  type: "formula"
+                  formula:
+                    | { type: "string"; string: string | null }
+                    | {
+                        type: "date"
+                        date: { start: string; end: string | null } | null
+                      }
+                    | { type: "number"; number: number | null }
+                    | { type: "boolean"; boolean: boolean | null }
+                }
+              | { type: "relation"; relation: Array<{ id: string }> }
+              | { type: "created_time"; created_time: string }
+              | {
+                  type: "created_by"
+                  created_by:
+                    | { id: IdRequest; object: "user" }
+                    | {
+                        type: "person"
+                        person: { email: string }
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
+                    | {
+                        type: "bot"
+                        bot: botLookup
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
+                }
+              | { type: "last_edited_time"; last_edited_time: string }
               | {
                   type: "last_edited_by"
-                  last_edited_by: Record<string, never>
-                }
-              | {
-                  type: "last_edited_time"
-                  last_edited_time: Record<string, never>
+                  last_edited_by:
+                    | { id: IdRequest; object: "user" }
+                    | {
+                        type: "person"
+                        person: { email: string }
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
+                    | {
+                        type: "bot"
+                        bot: botLookup
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
                 }
             >
             function: functionLookup
@@ -18544,7 +26729,34 @@ export type QueryDatabaseResponse =
                   }
                 | {
                     type: "mention"
-                    mention: mentionLookup
+                    mention:
+                      | {
+                          type: "user"
+                          user:
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                        }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null }
+                        }
+                      | { type: "page"; page: { id: IdRequest } }
+                      | { type: "database"; database: { id: IdRequest } }
                     annotations: annotationsLookup
                     plain_text: string
                     href: string | null
@@ -18571,7 +26783,34 @@ export type QueryDatabaseResponse =
                   }
                 | {
                     type: "mention"
-                    mention: mentionLookup
+                    mention:
+                      | {
+                          type: "user"
+                          user:
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                        }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null }
+                        }
+                      | { type: "page"; page: { id: IdRequest } }
+                      | { type: "database"; database: { id: IdRequest } }
                     annotations: annotationsLookup
                     plain_text: string
                     href: string | null
@@ -18586,15 +26825,15 @@ export type QueryDatabaseResponse =
               >
               id: string
             }
-          | { type: "number"; number: number; id: string }
-          | { type: "url"; url: string; id: string }
+          | { type: "number"; number: number | null; id: string }
+          | { type: "url"; url: string | null; id: string }
           | {
               type: "select"
               select: {
                 id: StringRequest
                 name: StringRequest
                 color: selectColorLookup
-              }
+              } | null
               id: string
             }
           | {
@@ -18629,11 +26868,11 @@ export type QueryDatabaseResponse =
               >
               id: string
             }
-          | { type: "email"; email: string; id: string }
-          | { type: "phone_number"; phone_number: string; id: string }
+          | { type: "email"; email: string | null; id: string }
+          | { type: "phone_number"; phone_number: string | null; id: string }
           | {
               type: "date"
-              date: { start: string; end: string | null }
+              date: { start: string; end: string | null } | null
               id: string
             }
           | {
@@ -18662,105 +26901,6 @@ export type QueryDatabaseResponse =
               id: string
             }
           | { type: "relation"; relation: Array<{ id: string }>; id: string }
-          | {
-              type: "rollup"
-              rollup:
-                | {
-                    type: "number"
-                    number: number | null
-                    function: functionLookup
-                  }
-                | {
-                    type: "date"
-                    date: { start: string; end: string | null } | null
-                    function: functionLookup
-                  }
-                | {
-                    type: "array"
-                    array: Array<
-                      | {
-                          type: "number"
-                          number: {
-                            format: formatLookup
-                          }
-                        }
-                      | { type: "formula"; formula: { expression: string } }
-                      | {
-                          type: "select"
-                          select: {
-                            options: Array<{
-                              name: StringRequest
-                              id?: StringRequest
-                              color?: selectColorLookup
-                            }>
-                          }
-                        }
-                      | {
-                          type: "multi_select"
-                          multi_select: {
-                            options: Array<{
-                              name: StringRequest
-                              id?: StringRequest
-                              color?: selectColorLookup
-                            }>
-                          }
-                        }
-                      | {
-                          type: "relation"
-                          relation: {
-                            database_id: IdRequest
-                            synced_property_id: string
-                            synced_property_name: string
-                          }
-                        }
-                      | {
-                          type: "rollup"
-                          rollup: {
-                            rollup_property_name: string
-                            relation_property_name: string
-                            rollup_property_id: string
-                            relation_property_id: string
-                            function: functionLookup
-                          }
-                        }
-                      | { type: "title"; title: Record<string, never> }
-                      | { type: "rich_text"; rich_text: Record<string, never> }
-                      | { type: "url"; url: Record<string, never> }
-                      | { type: "people"; people: Record<string, never> }
-                      | { type: "files"; files: Record<string, never> }
-                      | { type: "email"; email: Record<string, never> }
-                      | {
-                          type: "phone_number"
-                          phone_number: Record<string, never>
-                        }
-                      | { type: "date"; date: Record<string, never> }
-                      | { type: "checkbox"; checkbox: Record<string, never> }
-                      | {
-                          type: "created_by"
-                          created_by: Record<string, never>
-                        }
-                      | {
-                          type: "created_time"
-                          created_time: Record<string, never>
-                        }
-                      | {
-                          type: "last_edited_by"
-                          last_edited_by: Record<string, never>
-                        }
-                      | {
-                          type: "last_edited_time"
-                          last_edited_time: Record<string, never>
-                        }
-                    >
-                    function: functionLookup
-                  }
-                | {
-                    type: "unsupported"
-                    unsupported: Record<string, never>
-                    function: functionLookup
-                  }
-              id: string
-            }
           | { type: "created_time"; created_time: string; id: string }
           | {
               type: "created_by"
@@ -18804,6 +26944,277 @@ export type QueryDatabaseResponse =
                     avatar_url: string | null
                     id: IdRequest
                     object: "user"
+                  }
+              id: string
+            }
+          | {
+              type: "rollup"
+              rollup:
+                | {
+                    type: "number"
+                    number: number | null
+                    function: functionLookup
+                  }
+                | {
+                    type: "date"
+                    date: { start: string; end: string | null } | null
+                    function: functionLookup
+                  }
+                | {
+                    type: "array"
+                    array: Array<
+                      | {
+                          type: "title"
+                          title: Array<
+                            | {
+                                type: "text"
+                                text: {
+                                  content: string
+                                  link: { url: TextRequest } | null
+                                }
+                                annotations: annotationsLookup
+                                plain_text: string
+                                href: string | null
+                              }
+                            | {
+                                type: "mention"
+                                mention:
+                                  | {
+                                      type: "user"
+                                      user:
+                                        | { id: IdRequest; object: "user" }
+                                        | {
+                                            type: "person"
+                                            person: { email: string }
+                                            name: string | null
+                                            avatar_url: string | null
+                                            id: IdRequest
+                                            object: "user"
+                                          }
+                                        | {
+                                            type: "bot"
+                                            bot: botLookup
+                                            name: string | null
+                                            avatar_url: string | null
+                                            id: IdRequest
+                                            object: "user"
+                                          }
+                                    }
+                                  | {
+                                      type: "date"
+                                      date: {
+                                        start: string
+                                        end: string | null
+                                      }
+                                    }
+                                  | { type: "page"; page: { id: IdRequest } }
+                                  | {
+                                      type: "database"
+                                      database: { id: IdRequest }
+                                    }
+                                annotations: annotationsLookup
+                                plain_text: string
+                                href: string | null
+                              }
+                            | {
+                                type: "equation"
+                                equation: { expression: TextRequest }
+                                annotations: annotationsLookup
+                                plain_text: string
+                                href: string | null
+                              }
+                          >
+                        }
+                      | {
+                          type: "rich_text"
+                          rich_text: Array<
+                            | {
+                                type: "text"
+                                text: {
+                                  content: string
+                                  link: { url: TextRequest } | null
+                                }
+                                annotations: annotationsLookup
+                                plain_text: string
+                                href: string | null
+                              }
+                            | {
+                                type: "mention"
+                                mention:
+                                  | {
+                                      type: "user"
+                                      user:
+                                        | { id: IdRequest; object: "user" }
+                                        | {
+                                            type: "person"
+                                            person: { email: string }
+                                            name: string | null
+                                            avatar_url: string | null
+                                            id: IdRequest
+                                            object: "user"
+                                          }
+                                        | {
+                                            type: "bot"
+                                            bot: botLookup
+                                            name: string | null
+                                            avatar_url: string | null
+                                            id: IdRequest
+                                            object: "user"
+                                          }
+                                    }
+                                  | {
+                                      type: "date"
+                                      date: {
+                                        start: string
+                                        end: string | null
+                                      }
+                                    }
+                                  | { type: "page"; page: { id: IdRequest } }
+                                  | {
+                                      type: "database"
+                                      database: { id: IdRequest }
+                                    }
+                                annotations: annotationsLookup
+                                plain_text: string
+                                href: string | null
+                              }
+                            | {
+                                type: "equation"
+                                equation: { expression: TextRequest }
+                                annotations: annotationsLookup
+                                plain_text: string
+                                href: string | null
+                              }
+                          >
+                        }
+                      | { type: "number"; number: number | null }
+                      | { type: "url"; url: string | null }
+                      | {
+                          type: "select"
+                          select: {
+                            id: StringRequest
+                            name: StringRequest
+                            color: selectColorLookup
+                          } | null
+                        }
+                      | {
+                          type: "multi_select"
+                          multi_select: Array<{
+                            id: StringRequest
+                            name: StringRequest
+                            color: selectColorLookup
+                          }>
+                        }
+                      | {
+                          type: "people"
+                          people: Array<
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                          >
+                        }
+                      | { type: "email"; email: string | null }
+                      | { type: "phone_number"; phone_number: string | null }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null } | null
+                        }
+                      | {
+                          type: "files"
+                          files: Array<
+                            | {
+                                file: { url: string; expiry_time: string }
+                                name: string
+                                type?: "file"
+                              }
+                            | {
+                                external: { url: string }
+                                name: string
+                                type?: "external"
+                              }
+                          >
+                        }
+                      | { type: "checkbox"; checkbox: boolean }
+                      | {
+                          type: "formula"
+                          formula:
+                            | { type: "string"; string: string | null }
+                            | {
+                                type: "date"
+                                date: {
+                                  start: string
+                                  end: string | null
+                                } | null
+                              }
+                            | { type: "number"; number: number | null }
+                            | { type: "boolean"; boolean: boolean | null }
+                        }
+                      | { type: "relation"; relation: Array<{ id: string }> }
+                      | { type: "created_time"; created_time: string }
+                      | {
+                          type: "created_by"
+                          created_by:
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                        }
+                      | { type: "last_edited_time"; last_edited_time: string }
+                      | {
+                          type: "last_edited_by"
+                          last_edited_by:
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                        }
+                    >
+                    function: functionLookup
+                  }
+                | {
+                    type: "unsupported"
+                    unsupported: Record<string, never>
+                    function: functionLookup
                   }
               id: string
             }
@@ -18854,7 +27265,34 @@ export type QueryDatabaseResponse =
                   }
                 | {
                     type: "mention"
-                    mention: mentionLookup
+                    mention:
+                      | {
+                          type: "user"
+                          user:
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                        }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null }
+                        }
+                      | { type: "page"; page: { id: IdRequest } }
+                      | { type: "database"; database: { id: IdRequest } }
                     annotations: annotationsLookup
                     plain_text: string
                     href: string | null
@@ -18881,7 +27319,34 @@ export type QueryDatabaseResponse =
                   }
                 | {
                     type: "mention"
-                    mention: mentionLookup
+                    mention:
+                      | {
+                          type: "user"
+                          user:
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                        }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null }
+                        }
+                      | { type: "page"; page: { id: IdRequest } }
+                      | { type: "database"; database: { id: IdRequest } }
                     annotations: annotationsLookup
                     plain_text: string
                     href: string | null
@@ -18896,15 +27361,15 @@ export type QueryDatabaseResponse =
               >
               id: string
             }
-          | { type: "number"; number: number; id: string }
-          | { type: "url"; url: string; id: string }
+          | { type: "number"; number: number | null; id: string }
+          | { type: "url"; url: string | null; id: string }
           | {
               type: "select"
               select: {
                 id: StringRequest
                 name: StringRequest
                 color: selectColorLookup
-              }
+              } | null
               id: string
             }
           | {
@@ -18939,11 +27404,11 @@ export type QueryDatabaseResponse =
               >
               id: string
             }
-          | { type: "email"; email: string; id: string }
-          | { type: "phone_number"; phone_number: string; id: string }
+          | { type: "email"; email: string | null; id: string }
+          | { type: "phone_number"; phone_number: string | null; id: string }
           | {
               type: "date"
-              date: { start: string; end: string | null }
+              date: { start: string; end: string | null } | null
               id: string
             }
           | {
@@ -18972,105 +27437,6 @@ export type QueryDatabaseResponse =
               id: string
             }
           | { type: "relation"; relation: Array<{ id: string }>; id: string }
-          | {
-              type: "rollup"
-              rollup:
-                | {
-                    type: "number"
-                    number: number | null
-                    function: functionLookup
-                  }
-                | {
-                    type: "date"
-                    date: { start: string; end: string | null } | null
-                    function: functionLookup
-                  }
-                | {
-                    type: "array"
-                    array: Array<
-                      | {
-                          type: "number"
-                          number: {
-                            format: formatLookup
-                          }
-                        }
-                      | { type: "formula"; formula: { expression: string } }
-                      | {
-                          type: "select"
-                          select: {
-                            options: Array<{
-                              name: StringRequest
-                              id?: StringRequest
-                              color?: selectColorLookup
-                            }>
-                          }
-                        }
-                      | {
-                          type: "multi_select"
-                          multi_select: {
-                            options: Array<{
-                              name: StringRequest
-                              id?: StringRequest
-                              color?: selectColorLookup
-                            }>
-                          }
-                        }
-                      | {
-                          type: "relation"
-                          relation: {
-                            database_id: IdRequest
-                            synced_property_id: string
-                            synced_property_name: string
-                          }
-                        }
-                      | {
-                          type: "rollup"
-                          rollup: {
-                            rollup_property_name: string
-                            relation_property_name: string
-                            rollup_property_id: string
-                            relation_property_id: string
-                            function: functionLookup
-                          }
-                        }
-                      | { type: "title"; title: Record<string, never> }
-                      | { type: "rich_text"; rich_text: Record<string, never> }
-                      | { type: "url"; url: Record<string, never> }
-                      | { type: "people"; people: Record<string, never> }
-                      | { type: "files"; files: Record<string, never> }
-                      | { type: "email"; email: Record<string, never> }
-                      | {
-                          type: "phone_number"
-                          phone_number: Record<string, never>
-                        }
-                      | { type: "date"; date: Record<string, never> }
-                      | { type: "checkbox"; checkbox: Record<string, never> }
-                      | {
-                          type: "created_by"
-                          created_by: Record<string, never>
-                        }
-                      | {
-                          type: "created_time"
-                          created_time: Record<string, never>
-                        }
-                      | {
-                          type: "last_edited_by"
-                          last_edited_by: Record<string, never>
-                        }
-                      | {
-                          type: "last_edited_time"
-                          last_edited_time: Record<string, never>
-                        }
-                    >
-                    function: functionLookup
-                  }
-                | {
-                    type: "unsupported"
-                    unsupported: Record<string, never>
-                    function: functionLookup
-                  }
-              id: string
-            }
           | { type: "created_time"; created_time: string; id: string }
           | {
               type: "created_by"
@@ -19114,6 +27480,277 @@ export type QueryDatabaseResponse =
                     avatar_url: string | null
                     id: IdRequest
                     object: "user"
+                  }
+              id: string
+            }
+          | {
+              type: "rollup"
+              rollup:
+                | {
+                    type: "number"
+                    number: number | null
+                    function: functionLookup
+                  }
+                | {
+                    type: "date"
+                    date: { start: string; end: string | null } | null
+                    function: functionLookup
+                  }
+                | {
+                    type: "array"
+                    array: Array<
+                      | {
+                          type: "title"
+                          title: Array<
+                            | {
+                                type: "text"
+                                text: {
+                                  content: string
+                                  link: { url: TextRequest } | null
+                                }
+                                annotations: annotationsLookup
+                                plain_text: string
+                                href: string | null
+                              }
+                            | {
+                                type: "mention"
+                                mention:
+                                  | {
+                                      type: "user"
+                                      user:
+                                        | { id: IdRequest; object: "user" }
+                                        | {
+                                            type: "person"
+                                            person: { email: string }
+                                            name: string | null
+                                            avatar_url: string | null
+                                            id: IdRequest
+                                            object: "user"
+                                          }
+                                        | {
+                                            type: "bot"
+                                            bot: botLookup
+                                            name: string | null
+                                            avatar_url: string | null
+                                            id: IdRequest
+                                            object: "user"
+                                          }
+                                    }
+                                  | {
+                                      type: "date"
+                                      date: {
+                                        start: string
+                                        end: string | null
+                                      }
+                                    }
+                                  | { type: "page"; page: { id: IdRequest } }
+                                  | {
+                                      type: "database"
+                                      database: { id: IdRequest }
+                                    }
+                                annotations: annotationsLookup
+                                plain_text: string
+                                href: string | null
+                              }
+                            | {
+                                type: "equation"
+                                equation: { expression: TextRequest }
+                                annotations: annotationsLookup
+                                plain_text: string
+                                href: string | null
+                              }
+                          >
+                        }
+                      | {
+                          type: "rich_text"
+                          rich_text: Array<
+                            | {
+                                type: "text"
+                                text: {
+                                  content: string
+                                  link: { url: TextRequest } | null
+                                }
+                                annotations: annotationsLookup
+                                plain_text: string
+                                href: string | null
+                              }
+                            | {
+                                type: "mention"
+                                mention:
+                                  | {
+                                      type: "user"
+                                      user:
+                                        | { id: IdRequest; object: "user" }
+                                        | {
+                                            type: "person"
+                                            person: { email: string }
+                                            name: string | null
+                                            avatar_url: string | null
+                                            id: IdRequest
+                                            object: "user"
+                                          }
+                                        | {
+                                            type: "bot"
+                                            bot: botLookup
+                                            name: string | null
+                                            avatar_url: string | null
+                                            id: IdRequest
+                                            object: "user"
+                                          }
+                                    }
+                                  | {
+                                      type: "date"
+                                      date: {
+                                        start: string
+                                        end: string | null
+                                      }
+                                    }
+                                  | { type: "page"; page: { id: IdRequest } }
+                                  | {
+                                      type: "database"
+                                      database: { id: IdRequest }
+                                    }
+                                annotations: annotationsLookup
+                                plain_text: string
+                                href: string | null
+                              }
+                            | {
+                                type: "equation"
+                                equation: { expression: TextRequest }
+                                annotations: annotationsLookup
+                                plain_text: string
+                                href: string | null
+                              }
+                          >
+                        }
+                      | { type: "number"; number: number | null }
+                      | { type: "url"; url: string | null }
+                      | {
+                          type: "select"
+                          select: {
+                            id: StringRequest
+                            name: StringRequest
+                            color: selectColorLookup
+                          } | null
+                        }
+                      | {
+                          type: "multi_select"
+                          multi_select: Array<{
+                            id: StringRequest
+                            name: StringRequest
+                            color: selectColorLookup
+                          }>
+                        }
+                      | {
+                          type: "people"
+                          people: Array<
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                          >
+                        }
+                      | { type: "email"; email: string | null }
+                      | { type: "phone_number"; phone_number: string | null }
+                      | {
+                          type: "date"
+                          date: { start: string; end: string | null } | null
+                        }
+                      | {
+                          type: "files"
+                          files: Array<
+                            | {
+                                file: { url: string; expiry_time: string }
+                                name: string
+                                type?: "file"
+                              }
+                            | {
+                                external: { url: string }
+                                name: string
+                                type?: "external"
+                              }
+                          >
+                        }
+                      | { type: "checkbox"; checkbox: boolean }
+                      | {
+                          type: "formula"
+                          formula:
+                            | { type: "string"; string: string | null }
+                            | {
+                                type: "date"
+                                date: {
+                                  start: string
+                                  end: string | null
+                                } | null
+                              }
+                            | { type: "number"; number: number | null }
+                            | { type: "boolean"; boolean: boolean | null }
+                        }
+                      | { type: "relation"; relation: Array<{ id: string }> }
+                      | { type: "created_time"; created_time: string }
+                      | {
+                          type: "created_by"
+                          created_by:
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                        }
+                      | { type: "last_edited_time"; last_edited_time: string }
+                      | {
+                          type: "last_edited_by"
+                          last_edited_by:
+                            | { id: IdRequest; object: "user" }
+                            | {
+                                type: "person"
+                                person: { email: string }
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                            | {
+                                type: "bot"
+                                bot: botLookup
+                                name: string | null
+                                avatar_url: string | null
+                                id: IdRequest
+                                object: "user"
+                              }
+                        }
+                    >
+                    function: functionLookup
+                  }
+                | {
+                    type: "unsupported"
+                    unsupported: Record<string, never>
+                    function: functionLookup
                   }
               id: string
             }
@@ -19178,68 +27815,234 @@ export type ListDatabasesResponse =
             type: "array"
             array: Array<
               | {
-                  type: "number"
-                  number: {
-                    format: formatLookup
-                  }
+                  type: "title"
+                  title: Array<
+                    | {
+                        type: "text"
+                        text: {
+                          content: string
+                          link: { url: TextRequest } | null
+                        }
+                        annotations: annotationsLookup
+                        plain_text: string
+                        href: string | null
+                      }
+                    | {
+                        type: "mention"
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: { start: string; end: string | null }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
+                        annotations: annotationsLookup
+                        plain_text: string
+                        href: string | null
+                      }
+                    | {
+                        type: "equation"
+                        equation: { expression: TextRequest }
+                        annotations: annotationsLookup
+                        plain_text: string
+                        href: string | null
+                      }
+                  >
                 }
-              | { type: "formula"; formula: { expression: string } }
+              | {
+                  type: "rich_text"
+                  rich_text: Array<
+                    | {
+                        type: "text"
+                        text: {
+                          content: string
+                          link: { url: TextRequest } | null
+                        }
+                        annotations: annotationsLookup
+                        plain_text: string
+                        href: string | null
+                      }
+                    | {
+                        type: "mention"
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: { start: string; end: string | null }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
+                        annotations: annotationsLookup
+                        plain_text: string
+                        href: string | null
+                      }
+                    | {
+                        type: "equation"
+                        equation: { expression: TextRequest }
+                        annotations: annotationsLookup
+                        plain_text: string
+                        href: string | null
+                      }
+                  >
+                }
+              | { type: "number"; number: number | null }
+              | { type: "url"; url: string | null }
               | {
                   type: "select"
                   select: {
-                    options: Array<{
-                      name: StringRequest
-                      id?: StringRequest
-                      color?: selectColorLookup
-                    }>
-                  }
+                    id: StringRequest
+                    name: StringRequest
+                    color: selectColorLookup
+                  } | null
                 }
               | {
                   type: "multi_select"
-                  multi_select: {
-                    options: Array<{
-                      name: StringRequest
-                      id?: StringRequest
-                      color?: selectColorLookup
-                    }>
-                  }
+                  multi_select: Array<{
+                    id: StringRequest
+                    name: StringRequest
+                    color: selectColorLookup
+                  }>
                 }
               | {
-                  type: "relation"
-                  relation: {
-                    database_id: IdRequest
-                    synced_property_id: string
-                    synced_property_name: string
-                  }
+                  type: "people"
+                  people: Array<
+                    | { id: IdRequest; object: "user" }
+                    | {
+                        type: "person"
+                        person: { email: string }
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
+                    | {
+                        type: "bot"
+                        bot: botLookup
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
+                  >
+                }
+              | { type: "email"; email: string | null }
+              | { type: "phone_number"; phone_number: string | null }
+              | {
+                  type: "date"
+                  date: { start: string; end: string | null } | null
                 }
               | {
-                  type: "rollup"
-                  rollup: {
-                    rollup_property_name: string
-                    relation_property_name: string
-                    rollup_property_id: string
-                    relation_property_id: string
-                    function: functionLookup
-                  }
+                  type: "files"
+                  files: Array<
+                    | {
+                        file: { url: string; expiry_time: string }
+                        name: string
+                        type?: "file"
+                      }
+                    | {
+                        external: { url: string }
+                        name: string
+                        type?: "external"
+                      }
+                  >
                 }
-              | { type: "title"; title: Record<string, never> }
-              | { type: "rich_text"; rich_text: Record<string, never> }
-              | { type: "url"; url: Record<string, never> }
-              | { type: "people"; people: Record<string, never> }
-              | { type: "files"; files: Record<string, never> }
-              | { type: "email"; email: Record<string, never> }
-              | { type: "phone_number"; phone_number: Record<string, never> }
-              | { type: "date"; date: Record<string, never> }
-              | { type: "checkbox"; checkbox: Record<string, never> }
-              | { type: "created_by"; created_by: Record<string, never> }
-              | { type: "created_time"; created_time: Record<string, never> }
+              | { type: "checkbox"; checkbox: boolean }
+              | {
+                  type: "formula"
+                  formula:
+                    | { type: "string"; string: string | null }
+                    | {
+                        type: "date"
+                        date: { start: string; end: string | null } | null
+                      }
+                    | { type: "number"; number: number | null }
+                    | { type: "boolean"; boolean: boolean | null }
+                }
+              | { type: "relation"; relation: Array<{ id: string }> }
+              | { type: "created_time"; created_time: string }
+              | {
+                  type: "created_by"
+                  created_by:
+                    | { id: IdRequest; object: "user" }
+                    | {
+                        type: "person"
+                        person: { email: string }
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
+                    | {
+                        type: "bot"
+                        bot: botLookup
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
+                }
+              | { type: "last_edited_time"; last_edited_time: string }
               | {
                   type: "last_edited_by"
-                  last_edited_by: Record<string, never>
-                }
-              | {
-                  type: "last_edited_time"
-                  last_edited_time: Record<string, never>
+                  last_edited_by:
+                    | { id: IdRequest; object: "user" }
+                    | {
+                        type: "person"
+                        person: { email: string }
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
+                    | {
+                        type: "bot"
+                        bot: botLookup
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
                 }
             >
             function: functionLookup
@@ -19261,7 +28064,31 @@ export type ListDatabasesResponse =
             }
           | {
               type: "mention"
-              mention: mentionLookup
+              mention:
+                | {
+                    type: "user"
+                    user:
+                      | { id: IdRequest; object: "user" }
+                      | {
+                          type: "person"
+                          person: { email: string }
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                      | {
+                          type: "bot"
+                          bot: botLookup
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                  }
+                | { type: "date"; date: { start: string; end: string | null } }
+                | { type: "page"; page: { id: IdRequest } }
+                | { type: "database"; database: { id: IdRequest } }
               annotations: annotationsLookup
               plain_text: string
               href: string | null
@@ -19455,7 +28282,31 @@ export type ListDatabasesResponse =
             }
           | {
               type: "mention"
-              mention: mentionLookup
+              mention:
+                | {
+                    type: "user"
+                    user:
+                      | { id: IdRequest; object: "user" }
+                      | {
+                          type: "person"
+                          person: { email: string }
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                      | {
+                          type: "bot"
+                          bot: botLookup
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                  }
+                | { type: "date"; date: { start: string; end: string | null } }
+                | { type: "page"; page: { id: IdRequest } }
+                | { type: "database"; database: { id: IdRequest } }
               annotations: annotationsLookup
               plain_text: string
               href: string | null
@@ -19755,7 +28606,31 @@ export type CreateDatabaseResponse = {
       }
     | {
         type: "mention"
-        mention: mentionLookup
+        mention:
+          | {
+              type: "user"
+              user:
+                | { id: IdRequest; object: "user" }
+                | {
+                    type: "person"
+                    person: { email: string }
+                    name: string | null
+                    avatar_url: string | null
+                    id: IdRequest
+                    object: "user"
+                  }
+                | {
+                    type: "bot"
+                    bot: botLookup
+                    name: string | null
+                    avatar_url: string | null
+                    id: IdRequest
+                    object: "user"
+                  }
+            }
+          | { type: "date"; date: { start: string; end: string | null } }
+          | { type: "page"; page: { id: IdRequest } }
+          | { type: "database"; database: { id: IdRequest } }
         annotations: annotationsLookup
         plain_text: string
         href: string | null
@@ -19948,68 +28823,234 @@ export type SearchResponse =
             type: "array"
             array: Array<
               | {
-                  type: "number"
-                  number: {
-                    format: formatLookup
-                  }
+                  type: "title"
+                  title: Array<
+                    | {
+                        type: "text"
+                        text: {
+                          content: string
+                          link: { url: TextRequest } | null
+                        }
+                        annotations: annotationsLookup
+                        plain_text: string
+                        href: string | null
+                      }
+                    | {
+                        type: "mention"
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: { start: string; end: string | null }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
+                        annotations: annotationsLookup
+                        plain_text: string
+                        href: string | null
+                      }
+                    | {
+                        type: "equation"
+                        equation: { expression: TextRequest }
+                        annotations: annotationsLookup
+                        plain_text: string
+                        href: string | null
+                      }
+                  >
                 }
-              | { type: "formula"; formula: { expression: string } }
+              | {
+                  type: "rich_text"
+                  rich_text: Array<
+                    | {
+                        type: "text"
+                        text: {
+                          content: string
+                          link: { url: TextRequest } | null
+                        }
+                        annotations: annotationsLookup
+                        plain_text: string
+                        href: string | null
+                      }
+                    | {
+                        type: "mention"
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: { start: string; end: string | null }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
+                        annotations: annotationsLookup
+                        plain_text: string
+                        href: string | null
+                      }
+                    | {
+                        type: "equation"
+                        equation: { expression: TextRequest }
+                        annotations: annotationsLookup
+                        plain_text: string
+                        href: string | null
+                      }
+                  >
+                }
+              | { type: "number"; number: number | null }
+              | { type: "url"; url: string | null }
               | {
                   type: "select"
                   select: {
-                    options: Array<{
-                      name: StringRequest
-                      id?: StringRequest
-                      color?: selectColorLookup
-                    }>
-                  }
+                    id: StringRequest
+                    name: StringRequest
+                    color: selectColorLookup
+                  } | null
                 }
               | {
                   type: "multi_select"
-                  multi_select: {
-                    options: Array<{
-                      name: StringRequest
-                      id?: StringRequest
-                      color?: selectColorLookup
-                    }>
-                  }
+                  multi_select: Array<{
+                    id: StringRequest
+                    name: StringRequest
+                    color: selectColorLookup
+                  }>
                 }
               | {
-                  type: "relation"
-                  relation: {
-                    database_id: IdRequest
-                    synced_property_id: string
-                    synced_property_name: string
-                  }
+                  type: "people"
+                  people: Array<
+                    | { id: IdRequest; object: "user" }
+                    | {
+                        type: "person"
+                        person: { email: string }
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
+                    | {
+                        type: "bot"
+                        bot: botLookup
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
+                  >
+                }
+              | { type: "email"; email: string | null }
+              | { type: "phone_number"; phone_number: string | null }
+              | {
+                  type: "date"
+                  date: { start: string; end: string | null } | null
                 }
               | {
-                  type: "rollup"
-                  rollup: {
-                    rollup_property_name: string
-                    relation_property_name: string
-                    rollup_property_id: string
-                    relation_property_id: string
-                    function: functionLookup
-                  }
+                  type: "files"
+                  files: Array<
+                    | {
+                        file: { url: string; expiry_time: string }
+                        name: string
+                        type?: "file"
+                      }
+                    | {
+                        external: { url: string }
+                        name: string
+                        type?: "external"
+                      }
+                  >
                 }
-              | { type: "title"; title: Record<string, never> }
-              | { type: "rich_text"; rich_text: Record<string, never> }
-              | { type: "url"; url: Record<string, never> }
-              | { type: "people"; people: Record<string, never> }
-              | { type: "files"; files: Record<string, never> }
-              | { type: "email"; email: Record<string, never> }
-              | { type: "phone_number"; phone_number: Record<string, never> }
-              | { type: "date"; date: Record<string, never> }
-              | { type: "checkbox"; checkbox: Record<string, never> }
-              | { type: "created_by"; created_by: Record<string, never> }
-              | { type: "created_time"; created_time: Record<string, never> }
+              | { type: "checkbox"; checkbox: boolean }
+              | {
+                  type: "formula"
+                  formula:
+                    | { type: "string"; string: string | null }
+                    | {
+                        type: "date"
+                        date: { start: string; end: string | null } | null
+                      }
+                    | { type: "number"; number: number | null }
+                    | { type: "boolean"; boolean: boolean | null }
+                }
+              | { type: "relation"; relation: Array<{ id: string }> }
+              | { type: "created_time"; created_time: string }
+              | {
+                  type: "created_by"
+                  created_by:
+                    | { id: IdRequest; object: "user" }
+                    | {
+                        type: "person"
+                        person: { email: string }
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
+                    | {
+                        type: "bot"
+                        bot: botLookup
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
+                }
+              | { type: "last_edited_time"; last_edited_time: string }
               | {
                   type: "last_edited_by"
-                  last_edited_by: Record<string, never>
-                }
-              | {
-                  type: "last_edited_time"
-                  last_edited_time: Record<string, never>
+                  last_edited_by:
+                    | { id: IdRequest; object: "user" }
+                    | {
+                        type: "person"
+                        person: { email: string }
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
+                    | {
+                        type: "bot"
+                        bot: botLookup
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
                 }
             >
             function: functionLookup
@@ -20043,7 +29084,34 @@ export type SearchResponse =
                       }
                     | {
                         type: "mention"
-                        mention: mentionLookup
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: { start: string; end: string | null }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
                         annotations: annotationsLookup
                         plain_text: string
                         href: string | null
@@ -20073,7 +29141,34 @@ export type SearchResponse =
                       }
                     | {
                         type: "mention"
-                        mention: mentionLookup
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: { start: string; end: string | null }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
                         annotations: annotationsLookup
                         plain_text: string
                         href: string | null
@@ -20088,15 +29183,15 @@ export type SearchResponse =
                   >
                   id: string
                 }
-              | { type: "number"; number: number; id: string }
-              | { type: "url"; url: string; id: string }
+              | { type: "number"; number: number | null; id: string }
+              | { type: "url"; url: string | null; id: string }
               | {
                   type: "select"
                   select: {
                     id: StringRequest
                     name: StringRequest
                     color: selectColorLookup
-                  }
+                  } | null
                   id: string
                 }
               | {
@@ -20131,11 +29226,15 @@ export type SearchResponse =
                   >
                   id: string
                 }
-              | { type: "email"; email: string; id: string }
-              | { type: "phone_number"; phone_number: string; id: string }
+              | { type: "email"; email: string | null; id: string }
+              | {
+                  type: "phone_number"
+                  phone_number: string | null
+                  id: string
+                }
               | {
                   type: "date"
-                  date: { start: string; end: string | null }
+                  date: { start: string; end: string | null } | null
                   id: string
                 }
               | {
@@ -20170,111 +29269,6 @@ export type SearchResponse =
               | {
                   type: "relation"
                   relation: Array<{ id: string }>
-                  id: string
-                }
-              | {
-                  type: "rollup"
-                  rollup:
-                    | {
-                        type: "number"
-                        number: number | null
-                        function: functionLookup
-                      }
-                    | {
-                        type: "date"
-                        date: { start: string; end: string | null } | null
-                        function: functionLookup
-                      }
-                    | {
-                        type: "array"
-                        array: Array<
-                          | {
-                              type: "number"
-                              number: {
-                                format: formatLookup
-                              }
-                            }
-                          | { type: "formula"; formula: { expression: string } }
-                          | {
-                              type: "select"
-                              select: {
-                                options: Array<{
-                                  name: StringRequest
-                                  id?: StringRequest
-                                  color?: selectColorLookup
-                                }>
-                              }
-                            }
-                          | {
-                              type: "multi_select"
-                              multi_select: {
-                                options: Array<{
-                                  name: StringRequest
-                                  id?: StringRequest
-                                  color?: selectColorLookup
-                                }>
-                              }
-                            }
-                          | {
-                              type: "relation"
-                              relation: {
-                                database_id: IdRequest
-                                synced_property_id: string
-                                synced_property_name: string
-                              }
-                            }
-                          | {
-                              type: "rollup"
-                              rollup: {
-                                rollup_property_name: string
-                                relation_property_name: string
-                                rollup_property_id: string
-                                relation_property_id: string
-                                function: functionLookup
-                              }
-                            }
-                          | { type: "title"; title: Record<string, never> }
-                          | {
-                              type: "rich_text"
-                              rich_text: Record<string, never>
-                            }
-                          | { type: "url"; url: Record<string, never> }
-                          | { type: "people"; people: Record<string, never> }
-                          | { type: "files"; files: Record<string, never> }
-                          | { type: "email"; email: Record<string, never> }
-                          | {
-                              type: "phone_number"
-                              phone_number: Record<string, never>
-                            }
-                          | { type: "date"; date: Record<string, never> }
-                          | {
-                              type: "checkbox"
-                              checkbox: Record<string, never>
-                            }
-                          | {
-                              type: "created_by"
-                              created_by: Record<string, never>
-                            }
-                          | {
-                              type: "created_time"
-                              created_time: Record<string, never>
-                            }
-                          | {
-                              type: "last_edited_by"
-                              last_edited_by: Record<string, never>
-                            }
-                          | {
-                              type: "last_edited_time"
-                              last_edited_time: Record<string, never>
-                            }
-                        >
-                        function: functionLookup
-                      }
-                    | {
-                        type: "unsupported"
-                        unsupported: Record<string, never>
-                        function: functionLookup
-                      }
                   id: string
                 }
               | { type: "created_time"; created_time: string; id: string }
@@ -20327,6 +29321,292 @@ export type SearchResponse =
                       }
                   id: string
                 }
+              | {
+                  type: "rollup"
+                  rollup:
+                    | {
+                        type: "number"
+                        number: number | null
+                        function: functionLookup
+                      }
+                    | {
+                        type: "date"
+                        date: { start: string; end: string | null } | null
+                        function: functionLookup
+                      }
+                    | {
+                        type: "array"
+                        array: Array<
+                          | {
+                              type: "title"
+                              title: Array<
+                                | {
+                                    type: "text"
+                                    text: {
+                                      content: string
+                                      link: { url: TextRequest } | null
+                                    }
+                                    annotations: annotationsLookup
+                                    plain_text: string
+                                    href: string | null
+                                  }
+                                | {
+                                    type: "mention"
+                                    mention:
+                                      | {
+                                          type: "user"
+                                          user:
+                                            | { id: IdRequest; object: "user" }
+                                            | {
+                                                type: "person"
+                                                person: { email: string }
+                                                name: string | null
+                                                avatar_url: string | null
+                                                id: IdRequest
+                                                object: "user"
+                                              }
+                                            | {
+                                                type: "bot"
+                                                bot: botLookup
+                                                name: string | null
+                                                avatar_url: string | null
+                                                id: IdRequest
+                                                object: "user"
+                                              }
+                                        }
+                                      | {
+                                          type: "date"
+                                          date: {
+                                            start: string
+                                            end: string | null
+                                          }
+                                        }
+                                      | {
+                                          type: "page"
+                                          page: { id: IdRequest }
+                                        }
+                                      | {
+                                          type: "database"
+                                          database: { id: IdRequest }
+                                        }
+                                    annotations: annotationsLookup
+                                    plain_text: string
+                                    href: string | null
+                                  }
+                                | {
+                                    type: "equation"
+                                    equation: { expression: TextRequest }
+                                    annotations: annotationsLookup
+                                    plain_text: string
+                                    href: string | null
+                                  }
+                              >
+                            }
+                          | {
+                              type: "rich_text"
+                              rich_text: Array<
+                                | {
+                                    type: "text"
+                                    text: {
+                                      content: string
+                                      link: { url: TextRequest } | null
+                                    }
+                                    annotations: annotationsLookup
+                                    plain_text: string
+                                    href: string | null
+                                  }
+                                | {
+                                    type: "mention"
+                                    mention:
+                                      | {
+                                          type: "user"
+                                          user:
+                                            | { id: IdRequest; object: "user" }
+                                            | {
+                                                type: "person"
+                                                person: { email: string }
+                                                name: string | null
+                                                avatar_url: string | null
+                                                id: IdRequest
+                                                object: "user"
+                                              }
+                                            | {
+                                                type: "bot"
+                                                bot: botLookup
+                                                name: string | null
+                                                avatar_url: string | null
+                                                id: IdRequest
+                                                object: "user"
+                                              }
+                                        }
+                                      | {
+                                          type: "date"
+                                          date: {
+                                            start: string
+                                            end: string | null
+                                          }
+                                        }
+                                      | {
+                                          type: "page"
+                                          page: { id: IdRequest }
+                                        }
+                                      | {
+                                          type: "database"
+                                          database: { id: IdRequest }
+                                        }
+                                    annotations: annotationsLookup
+                                    plain_text: string
+                                    href: string | null
+                                  }
+                                | {
+                                    type: "equation"
+                                    equation: { expression: TextRequest }
+                                    annotations: annotationsLookup
+                                    plain_text: string
+                                    href: string | null
+                                  }
+                              >
+                            }
+                          | { type: "number"; number: number | null }
+                          | { type: "url"; url: string | null }
+                          | {
+                              type: "select"
+                              select: {
+                                id: StringRequest
+                                name: StringRequest
+                                color: selectColorLookup
+                              } | null
+                            }
+                          | {
+                              type: "multi_select"
+                              multi_select: Array<{
+                                id: StringRequest
+                                name: StringRequest
+                                color: selectColorLookup
+                              }>
+                            }
+                          | {
+                              type: "people"
+                              people: Array<
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                              >
+                            }
+                          | { type: "email"; email: string | null }
+                          | {
+                              type: "phone_number"
+                              phone_number: string | null
+                            }
+                          | {
+                              type: "date"
+                              date: { start: string; end: string | null } | null
+                            }
+                          | {
+                              type: "files"
+                              files: Array<
+                                | {
+                                    file: { url: string; expiry_time: string }
+                                    name: string
+                                    type?: "file"
+                                  }
+                                | {
+                                    external: { url: string }
+                                    name: string
+                                    type?: "external"
+                                  }
+                              >
+                            }
+                          | { type: "checkbox"; checkbox: boolean }
+                          | {
+                              type: "formula"
+                              formula:
+                                | { type: "string"; string: string | null }
+                                | {
+                                    type: "date"
+                                    date: {
+                                      start: string
+                                      end: string | null
+                                    } | null
+                                  }
+                                | { type: "number"; number: number | null }
+                                | { type: "boolean"; boolean: boolean | null }
+                            }
+                          | {
+                              type: "relation"
+                              relation: Array<{ id: string }>
+                            }
+                          | { type: "created_time"; created_time: string }
+                          | {
+                              type: "created_by"
+                              created_by:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "last_edited_time"
+                              last_edited_time: string
+                            }
+                          | {
+                              type: "last_edited_by"
+                              last_edited_by:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                        >
+                        function: functionLookup
+                      }
+                    | {
+                        type: "unsupported"
+                        unsupported: Record<string, never>
+                        function: functionLookup
+                      }
+                  id: string
+                }
             >
             icon:
               | {
@@ -20361,7 +29641,34 @@ export type SearchResponse =
                 }
               | {
                   type: "mention"
-                  mention: mentionLookup
+                  mention:
+                    | {
+                        type: "user"
+                        user:
+                          | { id: IdRequest; object: "user" }
+                          | {
+                              type: "person"
+                              person: { email: string }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                          | {
+                              type: "bot"
+                              bot: botLookup
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                      }
+                    | {
+                        type: "date"
+                        date: { start: string; end: string | null }
+                      }
+                    | { type: "page"; page: { id: IdRequest } }
+                    | { type: "database"; database: { id: IdRequest } }
                   annotations: annotationsLookup
                   plain_text: string
                   href: string | null
@@ -20568,7 +29875,34 @@ export type SearchResponse =
                       }
                     | {
                         type: "mention"
-                        mention: mentionLookup
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: { start: string; end: string | null }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
                         annotations: annotationsLookup
                         plain_text: string
                         href: string | null
@@ -20598,7 +29932,34 @@ export type SearchResponse =
                       }
                     | {
                         type: "mention"
-                        mention: mentionLookup
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: { start: string; end: string | null }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
                         annotations: annotationsLookup
                         plain_text: string
                         href: string | null
@@ -20613,15 +29974,15 @@ export type SearchResponse =
                   >
                   id: string
                 }
-              | { type: "number"; number: number; id: string }
-              | { type: "url"; url: string; id: string }
+              | { type: "number"; number: number | null; id: string }
+              | { type: "url"; url: string | null; id: string }
               | {
                   type: "select"
                   select: {
                     id: StringRequest
                     name: StringRequest
                     color: selectColorLookup
-                  }
+                  } | null
                   id: string
                 }
               | {
@@ -20656,11 +30017,15 @@ export type SearchResponse =
                   >
                   id: string
                 }
-              | { type: "email"; email: string; id: string }
-              | { type: "phone_number"; phone_number: string; id: string }
+              | { type: "email"; email: string | null; id: string }
+              | {
+                  type: "phone_number"
+                  phone_number: string | null
+                  id: string
+                }
               | {
                   type: "date"
-                  date: { start: string; end: string | null }
+                  date: { start: string; end: string | null } | null
                   id: string
                 }
               | {
@@ -20695,111 +30060,6 @@ export type SearchResponse =
               | {
                   type: "relation"
                   relation: Array<{ id: string }>
-                  id: string
-                }
-              | {
-                  type: "rollup"
-                  rollup:
-                    | {
-                        type: "number"
-                        number: number | null
-                        function: functionLookup
-                      }
-                    | {
-                        type: "date"
-                        date: { start: string; end: string | null } | null
-                        function: functionLookup
-                      }
-                    | {
-                        type: "array"
-                        array: Array<
-                          | {
-                              type: "number"
-                              number: {
-                                format: formatLookup
-                              }
-                            }
-                          | { type: "formula"; formula: { expression: string } }
-                          | {
-                              type: "select"
-                              select: {
-                                options: Array<{
-                                  name: StringRequest
-                                  id?: StringRequest
-                                  color?: selectColorLookup
-                                }>
-                              }
-                            }
-                          | {
-                              type: "multi_select"
-                              multi_select: {
-                                options: Array<{
-                                  name: StringRequest
-                                  id?: StringRequest
-                                  color?: selectColorLookup
-                                }>
-                              }
-                            }
-                          | {
-                              type: "relation"
-                              relation: {
-                                database_id: IdRequest
-                                synced_property_id: string
-                                synced_property_name: string
-                              }
-                            }
-                          | {
-                              type: "rollup"
-                              rollup: {
-                                rollup_property_name: string
-                                relation_property_name: string
-                                rollup_property_id: string
-                                relation_property_id: string
-                                function: functionLookup
-                              }
-                            }
-                          | { type: "title"; title: Record<string, never> }
-                          | {
-                              type: "rich_text"
-                              rich_text: Record<string, never>
-                            }
-                          | { type: "url"; url: Record<string, never> }
-                          | { type: "people"; people: Record<string, never> }
-                          | { type: "files"; files: Record<string, never> }
-                          | { type: "email"; email: Record<string, never> }
-                          | {
-                              type: "phone_number"
-                              phone_number: Record<string, never>
-                            }
-                          | { type: "date"; date: Record<string, never> }
-                          | {
-                              type: "checkbox"
-                              checkbox: Record<string, never>
-                            }
-                          | {
-                              type: "created_by"
-                              created_by: Record<string, never>
-                            }
-                          | {
-                              type: "created_time"
-                              created_time: Record<string, never>
-                            }
-                          | {
-                              type: "last_edited_by"
-                              last_edited_by: Record<string, never>
-                            }
-                          | {
-                              type: "last_edited_time"
-                              last_edited_time: Record<string, never>
-                            }
-                        >
-                        function: functionLookup
-                      }
-                    | {
-                        type: "unsupported"
-                        unsupported: Record<string, never>
-                        function: functionLookup
-                      }
                   id: string
                 }
               | { type: "created_time"; created_time: string; id: string }
@@ -20852,6 +30112,292 @@ export type SearchResponse =
                       }
                   id: string
                 }
+              | {
+                  type: "rollup"
+                  rollup:
+                    | {
+                        type: "number"
+                        number: number | null
+                        function: functionLookup
+                      }
+                    | {
+                        type: "date"
+                        date: { start: string; end: string | null } | null
+                        function: functionLookup
+                      }
+                    | {
+                        type: "array"
+                        array: Array<
+                          | {
+                              type: "title"
+                              title: Array<
+                                | {
+                                    type: "text"
+                                    text: {
+                                      content: string
+                                      link: { url: TextRequest } | null
+                                    }
+                                    annotations: annotationsLookup
+                                    plain_text: string
+                                    href: string | null
+                                  }
+                                | {
+                                    type: "mention"
+                                    mention:
+                                      | {
+                                          type: "user"
+                                          user:
+                                            | { id: IdRequest; object: "user" }
+                                            | {
+                                                type: "person"
+                                                person: { email: string }
+                                                name: string | null
+                                                avatar_url: string | null
+                                                id: IdRequest
+                                                object: "user"
+                                              }
+                                            | {
+                                                type: "bot"
+                                                bot: botLookup
+                                                name: string | null
+                                                avatar_url: string | null
+                                                id: IdRequest
+                                                object: "user"
+                                              }
+                                        }
+                                      | {
+                                          type: "date"
+                                          date: {
+                                            start: string
+                                            end: string | null
+                                          }
+                                        }
+                                      | {
+                                          type: "page"
+                                          page: { id: IdRequest }
+                                        }
+                                      | {
+                                          type: "database"
+                                          database: { id: IdRequest }
+                                        }
+                                    annotations: annotationsLookup
+                                    plain_text: string
+                                    href: string | null
+                                  }
+                                | {
+                                    type: "equation"
+                                    equation: { expression: TextRequest }
+                                    annotations: annotationsLookup
+                                    plain_text: string
+                                    href: string | null
+                                  }
+                              >
+                            }
+                          | {
+                              type: "rich_text"
+                              rich_text: Array<
+                                | {
+                                    type: "text"
+                                    text: {
+                                      content: string
+                                      link: { url: TextRequest } | null
+                                    }
+                                    annotations: annotationsLookup
+                                    plain_text: string
+                                    href: string | null
+                                  }
+                                | {
+                                    type: "mention"
+                                    mention:
+                                      | {
+                                          type: "user"
+                                          user:
+                                            | { id: IdRequest; object: "user" }
+                                            | {
+                                                type: "person"
+                                                person: { email: string }
+                                                name: string | null
+                                                avatar_url: string | null
+                                                id: IdRequest
+                                                object: "user"
+                                              }
+                                            | {
+                                                type: "bot"
+                                                bot: botLookup
+                                                name: string | null
+                                                avatar_url: string | null
+                                                id: IdRequest
+                                                object: "user"
+                                              }
+                                        }
+                                      | {
+                                          type: "date"
+                                          date: {
+                                            start: string
+                                            end: string | null
+                                          }
+                                        }
+                                      | {
+                                          type: "page"
+                                          page: { id: IdRequest }
+                                        }
+                                      | {
+                                          type: "database"
+                                          database: { id: IdRequest }
+                                        }
+                                    annotations: annotationsLookup
+                                    plain_text: string
+                                    href: string | null
+                                  }
+                                | {
+                                    type: "equation"
+                                    equation: { expression: TextRequest }
+                                    annotations: annotationsLookup
+                                    plain_text: string
+                                    href: string | null
+                                  }
+                              >
+                            }
+                          | { type: "number"; number: number | null }
+                          | { type: "url"; url: string | null }
+                          | {
+                              type: "select"
+                              select: {
+                                id: StringRequest
+                                name: StringRequest
+                                color: selectColorLookup
+                              } | null
+                            }
+                          | {
+                              type: "multi_select"
+                              multi_select: Array<{
+                                id: StringRequest
+                                name: StringRequest
+                                color: selectColorLookup
+                              }>
+                            }
+                          | {
+                              type: "people"
+                              people: Array<
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                              >
+                            }
+                          | { type: "email"; email: string | null }
+                          | {
+                              type: "phone_number"
+                              phone_number: string | null
+                            }
+                          | {
+                              type: "date"
+                              date: { start: string; end: string | null } | null
+                            }
+                          | {
+                              type: "files"
+                              files: Array<
+                                | {
+                                    file: { url: string; expiry_time: string }
+                                    name: string
+                                    type?: "file"
+                                  }
+                                | {
+                                    external: { url: string }
+                                    name: string
+                                    type?: "external"
+                                  }
+                              >
+                            }
+                          | { type: "checkbox"; checkbox: boolean }
+                          | {
+                              type: "formula"
+                              formula:
+                                | { type: "string"; string: string | null }
+                                | {
+                                    type: "date"
+                                    date: {
+                                      start: string
+                                      end: string | null
+                                    } | null
+                                  }
+                                | { type: "number"; number: number | null }
+                                | { type: "boolean"; boolean: boolean | null }
+                            }
+                          | {
+                              type: "relation"
+                              relation: Array<{ id: string }>
+                            }
+                          | { type: "created_time"; created_time: string }
+                          | {
+                              type: "created_by"
+                              created_by:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "last_edited_time"
+                              last_edited_time: string
+                            }
+                          | {
+                              type: "last_edited_by"
+                              last_edited_by:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot: botLookup
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                        >
+                        function: functionLookup
+                      }
+                    | {
+                        type: "unsupported"
+                        unsupported: Record<string, never>
+                        function: functionLookup
+                      }
+                  id: string
+                }
             >
             icon:
               | {
@@ -20886,7 +30432,34 @@ export type SearchResponse =
                 }
               | {
                   type: "mention"
-                  mention: mentionLookup
+                  mention:
+                    | {
+                        type: "user"
+                        user:
+                          | { id: IdRequest; object: "user" }
+                          | {
+                              type: "person"
+                              person: { email: string }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                          | {
+                              type: "bot"
+                              bot: botLookup
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                      }
+                    | {
+                        type: "date"
+                        date: { start: string; end: string | null }
+                      }
+                    | { type: "page"; page: { id: IdRequest } }
+                    | { type: "database"; database: { id: IdRequest } }
                   annotations: annotationsLookup
                   plain_text: string
                   href: string | null
@@ -24784,6 +34357,46 @@ export type functionLookup =
 | "percent_unchecked"
 | "show_original"
 
+export type annotationsLookup = {
+  bold: boolean
+  italic: boolean
+  strikethrough: boolean
+  underline: boolean
+  code: boolean
+  color:
+    | "default"
+    | "gray"
+    | "brown"
+    | "orange"
+    | "yellow"
+    | "green"
+    | "blue"
+    | "purple"
+    | "pink"
+    | "red"
+    | "gray_background"
+    | "brown_background"
+    | "orange_background"
+    | "yellow_background"
+    | "green_background"
+    | "blue_background"
+    | "purple_background"
+    | "pink_background"
+    | "red_background"
+}
+
+export type selectColorLookup =
+| "default"
+| "gray"
+| "brown"
+| "orange"
+| "yellow"
+| "green"
+| "blue"
+| "purple"
+| "pink"
+| "red"
+
 export type formatLookup =
 | "number"
 | "number_with_commas"
@@ -24821,90 +34434,6 @@ export type formatLookup =
 | "riyal"
 | "ringgit"
 | "leu"
-
-export type selectColorLookup =
-| "default"
-| "pink"
-| "purple"
-| "green"
-| "gray"
-| "orange"
-| "brown"
-| "red"
-| "yellow"
-| "blue"
-
-export type annotationsLookup = {
-  bold: boolean
-  italic: boolean
-  strikethrough: boolean
-  underline: boolean
-  code: boolean
-  color:
-    | "default"
-    | "gray"
-    | "brown"
-    | "orange"
-    | "yellow"
-    | "green"
-    | "blue"
-    | "purple"
-    | "pink"
-    | "red"
-    | "gray_background"
-    | "brown_background"
-    | "orange_background"
-    | "yellow_background"
-    | "green_background"
-    | "blue_background"
-    | "purple_background"
-    | "pink_background"
-    | "red_background"
-}
-
-export type mentionLookup =
-| {
-    type: "user"
-    user:
-      | { id: IdRequest; object: "user" }
-      | {
-          type: "person"
-          person: { email: string }
-          name: string | null
-          avatar_url: string | null
-          id: IdRequest
-          object: "user"
-        }
-      | {
-          type: "bot"
-          bot:
-            | Record<string, never>
-            | {
-                owner:
-                  | {
-                      type: "user"
-                      user:
-                        | {
-                            type: "person"
-                            person: { email: string }
-                            name: string | null
-                            avatar_url: string | null
-                            id: IdRequest
-                            object: "user"
-                          }
-                        | { id: IdRequest; object: "user" }
-                    }
-                  | { type: "workspace"; workspace: true }
-              }
-          name: string | null
-          avatar_url: string | null
-          id: IdRequest
-          object: "user"
-        }
-  }
-| { type: "date"; date: { start: string; end: string | null } }
-| { type: "page"; page: { id: IdRequest } }
-| { type: "database"; database: { id: IdRequest } }
 
 export type stringQueryLookup =
 | { equals: string }

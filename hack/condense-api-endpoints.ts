@@ -52,8 +52,19 @@ class LookupCheck {
         this.ignoreNext = 3;
         return true;
       }
+    } else if (actual !== expected && this.lookup.identifier === 'botLookup') {
+      if (this.idx === 15 || this.idx === 17) {
+        this.ignoreNext = 3;
+        return true;
+      }
+      if (this.idx === 9 || this.idx === 10 || this.idx === 11) {
+        this.ignoreNext = 2;
+        return true;
+      }
     }
-    assertEquals(actual, expected);//, `${this.lookup.identifier} ${this.idx}`);
+    assertEquals(actual, expected,
+      // `${this.lookup.identifier} ${this.idx}`
+      );
     return true;
   }
 }
@@ -75,7 +86,7 @@ function beginLookup(prefix: string, key: string) {
 }
 
 const lookups = new Map<string, Lookup>();
-const lookupKeys = /^( +)(emoji|language|function|format|annotations|color|mention|bot|image|video|pdf|file|audio)\??:( {)?$/;
+const lookupKeys = /^( +)(emoji|language|function|format|annotations|color|bot|image|video|pdf|file|audio)\??:( {)?$/;
 const queryLookupKeys = /^( +)(title|text|rich_text|url|email|phone|phone_number|number|date|people|select|multi_select|relation|created_time|last_edited_time):$/;
 let inLookup: LookupCapture | LookupCheck | null = null;
 let firstMention = true;
