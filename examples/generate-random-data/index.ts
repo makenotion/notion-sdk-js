@@ -152,15 +152,15 @@ function extractValueToString(
     case "created_time":
       return new Date(property.created_time).toISOString()
     case "date":
-      return new Date(property.date.start).toISOString()
+      return property.date ? new Date(property.date.start).toISOString() : ''
     case "email":
-      return property.email
+      return property.email || ''
     case "url":
-      return property.url
+      return property.url || ''
     case "number":
-      return property.number.toString()
+      return property.number?.toString() || ''
     case "phone_number":
-      return property.phone_number
+      return property.phone_number || ''
     case "select":
       if (!property.select) {
         return ""
