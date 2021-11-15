@@ -9,7 +9,7 @@ assignees: ''
 
 Report bugs here only for the Node JavaScript library.
 
-If you're having problems using Notion's API, or have any other feedback about the API including feature requests for the JavaScript library, please email support at developers@notion.com.
+If you're having problems using Notion's API, or have any other feedback about the API including feature requests for the JavaScript library, please email support at developers@makenotion.com.
 
 **Describe the bug**
 A clear and concise description of what the bug is.
