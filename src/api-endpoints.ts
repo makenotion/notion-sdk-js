@@ -3863,6 +3863,13 @@ type BlockObjectRequest =
       object?: "block"
     }
   | {
+      link_to_page:
+        | { page_id: IdRequest; type?: "page_id" }
+        | { database_id: IdRequest; type?: "database_id" }
+      type?: "link_to_page"
+      object?: "block"
+    }
+  | {
       column_list: {
         children: Array<{
           column: {
@@ -3966,6 +3973,13 @@ type BlockObjectRequest =
               | {
                   table_of_contents: Record<string, never>
                   type?: "table_of_contents"
+                  object?: "block"
+                }
+              | {
+                  link_to_page:
+                    | { page_id: IdRequest; type?: "page_id" }
+                    | { database_id: IdRequest; type?: "database_id" }
+                  type?: "link_to_page"
                   object?: "block"
                 }
               | {
@@ -4074,6 +4088,13 @@ type BlockObjectRequest =
                       | {
                           table_of_contents: Record<string, never>
                           type?: "table_of_contents"
+                          object?: "block"
+                        }
+                      | {
+                          link_to_page:
+                            | { page_id: IdRequest; type?: "page_id" }
+                            | { database_id: IdRequest; type?: "database_id" }
+                          type?: "link_to_page"
                           object?: "block"
                         }
                       | {
@@ -4255,6 +4276,13 @@ type BlockObjectRequest =
                           object?: "block"
                         }
                       | {
+                          link_to_page:
+                            | { page_id: IdRequest; type?: "page_id" }
+                            | { database_id: IdRequest; type?: "database_id" }
+                          type?: "link_to_page"
+                          object?: "block"
+                        }
+                      | {
                           paragraph: { text: Array<RichTextItemRequest> }
                           type?: "paragraph"
                           object?: "block"
@@ -4430,6 +4458,13 @@ type BlockObjectRequest =
                       | {
                           table_of_contents: Record<string, never>
                           type?: "table_of_contents"
+                          object?: "block"
+                        }
+                      | {
+                          link_to_page:
+                            | { page_id: IdRequest; type?: "page_id" }
+                            | { database_id: IdRequest; type?: "database_id" }
+                          type?: "link_to_page"
                           object?: "block"
                         }
                       | {
@@ -4611,6 +4646,13 @@ type BlockObjectRequest =
                           object?: "block"
                         }
                       | {
+                          link_to_page:
+                            | { page_id: IdRequest; type?: "page_id" }
+                            | { database_id: IdRequest; type?: "database_id" }
+                          type?: "link_to_page"
+                          object?: "block"
+                        }
+                      | {
                           paragraph: { text: Array<RichTextItemRequest> }
                           type?: "paragraph"
                           object?: "block"
@@ -4786,6 +4828,13 @@ type BlockObjectRequest =
                       | {
                           table_of_contents: Record<string, never>
                           type?: "table_of_contents"
+                          object?: "block"
+                        }
+                      | {
+                          link_to_page:
+                            | { page_id: IdRequest; type?: "page_id" }
+                            | { database_id: IdRequest; type?: "database_id" }
+                          type?: "link_to_page"
                           object?: "block"
                         }
                       | {
@@ -4968,6 +5017,13 @@ type BlockObjectRequest =
                           object?: "block"
                         }
                       | {
+                          link_to_page:
+                            | { page_id: IdRequest; type?: "page_id" }
+                            | { database_id: IdRequest; type?: "database_id" }
+                          type?: "link_to_page"
+                          object?: "block"
+                        }
+                      | {
                           paragraph: { text: Array<RichTextItemRequest> }
                           type?: "paragraph"
                           object?: "block"
@@ -5146,6 +5202,13 @@ type BlockObjectRequest =
                           object?: "block"
                         }
                       | {
+                          link_to_page:
+                            | { page_id: IdRequest; type?: "page_id" }
+                            | { database_id: IdRequest; type?: "database_id" }
+                          type?: "link_to_page"
+                          object?: "block"
+                        }
+                      | {
                           paragraph: { text: Array<RichTextItemRequest> }
                           type?: "paragraph"
                           object?: "block"
@@ -5321,6 +5384,13 @@ type BlockObjectRequest =
                       | {
                           table_of_contents: Record<string, never>
                           type?: "table_of_contents"
+                          object?: "block"
+                        }
+                      | {
+                          link_to_page:
+                            | { page_id: IdRequest; type?: "page_id" }
+                            | { database_id: IdRequest; type?: "database_id" }
+                          type?: "link_to_page"
                           object?: "block"
                         }
                       | {
@@ -5508,6 +5578,13 @@ type BlockObjectRequest =
                           object?: "block"
                         }
                       | {
+                          link_to_page:
+                            | { page_id: IdRequest; type?: "page_id" }
+                            | { database_id: IdRequest; type?: "database_id" }
+                          type?: "link_to_page"
+                          object?: "block"
+                        }
+                      | {
                           paragraph: { text: Array<RichTextItemRequest> }
                           type?: "paragraph"
                           object?: "block"
@@ -5688,6 +5765,13 @@ type BlockObjectRequest =
               object?: "block"
             }
           | {
+              link_to_page:
+                | { page_id: IdRequest; type?: "page_id" }
+                | { database_id: IdRequest; type?: "database_id" }
+              type?: "link_to_page"
+              object?: "block"
+            }
+          | {
               paragraph: {
                 text: Array<RichTextItemRequest>
                 children?: Array<
@@ -5793,6 +5877,13 @@ type BlockObjectRequest =
                   | {
                       table_of_contents: Record<string, never>
                       type?: "table_of_contents"
+                      object?: "block"
+                    }
+                  | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
                       object?: "block"
                     }
                   | {
@@ -5970,6 +6061,13 @@ type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
+                      object?: "block"
+                    }
+                  | {
                       paragraph: { text: Array<RichTextItemRequest> }
                       type?: "paragraph"
                       object?: "block"
@@ -6141,6 +6239,13 @@ type BlockObjectRequest =
                   | {
                       table_of_contents: Record<string, never>
                       type?: "table_of_contents"
+                      object?: "block"
+                    }
+                  | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
                       object?: "block"
                     }
                   | {
@@ -6318,6 +6423,13 @@ type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
+                      object?: "block"
+                    }
+                  | {
                       paragraph: { text: Array<RichTextItemRequest> }
                       type?: "paragraph"
                       object?: "block"
@@ -6489,6 +6601,13 @@ type BlockObjectRequest =
                   | {
                       table_of_contents: Record<string, never>
                       type?: "table_of_contents"
+                      object?: "block"
+                    }
+                  | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
                       object?: "block"
                     }
                   | {
@@ -6667,6 +6786,13 @@ type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
+                      object?: "block"
+                    }
+                  | {
                       paragraph: { text: Array<RichTextItemRequest> }
                       type?: "paragraph"
                       object?: "block"
@@ -6838,6 +6964,13 @@ type BlockObjectRequest =
                   | {
                       table_of_contents: Record<string, never>
                       type?: "table_of_contents"
+                      object?: "block"
+                    }
+                  | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
                       object?: "block"
                     }
                   | {
@@ -7015,6 +7148,13 @@ type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
+                      object?: "block"
+                    }
+                  | {
                       paragraph: { text: Array<RichTextItemRequest> }
                       type?: "paragraph"
                       object?: "block"
@@ -7189,6 +7329,13 @@ type BlockObjectRequest =
                   | {
                       table_of_contents: Record<string, never>
                       type?: "table_of_contents"
+                      object?: "block"
+                    }
+                  | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
                       object?: "block"
                     }
                   | {
@@ -7365,6 +7512,13 @@ type BlockObjectRequest =
               object?: "block"
             }
           | {
+              link_to_page:
+                | { page_id: IdRequest; type?: "page_id" }
+                | { database_id: IdRequest; type?: "database_id" }
+              type?: "link_to_page"
+              object?: "block"
+            }
+          | {
               paragraph: {
                 text: Array<RichTextItemRequest>
                 children?: Array<
@@ -7470,6 +7624,13 @@ type BlockObjectRequest =
                   | {
                       table_of_contents: Record<string, never>
                       type?: "table_of_contents"
+                      object?: "block"
+                    }
+                  | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
                       object?: "block"
                     }
                   | {
@@ -7647,6 +7808,13 @@ type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
+                      object?: "block"
+                    }
+                  | {
                       paragraph: { text: Array<RichTextItemRequest> }
                       type?: "paragraph"
                       object?: "block"
@@ -7818,6 +7986,13 @@ type BlockObjectRequest =
                   | {
                       table_of_contents: Record<string, never>
                       type?: "table_of_contents"
+                      object?: "block"
+                    }
+                  | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
                       object?: "block"
                     }
                   | {
@@ -7995,6 +8170,13 @@ type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
+                      object?: "block"
+                    }
+                  | {
                       paragraph: { text: Array<RichTextItemRequest> }
                       type?: "paragraph"
                       object?: "block"
@@ -8166,6 +8348,13 @@ type BlockObjectRequest =
                   | {
                       table_of_contents: Record<string, never>
                       type?: "table_of_contents"
+                      object?: "block"
+                    }
+                  | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
                       object?: "block"
                     }
                   | {
@@ -8344,6 +8533,13 @@ type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
+                      object?: "block"
+                    }
+                  | {
                       paragraph: { text: Array<RichTextItemRequest> }
                       type?: "paragraph"
                       object?: "block"
@@ -8515,6 +8711,13 @@ type BlockObjectRequest =
                   | {
                       table_of_contents: Record<string, never>
                       type?: "table_of_contents"
+                      object?: "block"
+                    }
+                  | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
                       object?: "block"
                     }
                   | {
@@ -8692,6 +8895,13 @@ type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
+                      object?: "block"
+                    }
+                  | {
                       paragraph: { text: Array<RichTextItemRequest> }
                       type?: "paragraph"
                       object?: "block"
@@ -8866,6 +9076,13 @@ type BlockObjectRequest =
                   | {
                       table_of_contents: Record<string, never>
                       type?: "table_of_contents"
+                      object?: "block"
+                    }
+                  | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
                       object?: "block"
                     }
                   | {
@@ -9042,6 +9259,13 @@ type BlockObjectRequest =
               object?: "block"
             }
           | {
+              link_to_page:
+                | { page_id: IdRequest; type?: "page_id" }
+                | { database_id: IdRequest; type?: "database_id" }
+              type?: "link_to_page"
+              object?: "block"
+            }
+          | {
               paragraph: {
                 text: Array<RichTextItemRequest>
                 children?: Array<
@@ -9147,6 +9371,13 @@ type BlockObjectRequest =
                   | {
                       table_of_contents: Record<string, never>
                       type?: "table_of_contents"
+                      object?: "block"
+                    }
+                  | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
                       object?: "block"
                     }
                   | {
@@ -9324,6 +9555,13 @@ type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
+                      object?: "block"
+                    }
+                  | {
                       paragraph: { text: Array<RichTextItemRequest> }
                       type?: "paragraph"
                       object?: "block"
@@ -9495,6 +9733,13 @@ type BlockObjectRequest =
                   | {
                       table_of_contents: Record<string, never>
                       type?: "table_of_contents"
+                      object?: "block"
+                    }
+                  | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
                       object?: "block"
                     }
                   | {
@@ -9672,6 +9917,13 @@ type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
+                      object?: "block"
+                    }
+                  | {
                       paragraph: { text: Array<RichTextItemRequest> }
                       type?: "paragraph"
                       object?: "block"
@@ -9843,6 +10095,13 @@ type BlockObjectRequest =
                   | {
                       table_of_contents: Record<string, never>
                       type?: "table_of_contents"
+                      object?: "block"
+                    }
+                  | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
                       object?: "block"
                     }
                   | {
@@ -10021,6 +10280,13 @@ type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
+                      object?: "block"
+                    }
+                  | {
                       paragraph: { text: Array<RichTextItemRequest> }
                       type?: "paragraph"
                       object?: "block"
@@ -10192,6 +10458,13 @@ type BlockObjectRequest =
                   | {
                       table_of_contents: Record<string, never>
                       type?: "table_of_contents"
+                      object?: "block"
+                    }
+                  | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
                       object?: "block"
                     }
                   | {
@@ -10369,6 +10642,13 @@ type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
+                      object?: "block"
+                    }
+                  | {
                       paragraph: { text: Array<RichTextItemRequest> }
                       type?: "paragraph"
                       object?: "block"
@@ -10543,6 +10823,13 @@ type BlockObjectRequest =
                   | {
                       table_of_contents: Record<string, never>
                       type?: "table_of_contents"
+                      object?: "block"
+                    }
+                  | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
                       object?: "block"
                     }
                   | {
@@ -10719,6 +11006,13 @@ type BlockObjectRequest =
               object?: "block"
             }
           | {
+              link_to_page:
+                | { page_id: IdRequest; type?: "page_id" }
+                | { database_id: IdRequest; type?: "database_id" }
+              type?: "link_to_page"
+              object?: "block"
+            }
+          | {
               paragraph: {
                 text: Array<RichTextItemRequest>
                 children?: Array<
@@ -10824,6 +11118,13 @@ type BlockObjectRequest =
                   | {
                       table_of_contents: Record<string, never>
                       type?: "table_of_contents"
+                      object?: "block"
+                    }
+                  | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
                       object?: "block"
                     }
                   | {
@@ -11001,6 +11302,13 @@ type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
+                      object?: "block"
+                    }
+                  | {
                       paragraph: { text: Array<RichTextItemRequest> }
                       type?: "paragraph"
                       object?: "block"
@@ -11172,6 +11480,13 @@ type BlockObjectRequest =
                   | {
                       table_of_contents: Record<string, never>
                       type?: "table_of_contents"
+                      object?: "block"
+                    }
+                  | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
                       object?: "block"
                     }
                   | {
@@ -11349,6 +11664,13 @@ type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
+                      object?: "block"
+                    }
+                  | {
                       paragraph: { text: Array<RichTextItemRequest> }
                       type?: "paragraph"
                       object?: "block"
@@ -11520,6 +11842,13 @@ type BlockObjectRequest =
                   | {
                       table_of_contents: Record<string, never>
                       type?: "table_of_contents"
+                      object?: "block"
+                    }
+                  | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
                       object?: "block"
                     }
                   | {
@@ -11698,6 +12027,13 @@ type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
+                      object?: "block"
+                    }
+                  | {
                       paragraph: { text: Array<RichTextItemRequest> }
                       type?: "paragraph"
                       object?: "block"
@@ -11869,6 +12205,13 @@ type BlockObjectRequest =
                   | {
                       table_of_contents: Record<string, never>
                       type?: "table_of_contents"
+                      object?: "block"
+                    }
+                  | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
                       object?: "block"
                     }
                   | {
@@ -12046,6 +12389,13 @@ type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
+                      object?: "block"
+                    }
+                  | {
                       paragraph: { text: Array<RichTextItemRequest> }
                       type?: "paragraph"
                       object?: "block"
@@ -12220,6 +12570,13 @@ type BlockObjectRequest =
                   | {
                       table_of_contents: Record<string, never>
                       type?: "table_of_contents"
+                      object?: "block"
+                    }
+                  | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
                       object?: "block"
                     }
                   | {
@@ -12396,6 +12753,13 @@ type BlockObjectRequest =
               object?: "block"
             }
           | {
+              link_to_page:
+                | { page_id: IdRequest; type?: "page_id" }
+                | { database_id: IdRequest; type?: "database_id" }
+              type?: "link_to_page"
+              object?: "block"
+            }
+          | {
               paragraph: {
                 text: Array<RichTextItemRequest>
                 children?: Array<
@@ -12501,6 +12865,13 @@ type BlockObjectRequest =
                   | {
                       table_of_contents: Record<string, never>
                       type?: "table_of_contents"
+                      object?: "block"
+                    }
+                  | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
                       object?: "block"
                     }
                   | {
@@ -12678,6 +13049,13 @@ type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
+                      object?: "block"
+                    }
+                  | {
                       paragraph: { text: Array<RichTextItemRequest> }
                       type?: "paragraph"
                       object?: "block"
@@ -12849,6 +13227,13 @@ type BlockObjectRequest =
                   | {
                       table_of_contents: Record<string, never>
                       type?: "table_of_contents"
+                      object?: "block"
+                    }
+                  | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
                       object?: "block"
                     }
                   | {
@@ -13026,6 +13411,13 @@ type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
+                      object?: "block"
+                    }
+                  | {
                       paragraph: { text: Array<RichTextItemRequest> }
                       type?: "paragraph"
                       object?: "block"
@@ -13197,6 +13589,13 @@ type BlockObjectRequest =
                   | {
                       table_of_contents: Record<string, never>
                       type?: "table_of_contents"
+                      object?: "block"
+                    }
+                  | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
                       object?: "block"
                     }
                   | {
@@ -13375,6 +13774,13 @@ type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
+                      object?: "block"
+                    }
+                  | {
                       paragraph: { text: Array<RichTextItemRequest> }
                       type?: "paragraph"
                       object?: "block"
@@ -13546,6 +13952,13 @@ type BlockObjectRequest =
                   | {
                       table_of_contents: Record<string, never>
                       type?: "table_of_contents"
+                      object?: "block"
+                    }
+                  | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
                       object?: "block"
                     }
                   | {
@@ -13723,6 +14136,13 @@ type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
+                      object?: "block"
+                    }
+                  | {
                       paragraph: { text: Array<RichTextItemRequest> }
                       type?: "paragraph"
                       object?: "block"
@@ -13897,6 +14317,13 @@ type BlockObjectRequest =
                   | {
                       table_of_contents: Record<string, never>
                       type?: "table_of_contents"
+                      object?: "block"
+                    }
+                  | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
                       object?: "block"
                     }
                   | {
@@ -14073,6 +14500,13 @@ type BlockObjectRequest =
               object?: "block"
             }
           | {
+              link_to_page:
+                | { page_id: IdRequest; type?: "page_id" }
+                | { database_id: IdRequest; type?: "database_id" }
+              type?: "link_to_page"
+              object?: "block"
+            }
+          | {
               paragraph: {
                 text: Array<RichTextItemRequest>
                 children?: Array<
@@ -14178,6 +14612,13 @@ type BlockObjectRequest =
                   | {
                       table_of_contents: Record<string, never>
                       type?: "table_of_contents"
+                      object?: "block"
+                    }
+                  | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
                       object?: "block"
                     }
                   | {
@@ -14355,6 +14796,13 @@ type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
+                      object?: "block"
+                    }
+                  | {
                       paragraph: { text: Array<RichTextItemRequest> }
                       type?: "paragraph"
                       object?: "block"
@@ -14526,6 +14974,13 @@ type BlockObjectRequest =
                   | {
                       table_of_contents: Record<string, never>
                       type?: "table_of_contents"
+                      object?: "block"
+                    }
+                  | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
                       object?: "block"
                     }
                   | {
@@ -14703,6 +15158,13 @@ type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
+                      object?: "block"
+                    }
+                  | {
                       paragraph: { text: Array<RichTextItemRequest> }
                       type?: "paragraph"
                       object?: "block"
@@ -14874,6 +15336,13 @@ type BlockObjectRequest =
                   | {
                       table_of_contents: Record<string, never>
                       type?: "table_of_contents"
+                      object?: "block"
+                    }
+                  | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
                       object?: "block"
                     }
                   | {
@@ -15052,6 +15521,13 @@ type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
+                      object?: "block"
+                    }
+                  | {
                       paragraph: { text: Array<RichTextItemRequest> }
                       type?: "paragraph"
                       object?: "block"
@@ -15223,6 +15699,13 @@ type BlockObjectRequest =
                   | {
                       table_of_contents: Record<string, never>
                       type?: "table_of_contents"
+                      object?: "block"
+                    }
+                  | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
                       object?: "block"
                     }
                   | {
@@ -15400,6 +15883,13 @@ type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
+                      object?: "block"
+                    }
+                  | {
                       paragraph: { text: Array<RichTextItemRequest> }
                       type?: "paragraph"
                       object?: "block"
@@ -15574,6 +16064,13 @@ type BlockObjectRequest =
                   | {
                       table_of_contents: Record<string, never>
                       type?: "table_of_contents"
+                      object?: "block"
+                    }
+                  | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
                       object?: "block"
                     }
                   | {
@@ -15751,6 +16248,13 @@ type BlockObjectRequest =
               object?: "block"
             }
           | {
+              link_to_page:
+                | { page_id: IdRequest; type?: "page_id" }
+                | { database_id: IdRequest; type?: "database_id" }
+              type?: "link_to_page"
+              object?: "block"
+            }
+          | {
               paragraph: {
                 text: Array<RichTextItemRequest>
                 children?: Array<
@@ -15856,6 +16360,13 @@ type BlockObjectRequest =
                   | {
                       table_of_contents: Record<string, never>
                       type?: "table_of_contents"
+                      object?: "block"
+                    }
+                  | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
                       object?: "block"
                     }
                   | {
@@ -16033,6 +16544,13 @@ type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
+                      object?: "block"
+                    }
+                  | {
                       paragraph: { text: Array<RichTextItemRequest> }
                       type?: "paragraph"
                       object?: "block"
@@ -16204,6 +16722,13 @@ type BlockObjectRequest =
                   | {
                       table_of_contents: Record<string, never>
                       type?: "table_of_contents"
+                      object?: "block"
+                    }
+                  | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
                       object?: "block"
                     }
                   | {
@@ -16381,6 +16906,13 @@ type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
+                      object?: "block"
+                    }
+                  | {
                       paragraph: { text: Array<RichTextItemRequest> }
                       type?: "paragraph"
                       object?: "block"
@@ -16552,6 +17084,13 @@ type BlockObjectRequest =
                   | {
                       table_of_contents: Record<string, never>
                       type?: "table_of_contents"
+                      object?: "block"
+                    }
+                  | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
                       object?: "block"
                     }
                   | {
@@ -16730,6 +17269,13 @@ type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
+                      object?: "block"
+                    }
+                  | {
                       paragraph: { text: Array<RichTextItemRequest> }
                       type?: "paragraph"
                       object?: "block"
@@ -16901,6 +17447,13 @@ type BlockObjectRequest =
                   | {
                       table_of_contents: Record<string, never>
                       type?: "table_of_contents"
+                      object?: "block"
+                    }
+                  | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
                       object?: "block"
                     }
                   | {
@@ -17078,6 +17631,13 @@ type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
+                      object?: "block"
+                    }
+                  | {
                       paragraph: { text: Array<RichTextItemRequest> }
                       type?: "paragraph"
                       object?: "block"
@@ -17252,6 +17812,13 @@ type BlockObjectRequest =
                   | {
                       table_of_contents: Record<string, never>
                       type?: "table_of_contents"
+                      object?: "block"
+                    }
+                  | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
                       object?: "block"
                     }
                   | {
@@ -17428,6 +17995,13 @@ type BlockObjectRequest =
               object?: "block"
             }
           | {
+              link_to_page:
+                | { page_id: IdRequest; type?: "page_id" }
+                | { database_id: IdRequest; type?: "database_id" }
+              type?: "link_to_page"
+              object?: "block"
+            }
+          | {
               paragraph: {
                 text: Array<RichTextItemRequest>
                 children?: Array<
@@ -17533,6 +18107,13 @@ type BlockObjectRequest =
                   | {
                       table_of_contents: Record<string, never>
                       type?: "table_of_contents"
+                      object?: "block"
+                    }
+                  | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
                       object?: "block"
                     }
                   | {
@@ -17710,6 +18291,13 @@ type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
+                      object?: "block"
+                    }
+                  | {
                       paragraph: { text: Array<RichTextItemRequest> }
                       type?: "paragraph"
                       object?: "block"
@@ -17881,6 +18469,13 @@ type BlockObjectRequest =
                   | {
                       table_of_contents: Record<string, never>
                       type?: "table_of_contents"
+                      object?: "block"
+                    }
+                  | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
                       object?: "block"
                     }
                   | {
@@ -18058,6 +18653,13 @@ type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
+                      object?: "block"
+                    }
+                  | {
                       paragraph: { text: Array<RichTextItemRequest> }
                       type?: "paragraph"
                       object?: "block"
@@ -18229,6 +18831,13 @@ type BlockObjectRequest =
                   | {
                       table_of_contents: Record<string, never>
                       type?: "table_of_contents"
+                      object?: "block"
+                    }
+                  | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
                       object?: "block"
                     }
                   | {
@@ -18407,6 +19016,13 @@ type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
+                      object?: "block"
+                    }
+                  | {
                       paragraph: { text: Array<RichTextItemRequest> }
                       type?: "paragraph"
                       object?: "block"
@@ -18578,6 +19194,13 @@ type BlockObjectRequest =
                   | {
                       table_of_contents: Record<string, never>
                       type?: "table_of_contents"
+                      object?: "block"
+                    }
+                  | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
                       object?: "block"
                     }
                   | {
@@ -18755,6 +19378,13 @@ type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
+                      object?: "block"
+                    }
+                  | {
                       paragraph: { text: Array<RichTextItemRequest> }
                       type?: "paragraph"
                       object?: "block"
@@ -18929,6 +19559,13 @@ type BlockObjectRequest =
                   | {
                       table_of_contents: Record<string, never>
                       type?: "table_of_contents"
+                      object?: "block"
+                    }
+                  | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
                       object?: "block"
                     }
                   | {
@@ -19105,6 +19742,13 @@ type BlockObjectRequest =
               object?: "block"
             }
           | {
+              link_to_page:
+                | { page_id: IdRequest; type?: "page_id" }
+                | { database_id: IdRequest; type?: "database_id" }
+              type?: "link_to_page"
+              object?: "block"
+            }
+          | {
               paragraph: {
                 text: Array<RichTextItemRequest>
                 children?: Array<
@@ -19210,6 +19854,13 @@ type BlockObjectRequest =
                   | {
                       table_of_contents: Record<string, never>
                       type?: "table_of_contents"
+                      object?: "block"
+                    }
+                  | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
                       object?: "block"
                     }
                   | {
@@ -19387,6 +20038,13 @@ type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
+                      object?: "block"
+                    }
+                  | {
                       paragraph: { text: Array<RichTextItemRequest> }
                       type?: "paragraph"
                       object?: "block"
@@ -19558,6 +20216,13 @@ type BlockObjectRequest =
                   | {
                       table_of_contents: Record<string, never>
                       type?: "table_of_contents"
+                      object?: "block"
+                    }
+                  | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
                       object?: "block"
                     }
                   | {
@@ -19735,6 +20400,13 @@ type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
+                      object?: "block"
+                    }
+                  | {
                       paragraph: { text: Array<RichTextItemRequest> }
                       type?: "paragraph"
                       object?: "block"
@@ -19906,6 +20578,13 @@ type BlockObjectRequest =
                   | {
                       table_of_contents: Record<string, never>
                       type?: "table_of_contents"
+                      object?: "block"
+                    }
+                  | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
                       object?: "block"
                     }
                   | {
@@ -20084,6 +20763,13 @@ type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
+                      object?: "block"
+                    }
+                  | {
                       paragraph: { text: Array<RichTextItemRequest> }
                       type?: "paragraph"
                       object?: "block"
@@ -20255,6 +20941,13 @@ type BlockObjectRequest =
                   | {
                       table_of_contents: Record<string, never>
                       type?: "table_of_contents"
+                      object?: "block"
+                    }
+                  | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
                       object?: "block"
                     }
                   | {
@@ -20432,6 +21125,13 @@ type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
+                      object?: "block"
+                    }
+                  | {
                       paragraph: { text: Array<RichTextItemRequest> }
                       type?: "paragraph"
                       object?: "block"
@@ -20606,6 +21306,13 @@ type BlockObjectRequest =
                   | {
                       table_of_contents: Record<string, never>
                       type?: "table_of_contents"
+                      object?: "block"
+                    }
+                  | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
                       object?: "block"
                     }
                   | {
@@ -20785,6 +21492,13 @@ type BlockObjectRequest =
               object?: "block"
             }
           | {
+              link_to_page:
+                | { page_id: IdRequest; type?: "page_id" }
+                | { database_id: IdRequest; type?: "database_id" }
+              type?: "link_to_page"
+              object?: "block"
+            }
+          | {
               paragraph: {
                 text: Array<RichTextItemRequest>
                 children?: Array<
@@ -20890,6 +21604,13 @@ type BlockObjectRequest =
                   | {
                       table_of_contents: Record<string, never>
                       type?: "table_of_contents"
+                      object?: "block"
+                    }
+                  | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
                       object?: "block"
                     }
                   | {
@@ -21067,6 +21788,13 @@ type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
+                      object?: "block"
+                    }
+                  | {
                       paragraph: { text: Array<RichTextItemRequest> }
                       type?: "paragraph"
                       object?: "block"
@@ -21238,6 +21966,13 @@ type BlockObjectRequest =
                   | {
                       table_of_contents: Record<string, never>
                       type?: "table_of_contents"
+                      object?: "block"
+                    }
+                  | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
                       object?: "block"
                     }
                   | {
@@ -21415,6 +22150,13 @@ type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
+                      object?: "block"
+                    }
+                  | {
                       paragraph: { text: Array<RichTextItemRequest> }
                       type?: "paragraph"
                       object?: "block"
@@ -21586,6 +22328,13 @@ type BlockObjectRequest =
                   | {
                       table_of_contents: Record<string, never>
                       type?: "table_of_contents"
+                      object?: "block"
+                    }
+                  | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
                       object?: "block"
                     }
                   | {
@@ -21764,6 +22513,13 @@ type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
+                      object?: "block"
+                    }
+                  | {
                       paragraph: { text: Array<RichTextItemRequest> }
                       type?: "paragraph"
                       object?: "block"
@@ -21935,6 +22691,13 @@ type BlockObjectRequest =
                   | {
                       table_of_contents: Record<string, never>
                       type?: "table_of_contents"
+                      object?: "block"
+                    }
+                  | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
                       object?: "block"
                     }
                   | {
@@ -22112,6 +22875,13 @@ type BlockObjectRequest =
                       object?: "block"
                     }
                   | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
+                      object?: "block"
+                    }
+                  | {
                       paragraph: { text: Array<RichTextItemRequest> }
                       type?: "paragraph"
                       object?: "block"
@@ -22286,6 +23056,13 @@ type BlockObjectRequest =
                   | {
                       table_of_contents: Record<string, never>
                       type?: "table_of_contents"
+                      object?: "block"
+                    }
+                  | {
+                      link_to_page:
+                        | { page_id: IdRequest; type?: "page_id" }
+                        | { database_id: IdRequest; type?: "database_id" }
+                      type?: "link_to_page"
                       object?: "block"
                     }
                   | {
@@ -31450,6 +32227,18 @@ export type GetBlockResponse =
       archived: boolean
     }
   | {
+      type: "link_to_page"
+      link_to_page:
+        | { type: "page_id"; page_id: IdRequest }
+        | { type: "database_id"; database_id: IdRequest }
+      object: "block"
+      id: string
+      created_time: string
+      last_edited_time: string
+      has_children: boolean
+      archived: boolean
+    }
+  | {
       type: "embed"
       embed: {
         url: string
@@ -33465,6 +34254,13 @@ type UpdateBlockBodyParameters =
   | {
       table_of_contents: Record<string, never>
       type?: "table_of_contents"
+      archived?: boolean
+    }
+  | {
+      link_to_page:
+        | { page_id: IdRequest; type?: "page_id" }
+        | { database_id: IdRequest; type?: "database_id" }
+      type?: "link_to_page"
       archived?: boolean
     }
   | {
@@ -35487,6 +36283,18 @@ export type UpdateBlockResponse =
       archived: boolean
     }
   | {
+      type: "link_to_page"
+      link_to_page:
+        | { type: "page_id"; page_id: IdRequest }
+        | { type: "database_id"; database_id: IdRequest }
+      object: "block"
+      id: string
+      created_time: string
+      last_edited_time: string
+      has_children: boolean
+      archived: boolean
+    }
+  | {
       type: "embed"
       embed: {
         url: string
@@ -37431,6 +38239,7 @@ export const updateBlock = {
     "divider",
     "breadcrumb",
     "table_of_contents",
+    "link_to_page",
     "paragraph",
     "bulleted_list_item",
     "numbered_list_item",
@@ -39405,6 +40214,18 @@ export type DeleteBlockResponse =
   | {
       type: "column"
       column: Record<string, never>
+      object: "block"
+      id: string
+      created_time: string
+      last_edited_time: string
+      has_children: boolean
+      archived: boolean
+    }
+  | {
+      type: "link_to_page"
+      link_to_page:
+        | { type: "page_id"; page_id: IdRequest }
+        | { type: "database_id"; database_id: IdRequest }
       object: "block"
       id: string
       created_time: string
@@ -44056,6 +44877,18 @@ export type ListBlockChildrenResponse =
             archived: boolean
           }
         | {
+            type: "link_to_page"
+            link_to_page:
+              | { type: "page_id"; page_id: IdRequest }
+              | { type: "database_id"; database_id: IdRequest }
+            object: "block"
+            id: string
+            created_time: string
+            last_edited_time: string
+            has_children: boolean
+            archived: boolean
+          }
+        | {
             type: "embed"
             embed: {
               url: string
@@ -48154,6 +48987,18 @@ export type ListBlockChildrenResponse =
         | {
             type: "column"
             column: Record<string, never>
+            object: "block"
+            id: string
+            created_time: string
+            last_edited_time: string
+            has_children: boolean
+            archived: boolean
+          }
+        | {
+            type: "link_to_page"
+            link_to_page:
+              | { type: "page_id"; page_id: IdRequest }
+              | { type: "database_id"; database_id: IdRequest }
             object: "block"
             id: string
             created_time: string
@@ -52915,6 +53760,18 @@ export type AppendBlockChildrenResponse =
             archived: boolean
           }
         | {
+            type: "link_to_page"
+            link_to_page:
+              | { type: "page_id"; page_id: IdRequest }
+              | { type: "database_id"; database_id: IdRequest }
+            object: "block"
+            id: string
+            created_time: string
+            last_edited_time: string
+            has_children: boolean
+            archived: boolean
+          }
+        | {
             type: "embed"
             embed: {
               url: string
@@ -57013,6 +57870,18 @@ export type AppendBlockChildrenResponse =
         | {
             type: "column"
             column: Record<string, never>
+            object: "block"
+            id: string
+            created_time: string
+            last_edited_time: string
+            has_children: boolean
+            archived: boolean
+          }
+        | {
+            type: "link_to_page"
+            link_to_page:
+              | { type: "page_id"; page_id: IdRequest }
+              | { type: "database_id"; database_id: IdRequest }
             object: "block"
             id: string
             created_time: string
