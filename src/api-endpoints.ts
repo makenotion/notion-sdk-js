@@ -1,6 +1,8 @@
 // cspell:disable-file
 // Note: This is a generated file.
 
+type EmptyObject = Record<string, never>
+
 type IdRequest = string | string
 
 type TextRequest = string
@@ -647,7 +649,7 @@ type RichTextItemRequest =
                 }
               | {
                   bot:
-                    | Record<string, never>
+                    | EmptyObject
                     | {
                         owner:
                           | {
@@ -4457,10 +4459,10 @@ type BlockObjectRequestWithoutChildren =
       object?: "block"
     }
   | { equation: { expression: string }; type?: "equation"; object?: "block" }
-  | { divider: Record<string, never>; type?: "divider"; object?: "block" }
-  | { breadcrumb: Record<string, never>; type?: "breadcrumb"; object?: "block" }
+  | { divider: EmptyObject; type?: "divider"; object?: "block" }
+  | { breadcrumb: EmptyObject; type?: "breadcrumb"; object?: "block" }
   | {
-      table_of_contents: Record<string, never>
+      table_of_contents: EmptyObject
       type?: "table_of_contents"
       object?: "block"
     }
@@ -4601,10 +4603,10 @@ type BlockObjectRequest =
       object?: "block"
     }
   | { equation: { expression: string }; type?: "equation"; object?: "block" }
-  | { divider: Record<string, never>; type?: "divider"; object?: "block" }
-  | { breadcrumb: Record<string, never>; type?: "breadcrumb"; object?: "block" }
+  | { divider: EmptyObject; type?: "divider"; object?: "block" }
+  | { breadcrumb: EmptyObject; type?: "breadcrumb"; object?: "block" }
   | {
-      table_of_contents: Record<string, never>
+      table_of_contents: EmptyObject
       type?: "table_of_contents"
       object?: "block"
     }
@@ -4706,18 +4708,14 @@ type BlockObjectRequest =
                   type?: "equation"
                   object?: "block"
                 }
+              | { divider: EmptyObject; type?: "divider"; object?: "block" }
               | {
-                  divider: Record<string, never>
-                  type?: "divider"
-                  object?: "block"
-                }
-              | {
-                  breadcrumb: Record<string, never>
+                  breadcrumb: EmptyObject
                   type?: "breadcrumb"
                   object?: "block"
                 }
               | {
-                  table_of_contents: Record<string, never>
+                  table_of_contents: EmptyObject
                   type?: "table_of_contents"
                   object?: "block"
                 }
@@ -4902,18 +4900,10 @@ type BlockObjectRequest =
               type?: "equation"
               object?: "block"
             }
+          | { divider: EmptyObject; type?: "divider"; object?: "block" }
+          | { breadcrumb: EmptyObject; type?: "breadcrumb"; object?: "block" }
           | {
-              divider: Record<string, never>
-              type?: "divider"
-              object?: "block"
-            }
-          | {
-              breadcrumb: Record<string, never>
-              type?: "breadcrumb"
-              object?: "block"
-            }
-          | {
-              table_of_contents: Record<string, never>
+              table_of_contents: EmptyObject
               type?: "table_of_contents"
               object?: "block"
             }
@@ -5092,18 +5082,10 @@ type BlockObjectRequest =
               type?: "equation"
               object?: "block"
             }
+          | { divider: EmptyObject; type?: "divider"; object?: "block" }
+          | { breadcrumb: EmptyObject; type?: "breadcrumb"; object?: "block" }
           | {
-              divider: Record<string, never>
-              type?: "divider"
-              object?: "block"
-            }
-          | {
-              breadcrumb: Record<string, never>
-              type?: "breadcrumb"
-              object?: "block"
-            }
-          | {
-              table_of_contents: Record<string, never>
+              table_of_contents: EmptyObject
               type?: "table_of_contents"
               object?: "block"
             }
@@ -5282,18 +5264,10 @@ type BlockObjectRequest =
               type?: "equation"
               object?: "block"
             }
+          | { divider: EmptyObject; type?: "divider"; object?: "block" }
+          | { breadcrumb: EmptyObject; type?: "breadcrumb"; object?: "block" }
           | {
-              divider: Record<string, never>
-              type?: "divider"
-              object?: "block"
-            }
-          | {
-              breadcrumb: Record<string, never>
-              type?: "breadcrumb"
-              object?: "block"
-            }
-          | {
-              table_of_contents: Record<string, never>
+              table_of_contents: EmptyObject
               type?: "table_of_contents"
               object?: "block"
             }
@@ -5472,18 +5446,10 @@ type BlockObjectRequest =
               type?: "equation"
               object?: "block"
             }
+          | { divider: EmptyObject; type?: "divider"; object?: "block" }
+          | { breadcrumb: EmptyObject; type?: "breadcrumb"; object?: "block" }
           | {
-              divider: Record<string, never>
-              type?: "divider"
-              object?: "block"
-            }
-          | {
-              breadcrumb: Record<string, never>
-              type?: "breadcrumb"
-              object?: "block"
-            }
-          | {
-              table_of_contents: Record<string, never>
+              table_of_contents: EmptyObject
               type?: "table_of_contents"
               object?: "block"
             }
@@ -5662,18 +5628,10 @@ type BlockObjectRequest =
               type?: "equation"
               object?: "block"
             }
+          | { divider: EmptyObject; type?: "divider"; object?: "block" }
+          | { breadcrumb: EmptyObject; type?: "breadcrumb"; object?: "block" }
           | {
-              divider: Record<string, never>
-              type?: "divider"
-              object?: "block"
-            }
-          | {
-              breadcrumb: Record<string, never>
-              type?: "breadcrumb"
-              object?: "block"
-            }
-          | {
-              table_of_contents: Record<string, never>
+              table_of_contents: EmptyObject
               type?: "table_of_contents"
               object?: "block"
             }
@@ -5852,18 +5810,10 @@ type BlockObjectRequest =
               type?: "equation"
               object?: "block"
             }
+          | { divider: EmptyObject; type?: "divider"; object?: "block" }
+          | { breadcrumb: EmptyObject; type?: "breadcrumb"; object?: "block" }
           | {
-              divider: Record<string, never>
-              type?: "divider"
-              object?: "block"
-            }
-          | {
-              breadcrumb: Record<string, never>
-              type?: "breadcrumb"
-              object?: "block"
-            }
-          | {
-              table_of_contents: Record<string, never>
+              table_of_contents: EmptyObject
               type?: "table_of_contents"
               object?: "block"
             }
@@ -6043,18 +5993,10 @@ type BlockObjectRequest =
               type?: "equation"
               object?: "block"
             }
+          | { divider: EmptyObject; type?: "divider"; object?: "block" }
+          | { breadcrumb: EmptyObject; type?: "breadcrumb"; object?: "block" }
           | {
-              divider: Record<string, never>
-              type?: "divider"
-              object?: "block"
-            }
-          | {
-              breadcrumb: Record<string, never>
-              type?: "breadcrumb"
-              object?: "block"
-            }
-          | {
-              table_of_contents: Record<string, never>
+              table_of_contents: EmptyObject
               type?: "table_of_contents"
               object?: "block"
             }
@@ -6233,18 +6175,10 @@ type BlockObjectRequest =
               type?: "equation"
               object?: "block"
             }
+          | { divider: EmptyObject; type?: "divider"; object?: "block" }
+          | { breadcrumb: EmptyObject; type?: "breadcrumb"; object?: "block" }
           | {
-              divider: Record<string, never>
-              type?: "divider"
-              object?: "block"
-            }
-          | {
-              breadcrumb: Record<string, never>
-              type?: "breadcrumb"
-              object?: "block"
-            }
-          | {
-              table_of_contents: Record<string, never>
+              table_of_contents: EmptyObject
               type?: "table_of_contents"
               object?: "block"
             }
@@ -6423,18 +6357,10 @@ type BlockObjectRequest =
               type?: "equation"
               object?: "block"
             }
+          | { divider: EmptyObject; type?: "divider"; object?: "block" }
+          | { breadcrumb: EmptyObject; type?: "breadcrumb"; object?: "block" }
           | {
-              divider: Record<string, never>
-              type?: "divider"
-              object?: "block"
-            }
-          | {
-              breadcrumb: Record<string, never>
-              type?: "breadcrumb"
-              object?: "block"
-            }
-          | {
-              table_of_contents: Record<string, never>
+              table_of_contents: EmptyObject
               type?: "table_of_contents"
               object?: "block"
             }
@@ -6616,18 +6542,10 @@ type BlockObjectRequest =
               type?: "equation"
               object?: "block"
             }
+          | { divider: EmptyObject; type?: "divider"; object?: "block" }
+          | { breadcrumb: EmptyObject; type?: "breadcrumb"; object?: "block" }
           | {
-              divider: Record<string, never>
-              type?: "divider"
-              object?: "block"
-            }
-          | {
-              breadcrumb: Record<string, never>
-              type?: "breadcrumb"
-              object?: "block"
-            }
-          | {
-              table_of_contents: Record<string, never>
+              table_of_contents: EmptyObject
               type?: "table_of_contents"
               object?: "block"
             }
@@ -6733,7 +6651,7 @@ export type GetSelfResponse =
   | {
       type: "bot"
       bot:
-        | Record<string, never>
+        | EmptyObject
         | {
             owner:
               | {
@@ -6783,7 +6701,7 @@ export type GetUserResponse =
   | {
       type: "bot"
       bot:
-        | Record<string, never>
+        | EmptyObject
         | {
             owner:
               | {
@@ -6944,7 +6862,7 @@ export type ListUsersResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -7110,7 +7028,7 @@ export type ListUsersResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -7272,7 +7190,7 @@ export type ListUsersResponse =
                     | {
                         type: "bot"
                         bot:
-                          | Record<string, never>
+                          | EmptyObject
                           | {
                               owner:
                                 | {
@@ -7355,7 +7273,7 @@ export type ListUsersResponse =
                     | {
                         type: "bot"
                         bot:
-                          | Record<string, never>
+                          | EmptyObject
                           | {
                               owner:
                                 | {
@@ -7395,7 +7313,7 @@ export type ListUsersResponse =
                     | {
                         type: "bot"
                         bot:
-                          | Record<string, never>
+                          | EmptyObject
                           | {
                               owner:
                                 | {
@@ -7446,7 +7364,7 @@ export type ListUsersResponse =
           }
         | {
             type: "unsupported"
-            unsupported: Record<string, never>
+            unsupported: EmptyObject
             function:
               | "count"
               | "count_values"
@@ -7484,7 +7402,7 @@ export type ListUsersResponse =
         | {
             type: "bot"
             bot:
-              | Record<string, never>
+              | EmptyObject
               | {
                   owner:
                     | {
@@ -7525,7 +7443,7 @@ export type ListUsersResponse =
         | {
             type: "bot"
             bot:
-              | Record<string, never>
+              | EmptyObject
               | {
                   owner:
                     | {
@@ -7655,7 +7573,7 @@ type CreatePageBodyParameters =
                     }
                   | {
                       bot:
-                        | Record<string, never>
+                        | EmptyObject
                         | {
                             owner:
                               | {
@@ -7794,7 +7712,7 @@ type CreatePageBodyParameters =
                   }
                 | {
                     bot:
-                      | Record<string, never>
+                      | EmptyObject
                       | {
                           owner:
                             | {
@@ -7932,7 +7850,7 @@ export type CreatePageResponse = {
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -8087,7 +8005,7 @@ export type CreatePageResponse = {
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -8243,7 +8161,7 @@ export type CreatePageResponse = {
           | {
               type: "bot"
               bot:
-                | Record<string, never>
+                | EmptyObject
                 | {
                     owner:
                       | {
@@ -8330,7 +8248,7 @@ export type CreatePageResponse = {
           | {
               type: "bot"
               bot:
-                | Record<string, never>
+                | EmptyObject
                 | {
                     owner:
                       | {
@@ -8371,7 +8289,7 @@ export type CreatePageResponse = {
           | {
               type: "bot"
               bot:
-                | Record<string, never>
+                | EmptyObject
                 | {
                     owner:
                       | {
@@ -8517,7 +8435,7 @@ export type CreatePageResponse = {
                                   | {
                                       type: "bot"
                                       bot:
-                                        | Record<string, never>
+                                        | EmptyObject
                                         | {
                                             owner:
                                               | {
@@ -8687,7 +8605,7 @@ export type CreatePageResponse = {
                                   | {
                                       type: "bot"
                                       bot:
-                                        | Record<string, never>
+                                        | EmptyObject
                                         | {
                                             owner:
                                               | {
@@ -8853,7 +8771,7 @@ export type CreatePageResponse = {
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -8936,7 +8854,7 @@ export type CreatePageResponse = {
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -8976,7 +8894,7 @@ export type CreatePageResponse = {
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -9027,7 +8945,7 @@ export type CreatePageResponse = {
             }
           | {
               type: "unsupported"
-              unsupported: Record<string, never>
+              unsupported: EmptyObject
               function:
                 | "count"
                 | "count_values"
@@ -9150,7 +9068,7 @@ export type GetPageResponse = {
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -9305,7 +9223,7 @@ export type GetPageResponse = {
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -9461,7 +9379,7 @@ export type GetPageResponse = {
           | {
               type: "bot"
               bot:
-                | Record<string, never>
+                | EmptyObject
                 | {
                     owner:
                       | {
@@ -9548,7 +9466,7 @@ export type GetPageResponse = {
           | {
               type: "bot"
               bot:
-                | Record<string, never>
+                | EmptyObject
                 | {
                     owner:
                       | {
@@ -9589,7 +9507,7 @@ export type GetPageResponse = {
           | {
               type: "bot"
               bot:
-                | Record<string, never>
+                | EmptyObject
                 | {
                     owner:
                       | {
@@ -9735,7 +9653,7 @@ export type GetPageResponse = {
                                   | {
                                       type: "bot"
                                       bot:
-                                        | Record<string, never>
+                                        | EmptyObject
                                         | {
                                             owner:
                                               | {
@@ -9905,7 +9823,7 @@ export type GetPageResponse = {
                                   | {
                                       type: "bot"
                                       bot:
-                                        | Record<string, never>
+                                        | EmptyObject
                                         | {
                                             owner:
                                               | {
@@ -10071,7 +9989,7 @@ export type GetPageResponse = {
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -10154,7 +10072,7 @@ export type GetPageResponse = {
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -10194,7 +10112,7 @@ export type GetPageResponse = {
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -10245,7 +10163,7 @@ export type GetPageResponse = {
             }
           | {
               type: "unsupported"
-              unsupported: Record<string, never>
+              unsupported: EmptyObject
               function:
                 | "count"
                 | "count_values"
@@ -10397,7 +10315,7 @@ type UpdatePageBodyParameters = {
                 }
               | {
                   bot:
-                    | Record<string, never>
+                    | EmptyObject
                     | {
                         owner:
                           | {
@@ -10536,7 +10454,7 @@ type UpdatePageBodyParameters = {
               }
             | {
                 bot:
-                  | Record<string, never>
+                  | EmptyObject
                   | {
                       owner:
                         | {
@@ -10659,7 +10577,7 @@ export type UpdatePageResponse = {
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -10814,7 +10732,7 @@ export type UpdatePageResponse = {
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -10970,7 +10888,7 @@ export type UpdatePageResponse = {
           | {
               type: "bot"
               bot:
-                | Record<string, never>
+                | EmptyObject
                 | {
                     owner:
                       | {
@@ -11057,7 +10975,7 @@ export type UpdatePageResponse = {
           | {
               type: "bot"
               bot:
-                | Record<string, never>
+                | EmptyObject
                 | {
                     owner:
                       | {
@@ -11098,7 +11016,7 @@ export type UpdatePageResponse = {
           | {
               type: "bot"
               bot:
-                | Record<string, never>
+                | EmptyObject
                 | {
                     owner:
                       | {
@@ -11244,7 +11162,7 @@ export type UpdatePageResponse = {
                                   | {
                                       type: "bot"
                                       bot:
-                                        | Record<string, never>
+                                        | EmptyObject
                                         | {
                                             owner:
                                               | {
@@ -11414,7 +11332,7 @@ export type UpdatePageResponse = {
                                   | {
                                       type: "bot"
                                       bot:
-                                        | Record<string, never>
+                                        | EmptyObject
                                         | {
                                             owner:
                                               | {
@@ -11580,7 +11498,7 @@ export type UpdatePageResponse = {
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -11663,7 +11581,7 @@ export type UpdatePageResponse = {
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -11703,7 +11621,7 @@ export type UpdatePageResponse = {
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -11754,7 +11672,7 @@ export type UpdatePageResponse = {
             }
           | {
               type: "unsupported"
-              unsupported: Record<string, never>
+              unsupported: EmptyObject
               function:
                 | "count"
                 | "count_values"
@@ -11911,7 +11829,7 @@ export type GetPagePropertyResponse =
         | {
             type: "bot"
             bot:
-              | Record<string, never>
+              | EmptyObject
               | {
                   owner:
                     | {
@@ -11952,7 +11870,7 @@ export type GetPagePropertyResponse =
         | {
             type: "bot"
             bot:
-              | Record<string, never>
+              | EmptyObject
               | {
                   owner:
                     | {
@@ -12052,7 +11970,7 @@ export type GetPagePropertyResponse =
                     | {
                         type: "bot"
                         bot:
-                          | Record<string, never>
+                          | EmptyObject
                           | {
                               owner:
                                 | {
@@ -12206,7 +12124,7 @@ export type GetPagePropertyResponse =
                     | {
                         type: "bot"
                         bot:
-                          | Record<string, never>
+                          | EmptyObject
                           | {
                               owner:
                                 | {
@@ -12321,7 +12239,7 @@ export type GetPagePropertyResponse =
         | {
             type: "bot"
             bot:
-              | Record<string, never>
+              | EmptyObject
               | {
                   owner:
                     | {
@@ -12468,7 +12386,7 @@ export type GetPagePropertyResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -12634,7 +12552,7 @@ export type GetPagePropertyResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -12796,7 +12714,7 @@ export type GetPagePropertyResponse =
                     | {
                         type: "bot"
                         bot:
-                          | Record<string, never>
+                          | EmptyObject
                           | {
                               owner:
                                 | {
@@ -12879,7 +12797,7 @@ export type GetPagePropertyResponse =
                     | {
                         type: "bot"
                         bot:
-                          | Record<string, never>
+                          | EmptyObject
                           | {
                               owner:
                                 | {
@@ -12919,7 +12837,7 @@ export type GetPagePropertyResponse =
                     | {
                         type: "bot"
                         bot:
-                          | Record<string, never>
+                          | EmptyObject
                           | {
                               owner:
                                 | {
@@ -12970,7 +12888,7 @@ export type GetPagePropertyResponse =
           }
         | {
             type: "unsupported"
-            unsupported: Record<string, never>
+            unsupported: EmptyObject
             function:
               | "count"
               | "count_values"
@@ -13084,7 +13002,7 @@ export type GetPagePropertyResponse =
               | {
                   type: "bot"
                   bot:
-                    | Record<string, never>
+                    | EmptyObject
                     | {
                         owner:
                           | {
@@ -13129,7 +13047,7 @@ export type GetPagePropertyResponse =
               | {
                   type: "bot"
                   bot:
-                    | Record<string, never>
+                    | EmptyObject
                     | {
                         owner:
                           | {
@@ -13229,7 +13147,7 @@ export type GetPagePropertyResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -13386,7 +13304,7 @@ export type GetPagePropertyResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -13504,7 +13422,7 @@ export type GetPagePropertyResponse =
               | {
                   type: "bot"
                   bot:
-                    | Record<string, never>
+                    | EmptyObject
                     | {
                         owner:
                           | {
@@ -13628,7 +13546,7 @@ export type GetPagePropertyResponse =
               | {
                   type: "bot"
                   bot:
-                    | Record<string, never>
+                    | EmptyObject
                     | {
                         owner:
                           | {
@@ -13673,7 +13591,7 @@ export type GetPagePropertyResponse =
               | {
                   type: "bot"
                   bot:
-                    | Record<string, never>
+                    | EmptyObject
                     | {
                         owner:
                           | {
@@ -13773,7 +13691,7 @@ export type GetPagePropertyResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -13930,7 +13848,7 @@ export type GetPagePropertyResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -14048,7 +13966,7 @@ export type GetPagePropertyResponse =
               | {
                   type: "bot"
                   bot:
-                    | Record<string, never>
+                    | EmptyObject
                     | {
                         owner:
                           | {
@@ -14154,7 +14072,7 @@ export type GetBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -14316,7 +14234,7 @@ export type GetBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -14478,7 +14396,7 @@ export type GetBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -14640,7 +14558,7 @@ export type GetBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -14802,7 +14720,7 @@ export type GetBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -14964,7 +14882,7 @@ export type GetBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -15126,7 +15044,7 @@ export type GetBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -15288,7 +15206,7 @@ export type GetBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -15451,7 +15369,7 @@ export type GetBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -15613,7 +15531,7 @@ export type GetBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -15817,7 +15735,7 @@ export type GetBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -15980,7 +15898,7 @@ export type GetBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -16096,7 +16014,7 @@ export type GetBlockResponse =
     }
   | {
       type: "divider"
-      divider: Record<string, never>
+      divider: EmptyObject
       object: "block"
       id: string
       created_time: string
@@ -16106,7 +16024,7 @@ export type GetBlockResponse =
     }
   | {
       type: "breadcrumb"
-      breadcrumb: Record<string, never>
+      breadcrumb: EmptyObject
       object: "block"
       id: string
       created_time: string
@@ -16116,7 +16034,7 @@ export type GetBlockResponse =
     }
   | {
       type: "table_of_contents"
-      table_of_contents: Record<string, never>
+      table_of_contents: EmptyObject
       object: "block"
       id: string
       created_time: string
@@ -16126,7 +16044,7 @@ export type GetBlockResponse =
     }
   | {
       type: "column_list"
-      column_list: Record<string, never>
+      column_list: EmptyObject
       object: "block"
       id: string
       created_time: string
@@ -16136,7 +16054,7 @@ export type GetBlockResponse =
     }
   | {
       type: "column"
-      column: Record<string, never>
+      column: EmptyObject
       object: "block"
       id: string
       created_time: string
@@ -16212,7 +16130,7 @@ export type GetBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -16375,7 +16293,7 @@ export type GetBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -16540,7 +16458,7 @@ export type GetBlockResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -16698,7 +16616,7 @@ export type GetBlockResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -16866,7 +16784,7 @@ export type GetBlockResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -17024,7 +16942,7 @@ export type GetBlockResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -17192,7 +17110,7 @@ export type GetBlockResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -17350,7 +17268,7 @@ export type GetBlockResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -17518,7 +17436,7 @@ export type GetBlockResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -17676,7 +17594,7 @@ export type GetBlockResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -17844,7 +17762,7 @@ export type GetBlockResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -18002,7 +17920,7 @@ export type GetBlockResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -18124,7 +18042,7 @@ export type GetBlockResponse =
     }
   | {
       type: "unsupported"
-      unsupported: Record<string, never>
+      unsupported: EmptyObject
       object: "block"
       id: string
       created_time: string
@@ -18217,14 +18135,10 @@ type UpdateBlockBodyParameters =
       archived?: boolean
     }
   | { equation: { expression: string }; type?: "equation"; archived?: boolean }
-  | { divider: Record<string, never>; type?: "divider"; archived?: boolean }
+  | { divider: EmptyObject; type?: "divider"; archived?: boolean }
+  | { breadcrumb: EmptyObject; type?: "breadcrumb"; archived?: boolean }
   | {
-      breadcrumb: Record<string, never>
-      type?: "breadcrumb"
-      archived?: boolean
-    }
-  | {
-      table_of_contents: Record<string, never>
+      table_of_contents: EmptyObject
       type?: "table_of_contents"
       archived?: boolean
     }
@@ -18348,7 +18262,7 @@ export type UpdateBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -18510,7 +18424,7 @@ export type UpdateBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -18672,7 +18586,7 @@ export type UpdateBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -18834,7 +18748,7 @@ export type UpdateBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -18996,7 +18910,7 @@ export type UpdateBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -19158,7 +19072,7 @@ export type UpdateBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -19320,7 +19234,7 @@ export type UpdateBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -19482,7 +19396,7 @@ export type UpdateBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -19645,7 +19559,7 @@ export type UpdateBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -19807,7 +19721,7 @@ export type UpdateBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -20011,7 +19925,7 @@ export type UpdateBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -20174,7 +20088,7 @@ export type UpdateBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -20290,7 +20204,7 @@ export type UpdateBlockResponse =
     }
   | {
       type: "divider"
-      divider: Record<string, never>
+      divider: EmptyObject
       object: "block"
       id: string
       created_time: string
@@ -20300,7 +20214,7 @@ export type UpdateBlockResponse =
     }
   | {
       type: "breadcrumb"
-      breadcrumb: Record<string, never>
+      breadcrumb: EmptyObject
       object: "block"
       id: string
       created_time: string
@@ -20310,7 +20224,7 @@ export type UpdateBlockResponse =
     }
   | {
       type: "table_of_contents"
-      table_of_contents: Record<string, never>
+      table_of_contents: EmptyObject
       object: "block"
       id: string
       created_time: string
@@ -20320,7 +20234,7 @@ export type UpdateBlockResponse =
     }
   | {
       type: "column_list"
-      column_list: Record<string, never>
+      column_list: EmptyObject
       object: "block"
       id: string
       created_time: string
@@ -20330,7 +20244,7 @@ export type UpdateBlockResponse =
     }
   | {
       type: "column"
-      column: Record<string, never>
+      column: EmptyObject
       object: "block"
       id: string
       created_time: string
@@ -20406,7 +20320,7 @@ export type UpdateBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -20569,7 +20483,7 @@ export type UpdateBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -20734,7 +20648,7 @@ export type UpdateBlockResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -20892,7 +20806,7 @@ export type UpdateBlockResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -21060,7 +20974,7 @@ export type UpdateBlockResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -21218,7 +21132,7 @@ export type UpdateBlockResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -21386,7 +21300,7 @@ export type UpdateBlockResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -21544,7 +21458,7 @@ export type UpdateBlockResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -21712,7 +21626,7 @@ export type UpdateBlockResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -21870,7 +21784,7 @@ export type UpdateBlockResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -22038,7 +21952,7 @@ export type UpdateBlockResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -22196,7 +22110,7 @@ export type UpdateBlockResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -22318,7 +22232,7 @@ export type UpdateBlockResponse =
     }
   | {
       type: "unsupported"
-      unsupported: Record<string, never>
+      unsupported: EmptyObject
       object: "block"
       id: string
       created_time: string
@@ -22425,7 +22339,7 @@ export type DeleteBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -22587,7 +22501,7 @@ export type DeleteBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -22749,7 +22663,7 @@ export type DeleteBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -22911,7 +22825,7 @@ export type DeleteBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -23073,7 +22987,7 @@ export type DeleteBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -23235,7 +23149,7 @@ export type DeleteBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -23397,7 +23311,7 @@ export type DeleteBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -23559,7 +23473,7 @@ export type DeleteBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -23722,7 +23636,7 @@ export type DeleteBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -23884,7 +23798,7 @@ export type DeleteBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -24088,7 +24002,7 @@ export type DeleteBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -24251,7 +24165,7 @@ export type DeleteBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -24367,7 +24281,7 @@ export type DeleteBlockResponse =
     }
   | {
       type: "divider"
-      divider: Record<string, never>
+      divider: EmptyObject
       object: "block"
       id: string
       created_time: string
@@ -24377,7 +24291,7 @@ export type DeleteBlockResponse =
     }
   | {
       type: "breadcrumb"
-      breadcrumb: Record<string, never>
+      breadcrumb: EmptyObject
       object: "block"
       id: string
       created_time: string
@@ -24387,7 +24301,7 @@ export type DeleteBlockResponse =
     }
   | {
       type: "table_of_contents"
-      table_of_contents: Record<string, never>
+      table_of_contents: EmptyObject
       object: "block"
       id: string
       created_time: string
@@ -24397,7 +24311,7 @@ export type DeleteBlockResponse =
     }
   | {
       type: "column_list"
-      column_list: Record<string, never>
+      column_list: EmptyObject
       object: "block"
       id: string
       created_time: string
@@ -24407,7 +24321,7 @@ export type DeleteBlockResponse =
     }
   | {
       type: "column"
-      column: Record<string, never>
+      column: EmptyObject
       object: "block"
       id: string
       created_time: string
@@ -24483,7 +24397,7 @@ export type DeleteBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -24646,7 +24560,7 @@ export type DeleteBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -24811,7 +24725,7 @@ export type DeleteBlockResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -24969,7 +24883,7 @@ export type DeleteBlockResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -25137,7 +25051,7 @@ export type DeleteBlockResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -25295,7 +25209,7 @@ export type DeleteBlockResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -25463,7 +25377,7 @@ export type DeleteBlockResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -25621,7 +25535,7 @@ export type DeleteBlockResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -25789,7 +25703,7 @@ export type DeleteBlockResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -25947,7 +25861,7 @@ export type DeleteBlockResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -26115,7 +26029,7 @@ export type DeleteBlockResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -26273,7 +26187,7 @@ export type DeleteBlockResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -26395,7 +26309,7 @@ export type DeleteBlockResponse =
     }
   | {
       type: "unsupported"
-      unsupported: Record<string, never>
+      unsupported: EmptyObject
       object: "block"
       id: string
       created_time: string
@@ -26546,7 +26460,7 @@ export type ListBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -26712,7 +26626,7 @@ export type ListBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -26874,7 +26788,7 @@ export type ListBlockChildrenResponse =
                     | {
                         type: "bot"
                         bot:
-                          | Record<string, never>
+                          | EmptyObject
                           | {
                               owner:
                                 | {
@@ -26957,7 +26871,7 @@ export type ListBlockChildrenResponse =
                     | {
                         type: "bot"
                         bot:
-                          | Record<string, never>
+                          | EmptyObject
                           | {
                               owner:
                                 | {
@@ -26997,7 +26911,7 @@ export type ListBlockChildrenResponse =
                     | {
                         type: "bot"
                         bot:
-                          | Record<string, never>
+                          | EmptyObject
                           | {
                               owner:
                                 | {
@@ -27048,7 +26962,7 @@ export type ListBlockChildrenResponse =
           }
         | {
             type: "unsupported"
-            unsupported: Record<string, never>
+            unsupported: EmptyObject
             function:
               | "count"
               | "count_values"
@@ -27130,7 +27044,7 @@ export type ListBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -27298,7 +27212,7 @@ export type ListBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -27466,7 +27380,7 @@ export type ListBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -27634,7 +27548,7 @@ export type ListBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -27802,7 +27716,7 @@ export type ListBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -27970,7 +27884,7 @@ export type ListBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -28138,7 +28052,7 @@ export type ListBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -28306,7 +28220,7 @@ export type ListBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -28475,7 +28389,7 @@ export type ListBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -28643,7 +28557,7 @@ export type ListBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -28853,7 +28767,7 @@ export type ListBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -29022,7 +28936,7 @@ export type ListBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -29144,7 +29058,7 @@ export type ListBlockChildrenResponse =
           }
         | {
             type: "divider"
-            divider: Record<string, never>
+            divider: EmptyObject
             object: "block"
             id: string
             created_time: string
@@ -29154,7 +29068,7 @@ export type ListBlockChildrenResponse =
           }
         | {
             type: "breadcrumb"
-            breadcrumb: Record<string, never>
+            breadcrumb: EmptyObject
             object: "block"
             id: string
             created_time: string
@@ -29164,7 +29078,7 @@ export type ListBlockChildrenResponse =
           }
         | {
             type: "table_of_contents"
-            table_of_contents: Record<string, never>
+            table_of_contents: EmptyObject
             object: "block"
             id: string
             created_time: string
@@ -29174,7 +29088,7 @@ export type ListBlockChildrenResponse =
           }
         | {
             type: "column_list"
-            column_list: Record<string, never>
+            column_list: EmptyObject
             object: "block"
             id: string
             created_time: string
@@ -29184,7 +29098,7 @@ export type ListBlockChildrenResponse =
           }
         | {
             type: "column"
-            column: Record<string, never>
+            column: EmptyObject
             object: "block"
             id: string
             created_time: string
@@ -29260,7 +29174,7 @@ export type ListBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -29429,7 +29343,7 @@ export type ListBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -29603,7 +29517,7 @@ export type ListBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -29770,7 +29684,7 @@ export type ListBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -29947,7 +29861,7 @@ export type ListBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -30114,7 +30028,7 @@ export type ListBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -30291,7 +30205,7 @@ export type ListBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -30458,7 +30372,7 @@ export type ListBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -30635,7 +30549,7 @@ export type ListBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -30802,7 +30716,7 @@ export type ListBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -30979,7 +30893,7 @@ export type ListBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -31146,7 +31060,7 @@ export type ListBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -31274,7 +31188,7 @@ export type ListBlockChildrenResponse =
           }
         | {
             type: "unsupported"
-            unsupported: Record<string, never>
+            unsupported: EmptyObject
             object: "block"
             id: string
             created_time: string
@@ -31344,7 +31258,7 @@ export type ListBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -31512,7 +31426,7 @@ export type ListBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -31680,7 +31594,7 @@ export type ListBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -31848,7 +31762,7 @@ export type ListBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -32016,7 +31930,7 @@ export type ListBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -32184,7 +32098,7 @@ export type ListBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -32352,7 +32266,7 @@ export type ListBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -32520,7 +32434,7 @@ export type ListBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -32689,7 +32603,7 @@ export type ListBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -32857,7 +32771,7 @@ export type ListBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -33067,7 +32981,7 @@ export type ListBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -33236,7 +33150,7 @@ export type ListBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -33358,7 +33272,7 @@ export type ListBlockChildrenResponse =
           }
         | {
             type: "divider"
-            divider: Record<string, never>
+            divider: EmptyObject
             object: "block"
             id: string
             created_time: string
@@ -33368,7 +33282,7 @@ export type ListBlockChildrenResponse =
           }
         | {
             type: "breadcrumb"
-            breadcrumb: Record<string, never>
+            breadcrumb: EmptyObject
             object: "block"
             id: string
             created_time: string
@@ -33378,7 +33292,7 @@ export type ListBlockChildrenResponse =
           }
         | {
             type: "table_of_contents"
-            table_of_contents: Record<string, never>
+            table_of_contents: EmptyObject
             object: "block"
             id: string
             created_time: string
@@ -33388,7 +33302,7 @@ export type ListBlockChildrenResponse =
           }
         | {
             type: "column_list"
-            column_list: Record<string, never>
+            column_list: EmptyObject
             object: "block"
             id: string
             created_time: string
@@ -33398,7 +33312,7 @@ export type ListBlockChildrenResponse =
           }
         | {
             type: "column"
-            column: Record<string, never>
+            column: EmptyObject
             object: "block"
             id: string
             created_time: string
@@ -33474,7 +33388,7 @@ export type ListBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -33643,7 +33557,7 @@ export type ListBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -33817,7 +33731,7 @@ export type ListBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -33984,7 +33898,7 @@ export type ListBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -34161,7 +34075,7 @@ export type ListBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -34328,7 +34242,7 @@ export type ListBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -34505,7 +34419,7 @@ export type ListBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -34672,7 +34586,7 @@ export type ListBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -34849,7 +34763,7 @@ export type ListBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -35016,7 +34930,7 @@ export type ListBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -35193,7 +35107,7 @@ export type ListBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -35360,7 +35274,7 @@ export type ListBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -35488,7 +35402,7 @@ export type ListBlockChildrenResponse =
           }
         | {
             type: "unsupported"
-            unsupported: Record<string, never>
+            unsupported: EmptyObject
             object: "block"
             id: string
             created_time: string
@@ -35641,7 +35555,7 @@ export type AppendBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -35807,7 +35721,7 @@ export type AppendBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -35969,7 +35883,7 @@ export type AppendBlockChildrenResponse =
                     | {
                         type: "bot"
                         bot:
-                          | Record<string, never>
+                          | EmptyObject
                           | {
                               owner:
                                 | {
@@ -36052,7 +35966,7 @@ export type AppendBlockChildrenResponse =
                     | {
                         type: "bot"
                         bot:
-                          | Record<string, never>
+                          | EmptyObject
                           | {
                               owner:
                                 | {
@@ -36092,7 +36006,7 @@ export type AppendBlockChildrenResponse =
                     | {
                         type: "bot"
                         bot:
-                          | Record<string, never>
+                          | EmptyObject
                           | {
                               owner:
                                 | {
@@ -36143,7 +36057,7 @@ export type AppendBlockChildrenResponse =
           }
         | {
             type: "unsupported"
-            unsupported: Record<string, never>
+            unsupported: EmptyObject
             function:
               | "count"
               | "count_values"
@@ -36225,7 +36139,7 @@ export type AppendBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -36393,7 +36307,7 @@ export type AppendBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -36561,7 +36475,7 @@ export type AppendBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -36729,7 +36643,7 @@ export type AppendBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -36897,7 +36811,7 @@ export type AppendBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -37065,7 +36979,7 @@ export type AppendBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -37233,7 +37147,7 @@ export type AppendBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -37401,7 +37315,7 @@ export type AppendBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -37570,7 +37484,7 @@ export type AppendBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -37738,7 +37652,7 @@ export type AppendBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -37948,7 +37862,7 @@ export type AppendBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -38117,7 +38031,7 @@ export type AppendBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -38239,7 +38153,7 @@ export type AppendBlockChildrenResponse =
           }
         | {
             type: "divider"
-            divider: Record<string, never>
+            divider: EmptyObject
             object: "block"
             id: string
             created_time: string
@@ -38249,7 +38163,7 @@ export type AppendBlockChildrenResponse =
           }
         | {
             type: "breadcrumb"
-            breadcrumb: Record<string, never>
+            breadcrumb: EmptyObject
             object: "block"
             id: string
             created_time: string
@@ -38259,7 +38173,7 @@ export type AppendBlockChildrenResponse =
           }
         | {
             type: "table_of_contents"
-            table_of_contents: Record<string, never>
+            table_of_contents: EmptyObject
             object: "block"
             id: string
             created_time: string
@@ -38269,7 +38183,7 @@ export type AppendBlockChildrenResponse =
           }
         | {
             type: "column_list"
-            column_list: Record<string, never>
+            column_list: EmptyObject
             object: "block"
             id: string
             created_time: string
@@ -38279,7 +38193,7 @@ export type AppendBlockChildrenResponse =
           }
         | {
             type: "column"
-            column: Record<string, never>
+            column: EmptyObject
             object: "block"
             id: string
             created_time: string
@@ -38355,7 +38269,7 @@ export type AppendBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -38524,7 +38438,7 @@ export type AppendBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -38698,7 +38612,7 @@ export type AppendBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -38865,7 +38779,7 @@ export type AppendBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -39042,7 +38956,7 @@ export type AppendBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -39209,7 +39123,7 @@ export type AppendBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -39386,7 +39300,7 @@ export type AppendBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -39553,7 +39467,7 @@ export type AppendBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -39730,7 +39644,7 @@ export type AppendBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -39897,7 +39811,7 @@ export type AppendBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -40074,7 +39988,7 @@ export type AppendBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -40241,7 +40155,7 @@ export type AppendBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -40369,7 +40283,7 @@ export type AppendBlockChildrenResponse =
           }
         | {
             type: "unsupported"
-            unsupported: Record<string, never>
+            unsupported: EmptyObject
             object: "block"
             id: string
             created_time: string
@@ -40439,7 +40353,7 @@ export type AppendBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -40607,7 +40521,7 @@ export type AppendBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -40775,7 +40689,7 @@ export type AppendBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -40943,7 +40857,7 @@ export type AppendBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -41111,7 +41025,7 @@ export type AppendBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -41279,7 +41193,7 @@ export type AppendBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -41447,7 +41361,7 @@ export type AppendBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -41615,7 +41529,7 @@ export type AppendBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -41784,7 +41698,7 @@ export type AppendBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -41952,7 +41866,7 @@ export type AppendBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -42162,7 +42076,7 @@ export type AppendBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -42331,7 +42245,7 @@ export type AppendBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -42453,7 +42367,7 @@ export type AppendBlockChildrenResponse =
           }
         | {
             type: "divider"
-            divider: Record<string, never>
+            divider: EmptyObject
             object: "block"
             id: string
             created_time: string
@@ -42463,7 +42377,7 @@ export type AppendBlockChildrenResponse =
           }
         | {
             type: "breadcrumb"
-            breadcrumb: Record<string, never>
+            breadcrumb: EmptyObject
             object: "block"
             id: string
             created_time: string
@@ -42473,7 +42387,7 @@ export type AppendBlockChildrenResponse =
           }
         | {
             type: "table_of_contents"
-            table_of_contents: Record<string, never>
+            table_of_contents: EmptyObject
             object: "block"
             id: string
             created_time: string
@@ -42483,7 +42397,7 @@ export type AppendBlockChildrenResponse =
           }
         | {
             type: "column_list"
-            column_list: Record<string, never>
+            column_list: EmptyObject
             object: "block"
             id: string
             created_time: string
@@ -42493,7 +42407,7 @@ export type AppendBlockChildrenResponse =
           }
         | {
             type: "column"
-            column: Record<string, never>
+            column: EmptyObject
             object: "block"
             id: string
             created_time: string
@@ -42569,7 +42483,7 @@ export type AppendBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -42738,7 +42652,7 @@ export type AppendBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -42912,7 +42826,7 @@ export type AppendBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -43079,7 +42993,7 @@ export type AppendBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -43256,7 +43170,7 @@ export type AppendBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -43423,7 +43337,7 @@ export type AppendBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -43600,7 +43514,7 @@ export type AppendBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -43767,7 +43681,7 @@ export type AppendBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -43944,7 +43858,7 @@ export type AppendBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -44111,7 +44025,7 @@ export type AppendBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -44288,7 +44202,7 @@ export type AppendBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -44455,7 +44369,7 @@ export type AppendBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -44583,7 +44497,7 @@ export type AppendBlockChildrenResponse =
           }
         | {
             type: "unsupported"
-            unsupported: Record<string, never>
+            unsupported: EmptyObject
             object: "block"
             id: string
             created_time: string
@@ -44664,7 +44578,7 @@ export type GetDatabaseResponse = {
                 | {
                     type: "bot"
                     bot:
-                      | Record<string, never>
+                      | EmptyObject
                       | {
                           owner:
                             | {
@@ -44917,56 +44831,36 @@ export type GetDatabaseResponse = {
         id: string
         name: string
       }
-    | { type: "title"; title: Record<string, never>; id: string; name: string }
-    | {
-        type: "rich_text"
-        rich_text: Record<string, never>
-        id: string
-        name: string
-      }
-    | { type: "url"; url: Record<string, never>; id: string; name: string }
-    | {
-        type: "people"
-        people: Record<string, never>
-        id: string
-        name: string
-      }
-    | { type: "files"; files: Record<string, never>; id: string; name: string }
-    | { type: "email"; email: Record<string, never>; id: string; name: string }
+    | { type: "title"; title: EmptyObject; id: string; name: string }
+    | { type: "rich_text"; rich_text: EmptyObject; id: string; name: string }
+    | { type: "url"; url: EmptyObject; id: string; name: string }
+    | { type: "people"; people: EmptyObject; id: string; name: string }
+    | { type: "files"; files: EmptyObject; id: string; name: string }
+    | { type: "email"; email: EmptyObject; id: string; name: string }
     | {
         type: "phone_number"
-        phone_number: Record<string, never>
+        phone_number: EmptyObject
         id: string
         name: string
       }
-    | { type: "date"; date: Record<string, never>; id: string; name: string }
-    | {
-        type: "checkbox"
-        checkbox: Record<string, never>
-        id: string
-        name: string
-      }
-    | {
-        type: "created_by"
-        created_by: Record<string, never>
-        id: string
-        name: string
-      }
+    | { type: "date"; date: EmptyObject; id: string; name: string }
+    | { type: "checkbox"; checkbox: EmptyObject; id: string; name: string }
+    | { type: "created_by"; created_by: EmptyObject; id: string; name: string }
     | {
         type: "created_time"
-        created_time: Record<string, never>
+        created_time: EmptyObject
         id: string
         name: string
       }
     | {
         type: "last_edited_by"
-        last_edited_by: Record<string, never>
+        last_edited_by: EmptyObject
         id: string
         name: string
       }
     | {
         type: "last_edited_time"
-        last_edited_time: Record<string, never>
+        last_edited_time: EmptyObject
         id: string
         name: string
       }
@@ -45253,44 +45147,32 @@ type UpdateDatabaseBodyParameters = {
         name?: string
       }
     | null
-    | { title: Record<string, never>; type?: "title"; name?: string }
+    | { title: EmptyObject; type?: "title"; name?: string }
     | null
-    | { rich_text: Record<string, never>; type?: "rich_text"; name?: string }
+    | { rich_text: EmptyObject; type?: "rich_text"; name?: string }
     | null
-    | { url: Record<string, never>; type?: "url"; name?: string }
+    | { url: EmptyObject; type?: "url"; name?: string }
     | null
-    | { people: Record<string, never>; type?: "people"; name?: string }
+    | { people: EmptyObject; type?: "people"; name?: string }
     | null
-    | { files: Record<string, never>; type?: "files"; name?: string }
+    | { files: EmptyObject; type?: "files"; name?: string }
     | null
-    | { email: Record<string, never>; type?: "email"; name?: string }
+    | { email: EmptyObject; type?: "email"; name?: string }
     | null
-    | {
-        phone_number: Record<string, never>
-        type?: "phone_number"
-        name?: string
-      }
+    | { phone_number: EmptyObject; type?: "phone_number"; name?: string }
     | null
-    | { date: Record<string, never>; type?: "date"; name?: string }
+    | { date: EmptyObject; type?: "date"; name?: string }
     | null
-    | { checkbox: Record<string, never>; type?: "checkbox"; name?: string }
+    | { checkbox: EmptyObject; type?: "checkbox"; name?: string }
     | null
-    | { created_by: Record<string, never>; type?: "created_by"; name?: string }
+    | { created_by: EmptyObject; type?: "created_by"; name?: string }
     | null
-    | {
-        created_time: Record<string, never>
-        type?: "created_time"
-        name?: string
-      }
+    | { created_time: EmptyObject; type?: "created_time"; name?: string }
+    | null
+    | { last_edited_by: EmptyObject; type?: "last_edited_by"; name?: string }
     | null
     | {
-        last_edited_by: Record<string, never>
-        type?: "last_edited_by"
-        name?: string
-      }
-    | null
-    | {
-        last_edited_time: Record<string, never>
+        last_edited_time: EmptyObject
         type?: "last_edited_time"
         name?: string
       }
@@ -45356,7 +45238,7 @@ export type UpdateDatabaseResponse = {
                 | {
                     type: "bot"
                     bot:
-                      | Record<string, never>
+                      | EmptyObject
                       | {
                           owner:
                             | {
@@ -45609,56 +45491,36 @@ export type UpdateDatabaseResponse = {
         id: string
         name: string
       }
-    | { type: "title"; title: Record<string, never>; id: string; name: string }
-    | {
-        type: "rich_text"
-        rich_text: Record<string, never>
-        id: string
-        name: string
-      }
-    | { type: "url"; url: Record<string, never>; id: string; name: string }
-    | {
-        type: "people"
-        people: Record<string, never>
-        id: string
-        name: string
-      }
-    | { type: "files"; files: Record<string, never>; id: string; name: string }
-    | { type: "email"; email: Record<string, never>; id: string; name: string }
+    | { type: "title"; title: EmptyObject; id: string; name: string }
+    | { type: "rich_text"; rich_text: EmptyObject; id: string; name: string }
+    | { type: "url"; url: EmptyObject; id: string; name: string }
+    | { type: "people"; people: EmptyObject; id: string; name: string }
+    | { type: "files"; files: EmptyObject; id: string; name: string }
+    | { type: "email"; email: EmptyObject; id: string; name: string }
     | {
         type: "phone_number"
-        phone_number: Record<string, never>
+        phone_number: EmptyObject
         id: string
         name: string
       }
-    | { type: "date"; date: Record<string, never>; id: string; name: string }
-    | {
-        type: "checkbox"
-        checkbox: Record<string, never>
-        id: string
-        name: string
-      }
-    | {
-        type: "created_by"
-        created_by: Record<string, never>
-        id: string
-        name: string
-      }
+    | { type: "date"; date: EmptyObject; id: string; name: string }
+    | { type: "checkbox"; checkbox: EmptyObject; id: string; name: string }
+    | { type: "created_by"; created_by: EmptyObject; id: string; name: string }
     | {
         type: "created_time"
-        created_time: Record<string, never>
+        created_time: EmptyObject
         id: string
         name: string
       }
     | {
         type: "last_edited_by"
-        last_edited_by: Record<string, never>
+        last_edited_by: EmptyObject
         id: string
         name: string
       }
     | {
         type: "last_edited_time"
-        last_edited_time: Record<string, never>
+        last_edited_time: EmptyObject
         id: string
         name: string
       }
@@ -45779,12 +45641,12 @@ type QueryDatabaseBodyParameters = {
                 | { after: string }
                 | { on_or_before: string }
                 | { on_or_after: string }
-                | { past_week: Record<string, never> }
-                | { past_month: Record<string, never> }
-                | { past_year: Record<string, never> }
-                | { next_week: Record<string, never> }
-                | { next_month: Record<string, never> }
-                | { next_year: Record<string, never> }
+                | { past_week: EmptyObject }
+                | { past_month: EmptyObject }
+                | { past_year: EmptyObject }
+                | { next_week: EmptyObject }
+                | { next_month: EmptyObject }
+                | { next_year: EmptyObject }
                 | { is_empty: true }
                 | { is_not_empty: true }
               property: string
@@ -45881,12 +45743,12 @@ type QueryDatabaseBodyParameters = {
                 | { after: string }
                 | { on_or_before: string }
                 | { on_or_after: string }
-                | { past_week: Record<string, never> }
-                | { past_month: Record<string, never> }
-                | { past_year: Record<string, never> }
-                | { next_week: Record<string, never> }
-                | { next_month: Record<string, never> }
-                | { next_year: Record<string, never> }
+                | { past_week: EmptyObject }
+                | { past_month: EmptyObject }
+                | { past_year: EmptyObject }
+                | { next_week: EmptyObject }
+                | { next_month: EmptyObject }
+                | { next_year: EmptyObject }
                 | { is_empty: true }
                 | { is_not_empty: true }
               property: string
@@ -45908,12 +45770,12 @@ type QueryDatabaseBodyParameters = {
                 | { after: string }
                 | { on_or_before: string }
                 | { on_or_after: string }
-                | { past_week: Record<string, never> }
-                | { past_month: Record<string, never> }
-                | { past_year: Record<string, never> }
-                | { next_week: Record<string, never> }
-                | { next_month: Record<string, never> }
-                | { next_year: Record<string, never> }
+                | { past_week: EmptyObject }
+                | { past_month: EmptyObject }
+                | { past_year: EmptyObject }
+                | { next_week: EmptyObject }
+                | { next_month: EmptyObject }
+                | { next_year: EmptyObject }
                 | { is_empty: true }
                 | { is_not_empty: true }
               property: string
@@ -45953,12 +45815,12 @@ type QueryDatabaseBodyParameters = {
                       | { after: string }
                       | { on_or_before: string }
                       | { on_or_after: string }
-                      | { past_week: Record<string, never> }
-                      | { past_month: Record<string, never> }
-                      | { past_year: Record<string, never> }
-                      | { next_week: Record<string, never> }
-                      | { next_month: Record<string, never> }
-                      | { next_year: Record<string, never> }
+                      | { past_week: EmptyObject }
+                      | { past_month: EmptyObject }
+                      | { past_year: EmptyObject }
+                      | { next_week: EmptyObject }
+                      | { next_month: EmptyObject }
+                      | { next_year: EmptyObject }
                       | { is_empty: true }
                       | { is_not_empty: true }
                   }
@@ -46024,12 +45886,12 @@ type QueryDatabaseBodyParameters = {
                             | { after: string }
                             | { on_or_before: string }
                             | { on_or_after: string }
-                            | { past_week: Record<string, never> }
-                            | { past_month: Record<string, never> }
-                            | { past_year: Record<string, never> }
-                            | { next_week: Record<string, never> }
-                            | { next_month: Record<string, never> }
-                            | { next_year: Record<string, never> }
+                            | { past_week: EmptyObject }
+                            | { past_month: EmptyObject }
+                            | { past_year: EmptyObject }
+                            | { next_week: EmptyObject }
+                            | { next_month: EmptyObject }
+                            | { next_year: EmptyObject }
                             | { is_empty: true }
                             | { is_not_empty: true }
                         }
@@ -46099,12 +45961,12 @@ type QueryDatabaseBodyParameters = {
                             | { after: string }
                             | { on_or_before: string }
                             | { on_or_after: string }
-                            | { past_week: Record<string, never> }
-                            | { past_month: Record<string, never> }
-                            | { past_year: Record<string, never> }
-                            | { next_week: Record<string, never> }
-                            | { next_month: Record<string, never> }
-                            | { next_year: Record<string, never> }
+                            | { past_week: EmptyObject }
+                            | { past_month: EmptyObject }
+                            | { past_year: EmptyObject }
+                            | { next_week: EmptyObject }
+                            | { next_month: EmptyObject }
+                            | { next_year: EmptyObject }
                             | { is_empty: true }
                             | { is_not_empty: true }
                         }
@@ -46174,12 +46036,12 @@ type QueryDatabaseBodyParameters = {
                             | { after: string }
                             | { on_or_before: string }
                             | { on_or_after: string }
-                            | { past_week: Record<string, never> }
-                            | { past_month: Record<string, never> }
-                            | { past_year: Record<string, never> }
-                            | { next_week: Record<string, never> }
-                            | { next_month: Record<string, never> }
-                            | { next_year: Record<string, never> }
+                            | { past_week: EmptyObject }
+                            | { past_month: EmptyObject }
+                            | { past_year: EmptyObject }
+                            | { next_week: EmptyObject }
+                            | { next_month: EmptyObject }
+                            | { next_year: EmptyObject }
                             | { is_empty: true }
                             | { is_not_empty: true }
                         }
@@ -46199,12 +46061,12 @@ type QueryDatabaseBodyParameters = {
                       | { after: string }
                       | { on_or_before: string }
                       | { on_or_after: string }
-                      | { past_week: Record<string, never> }
-                      | { past_month: Record<string, never> }
-                      | { past_year: Record<string, never> }
-                      | { next_week: Record<string, never> }
-                      | { next_month: Record<string, never> }
-                      | { next_year: Record<string, never> }
+                      | { past_week: EmptyObject }
+                      | { past_month: EmptyObject }
+                      | { past_year: EmptyObject }
+                      | { next_week: EmptyObject }
+                      | { next_month: EmptyObject }
+                      | { next_year: EmptyObject }
                       | { is_empty: true }
                       | { is_not_empty: true }
                   }
@@ -46306,12 +46168,12 @@ type QueryDatabaseBodyParameters = {
                       | { after: string }
                       | { on_or_before: string }
                       | { on_or_after: string }
-                      | { past_week: Record<string, never> }
-                      | { past_month: Record<string, never> }
-                      | { past_year: Record<string, never> }
-                      | { next_week: Record<string, never> }
-                      | { next_month: Record<string, never> }
-                      | { next_year: Record<string, never> }
+                      | { past_week: EmptyObject }
+                      | { past_month: EmptyObject }
+                      | { past_year: EmptyObject }
+                      | { next_week: EmptyObject }
+                      | { next_month: EmptyObject }
+                      | { next_year: EmptyObject }
                       | { is_empty: true }
                       | { is_not_empty: true }
                     property: string
@@ -46408,12 +46270,12 @@ type QueryDatabaseBodyParameters = {
                       | { after: string }
                       | { on_or_before: string }
                       | { on_or_after: string }
-                      | { past_week: Record<string, never> }
-                      | { past_month: Record<string, never> }
-                      | { past_year: Record<string, never> }
-                      | { next_week: Record<string, never> }
-                      | { next_month: Record<string, never> }
-                      | { next_year: Record<string, never> }
+                      | { past_week: EmptyObject }
+                      | { past_month: EmptyObject }
+                      | { past_year: EmptyObject }
+                      | { next_week: EmptyObject }
+                      | { next_month: EmptyObject }
+                      | { next_year: EmptyObject }
                       | { is_empty: true }
                       | { is_not_empty: true }
                     property: string
@@ -46435,12 +46297,12 @@ type QueryDatabaseBodyParameters = {
                       | { after: string }
                       | { on_or_before: string }
                       | { on_or_after: string }
-                      | { past_week: Record<string, never> }
-                      | { past_month: Record<string, never> }
-                      | { past_year: Record<string, never> }
-                      | { next_week: Record<string, never> }
-                      | { next_month: Record<string, never> }
-                      | { next_year: Record<string, never> }
+                      | { past_week: EmptyObject }
+                      | { past_month: EmptyObject }
+                      | { past_year: EmptyObject }
+                      | { next_week: EmptyObject }
+                      | { next_month: EmptyObject }
+                      | { next_year: EmptyObject }
                       | { is_empty: true }
                       | { is_not_empty: true }
                     property: string
@@ -46482,12 +46344,12 @@ type QueryDatabaseBodyParameters = {
                             | { after: string }
                             | { on_or_before: string }
                             | { on_or_after: string }
-                            | { past_week: Record<string, never> }
-                            | { past_month: Record<string, never> }
-                            | { past_year: Record<string, never> }
-                            | { next_week: Record<string, never> }
-                            | { next_month: Record<string, never> }
-                            | { next_year: Record<string, never> }
+                            | { past_week: EmptyObject }
+                            | { past_month: EmptyObject }
+                            | { past_year: EmptyObject }
+                            | { next_week: EmptyObject }
+                            | { next_month: EmptyObject }
+                            | { next_year: EmptyObject }
                             | { is_empty: true }
                             | { is_not_empty: true }
                         }
@@ -46553,12 +46415,12 @@ type QueryDatabaseBodyParameters = {
                                   | { after: string }
                                   | { on_or_before: string }
                                   | { on_or_after: string }
-                                  | { past_week: Record<string, never> }
-                                  | { past_month: Record<string, never> }
-                                  | { past_year: Record<string, never> }
-                                  | { next_week: Record<string, never> }
-                                  | { next_month: Record<string, never> }
-                                  | { next_year: Record<string, never> }
+                                  | { past_week: EmptyObject }
+                                  | { past_month: EmptyObject }
+                                  | { past_year: EmptyObject }
+                                  | { next_week: EmptyObject }
+                                  | { next_month: EmptyObject }
+                                  | { next_year: EmptyObject }
                                   | { is_empty: true }
                                   | { is_not_empty: true }
                               }
@@ -46632,12 +46494,12 @@ type QueryDatabaseBodyParameters = {
                                   | { after: string }
                                   | { on_or_before: string }
                                   | { on_or_after: string }
-                                  | { past_week: Record<string, never> }
-                                  | { past_month: Record<string, never> }
-                                  | { past_year: Record<string, never> }
-                                  | { next_week: Record<string, never> }
-                                  | { next_month: Record<string, never> }
-                                  | { next_year: Record<string, never> }
+                                  | { past_week: EmptyObject }
+                                  | { past_month: EmptyObject }
+                                  | { past_year: EmptyObject }
+                                  | { next_week: EmptyObject }
+                                  | { next_month: EmptyObject }
+                                  | { next_year: EmptyObject }
                                   | { is_empty: true }
                                   | { is_not_empty: true }
                               }
@@ -46711,12 +46573,12 @@ type QueryDatabaseBodyParameters = {
                                   | { after: string }
                                   | { on_or_before: string }
                                   | { on_or_after: string }
-                                  | { past_week: Record<string, never> }
-                                  | { past_month: Record<string, never> }
-                                  | { past_year: Record<string, never> }
-                                  | { next_week: Record<string, never> }
-                                  | { next_month: Record<string, never> }
-                                  | { next_year: Record<string, never> }
+                                  | { past_week: EmptyObject }
+                                  | { past_month: EmptyObject }
+                                  | { past_year: EmptyObject }
+                                  | { next_week: EmptyObject }
+                                  | { next_month: EmptyObject }
+                                  | { next_year: EmptyObject }
                                   | { is_empty: true }
                                   | { is_not_empty: true }
                               }
@@ -46740,12 +46602,12 @@ type QueryDatabaseBodyParameters = {
                             | { after: string }
                             | { on_or_before: string }
                             | { on_or_after: string }
-                            | { past_week: Record<string, never> }
-                            | { past_month: Record<string, never> }
-                            | { past_year: Record<string, never> }
-                            | { next_week: Record<string, never> }
-                            | { next_month: Record<string, never> }
-                            | { next_year: Record<string, never> }
+                            | { past_week: EmptyObject }
+                            | { past_month: EmptyObject }
+                            | { past_year: EmptyObject }
+                            | { next_week: EmptyObject }
+                            | { next_month: EmptyObject }
+                            | { next_year: EmptyObject }
                             | { is_empty: true }
                             | { is_not_empty: true }
                         }
@@ -46849,12 +46711,12 @@ type QueryDatabaseBodyParameters = {
                       | { after: string }
                       | { on_or_before: string }
                       | { on_or_after: string }
-                      | { past_week: Record<string, never> }
-                      | { past_month: Record<string, never> }
-                      | { past_year: Record<string, never> }
-                      | { next_week: Record<string, never> }
-                      | { next_month: Record<string, never> }
-                      | { next_year: Record<string, never> }
+                      | { past_week: EmptyObject }
+                      | { past_month: EmptyObject }
+                      | { past_year: EmptyObject }
+                      | { next_week: EmptyObject }
+                      | { next_month: EmptyObject }
+                      | { next_year: EmptyObject }
                       | { is_empty: true }
                       | { is_not_empty: true }
                     property: string
@@ -46951,12 +46813,12 @@ type QueryDatabaseBodyParameters = {
                       | { after: string }
                       | { on_or_before: string }
                       | { on_or_after: string }
-                      | { past_week: Record<string, never> }
-                      | { past_month: Record<string, never> }
-                      | { past_year: Record<string, never> }
-                      | { next_week: Record<string, never> }
-                      | { next_month: Record<string, never> }
-                      | { next_year: Record<string, never> }
+                      | { past_week: EmptyObject }
+                      | { past_month: EmptyObject }
+                      | { past_year: EmptyObject }
+                      | { next_week: EmptyObject }
+                      | { next_month: EmptyObject }
+                      | { next_year: EmptyObject }
                       | { is_empty: true }
                       | { is_not_empty: true }
                     property: string
@@ -46978,12 +46840,12 @@ type QueryDatabaseBodyParameters = {
                       | { after: string }
                       | { on_or_before: string }
                       | { on_or_after: string }
-                      | { past_week: Record<string, never> }
-                      | { past_month: Record<string, never> }
-                      | { past_year: Record<string, never> }
-                      | { next_week: Record<string, never> }
-                      | { next_month: Record<string, never> }
-                      | { next_year: Record<string, never> }
+                      | { past_week: EmptyObject }
+                      | { past_month: EmptyObject }
+                      | { past_year: EmptyObject }
+                      | { next_week: EmptyObject }
+                      | { next_month: EmptyObject }
+                      | { next_year: EmptyObject }
                       | { is_empty: true }
                       | { is_not_empty: true }
                     property: string
@@ -47025,12 +46887,12 @@ type QueryDatabaseBodyParameters = {
                             | { after: string }
                             | { on_or_before: string }
                             | { on_or_after: string }
-                            | { past_week: Record<string, never> }
-                            | { past_month: Record<string, never> }
-                            | { past_year: Record<string, never> }
-                            | { next_week: Record<string, never> }
-                            | { next_month: Record<string, never> }
-                            | { next_year: Record<string, never> }
+                            | { past_week: EmptyObject }
+                            | { past_month: EmptyObject }
+                            | { past_year: EmptyObject }
+                            | { next_week: EmptyObject }
+                            | { next_month: EmptyObject }
+                            | { next_year: EmptyObject }
                             | { is_empty: true }
                             | { is_not_empty: true }
                         }
@@ -47096,12 +46958,12 @@ type QueryDatabaseBodyParameters = {
                                   | { after: string }
                                   | { on_or_before: string }
                                   | { on_or_after: string }
-                                  | { past_week: Record<string, never> }
-                                  | { past_month: Record<string, never> }
-                                  | { past_year: Record<string, never> }
-                                  | { next_week: Record<string, never> }
-                                  | { next_month: Record<string, never> }
-                                  | { next_year: Record<string, never> }
+                                  | { past_week: EmptyObject }
+                                  | { past_month: EmptyObject }
+                                  | { past_year: EmptyObject }
+                                  | { next_week: EmptyObject }
+                                  | { next_month: EmptyObject }
+                                  | { next_year: EmptyObject }
                                   | { is_empty: true }
                                   | { is_not_empty: true }
                               }
@@ -47175,12 +47037,12 @@ type QueryDatabaseBodyParameters = {
                                   | { after: string }
                                   | { on_or_before: string }
                                   | { on_or_after: string }
-                                  | { past_week: Record<string, never> }
-                                  | { past_month: Record<string, never> }
-                                  | { past_year: Record<string, never> }
-                                  | { next_week: Record<string, never> }
-                                  | { next_month: Record<string, never> }
-                                  | { next_year: Record<string, never> }
+                                  | { past_week: EmptyObject }
+                                  | { past_month: EmptyObject }
+                                  | { past_year: EmptyObject }
+                                  | { next_week: EmptyObject }
+                                  | { next_month: EmptyObject }
+                                  | { next_year: EmptyObject }
                                   | { is_empty: true }
                                   | { is_not_empty: true }
                               }
@@ -47254,12 +47116,12 @@ type QueryDatabaseBodyParameters = {
                                   | { after: string }
                                   | { on_or_before: string }
                                   | { on_or_after: string }
-                                  | { past_week: Record<string, never> }
-                                  | { past_month: Record<string, never> }
-                                  | { past_year: Record<string, never> }
-                                  | { next_week: Record<string, never> }
-                                  | { next_month: Record<string, never> }
-                                  | { next_year: Record<string, never> }
+                                  | { past_week: EmptyObject }
+                                  | { past_month: EmptyObject }
+                                  | { past_year: EmptyObject }
+                                  | { next_week: EmptyObject }
+                                  | { next_month: EmptyObject }
+                                  | { next_year: EmptyObject }
                                   | { is_empty: true }
                                   | { is_not_empty: true }
                               }
@@ -47283,12 +47145,12 @@ type QueryDatabaseBodyParameters = {
                             | { after: string }
                             | { on_or_before: string }
                             | { on_or_after: string }
-                            | { past_week: Record<string, never> }
-                            | { past_month: Record<string, never> }
-                            | { past_year: Record<string, never> }
-                            | { next_week: Record<string, never> }
-                            | { next_month: Record<string, never> }
-                            | { next_year: Record<string, never> }
+                            | { past_week: EmptyObject }
+                            | { past_month: EmptyObject }
+                            | { past_year: EmptyObject }
+                            | { next_week: EmptyObject }
+                            | { next_month: EmptyObject }
+                            | { next_year: EmptyObject }
                             | { is_empty: true }
                             | { is_not_empty: true }
                         }
@@ -47394,12 +47256,12 @@ type QueryDatabaseBodyParameters = {
                 | { after: string }
                 | { on_or_before: string }
                 | { on_or_after: string }
-                | { past_week: Record<string, never> }
-                | { past_month: Record<string, never> }
-                | { past_year: Record<string, never> }
-                | { next_week: Record<string, never> }
-                | { next_month: Record<string, never> }
-                | { next_year: Record<string, never> }
+                | { past_week: EmptyObject }
+                | { past_month: EmptyObject }
+                | { past_year: EmptyObject }
+                | { next_week: EmptyObject }
+                | { next_month: EmptyObject }
+                | { next_year: EmptyObject }
                 | { is_empty: true }
                 | { is_not_empty: true }
               property: string
@@ -47496,12 +47358,12 @@ type QueryDatabaseBodyParameters = {
                 | { after: string }
                 | { on_or_before: string }
                 | { on_or_after: string }
-                | { past_week: Record<string, never> }
-                | { past_month: Record<string, never> }
-                | { past_year: Record<string, never> }
-                | { next_week: Record<string, never> }
-                | { next_month: Record<string, never> }
-                | { next_year: Record<string, never> }
+                | { past_week: EmptyObject }
+                | { past_month: EmptyObject }
+                | { past_year: EmptyObject }
+                | { next_week: EmptyObject }
+                | { next_month: EmptyObject }
+                | { next_year: EmptyObject }
                 | { is_empty: true }
                 | { is_not_empty: true }
               property: string
@@ -47523,12 +47385,12 @@ type QueryDatabaseBodyParameters = {
                 | { after: string }
                 | { on_or_before: string }
                 | { on_or_after: string }
-                | { past_week: Record<string, never> }
-                | { past_month: Record<string, never> }
-                | { past_year: Record<string, never> }
-                | { next_week: Record<string, never> }
-                | { next_month: Record<string, never> }
-                | { next_year: Record<string, never> }
+                | { past_week: EmptyObject }
+                | { past_month: EmptyObject }
+                | { past_year: EmptyObject }
+                | { next_week: EmptyObject }
+                | { next_month: EmptyObject }
+                | { next_year: EmptyObject }
                 | { is_empty: true }
                 | { is_not_empty: true }
               property: string
@@ -47568,12 +47430,12 @@ type QueryDatabaseBodyParameters = {
                       | { after: string }
                       | { on_or_before: string }
                       | { on_or_after: string }
-                      | { past_week: Record<string, never> }
-                      | { past_month: Record<string, never> }
-                      | { past_year: Record<string, never> }
-                      | { next_week: Record<string, never> }
-                      | { next_month: Record<string, never> }
-                      | { next_year: Record<string, never> }
+                      | { past_week: EmptyObject }
+                      | { past_month: EmptyObject }
+                      | { past_year: EmptyObject }
+                      | { next_week: EmptyObject }
+                      | { next_month: EmptyObject }
+                      | { next_year: EmptyObject }
                       | { is_empty: true }
                       | { is_not_empty: true }
                   }
@@ -47639,12 +47501,12 @@ type QueryDatabaseBodyParameters = {
                             | { after: string }
                             | { on_or_before: string }
                             | { on_or_after: string }
-                            | { past_week: Record<string, never> }
-                            | { past_month: Record<string, never> }
-                            | { past_year: Record<string, never> }
-                            | { next_week: Record<string, never> }
-                            | { next_month: Record<string, never> }
-                            | { next_year: Record<string, never> }
+                            | { past_week: EmptyObject }
+                            | { past_month: EmptyObject }
+                            | { past_year: EmptyObject }
+                            | { next_week: EmptyObject }
+                            | { next_month: EmptyObject }
+                            | { next_year: EmptyObject }
                             | { is_empty: true }
                             | { is_not_empty: true }
                         }
@@ -47714,12 +47576,12 @@ type QueryDatabaseBodyParameters = {
                             | { after: string }
                             | { on_or_before: string }
                             | { on_or_after: string }
-                            | { past_week: Record<string, never> }
-                            | { past_month: Record<string, never> }
-                            | { past_year: Record<string, never> }
-                            | { next_week: Record<string, never> }
-                            | { next_month: Record<string, never> }
-                            | { next_year: Record<string, never> }
+                            | { past_week: EmptyObject }
+                            | { past_month: EmptyObject }
+                            | { past_year: EmptyObject }
+                            | { next_week: EmptyObject }
+                            | { next_month: EmptyObject }
+                            | { next_year: EmptyObject }
                             | { is_empty: true }
                             | { is_not_empty: true }
                         }
@@ -47789,12 +47651,12 @@ type QueryDatabaseBodyParameters = {
                             | { after: string }
                             | { on_or_before: string }
                             | { on_or_after: string }
-                            | { past_week: Record<string, never> }
-                            | { past_month: Record<string, never> }
-                            | { past_year: Record<string, never> }
-                            | { next_week: Record<string, never> }
-                            | { next_month: Record<string, never> }
-                            | { next_year: Record<string, never> }
+                            | { past_week: EmptyObject }
+                            | { past_month: EmptyObject }
+                            | { past_year: EmptyObject }
+                            | { next_week: EmptyObject }
+                            | { next_month: EmptyObject }
+                            | { next_year: EmptyObject }
                             | { is_empty: true }
                             | { is_not_empty: true }
                         }
@@ -47814,12 +47676,12 @@ type QueryDatabaseBodyParameters = {
                       | { after: string }
                       | { on_or_before: string }
                       | { on_or_after: string }
-                      | { past_week: Record<string, never> }
-                      | { past_month: Record<string, never> }
-                      | { past_year: Record<string, never> }
-                      | { next_week: Record<string, never> }
-                      | { next_month: Record<string, never> }
-                      | { next_year: Record<string, never> }
+                      | { past_week: EmptyObject }
+                      | { past_month: EmptyObject }
+                      | { past_year: EmptyObject }
+                      | { next_week: EmptyObject }
+                      | { next_month: EmptyObject }
+                      | { next_year: EmptyObject }
                       | { is_empty: true }
                       | { is_not_empty: true }
                   }
@@ -47921,12 +47783,12 @@ type QueryDatabaseBodyParameters = {
                       | { after: string }
                       | { on_or_before: string }
                       | { on_or_after: string }
-                      | { past_week: Record<string, never> }
-                      | { past_month: Record<string, never> }
-                      | { past_year: Record<string, never> }
-                      | { next_week: Record<string, never> }
-                      | { next_month: Record<string, never> }
-                      | { next_year: Record<string, never> }
+                      | { past_week: EmptyObject }
+                      | { past_month: EmptyObject }
+                      | { past_year: EmptyObject }
+                      | { next_week: EmptyObject }
+                      | { next_month: EmptyObject }
+                      | { next_year: EmptyObject }
                       | { is_empty: true }
                       | { is_not_empty: true }
                     property: string
@@ -48023,12 +47885,12 @@ type QueryDatabaseBodyParameters = {
                       | { after: string }
                       | { on_or_before: string }
                       | { on_or_after: string }
-                      | { past_week: Record<string, never> }
-                      | { past_month: Record<string, never> }
-                      | { past_year: Record<string, never> }
-                      | { next_week: Record<string, never> }
-                      | { next_month: Record<string, never> }
-                      | { next_year: Record<string, never> }
+                      | { past_week: EmptyObject }
+                      | { past_month: EmptyObject }
+                      | { past_year: EmptyObject }
+                      | { next_week: EmptyObject }
+                      | { next_month: EmptyObject }
+                      | { next_year: EmptyObject }
                       | { is_empty: true }
                       | { is_not_empty: true }
                     property: string
@@ -48050,12 +47912,12 @@ type QueryDatabaseBodyParameters = {
                       | { after: string }
                       | { on_or_before: string }
                       | { on_or_after: string }
-                      | { past_week: Record<string, never> }
-                      | { past_month: Record<string, never> }
-                      | { past_year: Record<string, never> }
-                      | { next_week: Record<string, never> }
-                      | { next_month: Record<string, never> }
-                      | { next_year: Record<string, never> }
+                      | { past_week: EmptyObject }
+                      | { past_month: EmptyObject }
+                      | { past_year: EmptyObject }
+                      | { next_week: EmptyObject }
+                      | { next_month: EmptyObject }
+                      | { next_year: EmptyObject }
                       | { is_empty: true }
                       | { is_not_empty: true }
                     property: string
@@ -48097,12 +47959,12 @@ type QueryDatabaseBodyParameters = {
                             | { after: string }
                             | { on_or_before: string }
                             | { on_or_after: string }
-                            | { past_week: Record<string, never> }
-                            | { past_month: Record<string, never> }
-                            | { past_year: Record<string, never> }
-                            | { next_week: Record<string, never> }
-                            | { next_month: Record<string, never> }
-                            | { next_year: Record<string, never> }
+                            | { past_week: EmptyObject }
+                            | { past_month: EmptyObject }
+                            | { past_year: EmptyObject }
+                            | { next_week: EmptyObject }
+                            | { next_month: EmptyObject }
+                            | { next_year: EmptyObject }
                             | { is_empty: true }
                             | { is_not_empty: true }
                         }
@@ -48168,12 +48030,12 @@ type QueryDatabaseBodyParameters = {
                                   | { after: string }
                                   | { on_or_before: string }
                                   | { on_or_after: string }
-                                  | { past_week: Record<string, never> }
-                                  | { past_month: Record<string, never> }
-                                  | { past_year: Record<string, never> }
-                                  | { next_week: Record<string, never> }
-                                  | { next_month: Record<string, never> }
-                                  | { next_year: Record<string, never> }
+                                  | { past_week: EmptyObject }
+                                  | { past_month: EmptyObject }
+                                  | { past_year: EmptyObject }
+                                  | { next_week: EmptyObject }
+                                  | { next_month: EmptyObject }
+                                  | { next_year: EmptyObject }
                                   | { is_empty: true }
                                   | { is_not_empty: true }
                               }
@@ -48247,12 +48109,12 @@ type QueryDatabaseBodyParameters = {
                                   | { after: string }
                                   | { on_or_before: string }
                                   | { on_or_after: string }
-                                  | { past_week: Record<string, never> }
-                                  | { past_month: Record<string, never> }
-                                  | { past_year: Record<string, never> }
-                                  | { next_week: Record<string, never> }
-                                  | { next_month: Record<string, never> }
-                                  | { next_year: Record<string, never> }
+                                  | { past_week: EmptyObject }
+                                  | { past_month: EmptyObject }
+                                  | { past_year: EmptyObject }
+                                  | { next_week: EmptyObject }
+                                  | { next_month: EmptyObject }
+                                  | { next_year: EmptyObject }
                                   | { is_empty: true }
                                   | { is_not_empty: true }
                               }
@@ -48326,12 +48188,12 @@ type QueryDatabaseBodyParameters = {
                                   | { after: string }
                                   | { on_or_before: string }
                                   | { on_or_after: string }
-                                  | { past_week: Record<string, never> }
-                                  | { past_month: Record<string, never> }
-                                  | { past_year: Record<string, never> }
-                                  | { next_week: Record<string, never> }
-                                  | { next_month: Record<string, never> }
-                                  | { next_year: Record<string, never> }
+                                  | { past_week: EmptyObject }
+                                  | { past_month: EmptyObject }
+                                  | { past_year: EmptyObject }
+                                  | { next_week: EmptyObject }
+                                  | { next_month: EmptyObject }
+                                  | { next_year: EmptyObject }
                                   | { is_empty: true }
                                   | { is_not_empty: true }
                               }
@@ -48355,12 +48217,12 @@ type QueryDatabaseBodyParameters = {
                             | { after: string }
                             | { on_or_before: string }
                             | { on_or_after: string }
-                            | { past_week: Record<string, never> }
-                            | { past_month: Record<string, never> }
-                            | { past_year: Record<string, never> }
-                            | { next_week: Record<string, never> }
-                            | { next_month: Record<string, never> }
-                            | { next_year: Record<string, never> }
+                            | { past_week: EmptyObject }
+                            | { past_month: EmptyObject }
+                            | { past_year: EmptyObject }
+                            | { next_week: EmptyObject }
+                            | { next_month: EmptyObject }
+                            | { next_year: EmptyObject }
                             | { is_empty: true }
                             | { is_not_empty: true }
                         }
@@ -48464,12 +48326,12 @@ type QueryDatabaseBodyParameters = {
                       | { after: string }
                       | { on_or_before: string }
                       | { on_or_after: string }
-                      | { past_week: Record<string, never> }
-                      | { past_month: Record<string, never> }
-                      | { past_year: Record<string, never> }
-                      | { next_week: Record<string, never> }
-                      | { next_month: Record<string, never> }
-                      | { next_year: Record<string, never> }
+                      | { past_week: EmptyObject }
+                      | { past_month: EmptyObject }
+                      | { past_year: EmptyObject }
+                      | { next_week: EmptyObject }
+                      | { next_month: EmptyObject }
+                      | { next_year: EmptyObject }
                       | { is_empty: true }
                       | { is_not_empty: true }
                     property: string
@@ -48566,12 +48428,12 @@ type QueryDatabaseBodyParameters = {
                       | { after: string }
                       | { on_or_before: string }
                       | { on_or_after: string }
-                      | { past_week: Record<string, never> }
-                      | { past_month: Record<string, never> }
-                      | { past_year: Record<string, never> }
-                      | { next_week: Record<string, never> }
-                      | { next_month: Record<string, never> }
-                      | { next_year: Record<string, never> }
+                      | { past_week: EmptyObject }
+                      | { past_month: EmptyObject }
+                      | { past_year: EmptyObject }
+                      | { next_week: EmptyObject }
+                      | { next_month: EmptyObject }
+                      | { next_year: EmptyObject }
                       | { is_empty: true }
                       | { is_not_empty: true }
                     property: string
@@ -48593,12 +48455,12 @@ type QueryDatabaseBodyParameters = {
                       | { after: string }
                       | { on_or_before: string }
                       | { on_or_after: string }
-                      | { past_week: Record<string, never> }
-                      | { past_month: Record<string, never> }
-                      | { past_year: Record<string, never> }
-                      | { next_week: Record<string, never> }
-                      | { next_month: Record<string, never> }
-                      | { next_year: Record<string, never> }
+                      | { past_week: EmptyObject }
+                      | { past_month: EmptyObject }
+                      | { past_year: EmptyObject }
+                      | { next_week: EmptyObject }
+                      | { next_month: EmptyObject }
+                      | { next_year: EmptyObject }
                       | { is_empty: true }
                       | { is_not_empty: true }
                     property: string
@@ -48640,12 +48502,12 @@ type QueryDatabaseBodyParameters = {
                             | { after: string }
                             | { on_or_before: string }
                             | { on_or_after: string }
-                            | { past_week: Record<string, never> }
-                            | { past_month: Record<string, never> }
-                            | { past_year: Record<string, never> }
-                            | { next_week: Record<string, never> }
-                            | { next_month: Record<string, never> }
-                            | { next_year: Record<string, never> }
+                            | { past_week: EmptyObject }
+                            | { past_month: EmptyObject }
+                            | { past_year: EmptyObject }
+                            | { next_week: EmptyObject }
+                            | { next_month: EmptyObject }
+                            | { next_year: EmptyObject }
                             | { is_empty: true }
                             | { is_not_empty: true }
                         }
@@ -48711,12 +48573,12 @@ type QueryDatabaseBodyParameters = {
                                   | { after: string }
                                   | { on_or_before: string }
                                   | { on_or_after: string }
-                                  | { past_week: Record<string, never> }
-                                  | { past_month: Record<string, never> }
-                                  | { past_year: Record<string, never> }
-                                  | { next_week: Record<string, never> }
-                                  | { next_month: Record<string, never> }
-                                  | { next_year: Record<string, never> }
+                                  | { past_week: EmptyObject }
+                                  | { past_month: EmptyObject }
+                                  | { past_year: EmptyObject }
+                                  | { next_week: EmptyObject }
+                                  | { next_month: EmptyObject }
+                                  | { next_year: EmptyObject }
                                   | { is_empty: true }
                                   | { is_not_empty: true }
                               }
@@ -48790,12 +48652,12 @@ type QueryDatabaseBodyParameters = {
                                   | { after: string }
                                   | { on_or_before: string }
                                   | { on_or_after: string }
-                                  | { past_week: Record<string, never> }
-                                  | { past_month: Record<string, never> }
-                                  | { past_year: Record<string, never> }
-                                  | { next_week: Record<string, never> }
-                                  | { next_month: Record<string, never> }
-                                  | { next_year: Record<string, never> }
+                                  | { past_week: EmptyObject }
+                                  | { past_month: EmptyObject }
+                                  | { past_year: EmptyObject }
+                                  | { next_week: EmptyObject }
+                                  | { next_month: EmptyObject }
+                                  | { next_year: EmptyObject }
                                   | { is_empty: true }
                                   | { is_not_empty: true }
                               }
@@ -48869,12 +48731,12 @@ type QueryDatabaseBodyParameters = {
                                   | { after: string }
                                   | { on_or_before: string }
                                   | { on_or_after: string }
-                                  | { past_week: Record<string, never> }
-                                  | { past_month: Record<string, never> }
-                                  | { past_year: Record<string, never> }
-                                  | { next_week: Record<string, never> }
-                                  | { next_month: Record<string, never> }
-                                  | { next_year: Record<string, never> }
+                                  | { past_week: EmptyObject }
+                                  | { past_month: EmptyObject }
+                                  | { past_year: EmptyObject }
+                                  | { next_week: EmptyObject }
+                                  | { next_month: EmptyObject }
+                                  | { next_year: EmptyObject }
                                   | { is_empty: true }
                                   | { is_not_empty: true }
                               }
@@ -48898,12 +48760,12 @@ type QueryDatabaseBodyParameters = {
                             | { after: string }
                             | { on_or_before: string }
                             | { on_or_after: string }
-                            | { past_week: Record<string, never> }
-                            | { past_month: Record<string, never> }
-                            | { past_year: Record<string, never> }
-                            | { next_week: Record<string, never> }
-                            | { next_month: Record<string, never> }
-                            | { next_year: Record<string, never> }
+                            | { past_week: EmptyObject }
+                            | { past_month: EmptyObject }
+                            | { past_year: EmptyObject }
+                            | { next_week: EmptyObject }
+                            | { next_month: EmptyObject }
+                            | { next_year: EmptyObject }
                             | { is_empty: true }
                             | { is_not_empty: true }
                         }
@@ -49007,12 +48869,12 @@ type QueryDatabaseBodyParameters = {
           | { after: string }
           | { on_or_before: string }
           | { on_or_after: string }
-          | { past_week: Record<string, never> }
-          | { past_month: Record<string, never> }
-          | { past_year: Record<string, never> }
-          | { next_week: Record<string, never> }
-          | { next_month: Record<string, never> }
-          | { next_year: Record<string, never> }
+          | { past_week: EmptyObject }
+          | { past_month: EmptyObject }
+          | { past_year: EmptyObject }
+          | { next_week: EmptyObject }
+          | { next_month: EmptyObject }
+          | { next_year: EmptyObject }
           | { is_empty: true }
           | { is_not_empty: true }
         property: string
@@ -49109,12 +48971,12 @@ type QueryDatabaseBodyParameters = {
           | { after: string }
           | { on_or_before: string }
           | { on_or_after: string }
-          | { past_week: Record<string, never> }
-          | { past_month: Record<string, never> }
-          | { past_year: Record<string, never> }
-          | { next_week: Record<string, never> }
-          | { next_month: Record<string, never> }
-          | { next_year: Record<string, never> }
+          | { past_week: EmptyObject }
+          | { past_month: EmptyObject }
+          | { past_year: EmptyObject }
+          | { next_week: EmptyObject }
+          | { next_month: EmptyObject }
+          | { next_year: EmptyObject }
           | { is_empty: true }
           | { is_not_empty: true }
         property: string
@@ -49136,12 +48998,12 @@ type QueryDatabaseBodyParameters = {
           | { after: string }
           | { on_or_before: string }
           | { on_or_after: string }
-          | { past_week: Record<string, never> }
-          | { past_month: Record<string, never> }
-          | { past_year: Record<string, never> }
-          | { next_week: Record<string, never> }
-          | { next_month: Record<string, never> }
-          | { next_year: Record<string, never> }
+          | { past_week: EmptyObject }
+          | { past_month: EmptyObject }
+          | { past_year: EmptyObject }
+          | { next_week: EmptyObject }
+          | { next_month: EmptyObject }
+          | { next_year: EmptyObject }
           | { is_empty: true }
           | { is_not_empty: true }
         property: string
@@ -49179,12 +49041,12 @@ type QueryDatabaseBodyParameters = {
                 | { after: string }
                 | { on_or_before: string }
                 | { on_or_after: string }
-                | { past_week: Record<string, never> }
-                | { past_month: Record<string, never> }
-                | { past_year: Record<string, never> }
-                | { next_week: Record<string, never> }
-                | { next_month: Record<string, never> }
-                | { next_year: Record<string, never> }
+                | { past_week: EmptyObject }
+                | { past_month: EmptyObject }
+                | { past_year: EmptyObject }
+                | { next_week: EmptyObject }
+                | { next_month: EmptyObject }
+                | { next_year: EmptyObject }
                 | { is_empty: true }
                 | { is_not_empty: true }
             }
@@ -49248,12 +49110,12 @@ type QueryDatabaseBodyParameters = {
                       | { after: string }
                       | { on_or_before: string }
                       | { on_or_after: string }
-                      | { past_week: Record<string, never> }
-                      | { past_month: Record<string, never> }
-                      | { past_year: Record<string, never> }
-                      | { next_week: Record<string, never> }
-                      | { next_month: Record<string, never> }
-                      | { next_year: Record<string, never> }
+                      | { past_week: EmptyObject }
+                      | { past_month: EmptyObject }
+                      | { past_year: EmptyObject }
+                      | { next_week: EmptyObject }
+                      | { next_month: EmptyObject }
+                      | { next_year: EmptyObject }
                       | { is_empty: true }
                       | { is_not_empty: true }
                   }
@@ -49321,12 +49183,12 @@ type QueryDatabaseBodyParameters = {
                       | { after: string }
                       | { on_or_before: string }
                       | { on_or_after: string }
-                      | { past_week: Record<string, never> }
-                      | { past_month: Record<string, never> }
-                      | { past_year: Record<string, never> }
-                      | { next_week: Record<string, never> }
-                      | { next_month: Record<string, never> }
-                      | { next_year: Record<string, never> }
+                      | { past_week: EmptyObject }
+                      | { past_month: EmptyObject }
+                      | { past_year: EmptyObject }
+                      | { next_week: EmptyObject }
+                      | { next_month: EmptyObject }
+                      | { next_year: EmptyObject }
                       | { is_empty: true }
                       | { is_not_empty: true }
                   }
@@ -49394,12 +49256,12 @@ type QueryDatabaseBodyParameters = {
                       | { after: string }
                       | { on_or_before: string }
                       | { on_or_after: string }
-                      | { past_week: Record<string, never> }
-                      | { past_month: Record<string, never> }
-                      | { past_year: Record<string, never> }
-                      | { next_week: Record<string, never> }
-                      | { next_month: Record<string, never> }
-                      | { next_year: Record<string, never> }
+                      | { past_week: EmptyObject }
+                      | { past_month: EmptyObject }
+                      | { past_year: EmptyObject }
+                      | { next_week: EmptyObject }
+                      | { next_month: EmptyObject }
+                      | { next_year: EmptyObject }
                       | { is_empty: true }
                       | { is_not_empty: true }
                   }
@@ -49419,12 +49281,12 @@ type QueryDatabaseBodyParameters = {
                 | { after: string }
                 | { on_or_before: string }
                 | { on_or_after: string }
-                | { past_week: Record<string, never> }
-                | { past_month: Record<string, never> }
-                | { past_year: Record<string, never> }
-                | { next_week: Record<string, never> }
-                | { next_month: Record<string, never> }
-                | { next_year: Record<string, never> }
+                | { past_week: EmptyObject }
+                | { past_month: EmptyObject }
+                | { past_year: EmptyObject }
+                | { next_week: EmptyObject }
+                | { next_month: EmptyObject }
+                | { next_year: EmptyObject }
                 | { is_empty: true }
                 | { is_not_empty: true }
             }
@@ -49572,7 +49434,7 @@ export type QueryDatabaseResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -49738,7 +49600,7 @@ export type QueryDatabaseResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -49900,7 +49762,7 @@ export type QueryDatabaseResponse =
                     | {
                         type: "bot"
                         bot:
-                          | Record<string, never>
+                          | EmptyObject
                           | {
                               owner:
                                 | {
@@ -49983,7 +49845,7 @@ export type QueryDatabaseResponse =
                     | {
                         type: "bot"
                         bot:
-                          | Record<string, never>
+                          | EmptyObject
                           | {
                               owner:
                                 | {
@@ -50023,7 +49885,7 @@ export type QueryDatabaseResponse =
                     | {
                         type: "bot"
                         bot:
-                          | Record<string, never>
+                          | EmptyObject
                           | {
                               owner:
                                 | {
@@ -50074,7 +49936,7 @@ export type QueryDatabaseResponse =
           }
         | {
             type: "unsupported"
-            unsupported: Record<string, never>
+            unsupported: EmptyObject
             function:
               | "count"
               | "count_values"
@@ -50161,7 +50023,7 @@ export type QueryDatabaseResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -50322,7 +50184,7 @@ export type QueryDatabaseResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -50484,7 +50346,7 @@ export type QueryDatabaseResponse =
                 | {
                     type: "bot"
                     bot:
-                      | Record<string, never>
+                      | EmptyObject
                       | {
                           owner:
                             | {
@@ -50571,7 +50433,7 @@ export type QueryDatabaseResponse =
                 | {
                     type: "bot"
                     bot:
-                      | Record<string, never>
+                      | EmptyObject
                       | {
                           owner:
                             | {
@@ -50612,7 +50474,7 @@ export type QueryDatabaseResponse =
                 | {
                     type: "bot"
                     bot:
-                      | Record<string, never>
+                      | EmptyObject
                       | {
                           owner:
                             | {
@@ -50758,7 +50620,7 @@ export type QueryDatabaseResponse =
                                         | {
                                             type: "bot"
                                             bot:
-                                              | Record<string, never>
+                                              | EmptyObject
                                               | {
                                                   owner:
                                                     | {
@@ -50933,7 +50795,7 @@ export type QueryDatabaseResponse =
                                         | {
                                             type: "bot"
                                             bot:
-                                              | Record<string, never>
+                                              | EmptyObject
                                               | {
                                                   owner:
                                                     | {
@@ -51104,7 +50966,7 @@ export type QueryDatabaseResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -51190,7 +51052,7 @@ export type QueryDatabaseResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -51233,7 +51095,7 @@ export type QueryDatabaseResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -51287,7 +51149,7 @@ export type QueryDatabaseResponse =
                   }
                 | {
                     type: "unsupported"
-                    unsupported: Record<string, never>
+                    unsupported: EmptyObject
                     function:
                       | "count"
                       | "count_values"
@@ -51400,7 +51262,7 @@ export type QueryDatabaseResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -51561,7 +51423,7 @@ export type QueryDatabaseResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -51723,7 +51585,7 @@ export type QueryDatabaseResponse =
                 | {
                     type: "bot"
                     bot:
-                      | Record<string, never>
+                      | EmptyObject
                       | {
                           owner:
                             | {
@@ -51810,7 +51672,7 @@ export type QueryDatabaseResponse =
                 | {
                     type: "bot"
                     bot:
-                      | Record<string, never>
+                      | EmptyObject
                       | {
                           owner:
                             | {
@@ -51851,7 +51713,7 @@ export type QueryDatabaseResponse =
                 | {
                     type: "bot"
                     bot:
-                      | Record<string, never>
+                      | EmptyObject
                       | {
                           owner:
                             | {
@@ -51997,7 +51859,7 @@ export type QueryDatabaseResponse =
                                         | {
                                             type: "bot"
                                             bot:
-                                              | Record<string, never>
+                                              | EmptyObject
                                               | {
                                                   owner:
                                                     | {
@@ -52172,7 +52034,7 @@ export type QueryDatabaseResponse =
                                         | {
                                             type: "bot"
                                             bot:
-                                              | Record<string, never>
+                                              | EmptyObject
                                               | {
                                                   owner:
                                                     | {
@@ -52343,7 +52205,7 @@ export type QueryDatabaseResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -52429,7 +52291,7 @@ export type QueryDatabaseResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -52472,7 +52334,7 @@ export type QueryDatabaseResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -52526,7 +52388,7 @@ export type QueryDatabaseResponse =
                   }
                 | {
                     type: "unsupported"
-                    unsupported: Record<string, never>
+                    unsupported: EmptyObject
                     function:
                       | "count"
                       | "count_values"
@@ -52715,7 +52577,7 @@ export type ListDatabasesResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -52881,7 +52743,7 @@ export type ListDatabasesResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -53043,7 +52905,7 @@ export type ListDatabasesResponse =
                     | {
                         type: "bot"
                         bot:
-                          | Record<string, never>
+                          | EmptyObject
                           | {
                               owner:
                                 | {
@@ -53126,7 +52988,7 @@ export type ListDatabasesResponse =
                     | {
                         type: "bot"
                         bot:
-                          | Record<string, never>
+                          | EmptyObject
                           | {
                               owner:
                                 | {
@@ -53166,7 +53028,7 @@ export type ListDatabasesResponse =
                     | {
                         type: "bot"
                         bot:
-                          | Record<string, never>
+                          | EmptyObject
                           | {
                               owner:
                                 | {
@@ -53217,7 +53079,7 @@ export type ListDatabasesResponse =
           }
         | {
             type: "unsupported"
-            unsupported: Record<string, never>
+            unsupported: EmptyObject
             function:
               | "count"
               | "count_values"
@@ -53296,7 +53158,7 @@ export type ListDatabasesResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -53549,81 +53411,51 @@ export type ListDatabasesResponse =
               id: string
               name: string
             }
-          | {
-              type: "title"
-              title: Record<string, never>
-              id: string
-              name: string
-            }
+          | { type: "title"; title: EmptyObject; id: string; name: string }
           | {
               type: "rich_text"
-              rich_text: Record<string, never>
+              rich_text: EmptyObject
               id: string
               name: string
             }
-          | {
-              type: "url"
-              url: Record<string, never>
-              id: string
-              name: string
-            }
-          | {
-              type: "people"
-              people: Record<string, never>
-              id: string
-              name: string
-            }
-          | {
-              type: "files"
-              files: Record<string, never>
-              id: string
-              name: string
-            }
-          | {
-              type: "email"
-              email: Record<string, never>
-              id: string
-              name: string
-            }
+          | { type: "url"; url: EmptyObject; id: string; name: string }
+          | { type: "people"; people: EmptyObject; id: string; name: string }
+          | { type: "files"; files: EmptyObject; id: string; name: string }
+          | { type: "email"; email: EmptyObject; id: string; name: string }
           | {
               type: "phone_number"
-              phone_number: Record<string, never>
+              phone_number: EmptyObject
               id: string
               name: string
             }
-          | {
-              type: "date"
-              date: Record<string, never>
-              id: string
-              name: string
-            }
+          | { type: "date"; date: EmptyObject; id: string; name: string }
           | {
               type: "checkbox"
-              checkbox: Record<string, never>
+              checkbox: EmptyObject
               id: string
               name: string
             }
           | {
               type: "created_by"
-              created_by: Record<string, never>
+              created_by: EmptyObject
               id: string
               name: string
             }
           | {
               type: "created_time"
-              created_time: Record<string, never>
+              created_time: EmptyObject
               id: string
               name: string
             }
           | {
               type: "last_edited_by"
-              last_edited_by: Record<string, never>
+              last_edited_by: EmptyObject
               id: string
               name: string
             }
           | {
               type: "last_edited_time"
-              last_edited_time: Record<string, never>
+              last_edited_time: EmptyObject
               id: string
               name: string
             }
@@ -53695,7 +53527,7 @@ export type ListDatabasesResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -53948,81 +53780,51 @@ export type ListDatabasesResponse =
               id: string
               name: string
             }
-          | {
-              type: "title"
-              title: Record<string, never>
-              id: string
-              name: string
-            }
+          | { type: "title"; title: EmptyObject; id: string; name: string }
           | {
               type: "rich_text"
-              rich_text: Record<string, never>
+              rich_text: EmptyObject
               id: string
               name: string
             }
-          | {
-              type: "url"
-              url: Record<string, never>
-              id: string
-              name: string
-            }
-          | {
-              type: "people"
-              people: Record<string, never>
-              id: string
-              name: string
-            }
-          | {
-              type: "files"
-              files: Record<string, never>
-              id: string
-              name: string
-            }
-          | {
-              type: "email"
-              email: Record<string, never>
-              id: string
-              name: string
-            }
+          | { type: "url"; url: EmptyObject; id: string; name: string }
+          | { type: "people"; people: EmptyObject; id: string; name: string }
+          | { type: "files"; files: EmptyObject; id: string; name: string }
+          | { type: "email"; email: EmptyObject; id: string; name: string }
           | {
               type: "phone_number"
-              phone_number: Record<string, never>
+              phone_number: EmptyObject
               id: string
               name: string
             }
-          | {
-              type: "date"
-              date: Record<string, never>
-              id: string
-              name: string
-            }
+          | { type: "date"; date: EmptyObject; id: string; name: string }
           | {
               type: "checkbox"
-              checkbox: Record<string, never>
+              checkbox: EmptyObject
               id: string
               name: string
             }
           | {
               type: "created_by"
-              created_by: Record<string, never>
+              created_by: EmptyObject
               id: string
               name: string
             }
           | {
               type: "created_time"
-              created_time: Record<string, never>
+              created_time: EmptyObject
               id: string
               name: string
             }
           | {
               type: "last_edited_by"
-              last_edited_by: Record<string, never>
+              last_edited_by: EmptyObject
               id: string
               name: string
             }
           | {
               type: "last_edited_time"
-              last_edited_time: Record<string, never>
+              last_edited_time: EmptyObject
               id: string
               name: string
             }
@@ -54256,19 +54058,19 @@ type CreateDatabaseBodyParameters = {
             }
         type?: "rollup"
       }
-    | { title: Record<string, never>; type?: "title" }
-    | { rich_text: Record<string, never>; type?: "rich_text" }
-    | { url: Record<string, never>; type?: "url" }
-    | { people: Record<string, never>; type?: "people" }
-    | { files: Record<string, never>; type?: "files" }
-    | { email: Record<string, never>; type?: "email" }
-    | { phone_number: Record<string, never>; type?: "phone_number" }
-    | { date: Record<string, never>; type?: "date" }
-    | { checkbox: Record<string, never>; type?: "checkbox" }
-    | { created_by: Record<string, never>; type?: "created_by" }
-    | { created_time: Record<string, never>; type?: "created_time" }
-    | { last_edited_by: Record<string, never>; type?: "last_edited_by" }
-    | { last_edited_time: Record<string, never>; type?: "last_edited_time" }
+    | { title: EmptyObject; type?: "title" }
+    | { rich_text: EmptyObject; type?: "rich_text" }
+    | { url: EmptyObject; type?: "url" }
+    | { people: EmptyObject; type?: "people" }
+    | { files: EmptyObject; type?: "files" }
+    | { email: EmptyObject; type?: "email" }
+    | { phone_number: EmptyObject; type?: "phone_number" }
+    | { date: EmptyObject; type?: "date" }
+    | { checkbox: EmptyObject; type?: "checkbox" }
+    | { created_by: EmptyObject; type?: "created_by" }
+    | { created_time: EmptyObject; type?: "created_time" }
+    | { last_edited_by: EmptyObject; type?: "last_edited_by" }
+    | { last_edited_time: EmptyObject; type?: "last_edited_time" }
   >
   icon?:
     | { emoji: EmojiRequest; type?: "emoji" }
@@ -54334,7 +54136,7 @@ export type CreateDatabaseResponse = {
                 | {
                     type: "bot"
                     bot:
-                      | Record<string, never>
+                      | EmptyObject
                       | {
                           owner:
                             | {
@@ -54587,56 +54389,36 @@ export type CreateDatabaseResponse = {
         id: string
         name: string
       }
-    | { type: "title"; title: Record<string, never>; id: string; name: string }
-    | {
-        type: "rich_text"
-        rich_text: Record<string, never>
-        id: string
-        name: string
-      }
-    | { type: "url"; url: Record<string, never>; id: string; name: string }
-    | {
-        type: "people"
-        people: Record<string, never>
-        id: string
-        name: string
-      }
-    | { type: "files"; files: Record<string, never>; id: string; name: string }
-    | { type: "email"; email: Record<string, never>; id: string; name: string }
+    | { type: "title"; title: EmptyObject; id: string; name: string }
+    | { type: "rich_text"; rich_text: EmptyObject; id: string; name: string }
+    | { type: "url"; url: EmptyObject; id: string; name: string }
+    | { type: "people"; people: EmptyObject; id: string; name: string }
+    | { type: "files"; files: EmptyObject; id: string; name: string }
+    | { type: "email"; email: EmptyObject; id: string; name: string }
     | {
         type: "phone_number"
-        phone_number: Record<string, never>
+        phone_number: EmptyObject
         id: string
         name: string
       }
-    | { type: "date"; date: Record<string, never>; id: string; name: string }
-    | {
-        type: "checkbox"
-        checkbox: Record<string, never>
-        id: string
-        name: string
-      }
-    | {
-        type: "created_by"
-        created_by: Record<string, never>
-        id: string
-        name: string
-      }
+    | { type: "date"; date: EmptyObject; id: string; name: string }
+    | { type: "checkbox"; checkbox: EmptyObject; id: string; name: string }
+    | { type: "created_by"; created_by: EmptyObject; id: string; name: string }
     | {
         type: "created_time"
-        created_time: Record<string, never>
+        created_time: EmptyObject
         id: string
         name: string
       }
     | {
         type: "last_edited_by"
-        last_edited_by: Record<string, never>
+        last_edited_by: EmptyObject
         id: string
         name: string
       }
     | {
         type: "last_edited_time"
-        last_edited_time: Record<string, never>
+        last_edited_time: EmptyObject
         id: string
         name: string
       }
@@ -54794,7 +54576,7 @@ export type SearchResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -54960,7 +54742,7 @@ export type SearchResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -55122,7 +54904,7 @@ export type SearchResponse =
                     | {
                         type: "bot"
                         bot:
-                          | Record<string, never>
+                          | EmptyObject
                           | {
                               owner:
                                 | {
@@ -55205,7 +54987,7 @@ export type SearchResponse =
                     | {
                         type: "bot"
                         bot:
-                          | Record<string, never>
+                          | EmptyObject
                           | {
                               owner:
                                 | {
@@ -55245,7 +55027,7 @@ export type SearchResponse =
                     | {
                         type: "bot"
                         bot:
-                          | Record<string, never>
+                          | EmptyObject
                           | {
                               owner:
                                 | {
@@ -55296,7 +55078,7 @@ export type SearchResponse =
           }
         | {
             type: "unsupported"
-            unsupported: Record<string, never>
+            unsupported: EmptyObject
             function:
               | "count"
               | "count_values"
@@ -55387,7 +55169,7 @@ export type SearchResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -55554,7 +55336,7 @@ export type SearchResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -55719,7 +55501,7 @@ export type SearchResponse =
                     | {
                         type: "bot"
                         bot:
-                          | Record<string, never>
+                          | EmptyObject
                           | {
                               owner:
                                 | {
@@ -55814,7 +55596,7 @@ export type SearchResponse =
                     | {
                         type: "bot"
                         bot:
-                          | Record<string, never>
+                          | EmptyObject
                           | {
                               owner:
                                 | {
@@ -55859,7 +55641,7 @@ export type SearchResponse =
                     | {
                         type: "bot"
                         bot:
-                          | Record<string, never>
+                          | EmptyObject
                           | {
                               owner:
                                 | {
@@ -56005,7 +55787,7 @@ export type SearchResponse =
                                             | {
                                                 type: "bot"
                                                 bot:
-                                                  | Record<string, never>
+                                                  | EmptyObject
                                                   | {
                                                       owner:
                                                         | {
@@ -56183,7 +55965,7 @@ export type SearchResponse =
                                             | {
                                                 type: "bot"
                                                 bot:
-                                                  | Record<string, never>
+                                                  | EmptyObject
                                                   | {
                                                       owner:
                                                         | {
@@ -56357,7 +56139,7 @@ export type SearchResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -56452,7 +56234,7 @@ export type SearchResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -56501,7 +56283,7 @@ export type SearchResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -56558,7 +56340,7 @@ export type SearchResponse =
                       }
                     | {
                         type: "unsupported"
-                        unsupported: Record<string, never>
+                        unsupported: EmptyObject
                         function:
                           | "count"
                           | "count_values"
@@ -56658,7 +56440,7 @@ export type SearchResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -56914,81 +56696,56 @@ export type SearchResponse =
                   id: string
                   name: string
                 }
-              | {
-                  type: "title"
-                  title: Record<string, never>
-                  id: string
-                  name: string
-                }
+              | { type: "title"; title: EmptyObject; id: string; name: string }
               | {
                   type: "rich_text"
-                  rich_text: Record<string, never>
+                  rich_text: EmptyObject
                   id: string
                   name: string
                 }
-              | {
-                  type: "url"
-                  url: Record<string, never>
-                  id: string
-                  name: string
-                }
+              | { type: "url"; url: EmptyObject; id: string; name: string }
               | {
                   type: "people"
-                  people: Record<string, never>
+                  people: EmptyObject
                   id: string
                   name: string
                 }
-              | {
-                  type: "files"
-                  files: Record<string, never>
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "email"
-                  email: Record<string, never>
-                  id: string
-                  name: string
-                }
+              | { type: "files"; files: EmptyObject; id: string; name: string }
+              | { type: "email"; email: EmptyObject; id: string; name: string }
               | {
                   type: "phone_number"
-                  phone_number: Record<string, never>
+                  phone_number: EmptyObject
                   id: string
                   name: string
                 }
-              | {
-                  type: "date"
-                  date: Record<string, never>
-                  id: string
-                  name: string
-                }
+              | { type: "date"; date: EmptyObject; id: string; name: string }
               | {
                   type: "checkbox"
-                  checkbox: Record<string, never>
+                  checkbox: EmptyObject
                   id: string
                   name: string
                 }
               | {
                   type: "created_by"
-                  created_by: Record<string, never>
+                  created_by: EmptyObject
                   id: string
                   name: string
                 }
               | {
                   type: "created_time"
-                  created_time: Record<string, never>
+                  created_time: EmptyObject
                   id: string
                   name: string
                 }
               | {
                   type: "last_edited_by"
-                  last_edited_by: Record<string, never>
+                  last_edited_by: EmptyObject
                   id: string
                   name: string
                 }
               | {
                   type: "last_edited_time"
-                  last_edited_time: Record<string, never>
+                  last_edited_time: EmptyObject
                   id: string
                   name: string
                 }
@@ -57073,7 +56830,7 @@ export type SearchResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -57240,7 +56997,7 @@ export type SearchResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -57405,7 +57162,7 @@ export type SearchResponse =
                     | {
                         type: "bot"
                         bot:
-                          | Record<string, never>
+                          | EmptyObject
                           | {
                               owner:
                                 | {
@@ -57500,7 +57257,7 @@ export type SearchResponse =
                     | {
                         type: "bot"
                         bot:
-                          | Record<string, never>
+                          | EmptyObject
                           | {
                               owner:
                                 | {
@@ -57545,7 +57302,7 @@ export type SearchResponse =
                     | {
                         type: "bot"
                         bot:
-                          | Record<string, never>
+                          | EmptyObject
                           | {
                               owner:
                                 | {
@@ -57691,7 +57448,7 @@ export type SearchResponse =
                                             | {
                                                 type: "bot"
                                                 bot:
-                                                  | Record<string, never>
+                                                  | EmptyObject
                                                   | {
                                                       owner:
                                                         | {
@@ -57869,7 +57626,7 @@ export type SearchResponse =
                                             | {
                                                 type: "bot"
                                                 bot:
-                                                  | Record<string, never>
+                                                  | EmptyObject
                                                   | {
                                                       owner:
                                                         | {
@@ -58043,7 +57800,7 @@ export type SearchResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -58138,7 +57895,7 @@ export type SearchResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -58187,7 +57944,7 @@ export type SearchResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -58244,7 +58001,7 @@ export type SearchResponse =
                       }
                     | {
                         type: "unsupported"
-                        unsupported: Record<string, never>
+                        unsupported: EmptyObject
                         function:
                           | "count"
                           | "count_values"
@@ -58344,7 +58101,7 @@ export type SearchResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -58600,81 +58357,56 @@ export type SearchResponse =
                   id: string
                   name: string
                 }
-              | {
-                  type: "title"
-                  title: Record<string, never>
-                  id: string
-                  name: string
-                }
+              | { type: "title"; title: EmptyObject; id: string; name: string }
               | {
                   type: "rich_text"
-                  rich_text: Record<string, never>
+                  rich_text: EmptyObject
                   id: string
                   name: string
                 }
-              | {
-                  type: "url"
-                  url: Record<string, never>
-                  id: string
-                  name: string
-                }
+              | { type: "url"; url: EmptyObject; id: string; name: string }
               | {
                   type: "people"
-                  people: Record<string, never>
+                  people: EmptyObject
                   id: string
                   name: string
                 }
-              | {
-                  type: "files"
-                  files: Record<string, never>
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "email"
-                  email: Record<string, never>
-                  id: string
-                  name: string
-                }
+              | { type: "files"; files: EmptyObject; id: string; name: string }
+              | { type: "email"; email: EmptyObject; id: string; name: string }
               | {
                   type: "phone_number"
-                  phone_number: Record<string, never>
+                  phone_number: EmptyObject
                   id: string
                   name: string
                 }
-              | {
-                  type: "date"
-                  date: Record<string, never>
-                  id: string
-                  name: string
-                }
+              | { type: "date"; date: EmptyObject; id: string; name: string }
               | {
                   type: "checkbox"
-                  checkbox: Record<string, never>
+                  checkbox: EmptyObject
                   id: string
                   name: string
                 }
               | {
                   type: "created_by"
-                  created_by: Record<string, never>
+                  created_by: EmptyObject
                   id: string
                   name: string
                 }
               | {
                   type: "created_time"
-                  created_time: Record<string, never>
+                  created_time: EmptyObject
                   id: string
                   name: string
                 }
               | {
                   type: "last_edited_by"
-                  last_edited_by: Record<string, never>
+                  last_edited_by: EmptyObject
                   id: string
                   name: string
                 }
               | {
                   type: "last_edited_time"
-                  last_edited_time: Record<string, never>
+                  last_edited_time: EmptyObject
                   id: string
                   name: string
                 }
