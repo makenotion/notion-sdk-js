@@ -1,9 +1,606 @@
 // cspell:disable-file
 // Note: This is a generated file.
 
+type EmptyObject = Record<string, never>
+
 type IdRequest = string | string
 
 type TextRequest = string
+
+type TimeZoneRequest =
+  | "Africa/Abidjan"
+  | "Africa/Accra"
+  | "Africa/Addis_Ababa"
+  | "Africa/Algiers"
+  | "Africa/Asmara"
+  | "Africa/Asmera"
+  | "Africa/Bamako"
+  | "Africa/Bangui"
+  | "Africa/Banjul"
+  | "Africa/Bissau"
+  | "Africa/Blantyre"
+  | "Africa/Brazzaville"
+  | "Africa/Bujumbura"
+  | "Africa/Cairo"
+  | "Africa/Casablanca"
+  | "Africa/Ceuta"
+  | "Africa/Conakry"
+  | "Africa/Dakar"
+  | "Africa/Dar_es_Salaam"
+  | "Africa/Djibouti"
+  | "Africa/Douala"
+  | "Africa/El_Aaiun"
+  | "Africa/Freetown"
+  | "Africa/Gaborone"
+  | "Africa/Harare"
+  | "Africa/Johannesburg"
+  | "Africa/Juba"
+  | "Africa/Kampala"
+  | "Africa/Khartoum"
+  | "Africa/Kigali"
+  | "Africa/Kinshasa"
+  | "Africa/Lagos"
+  | "Africa/Libreville"
+  | "Africa/Lome"
+  | "Africa/Luanda"
+  | "Africa/Lubumbashi"
+  | "Africa/Lusaka"
+  | "Africa/Malabo"
+  | "Africa/Maputo"
+  | "Africa/Maseru"
+  | "Africa/Mbabane"
+  | "Africa/Mogadishu"
+  | "Africa/Monrovia"
+  | "Africa/Nairobi"
+  | "Africa/Ndjamena"
+  | "Africa/Niamey"
+  | "Africa/Nouakchott"
+  | "Africa/Ouagadougou"
+  | "Africa/Porto-Novo"
+  | "Africa/Sao_Tome"
+  | "Africa/Timbuktu"
+  | "Africa/Tripoli"
+  | "Africa/Tunis"
+  | "Africa/Windhoek"
+  | "America/Adak"
+  | "America/Anchorage"
+  | "America/Anguilla"
+  | "America/Antigua"
+  | "America/Araguaina"
+  | "America/Argentina/Buenos_Aires"
+  | "America/Argentina/Catamarca"
+  | "America/Argentina/ComodRivadavia"
+  | "America/Argentina/Cordoba"
+  | "America/Argentina/Jujuy"
+  | "America/Argentina/La_Rioja"
+  | "America/Argentina/Mendoza"
+  | "America/Argentina/Rio_Gallegos"
+  | "America/Argentina/Salta"
+  | "America/Argentina/San_Juan"
+  | "America/Argentina/San_Luis"
+  | "America/Argentina/Tucuman"
+  | "America/Argentina/Ushuaia"
+  | "America/Aruba"
+  | "America/Asuncion"
+  | "America/Atikokan"
+  | "America/Atka"
+  | "America/Bahia"
+  | "America/Bahia_Banderas"
+  | "America/Barbados"
+  | "America/Belem"
+  | "America/Belize"
+  | "America/Blanc-Sablon"
+  | "America/Boa_Vista"
+  | "America/Bogota"
+  | "America/Boise"
+  | "America/Buenos_Aires"
+  | "America/Cambridge_Bay"
+  | "America/Campo_Grande"
+  | "America/Cancun"
+  | "America/Caracas"
+  | "America/Catamarca"
+  | "America/Cayenne"
+  | "America/Cayman"
+  | "America/Chicago"
+  | "America/Chihuahua"
+  | "America/Coral_Harbour"
+  | "America/Cordoba"
+  | "America/Costa_Rica"
+  | "America/Creston"
+  | "America/Cuiaba"
+  | "America/Curacao"
+  | "America/Danmarkshavn"
+  | "America/Dawson"
+  | "America/Dawson_Creek"
+  | "America/Denver"
+  | "America/Detroit"
+  | "America/Dominica"
+  | "America/Edmonton"
+  | "America/Eirunepe"
+  | "America/El_Salvador"
+  | "America/Ensenada"
+  | "America/Fort_Nelson"
+  | "America/Fort_Wayne"
+  | "America/Fortaleza"
+  | "America/Glace_Bay"
+  | "America/Godthab"
+  | "America/Goose_Bay"
+  | "America/Grand_Turk"
+  | "America/Grenada"
+  | "America/Guadeloupe"
+  | "America/Guatemala"
+  | "America/Guayaquil"
+  | "America/Guyana"
+  | "America/Halifax"
+  | "America/Havana"
+  | "America/Hermosillo"
+  | "America/Indiana/Indianapolis"
+  | "America/Indiana/Knox"
+  | "America/Indiana/Marengo"
+  | "America/Indiana/Petersburg"
+  | "America/Indiana/Tell_City"
+  | "America/Indiana/Vevay"
+  | "America/Indiana/Vincennes"
+  | "America/Indiana/Winamac"
+  | "America/Indianapolis"
+  | "America/Inuvik"
+  | "America/Iqaluit"
+  | "America/Jamaica"
+  | "America/Jujuy"
+  | "America/Juneau"
+  | "America/Kentucky/Louisville"
+  | "America/Kentucky/Monticello"
+  | "America/Knox_IN"
+  | "America/Kralendijk"
+  | "America/La_Paz"
+  | "America/Lima"
+  | "America/Los_Angeles"
+  | "America/Louisville"
+  | "America/Lower_Princes"
+  | "America/Maceio"
+  | "America/Managua"
+  | "America/Manaus"
+  | "America/Marigot"
+  | "America/Martinique"
+  | "America/Matamoros"
+  | "America/Mazatlan"
+  | "America/Mendoza"
+  | "America/Menominee"
+  | "America/Merida"
+  | "America/Metlakatla"
+  | "America/Mexico_City"
+  | "America/Miquelon"
+  | "America/Moncton"
+  | "America/Monterrey"
+  | "America/Montevideo"
+  | "America/Montreal"
+  | "America/Montserrat"
+  | "America/Nassau"
+  | "America/New_York"
+  | "America/Nipigon"
+  | "America/Nome"
+  | "America/Noronha"
+  | "America/North_Dakota/Beulah"
+  | "America/North_Dakota/Center"
+  | "America/North_Dakota/New_Salem"
+  | "America/Ojinaga"
+  | "America/Panama"
+  | "America/Pangnirtung"
+  | "America/Paramaribo"
+  | "America/Phoenix"
+  | "America/Port-au-Prince"
+  | "America/Port_of_Spain"
+  | "America/Porto_Acre"
+  | "America/Porto_Velho"
+  | "America/Puerto_Rico"
+  | "America/Punta_Arenas"
+  | "America/Rainy_River"
+  | "America/Rankin_Inlet"
+  | "America/Recife"
+  | "America/Regina"
+  | "America/Resolute"
+  | "America/Rio_Branco"
+  | "America/Rosario"
+  | "America/Santa_Isabel"
+  | "America/Santarem"
+  | "America/Santiago"
+  | "America/Santo_Domingo"
+  | "America/Sao_Paulo"
+  | "America/Scoresbysund"
+  | "America/Shiprock"
+  | "America/Sitka"
+  | "America/St_Barthelemy"
+  | "America/St_Johns"
+  | "America/St_Kitts"
+  | "America/St_Lucia"
+  | "America/St_Thomas"
+  | "America/St_Vincent"
+  | "America/Swift_Current"
+  | "America/Tegucigalpa"
+  | "America/Thule"
+  | "America/Thunder_Bay"
+  | "America/Tijuana"
+  | "America/Toronto"
+  | "America/Tortola"
+  | "America/Vancouver"
+  | "America/Virgin"
+  | "America/Whitehorse"
+  | "America/Winnipeg"
+  | "America/Yakutat"
+  | "America/Yellowknife"
+  | "Antarctica/Casey"
+  | "Antarctica/Davis"
+  | "Antarctica/DumontDUrville"
+  | "Antarctica/Macquarie"
+  | "Antarctica/Mawson"
+  | "Antarctica/McMurdo"
+  | "Antarctica/Palmer"
+  | "Antarctica/Rothera"
+  | "Antarctica/South_Pole"
+  | "Antarctica/Syowa"
+  | "Antarctica/Troll"
+  | "Antarctica/Vostok"
+  | "Arctic/Longyearbyen"
+  | "Asia/Aden"
+  | "Asia/Almaty"
+  | "Asia/Amman"
+  | "Asia/Anadyr"
+  | "Asia/Aqtau"
+  | "Asia/Aqtobe"
+  | "Asia/Ashgabat"
+  | "Asia/Ashkhabad"
+  | "Asia/Atyrau"
+  | "Asia/Baghdad"
+  | "Asia/Bahrain"
+  | "Asia/Baku"
+  | "Asia/Bangkok"
+  | "Asia/Barnaul"
+  | "Asia/Beirut"
+  | "Asia/Bishkek"
+  | "Asia/Brunei"
+  | "Asia/Calcutta"
+  | "Asia/Chita"
+  | "Asia/Choibalsan"
+  | "Asia/Chongqing"
+  | "Asia/Chungking"
+  | "Asia/Colombo"
+  | "Asia/Dacca"
+  | "Asia/Damascus"
+  | "Asia/Dhaka"
+  | "Asia/Dili"
+  | "Asia/Dubai"
+  | "Asia/Dushanbe"
+  | "Asia/Famagusta"
+  | "Asia/Gaza"
+  | "Asia/Harbin"
+  | "Asia/Hebron"
+  | "Asia/Ho_Chi_Minh"
+  | "Asia/Hong_Kong"
+  | "Asia/Hovd"
+  | "Asia/Irkutsk"
+  | "Asia/Istanbul"
+  | "Asia/Jakarta"
+  | "Asia/Jayapura"
+  | "Asia/Jerusalem"
+  | "Asia/Kabul"
+  | "Asia/Kamchatka"
+  | "Asia/Karachi"
+  | "Asia/Kashgar"
+  | "Asia/Kathmandu"
+  | "Asia/Katmandu"
+  | "Asia/Khandyga"
+  | "Asia/Kolkata"
+  | "Asia/Krasnoyarsk"
+  | "Asia/Kuala_Lumpur"
+  | "Asia/Kuching"
+  | "Asia/Kuwait"
+  | "Asia/Macao"
+  | "Asia/Macau"
+  | "Asia/Magadan"
+  | "Asia/Makassar"
+  | "Asia/Manila"
+  | "Asia/Muscat"
+  | "Asia/Nicosia"
+  | "Asia/Novokuznetsk"
+  | "Asia/Novosibirsk"
+  | "Asia/Omsk"
+  | "Asia/Oral"
+  | "Asia/Phnom_Penh"
+  | "Asia/Pontianak"
+  | "Asia/Pyongyang"
+  | "Asia/Qatar"
+  | "Asia/Qostanay"
+  | "Asia/Qyzylorda"
+  | "Asia/Rangoon"
+  | "Asia/Riyadh"
+  | "Asia/Saigon"
+  | "Asia/Sakhalin"
+  | "Asia/Samarkand"
+  | "Asia/Seoul"
+  | "Asia/Shanghai"
+  | "Asia/Singapore"
+  | "Asia/Srednekolymsk"
+  | "Asia/Taipei"
+  | "Asia/Tashkent"
+  | "Asia/Tbilisi"
+  | "Asia/Tehran"
+  | "Asia/Tel_Aviv"
+  | "Asia/Thimbu"
+  | "Asia/Thimphu"
+  | "Asia/Tokyo"
+  | "Asia/Tomsk"
+  | "Asia/Ujung_Pandang"
+  | "Asia/Ulaanbaatar"
+  | "Asia/Ulan_Bator"
+  | "Asia/Urumqi"
+  | "Asia/Ust-Nera"
+  | "Asia/Vientiane"
+  | "Asia/Vladivostok"
+  | "Asia/Yakutsk"
+  | "Asia/Yangon"
+  | "Asia/Yekaterinburg"
+  | "Asia/Yerevan"
+  | "Atlantic/Azores"
+  | "Atlantic/Bermuda"
+  | "Atlantic/Canary"
+  | "Atlantic/Cape_Verde"
+  | "Atlantic/Faeroe"
+  | "Atlantic/Faroe"
+  | "Atlantic/Jan_Mayen"
+  | "Atlantic/Madeira"
+  | "Atlantic/Reykjavik"
+  | "Atlantic/South_Georgia"
+  | "Atlantic/St_Helena"
+  | "Atlantic/Stanley"
+  | "Australia/ACT"
+  | "Australia/Adelaide"
+  | "Australia/Brisbane"
+  | "Australia/Broken_Hill"
+  | "Australia/Canberra"
+  | "Australia/Currie"
+  | "Australia/Darwin"
+  | "Australia/Eucla"
+  | "Australia/Hobart"
+  | "Australia/LHI"
+  | "Australia/Lindeman"
+  | "Australia/Lord_Howe"
+  | "Australia/Melbourne"
+  | "Australia/NSW"
+  | "Australia/North"
+  | "Australia/Perth"
+  | "Australia/Queensland"
+  | "Australia/South"
+  | "Australia/Sydney"
+  | "Australia/Tasmania"
+  | "Australia/Victoria"
+  | "Australia/West"
+  | "Australia/Yancowinna"
+  | "Brazil/Acre"
+  | "Brazil/DeNoronha"
+  | "Brazil/East"
+  | "Brazil/West"
+  | "CET"
+  | "CST6CDT"
+  | "Canada/Atlantic"
+  | "Canada/Central"
+  | "Canada/Eastern"
+  | "Canada/Mountain"
+  | "Canada/Newfoundland"
+  | "Canada/Pacific"
+  | "Canada/Saskatchewan"
+  | "Canada/Yukon"
+  | "Chile/Continental"
+  | "Chile/EasterIsland"
+  | "Cuba"
+  | "EET"
+  | "EST"
+  | "EST5EDT"
+  | "Egypt"
+  | "Eire"
+  | "Etc/GMT"
+  | "Etc/GMT+0"
+  | "Etc/GMT+1"
+  | "Etc/GMT+10"
+  | "Etc/GMT+11"
+  | "Etc/GMT+12"
+  | "Etc/GMT+2"
+  | "Etc/GMT+3"
+  | "Etc/GMT+4"
+  | "Etc/GMT+5"
+  | "Etc/GMT+6"
+  | "Etc/GMT+7"
+  | "Etc/GMT+8"
+  | "Etc/GMT+9"
+  | "Etc/GMT-0"
+  | "Etc/GMT-1"
+  | "Etc/GMT-10"
+  | "Etc/GMT-11"
+  | "Etc/GMT-12"
+  | "Etc/GMT-13"
+  | "Etc/GMT-14"
+  | "Etc/GMT-2"
+  | "Etc/GMT-3"
+  | "Etc/GMT-4"
+  | "Etc/GMT-5"
+  | "Etc/GMT-6"
+  | "Etc/GMT-7"
+  | "Etc/GMT-8"
+  | "Etc/GMT-9"
+  | "Etc/GMT0"
+  | "Etc/Greenwich"
+  | "Etc/UCT"
+  | "Etc/UTC"
+  | "Etc/Universal"
+  | "Etc/Zulu"
+  | "Europe/Amsterdam"
+  | "Europe/Andorra"
+  | "Europe/Astrakhan"
+  | "Europe/Athens"
+  | "Europe/Belfast"
+  | "Europe/Belgrade"
+  | "Europe/Berlin"
+  | "Europe/Bratislava"
+  | "Europe/Brussels"
+  | "Europe/Bucharest"
+  | "Europe/Budapest"
+  | "Europe/Busingen"
+  | "Europe/Chisinau"
+  | "Europe/Copenhagen"
+  | "Europe/Dublin"
+  | "Europe/Gibraltar"
+  | "Europe/Guernsey"
+  | "Europe/Helsinki"
+  | "Europe/Isle_of_Man"
+  | "Europe/Istanbul"
+  | "Europe/Jersey"
+  | "Europe/Kaliningrad"
+  | "Europe/Kiev"
+  | "Europe/Kirov"
+  | "Europe/Lisbon"
+  | "Europe/Ljubljana"
+  | "Europe/London"
+  | "Europe/Luxembourg"
+  | "Europe/Madrid"
+  | "Europe/Malta"
+  | "Europe/Mariehamn"
+  | "Europe/Minsk"
+  | "Europe/Monaco"
+  | "Europe/Moscow"
+  | "Europe/Nicosia"
+  | "Europe/Oslo"
+  | "Europe/Paris"
+  | "Europe/Podgorica"
+  | "Europe/Prague"
+  | "Europe/Riga"
+  | "Europe/Rome"
+  | "Europe/Samara"
+  | "Europe/San_Marino"
+  | "Europe/Sarajevo"
+  | "Europe/Saratov"
+  | "Europe/Simferopol"
+  | "Europe/Skopje"
+  | "Europe/Sofia"
+  | "Europe/Stockholm"
+  | "Europe/Tallinn"
+  | "Europe/Tirane"
+  | "Europe/Tiraspol"
+  | "Europe/Ulyanovsk"
+  | "Europe/Uzhgorod"
+  | "Europe/Vaduz"
+  | "Europe/Vatican"
+  | "Europe/Vienna"
+  | "Europe/Vilnius"
+  | "Europe/Volgograd"
+  | "Europe/Warsaw"
+  | "Europe/Zagreb"
+  | "Europe/Zaporozhye"
+  | "Europe/Zurich"
+  | "GB"
+  | "GB-Eire"
+  | "GMT"
+  | "GMT+0"
+  | "GMT-0"
+  | "GMT0"
+  | "Greenwich"
+  | "HST"
+  | "Hongkong"
+  | "Iceland"
+  | "Indian/Antananarivo"
+  | "Indian/Chagos"
+  | "Indian/Christmas"
+  | "Indian/Cocos"
+  | "Indian/Comoro"
+  | "Indian/Kerguelen"
+  | "Indian/Mahe"
+  | "Indian/Maldives"
+  | "Indian/Mauritius"
+  | "Indian/Mayotte"
+  | "Indian/Reunion"
+  | "Iran"
+  | "Israel"
+  | "Jamaica"
+  | "Japan"
+  | "Kwajalein"
+  | "Libya"
+  | "MET"
+  | "MST"
+  | "MST7MDT"
+  | "Mexico/BajaNorte"
+  | "Mexico/BajaSur"
+  | "Mexico/General"
+  | "NZ"
+  | "NZ-CHAT"
+  | "Navajo"
+  | "PRC"
+  | "PST8PDT"
+  | "Pacific/Apia"
+  | "Pacific/Auckland"
+  | "Pacific/Bougainville"
+  | "Pacific/Chatham"
+  | "Pacific/Chuuk"
+  | "Pacific/Easter"
+  | "Pacific/Efate"
+  | "Pacific/Enderbury"
+  | "Pacific/Fakaofo"
+  | "Pacific/Fiji"
+  | "Pacific/Funafuti"
+  | "Pacific/Galapagos"
+  | "Pacific/Gambier"
+  | "Pacific/Guadalcanal"
+  | "Pacific/Guam"
+  | "Pacific/Honolulu"
+  | "Pacific/Johnston"
+  | "Pacific/Kiritimati"
+  | "Pacific/Kosrae"
+  | "Pacific/Kwajalein"
+  | "Pacific/Majuro"
+  | "Pacific/Marquesas"
+  | "Pacific/Midway"
+  | "Pacific/Nauru"
+  | "Pacific/Niue"
+  | "Pacific/Norfolk"
+  | "Pacific/Noumea"
+  | "Pacific/Pago_Pago"
+  | "Pacific/Palau"
+  | "Pacific/Pitcairn"
+  | "Pacific/Pohnpei"
+  | "Pacific/Ponape"
+  | "Pacific/Port_Moresby"
+  | "Pacific/Rarotonga"
+  | "Pacific/Saipan"
+  | "Pacific/Samoa"
+  | "Pacific/Tahiti"
+  | "Pacific/Tarawa"
+  | "Pacific/Tongatapu"
+  | "Pacific/Truk"
+  | "Pacific/Wake"
+  | "Pacific/Wallis"
+  | "Pacific/Yap"
+  | "Poland"
+  | "Portugal"
+  | "ROC"
+  | "ROK"
+  | "Singapore"
+  | "Turkey"
+  | "UCT"
+  | "US/Alaska"
+  | "US/Aleutian"
+  | "US/Arizona"
+  | "US/Central"
+  | "US/East-Indiana"
+  | "US/Eastern"
+  | "US/Hawaii"
+  | "US/Indiana-Starke"
+  | "US/Michigan"
+  | "US/Mountain"
+  | "US/Pacific"
+  | "US/Pacific-New"
+  | "US/Samoa"
+  | "UTC"
+  | "Universal"
+  | "W-SU"
+  | "WET"
+  | "Zulu"
 
 type RichTextItemRequest =
   | {
@@ -52,7 +649,7 @@ type RichTextItemRequest =
                 }
               | {
                   bot:
-                    | Record<string, never>
+                    | EmptyObject
                     | {
                         owner:
                           | {
@@ -77,7 +674,13 @@ type RichTextItemRequest =
                   object?: "user"
                 }
           }
-        | { date: { start: string; end?: string | null } }
+        | {
+            date: {
+              start: string
+              end?: string | null
+              time_zone?: TimeZoneRequest | null
+            }
+          }
         | { page: { id: IdRequest } }
         | { database: { id: IdRequest } }
       type?: "mention"
@@ -3766,6 +4369,7 @@ type LanguageRequest =
   | "scheme"
   | "scss"
   | "shell"
+  | "solidity"
   | "sql"
   | "swift"
   | "typescript"
@@ -3855,10 +4459,10 @@ type BlockObjectRequestWithoutChildren =
       object?: "block"
     }
   | { equation: { expression: string }; type?: "equation"; object?: "block" }
-  | { divider: Record<string, never>; type?: "divider"; object?: "block" }
-  | { breadcrumb: Record<string, never>; type?: "breadcrumb"; object?: "block" }
+  | { divider: EmptyObject; type?: "divider"; object?: "block" }
+  | { breadcrumb: EmptyObject; type?: "breadcrumb"; object?: "block" }
   | {
-      table_of_contents: Record<string, never>
+      table_of_contents: EmptyObject
       type?: "table_of_contents"
       object?: "block"
     }
@@ -3999,10 +4603,10 @@ type BlockObjectRequest =
       object?: "block"
     }
   | { equation: { expression: string }; type?: "equation"; object?: "block" }
-  | { divider: Record<string, never>; type?: "divider"; object?: "block" }
-  | { breadcrumb: Record<string, never>; type?: "breadcrumb"; object?: "block" }
+  | { divider: EmptyObject; type?: "divider"; object?: "block" }
+  | { breadcrumb: EmptyObject; type?: "breadcrumb"; object?: "block" }
   | {
-      table_of_contents: Record<string, never>
+      table_of_contents: EmptyObject
       type?: "table_of_contents"
       object?: "block"
     }
@@ -4104,18 +4708,14 @@ type BlockObjectRequest =
                   type?: "equation"
                   object?: "block"
                 }
+              | { divider: EmptyObject; type?: "divider"; object?: "block" }
               | {
-                  divider: Record<string, never>
-                  type?: "divider"
-                  object?: "block"
-                }
-              | {
-                  breadcrumb: Record<string, never>
+                  breadcrumb: EmptyObject
                   type?: "breadcrumb"
                   object?: "block"
                 }
               | {
-                  table_of_contents: Record<string, never>
+                  table_of_contents: EmptyObject
                   type?: "table_of_contents"
                   object?: "block"
                 }
@@ -4300,18 +4900,10 @@ type BlockObjectRequest =
               type?: "equation"
               object?: "block"
             }
+          | { divider: EmptyObject; type?: "divider"; object?: "block" }
+          | { breadcrumb: EmptyObject; type?: "breadcrumb"; object?: "block" }
           | {
-              divider: Record<string, never>
-              type?: "divider"
-              object?: "block"
-            }
-          | {
-              breadcrumb: Record<string, never>
-              type?: "breadcrumb"
-              object?: "block"
-            }
-          | {
-              table_of_contents: Record<string, never>
+              table_of_contents: EmptyObject
               type?: "table_of_contents"
               object?: "block"
             }
@@ -4490,18 +5082,10 @@ type BlockObjectRequest =
               type?: "equation"
               object?: "block"
             }
+          | { divider: EmptyObject; type?: "divider"; object?: "block" }
+          | { breadcrumb: EmptyObject; type?: "breadcrumb"; object?: "block" }
           | {
-              divider: Record<string, never>
-              type?: "divider"
-              object?: "block"
-            }
-          | {
-              breadcrumb: Record<string, never>
-              type?: "breadcrumb"
-              object?: "block"
-            }
-          | {
-              table_of_contents: Record<string, never>
+              table_of_contents: EmptyObject
               type?: "table_of_contents"
               object?: "block"
             }
@@ -4680,18 +5264,10 @@ type BlockObjectRequest =
               type?: "equation"
               object?: "block"
             }
+          | { divider: EmptyObject; type?: "divider"; object?: "block" }
+          | { breadcrumb: EmptyObject; type?: "breadcrumb"; object?: "block" }
           | {
-              divider: Record<string, never>
-              type?: "divider"
-              object?: "block"
-            }
-          | {
-              breadcrumb: Record<string, never>
-              type?: "breadcrumb"
-              object?: "block"
-            }
-          | {
-              table_of_contents: Record<string, never>
+              table_of_contents: EmptyObject
               type?: "table_of_contents"
               object?: "block"
             }
@@ -4870,18 +5446,10 @@ type BlockObjectRequest =
               type?: "equation"
               object?: "block"
             }
+          | { divider: EmptyObject; type?: "divider"; object?: "block" }
+          | { breadcrumb: EmptyObject; type?: "breadcrumb"; object?: "block" }
           | {
-              divider: Record<string, never>
-              type?: "divider"
-              object?: "block"
-            }
-          | {
-              breadcrumb: Record<string, never>
-              type?: "breadcrumb"
-              object?: "block"
-            }
-          | {
-              table_of_contents: Record<string, never>
+              table_of_contents: EmptyObject
               type?: "table_of_contents"
               object?: "block"
             }
@@ -5060,18 +5628,10 @@ type BlockObjectRequest =
               type?: "equation"
               object?: "block"
             }
+          | { divider: EmptyObject; type?: "divider"; object?: "block" }
+          | { breadcrumb: EmptyObject; type?: "breadcrumb"; object?: "block" }
           | {
-              divider: Record<string, never>
-              type?: "divider"
-              object?: "block"
-            }
-          | {
-              breadcrumb: Record<string, never>
-              type?: "breadcrumb"
-              object?: "block"
-            }
-          | {
-              table_of_contents: Record<string, never>
+              table_of_contents: EmptyObject
               type?: "table_of_contents"
               object?: "block"
             }
@@ -5250,18 +5810,10 @@ type BlockObjectRequest =
               type?: "equation"
               object?: "block"
             }
+          | { divider: EmptyObject; type?: "divider"; object?: "block" }
+          | { breadcrumb: EmptyObject; type?: "breadcrumb"; object?: "block" }
           | {
-              divider: Record<string, never>
-              type?: "divider"
-              object?: "block"
-            }
-          | {
-              breadcrumb: Record<string, never>
-              type?: "breadcrumb"
-              object?: "block"
-            }
-          | {
-              table_of_contents: Record<string, never>
+              table_of_contents: EmptyObject
               type?: "table_of_contents"
               object?: "block"
             }
@@ -5441,18 +5993,10 @@ type BlockObjectRequest =
               type?: "equation"
               object?: "block"
             }
+          | { divider: EmptyObject; type?: "divider"; object?: "block" }
+          | { breadcrumb: EmptyObject; type?: "breadcrumb"; object?: "block" }
           | {
-              divider: Record<string, never>
-              type?: "divider"
-              object?: "block"
-            }
-          | {
-              breadcrumb: Record<string, never>
-              type?: "breadcrumb"
-              object?: "block"
-            }
-          | {
-              table_of_contents: Record<string, never>
+              table_of_contents: EmptyObject
               type?: "table_of_contents"
               object?: "block"
             }
@@ -5631,18 +6175,10 @@ type BlockObjectRequest =
               type?: "equation"
               object?: "block"
             }
+          | { divider: EmptyObject; type?: "divider"; object?: "block" }
+          | { breadcrumb: EmptyObject; type?: "breadcrumb"; object?: "block" }
           | {
-              divider: Record<string, never>
-              type?: "divider"
-              object?: "block"
-            }
-          | {
-              breadcrumb: Record<string, never>
-              type?: "breadcrumb"
-              object?: "block"
-            }
-          | {
-              table_of_contents: Record<string, never>
+              table_of_contents: EmptyObject
               type?: "table_of_contents"
               object?: "block"
             }
@@ -5821,18 +6357,10 @@ type BlockObjectRequest =
               type?: "equation"
               object?: "block"
             }
+          | { divider: EmptyObject; type?: "divider"; object?: "block" }
+          | { breadcrumb: EmptyObject; type?: "breadcrumb"; object?: "block" }
           | {
-              divider: Record<string, never>
-              type?: "divider"
-              object?: "block"
-            }
-          | {
-              breadcrumb: Record<string, never>
-              type?: "breadcrumb"
-              object?: "block"
-            }
-          | {
-              table_of_contents: Record<string, never>
+              table_of_contents: EmptyObject
               type?: "table_of_contents"
               object?: "block"
             }
@@ -6014,18 +6542,10 @@ type BlockObjectRequest =
               type?: "equation"
               object?: "block"
             }
+          | { divider: EmptyObject; type?: "divider"; object?: "block" }
+          | { breadcrumb: EmptyObject; type?: "breadcrumb"; object?: "block" }
           | {
-              divider: Record<string, never>
-              type?: "divider"
-              object?: "block"
-            }
-          | {
-              breadcrumb: Record<string, never>
-              type?: "breadcrumb"
-              object?: "block"
-            }
-          | {
-              table_of_contents: Record<string, never>
+              table_of_contents: EmptyObject
               type?: "table_of_contents"
               object?: "block"
             }
@@ -6131,7 +6651,7 @@ export type GetSelfResponse =
   | {
       type: "bot"
       bot:
-        | Record<string, never>
+        | EmptyObject
         | {
             owner:
               | {
@@ -6181,7 +6701,7 @@ export type GetUserResponse =
   | {
       type: "bot"
       bot:
-        | Record<string, never>
+        | EmptyObject
         | {
             owner:
               | {
@@ -6253,7 +6773,11 @@ export type ListUsersResponse =
           }
         | {
             type: "date"
-            date: { start: string; end: string | null } | null
+            date: {
+              start: string
+              end: string | null
+              time_zone: TimeZoneRequest | null
+            } | null
             function:
               | "count"
               | "count_values"
@@ -6338,7 +6862,7 @@ export type ListUsersResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -6370,7 +6894,11 @@ export type ListUsersResponse =
                             }
                           | {
                               type: "date"
-                              date: { start: string; end: string | null }
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              }
                             }
                           | {
                               type: "link_preview"
@@ -6500,7 +7028,7 @@ export type ListUsersResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -6532,7 +7060,11 @@ export type ListUsersResponse =
                             }
                           | {
                               type: "date"
-                              date: { start: string; end: string | null }
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              }
                             }
                           | {
                               type: "link_preview"
@@ -6658,7 +7190,7 @@ export type ListUsersResponse =
                     | {
                         type: "bot"
                         bot:
-                          | Record<string, never>
+                          | EmptyObject
                           | {
                               owner:
                                 | {
@@ -6687,7 +7219,11 @@ export type ListUsersResponse =
               | { type: "phone_number"; phone_number: string | null }
               | {
                   type: "date"
-                  date: { start: string; end: string | null } | null
+                  date: {
+                    start: string
+                    end: string | null
+                    time_zone: TimeZoneRequest | null
+                  } | null
                 }
               | {
                   type: "files"
@@ -6711,7 +7247,11 @@ export type ListUsersResponse =
                     | { type: "string"; string: string | null }
                     | {
                         type: "date"
-                        date: { start: string; end: string | null } | null
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
+                        } | null
                       }
                     | { type: "number"; number: number | null }
                     | { type: "boolean"; boolean: boolean | null }
@@ -6733,7 +7273,7 @@ export type ListUsersResponse =
                     | {
                         type: "bot"
                         bot:
-                          | Record<string, never>
+                          | EmptyObject
                           | {
                               owner:
                                 | {
@@ -6773,7 +7313,7 @@ export type ListUsersResponse =
                     | {
                         type: "bot"
                         bot:
-                          | Record<string, never>
+                          | EmptyObject
                           | {
                               owner:
                                 | {
@@ -6824,7 +7364,7 @@ export type ListUsersResponse =
           }
         | {
             type: "unsupported"
-            unsupported: Record<string, never>
+            unsupported: EmptyObject
             function:
               | "count"
               | "count_values"
@@ -6862,7 +7402,7 @@ export type ListUsersResponse =
         | {
             type: "bot"
             bot:
-              | Record<string, never>
+              | EmptyObject
               | {
                   owner:
                     | {
@@ -6903,7 +7443,7 @@ export type ListUsersResponse =
         | {
             type: "bot"
             bot:
-              | Record<string, never>
+              | EmptyObject
               | {
                   owner:
                     | {
@@ -7033,7 +7573,7 @@ type CreatePageBodyParameters =
                     }
                   | {
                       bot:
-                        | Record<string, never>
+                        | EmptyObject
                         | {
                             owner:
                               | {
@@ -7063,7 +7603,11 @@ type CreatePageBodyParameters =
             | { email: StringRequest | null; type?: "email" }
             | { phone_number: StringRequest | null; type?: "phone_number" }
             | {
-                date: { start: string; end?: string | null } | null
+                date: {
+                  start: string
+                  end?: string | null
+                  time_zone?: TimeZoneRequest | null
+                } | null
                 type?: "date"
               }
             | { checkbox: boolean; type?: "checkbox" }
@@ -7168,7 +7712,7 @@ type CreatePageBodyParameters =
                   }
                 | {
                     bot:
-                      | Record<string, never>
+                      | EmptyObject
                       | {
                           owner:
                             | {
@@ -7197,7 +7741,11 @@ type CreatePageBodyParameters =
             | null
             | StringRequest
             | null
-            | { start: string; end?: string | null }
+            | {
+                start: string
+                end?: string | null
+                time_zone?: TimeZoneRequest | null
+              }
             | null
             | boolean
             | Array<{ id: IdRequest }>
@@ -7302,7 +7850,7 @@ export type CreatePageResponse = {
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -7326,7 +7874,14 @@ export type CreatePageResponse = {
                           object: "user"
                         }
                   }
-                | { type: "date"; date: { start: string; end: string | null } }
+                | {
+                    type: "date"
+                    date: {
+                      start: string
+                      end: string | null
+                      time_zone: TimeZoneRequest | null
+                    }
+                  }
                 | { type: "link_preview"; link_preview: { url: TextRequest } }
                 | { type: "page"; page: { id: IdRequest } }
                 | { type: "database"; database: { id: IdRequest } }
@@ -7450,7 +8005,7 @@ export type CreatePageResponse = {
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -7474,7 +8029,14 @@ export type CreatePageResponse = {
                           object: "user"
                         }
                   }
-                | { type: "date"; date: { start: string; end: string | null } }
+                | {
+                    type: "date"
+                    date: {
+                      start: string
+                      end: string | null
+                      time_zone: TimeZoneRequest | null
+                    }
+                  }
                 | { type: "link_preview"; link_preview: { url: TextRequest } }
                 | { type: "page"; page: { id: IdRequest } }
                 | { type: "database"; database: { id: IdRequest } }
@@ -7599,7 +8161,7 @@ export type CreatePageResponse = {
           | {
               type: "bot"
               bot:
-                | Record<string, never>
+                | EmptyObject
                 | {
                     owner:
                       | {
@@ -7629,7 +8191,11 @@ export type CreatePageResponse = {
     | { type: "phone_number"; phone_number: string | null; id: string }
     | {
         type: "date"
-        date: { start: string; end: string | null } | null
+        date: {
+          start: string
+          end: string | null
+          time_zone: TimeZoneRequest | null
+        } | null
         id: string
       }
     | {
@@ -7653,7 +8219,14 @@ export type CreatePageResponse = {
         type: "formula"
         formula:
           | { type: "string"; string: string | null }
-          | { type: "date"; date: { start: string; end: string | null } | null }
+          | {
+              type: "date"
+              date: {
+                start: string
+                end: string | null
+                time_zone: TimeZoneRequest | null
+              } | null
+            }
           | { type: "number"; number: number | null }
           | { type: "boolean"; boolean: boolean | null }
         id: string
@@ -7675,7 +8248,7 @@ export type CreatePageResponse = {
           | {
               type: "bot"
               bot:
-                | Record<string, never>
+                | EmptyObject
                 | {
                     owner:
                       | {
@@ -7716,7 +8289,7 @@ export type CreatePageResponse = {
           | {
               type: "bot"
               bot:
-                | Record<string, never>
+                | EmptyObject
                 | {
                     owner:
                       | {
@@ -7773,7 +8346,11 @@ export type CreatePageResponse = {
             }
           | {
               type: "date"
-              date: { start: string; end: string | null } | null
+              date: {
+                start: string
+                end: string | null
+                time_zone: TimeZoneRequest | null
+              } | null
               function:
                 | "count"
                 | "count_values"
@@ -7858,7 +8435,7 @@ export type CreatePageResponse = {
                                   | {
                                       type: "bot"
                                       bot:
-                                        | Record<string, never>
+                                        | EmptyObject
                                         | {
                                             owner:
                                               | {
@@ -7894,7 +8471,11 @@ export type CreatePageResponse = {
                               }
                             | {
                                 type: "date"
-                                date: { start: string; end: string | null }
+                                date: {
+                                  start: string
+                                  end: string | null
+                                  time_zone: TimeZoneRequest | null
+                                }
                               }
                             | {
                                 type: "link_preview"
@@ -8024,7 +8605,7 @@ export type CreatePageResponse = {
                                   | {
                                       type: "bot"
                                       bot:
-                                        | Record<string, never>
+                                        | EmptyObject
                                         | {
                                             owner:
                                               | {
@@ -8060,7 +8641,11 @@ export type CreatePageResponse = {
                               }
                             | {
                                 type: "date"
-                                date: { start: string; end: string | null }
+                                date: {
+                                  start: string
+                                  end: string | null
+                                  time_zone: TimeZoneRequest | null
+                                }
                               }
                             | {
                                 type: "link_preview"
@@ -8186,7 +8771,7 @@ export type CreatePageResponse = {
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -8215,7 +8800,11 @@ export type CreatePageResponse = {
                 | { type: "phone_number"; phone_number: string | null }
                 | {
                     type: "date"
-                    date: { start: string; end: string | null } | null
+                    date: {
+                      start: string
+                      end: string | null
+                      time_zone: TimeZoneRequest | null
+                    } | null
                   }
                 | {
                     type: "files"
@@ -8239,7 +8828,11 @@ export type CreatePageResponse = {
                       | { type: "string"; string: string | null }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null } | null
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          } | null
                         }
                       | { type: "number"; number: number | null }
                       | { type: "boolean"; boolean: boolean | null }
@@ -8261,7 +8854,7 @@ export type CreatePageResponse = {
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -8301,7 +8894,7 @@ export type CreatePageResponse = {
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -8352,7 +8945,7 @@ export type CreatePageResponse = {
             }
           | {
               type: "unsupported"
-              unsupported: Record<string, never>
+              unsupported: EmptyObject
               function:
                 | "count"
                 | "count_values"
@@ -8475,7 +9068,7 @@ export type GetPageResponse = {
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -8499,7 +9092,14 @@ export type GetPageResponse = {
                           object: "user"
                         }
                   }
-                | { type: "date"; date: { start: string; end: string | null } }
+                | {
+                    type: "date"
+                    date: {
+                      start: string
+                      end: string | null
+                      time_zone: TimeZoneRequest | null
+                    }
+                  }
                 | { type: "link_preview"; link_preview: { url: TextRequest } }
                 | { type: "page"; page: { id: IdRequest } }
                 | { type: "database"; database: { id: IdRequest } }
@@ -8623,7 +9223,7 @@ export type GetPageResponse = {
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -8647,7 +9247,14 @@ export type GetPageResponse = {
                           object: "user"
                         }
                   }
-                | { type: "date"; date: { start: string; end: string | null } }
+                | {
+                    type: "date"
+                    date: {
+                      start: string
+                      end: string | null
+                      time_zone: TimeZoneRequest | null
+                    }
+                  }
                 | { type: "link_preview"; link_preview: { url: TextRequest } }
                 | { type: "page"; page: { id: IdRequest } }
                 | { type: "database"; database: { id: IdRequest } }
@@ -8772,7 +9379,7 @@ export type GetPageResponse = {
           | {
               type: "bot"
               bot:
-                | Record<string, never>
+                | EmptyObject
                 | {
                     owner:
                       | {
@@ -8802,7 +9409,11 @@ export type GetPageResponse = {
     | { type: "phone_number"; phone_number: string | null; id: string }
     | {
         type: "date"
-        date: { start: string; end: string | null } | null
+        date: {
+          start: string
+          end: string | null
+          time_zone: TimeZoneRequest | null
+        } | null
         id: string
       }
     | {
@@ -8826,7 +9437,14 @@ export type GetPageResponse = {
         type: "formula"
         formula:
           | { type: "string"; string: string | null }
-          | { type: "date"; date: { start: string; end: string | null } | null }
+          | {
+              type: "date"
+              date: {
+                start: string
+                end: string | null
+                time_zone: TimeZoneRequest | null
+              } | null
+            }
           | { type: "number"; number: number | null }
           | { type: "boolean"; boolean: boolean | null }
         id: string
@@ -8848,7 +9466,7 @@ export type GetPageResponse = {
           | {
               type: "bot"
               bot:
-                | Record<string, never>
+                | EmptyObject
                 | {
                     owner:
                       | {
@@ -8889,7 +9507,7 @@ export type GetPageResponse = {
           | {
               type: "bot"
               bot:
-                | Record<string, never>
+                | EmptyObject
                 | {
                     owner:
                       | {
@@ -8946,7 +9564,11 @@ export type GetPageResponse = {
             }
           | {
               type: "date"
-              date: { start: string; end: string | null } | null
+              date: {
+                start: string
+                end: string | null
+                time_zone: TimeZoneRequest | null
+              } | null
               function:
                 | "count"
                 | "count_values"
@@ -9031,7 +9653,7 @@ export type GetPageResponse = {
                                   | {
                                       type: "bot"
                                       bot:
-                                        | Record<string, never>
+                                        | EmptyObject
                                         | {
                                             owner:
                                               | {
@@ -9067,7 +9689,11 @@ export type GetPageResponse = {
                               }
                             | {
                                 type: "date"
-                                date: { start: string; end: string | null }
+                                date: {
+                                  start: string
+                                  end: string | null
+                                  time_zone: TimeZoneRequest | null
+                                }
                               }
                             | {
                                 type: "link_preview"
@@ -9197,7 +9823,7 @@ export type GetPageResponse = {
                                   | {
                                       type: "bot"
                                       bot:
-                                        | Record<string, never>
+                                        | EmptyObject
                                         | {
                                             owner:
                                               | {
@@ -9233,7 +9859,11 @@ export type GetPageResponse = {
                               }
                             | {
                                 type: "date"
-                                date: { start: string; end: string | null }
+                                date: {
+                                  start: string
+                                  end: string | null
+                                  time_zone: TimeZoneRequest | null
+                                }
                               }
                             | {
                                 type: "link_preview"
@@ -9359,7 +9989,7 @@ export type GetPageResponse = {
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -9388,7 +10018,11 @@ export type GetPageResponse = {
                 | { type: "phone_number"; phone_number: string | null }
                 | {
                     type: "date"
-                    date: { start: string; end: string | null } | null
+                    date: {
+                      start: string
+                      end: string | null
+                      time_zone: TimeZoneRequest | null
+                    } | null
                   }
                 | {
                     type: "files"
@@ -9412,7 +10046,11 @@ export type GetPageResponse = {
                       | { type: "string"; string: string | null }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null } | null
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          } | null
                         }
                       | { type: "number"; number: number | null }
                       | { type: "boolean"; boolean: boolean | null }
@@ -9434,7 +10072,7 @@ export type GetPageResponse = {
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -9474,7 +10112,7 @@ export type GetPageResponse = {
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -9525,7 +10163,7 @@ export type GetPageResponse = {
             }
           | {
               type: "unsupported"
-              unsupported: Record<string, never>
+              unsupported: EmptyObject
               function:
                 | "count"
                 | "count_values"
@@ -9677,7 +10315,7 @@ type UpdatePageBodyParameters = {
                 }
               | {
                   bot:
-                    | Record<string, never>
+                    | EmptyObject
                     | {
                         owner:
                           | {
@@ -9706,7 +10344,14 @@ type UpdatePageBodyParameters = {
           }
         | { email: StringRequest | null; type?: "email" }
         | { phone_number: StringRequest | null; type?: "phone_number" }
-        | { date: { start: string; end?: string | null } | null; type?: "date" }
+        | {
+            date: {
+              start: string
+              end?: string | null
+              time_zone?: TimeZoneRequest | null
+            } | null
+            type?: "date"
+          }
         | { checkbox: boolean; type?: "checkbox" }
         | { relation: Array<{ id: IdRequest }>; type?: "relation" }
         | {
@@ -9809,7 +10454,7 @@ type UpdatePageBodyParameters = {
               }
             | {
                 bot:
-                  | Record<string, never>
+                  | EmptyObject
                   | {
                       owner:
                         | {
@@ -9838,7 +10483,11 @@ type UpdatePageBodyParameters = {
         | null
         | StringRequest
         | null
-        | { start: string; end?: string | null }
+        | {
+            start: string
+            end?: string | null
+            time_zone?: TimeZoneRequest | null
+          }
         | null
         | boolean
         | Array<{ id: IdRequest }>
@@ -9928,7 +10577,7 @@ export type UpdatePageResponse = {
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -9952,7 +10601,14 @@ export type UpdatePageResponse = {
                           object: "user"
                         }
                   }
-                | { type: "date"; date: { start: string; end: string | null } }
+                | {
+                    type: "date"
+                    date: {
+                      start: string
+                      end: string | null
+                      time_zone: TimeZoneRequest | null
+                    }
+                  }
                 | { type: "link_preview"; link_preview: { url: TextRequest } }
                 | { type: "page"; page: { id: IdRequest } }
                 | { type: "database"; database: { id: IdRequest } }
@@ -10076,7 +10732,7 @@ export type UpdatePageResponse = {
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -10100,7 +10756,14 @@ export type UpdatePageResponse = {
                           object: "user"
                         }
                   }
-                | { type: "date"; date: { start: string; end: string | null } }
+                | {
+                    type: "date"
+                    date: {
+                      start: string
+                      end: string | null
+                      time_zone: TimeZoneRequest | null
+                    }
+                  }
                 | { type: "link_preview"; link_preview: { url: TextRequest } }
                 | { type: "page"; page: { id: IdRequest } }
                 | { type: "database"; database: { id: IdRequest } }
@@ -10225,7 +10888,7 @@ export type UpdatePageResponse = {
           | {
               type: "bot"
               bot:
-                | Record<string, never>
+                | EmptyObject
                 | {
                     owner:
                       | {
@@ -10255,7 +10918,11 @@ export type UpdatePageResponse = {
     | { type: "phone_number"; phone_number: string | null; id: string }
     | {
         type: "date"
-        date: { start: string; end: string | null } | null
+        date: {
+          start: string
+          end: string | null
+          time_zone: TimeZoneRequest | null
+        } | null
         id: string
       }
     | {
@@ -10279,7 +10946,14 @@ export type UpdatePageResponse = {
         type: "formula"
         formula:
           | { type: "string"; string: string | null }
-          | { type: "date"; date: { start: string; end: string | null } | null }
+          | {
+              type: "date"
+              date: {
+                start: string
+                end: string | null
+                time_zone: TimeZoneRequest | null
+              } | null
+            }
           | { type: "number"; number: number | null }
           | { type: "boolean"; boolean: boolean | null }
         id: string
@@ -10301,7 +10975,7 @@ export type UpdatePageResponse = {
           | {
               type: "bot"
               bot:
-                | Record<string, never>
+                | EmptyObject
                 | {
                     owner:
                       | {
@@ -10342,7 +11016,7 @@ export type UpdatePageResponse = {
           | {
               type: "bot"
               bot:
-                | Record<string, never>
+                | EmptyObject
                 | {
                     owner:
                       | {
@@ -10399,7 +11073,11 @@ export type UpdatePageResponse = {
             }
           | {
               type: "date"
-              date: { start: string; end: string | null } | null
+              date: {
+                start: string
+                end: string | null
+                time_zone: TimeZoneRequest | null
+              } | null
               function:
                 | "count"
                 | "count_values"
@@ -10484,7 +11162,7 @@ export type UpdatePageResponse = {
                                   | {
                                       type: "bot"
                                       bot:
-                                        | Record<string, never>
+                                        | EmptyObject
                                         | {
                                             owner:
                                               | {
@@ -10520,7 +11198,11 @@ export type UpdatePageResponse = {
                               }
                             | {
                                 type: "date"
-                                date: { start: string; end: string | null }
+                                date: {
+                                  start: string
+                                  end: string | null
+                                  time_zone: TimeZoneRequest | null
+                                }
                               }
                             | {
                                 type: "link_preview"
@@ -10650,7 +11332,7 @@ export type UpdatePageResponse = {
                                   | {
                                       type: "bot"
                                       bot:
-                                        | Record<string, never>
+                                        | EmptyObject
                                         | {
                                             owner:
                                               | {
@@ -10686,7 +11368,11 @@ export type UpdatePageResponse = {
                               }
                             | {
                                 type: "date"
-                                date: { start: string; end: string | null }
+                                date: {
+                                  start: string
+                                  end: string | null
+                                  time_zone: TimeZoneRequest | null
+                                }
                               }
                             | {
                                 type: "link_preview"
@@ -10812,7 +11498,7 @@ export type UpdatePageResponse = {
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -10841,7 +11527,11 @@ export type UpdatePageResponse = {
                 | { type: "phone_number"; phone_number: string | null }
                 | {
                     type: "date"
-                    date: { start: string; end: string | null } | null
+                    date: {
+                      start: string
+                      end: string | null
+                      time_zone: TimeZoneRequest | null
+                    } | null
                   }
                 | {
                     type: "files"
@@ -10865,7 +11555,11 @@ export type UpdatePageResponse = {
                       | { type: "string"; string: string | null }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null } | null
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          } | null
                         }
                       | { type: "number"; number: number | null }
                       | { type: "boolean"; boolean: boolean | null }
@@ -10887,7 +11581,7 @@ export type UpdatePageResponse = {
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -10927,7 +11621,7 @@ export type UpdatePageResponse = {
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -10978,7 +11672,7 @@ export type UpdatePageResponse = {
             }
           | {
               type: "unsupported"
-              unsupported: Record<string, never>
+              unsupported: EmptyObject
               function:
                 | "count"
                 | "count_values"
@@ -11090,7 +11784,11 @@ export type GetPagePropertyResponse =
     }
   | {
       type: "date"
-      date: { start: string; end: string | null } | null
+      date: {
+        start: string
+        end: string | null
+        time_zone: TimeZoneRequest | null
+      } | null
       object: "property_item"
     }
   | { type: "email"; email: string | null; object: "property_item" }
@@ -11131,7 +11829,7 @@ export type GetPagePropertyResponse =
         | {
             type: "bot"
             bot:
-              | Record<string, never>
+              | EmptyObject
               | {
                   owner:
                     | {
@@ -11172,7 +11870,7 @@ export type GetPagePropertyResponse =
         | {
             type: "bot"
             bot:
-              | Record<string, never>
+              | EmptyObject
               | {
                   owner:
                     | {
@@ -11206,7 +11904,14 @@ export type GetPagePropertyResponse =
       type: "formula"
       formula:
         | { type: "string"; string: string | null }
-        | { type: "date"; date: { start: string; end: string | null } | null }
+        | {
+            type: "date"
+            date: {
+              start: string
+              end: string | null
+              time_zone: TimeZoneRequest | null
+            } | null
+          }
         | { type: "number"; number: number | null }
         | { type: "boolean"; boolean: boolean | null }
       object: "property_item"
@@ -11265,7 +11970,7 @@ export type GetPagePropertyResponse =
                     | {
                         type: "bot"
                         bot:
-                          | Record<string, never>
+                          | EmptyObject
                           | {
                               owner:
                                 | {
@@ -11289,7 +11994,14 @@ export type GetPagePropertyResponse =
                         object: "user"
                       }
                 }
-              | { type: "date"; date: { start: string; end: string | null } }
+              | {
+                  type: "date"
+                  date: {
+                    start: string
+                    end: string | null
+                    time_zone: TimeZoneRequest | null
+                  }
+                }
               | { type: "link_preview"; link_preview: { url: TextRequest } }
               | { type: "page"; page: { id: IdRequest } }
               | { type: "database"; database: { id: IdRequest } }
@@ -11412,7 +12124,7 @@ export type GetPagePropertyResponse =
                     | {
                         type: "bot"
                         bot:
-                          | Record<string, never>
+                          | EmptyObject
                           | {
                               owner:
                                 | {
@@ -11436,7 +12148,14 @@ export type GetPagePropertyResponse =
                         object: "user"
                       }
                 }
-              | { type: "date"; date: { start: string; end: string | null } }
+              | {
+                  type: "date"
+                  date: {
+                    start: string
+                    end: string | null
+                    time_zone: TimeZoneRequest | null
+                  }
+                }
               | { type: "link_preview"; link_preview: { url: TextRequest } }
               | { type: "page"; page: { id: IdRequest } }
               | { type: "database"; database: { id: IdRequest } }
@@ -11520,7 +12239,7 @@ export type GetPagePropertyResponse =
         | {
             type: "bot"
             bot:
-              | Record<string, never>
+              | EmptyObject
               | {
                   owner:
                     | {
@@ -11578,7 +12297,11 @@ export type GetPagePropertyResponse =
           }
         | {
             type: "date"
-            date: { start: string; end: string | null } | null
+            date: {
+              start: string
+              end: string | null
+              time_zone: TimeZoneRequest | null
+            } | null
             function:
               | "count"
               | "count_values"
@@ -11663,7 +12386,7 @@ export type GetPagePropertyResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -11695,7 +12418,11 @@ export type GetPagePropertyResponse =
                             }
                           | {
                               type: "date"
-                              date: { start: string; end: string | null }
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              }
                             }
                           | {
                               type: "link_preview"
@@ -11825,7 +12552,7 @@ export type GetPagePropertyResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -11857,7 +12584,11 @@ export type GetPagePropertyResponse =
                             }
                           | {
                               type: "date"
-                              date: { start: string; end: string | null }
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              }
                             }
                           | {
                               type: "link_preview"
@@ -11983,7 +12714,7 @@ export type GetPagePropertyResponse =
                     | {
                         type: "bot"
                         bot:
-                          | Record<string, never>
+                          | EmptyObject
                           | {
                               owner:
                                 | {
@@ -12012,7 +12743,11 @@ export type GetPagePropertyResponse =
               | { type: "phone_number"; phone_number: string | null }
               | {
                   type: "date"
-                  date: { start: string; end: string | null } | null
+                  date: {
+                    start: string
+                    end: string | null
+                    time_zone: TimeZoneRequest | null
+                  } | null
                 }
               | {
                   type: "files"
@@ -12036,7 +12771,11 @@ export type GetPagePropertyResponse =
                     | { type: "string"; string: string | null }
                     | {
                         type: "date"
-                        date: { start: string; end: string | null } | null
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
+                        } | null
                       }
                     | { type: "number"; number: number | null }
                     | { type: "boolean"; boolean: boolean | null }
@@ -12058,7 +12797,7 @@ export type GetPagePropertyResponse =
                     | {
                         type: "bot"
                         bot:
-                          | Record<string, never>
+                          | EmptyObject
                           | {
                               owner:
                                 | {
@@ -12098,7 +12837,7 @@ export type GetPagePropertyResponse =
                     | {
                         type: "bot"
                         bot:
-                          | Record<string, never>
+                          | EmptyObject
                           | {
                               owner:
                                 | {
@@ -12149,7 +12888,7 @@ export type GetPagePropertyResponse =
           }
         | {
             type: "unsupported"
-            unsupported: Record<string, never>
+            unsupported: EmptyObject
             function:
               | "count"
               | "count_values"
@@ -12218,7 +12957,11 @@ export type GetPagePropertyResponse =
           }
         | {
             type: "date"
-            date: { start: string; end: string | null } | null
+            date: {
+              start: string
+              end: string | null
+              time_zone: TimeZoneRequest | null
+            } | null
             object: "property_item"
           }
         | { type: "email"; email: string | null; object: "property_item" }
@@ -12259,7 +13002,7 @@ export type GetPagePropertyResponse =
               | {
                   type: "bot"
                   bot:
-                    | Record<string, never>
+                    | EmptyObject
                     | {
                         owner:
                           | {
@@ -12304,7 +13047,7 @@ export type GetPagePropertyResponse =
               | {
                   type: "bot"
                   bot:
-                    | Record<string, never>
+                    | EmptyObject
                     | {
                         owner:
                           | {
@@ -12340,7 +13083,11 @@ export type GetPagePropertyResponse =
               | { type: "string"; string: string | null }
               | {
                   type: "date"
-                  date: { start: string; end: string | null } | null
+                  date: {
+                    start: string
+                    end: string | null
+                    time_zone: TimeZoneRequest | null
+                  } | null
                 }
               | { type: "number"; number: number | null }
               | { type: "boolean"; boolean: boolean | null }
@@ -12400,7 +13147,7 @@ export type GetPagePropertyResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -12426,7 +13173,11 @@ export type GetPagePropertyResponse =
                       }
                     | {
                         type: "date"
-                        date: { start: string; end: string | null }
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
+                        }
                       }
                     | {
                         type: "link_preview"
@@ -12553,7 +13304,7 @@ export type GetPagePropertyResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -12579,7 +13330,11 @@ export type GetPagePropertyResponse =
                       }
                     | {
                         type: "date"
-                        date: { start: string; end: string | null }
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
+                        }
                       }
                     | {
                         type: "link_preview"
@@ -12667,7 +13422,7 @@ export type GetPagePropertyResponse =
               | {
                   type: "bot"
                   bot:
-                    | Record<string, never>
+                    | EmptyObject
                     | {
                         owner:
                           | {
@@ -12746,7 +13501,11 @@ export type GetPagePropertyResponse =
           }
         | {
             type: "date"
-            date: { start: string; end: string | null } | null
+            date: {
+              start: string
+              end: string | null
+              time_zone: TimeZoneRequest | null
+            } | null
             object: "property_item"
           }
         | { type: "email"; email: string | null; object: "property_item" }
@@ -12787,7 +13546,7 @@ export type GetPagePropertyResponse =
               | {
                   type: "bot"
                   bot:
-                    | Record<string, never>
+                    | EmptyObject
                     | {
                         owner:
                           | {
@@ -12832,7 +13591,7 @@ export type GetPagePropertyResponse =
               | {
                   type: "bot"
                   bot:
-                    | Record<string, never>
+                    | EmptyObject
                     | {
                         owner:
                           | {
@@ -12868,7 +13627,11 @@ export type GetPagePropertyResponse =
               | { type: "string"; string: string | null }
               | {
                   type: "date"
-                  date: { start: string; end: string | null } | null
+                  date: {
+                    start: string
+                    end: string | null
+                    time_zone: TimeZoneRequest | null
+                  } | null
                 }
               | { type: "number"; number: number | null }
               | { type: "boolean"; boolean: boolean | null }
@@ -12928,7 +13691,7 @@ export type GetPagePropertyResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -12954,7 +13717,11 @@ export type GetPagePropertyResponse =
                       }
                     | {
                         type: "date"
-                        date: { start: string; end: string | null }
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
+                        }
                       }
                     | {
                         type: "link_preview"
@@ -13081,7 +13848,7 @@ export type GetPagePropertyResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -13107,7 +13874,11 @@ export type GetPagePropertyResponse =
                       }
                     | {
                         type: "date"
-                        date: { start: string; end: string | null }
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
+                        }
                       }
                     | {
                         type: "link_preview"
@@ -13195,7 +13966,7 @@ export type GetPagePropertyResponse =
               | {
                   type: "bot"
                   bot:
-                    | Record<string, never>
+                    | EmptyObject
                     | {
                         owner:
                           | {
@@ -13301,7 +14072,7 @@ export type GetBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -13325,7 +14096,14 @@ export type GetBlockResponse =
                           object: "user"
                         }
                   }
-                | { type: "date"; date: { start: string; end: string | null } }
+                | {
+                    type: "date"
+                    date: {
+                      start: string
+                      end: string | null
+                      time_zone: TimeZoneRequest | null
+                    }
+                  }
                 | { type: "link_preview"; link_preview: { url: TextRequest } }
                 | { type: "page"; page: { id: IdRequest } }
                 | { type: "database"; database: { id: IdRequest } }
@@ -13456,7 +14234,7 @@ export type GetBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -13480,7 +14258,14 @@ export type GetBlockResponse =
                           object: "user"
                         }
                   }
-                | { type: "date"; date: { start: string; end: string | null } }
+                | {
+                    type: "date"
+                    date: {
+                      start: string
+                      end: string | null
+                      time_zone: TimeZoneRequest | null
+                    }
+                  }
                 | { type: "link_preview"; link_preview: { url: TextRequest } }
                 | { type: "page"; page: { id: IdRequest } }
                 | { type: "database"; database: { id: IdRequest } }
@@ -13611,7 +14396,7 @@ export type GetBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -13635,7 +14420,14 @@ export type GetBlockResponse =
                           object: "user"
                         }
                   }
-                | { type: "date"; date: { start: string; end: string | null } }
+                | {
+                    type: "date"
+                    date: {
+                      start: string
+                      end: string | null
+                      time_zone: TimeZoneRequest | null
+                    }
+                  }
                 | { type: "link_preview"; link_preview: { url: TextRequest } }
                 | { type: "page"; page: { id: IdRequest } }
                 | { type: "database"; database: { id: IdRequest } }
@@ -13766,7 +14558,7 @@ export type GetBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -13790,7 +14582,14 @@ export type GetBlockResponse =
                           object: "user"
                         }
                   }
-                | { type: "date"; date: { start: string; end: string | null } }
+                | {
+                    type: "date"
+                    date: {
+                      start: string
+                      end: string | null
+                      time_zone: TimeZoneRequest | null
+                    }
+                  }
                 | { type: "link_preview"; link_preview: { url: TextRequest } }
                 | { type: "page"; page: { id: IdRequest } }
                 | { type: "database"; database: { id: IdRequest } }
@@ -13921,7 +14720,7 @@ export type GetBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -13945,7 +14744,14 @@ export type GetBlockResponse =
                           object: "user"
                         }
                   }
-                | { type: "date"; date: { start: string; end: string | null } }
+                | {
+                    type: "date"
+                    date: {
+                      start: string
+                      end: string | null
+                      time_zone: TimeZoneRequest | null
+                    }
+                  }
                 | { type: "link_preview"; link_preview: { url: TextRequest } }
                 | { type: "page"; page: { id: IdRequest } }
                 | { type: "database"; database: { id: IdRequest } }
@@ -14076,7 +14882,7 @@ export type GetBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -14100,7 +14906,14 @@ export type GetBlockResponse =
                           object: "user"
                         }
                   }
-                | { type: "date"; date: { start: string; end: string | null } }
+                | {
+                    type: "date"
+                    date: {
+                      start: string
+                      end: string | null
+                      time_zone: TimeZoneRequest | null
+                    }
+                  }
                 | { type: "link_preview"; link_preview: { url: TextRequest } }
                 | { type: "page"; page: { id: IdRequest } }
                 | { type: "database"; database: { id: IdRequest } }
@@ -14231,7 +15044,7 @@ export type GetBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -14255,7 +15068,14 @@ export type GetBlockResponse =
                           object: "user"
                         }
                   }
-                | { type: "date"; date: { start: string; end: string | null } }
+                | {
+                    type: "date"
+                    date: {
+                      start: string
+                      end: string | null
+                      time_zone: TimeZoneRequest | null
+                    }
+                  }
                 | { type: "link_preview"; link_preview: { url: TextRequest } }
                 | { type: "page"; page: { id: IdRequest } }
                 | { type: "database"; database: { id: IdRequest } }
@@ -14386,7 +15206,7 @@ export type GetBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -14410,7 +15230,14 @@ export type GetBlockResponse =
                           object: "user"
                         }
                   }
-                | { type: "date"; date: { start: string; end: string | null } }
+                | {
+                    type: "date"
+                    date: {
+                      start: string
+                      end: string | null
+                      time_zone: TimeZoneRequest | null
+                    }
+                  }
                 | { type: "link_preview"; link_preview: { url: TextRequest } }
                 | { type: "page"; page: { id: IdRequest } }
                 | { type: "database"; database: { id: IdRequest } }
@@ -14542,7 +15369,7 @@ export type GetBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -14566,7 +15393,14 @@ export type GetBlockResponse =
                           object: "user"
                         }
                   }
-                | { type: "date"; date: { start: string; end: string | null } }
+                | {
+                    type: "date"
+                    date: {
+                      start: string
+                      end: string | null
+                      time_zone: TimeZoneRequest | null
+                    }
+                  }
                 | { type: "link_preview"; link_preview: { url: TextRequest } }
                 | { type: "page"; page: { id: IdRequest } }
                 | { type: "database"; database: { id: IdRequest } }
@@ -14697,7 +15531,7 @@ export type GetBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -14721,7 +15555,14 @@ export type GetBlockResponse =
                           object: "user"
                         }
                   }
-                | { type: "date"; date: { start: string; end: string | null } }
+                | {
+                    type: "date"
+                    date: {
+                      start: string
+                      end: string | null
+                      time_zone: TimeZoneRequest | null
+                    }
+                  }
                 | { type: "link_preview"; link_preview: { url: TextRequest } }
                 | { type: "page"; page: { id: IdRequest } }
                 | { type: "database"; database: { id: IdRequest } }
@@ -14894,7 +15735,7 @@ export type GetBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -14918,7 +15759,14 @@ export type GetBlockResponse =
                           object: "user"
                         }
                   }
-                | { type: "date"; date: { start: string; end: string | null } }
+                | {
+                    type: "date"
+                    date: {
+                      start: string
+                      end: string | null
+                      time_zone: TimeZoneRequest | null
+                    }
+                  }
                 | { type: "link_preview"; link_preview: { url: TextRequest } }
                 | { type: "page"; page: { id: IdRequest } }
                 | { type: "database"; database: { id: IdRequest } }
@@ -15050,7 +15898,7 @@ export type GetBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -15074,7 +15922,14 @@ export type GetBlockResponse =
                           object: "user"
                         }
                   }
-                | { type: "date"; date: { start: string; end: string | null } }
+                | {
+                    type: "date"
+                    date: {
+                      start: string
+                      end: string | null
+                      time_zone: TimeZoneRequest | null
+                    }
+                  }
                 | { type: "link_preview"; link_preview: { url: TextRequest } }
                 | { type: "page"; page: { id: IdRequest } }
                 | { type: "database"; database: { id: IdRequest } }
@@ -15159,7 +16014,7 @@ export type GetBlockResponse =
     }
   | {
       type: "divider"
-      divider: Record<string, never>
+      divider: EmptyObject
       object: "block"
       id: string
       created_time: string
@@ -15169,7 +16024,7 @@ export type GetBlockResponse =
     }
   | {
       type: "breadcrumb"
-      breadcrumb: Record<string, never>
+      breadcrumb: EmptyObject
       object: "block"
       id: string
       created_time: string
@@ -15179,7 +16034,7 @@ export type GetBlockResponse =
     }
   | {
       type: "table_of_contents"
-      table_of_contents: Record<string, never>
+      table_of_contents: EmptyObject
       object: "block"
       id: string
       created_time: string
@@ -15189,7 +16044,7 @@ export type GetBlockResponse =
     }
   | {
       type: "column_list"
-      column_list: Record<string, never>
+      column_list: EmptyObject
       object: "block"
       id: string
       created_time: string
@@ -15199,7 +16054,7 @@ export type GetBlockResponse =
     }
   | {
       type: "column"
-      column: Record<string, never>
+      column: EmptyObject
       object: "block"
       id: string
       created_time: string
@@ -15275,7 +16130,7 @@ export type GetBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -15299,7 +16154,14 @@ export type GetBlockResponse =
                           object: "user"
                         }
                   }
-                | { type: "date"; date: { start: string; end: string | null } }
+                | {
+                    type: "date"
+                    date: {
+                      start: string
+                      end: string | null
+                      time_zone: TimeZoneRequest | null
+                    }
+                  }
                 | { type: "link_preview"; link_preview: { url: TextRequest } }
                 | { type: "page"; page: { id: IdRequest } }
                 | { type: "database"; database: { id: IdRequest } }
@@ -15431,7 +16293,7 @@ export type GetBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -15455,7 +16317,14 @@ export type GetBlockResponse =
                           object: "user"
                         }
                   }
-                | { type: "date"; date: { start: string; end: string | null } }
+                | {
+                    type: "date"
+                    date: {
+                      start: string
+                      end: string | null
+                      time_zone: TimeZoneRequest | null
+                    }
+                  }
                 | { type: "link_preview"; link_preview: { url: TextRequest } }
                 | { type: "page"; page: { id: IdRequest } }
                 | { type: "database"; database: { id: IdRequest } }
@@ -15589,7 +16458,7 @@ export type GetBlockResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -15615,7 +16484,11 @@ export type GetBlockResponse =
                       }
                     | {
                         type: "date"
-                        date: { start: string; end: string | null }
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
+                        }
                       }
                     | {
                         type: "link_preview"
@@ -15743,7 +16616,7 @@ export type GetBlockResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -15769,7 +16642,11 @@ export type GetBlockResponse =
                       }
                     | {
                         type: "date"
-                        date: { start: string; end: string | null }
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
+                        }
                       }
                     | {
                         type: "link_preview"
@@ -15907,7 +16784,7 @@ export type GetBlockResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -15933,7 +16810,11 @@ export type GetBlockResponse =
                       }
                     | {
                         type: "date"
-                        date: { start: string; end: string | null }
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
+                        }
                       }
                     | {
                         type: "link_preview"
@@ -16061,7 +16942,7 @@ export type GetBlockResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -16087,7 +16968,11 @@ export type GetBlockResponse =
                       }
                     | {
                         type: "date"
-                        date: { start: string; end: string | null }
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
+                        }
                       }
                     | {
                         type: "link_preview"
@@ -16225,7 +17110,7 @@ export type GetBlockResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -16251,7 +17136,11 @@ export type GetBlockResponse =
                       }
                     | {
                         type: "date"
-                        date: { start: string; end: string | null }
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
+                        }
                       }
                     | {
                         type: "link_preview"
@@ -16379,7 +17268,7 @@ export type GetBlockResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -16405,7 +17294,11 @@ export type GetBlockResponse =
                       }
                     | {
                         type: "date"
-                        date: { start: string; end: string | null }
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
+                        }
                       }
                     | {
                         type: "link_preview"
@@ -16543,7 +17436,7 @@ export type GetBlockResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -16569,7 +17462,11 @@ export type GetBlockResponse =
                       }
                     | {
                         type: "date"
-                        date: { start: string; end: string | null }
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
+                        }
                       }
                     | {
                         type: "link_preview"
@@ -16697,7 +17594,7 @@ export type GetBlockResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -16723,7 +17620,11 @@ export type GetBlockResponse =
                       }
                     | {
                         type: "date"
-                        date: { start: string; end: string | null }
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
+                        }
                       }
                     | {
                         type: "link_preview"
@@ -16861,7 +17762,7 @@ export type GetBlockResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -16887,7 +17788,11 @@ export type GetBlockResponse =
                       }
                     | {
                         type: "date"
-                        date: { start: string; end: string | null }
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
+                        }
                       }
                     | {
                         type: "link_preview"
@@ -17015,7 +17920,7 @@ export type GetBlockResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -17041,7 +17946,11 @@ export type GetBlockResponse =
                       }
                     | {
                         type: "date"
-                        date: { start: string; end: string | null }
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
+                        }
                       }
                     | {
                         type: "link_preview"
@@ -17133,7 +18042,7 @@ export type GetBlockResponse =
     }
   | {
       type: "unsupported"
-      unsupported: Record<string, never>
+      unsupported: EmptyObject
       object: "block"
       id: string
       created_time: string
@@ -17226,14 +18135,10 @@ type UpdateBlockBodyParameters =
       archived?: boolean
     }
   | { equation: { expression: string }; type?: "equation"; archived?: boolean }
-  | { divider: Record<string, never>; type?: "divider"; archived?: boolean }
+  | { divider: EmptyObject; type?: "divider"; archived?: boolean }
+  | { breadcrumb: EmptyObject; type?: "breadcrumb"; archived?: boolean }
   | {
-      breadcrumb: Record<string, never>
-      type?: "breadcrumb"
-      archived?: boolean
-    }
-  | {
-      table_of_contents: Record<string, never>
+      table_of_contents: EmptyObject
       type?: "table_of_contents"
       archived?: boolean
     }
@@ -17357,7 +18262,7 @@ export type UpdateBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -17381,7 +18286,14 @@ export type UpdateBlockResponse =
                           object: "user"
                         }
                   }
-                | { type: "date"; date: { start: string; end: string | null } }
+                | {
+                    type: "date"
+                    date: {
+                      start: string
+                      end: string | null
+                      time_zone: TimeZoneRequest | null
+                    }
+                  }
                 | { type: "link_preview"; link_preview: { url: TextRequest } }
                 | { type: "page"; page: { id: IdRequest } }
                 | { type: "database"; database: { id: IdRequest } }
@@ -17512,7 +18424,7 @@ export type UpdateBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -17536,7 +18448,14 @@ export type UpdateBlockResponse =
                           object: "user"
                         }
                   }
-                | { type: "date"; date: { start: string; end: string | null } }
+                | {
+                    type: "date"
+                    date: {
+                      start: string
+                      end: string | null
+                      time_zone: TimeZoneRequest | null
+                    }
+                  }
                 | { type: "link_preview"; link_preview: { url: TextRequest } }
                 | { type: "page"; page: { id: IdRequest } }
                 | { type: "database"; database: { id: IdRequest } }
@@ -17667,7 +18586,7 @@ export type UpdateBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -17691,7 +18610,14 @@ export type UpdateBlockResponse =
                           object: "user"
                         }
                   }
-                | { type: "date"; date: { start: string; end: string | null } }
+                | {
+                    type: "date"
+                    date: {
+                      start: string
+                      end: string | null
+                      time_zone: TimeZoneRequest | null
+                    }
+                  }
                 | { type: "link_preview"; link_preview: { url: TextRequest } }
                 | { type: "page"; page: { id: IdRequest } }
                 | { type: "database"; database: { id: IdRequest } }
@@ -17822,7 +18748,7 @@ export type UpdateBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -17846,7 +18772,14 @@ export type UpdateBlockResponse =
                           object: "user"
                         }
                   }
-                | { type: "date"; date: { start: string; end: string | null } }
+                | {
+                    type: "date"
+                    date: {
+                      start: string
+                      end: string | null
+                      time_zone: TimeZoneRequest | null
+                    }
+                  }
                 | { type: "link_preview"; link_preview: { url: TextRequest } }
                 | { type: "page"; page: { id: IdRequest } }
                 | { type: "database"; database: { id: IdRequest } }
@@ -17977,7 +18910,7 @@ export type UpdateBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -18001,7 +18934,14 @@ export type UpdateBlockResponse =
                           object: "user"
                         }
                   }
-                | { type: "date"; date: { start: string; end: string | null } }
+                | {
+                    type: "date"
+                    date: {
+                      start: string
+                      end: string | null
+                      time_zone: TimeZoneRequest | null
+                    }
+                  }
                 | { type: "link_preview"; link_preview: { url: TextRequest } }
                 | { type: "page"; page: { id: IdRequest } }
                 | { type: "database"; database: { id: IdRequest } }
@@ -18132,7 +19072,7 @@ export type UpdateBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -18156,7 +19096,14 @@ export type UpdateBlockResponse =
                           object: "user"
                         }
                   }
-                | { type: "date"; date: { start: string; end: string | null } }
+                | {
+                    type: "date"
+                    date: {
+                      start: string
+                      end: string | null
+                      time_zone: TimeZoneRequest | null
+                    }
+                  }
                 | { type: "link_preview"; link_preview: { url: TextRequest } }
                 | { type: "page"; page: { id: IdRequest } }
                 | { type: "database"; database: { id: IdRequest } }
@@ -18287,7 +19234,7 @@ export type UpdateBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -18311,7 +19258,14 @@ export type UpdateBlockResponse =
                           object: "user"
                         }
                   }
-                | { type: "date"; date: { start: string; end: string | null } }
+                | {
+                    type: "date"
+                    date: {
+                      start: string
+                      end: string | null
+                      time_zone: TimeZoneRequest | null
+                    }
+                  }
                 | { type: "link_preview"; link_preview: { url: TextRequest } }
                 | { type: "page"; page: { id: IdRequest } }
                 | { type: "database"; database: { id: IdRequest } }
@@ -18442,7 +19396,7 @@ export type UpdateBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -18466,7 +19420,14 @@ export type UpdateBlockResponse =
                           object: "user"
                         }
                   }
-                | { type: "date"; date: { start: string; end: string | null } }
+                | {
+                    type: "date"
+                    date: {
+                      start: string
+                      end: string | null
+                      time_zone: TimeZoneRequest | null
+                    }
+                  }
                 | { type: "link_preview"; link_preview: { url: TextRequest } }
                 | { type: "page"; page: { id: IdRequest } }
                 | { type: "database"; database: { id: IdRequest } }
@@ -18598,7 +19559,7 @@ export type UpdateBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -18622,7 +19583,14 @@ export type UpdateBlockResponse =
                           object: "user"
                         }
                   }
-                | { type: "date"; date: { start: string; end: string | null } }
+                | {
+                    type: "date"
+                    date: {
+                      start: string
+                      end: string | null
+                      time_zone: TimeZoneRequest | null
+                    }
+                  }
                 | { type: "link_preview"; link_preview: { url: TextRequest } }
                 | { type: "page"; page: { id: IdRequest } }
                 | { type: "database"; database: { id: IdRequest } }
@@ -18753,7 +19721,7 @@ export type UpdateBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -18777,7 +19745,14 @@ export type UpdateBlockResponse =
                           object: "user"
                         }
                   }
-                | { type: "date"; date: { start: string; end: string | null } }
+                | {
+                    type: "date"
+                    date: {
+                      start: string
+                      end: string | null
+                      time_zone: TimeZoneRequest | null
+                    }
+                  }
                 | { type: "link_preview"; link_preview: { url: TextRequest } }
                 | { type: "page"; page: { id: IdRequest } }
                 | { type: "database"; database: { id: IdRequest } }
@@ -18950,7 +19925,7 @@ export type UpdateBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -18974,7 +19949,14 @@ export type UpdateBlockResponse =
                           object: "user"
                         }
                   }
-                | { type: "date"; date: { start: string; end: string | null } }
+                | {
+                    type: "date"
+                    date: {
+                      start: string
+                      end: string | null
+                      time_zone: TimeZoneRequest | null
+                    }
+                  }
                 | { type: "link_preview"; link_preview: { url: TextRequest } }
                 | { type: "page"; page: { id: IdRequest } }
                 | { type: "database"; database: { id: IdRequest } }
@@ -19106,7 +20088,7 @@ export type UpdateBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -19130,7 +20112,14 @@ export type UpdateBlockResponse =
                           object: "user"
                         }
                   }
-                | { type: "date"; date: { start: string; end: string | null } }
+                | {
+                    type: "date"
+                    date: {
+                      start: string
+                      end: string | null
+                      time_zone: TimeZoneRequest | null
+                    }
+                  }
                 | { type: "link_preview"; link_preview: { url: TextRequest } }
                 | { type: "page"; page: { id: IdRequest } }
                 | { type: "database"; database: { id: IdRequest } }
@@ -19215,7 +20204,7 @@ export type UpdateBlockResponse =
     }
   | {
       type: "divider"
-      divider: Record<string, never>
+      divider: EmptyObject
       object: "block"
       id: string
       created_time: string
@@ -19225,7 +20214,7 @@ export type UpdateBlockResponse =
     }
   | {
       type: "breadcrumb"
-      breadcrumb: Record<string, never>
+      breadcrumb: EmptyObject
       object: "block"
       id: string
       created_time: string
@@ -19235,7 +20224,7 @@ export type UpdateBlockResponse =
     }
   | {
       type: "table_of_contents"
-      table_of_contents: Record<string, never>
+      table_of_contents: EmptyObject
       object: "block"
       id: string
       created_time: string
@@ -19245,7 +20234,7 @@ export type UpdateBlockResponse =
     }
   | {
       type: "column_list"
-      column_list: Record<string, never>
+      column_list: EmptyObject
       object: "block"
       id: string
       created_time: string
@@ -19255,7 +20244,7 @@ export type UpdateBlockResponse =
     }
   | {
       type: "column"
-      column: Record<string, never>
+      column: EmptyObject
       object: "block"
       id: string
       created_time: string
@@ -19331,7 +20320,7 @@ export type UpdateBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -19355,7 +20344,14 @@ export type UpdateBlockResponse =
                           object: "user"
                         }
                   }
-                | { type: "date"; date: { start: string; end: string | null } }
+                | {
+                    type: "date"
+                    date: {
+                      start: string
+                      end: string | null
+                      time_zone: TimeZoneRequest | null
+                    }
+                  }
                 | { type: "link_preview"; link_preview: { url: TextRequest } }
                 | { type: "page"; page: { id: IdRequest } }
                 | { type: "database"; database: { id: IdRequest } }
@@ -19487,7 +20483,7 @@ export type UpdateBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -19511,7 +20507,14 @@ export type UpdateBlockResponse =
                           object: "user"
                         }
                   }
-                | { type: "date"; date: { start: string; end: string | null } }
+                | {
+                    type: "date"
+                    date: {
+                      start: string
+                      end: string | null
+                      time_zone: TimeZoneRequest | null
+                    }
+                  }
                 | { type: "link_preview"; link_preview: { url: TextRequest } }
                 | { type: "page"; page: { id: IdRequest } }
                 | { type: "database"; database: { id: IdRequest } }
@@ -19645,7 +20648,7 @@ export type UpdateBlockResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -19671,7 +20674,11 @@ export type UpdateBlockResponse =
                       }
                     | {
                         type: "date"
-                        date: { start: string; end: string | null }
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
+                        }
                       }
                     | {
                         type: "link_preview"
@@ -19799,7 +20806,7 @@ export type UpdateBlockResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -19825,7 +20832,11 @@ export type UpdateBlockResponse =
                       }
                     | {
                         type: "date"
-                        date: { start: string; end: string | null }
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
+                        }
                       }
                     | {
                         type: "link_preview"
@@ -19963,7 +20974,7 @@ export type UpdateBlockResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -19989,7 +21000,11 @@ export type UpdateBlockResponse =
                       }
                     | {
                         type: "date"
-                        date: { start: string; end: string | null }
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
+                        }
                       }
                     | {
                         type: "link_preview"
@@ -20117,7 +21132,7 @@ export type UpdateBlockResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -20143,7 +21158,11 @@ export type UpdateBlockResponse =
                       }
                     | {
                         type: "date"
-                        date: { start: string; end: string | null }
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
+                        }
                       }
                     | {
                         type: "link_preview"
@@ -20281,7 +21300,7 @@ export type UpdateBlockResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -20307,7 +21326,11 @@ export type UpdateBlockResponse =
                       }
                     | {
                         type: "date"
-                        date: { start: string; end: string | null }
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
+                        }
                       }
                     | {
                         type: "link_preview"
@@ -20435,7 +21458,7 @@ export type UpdateBlockResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -20461,7 +21484,11 @@ export type UpdateBlockResponse =
                       }
                     | {
                         type: "date"
-                        date: { start: string; end: string | null }
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
+                        }
                       }
                     | {
                         type: "link_preview"
@@ -20599,7 +21626,7 @@ export type UpdateBlockResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -20625,7 +21652,11 @@ export type UpdateBlockResponse =
                       }
                     | {
                         type: "date"
-                        date: { start: string; end: string | null }
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
+                        }
                       }
                     | {
                         type: "link_preview"
@@ -20753,7 +21784,7 @@ export type UpdateBlockResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -20779,7 +21810,11 @@ export type UpdateBlockResponse =
                       }
                     | {
                         type: "date"
-                        date: { start: string; end: string | null }
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
+                        }
                       }
                     | {
                         type: "link_preview"
@@ -20917,7 +21952,7 @@ export type UpdateBlockResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -20943,7 +21978,11 @@ export type UpdateBlockResponse =
                       }
                     | {
                         type: "date"
-                        date: { start: string; end: string | null }
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
+                        }
                       }
                     | {
                         type: "link_preview"
@@ -21071,7 +22110,7 @@ export type UpdateBlockResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -21097,7 +22136,11 @@ export type UpdateBlockResponse =
                       }
                     | {
                         type: "date"
-                        date: { start: string; end: string | null }
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
+                        }
                       }
                     | {
                         type: "link_preview"
@@ -21189,7 +22232,7 @@ export type UpdateBlockResponse =
     }
   | {
       type: "unsupported"
-      unsupported: Record<string, never>
+      unsupported: EmptyObject
       object: "block"
       id: string
       created_time: string
@@ -21296,7 +22339,7 @@ export type DeleteBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -21320,7 +22363,14 @@ export type DeleteBlockResponse =
                           object: "user"
                         }
                   }
-                | { type: "date"; date: { start: string; end: string | null } }
+                | {
+                    type: "date"
+                    date: {
+                      start: string
+                      end: string | null
+                      time_zone: TimeZoneRequest | null
+                    }
+                  }
                 | { type: "link_preview"; link_preview: { url: TextRequest } }
                 | { type: "page"; page: { id: IdRequest } }
                 | { type: "database"; database: { id: IdRequest } }
@@ -21451,7 +22501,7 @@ export type DeleteBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -21475,7 +22525,14 @@ export type DeleteBlockResponse =
                           object: "user"
                         }
                   }
-                | { type: "date"; date: { start: string; end: string | null } }
+                | {
+                    type: "date"
+                    date: {
+                      start: string
+                      end: string | null
+                      time_zone: TimeZoneRequest | null
+                    }
+                  }
                 | { type: "link_preview"; link_preview: { url: TextRequest } }
                 | { type: "page"; page: { id: IdRequest } }
                 | { type: "database"; database: { id: IdRequest } }
@@ -21606,7 +22663,7 @@ export type DeleteBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -21630,7 +22687,14 @@ export type DeleteBlockResponse =
                           object: "user"
                         }
                   }
-                | { type: "date"; date: { start: string; end: string | null } }
+                | {
+                    type: "date"
+                    date: {
+                      start: string
+                      end: string | null
+                      time_zone: TimeZoneRequest | null
+                    }
+                  }
                 | { type: "link_preview"; link_preview: { url: TextRequest } }
                 | { type: "page"; page: { id: IdRequest } }
                 | { type: "database"; database: { id: IdRequest } }
@@ -21761,7 +22825,7 @@ export type DeleteBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -21785,7 +22849,14 @@ export type DeleteBlockResponse =
                           object: "user"
                         }
                   }
-                | { type: "date"; date: { start: string; end: string | null } }
+                | {
+                    type: "date"
+                    date: {
+                      start: string
+                      end: string | null
+                      time_zone: TimeZoneRequest | null
+                    }
+                  }
                 | { type: "link_preview"; link_preview: { url: TextRequest } }
                 | { type: "page"; page: { id: IdRequest } }
                 | { type: "database"; database: { id: IdRequest } }
@@ -21916,7 +22987,7 @@ export type DeleteBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -21940,7 +23011,14 @@ export type DeleteBlockResponse =
                           object: "user"
                         }
                   }
-                | { type: "date"; date: { start: string; end: string | null } }
+                | {
+                    type: "date"
+                    date: {
+                      start: string
+                      end: string | null
+                      time_zone: TimeZoneRequest | null
+                    }
+                  }
                 | { type: "link_preview"; link_preview: { url: TextRequest } }
                 | { type: "page"; page: { id: IdRequest } }
                 | { type: "database"; database: { id: IdRequest } }
@@ -22071,7 +23149,7 @@ export type DeleteBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -22095,7 +23173,14 @@ export type DeleteBlockResponse =
                           object: "user"
                         }
                   }
-                | { type: "date"; date: { start: string; end: string | null } }
+                | {
+                    type: "date"
+                    date: {
+                      start: string
+                      end: string | null
+                      time_zone: TimeZoneRequest | null
+                    }
+                  }
                 | { type: "link_preview"; link_preview: { url: TextRequest } }
                 | { type: "page"; page: { id: IdRequest } }
                 | { type: "database"; database: { id: IdRequest } }
@@ -22226,7 +23311,7 @@ export type DeleteBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -22250,7 +23335,14 @@ export type DeleteBlockResponse =
                           object: "user"
                         }
                   }
-                | { type: "date"; date: { start: string; end: string | null } }
+                | {
+                    type: "date"
+                    date: {
+                      start: string
+                      end: string | null
+                      time_zone: TimeZoneRequest | null
+                    }
+                  }
                 | { type: "link_preview"; link_preview: { url: TextRequest } }
                 | { type: "page"; page: { id: IdRequest } }
                 | { type: "database"; database: { id: IdRequest } }
@@ -22381,7 +23473,7 @@ export type DeleteBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -22405,7 +23497,14 @@ export type DeleteBlockResponse =
                           object: "user"
                         }
                   }
-                | { type: "date"; date: { start: string; end: string | null } }
+                | {
+                    type: "date"
+                    date: {
+                      start: string
+                      end: string | null
+                      time_zone: TimeZoneRequest | null
+                    }
+                  }
                 | { type: "link_preview"; link_preview: { url: TextRequest } }
                 | { type: "page"; page: { id: IdRequest } }
                 | { type: "database"; database: { id: IdRequest } }
@@ -22537,7 +23636,7 @@ export type DeleteBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -22561,7 +23660,14 @@ export type DeleteBlockResponse =
                           object: "user"
                         }
                   }
-                | { type: "date"; date: { start: string; end: string | null } }
+                | {
+                    type: "date"
+                    date: {
+                      start: string
+                      end: string | null
+                      time_zone: TimeZoneRequest | null
+                    }
+                  }
                 | { type: "link_preview"; link_preview: { url: TextRequest } }
                 | { type: "page"; page: { id: IdRequest } }
                 | { type: "database"; database: { id: IdRequest } }
@@ -22692,7 +23798,7 @@ export type DeleteBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -22716,7 +23822,14 @@ export type DeleteBlockResponse =
                           object: "user"
                         }
                   }
-                | { type: "date"; date: { start: string; end: string | null } }
+                | {
+                    type: "date"
+                    date: {
+                      start: string
+                      end: string | null
+                      time_zone: TimeZoneRequest | null
+                    }
+                  }
                 | { type: "link_preview"; link_preview: { url: TextRequest } }
                 | { type: "page"; page: { id: IdRequest } }
                 | { type: "database"; database: { id: IdRequest } }
@@ -22889,7 +24002,7 @@ export type DeleteBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -22913,7 +24026,14 @@ export type DeleteBlockResponse =
                           object: "user"
                         }
                   }
-                | { type: "date"; date: { start: string; end: string | null } }
+                | {
+                    type: "date"
+                    date: {
+                      start: string
+                      end: string | null
+                      time_zone: TimeZoneRequest | null
+                    }
+                  }
                 | { type: "link_preview"; link_preview: { url: TextRequest } }
                 | { type: "page"; page: { id: IdRequest } }
                 | { type: "database"; database: { id: IdRequest } }
@@ -23045,7 +24165,7 @@ export type DeleteBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -23069,7 +24189,14 @@ export type DeleteBlockResponse =
                           object: "user"
                         }
                   }
-                | { type: "date"; date: { start: string; end: string | null } }
+                | {
+                    type: "date"
+                    date: {
+                      start: string
+                      end: string | null
+                      time_zone: TimeZoneRequest | null
+                    }
+                  }
                 | { type: "link_preview"; link_preview: { url: TextRequest } }
                 | { type: "page"; page: { id: IdRequest } }
                 | { type: "database"; database: { id: IdRequest } }
@@ -23154,7 +24281,7 @@ export type DeleteBlockResponse =
     }
   | {
       type: "divider"
-      divider: Record<string, never>
+      divider: EmptyObject
       object: "block"
       id: string
       created_time: string
@@ -23164,7 +24291,7 @@ export type DeleteBlockResponse =
     }
   | {
       type: "breadcrumb"
-      breadcrumb: Record<string, never>
+      breadcrumb: EmptyObject
       object: "block"
       id: string
       created_time: string
@@ -23174,7 +24301,7 @@ export type DeleteBlockResponse =
     }
   | {
       type: "table_of_contents"
-      table_of_contents: Record<string, never>
+      table_of_contents: EmptyObject
       object: "block"
       id: string
       created_time: string
@@ -23184,7 +24311,7 @@ export type DeleteBlockResponse =
     }
   | {
       type: "column_list"
-      column_list: Record<string, never>
+      column_list: EmptyObject
       object: "block"
       id: string
       created_time: string
@@ -23194,7 +24321,7 @@ export type DeleteBlockResponse =
     }
   | {
       type: "column"
-      column: Record<string, never>
+      column: EmptyObject
       object: "block"
       id: string
       created_time: string
@@ -23270,7 +24397,7 @@ export type DeleteBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -23294,7 +24421,14 @@ export type DeleteBlockResponse =
                           object: "user"
                         }
                   }
-                | { type: "date"; date: { start: string; end: string | null } }
+                | {
+                    type: "date"
+                    date: {
+                      start: string
+                      end: string | null
+                      time_zone: TimeZoneRequest | null
+                    }
+                  }
                 | { type: "link_preview"; link_preview: { url: TextRequest } }
                 | { type: "page"; page: { id: IdRequest } }
                 | { type: "database"; database: { id: IdRequest } }
@@ -23426,7 +24560,7 @@ export type DeleteBlockResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -23450,7 +24584,14 @@ export type DeleteBlockResponse =
                           object: "user"
                         }
                   }
-                | { type: "date"; date: { start: string; end: string | null } }
+                | {
+                    type: "date"
+                    date: {
+                      start: string
+                      end: string | null
+                      time_zone: TimeZoneRequest | null
+                    }
+                  }
                 | { type: "link_preview"; link_preview: { url: TextRequest } }
                 | { type: "page"; page: { id: IdRequest } }
                 | { type: "database"; database: { id: IdRequest } }
@@ -23584,7 +24725,7 @@ export type DeleteBlockResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -23610,7 +24751,11 @@ export type DeleteBlockResponse =
                       }
                     | {
                         type: "date"
-                        date: { start: string; end: string | null }
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
+                        }
                       }
                     | {
                         type: "link_preview"
@@ -23738,7 +24883,7 @@ export type DeleteBlockResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -23764,7 +24909,11 @@ export type DeleteBlockResponse =
                       }
                     | {
                         type: "date"
-                        date: { start: string; end: string | null }
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
+                        }
                       }
                     | {
                         type: "link_preview"
@@ -23902,7 +25051,7 @@ export type DeleteBlockResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -23928,7 +25077,11 @@ export type DeleteBlockResponse =
                       }
                     | {
                         type: "date"
-                        date: { start: string; end: string | null }
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
+                        }
                       }
                     | {
                         type: "link_preview"
@@ -24056,7 +25209,7 @@ export type DeleteBlockResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -24082,7 +25235,11 @@ export type DeleteBlockResponse =
                       }
                     | {
                         type: "date"
-                        date: { start: string; end: string | null }
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
+                        }
                       }
                     | {
                         type: "link_preview"
@@ -24220,7 +25377,7 @@ export type DeleteBlockResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -24246,7 +25403,11 @@ export type DeleteBlockResponse =
                       }
                     | {
                         type: "date"
-                        date: { start: string; end: string | null }
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
+                        }
                       }
                     | {
                         type: "link_preview"
@@ -24374,7 +25535,7 @@ export type DeleteBlockResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -24400,7 +25561,11 @@ export type DeleteBlockResponse =
                       }
                     | {
                         type: "date"
-                        date: { start: string; end: string | null }
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
+                        }
                       }
                     | {
                         type: "link_preview"
@@ -24538,7 +25703,7 @@ export type DeleteBlockResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -24564,7 +25729,11 @@ export type DeleteBlockResponse =
                       }
                     | {
                         type: "date"
-                        date: { start: string; end: string | null }
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
+                        }
                       }
                     | {
                         type: "link_preview"
@@ -24692,7 +25861,7 @@ export type DeleteBlockResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -24718,7 +25887,11 @@ export type DeleteBlockResponse =
                       }
                     | {
                         type: "date"
-                        date: { start: string; end: string | null }
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
+                        }
                       }
                     | {
                         type: "link_preview"
@@ -24856,7 +26029,7 @@ export type DeleteBlockResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -24882,7 +26055,11 @@ export type DeleteBlockResponse =
                       }
                     | {
                         type: "date"
-                        date: { start: string; end: string | null }
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
+                        }
                       }
                     | {
                         type: "link_preview"
@@ -25010,7 +26187,7 @@ export type DeleteBlockResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -25036,7 +26213,11 @@ export type DeleteBlockResponse =
                       }
                     | {
                         type: "date"
-                        date: { start: string; end: string | null }
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
+                        }
                       }
                     | {
                         type: "link_preview"
@@ -25128,7 +26309,7 @@ export type DeleteBlockResponse =
     }
   | {
       type: "unsupported"
-      unsupported: Record<string, never>
+      unsupported: EmptyObject
       object: "block"
       id: string
       created_time: string
@@ -25190,7 +26371,11 @@ export type ListBlockChildrenResponse =
           }
         | {
             type: "date"
-            date: { start: string; end: string | null } | null
+            date: {
+              start: string
+              end: string | null
+              time_zone: TimeZoneRequest | null
+            } | null
             function:
               | "count"
               | "count_values"
@@ -25275,7 +26460,7 @@ export type ListBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -25307,7 +26492,11 @@ export type ListBlockChildrenResponse =
                             }
                           | {
                               type: "date"
-                              date: { start: string; end: string | null }
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              }
                             }
                           | {
                               type: "link_preview"
@@ -25437,7 +26626,7 @@ export type ListBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -25469,7 +26658,11 @@ export type ListBlockChildrenResponse =
                             }
                           | {
                               type: "date"
-                              date: { start: string; end: string | null }
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              }
                             }
                           | {
                               type: "link_preview"
@@ -25595,7 +26788,7 @@ export type ListBlockChildrenResponse =
                     | {
                         type: "bot"
                         bot:
-                          | Record<string, never>
+                          | EmptyObject
                           | {
                               owner:
                                 | {
@@ -25624,7 +26817,11 @@ export type ListBlockChildrenResponse =
               | { type: "phone_number"; phone_number: string | null }
               | {
                   type: "date"
-                  date: { start: string; end: string | null } | null
+                  date: {
+                    start: string
+                    end: string | null
+                    time_zone: TimeZoneRequest | null
+                  } | null
                 }
               | {
                   type: "files"
@@ -25648,7 +26845,11 @@ export type ListBlockChildrenResponse =
                     | { type: "string"; string: string | null }
                     | {
                         type: "date"
-                        date: { start: string; end: string | null } | null
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
+                        } | null
                       }
                     | { type: "number"; number: number | null }
                     | { type: "boolean"; boolean: boolean | null }
@@ -25670,7 +26871,7 @@ export type ListBlockChildrenResponse =
                     | {
                         type: "bot"
                         bot:
-                          | Record<string, never>
+                          | EmptyObject
                           | {
                               owner:
                                 | {
@@ -25710,7 +26911,7 @@ export type ListBlockChildrenResponse =
                     | {
                         type: "bot"
                         bot:
-                          | Record<string, never>
+                          | EmptyObject
                           | {
                               owner:
                                 | {
@@ -25761,7 +26962,7 @@ export type ListBlockChildrenResponse =
           }
         | {
             type: "unsupported"
-            unsupported: Record<string, never>
+            unsupported: EmptyObject
             function:
               | "count"
               | "count_values"
@@ -25843,7 +27044,7 @@ export type ListBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -25872,7 +27073,11 @@ export type ListBlockChildrenResponse =
                         }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null }
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          }
                         }
                       | {
                           type: "link_preview"
@@ -26007,7 +27212,7 @@ export type ListBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -26036,7 +27241,11 @@ export type ListBlockChildrenResponse =
                         }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null }
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          }
                         }
                       | {
                           type: "link_preview"
@@ -26171,7 +27380,7 @@ export type ListBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -26200,7 +27409,11 @@ export type ListBlockChildrenResponse =
                         }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null }
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          }
                         }
                       | {
                           type: "link_preview"
@@ -26335,7 +27548,7 @@ export type ListBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -26364,7 +27577,11 @@ export type ListBlockChildrenResponse =
                         }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null }
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          }
                         }
                       | {
                           type: "link_preview"
@@ -26499,7 +27716,7 @@ export type ListBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -26528,7 +27745,11 @@ export type ListBlockChildrenResponse =
                         }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null }
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          }
                         }
                       | {
                           type: "link_preview"
@@ -26663,7 +27884,7 @@ export type ListBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -26692,7 +27913,11 @@ export type ListBlockChildrenResponse =
                         }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null }
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          }
                         }
                       | {
                           type: "link_preview"
@@ -26827,7 +28052,7 @@ export type ListBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -26856,7 +28081,11 @@ export type ListBlockChildrenResponse =
                         }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null }
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          }
                         }
                       | {
                           type: "link_preview"
@@ -26991,7 +28220,7 @@ export type ListBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -27020,7 +28249,11 @@ export type ListBlockChildrenResponse =
                         }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null }
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          }
                         }
                       | {
                           type: "link_preview"
@@ -27156,7 +28389,7 @@ export type ListBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -27185,7 +28418,11 @@ export type ListBlockChildrenResponse =
                         }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null }
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          }
                         }
                       | {
                           type: "link_preview"
@@ -27320,7 +28557,7 @@ export type ListBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -27349,7 +28586,11 @@ export type ListBlockChildrenResponse =
                         }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null }
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          }
                         }
                       | {
                           type: "link_preview"
@@ -27526,7 +28767,7 @@ export type ListBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -27555,7 +28796,11 @@ export type ListBlockChildrenResponse =
                         }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null }
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          }
                         }
                       | {
                           type: "link_preview"
@@ -27691,7 +28936,7 @@ export type ListBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -27720,7 +28965,11 @@ export type ListBlockChildrenResponse =
                         }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null }
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          }
                         }
                       | {
                           type: "link_preview"
@@ -27809,7 +29058,7 @@ export type ListBlockChildrenResponse =
           }
         | {
             type: "divider"
-            divider: Record<string, never>
+            divider: EmptyObject
             object: "block"
             id: string
             created_time: string
@@ -27819,7 +29068,7 @@ export type ListBlockChildrenResponse =
           }
         | {
             type: "breadcrumb"
-            breadcrumb: Record<string, never>
+            breadcrumb: EmptyObject
             object: "block"
             id: string
             created_time: string
@@ -27829,7 +29078,7 @@ export type ListBlockChildrenResponse =
           }
         | {
             type: "table_of_contents"
-            table_of_contents: Record<string, never>
+            table_of_contents: EmptyObject
             object: "block"
             id: string
             created_time: string
@@ -27839,7 +29088,7 @@ export type ListBlockChildrenResponse =
           }
         | {
             type: "column_list"
-            column_list: Record<string, never>
+            column_list: EmptyObject
             object: "block"
             id: string
             created_time: string
@@ -27849,7 +29098,7 @@ export type ListBlockChildrenResponse =
           }
         | {
             type: "column"
-            column: Record<string, never>
+            column: EmptyObject
             object: "block"
             id: string
             created_time: string
@@ -27925,7 +29174,7 @@ export type ListBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -27954,7 +29203,11 @@ export type ListBlockChildrenResponse =
                         }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null }
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          }
                         }
                       | {
                           type: "link_preview"
@@ -28090,7 +29343,7 @@ export type ListBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -28119,7 +29372,11 @@ export type ListBlockChildrenResponse =
                         }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null }
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          }
                         }
                       | {
                           type: "link_preview"
@@ -28260,7 +29517,7 @@ export type ListBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -28292,7 +29549,11 @@ export type ListBlockChildrenResponse =
                             }
                           | {
                               type: "date"
-                              date: { start: string; end: string | null }
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              }
                             }
                           | {
                               type: "link_preview"
@@ -28423,7 +29684,7 @@ export type ListBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -28455,7 +29716,11 @@ export type ListBlockChildrenResponse =
                             }
                           | {
                               type: "date"
-                              date: { start: string; end: string | null }
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              }
                             }
                           | {
                               type: "link_preview"
@@ -28596,7 +29861,7 @@ export type ListBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -28628,7 +29893,11 @@ export type ListBlockChildrenResponse =
                             }
                           | {
                               type: "date"
-                              date: { start: string; end: string | null }
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              }
                             }
                           | {
                               type: "link_preview"
@@ -28759,7 +30028,7 @@ export type ListBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -28791,7 +30060,11 @@ export type ListBlockChildrenResponse =
                             }
                           | {
                               type: "date"
-                              date: { start: string; end: string | null }
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              }
                             }
                           | {
                               type: "link_preview"
@@ -28932,7 +30205,7 @@ export type ListBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -28964,7 +30237,11 @@ export type ListBlockChildrenResponse =
                             }
                           | {
                               type: "date"
-                              date: { start: string; end: string | null }
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              }
                             }
                           | {
                               type: "link_preview"
@@ -29095,7 +30372,7 @@ export type ListBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -29127,7 +30404,11 @@ export type ListBlockChildrenResponse =
                             }
                           | {
                               type: "date"
-                              date: { start: string; end: string | null }
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              }
                             }
                           | {
                               type: "link_preview"
@@ -29268,7 +30549,7 @@ export type ListBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -29300,7 +30581,11 @@ export type ListBlockChildrenResponse =
                             }
                           | {
                               type: "date"
-                              date: { start: string; end: string | null }
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              }
                             }
                           | {
                               type: "link_preview"
@@ -29431,7 +30716,7 @@ export type ListBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -29463,7 +30748,11 @@ export type ListBlockChildrenResponse =
                             }
                           | {
                               type: "date"
-                              date: { start: string; end: string | null }
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              }
                             }
                           | {
                               type: "link_preview"
@@ -29604,7 +30893,7 @@ export type ListBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -29636,7 +30925,11 @@ export type ListBlockChildrenResponse =
                             }
                           | {
                               type: "date"
-                              date: { start: string; end: string | null }
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              }
                             }
                           | {
                               type: "link_preview"
@@ -29767,7 +31060,7 @@ export type ListBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -29799,7 +31092,11 @@ export type ListBlockChildrenResponse =
                             }
                           | {
                               type: "date"
-                              date: { start: string; end: string | null }
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              }
                             }
                           | {
                               type: "link_preview"
@@ -29891,7 +31188,7 @@ export type ListBlockChildrenResponse =
           }
         | {
             type: "unsupported"
-            unsupported: Record<string, never>
+            unsupported: EmptyObject
             object: "block"
             id: string
             created_time: string
@@ -29961,7 +31258,7 @@ export type ListBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -29990,7 +31287,11 @@ export type ListBlockChildrenResponse =
                         }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null }
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          }
                         }
                       | {
                           type: "link_preview"
@@ -30125,7 +31426,7 @@ export type ListBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -30154,7 +31455,11 @@ export type ListBlockChildrenResponse =
                         }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null }
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          }
                         }
                       | {
                           type: "link_preview"
@@ -30289,7 +31594,7 @@ export type ListBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -30318,7 +31623,11 @@ export type ListBlockChildrenResponse =
                         }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null }
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          }
                         }
                       | {
                           type: "link_preview"
@@ -30453,7 +31762,7 @@ export type ListBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -30482,7 +31791,11 @@ export type ListBlockChildrenResponse =
                         }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null }
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          }
                         }
                       | {
                           type: "link_preview"
@@ -30617,7 +31930,7 @@ export type ListBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -30646,7 +31959,11 @@ export type ListBlockChildrenResponse =
                         }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null }
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          }
                         }
                       | {
                           type: "link_preview"
@@ -30781,7 +32098,7 @@ export type ListBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -30810,7 +32127,11 @@ export type ListBlockChildrenResponse =
                         }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null }
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          }
                         }
                       | {
                           type: "link_preview"
@@ -30945,7 +32266,7 @@ export type ListBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -30974,7 +32295,11 @@ export type ListBlockChildrenResponse =
                         }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null }
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          }
                         }
                       | {
                           type: "link_preview"
@@ -31109,7 +32434,7 @@ export type ListBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -31138,7 +32463,11 @@ export type ListBlockChildrenResponse =
                         }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null }
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          }
                         }
                       | {
                           type: "link_preview"
@@ -31274,7 +32603,7 @@ export type ListBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -31303,7 +32632,11 @@ export type ListBlockChildrenResponse =
                         }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null }
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          }
                         }
                       | {
                           type: "link_preview"
@@ -31438,7 +32771,7 @@ export type ListBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -31467,7 +32800,11 @@ export type ListBlockChildrenResponse =
                         }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null }
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          }
                         }
                       | {
                           type: "link_preview"
@@ -31644,7 +32981,7 @@ export type ListBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -31673,7 +33010,11 @@ export type ListBlockChildrenResponse =
                         }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null }
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          }
                         }
                       | {
                           type: "link_preview"
@@ -31809,7 +33150,7 @@ export type ListBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -31838,7 +33179,11 @@ export type ListBlockChildrenResponse =
                         }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null }
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          }
                         }
                       | {
                           type: "link_preview"
@@ -31927,7 +33272,7 @@ export type ListBlockChildrenResponse =
           }
         | {
             type: "divider"
-            divider: Record<string, never>
+            divider: EmptyObject
             object: "block"
             id: string
             created_time: string
@@ -31937,7 +33282,7 @@ export type ListBlockChildrenResponse =
           }
         | {
             type: "breadcrumb"
-            breadcrumb: Record<string, never>
+            breadcrumb: EmptyObject
             object: "block"
             id: string
             created_time: string
@@ -31947,7 +33292,7 @@ export type ListBlockChildrenResponse =
           }
         | {
             type: "table_of_contents"
-            table_of_contents: Record<string, never>
+            table_of_contents: EmptyObject
             object: "block"
             id: string
             created_time: string
@@ -31957,7 +33302,7 @@ export type ListBlockChildrenResponse =
           }
         | {
             type: "column_list"
-            column_list: Record<string, never>
+            column_list: EmptyObject
             object: "block"
             id: string
             created_time: string
@@ -31967,7 +33312,7 @@ export type ListBlockChildrenResponse =
           }
         | {
             type: "column"
-            column: Record<string, never>
+            column: EmptyObject
             object: "block"
             id: string
             created_time: string
@@ -32043,7 +33388,7 @@ export type ListBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -32072,7 +33417,11 @@ export type ListBlockChildrenResponse =
                         }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null }
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          }
                         }
                       | {
                           type: "link_preview"
@@ -32208,7 +33557,7 @@ export type ListBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -32237,7 +33586,11 @@ export type ListBlockChildrenResponse =
                         }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null }
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          }
                         }
                       | {
                           type: "link_preview"
@@ -32378,7 +33731,7 @@ export type ListBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -32410,7 +33763,11 @@ export type ListBlockChildrenResponse =
                             }
                           | {
                               type: "date"
-                              date: { start: string; end: string | null }
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              }
                             }
                           | {
                               type: "link_preview"
@@ -32541,7 +33898,7 @@ export type ListBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -32573,7 +33930,11 @@ export type ListBlockChildrenResponse =
                             }
                           | {
                               type: "date"
-                              date: { start: string; end: string | null }
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              }
                             }
                           | {
                               type: "link_preview"
@@ -32714,7 +34075,7 @@ export type ListBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -32746,7 +34107,11 @@ export type ListBlockChildrenResponse =
                             }
                           | {
                               type: "date"
-                              date: { start: string; end: string | null }
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              }
                             }
                           | {
                               type: "link_preview"
@@ -32877,7 +34242,7 @@ export type ListBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -32909,7 +34274,11 @@ export type ListBlockChildrenResponse =
                             }
                           | {
                               type: "date"
-                              date: { start: string; end: string | null }
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              }
                             }
                           | {
                               type: "link_preview"
@@ -33050,7 +34419,7 @@ export type ListBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -33082,7 +34451,11 @@ export type ListBlockChildrenResponse =
                             }
                           | {
                               type: "date"
-                              date: { start: string; end: string | null }
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              }
                             }
                           | {
                               type: "link_preview"
@@ -33213,7 +34586,7 @@ export type ListBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -33245,7 +34618,11 @@ export type ListBlockChildrenResponse =
                             }
                           | {
                               type: "date"
-                              date: { start: string; end: string | null }
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              }
                             }
                           | {
                               type: "link_preview"
@@ -33386,7 +34763,7 @@ export type ListBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -33418,7 +34795,11 @@ export type ListBlockChildrenResponse =
                             }
                           | {
                               type: "date"
-                              date: { start: string; end: string | null }
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              }
                             }
                           | {
                               type: "link_preview"
@@ -33549,7 +34930,7 @@ export type ListBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -33581,7 +34962,11 @@ export type ListBlockChildrenResponse =
                             }
                           | {
                               type: "date"
-                              date: { start: string; end: string | null }
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              }
                             }
                           | {
                               type: "link_preview"
@@ -33722,7 +35107,7 @@ export type ListBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -33754,7 +35139,11 @@ export type ListBlockChildrenResponse =
                             }
                           | {
                               type: "date"
-                              date: { start: string; end: string | null }
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              }
                             }
                           | {
                               type: "link_preview"
@@ -33885,7 +35274,7 @@ export type ListBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -33917,7 +35306,11 @@ export type ListBlockChildrenResponse =
                             }
                           | {
                               type: "date"
-                              date: { start: string; end: string | null }
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              }
                             }
                           | {
                               type: "link_preview"
@@ -34009,7 +35402,7 @@ export type ListBlockChildrenResponse =
           }
         | {
             type: "unsupported"
-            unsupported: Record<string, never>
+            unsupported: EmptyObject
             object: "block"
             id: string
             created_time: string
@@ -34073,7 +35466,11 @@ export type AppendBlockChildrenResponse =
           }
         | {
             type: "date"
-            date: { start: string; end: string | null } | null
+            date: {
+              start: string
+              end: string | null
+              time_zone: TimeZoneRequest | null
+            } | null
             function:
               | "count"
               | "count_values"
@@ -34158,7 +35555,7 @@ export type AppendBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -34190,7 +35587,11 @@ export type AppendBlockChildrenResponse =
                             }
                           | {
                               type: "date"
-                              date: { start: string; end: string | null }
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              }
                             }
                           | {
                               type: "link_preview"
@@ -34320,7 +35721,7 @@ export type AppendBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -34352,7 +35753,11 @@ export type AppendBlockChildrenResponse =
                             }
                           | {
                               type: "date"
-                              date: { start: string; end: string | null }
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              }
                             }
                           | {
                               type: "link_preview"
@@ -34478,7 +35883,7 @@ export type AppendBlockChildrenResponse =
                     | {
                         type: "bot"
                         bot:
-                          | Record<string, never>
+                          | EmptyObject
                           | {
                               owner:
                                 | {
@@ -34507,7 +35912,11 @@ export type AppendBlockChildrenResponse =
               | { type: "phone_number"; phone_number: string | null }
               | {
                   type: "date"
-                  date: { start: string; end: string | null } | null
+                  date: {
+                    start: string
+                    end: string | null
+                    time_zone: TimeZoneRequest | null
+                  } | null
                 }
               | {
                   type: "files"
@@ -34531,7 +35940,11 @@ export type AppendBlockChildrenResponse =
                     | { type: "string"; string: string | null }
                     | {
                         type: "date"
-                        date: { start: string; end: string | null } | null
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
+                        } | null
                       }
                     | { type: "number"; number: number | null }
                     | { type: "boolean"; boolean: boolean | null }
@@ -34553,7 +35966,7 @@ export type AppendBlockChildrenResponse =
                     | {
                         type: "bot"
                         bot:
-                          | Record<string, never>
+                          | EmptyObject
                           | {
                               owner:
                                 | {
@@ -34593,7 +36006,7 @@ export type AppendBlockChildrenResponse =
                     | {
                         type: "bot"
                         bot:
-                          | Record<string, never>
+                          | EmptyObject
                           | {
                               owner:
                                 | {
@@ -34644,7 +36057,7 @@ export type AppendBlockChildrenResponse =
           }
         | {
             type: "unsupported"
-            unsupported: Record<string, never>
+            unsupported: EmptyObject
             function:
               | "count"
               | "count_values"
@@ -34726,7 +36139,7 @@ export type AppendBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -34755,7 +36168,11 @@ export type AppendBlockChildrenResponse =
                         }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null }
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          }
                         }
                       | {
                           type: "link_preview"
@@ -34890,7 +36307,7 @@ export type AppendBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -34919,7 +36336,11 @@ export type AppendBlockChildrenResponse =
                         }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null }
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          }
                         }
                       | {
                           type: "link_preview"
@@ -35054,7 +36475,7 @@ export type AppendBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -35083,7 +36504,11 @@ export type AppendBlockChildrenResponse =
                         }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null }
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          }
                         }
                       | {
                           type: "link_preview"
@@ -35218,7 +36643,7 @@ export type AppendBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -35247,7 +36672,11 @@ export type AppendBlockChildrenResponse =
                         }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null }
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          }
                         }
                       | {
                           type: "link_preview"
@@ -35382,7 +36811,7 @@ export type AppendBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -35411,7 +36840,11 @@ export type AppendBlockChildrenResponse =
                         }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null }
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          }
                         }
                       | {
                           type: "link_preview"
@@ -35546,7 +36979,7 @@ export type AppendBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -35575,7 +37008,11 @@ export type AppendBlockChildrenResponse =
                         }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null }
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          }
                         }
                       | {
                           type: "link_preview"
@@ -35710,7 +37147,7 @@ export type AppendBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -35739,7 +37176,11 @@ export type AppendBlockChildrenResponse =
                         }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null }
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          }
                         }
                       | {
                           type: "link_preview"
@@ -35874,7 +37315,7 @@ export type AppendBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -35903,7 +37344,11 @@ export type AppendBlockChildrenResponse =
                         }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null }
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          }
                         }
                       | {
                           type: "link_preview"
@@ -36039,7 +37484,7 @@ export type AppendBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -36068,7 +37513,11 @@ export type AppendBlockChildrenResponse =
                         }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null }
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          }
                         }
                       | {
                           type: "link_preview"
@@ -36203,7 +37652,7 @@ export type AppendBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -36232,7 +37681,11 @@ export type AppendBlockChildrenResponse =
                         }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null }
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          }
                         }
                       | {
                           type: "link_preview"
@@ -36409,7 +37862,7 @@ export type AppendBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -36438,7 +37891,11 @@ export type AppendBlockChildrenResponse =
                         }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null }
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          }
                         }
                       | {
                           type: "link_preview"
@@ -36574,7 +38031,7 @@ export type AppendBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -36603,7 +38060,11 @@ export type AppendBlockChildrenResponse =
                         }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null }
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          }
                         }
                       | {
                           type: "link_preview"
@@ -36692,7 +38153,7 @@ export type AppendBlockChildrenResponse =
           }
         | {
             type: "divider"
-            divider: Record<string, never>
+            divider: EmptyObject
             object: "block"
             id: string
             created_time: string
@@ -36702,7 +38163,7 @@ export type AppendBlockChildrenResponse =
           }
         | {
             type: "breadcrumb"
-            breadcrumb: Record<string, never>
+            breadcrumb: EmptyObject
             object: "block"
             id: string
             created_time: string
@@ -36712,7 +38173,7 @@ export type AppendBlockChildrenResponse =
           }
         | {
             type: "table_of_contents"
-            table_of_contents: Record<string, never>
+            table_of_contents: EmptyObject
             object: "block"
             id: string
             created_time: string
@@ -36722,7 +38183,7 @@ export type AppendBlockChildrenResponse =
           }
         | {
             type: "column_list"
-            column_list: Record<string, never>
+            column_list: EmptyObject
             object: "block"
             id: string
             created_time: string
@@ -36732,7 +38193,7 @@ export type AppendBlockChildrenResponse =
           }
         | {
             type: "column"
-            column: Record<string, never>
+            column: EmptyObject
             object: "block"
             id: string
             created_time: string
@@ -36808,7 +38269,7 @@ export type AppendBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -36837,7 +38298,11 @@ export type AppendBlockChildrenResponse =
                         }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null }
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          }
                         }
                       | {
                           type: "link_preview"
@@ -36973,7 +38438,7 @@ export type AppendBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -37002,7 +38467,11 @@ export type AppendBlockChildrenResponse =
                         }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null }
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          }
                         }
                       | {
                           type: "link_preview"
@@ -37143,7 +38612,7 @@ export type AppendBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -37175,7 +38644,11 @@ export type AppendBlockChildrenResponse =
                             }
                           | {
                               type: "date"
-                              date: { start: string; end: string | null }
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              }
                             }
                           | {
                               type: "link_preview"
@@ -37306,7 +38779,7 @@ export type AppendBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -37338,7 +38811,11 @@ export type AppendBlockChildrenResponse =
                             }
                           | {
                               type: "date"
-                              date: { start: string; end: string | null }
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              }
                             }
                           | {
                               type: "link_preview"
@@ -37479,7 +38956,7 @@ export type AppendBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -37511,7 +38988,11 @@ export type AppendBlockChildrenResponse =
                             }
                           | {
                               type: "date"
-                              date: { start: string; end: string | null }
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              }
                             }
                           | {
                               type: "link_preview"
@@ -37642,7 +39123,7 @@ export type AppendBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -37674,7 +39155,11 @@ export type AppendBlockChildrenResponse =
                             }
                           | {
                               type: "date"
-                              date: { start: string; end: string | null }
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              }
                             }
                           | {
                               type: "link_preview"
@@ -37815,7 +39300,7 @@ export type AppendBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -37847,7 +39332,11 @@ export type AppendBlockChildrenResponse =
                             }
                           | {
                               type: "date"
-                              date: { start: string; end: string | null }
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              }
                             }
                           | {
                               type: "link_preview"
@@ -37978,7 +39467,7 @@ export type AppendBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -38010,7 +39499,11 @@ export type AppendBlockChildrenResponse =
                             }
                           | {
                               type: "date"
-                              date: { start: string; end: string | null }
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              }
                             }
                           | {
                               type: "link_preview"
@@ -38151,7 +39644,7 @@ export type AppendBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -38183,7 +39676,11 @@ export type AppendBlockChildrenResponse =
                             }
                           | {
                               type: "date"
-                              date: { start: string; end: string | null }
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              }
                             }
                           | {
                               type: "link_preview"
@@ -38314,7 +39811,7 @@ export type AppendBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -38346,7 +39843,11 @@ export type AppendBlockChildrenResponse =
                             }
                           | {
                               type: "date"
-                              date: { start: string; end: string | null }
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              }
                             }
                           | {
                               type: "link_preview"
@@ -38487,7 +39988,7 @@ export type AppendBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -38519,7 +40020,11 @@ export type AppendBlockChildrenResponse =
                             }
                           | {
                               type: "date"
-                              date: { start: string; end: string | null }
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              }
                             }
                           | {
                               type: "link_preview"
@@ -38650,7 +40155,7 @@ export type AppendBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -38682,7 +40187,11 @@ export type AppendBlockChildrenResponse =
                             }
                           | {
                               type: "date"
-                              date: { start: string; end: string | null }
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              }
                             }
                           | {
                               type: "link_preview"
@@ -38774,7 +40283,7 @@ export type AppendBlockChildrenResponse =
           }
         | {
             type: "unsupported"
-            unsupported: Record<string, never>
+            unsupported: EmptyObject
             object: "block"
             id: string
             created_time: string
@@ -38844,7 +40353,7 @@ export type AppendBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -38873,7 +40382,11 @@ export type AppendBlockChildrenResponse =
                         }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null }
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          }
                         }
                       | {
                           type: "link_preview"
@@ -39008,7 +40521,7 @@ export type AppendBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -39037,7 +40550,11 @@ export type AppendBlockChildrenResponse =
                         }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null }
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          }
                         }
                       | {
                           type: "link_preview"
@@ -39172,7 +40689,7 @@ export type AppendBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -39201,7 +40718,11 @@ export type AppendBlockChildrenResponse =
                         }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null }
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          }
                         }
                       | {
                           type: "link_preview"
@@ -39336,7 +40857,7 @@ export type AppendBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -39365,7 +40886,11 @@ export type AppendBlockChildrenResponse =
                         }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null }
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          }
                         }
                       | {
                           type: "link_preview"
@@ -39500,7 +41025,7 @@ export type AppendBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -39529,7 +41054,11 @@ export type AppendBlockChildrenResponse =
                         }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null }
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          }
                         }
                       | {
                           type: "link_preview"
@@ -39664,7 +41193,7 @@ export type AppendBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -39693,7 +41222,11 @@ export type AppendBlockChildrenResponse =
                         }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null }
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          }
                         }
                       | {
                           type: "link_preview"
@@ -39828,7 +41361,7 @@ export type AppendBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -39857,7 +41390,11 @@ export type AppendBlockChildrenResponse =
                         }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null }
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          }
                         }
                       | {
                           type: "link_preview"
@@ -39992,7 +41529,7 @@ export type AppendBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -40021,7 +41558,11 @@ export type AppendBlockChildrenResponse =
                         }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null }
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          }
                         }
                       | {
                           type: "link_preview"
@@ -40157,7 +41698,7 @@ export type AppendBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -40186,7 +41727,11 @@ export type AppendBlockChildrenResponse =
                         }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null }
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          }
                         }
                       | {
                           type: "link_preview"
@@ -40321,7 +41866,7 @@ export type AppendBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -40350,7 +41895,11 @@ export type AppendBlockChildrenResponse =
                         }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null }
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          }
                         }
                       | {
                           type: "link_preview"
@@ -40527,7 +42076,7 @@ export type AppendBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -40556,7 +42105,11 @@ export type AppendBlockChildrenResponse =
                         }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null }
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          }
                         }
                       | {
                           type: "link_preview"
@@ -40692,7 +42245,7 @@ export type AppendBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -40721,7 +42274,11 @@ export type AppendBlockChildrenResponse =
                         }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null }
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          }
                         }
                       | {
                           type: "link_preview"
@@ -40810,7 +42367,7 @@ export type AppendBlockChildrenResponse =
           }
         | {
             type: "divider"
-            divider: Record<string, never>
+            divider: EmptyObject
             object: "block"
             id: string
             created_time: string
@@ -40820,7 +42377,7 @@ export type AppendBlockChildrenResponse =
           }
         | {
             type: "breadcrumb"
-            breadcrumb: Record<string, never>
+            breadcrumb: EmptyObject
             object: "block"
             id: string
             created_time: string
@@ -40830,7 +42387,7 @@ export type AppendBlockChildrenResponse =
           }
         | {
             type: "table_of_contents"
-            table_of_contents: Record<string, never>
+            table_of_contents: EmptyObject
             object: "block"
             id: string
             created_time: string
@@ -40840,7 +42397,7 @@ export type AppendBlockChildrenResponse =
           }
         | {
             type: "column_list"
-            column_list: Record<string, never>
+            column_list: EmptyObject
             object: "block"
             id: string
             created_time: string
@@ -40850,7 +42407,7 @@ export type AppendBlockChildrenResponse =
           }
         | {
             type: "column"
-            column: Record<string, never>
+            column: EmptyObject
             object: "block"
             id: string
             created_time: string
@@ -40926,7 +42483,7 @@ export type AppendBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -40955,7 +42512,11 @@ export type AppendBlockChildrenResponse =
                         }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null }
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          }
                         }
                       | {
                           type: "link_preview"
@@ -41091,7 +42652,7 @@ export type AppendBlockChildrenResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -41120,7 +42681,11 @@ export type AppendBlockChildrenResponse =
                         }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null }
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          }
                         }
                       | {
                           type: "link_preview"
@@ -41261,7 +42826,7 @@ export type AppendBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -41293,7 +42858,11 @@ export type AppendBlockChildrenResponse =
                             }
                           | {
                               type: "date"
-                              date: { start: string; end: string | null }
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              }
                             }
                           | {
                               type: "link_preview"
@@ -41424,7 +42993,7 @@ export type AppendBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -41456,7 +43025,11 @@ export type AppendBlockChildrenResponse =
                             }
                           | {
                               type: "date"
-                              date: { start: string; end: string | null }
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              }
                             }
                           | {
                               type: "link_preview"
@@ -41597,7 +43170,7 @@ export type AppendBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -41629,7 +43202,11 @@ export type AppendBlockChildrenResponse =
                             }
                           | {
                               type: "date"
-                              date: { start: string; end: string | null }
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              }
                             }
                           | {
                               type: "link_preview"
@@ -41760,7 +43337,7 @@ export type AppendBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -41792,7 +43369,11 @@ export type AppendBlockChildrenResponse =
                             }
                           | {
                               type: "date"
-                              date: { start: string; end: string | null }
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              }
                             }
                           | {
                               type: "link_preview"
@@ -41933,7 +43514,7 @@ export type AppendBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -41965,7 +43546,11 @@ export type AppendBlockChildrenResponse =
                             }
                           | {
                               type: "date"
-                              date: { start: string; end: string | null }
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              }
                             }
                           | {
                               type: "link_preview"
@@ -42096,7 +43681,7 @@ export type AppendBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -42128,7 +43713,11 @@ export type AppendBlockChildrenResponse =
                             }
                           | {
                               type: "date"
-                              date: { start: string; end: string | null }
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              }
                             }
                           | {
                               type: "link_preview"
@@ -42269,7 +43858,7 @@ export type AppendBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -42301,7 +43890,11 @@ export type AppendBlockChildrenResponse =
                             }
                           | {
                               type: "date"
-                              date: { start: string; end: string | null }
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              }
                             }
                           | {
                               type: "link_preview"
@@ -42432,7 +44025,7 @@ export type AppendBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -42464,7 +44057,11 @@ export type AppendBlockChildrenResponse =
                             }
                           | {
                               type: "date"
-                              date: { start: string; end: string | null }
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              }
                             }
                           | {
                               type: "link_preview"
@@ -42605,7 +44202,7 @@ export type AppendBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -42637,7 +44234,11 @@ export type AppendBlockChildrenResponse =
                             }
                           | {
                               type: "date"
-                              date: { start: string; end: string | null }
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              }
                             }
                           | {
                               type: "link_preview"
@@ -42768,7 +44369,7 @@ export type AppendBlockChildrenResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -42800,7 +44401,11 @@ export type AppendBlockChildrenResponse =
                             }
                           | {
                               type: "date"
-                              date: { start: string; end: string | null }
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              }
                             }
                           | {
                               type: "link_preview"
@@ -42892,7 +44497,7 @@ export type AppendBlockChildrenResponse =
           }
         | {
             type: "unsupported"
-            unsupported: Record<string, never>
+            unsupported: EmptyObject
             object: "block"
             id: string
             created_time: string
@@ -42973,7 +44578,7 @@ export type GetDatabaseResponse = {
                 | {
                     type: "bot"
                     bot:
-                      | Record<string, never>
+                      | EmptyObject
                       | {
                           owner:
                             | {
@@ -42997,7 +44602,14 @@ export type GetDatabaseResponse = {
                     object: "user"
                   }
             }
-          | { type: "date"; date: { start: string; end: string | null } }
+          | {
+              type: "date"
+              date: {
+                start: string
+                end: string | null
+                time_zone: TimeZoneRequest | null
+              }
+            }
           | { type: "link_preview"; link_preview: { url: TextRequest } }
           | { type: "page"; page: { id: IdRequest } }
           | { type: "database"; database: { id: IdRequest } }
@@ -43219,56 +44831,36 @@ export type GetDatabaseResponse = {
         id: string
         name: string
       }
-    | { type: "title"; title: Record<string, never>; id: string; name: string }
-    | {
-        type: "rich_text"
-        rich_text: Record<string, never>
-        id: string
-        name: string
-      }
-    | { type: "url"; url: Record<string, never>; id: string; name: string }
-    | {
-        type: "people"
-        people: Record<string, never>
-        id: string
-        name: string
-      }
-    | { type: "files"; files: Record<string, never>; id: string; name: string }
-    | { type: "email"; email: Record<string, never>; id: string; name: string }
+    | { type: "title"; title: EmptyObject; id: string; name: string }
+    | { type: "rich_text"; rich_text: EmptyObject; id: string; name: string }
+    | { type: "url"; url: EmptyObject; id: string; name: string }
+    | { type: "people"; people: EmptyObject; id: string; name: string }
+    | { type: "files"; files: EmptyObject; id: string; name: string }
+    | { type: "email"; email: EmptyObject; id: string; name: string }
     | {
         type: "phone_number"
-        phone_number: Record<string, never>
+        phone_number: EmptyObject
         id: string
         name: string
       }
-    | { type: "date"; date: Record<string, never>; id: string; name: string }
-    | {
-        type: "checkbox"
-        checkbox: Record<string, never>
-        id: string
-        name: string
-      }
-    | {
-        type: "created_by"
-        created_by: Record<string, never>
-        id: string
-        name: string
-      }
+    | { type: "date"; date: EmptyObject; id: string; name: string }
+    | { type: "checkbox"; checkbox: EmptyObject; id: string; name: string }
+    | { type: "created_by"; created_by: EmptyObject; id: string; name: string }
     | {
         type: "created_time"
-        created_time: Record<string, never>
+        created_time: EmptyObject
         id: string
         name: string
       }
     | {
         type: "last_edited_by"
-        last_edited_by: Record<string, never>
+        last_edited_by: EmptyObject
         id: string
         name: string
       }
     | {
         type: "last_edited_time"
-        last_edited_time: Record<string, never>
+        last_edited_time: EmptyObject
         id: string
         name: string
       }
@@ -43555,44 +45147,32 @@ type UpdateDatabaseBodyParameters = {
         name?: string
       }
     | null
-    | { title: Record<string, never>; type?: "title"; name?: string }
+    | { title: EmptyObject; type?: "title"; name?: string }
     | null
-    | { rich_text: Record<string, never>; type?: "rich_text"; name?: string }
+    | { rich_text: EmptyObject; type?: "rich_text"; name?: string }
     | null
-    | { url: Record<string, never>; type?: "url"; name?: string }
+    | { url: EmptyObject; type?: "url"; name?: string }
     | null
-    | { people: Record<string, never>; type?: "people"; name?: string }
+    | { people: EmptyObject; type?: "people"; name?: string }
     | null
-    | { files: Record<string, never>; type?: "files"; name?: string }
+    | { files: EmptyObject; type?: "files"; name?: string }
     | null
-    | { email: Record<string, never>; type?: "email"; name?: string }
+    | { email: EmptyObject; type?: "email"; name?: string }
     | null
-    | {
-        phone_number: Record<string, never>
-        type?: "phone_number"
-        name?: string
-      }
+    | { phone_number: EmptyObject; type?: "phone_number"; name?: string }
     | null
-    | { date: Record<string, never>; type?: "date"; name?: string }
+    | { date: EmptyObject; type?: "date"; name?: string }
     | null
-    | { checkbox: Record<string, never>; type?: "checkbox"; name?: string }
+    | { checkbox: EmptyObject; type?: "checkbox"; name?: string }
     | null
-    | { created_by: Record<string, never>; type?: "created_by"; name?: string }
+    | { created_by: EmptyObject; type?: "created_by"; name?: string }
     | null
-    | {
-        created_time: Record<string, never>
-        type?: "created_time"
-        name?: string
-      }
+    | { created_time: EmptyObject; type?: "created_time"; name?: string }
+    | null
+    | { last_edited_by: EmptyObject; type?: "last_edited_by"; name?: string }
     | null
     | {
-        last_edited_by: Record<string, never>
-        type?: "last_edited_by"
-        name?: string
-      }
-    | null
-    | {
-        last_edited_time: Record<string, never>
+        last_edited_time: EmptyObject
         type?: "last_edited_time"
         name?: string
       }
@@ -43658,7 +45238,7 @@ export type UpdateDatabaseResponse = {
                 | {
                     type: "bot"
                     bot:
-                      | Record<string, never>
+                      | EmptyObject
                       | {
                           owner:
                             | {
@@ -43682,7 +45262,14 @@ export type UpdateDatabaseResponse = {
                     object: "user"
                   }
             }
-          | { type: "date"; date: { start: string; end: string | null } }
+          | {
+              type: "date"
+              date: {
+                start: string
+                end: string | null
+                time_zone: TimeZoneRequest | null
+              }
+            }
           | { type: "link_preview"; link_preview: { url: TextRequest } }
           | { type: "page"; page: { id: IdRequest } }
           | { type: "database"; database: { id: IdRequest } }
@@ -43904,56 +45491,36 @@ export type UpdateDatabaseResponse = {
         id: string
         name: string
       }
-    | { type: "title"; title: Record<string, never>; id: string; name: string }
-    | {
-        type: "rich_text"
-        rich_text: Record<string, never>
-        id: string
-        name: string
-      }
-    | { type: "url"; url: Record<string, never>; id: string; name: string }
-    | {
-        type: "people"
-        people: Record<string, never>
-        id: string
-        name: string
-      }
-    | { type: "files"; files: Record<string, never>; id: string; name: string }
-    | { type: "email"; email: Record<string, never>; id: string; name: string }
+    | { type: "title"; title: EmptyObject; id: string; name: string }
+    | { type: "rich_text"; rich_text: EmptyObject; id: string; name: string }
+    | { type: "url"; url: EmptyObject; id: string; name: string }
+    | { type: "people"; people: EmptyObject; id: string; name: string }
+    | { type: "files"; files: EmptyObject; id: string; name: string }
+    | { type: "email"; email: EmptyObject; id: string; name: string }
     | {
         type: "phone_number"
-        phone_number: Record<string, never>
+        phone_number: EmptyObject
         id: string
         name: string
       }
-    | { type: "date"; date: Record<string, never>; id: string; name: string }
-    | {
-        type: "checkbox"
-        checkbox: Record<string, never>
-        id: string
-        name: string
-      }
-    | {
-        type: "created_by"
-        created_by: Record<string, never>
-        id: string
-        name: string
-      }
+    | { type: "date"; date: EmptyObject; id: string; name: string }
+    | { type: "checkbox"; checkbox: EmptyObject; id: string; name: string }
+    | { type: "created_by"; created_by: EmptyObject; id: string; name: string }
     | {
         type: "created_time"
-        created_time: Record<string, never>
+        created_time: EmptyObject
         id: string
         name: string
       }
     | {
         type: "last_edited_by"
-        last_edited_by: Record<string, never>
+        last_edited_by: EmptyObject
         id: string
         name: string
       }
     | {
         type: "last_edited_time"
-        last_edited_time: Record<string, never>
+        last_edited_time: EmptyObject
         id: string
         name: string
       }
@@ -44074,12 +45641,12 @@ type QueryDatabaseBodyParameters = {
                 | { after: string }
                 | { on_or_before: string }
                 | { on_or_after: string }
-                | { past_week: Record<string, never> }
-                | { past_month: Record<string, never> }
-                | { past_year: Record<string, never> }
-                | { next_week: Record<string, never> }
-                | { next_month: Record<string, never> }
-                | { next_year: Record<string, never> }
+                | { past_week: EmptyObject }
+                | { past_month: EmptyObject }
+                | { past_year: EmptyObject }
+                | { next_week: EmptyObject }
+                | { next_month: EmptyObject }
+                | { next_year: EmptyObject }
                 | { is_empty: true }
                 | { is_not_empty: true }
               property: string
@@ -44176,12 +45743,12 @@ type QueryDatabaseBodyParameters = {
                 | { after: string }
                 | { on_or_before: string }
                 | { on_or_after: string }
-                | { past_week: Record<string, never> }
-                | { past_month: Record<string, never> }
-                | { past_year: Record<string, never> }
-                | { next_week: Record<string, never> }
-                | { next_month: Record<string, never> }
-                | { next_year: Record<string, never> }
+                | { past_week: EmptyObject }
+                | { past_month: EmptyObject }
+                | { past_year: EmptyObject }
+                | { next_week: EmptyObject }
+                | { next_month: EmptyObject }
+                | { next_year: EmptyObject }
                 | { is_empty: true }
                 | { is_not_empty: true }
               property: string
@@ -44203,12 +45770,12 @@ type QueryDatabaseBodyParameters = {
                 | { after: string }
                 | { on_or_before: string }
                 | { on_or_after: string }
-                | { past_week: Record<string, never> }
-                | { past_month: Record<string, never> }
-                | { past_year: Record<string, never> }
-                | { next_week: Record<string, never> }
-                | { next_month: Record<string, never> }
-                | { next_year: Record<string, never> }
+                | { past_week: EmptyObject }
+                | { past_month: EmptyObject }
+                | { past_year: EmptyObject }
+                | { next_week: EmptyObject }
+                | { next_month: EmptyObject }
+                | { next_year: EmptyObject }
                 | { is_empty: true }
                 | { is_not_empty: true }
               property: string
@@ -44248,12 +45815,12 @@ type QueryDatabaseBodyParameters = {
                       | { after: string }
                       | { on_or_before: string }
                       | { on_or_after: string }
-                      | { past_week: Record<string, never> }
-                      | { past_month: Record<string, never> }
-                      | { past_year: Record<string, never> }
-                      | { next_week: Record<string, never> }
-                      | { next_month: Record<string, never> }
-                      | { next_year: Record<string, never> }
+                      | { past_week: EmptyObject }
+                      | { past_month: EmptyObject }
+                      | { past_year: EmptyObject }
+                      | { next_week: EmptyObject }
+                      | { next_month: EmptyObject }
+                      | { next_year: EmptyObject }
                       | { is_empty: true }
                       | { is_not_empty: true }
                   }
@@ -44319,12 +45886,12 @@ type QueryDatabaseBodyParameters = {
                             | { after: string }
                             | { on_or_before: string }
                             | { on_or_after: string }
-                            | { past_week: Record<string, never> }
-                            | { past_month: Record<string, never> }
-                            | { past_year: Record<string, never> }
-                            | { next_week: Record<string, never> }
-                            | { next_month: Record<string, never> }
-                            | { next_year: Record<string, never> }
+                            | { past_week: EmptyObject }
+                            | { past_month: EmptyObject }
+                            | { past_year: EmptyObject }
+                            | { next_week: EmptyObject }
+                            | { next_month: EmptyObject }
+                            | { next_year: EmptyObject }
                             | { is_empty: true }
                             | { is_not_empty: true }
                         }
@@ -44394,12 +45961,12 @@ type QueryDatabaseBodyParameters = {
                             | { after: string }
                             | { on_or_before: string }
                             | { on_or_after: string }
-                            | { past_week: Record<string, never> }
-                            | { past_month: Record<string, never> }
-                            | { past_year: Record<string, never> }
-                            | { next_week: Record<string, never> }
-                            | { next_month: Record<string, never> }
-                            | { next_year: Record<string, never> }
+                            | { past_week: EmptyObject }
+                            | { past_month: EmptyObject }
+                            | { past_year: EmptyObject }
+                            | { next_week: EmptyObject }
+                            | { next_month: EmptyObject }
+                            | { next_year: EmptyObject }
                             | { is_empty: true }
                             | { is_not_empty: true }
                         }
@@ -44469,12 +46036,12 @@ type QueryDatabaseBodyParameters = {
                             | { after: string }
                             | { on_or_before: string }
                             | { on_or_after: string }
-                            | { past_week: Record<string, never> }
-                            | { past_month: Record<string, never> }
-                            | { past_year: Record<string, never> }
-                            | { next_week: Record<string, never> }
-                            | { next_month: Record<string, never> }
-                            | { next_year: Record<string, never> }
+                            | { past_week: EmptyObject }
+                            | { past_month: EmptyObject }
+                            | { past_year: EmptyObject }
+                            | { next_week: EmptyObject }
+                            | { next_month: EmptyObject }
+                            | { next_year: EmptyObject }
                             | { is_empty: true }
                             | { is_not_empty: true }
                         }
@@ -44494,12 +46061,12 @@ type QueryDatabaseBodyParameters = {
                       | { after: string }
                       | { on_or_before: string }
                       | { on_or_after: string }
-                      | { past_week: Record<string, never> }
-                      | { past_month: Record<string, never> }
-                      | { past_year: Record<string, never> }
-                      | { next_week: Record<string, never> }
-                      | { next_month: Record<string, never> }
-                      | { next_year: Record<string, never> }
+                      | { past_week: EmptyObject }
+                      | { past_month: EmptyObject }
+                      | { past_year: EmptyObject }
+                      | { next_week: EmptyObject }
+                      | { next_month: EmptyObject }
+                      | { next_year: EmptyObject }
                       | { is_empty: true }
                       | { is_not_empty: true }
                   }
@@ -44601,12 +46168,12 @@ type QueryDatabaseBodyParameters = {
                       | { after: string }
                       | { on_or_before: string }
                       | { on_or_after: string }
-                      | { past_week: Record<string, never> }
-                      | { past_month: Record<string, never> }
-                      | { past_year: Record<string, never> }
-                      | { next_week: Record<string, never> }
-                      | { next_month: Record<string, never> }
-                      | { next_year: Record<string, never> }
+                      | { past_week: EmptyObject }
+                      | { past_month: EmptyObject }
+                      | { past_year: EmptyObject }
+                      | { next_week: EmptyObject }
+                      | { next_month: EmptyObject }
+                      | { next_year: EmptyObject }
                       | { is_empty: true }
                       | { is_not_empty: true }
                     property: string
@@ -44703,12 +46270,12 @@ type QueryDatabaseBodyParameters = {
                       | { after: string }
                       | { on_or_before: string }
                       | { on_or_after: string }
-                      | { past_week: Record<string, never> }
-                      | { past_month: Record<string, never> }
-                      | { past_year: Record<string, never> }
-                      | { next_week: Record<string, never> }
-                      | { next_month: Record<string, never> }
-                      | { next_year: Record<string, never> }
+                      | { past_week: EmptyObject }
+                      | { past_month: EmptyObject }
+                      | { past_year: EmptyObject }
+                      | { next_week: EmptyObject }
+                      | { next_month: EmptyObject }
+                      | { next_year: EmptyObject }
                       | { is_empty: true }
                       | { is_not_empty: true }
                     property: string
@@ -44730,12 +46297,12 @@ type QueryDatabaseBodyParameters = {
                       | { after: string }
                       | { on_or_before: string }
                       | { on_or_after: string }
-                      | { past_week: Record<string, never> }
-                      | { past_month: Record<string, never> }
-                      | { past_year: Record<string, never> }
-                      | { next_week: Record<string, never> }
-                      | { next_month: Record<string, never> }
-                      | { next_year: Record<string, never> }
+                      | { past_week: EmptyObject }
+                      | { past_month: EmptyObject }
+                      | { past_year: EmptyObject }
+                      | { next_week: EmptyObject }
+                      | { next_month: EmptyObject }
+                      | { next_year: EmptyObject }
                       | { is_empty: true }
                       | { is_not_empty: true }
                     property: string
@@ -44777,12 +46344,12 @@ type QueryDatabaseBodyParameters = {
                             | { after: string }
                             | { on_or_before: string }
                             | { on_or_after: string }
-                            | { past_week: Record<string, never> }
-                            | { past_month: Record<string, never> }
-                            | { past_year: Record<string, never> }
-                            | { next_week: Record<string, never> }
-                            | { next_month: Record<string, never> }
-                            | { next_year: Record<string, never> }
+                            | { past_week: EmptyObject }
+                            | { past_month: EmptyObject }
+                            | { past_year: EmptyObject }
+                            | { next_week: EmptyObject }
+                            | { next_month: EmptyObject }
+                            | { next_year: EmptyObject }
                             | { is_empty: true }
                             | { is_not_empty: true }
                         }
@@ -44848,12 +46415,12 @@ type QueryDatabaseBodyParameters = {
                                   | { after: string }
                                   | { on_or_before: string }
                                   | { on_or_after: string }
-                                  | { past_week: Record<string, never> }
-                                  | { past_month: Record<string, never> }
-                                  | { past_year: Record<string, never> }
-                                  | { next_week: Record<string, never> }
-                                  | { next_month: Record<string, never> }
-                                  | { next_year: Record<string, never> }
+                                  | { past_week: EmptyObject }
+                                  | { past_month: EmptyObject }
+                                  | { past_year: EmptyObject }
+                                  | { next_week: EmptyObject }
+                                  | { next_month: EmptyObject }
+                                  | { next_year: EmptyObject }
                                   | { is_empty: true }
                                   | { is_not_empty: true }
                               }
@@ -44927,12 +46494,12 @@ type QueryDatabaseBodyParameters = {
                                   | { after: string }
                                   | { on_or_before: string }
                                   | { on_or_after: string }
-                                  | { past_week: Record<string, never> }
-                                  | { past_month: Record<string, never> }
-                                  | { past_year: Record<string, never> }
-                                  | { next_week: Record<string, never> }
-                                  | { next_month: Record<string, never> }
-                                  | { next_year: Record<string, never> }
+                                  | { past_week: EmptyObject }
+                                  | { past_month: EmptyObject }
+                                  | { past_year: EmptyObject }
+                                  | { next_week: EmptyObject }
+                                  | { next_month: EmptyObject }
+                                  | { next_year: EmptyObject }
                                   | { is_empty: true }
                                   | { is_not_empty: true }
                               }
@@ -45006,12 +46573,12 @@ type QueryDatabaseBodyParameters = {
                                   | { after: string }
                                   | { on_or_before: string }
                                   | { on_or_after: string }
-                                  | { past_week: Record<string, never> }
-                                  | { past_month: Record<string, never> }
-                                  | { past_year: Record<string, never> }
-                                  | { next_week: Record<string, never> }
-                                  | { next_month: Record<string, never> }
-                                  | { next_year: Record<string, never> }
+                                  | { past_week: EmptyObject }
+                                  | { past_month: EmptyObject }
+                                  | { past_year: EmptyObject }
+                                  | { next_week: EmptyObject }
+                                  | { next_month: EmptyObject }
+                                  | { next_year: EmptyObject }
                                   | { is_empty: true }
                                   | { is_not_empty: true }
                               }
@@ -45035,12 +46602,12 @@ type QueryDatabaseBodyParameters = {
                             | { after: string }
                             | { on_or_before: string }
                             | { on_or_after: string }
-                            | { past_week: Record<string, never> }
-                            | { past_month: Record<string, never> }
-                            | { past_year: Record<string, never> }
-                            | { next_week: Record<string, never> }
-                            | { next_month: Record<string, never> }
-                            | { next_year: Record<string, never> }
+                            | { past_week: EmptyObject }
+                            | { past_month: EmptyObject }
+                            | { past_year: EmptyObject }
+                            | { next_week: EmptyObject }
+                            | { next_month: EmptyObject }
+                            | { next_year: EmptyObject }
                             | { is_empty: true }
                             | { is_not_empty: true }
                         }
@@ -45144,12 +46711,12 @@ type QueryDatabaseBodyParameters = {
                       | { after: string }
                       | { on_or_before: string }
                       | { on_or_after: string }
-                      | { past_week: Record<string, never> }
-                      | { past_month: Record<string, never> }
-                      | { past_year: Record<string, never> }
-                      | { next_week: Record<string, never> }
-                      | { next_month: Record<string, never> }
-                      | { next_year: Record<string, never> }
+                      | { past_week: EmptyObject }
+                      | { past_month: EmptyObject }
+                      | { past_year: EmptyObject }
+                      | { next_week: EmptyObject }
+                      | { next_month: EmptyObject }
+                      | { next_year: EmptyObject }
                       | { is_empty: true }
                       | { is_not_empty: true }
                     property: string
@@ -45246,12 +46813,12 @@ type QueryDatabaseBodyParameters = {
                       | { after: string }
                       | { on_or_before: string }
                       | { on_or_after: string }
-                      | { past_week: Record<string, never> }
-                      | { past_month: Record<string, never> }
-                      | { past_year: Record<string, never> }
-                      | { next_week: Record<string, never> }
-                      | { next_month: Record<string, never> }
-                      | { next_year: Record<string, never> }
+                      | { past_week: EmptyObject }
+                      | { past_month: EmptyObject }
+                      | { past_year: EmptyObject }
+                      | { next_week: EmptyObject }
+                      | { next_month: EmptyObject }
+                      | { next_year: EmptyObject }
                       | { is_empty: true }
                       | { is_not_empty: true }
                     property: string
@@ -45273,12 +46840,12 @@ type QueryDatabaseBodyParameters = {
                       | { after: string }
                       | { on_or_before: string }
                       | { on_or_after: string }
-                      | { past_week: Record<string, never> }
-                      | { past_month: Record<string, never> }
-                      | { past_year: Record<string, never> }
-                      | { next_week: Record<string, never> }
-                      | { next_month: Record<string, never> }
-                      | { next_year: Record<string, never> }
+                      | { past_week: EmptyObject }
+                      | { past_month: EmptyObject }
+                      | { past_year: EmptyObject }
+                      | { next_week: EmptyObject }
+                      | { next_month: EmptyObject }
+                      | { next_year: EmptyObject }
                       | { is_empty: true }
                       | { is_not_empty: true }
                     property: string
@@ -45320,12 +46887,12 @@ type QueryDatabaseBodyParameters = {
                             | { after: string }
                             | { on_or_before: string }
                             | { on_or_after: string }
-                            | { past_week: Record<string, never> }
-                            | { past_month: Record<string, never> }
-                            | { past_year: Record<string, never> }
-                            | { next_week: Record<string, never> }
-                            | { next_month: Record<string, never> }
-                            | { next_year: Record<string, never> }
+                            | { past_week: EmptyObject }
+                            | { past_month: EmptyObject }
+                            | { past_year: EmptyObject }
+                            | { next_week: EmptyObject }
+                            | { next_month: EmptyObject }
+                            | { next_year: EmptyObject }
                             | { is_empty: true }
                             | { is_not_empty: true }
                         }
@@ -45391,12 +46958,12 @@ type QueryDatabaseBodyParameters = {
                                   | { after: string }
                                   | { on_or_before: string }
                                   | { on_or_after: string }
-                                  | { past_week: Record<string, never> }
-                                  | { past_month: Record<string, never> }
-                                  | { past_year: Record<string, never> }
-                                  | { next_week: Record<string, never> }
-                                  | { next_month: Record<string, never> }
-                                  | { next_year: Record<string, never> }
+                                  | { past_week: EmptyObject }
+                                  | { past_month: EmptyObject }
+                                  | { past_year: EmptyObject }
+                                  | { next_week: EmptyObject }
+                                  | { next_month: EmptyObject }
+                                  | { next_year: EmptyObject }
                                   | { is_empty: true }
                                   | { is_not_empty: true }
                               }
@@ -45470,12 +47037,12 @@ type QueryDatabaseBodyParameters = {
                                   | { after: string }
                                   | { on_or_before: string }
                                   | { on_or_after: string }
-                                  | { past_week: Record<string, never> }
-                                  | { past_month: Record<string, never> }
-                                  | { past_year: Record<string, never> }
-                                  | { next_week: Record<string, never> }
-                                  | { next_month: Record<string, never> }
-                                  | { next_year: Record<string, never> }
+                                  | { past_week: EmptyObject }
+                                  | { past_month: EmptyObject }
+                                  | { past_year: EmptyObject }
+                                  | { next_week: EmptyObject }
+                                  | { next_month: EmptyObject }
+                                  | { next_year: EmptyObject }
                                   | { is_empty: true }
                                   | { is_not_empty: true }
                               }
@@ -45549,12 +47116,12 @@ type QueryDatabaseBodyParameters = {
                                   | { after: string }
                                   | { on_or_before: string }
                                   | { on_or_after: string }
-                                  | { past_week: Record<string, never> }
-                                  | { past_month: Record<string, never> }
-                                  | { past_year: Record<string, never> }
-                                  | { next_week: Record<string, never> }
-                                  | { next_month: Record<string, never> }
-                                  | { next_year: Record<string, never> }
+                                  | { past_week: EmptyObject }
+                                  | { past_month: EmptyObject }
+                                  | { past_year: EmptyObject }
+                                  | { next_week: EmptyObject }
+                                  | { next_month: EmptyObject }
+                                  | { next_year: EmptyObject }
                                   | { is_empty: true }
                                   | { is_not_empty: true }
                               }
@@ -45578,12 +47145,12 @@ type QueryDatabaseBodyParameters = {
                             | { after: string }
                             | { on_or_before: string }
                             | { on_or_after: string }
-                            | { past_week: Record<string, never> }
-                            | { past_month: Record<string, never> }
-                            | { past_year: Record<string, never> }
-                            | { next_week: Record<string, never> }
-                            | { next_month: Record<string, never> }
-                            | { next_year: Record<string, never> }
+                            | { past_week: EmptyObject }
+                            | { past_month: EmptyObject }
+                            | { past_year: EmptyObject }
+                            | { next_week: EmptyObject }
+                            | { next_month: EmptyObject }
+                            | { next_year: EmptyObject }
                             | { is_empty: true }
                             | { is_not_empty: true }
                         }
@@ -45689,12 +47256,12 @@ type QueryDatabaseBodyParameters = {
                 | { after: string }
                 | { on_or_before: string }
                 | { on_or_after: string }
-                | { past_week: Record<string, never> }
-                | { past_month: Record<string, never> }
-                | { past_year: Record<string, never> }
-                | { next_week: Record<string, never> }
-                | { next_month: Record<string, never> }
-                | { next_year: Record<string, never> }
+                | { past_week: EmptyObject }
+                | { past_month: EmptyObject }
+                | { past_year: EmptyObject }
+                | { next_week: EmptyObject }
+                | { next_month: EmptyObject }
+                | { next_year: EmptyObject }
                 | { is_empty: true }
                 | { is_not_empty: true }
               property: string
@@ -45791,12 +47358,12 @@ type QueryDatabaseBodyParameters = {
                 | { after: string }
                 | { on_or_before: string }
                 | { on_or_after: string }
-                | { past_week: Record<string, never> }
-                | { past_month: Record<string, never> }
-                | { past_year: Record<string, never> }
-                | { next_week: Record<string, never> }
-                | { next_month: Record<string, never> }
-                | { next_year: Record<string, never> }
+                | { past_week: EmptyObject }
+                | { past_month: EmptyObject }
+                | { past_year: EmptyObject }
+                | { next_week: EmptyObject }
+                | { next_month: EmptyObject }
+                | { next_year: EmptyObject }
                 | { is_empty: true }
                 | { is_not_empty: true }
               property: string
@@ -45818,12 +47385,12 @@ type QueryDatabaseBodyParameters = {
                 | { after: string }
                 | { on_or_before: string }
                 | { on_or_after: string }
-                | { past_week: Record<string, never> }
-                | { past_month: Record<string, never> }
-                | { past_year: Record<string, never> }
-                | { next_week: Record<string, never> }
-                | { next_month: Record<string, never> }
-                | { next_year: Record<string, never> }
+                | { past_week: EmptyObject }
+                | { past_month: EmptyObject }
+                | { past_year: EmptyObject }
+                | { next_week: EmptyObject }
+                | { next_month: EmptyObject }
+                | { next_year: EmptyObject }
                 | { is_empty: true }
                 | { is_not_empty: true }
               property: string
@@ -45863,12 +47430,12 @@ type QueryDatabaseBodyParameters = {
                       | { after: string }
                       | { on_or_before: string }
                       | { on_or_after: string }
-                      | { past_week: Record<string, never> }
-                      | { past_month: Record<string, never> }
-                      | { past_year: Record<string, never> }
-                      | { next_week: Record<string, never> }
-                      | { next_month: Record<string, never> }
-                      | { next_year: Record<string, never> }
+                      | { past_week: EmptyObject }
+                      | { past_month: EmptyObject }
+                      | { past_year: EmptyObject }
+                      | { next_week: EmptyObject }
+                      | { next_month: EmptyObject }
+                      | { next_year: EmptyObject }
                       | { is_empty: true }
                       | { is_not_empty: true }
                   }
@@ -45934,12 +47501,12 @@ type QueryDatabaseBodyParameters = {
                             | { after: string }
                             | { on_or_before: string }
                             | { on_or_after: string }
-                            | { past_week: Record<string, never> }
-                            | { past_month: Record<string, never> }
-                            | { past_year: Record<string, never> }
-                            | { next_week: Record<string, never> }
-                            | { next_month: Record<string, never> }
-                            | { next_year: Record<string, never> }
+                            | { past_week: EmptyObject }
+                            | { past_month: EmptyObject }
+                            | { past_year: EmptyObject }
+                            | { next_week: EmptyObject }
+                            | { next_month: EmptyObject }
+                            | { next_year: EmptyObject }
                             | { is_empty: true }
                             | { is_not_empty: true }
                         }
@@ -46009,12 +47576,12 @@ type QueryDatabaseBodyParameters = {
                             | { after: string }
                             | { on_or_before: string }
                             | { on_or_after: string }
-                            | { past_week: Record<string, never> }
-                            | { past_month: Record<string, never> }
-                            | { past_year: Record<string, never> }
-                            | { next_week: Record<string, never> }
-                            | { next_month: Record<string, never> }
-                            | { next_year: Record<string, never> }
+                            | { past_week: EmptyObject }
+                            | { past_month: EmptyObject }
+                            | { past_year: EmptyObject }
+                            | { next_week: EmptyObject }
+                            | { next_month: EmptyObject }
+                            | { next_year: EmptyObject }
                             | { is_empty: true }
                             | { is_not_empty: true }
                         }
@@ -46084,12 +47651,12 @@ type QueryDatabaseBodyParameters = {
                             | { after: string }
                             | { on_or_before: string }
                             | { on_or_after: string }
-                            | { past_week: Record<string, never> }
-                            | { past_month: Record<string, never> }
-                            | { past_year: Record<string, never> }
-                            | { next_week: Record<string, never> }
-                            | { next_month: Record<string, never> }
-                            | { next_year: Record<string, never> }
+                            | { past_week: EmptyObject }
+                            | { past_month: EmptyObject }
+                            | { past_year: EmptyObject }
+                            | { next_week: EmptyObject }
+                            | { next_month: EmptyObject }
+                            | { next_year: EmptyObject }
                             | { is_empty: true }
                             | { is_not_empty: true }
                         }
@@ -46109,12 +47676,12 @@ type QueryDatabaseBodyParameters = {
                       | { after: string }
                       | { on_or_before: string }
                       | { on_or_after: string }
-                      | { past_week: Record<string, never> }
-                      | { past_month: Record<string, never> }
-                      | { past_year: Record<string, never> }
-                      | { next_week: Record<string, never> }
-                      | { next_month: Record<string, never> }
-                      | { next_year: Record<string, never> }
+                      | { past_week: EmptyObject }
+                      | { past_month: EmptyObject }
+                      | { past_year: EmptyObject }
+                      | { next_week: EmptyObject }
+                      | { next_month: EmptyObject }
+                      | { next_year: EmptyObject }
                       | { is_empty: true }
                       | { is_not_empty: true }
                   }
@@ -46216,12 +47783,12 @@ type QueryDatabaseBodyParameters = {
                       | { after: string }
                       | { on_or_before: string }
                       | { on_or_after: string }
-                      | { past_week: Record<string, never> }
-                      | { past_month: Record<string, never> }
-                      | { past_year: Record<string, never> }
-                      | { next_week: Record<string, never> }
-                      | { next_month: Record<string, never> }
-                      | { next_year: Record<string, never> }
+                      | { past_week: EmptyObject }
+                      | { past_month: EmptyObject }
+                      | { past_year: EmptyObject }
+                      | { next_week: EmptyObject }
+                      | { next_month: EmptyObject }
+                      | { next_year: EmptyObject }
                       | { is_empty: true }
                       | { is_not_empty: true }
                     property: string
@@ -46318,12 +47885,12 @@ type QueryDatabaseBodyParameters = {
                       | { after: string }
                       | { on_or_before: string }
                       | { on_or_after: string }
-                      | { past_week: Record<string, never> }
-                      | { past_month: Record<string, never> }
-                      | { past_year: Record<string, never> }
-                      | { next_week: Record<string, never> }
-                      | { next_month: Record<string, never> }
-                      | { next_year: Record<string, never> }
+                      | { past_week: EmptyObject }
+                      | { past_month: EmptyObject }
+                      | { past_year: EmptyObject }
+                      | { next_week: EmptyObject }
+                      | { next_month: EmptyObject }
+                      | { next_year: EmptyObject }
                       | { is_empty: true }
                       | { is_not_empty: true }
                     property: string
@@ -46345,12 +47912,12 @@ type QueryDatabaseBodyParameters = {
                       | { after: string }
                       | { on_or_before: string }
                       | { on_or_after: string }
-                      | { past_week: Record<string, never> }
-                      | { past_month: Record<string, never> }
-                      | { past_year: Record<string, never> }
-                      | { next_week: Record<string, never> }
-                      | { next_month: Record<string, never> }
-                      | { next_year: Record<string, never> }
+                      | { past_week: EmptyObject }
+                      | { past_month: EmptyObject }
+                      | { past_year: EmptyObject }
+                      | { next_week: EmptyObject }
+                      | { next_month: EmptyObject }
+                      | { next_year: EmptyObject }
                       | { is_empty: true }
                       | { is_not_empty: true }
                     property: string
@@ -46392,12 +47959,12 @@ type QueryDatabaseBodyParameters = {
                             | { after: string }
                             | { on_or_before: string }
                             | { on_or_after: string }
-                            | { past_week: Record<string, never> }
-                            | { past_month: Record<string, never> }
-                            | { past_year: Record<string, never> }
-                            | { next_week: Record<string, never> }
-                            | { next_month: Record<string, never> }
-                            | { next_year: Record<string, never> }
+                            | { past_week: EmptyObject }
+                            | { past_month: EmptyObject }
+                            | { past_year: EmptyObject }
+                            | { next_week: EmptyObject }
+                            | { next_month: EmptyObject }
+                            | { next_year: EmptyObject }
                             | { is_empty: true }
                             | { is_not_empty: true }
                         }
@@ -46463,12 +48030,12 @@ type QueryDatabaseBodyParameters = {
                                   | { after: string }
                                   | { on_or_before: string }
                                   | { on_or_after: string }
-                                  | { past_week: Record<string, never> }
-                                  | { past_month: Record<string, never> }
-                                  | { past_year: Record<string, never> }
-                                  | { next_week: Record<string, never> }
-                                  | { next_month: Record<string, never> }
-                                  | { next_year: Record<string, never> }
+                                  | { past_week: EmptyObject }
+                                  | { past_month: EmptyObject }
+                                  | { past_year: EmptyObject }
+                                  | { next_week: EmptyObject }
+                                  | { next_month: EmptyObject }
+                                  | { next_year: EmptyObject }
                                   | { is_empty: true }
                                   | { is_not_empty: true }
                               }
@@ -46542,12 +48109,12 @@ type QueryDatabaseBodyParameters = {
                                   | { after: string }
                                   | { on_or_before: string }
                                   | { on_or_after: string }
-                                  | { past_week: Record<string, never> }
-                                  | { past_month: Record<string, never> }
-                                  | { past_year: Record<string, never> }
-                                  | { next_week: Record<string, never> }
-                                  | { next_month: Record<string, never> }
-                                  | { next_year: Record<string, never> }
+                                  | { past_week: EmptyObject }
+                                  | { past_month: EmptyObject }
+                                  | { past_year: EmptyObject }
+                                  | { next_week: EmptyObject }
+                                  | { next_month: EmptyObject }
+                                  | { next_year: EmptyObject }
                                   | { is_empty: true }
                                   | { is_not_empty: true }
                               }
@@ -46621,12 +48188,12 @@ type QueryDatabaseBodyParameters = {
                                   | { after: string }
                                   | { on_or_before: string }
                                   | { on_or_after: string }
-                                  | { past_week: Record<string, never> }
-                                  | { past_month: Record<string, never> }
-                                  | { past_year: Record<string, never> }
-                                  | { next_week: Record<string, never> }
-                                  | { next_month: Record<string, never> }
-                                  | { next_year: Record<string, never> }
+                                  | { past_week: EmptyObject }
+                                  | { past_month: EmptyObject }
+                                  | { past_year: EmptyObject }
+                                  | { next_week: EmptyObject }
+                                  | { next_month: EmptyObject }
+                                  | { next_year: EmptyObject }
                                   | { is_empty: true }
                                   | { is_not_empty: true }
                               }
@@ -46650,12 +48217,12 @@ type QueryDatabaseBodyParameters = {
                             | { after: string }
                             | { on_or_before: string }
                             | { on_or_after: string }
-                            | { past_week: Record<string, never> }
-                            | { past_month: Record<string, never> }
-                            | { past_year: Record<string, never> }
-                            | { next_week: Record<string, never> }
-                            | { next_month: Record<string, never> }
-                            | { next_year: Record<string, never> }
+                            | { past_week: EmptyObject }
+                            | { past_month: EmptyObject }
+                            | { past_year: EmptyObject }
+                            | { next_week: EmptyObject }
+                            | { next_month: EmptyObject }
+                            | { next_year: EmptyObject }
                             | { is_empty: true }
                             | { is_not_empty: true }
                         }
@@ -46759,12 +48326,12 @@ type QueryDatabaseBodyParameters = {
                       | { after: string }
                       | { on_or_before: string }
                       | { on_or_after: string }
-                      | { past_week: Record<string, never> }
-                      | { past_month: Record<string, never> }
-                      | { past_year: Record<string, never> }
-                      | { next_week: Record<string, never> }
-                      | { next_month: Record<string, never> }
-                      | { next_year: Record<string, never> }
+                      | { past_week: EmptyObject }
+                      | { past_month: EmptyObject }
+                      | { past_year: EmptyObject }
+                      | { next_week: EmptyObject }
+                      | { next_month: EmptyObject }
+                      | { next_year: EmptyObject }
                       | { is_empty: true }
                       | { is_not_empty: true }
                     property: string
@@ -46861,12 +48428,12 @@ type QueryDatabaseBodyParameters = {
                       | { after: string }
                       | { on_or_before: string }
                       | { on_or_after: string }
-                      | { past_week: Record<string, never> }
-                      | { past_month: Record<string, never> }
-                      | { past_year: Record<string, never> }
-                      | { next_week: Record<string, never> }
-                      | { next_month: Record<string, never> }
-                      | { next_year: Record<string, never> }
+                      | { past_week: EmptyObject }
+                      | { past_month: EmptyObject }
+                      | { past_year: EmptyObject }
+                      | { next_week: EmptyObject }
+                      | { next_month: EmptyObject }
+                      | { next_year: EmptyObject }
                       | { is_empty: true }
                       | { is_not_empty: true }
                     property: string
@@ -46888,12 +48455,12 @@ type QueryDatabaseBodyParameters = {
                       | { after: string }
                       | { on_or_before: string }
                       | { on_or_after: string }
-                      | { past_week: Record<string, never> }
-                      | { past_month: Record<string, never> }
-                      | { past_year: Record<string, never> }
-                      | { next_week: Record<string, never> }
-                      | { next_month: Record<string, never> }
-                      | { next_year: Record<string, never> }
+                      | { past_week: EmptyObject }
+                      | { past_month: EmptyObject }
+                      | { past_year: EmptyObject }
+                      | { next_week: EmptyObject }
+                      | { next_month: EmptyObject }
+                      | { next_year: EmptyObject }
                       | { is_empty: true }
                       | { is_not_empty: true }
                     property: string
@@ -46935,12 +48502,12 @@ type QueryDatabaseBodyParameters = {
                             | { after: string }
                             | { on_or_before: string }
                             | { on_or_after: string }
-                            | { past_week: Record<string, never> }
-                            | { past_month: Record<string, never> }
-                            | { past_year: Record<string, never> }
-                            | { next_week: Record<string, never> }
-                            | { next_month: Record<string, never> }
-                            | { next_year: Record<string, never> }
+                            | { past_week: EmptyObject }
+                            | { past_month: EmptyObject }
+                            | { past_year: EmptyObject }
+                            | { next_week: EmptyObject }
+                            | { next_month: EmptyObject }
+                            | { next_year: EmptyObject }
                             | { is_empty: true }
                             | { is_not_empty: true }
                         }
@@ -47006,12 +48573,12 @@ type QueryDatabaseBodyParameters = {
                                   | { after: string }
                                   | { on_or_before: string }
                                   | { on_or_after: string }
-                                  | { past_week: Record<string, never> }
-                                  | { past_month: Record<string, never> }
-                                  | { past_year: Record<string, never> }
-                                  | { next_week: Record<string, never> }
-                                  | { next_month: Record<string, never> }
-                                  | { next_year: Record<string, never> }
+                                  | { past_week: EmptyObject }
+                                  | { past_month: EmptyObject }
+                                  | { past_year: EmptyObject }
+                                  | { next_week: EmptyObject }
+                                  | { next_month: EmptyObject }
+                                  | { next_year: EmptyObject }
                                   | { is_empty: true }
                                   | { is_not_empty: true }
                               }
@@ -47085,12 +48652,12 @@ type QueryDatabaseBodyParameters = {
                                   | { after: string }
                                   | { on_or_before: string }
                                   | { on_or_after: string }
-                                  | { past_week: Record<string, never> }
-                                  | { past_month: Record<string, never> }
-                                  | { past_year: Record<string, never> }
-                                  | { next_week: Record<string, never> }
-                                  | { next_month: Record<string, never> }
-                                  | { next_year: Record<string, never> }
+                                  | { past_week: EmptyObject }
+                                  | { past_month: EmptyObject }
+                                  | { past_year: EmptyObject }
+                                  | { next_week: EmptyObject }
+                                  | { next_month: EmptyObject }
+                                  | { next_year: EmptyObject }
                                   | { is_empty: true }
                                   | { is_not_empty: true }
                               }
@@ -47164,12 +48731,12 @@ type QueryDatabaseBodyParameters = {
                                   | { after: string }
                                   | { on_or_before: string }
                                   | { on_or_after: string }
-                                  | { past_week: Record<string, never> }
-                                  | { past_month: Record<string, never> }
-                                  | { past_year: Record<string, never> }
-                                  | { next_week: Record<string, never> }
-                                  | { next_month: Record<string, never> }
-                                  | { next_year: Record<string, never> }
+                                  | { past_week: EmptyObject }
+                                  | { past_month: EmptyObject }
+                                  | { past_year: EmptyObject }
+                                  | { next_week: EmptyObject }
+                                  | { next_month: EmptyObject }
+                                  | { next_year: EmptyObject }
                                   | { is_empty: true }
                                   | { is_not_empty: true }
                               }
@@ -47193,12 +48760,12 @@ type QueryDatabaseBodyParameters = {
                             | { after: string }
                             | { on_or_before: string }
                             | { on_or_after: string }
-                            | { past_week: Record<string, never> }
-                            | { past_month: Record<string, never> }
-                            | { past_year: Record<string, never> }
-                            | { next_week: Record<string, never> }
-                            | { next_month: Record<string, never> }
-                            | { next_year: Record<string, never> }
+                            | { past_week: EmptyObject }
+                            | { past_month: EmptyObject }
+                            | { past_year: EmptyObject }
+                            | { next_week: EmptyObject }
+                            | { next_month: EmptyObject }
+                            | { next_year: EmptyObject }
                             | { is_empty: true }
                             | { is_not_empty: true }
                         }
@@ -47302,12 +48869,12 @@ type QueryDatabaseBodyParameters = {
           | { after: string }
           | { on_or_before: string }
           | { on_or_after: string }
-          | { past_week: Record<string, never> }
-          | { past_month: Record<string, never> }
-          | { past_year: Record<string, never> }
-          | { next_week: Record<string, never> }
-          | { next_month: Record<string, never> }
-          | { next_year: Record<string, never> }
+          | { past_week: EmptyObject }
+          | { past_month: EmptyObject }
+          | { past_year: EmptyObject }
+          | { next_week: EmptyObject }
+          | { next_month: EmptyObject }
+          | { next_year: EmptyObject }
           | { is_empty: true }
           | { is_not_empty: true }
         property: string
@@ -47404,12 +48971,12 @@ type QueryDatabaseBodyParameters = {
           | { after: string }
           | { on_or_before: string }
           | { on_or_after: string }
-          | { past_week: Record<string, never> }
-          | { past_month: Record<string, never> }
-          | { past_year: Record<string, never> }
-          | { next_week: Record<string, never> }
-          | { next_month: Record<string, never> }
-          | { next_year: Record<string, never> }
+          | { past_week: EmptyObject }
+          | { past_month: EmptyObject }
+          | { past_year: EmptyObject }
+          | { next_week: EmptyObject }
+          | { next_month: EmptyObject }
+          | { next_year: EmptyObject }
           | { is_empty: true }
           | { is_not_empty: true }
         property: string
@@ -47431,12 +48998,12 @@ type QueryDatabaseBodyParameters = {
           | { after: string }
           | { on_or_before: string }
           | { on_or_after: string }
-          | { past_week: Record<string, never> }
-          | { past_month: Record<string, never> }
-          | { past_year: Record<string, never> }
-          | { next_week: Record<string, never> }
-          | { next_month: Record<string, never> }
-          | { next_year: Record<string, never> }
+          | { past_week: EmptyObject }
+          | { past_month: EmptyObject }
+          | { past_year: EmptyObject }
+          | { next_week: EmptyObject }
+          | { next_month: EmptyObject }
+          | { next_year: EmptyObject }
           | { is_empty: true }
           | { is_not_empty: true }
         property: string
@@ -47474,12 +49041,12 @@ type QueryDatabaseBodyParameters = {
                 | { after: string }
                 | { on_or_before: string }
                 | { on_or_after: string }
-                | { past_week: Record<string, never> }
-                | { past_month: Record<string, never> }
-                | { past_year: Record<string, never> }
-                | { next_week: Record<string, never> }
-                | { next_month: Record<string, never> }
-                | { next_year: Record<string, never> }
+                | { past_week: EmptyObject }
+                | { past_month: EmptyObject }
+                | { past_year: EmptyObject }
+                | { next_week: EmptyObject }
+                | { next_month: EmptyObject }
+                | { next_year: EmptyObject }
                 | { is_empty: true }
                 | { is_not_empty: true }
             }
@@ -47543,12 +49110,12 @@ type QueryDatabaseBodyParameters = {
                       | { after: string }
                       | { on_or_before: string }
                       | { on_or_after: string }
-                      | { past_week: Record<string, never> }
-                      | { past_month: Record<string, never> }
-                      | { past_year: Record<string, never> }
-                      | { next_week: Record<string, never> }
-                      | { next_month: Record<string, never> }
-                      | { next_year: Record<string, never> }
+                      | { past_week: EmptyObject }
+                      | { past_month: EmptyObject }
+                      | { past_year: EmptyObject }
+                      | { next_week: EmptyObject }
+                      | { next_month: EmptyObject }
+                      | { next_year: EmptyObject }
                       | { is_empty: true }
                       | { is_not_empty: true }
                   }
@@ -47616,12 +49183,12 @@ type QueryDatabaseBodyParameters = {
                       | { after: string }
                       | { on_or_before: string }
                       | { on_or_after: string }
-                      | { past_week: Record<string, never> }
-                      | { past_month: Record<string, never> }
-                      | { past_year: Record<string, never> }
-                      | { next_week: Record<string, never> }
-                      | { next_month: Record<string, never> }
-                      | { next_year: Record<string, never> }
+                      | { past_week: EmptyObject }
+                      | { past_month: EmptyObject }
+                      | { past_year: EmptyObject }
+                      | { next_week: EmptyObject }
+                      | { next_month: EmptyObject }
+                      | { next_year: EmptyObject }
                       | { is_empty: true }
                       | { is_not_empty: true }
                   }
@@ -47689,12 +49256,12 @@ type QueryDatabaseBodyParameters = {
                       | { after: string }
                       | { on_or_before: string }
                       | { on_or_after: string }
-                      | { past_week: Record<string, never> }
-                      | { past_month: Record<string, never> }
-                      | { past_year: Record<string, never> }
-                      | { next_week: Record<string, never> }
-                      | { next_month: Record<string, never> }
-                      | { next_year: Record<string, never> }
+                      | { past_week: EmptyObject }
+                      | { past_month: EmptyObject }
+                      | { past_year: EmptyObject }
+                      | { next_week: EmptyObject }
+                      | { next_month: EmptyObject }
+                      | { next_year: EmptyObject }
                       | { is_empty: true }
                       | { is_not_empty: true }
                   }
@@ -47714,12 +49281,12 @@ type QueryDatabaseBodyParameters = {
                 | { after: string }
                 | { on_or_before: string }
                 | { on_or_after: string }
-                | { past_week: Record<string, never> }
-                | { past_month: Record<string, never> }
-                | { past_year: Record<string, never> }
-                | { next_week: Record<string, never> }
-                | { next_month: Record<string, never> }
-                | { next_year: Record<string, never> }
+                | { past_week: EmptyObject }
+                | { past_month: EmptyObject }
+                | { past_year: EmptyObject }
+                | { next_week: EmptyObject }
+                | { next_month: EmptyObject }
+                | { next_year: EmptyObject }
                 | { is_empty: true }
                 | { is_not_empty: true }
             }
@@ -47778,7 +49345,11 @@ export type QueryDatabaseResponse =
           }
         | {
             type: "date"
-            date: { start: string; end: string | null } | null
+            date: {
+              start: string
+              end: string | null
+              time_zone: TimeZoneRequest | null
+            } | null
             function:
               | "count"
               | "count_values"
@@ -47863,7 +49434,7 @@ export type QueryDatabaseResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -47895,7 +49466,11 @@ export type QueryDatabaseResponse =
                             }
                           | {
                               type: "date"
-                              date: { start: string; end: string | null }
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              }
                             }
                           | {
                               type: "link_preview"
@@ -48025,7 +49600,7 @@ export type QueryDatabaseResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -48057,7 +49632,11 @@ export type QueryDatabaseResponse =
                             }
                           | {
                               type: "date"
-                              date: { start: string; end: string | null }
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              }
                             }
                           | {
                               type: "link_preview"
@@ -48183,7 +49762,7 @@ export type QueryDatabaseResponse =
                     | {
                         type: "bot"
                         bot:
-                          | Record<string, never>
+                          | EmptyObject
                           | {
                               owner:
                                 | {
@@ -48212,7 +49791,11 @@ export type QueryDatabaseResponse =
               | { type: "phone_number"; phone_number: string | null }
               | {
                   type: "date"
-                  date: { start: string; end: string | null } | null
+                  date: {
+                    start: string
+                    end: string | null
+                    time_zone: TimeZoneRequest | null
+                  } | null
                 }
               | {
                   type: "files"
@@ -48236,7 +49819,11 @@ export type QueryDatabaseResponse =
                     | { type: "string"; string: string | null }
                     | {
                         type: "date"
-                        date: { start: string; end: string | null } | null
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
+                        } | null
                       }
                     | { type: "number"; number: number | null }
                     | { type: "boolean"; boolean: boolean | null }
@@ -48258,7 +49845,7 @@ export type QueryDatabaseResponse =
                     | {
                         type: "bot"
                         bot:
-                          | Record<string, never>
+                          | EmptyObject
                           | {
                               owner:
                                 | {
@@ -48298,7 +49885,7 @@ export type QueryDatabaseResponse =
                     | {
                         type: "bot"
                         bot:
-                          | Record<string, never>
+                          | EmptyObject
                           | {
                               owner:
                                 | {
@@ -48349,7 +49936,7 @@ export type QueryDatabaseResponse =
           }
         | {
             type: "unsupported"
-            unsupported: Record<string, never>
+            unsupported: EmptyObject
             function:
               | "count"
               | "count_values"
@@ -48436,7 +50023,7 @@ export type QueryDatabaseResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -48465,7 +50052,11 @@ export type QueryDatabaseResponse =
                         }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null }
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          }
                         }
                       | {
                           type: "link_preview"
@@ -48593,7 +50184,7 @@ export type QueryDatabaseResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -48622,7 +50213,11 @@ export type QueryDatabaseResponse =
                         }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null }
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          }
                         }
                       | {
                           type: "link_preview"
@@ -48751,7 +50346,7 @@ export type QueryDatabaseResponse =
                 | {
                     type: "bot"
                     bot:
-                      | Record<string, never>
+                      | EmptyObject
                       | {
                           owner:
                             | {
@@ -48781,7 +50376,11 @@ export type QueryDatabaseResponse =
           | { type: "phone_number"; phone_number: string | null; id: string }
           | {
               type: "date"
-              date: { start: string; end: string | null } | null
+              date: {
+                start: string
+                end: string | null
+                time_zone: TimeZoneRequest | null
+              } | null
               id: string
             }
           | {
@@ -48807,7 +50406,11 @@ export type QueryDatabaseResponse =
                 | { type: "string"; string: string | null }
                 | {
                     type: "date"
-                    date: { start: string; end: string | null } | null
+                    date: {
+                      start: string
+                      end: string | null
+                      time_zone: TimeZoneRequest | null
+                    } | null
                   }
                 | { type: "number"; number: number | null }
                 | { type: "boolean"; boolean: boolean | null }
@@ -48830,7 +50433,7 @@ export type QueryDatabaseResponse =
                 | {
                     type: "bot"
                     bot:
-                      | Record<string, never>
+                      | EmptyObject
                       | {
                           owner:
                             | {
@@ -48871,7 +50474,7 @@ export type QueryDatabaseResponse =
                 | {
                     type: "bot"
                     bot:
-                      | Record<string, never>
+                      | EmptyObject
                       | {
                           owner:
                             | {
@@ -48928,7 +50531,11 @@ export type QueryDatabaseResponse =
                   }
                 | {
                     type: "date"
-                    date: { start: string; end: string | null } | null
+                    date: {
+                      start: string
+                      end: string | null
+                      time_zone: TimeZoneRequest | null
+                    } | null
                     function:
                       | "count"
                       | "count_values"
@@ -49013,7 +50620,7 @@ export type QueryDatabaseResponse =
                                         | {
                                             type: "bot"
                                             bot:
-                                              | Record<string, never>
+                                              | EmptyObject
                                               | {
                                                   owner:
                                                     | {
@@ -49054,6 +50661,7 @@ export type QueryDatabaseResponse =
                                       date: {
                                         start: string
                                         end: string | null
+                                        time_zone: TimeZoneRequest | null
                                       }
                                     }
                                   | {
@@ -49187,7 +50795,7 @@ export type QueryDatabaseResponse =
                                         | {
                                             type: "bot"
                                             bot:
-                                              | Record<string, never>
+                                              | EmptyObject
                                               | {
                                                   owner:
                                                     | {
@@ -49228,6 +50836,7 @@ export type QueryDatabaseResponse =
                                       date: {
                                         start: string
                                         end: string | null
+                                        time_zone: TimeZoneRequest | null
                                       }
                                     }
                                   | {
@@ -49357,7 +50966,7 @@ export type QueryDatabaseResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -49389,7 +50998,11 @@ export type QueryDatabaseResponse =
                       | { type: "phone_number"; phone_number: string | null }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null } | null
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          } | null
                         }
                       | {
                           type: "files"
@@ -49416,6 +51029,7 @@ export type QueryDatabaseResponse =
                                 date: {
                                   start: string
                                   end: string | null
+                                  time_zone: TimeZoneRequest | null
                                 } | null
                               }
                             | { type: "number"; number: number | null }
@@ -49438,7 +51052,7 @@ export type QueryDatabaseResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -49481,7 +51095,7 @@ export type QueryDatabaseResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -49535,7 +51149,7 @@ export type QueryDatabaseResponse =
                   }
                 | {
                     type: "unsupported"
-                    unsupported: Record<string, never>
+                    unsupported: EmptyObject
                     function:
                       | "count"
                       | "count_values"
@@ -49648,7 +51262,7 @@ export type QueryDatabaseResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -49677,7 +51291,11 @@ export type QueryDatabaseResponse =
                         }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null }
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          }
                         }
                       | {
                           type: "link_preview"
@@ -49805,7 +51423,7 @@ export type QueryDatabaseResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -49834,7 +51452,11 @@ export type QueryDatabaseResponse =
                         }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null }
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          }
                         }
                       | {
                           type: "link_preview"
@@ -49963,7 +51585,7 @@ export type QueryDatabaseResponse =
                 | {
                     type: "bot"
                     bot:
-                      | Record<string, never>
+                      | EmptyObject
                       | {
                           owner:
                             | {
@@ -49993,7 +51615,11 @@ export type QueryDatabaseResponse =
           | { type: "phone_number"; phone_number: string | null; id: string }
           | {
               type: "date"
-              date: { start: string; end: string | null } | null
+              date: {
+                start: string
+                end: string | null
+                time_zone: TimeZoneRequest | null
+              } | null
               id: string
             }
           | {
@@ -50019,7 +51645,11 @@ export type QueryDatabaseResponse =
                 | { type: "string"; string: string | null }
                 | {
                     type: "date"
-                    date: { start: string; end: string | null } | null
+                    date: {
+                      start: string
+                      end: string | null
+                      time_zone: TimeZoneRequest | null
+                    } | null
                   }
                 | { type: "number"; number: number | null }
                 | { type: "boolean"; boolean: boolean | null }
@@ -50042,7 +51672,7 @@ export type QueryDatabaseResponse =
                 | {
                     type: "bot"
                     bot:
-                      | Record<string, never>
+                      | EmptyObject
                       | {
                           owner:
                             | {
@@ -50083,7 +51713,7 @@ export type QueryDatabaseResponse =
                 | {
                     type: "bot"
                     bot:
-                      | Record<string, never>
+                      | EmptyObject
                       | {
                           owner:
                             | {
@@ -50140,7 +51770,11 @@ export type QueryDatabaseResponse =
                   }
                 | {
                     type: "date"
-                    date: { start: string; end: string | null } | null
+                    date: {
+                      start: string
+                      end: string | null
+                      time_zone: TimeZoneRequest | null
+                    } | null
                     function:
                       | "count"
                       | "count_values"
@@ -50225,7 +51859,7 @@ export type QueryDatabaseResponse =
                                         | {
                                             type: "bot"
                                             bot:
-                                              | Record<string, never>
+                                              | EmptyObject
                                               | {
                                                   owner:
                                                     | {
@@ -50266,6 +51900,7 @@ export type QueryDatabaseResponse =
                                       date: {
                                         start: string
                                         end: string | null
+                                        time_zone: TimeZoneRequest | null
                                       }
                                     }
                                   | {
@@ -50399,7 +52034,7 @@ export type QueryDatabaseResponse =
                                         | {
                                             type: "bot"
                                             bot:
-                                              | Record<string, never>
+                                              | EmptyObject
                                               | {
                                                   owner:
                                                     | {
@@ -50440,6 +52075,7 @@ export type QueryDatabaseResponse =
                                       date: {
                                         start: string
                                         end: string | null
+                                        time_zone: TimeZoneRequest | null
                                       }
                                     }
                                   | {
@@ -50569,7 +52205,7 @@ export type QueryDatabaseResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -50601,7 +52237,11 @@ export type QueryDatabaseResponse =
                       | { type: "phone_number"; phone_number: string | null }
                       | {
                           type: "date"
-                          date: { start: string; end: string | null } | null
+                          date: {
+                            start: string
+                            end: string | null
+                            time_zone: TimeZoneRequest | null
+                          } | null
                         }
                       | {
                           type: "files"
@@ -50628,6 +52268,7 @@ export type QueryDatabaseResponse =
                                 date: {
                                   start: string
                                   end: string | null
+                                  time_zone: TimeZoneRequest | null
                                 } | null
                               }
                             | { type: "number"; number: number | null }
@@ -50650,7 +52291,7 @@ export type QueryDatabaseResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -50693,7 +52334,7 @@ export type QueryDatabaseResponse =
                             | {
                                 type: "bot"
                                 bot:
-                                  | Record<string, never>
+                                  | EmptyObject
                                   | {
                                       owner:
                                         | {
@@ -50747,7 +52388,7 @@ export type QueryDatabaseResponse =
                   }
                 | {
                     type: "unsupported"
-                    unsupported: Record<string, never>
+                    unsupported: EmptyObject
                     function:
                       | "count"
                       | "count_values"
@@ -50847,7 +52488,11 @@ export type ListDatabasesResponse =
           }
         | {
             type: "date"
-            date: { start: string; end: string | null } | null
+            date: {
+              start: string
+              end: string | null
+              time_zone: TimeZoneRequest | null
+            } | null
             function:
               | "count"
               | "count_values"
@@ -50932,7 +52577,7 @@ export type ListDatabasesResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -50964,7 +52609,11 @@ export type ListDatabasesResponse =
                             }
                           | {
                               type: "date"
-                              date: { start: string; end: string | null }
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              }
                             }
                           | {
                               type: "link_preview"
@@ -51094,7 +52743,7 @@ export type ListDatabasesResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -51126,7 +52775,11 @@ export type ListDatabasesResponse =
                             }
                           | {
                               type: "date"
-                              date: { start: string; end: string | null }
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              }
                             }
                           | {
                               type: "link_preview"
@@ -51252,7 +52905,7 @@ export type ListDatabasesResponse =
                     | {
                         type: "bot"
                         bot:
-                          | Record<string, never>
+                          | EmptyObject
                           | {
                               owner:
                                 | {
@@ -51281,7 +52934,11 @@ export type ListDatabasesResponse =
               | { type: "phone_number"; phone_number: string | null }
               | {
                   type: "date"
-                  date: { start: string; end: string | null } | null
+                  date: {
+                    start: string
+                    end: string | null
+                    time_zone: TimeZoneRequest | null
+                  } | null
                 }
               | {
                   type: "files"
@@ -51305,7 +52962,11 @@ export type ListDatabasesResponse =
                     | { type: "string"; string: string | null }
                     | {
                         type: "date"
-                        date: { start: string; end: string | null } | null
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
+                        } | null
                       }
                     | { type: "number"; number: number | null }
                     | { type: "boolean"; boolean: boolean | null }
@@ -51327,7 +52988,7 @@ export type ListDatabasesResponse =
                     | {
                         type: "bot"
                         bot:
-                          | Record<string, never>
+                          | EmptyObject
                           | {
                               owner:
                                 | {
@@ -51367,7 +53028,7 @@ export type ListDatabasesResponse =
                     | {
                         type: "bot"
                         bot:
-                          | Record<string, never>
+                          | EmptyObject
                           | {
                               owner:
                                 | {
@@ -51418,7 +53079,7 @@ export type ListDatabasesResponse =
           }
         | {
             type: "unsupported"
-            unsupported: Record<string, never>
+            unsupported: EmptyObject
             function:
               | "count"
               | "count_values"
@@ -51497,7 +53158,7 @@ export type ListDatabasesResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -51521,7 +53182,14 @@ export type ListDatabasesResponse =
                           object: "user"
                         }
                   }
-                | { type: "date"; date: { start: string; end: string | null } }
+                | {
+                    type: "date"
+                    date: {
+                      start: string
+                      end: string | null
+                      time_zone: TimeZoneRequest | null
+                    }
+                  }
                 | { type: "link_preview"; link_preview: { url: TextRequest } }
                 | { type: "page"; page: { id: IdRequest } }
                 | { type: "database"; database: { id: IdRequest } }
@@ -51743,81 +53411,51 @@ export type ListDatabasesResponse =
               id: string
               name: string
             }
-          | {
-              type: "title"
-              title: Record<string, never>
-              id: string
-              name: string
-            }
+          | { type: "title"; title: EmptyObject; id: string; name: string }
           | {
               type: "rich_text"
-              rich_text: Record<string, never>
+              rich_text: EmptyObject
               id: string
               name: string
             }
-          | {
-              type: "url"
-              url: Record<string, never>
-              id: string
-              name: string
-            }
-          | {
-              type: "people"
-              people: Record<string, never>
-              id: string
-              name: string
-            }
-          | {
-              type: "files"
-              files: Record<string, never>
-              id: string
-              name: string
-            }
-          | {
-              type: "email"
-              email: Record<string, never>
-              id: string
-              name: string
-            }
+          | { type: "url"; url: EmptyObject; id: string; name: string }
+          | { type: "people"; people: EmptyObject; id: string; name: string }
+          | { type: "files"; files: EmptyObject; id: string; name: string }
+          | { type: "email"; email: EmptyObject; id: string; name: string }
           | {
               type: "phone_number"
-              phone_number: Record<string, never>
+              phone_number: EmptyObject
               id: string
               name: string
             }
-          | {
-              type: "date"
-              date: Record<string, never>
-              id: string
-              name: string
-            }
+          | { type: "date"; date: EmptyObject; id: string; name: string }
           | {
               type: "checkbox"
-              checkbox: Record<string, never>
+              checkbox: EmptyObject
               id: string
               name: string
             }
           | {
               type: "created_by"
-              created_by: Record<string, never>
+              created_by: EmptyObject
               id: string
               name: string
             }
           | {
               type: "created_time"
-              created_time: Record<string, never>
+              created_time: EmptyObject
               id: string
               name: string
             }
           | {
               type: "last_edited_by"
-              last_edited_by: Record<string, never>
+              last_edited_by: EmptyObject
               id: string
               name: string
             }
           | {
               type: "last_edited_time"
-              last_edited_time: Record<string, never>
+              last_edited_time: EmptyObject
               id: string
               name: string
             }
@@ -51889,7 +53527,7 @@ export type ListDatabasesResponse =
                       | {
                           type: "bot"
                           bot:
-                            | Record<string, never>
+                            | EmptyObject
                             | {
                                 owner:
                                   | {
@@ -51913,7 +53551,14 @@ export type ListDatabasesResponse =
                           object: "user"
                         }
                   }
-                | { type: "date"; date: { start: string; end: string | null } }
+                | {
+                    type: "date"
+                    date: {
+                      start: string
+                      end: string | null
+                      time_zone: TimeZoneRequest | null
+                    }
+                  }
                 | { type: "link_preview"; link_preview: { url: TextRequest } }
                 | { type: "page"; page: { id: IdRequest } }
                 | { type: "database"; database: { id: IdRequest } }
@@ -52135,81 +53780,51 @@ export type ListDatabasesResponse =
               id: string
               name: string
             }
-          | {
-              type: "title"
-              title: Record<string, never>
-              id: string
-              name: string
-            }
+          | { type: "title"; title: EmptyObject; id: string; name: string }
           | {
               type: "rich_text"
-              rich_text: Record<string, never>
+              rich_text: EmptyObject
               id: string
               name: string
             }
-          | {
-              type: "url"
-              url: Record<string, never>
-              id: string
-              name: string
-            }
-          | {
-              type: "people"
-              people: Record<string, never>
-              id: string
-              name: string
-            }
-          | {
-              type: "files"
-              files: Record<string, never>
-              id: string
-              name: string
-            }
-          | {
-              type: "email"
-              email: Record<string, never>
-              id: string
-              name: string
-            }
+          | { type: "url"; url: EmptyObject; id: string; name: string }
+          | { type: "people"; people: EmptyObject; id: string; name: string }
+          | { type: "files"; files: EmptyObject; id: string; name: string }
+          | { type: "email"; email: EmptyObject; id: string; name: string }
           | {
               type: "phone_number"
-              phone_number: Record<string, never>
+              phone_number: EmptyObject
               id: string
               name: string
             }
-          | {
-              type: "date"
-              date: Record<string, never>
-              id: string
-              name: string
-            }
+          | { type: "date"; date: EmptyObject; id: string; name: string }
           | {
               type: "checkbox"
-              checkbox: Record<string, never>
+              checkbox: EmptyObject
               id: string
               name: string
             }
           | {
               type: "created_by"
-              created_by: Record<string, never>
+              created_by: EmptyObject
               id: string
               name: string
             }
           | {
               type: "created_time"
-              created_time: Record<string, never>
+              created_time: EmptyObject
               id: string
               name: string
             }
           | {
               type: "last_edited_by"
-              last_edited_by: Record<string, never>
+              last_edited_by: EmptyObject
               id: string
               name: string
             }
           | {
               type: "last_edited_time"
-              last_edited_time: Record<string, never>
+              last_edited_time: EmptyObject
               id: string
               name: string
             }
@@ -52443,19 +54058,19 @@ type CreateDatabaseBodyParameters = {
             }
         type?: "rollup"
       }
-    | { title: Record<string, never>; type?: "title" }
-    | { rich_text: Record<string, never>; type?: "rich_text" }
-    | { url: Record<string, never>; type?: "url" }
-    | { people: Record<string, never>; type?: "people" }
-    | { files: Record<string, never>; type?: "files" }
-    | { email: Record<string, never>; type?: "email" }
-    | { phone_number: Record<string, never>; type?: "phone_number" }
-    | { date: Record<string, never>; type?: "date" }
-    | { checkbox: Record<string, never>; type?: "checkbox" }
-    | { created_by: Record<string, never>; type?: "created_by" }
-    | { created_time: Record<string, never>; type?: "created_time" }
-    | { last_edited_by: Record<string, never>; type?: "last_edited_by" }
-    | { last_edited_time: Record<string, never>; type?: "last_edited_time" }
+    | { title: EmptyObject; type?: "title" }
+    | { rich_text: EmptyObject; type?: "rich_text" }
+    | { url: EmptyObject; type?: "url" }
+    | { people: EmptyObject; type?: "people" }
+    | { files: EmptyObject; type?: "files" }
+    | { email: EmptyObject; type?: "email" }
+    | { phone_number: EmptyObject; type?: "phone_number" }
+    | { date: EmptyObject; type?: "date" }
+    | { checkbox: EmptyObject; type?: "checkbox" }
+    | { created_by: EmptyObject; type?: "created_by" }
+    | { created_time: EmptyObject; type?: "created_time" }
+    | { last_edited_by: EmptyObject; type?: "last_edited_by" }
+    | { last_edited_time: EmptyObject; type?: "last_edited_time" }
   >
   icon?:
     | { emoji: EmojiRequest; type?: "emoji" }
@@ -52521,7 +54136,7 @@ export type CreateDatabaseResponse = {
                 | {
                     type: "bot"
                     bot:
-                      | Record<string, never>
+                      | EmptyObject
                       | {
                           owner:
                             | {
@@ -52545,7 +54160,14 @@ export type CreateDatabaseResponse = {
                     object: "user"
                   }
             }
-          | { type: "date"; date: { start: string; end: string | null } }
+          | {
+              type: "date"
+              date: {
+                start: string
+                end: string | null
+                time_zone: TimeZoneRequest | null
+              }
+            }
           | { type: "link_preview"; link_preview: { url: TextRequest } }
           | { type: "page"; page: { id: IdRequest } }
           | { type: "database"; database: { id: IdRequest } }
@@ -52767,56 +54389,36 @@ export type CreateDatabaseResponse = {
         id: string
         name: string
       }
-    | { type: "title"; title: Record<string, never>; id: string; name: string }
-    | {
-        type: "rich_text"
-        rich_text: Record<string, never>
-        id: string
-        name: string
-      }
-    | { type: "url"; url: Record<string, never>; id: string; name: string }
-    | {
-        type: "people"
-        people: Record<string, never>
-        id: string
-        name: string
-      }
-    | { type: "files"; files: Record<string, never>; id: string; name: string }
-    | { type: "email"; email: Record<string, never>; id: string; name: string }
+    | { type: "title"; title: EmptyObject; id: string; name: string }
+    | { type: "rich_text"; rich_text: EmptyObject; id: string; name: string }
+    | { type: "url"; url: EmptyObject; id: string; name: string }
+    | { type: "people"; people: EmptyObject; id: string; name: string }
+    | { type: "files"; files: EmptyObject; id: string; name: string }
+    | { type: "email"; email: EmptyObject; id: string; name: string }
     | {
         type: "phone_number"
-        phone_number: Record<string, never>
+        phone_number: EmptyObject
         id: string
         name: string
       }
-    | { type: "date"; date: Record<string, never>; id: string; name: string }
-    | {
-        type: "checkbox"
-        checkbox: Record<string, never>
-        id: string
-        name: string
-      }
-    | {
-        type: "created_by"
-        created_by: Record<string, never>
-        id: string
-        name: string
-      }
+    | { type: "date"; date: EmptyObject; id: string; name: string }
+    | { type: "checkbox"; checkbox: EmptyObject; id: string; name: string }
+    | { type: "created_by"; created_by: EmptyObject; id: string; name: string }
     | {
         type: "created_time"
-        created_time: Record<string, never>
+        created_time: EmptyObject
         id: string
         name: string
       }
     | {
         type: "last_edited_by"
-        last_edited_by: Record<string, never>
+        last_edited_by: EmptyObject
         id: string
         name: string
       }
     | {
         type: "last_edited_time"
-        last_edited_time: Record<string, never>
+        last_edited_time: EmptyObject
         id: string
         name: string
       }
@@ -52885,7 +54487,11 @@ export type SearchResponse =
           }
         | {
             type: "date"
-            date: { start: string; end: string | null } | null
+            date: {
+              start: string
+              end: string | null
+              time_zone: TimeZoneRequest | null
+            } | null
             function:
               | "count"
               | "count_values"
@@ -52970,7 +54576,7 @@ export type SearchResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -53002,7 +54608,11 @@ export type SearchResponse =
                             }
                           | {
                               type: "date"
-                              date: { start: string; end: string | null }
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              }
                             }
                           | {
                               type: "link_preview"
@@ -53132,7 +54742,7 @@ export type SearchResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -53164,7 +54774,11 @@ export type SearchResponse =
                             }
                           | {
                               type: "date"
-                              date: { start: string; end: string | null }
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              }
                             }
                           | {
                               type: "link_preview"
@@ -53290,7 +54904,7 @@ export type SearchResponse =
                     | {
                         type: "bot"
                         bot:
-                          | Record<string, never>
+                          | EmptyObject
                           | {
                               owner:
                                 | {
@@ -53319,7 +54933,11 @@ export type SearchResponse =
               | { type: "phone_number"; phone_number: string | null }
               | {
                   type: "date"
-                  date: { start: string; end: string | null } | null
+                  date: {
+                    start: string
+                    end: string | null
+                    time_zone: TimeZoneRequest | null
+                  } | null
                 }
               | {
                   type: "files"
@@ -53343,7 +54961,11 @@ export type SearchResponse =
                     | { type: "string"; string: string | null }
                     | {
                         type: "date"
-                        date: { start: string; end: string | null } | null
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
+                        } | null
                       }
                     | { type: "number"; number: number | null }
                     | { type: "boolean"; boolean: boolean | null }
@@ -53365,7 +54987,7 @@ export type SearchResponse =
                     | {
                         type: "bot"
                         bot:
-                          | Record<string, never>
+                          | EmptyObject
                           | {
                               owner:
                                 | {
@@ -53405,7 +55027,7 @@ export type SearchResponse =
                     | {
                         type: "bot"
                         bot:
-                          | Record<string, never>
+                          | EmptyObject
                           | {
                               owner:
                                 | {
@@ -53456,7 +55078,7 @@ export type SearchResponse =
           }
         | {
             type: "unsupported"
-            unsupported: Record<string, never>
+            unsupported: EmptyObject
             function:
               | "count"
               | "count_values"
@@ -53547,7 +55169,7 @@ export type SearchResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -53579,7 +55201,11 @@ export type SearchResponse =
                             }
                           | {
                               type: "date"
-                              date: { start: string; end: string | null }
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              }
                             }
                           | {
                               type: "link_preview"
@@ -53710,7 +55336,7 @@ export type SearchResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -53742,7 +55368,11 @@ export type SearchResponse =
                             }
                           | {
                               type: "date"
-                              date: { start: string; end: string | null }
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              }
                             }
                           | {
                               type: "link_preview"
@@ -53871,7 +55501,7 @@ export type SearchResponse =
                     | {
                         type: "bot"
                         bot:
-                          | Record<string, never>
+                          | EmptyObject
                           | {
                               owner:
                                 | {
@@ -53905,7 +55535,11 @@ export type SearchResponse =
                 }
               | {
                   type: "date"
-                  date: { start: string; end: string | null } | null
+                  date: {
+                    start: string
+                    end: string | null
+                    time_zone: TimeZoneRequest | null
+                  } | null
                   id: string
                 }
               | {
@@ -53931,7 +55565,11 @@ export type SearchResponse =
                     | { type: "string"; string: string | null }
                     | {
                         type: "date"
-                        date: { start: string; end: string | null } | null
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
+                        } | null
                       }
                     | { type: "number"; number: number | null }
                     | { type: "boolean"; boolean: boolean | null }
@@ -53958,7 +55596,7 @@ export type SearchResponse =
                     | {
                         type: "bot"
                         bot:
-                          | Record<string, never>
+                          | EmptyObject
                           | {
                               owner:
                                 | {
@@ -54003,7 +55641,7 @@ export type SearchResponse =
                     | {
                         type: "bot"
                         bot:
-                          | Record<string, never>
+                          | EmptyObject
                           | {
                               owner:
                                 | {
@@ -54060,7 +55698,11 @@ export type SearchResponse =
                       }
                     | {
                         type: "date"
-                        date: { start: string; end: string | null } | null
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
+                        } | null
                         function:
                           | "count"
                           | "count_values"
@@ -54145,7 +55787,7 @@ export type SearchResponse =
                                             | {
                                                 type: "bot"
                                                 bot:
-                                                  | Record<string, never>
+                                                  | EmptyObject
                                                   | {
                                                       owner:
                                                         | {
@@ -54186,6 +55828,7 @@ export type SearchResponse =
                                           date: {
                                             start: string
                                             end: string | null
+                                            time_zone: TimeZoneRequest | null
                                           }
                                         }
                                       | {
@@ -54322,7 +55965,7 @@ export type SearchResponse =
                                             | {
                                                 type: "bot"
                                                 bot:
-                                                  | Record<string, never>
+                                                  | EmptyObject
                                                   | {
                                                       owner:
                                                         | {
@@ -54363,6 +56006,7 @@ export type SearchResponse =
                                           date: {
                                             start: string
                                             end: string | null
+                                            time_zone: TimeZoneRequest | null
                                           }
                                         }
                                       | {
@@ -54495,7 +56139,7 @@ export type SearchResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -54533,7 +56177,11 @@ export type SearchResponse =
                             }
                           | {
                               type: "date"
-                              date: { start: string; end: string | null } | null
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              } | null
                             }
                           | {
                               type: "files"
@@ -54560,6 +56208,7 @@ export type SearchResponse =
                                     date: {
                                       start: string
                                       end: string | null
+                                      time_zone: TimeZoneRequest | null
                                     } | null
                                   }
                                 | { type: "number"; number: number | null }
@@ -54585,7 +56234,7 @@ export type SearchResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -54634,7 +56283,7 @@ export type SearchResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -54691,7 +56340,7 @@ export type SearchResponse =
                       }
                     | {
                         type: "unsupported"
-                        unsupported: Record<string, never>
+                        unsupported: EmptyObject
                         function:
                           | "count"
                           | "count_values"
@@ -54791,7 +56440,7 @@ export type SearchResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -54817,7 +56466,11 @@ export type SearchResponse =
                       }
                     | {
                         type: "date"
-                        date: { start: string; end: string | null }
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
+                        }
                       }
                     | {
                         type: "link_preview"
@@ -55043,81 +56696,56 @@ export type SearchResponse =
                   id: string
                   name: string
                 }
-              | {
-                  type: "title"
-                  title: Record<string, never>
-                  id: string
-                  name: string
-                }
+              | { type: "title"; title: EmptyObject; id: string; name: string }
               | {
                   type: "rich_text"
-                  rich_text: Record<string, never>
+                  rich_text: EmptyObject
                   id: string
                   name: string
                 }
-              | {
-                  type: "url"
-                  url: Record<string, never>
-                  id: string
-                  name: string
-                }
+              | { type: "url"; url: EmptyObject; id: string; name: string }
               | {
                   type: "people"
-                  people: Record<string, never>
+                  people: EmptyObject
                   id: string
                   name: string
                 }
-              | {
-                  type: "files"
-                  files: Record<string, never>
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "email"
-                  email: Record<string, never>
-                  id: string
-                  name: string
-                }
+              | { type: "files"; files: EmptyObject; id: string; name: string }
+              | { type: "email"; email: EmptyObject; id: string; name: string }
               | {
                   type: "phone_number"
-                  phone_number: Record<string, never>
+                  phone_number: EmptyObject
                   id: string
                   name: string
                 }
-              | {
-                  type: "date"
-                  date: Record<string, never>
-                  id: string
-                  name: string
-                }
+              | { type: "date"; date: EmptyObject; id: string; name: string }
               | {
                   type: "checkbox"
-                  checkbox: Record<string, never>
+                  checkbox: EmptyObject
                   id: string
                   name: string
                 }
               | {
                   type: "created_by"
-                  created_by: Record<string, never>
+                  created_by: EmptyObject
                   id: string
                   name: string
                 }
               | {
                   type: "created_time"
-                  created_time: Record<string, never>
+                  created_time: EmptyObject
                   id: string
                   name: string
                 }
               | {
                   type: "last_edited_by"
-                  last_edited_by: Record<string, never>
+                  last_edited_by: EmptyObject
                   id: string
                   name: string
                 }
               | {
                   type: "last_edited_time"
-                  last_edited_time: Record<string, never>
+                  last_edited_time: EmptyObject
                   id: string
                   name: string
                 }
@@ -55202,7 +56830,7 @@ export type SearchResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -55234,7 +56862,11 @@ export type SearchResponse =
                             }
                           | {
                               type: "date"
-                              date: { start: string; end: string | null }
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              }
                             }
                           | {
                               type: "link_preview"
@@ -55365,7 +56997,7 @@ export type SearchResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -55397,7 +57029,11 @@ export type SearchResponse =
                             }
                           | {
                               type: "date"
-                              date: { start: string; end: string | null }
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              }
                             }
                           | {
                               type: "link_preview"
@@ -55526,7 +57162,7 @@ export type SearchResponse =
                     | {
                         type: "bot"
                         bot:
-                          | Record<string, never>
+                          | EmptyObject
                           | {
                               owner:
                                 | {
@@ -55560,7 +57196,11 @@ export type SearchResponse =
                 }
               | {
                   type: "date"
-                  date: { start: string; end: string | null } | null
+                  date: {
+                    start: string
+                    end: string | null
+                    time_zone: TimeZoneRequest | null
+                  } | null
                   id: string
                 }
               | {
@@ -55586,7 +57226,11 @@ export type SearchResponse =
                     | { type: "string"; string: string | null }
                     | {
                         type: "date"
-                        date: { start: string; end: string | null } | null
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
+                        } | null
                       }
                     | { type: "number"; number: number | null }
                     | { type: "boolean"; boolean: boolean | null }
@@ -55613,7 +57257,7 @@ export type SearchResponse =
                     | {
                         type: "bot"
                         bot:
-                          | Record<string, never>
+                          | EmptyObject
                           | {
                               owner:
                                 | {
@@ -55658,7 +57302,7 @@ export type SearchResponse =
                     | {
                         type: "bot"
                         bot:
-                          | Record<string, never>
+                          | EmptyObject
                           | {
                               owner:
                                 | {
@@ -55715,7 +57359,11 @@ export type SearchResponse =
                       }
                     | {
                         type: "date"
-                        date: { start: string; end: string | null } | null
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
+                        } | null
                         function:
                           | "count"
                           | "count_values"
@@ -55800,7 +57448,7 @@ export type SearchResponse =
                                             | {
                                                 type: "bot"
                                                 bot:
-                                                  | Record<string, never>
+                                                  | EmptyObject
                                                   | {
                                                       owner:
                                                         | {
@@ -55841,6 +57489,7 @@ export type SearchResponse =
                                           date: {
                                             start: string
                                             end: string | null
+                                            time_zone: TimeZoneRequest | null
                                           }
                                         }
                                       | {
@@ -55977,7 +57626,7 @@ export type SearchResponse =
                                             | {
                                                 type: "bot"
                                                 bot:
-                                                  | Record<string, never>
+                                                  | EmptyObject
                                                   | {
                                                       owner:
                                                         | {
@@ -56018,6 +57667,7 @@ export type SearchResponse =
                                           date: {
                                             start: string
                                             end: string | null
+                                            time_zone: TimeZoneRequest | null
                                           }
                                         }
                                       | {
@@ -56150,7 +57800,7 @@ export type SearchResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -56188,7 +57838,11 @@ export type SearchResponse =
                             }
                           | {
                               type: "date"
-                              date: { start: string; end: string | null } | null
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              } | null
                             }
                           | {
                               type: "files"
@@ -56215,6 +57869,7 @@ export type SearchResponse =
                                     date: {
                                       start: string
                                       end: string | null
+                                      time_zone: TimeZoneRequest | null
                                     } | null
                                   }
                                 | { type: "number"; number: number | null }
@@ -56240,7 +57895,7 @@ export type SearchResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -56289,7 +57944,7 @@ export type SearchResponse =
                                 | {
                                     type: "bot"
                                     bot:
-                                      | Record<string, never>
+                                      | EmptyObject
                                       | {
                                           owner:
                                             | {
@@ -56346,7 +58001,7 @@ export type SearchResponse =
                       }
                     | {
                         type: "unsupported"
-                        unsupported: Record<string, never>
+                        unsupported: EmptyObject
                         function:
                           | "count"
                           | "count_values"
@@ -56446,7 +58101,7 @@ export type SearchResponse =
                           | {
                               type: "bot"
                               bot:
-                                | Record<string, never>
+                                | EmptyObject
                                 | {
                                     owner:
                                       | {
@@ -56472,7 +58127,11 @@ export type SearchResponse =
                       }
                     | {
                         type: "date"
-                        date: { start: string; end: string | null }
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
+                        }
                       }
                     | {
                         type: "link_preview"
@@ -56698,81 +58357,56 @@ export type SearchResponse =
                   id: string
                   name: string
                 }
-              | {
-                  type: "title"
-                  title: Record<string, never>
-                  id: string
-                  name: string
-                }
+              | { type: "title"; title: EmptyObject; id: string; name: string }
               | {
                   type: "rich_text"
-                  rich_text: Record<string, never>
+                  rich_text: EmptyObject
                   id: string
                   name: string
                 }
-              | {
-                  type: "url"
-                  url: Record<string, never>
-                  id: string
-                  name: string
-                }
+              | { type: "url"; url: EmptyObject; id: string; name: string }
               | {
                   type: "people"
-                  people: Record<string, never>
+                  people: EmptyObject
                   id: string
                   name: string
                 }
-              | {
-                  type: "files"
-                  files: Record<string, never>
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "email"
-                  email: Record<string, never>
-                  id: string
-                  name: string
-                }
+              | { type: "files"; files: EmptyObject; id: string; name: string }
+              | { type: "email"; email: EmptyObject; id: string; name: string }
               | {
                   type: "phone_number"
-                  phone_number: Record<string, never>
+                  phone_number: EmptyObject
                   id: string
                   name: string
                 }
-              | {
-                  type: "date"
-                  date: Record<string, never>
-                  id: string
-                  name: string
-                }
+              | { type: "date"; date: EmptyObject; id: string; name: string }
               | {
                   type: "checkbox"
-                  checkbox: Record<string, never>
+                  checkbox: EmptyObject
                   id: string
                   name: string
                 }
               | {
                   type: "created_by"
-                  created_by: Record<string, never>
+                  created_by: EmptyObject
                   id: string
                   name: string
                 }
               | {
                   type: "created_time"
-                  created_time: Record<string, never>
+                  created_time: EmptyObject
                   id: string
                   name: string
                 }
               | {
                   type: "last_edited_by"
-                  last_edited_by: Record<string, never>
+                  last_edited_by: EmptyObject
                   id: string
                   name: string
                 }
               | {
                   type: "last_edited_time"
-                  last_edited_time: Record<string, never>
+                  last_edited_time: EmptyObject
                   id: string
                   name: string
                 }
