@@ -640,7 +640,7 @@ type RichTextItemRequest =
             user:
               | { id: IdRequest }
               | {
-                  person: { email: string }
+                  person: { email?: string }
                   id: IdRequest
                   type?: "person"
                   name?: string | null
@@ -6642,7 +6642,7 @@ export type GetSelfParameters = Record<string, never>
 export type GetSelfResponse =
   | {
       type: "person"
-      person: { email: string }
+      person: { email?: string }
       name: string | null
       avatar_url: string | null
       id: IdRequest
@@ -6692,7 +6692,7 @@ export type GetUserParameters = GetUserPathParameters
 export type GetUserResponse =
   | {
       type: "person"
-      person: { email: string }
+      person: { email?: string }
       name: string | null
       avatar_url: string | null
       id: IdRequest
@@ -6853,7 +6853,7 @@ export type ListUsersResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -7019,7 +7019,7 @@ export type ListUsersResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -7181,7 +7181,7 @@ export type ListUsersResponse =
                     | { id: IdRequest; object: "user" }
                     | {
                         type: "person"
-                        person: { email: string }
+                        person: { email?: string }
                         name: string | null
                         avatar_url: string | null
                         id: IdRequest
@@ -7264,7 +7264,7 @@ export type ListUsersResponse =
                     | { id: IdRequest; object: "user" }
                     | {
                         type: "person"
-                        person: { email: string }
+                        person: { email?: string }
                         name: string | null
                         avatar_url: string | null
                         id: IdRequest
@@ -7304,7 +7304,7 @@ export type ListUsersResponse =
                     | { id: IdRequest; object: "user" }
                     | {
                         type: "person"
-                        person: { email: string }
+                        person: { email?: string }
                         name: string | null
                         avatar_url: string | null
                         id: IdRequest
@@ -7393,7 +7393,7 @@ export type ListUsersResponse =
       results: Array<
         | {
             type: "person"
-            person: { email: string }
+            person: { email?: string }
             name: string | null
             avatar_url: string | null
             id: IdRequest
@@ -7434,7 +7434,7 @@ export type ListUsersResponse =
       results: Array<
         | {
             type: "person"
-            person: { email: string }
+            person: { email?: string }
             name: string | null
             avatar_url: string | null
             id: IdRequest
@@ -7481,7 +7481,7 @@ export const listUsers = {
 
 type CreatePageBodyParameters =
   | {
-      parent: { database_id: IdRequest }
+      parent: { database_id: IdRequest; type?: "database_id" }
       properties:
         | Record<
             string,
@@ -7564,7 +7564,7 @@ type CreatePageBodyParameters =
                 people: Array<
                   | { id: IdRequest }
                   | {
-                      person: { email: string }
+                      person: { email?: string }
                       id: IdRequest
                       type?: "person"
                       name?: string | null
@@ -7703,7 +7703,7 @@ type CreatePageBodyParameters =
             | Array<
                 | { id: IdRequest }
                 | {
-                    person: { email: string }
+                    person: { email?: string }
                     id: IdRequest
                     type?: "person"
                     name?: string | null
@@ -7772,7 +7772,7 @@ type CreatePageBodyParameters =
       children?: Array<BlockObjectRequest>
     }
   | {
-      parent: { page_id: IdRequest }
+      parent: { page_id: IdRequest; type?: "page_id" }
       properties: {
         title?:
           | { title: Array<RichTextItemRequest>; type?: "title" }
@@ -7789,1209 +7789,1223 @@ type CreatePageBodyParameters =
 
 export type CreatePageParameters = CreatePageBodyParameters
 
-export type CreatePageResponse = {
-  parent:
-    | { type: "database_id"; database_id: IdRequest }
-    | { type: "page_id"; page_id: IdRequest }
-    | { type: "workspace"; workspace: true }
-  properties: Record<
-    string,
-    | {
-        type: "title"
-        title: Array<
-          | {
-              type: "text"
-              text: { content: string; link: { url: TextRequest } | null }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color:
-                  | "default"
-                  | "gray"
-                  | "brown"
-                  | "orange"
-                  | "yellow"
-                  | "green"
-                  | "blue"
-                  | "purple"
-                  | "pink"
-                  | "red"
-                  | "gray_background"
-                  | "brown_background"
-                  | "orange_background"
-                  | "yellow_background"
-                  | "green_background"
-                  | "blue_background"
-                  | "purple_background"
-                  | "pink_background"
-                  | "red_background"
-              }
-              plain_text: string
-              href: string | null
-            }
-          | {
-              type: "mention"
-              mention:
-                | {
-                    type: "user"
-                    user:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | EmptyObject
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
+export type CreatePageResponse =
+  | {
+      parent:
+        | { type: "database_id"; database_id: IdRequest }
+        | { type: "page_id"; page_id: IdRequest }
+        | { type: "workspace"; workspace: true }
+      properties: Record<
+        string,
+        | {
+            type: "title"
+            title: Array<
+              | {
+                  type: "text"
+                  text: { content: string; link: { url: TextRequest } | null }
+                  annotations: {
+                    bold: boolean
+                    italic: boolean
+                    strikethrough: boolean
+                    underline: boolean
+                    code: boolean
+                    color:
+                      | "default"
+                      | "gray"
+                      | "brown"
+                      | "orange"
+                      | "yellow"
+                      | "green"
+                      | "blue"
+                      | "purple"
+                      | "pink"
+                      | "red"
+                      | "gray_background"
+                      | "brown_background"
+                      | "orange_background"
+                      | "yellow_background"
+                      | "green_background"
+                      | "blue_background"
+                      | "purple_background"
+                      | "pink_background"
+                      | "red_background"
                   }
-                | {
-                    type: "date"
-                    date: {
-                      start: string
-                      end: string | null
-                      time_zone: TimeZoneRequest | null
-                    }
-                  }
-                | { type: "link_preview"; link_preview: { url: TextRequest } }
-                | { type: "page"; page: { id: IdRequest } }
-                | { type: "database"; database: { id: IdRequest } }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color:
-                  | "default"
-                  | "gray"
-                  | "brown"
-                  | "orange"
-                  | "yellow"
-                  | "green"
-                  | "blue"
-                  | "purple"
-                  | "pink"
-                  | "red"
-                  | "gray_background"
-                  | "brown_background"
-                  | "orange_background"
-                  | "yellow_background"
-                  | "green_background"
-                  | "blue_background"
-                  | "purple_background"
-                  | "pink_background"
-                  | "red_background"
-              }
-              plain_text: string
-              href: string | null
-            }
-          | {
-              type: "equation"
-              equation: { expression: TextRequest }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color:
-                  | "default"
-                  | "gray"
-                  | "brown"
-                  | "orange"
-                  | "yellow"
-                  | "green"
-                  | "blue"
-                  | "purple"
-                  | "pink"
-                  | "red"
-                  | "gray_background"
-                  | "brown_background"
-                  | "orange_background"
-                  | "yellow_background"
-                  | "green_background"
-                  | "blue_background"
-                  | "purple_background"
-                  | "pink_background"
-                  | "red_background"
-              }
-              plain_text: string
-              href: string | null
-            }
-        >
-        id: string
-      }
-    | {
-        type: "rich_text"
-        rich_text: Array<
-          | {
-              type: "text"
-              text: { content: string; link: { url: TextRequest } | null }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color:
-                  | "default"
-                  | "gray"
-                  | "brown"
-                  | "orange"
-                  | "yellow"
-                  | "green"
-                  | "blue"
-                  | "purple"
-                  | "pink"
-                  | "red"
-                  | "gray_background"
-                  | "brown_background"
-                  | "orange_background"
-                  | "yellow_background"
-                  | "green_background"
-                  | "blue_background"
-                  | "purple_background"
-                  | "pink_background"
-                  | "red_background"
-              }
-              plain_text: string
-              href: string | null
-            }
-          | {
-              type: "mention"
-              mention:
-                | {
-                    type: "user"
-                    user:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
+                  plain_text: string
+                  href: string | null
+                }
+              | {
+                  type: "mention"
+                  mention:
+                    | {
+                        type: "user"
+                        user:
+                          | { id: IdRequest; object: "user" }
+                          | {
+                              type: "person"
+                              person: { email?: string }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                          | {
+                              type: "bot"
+                              bot:
+                                | EmptyObject
+                                | {
+                                    owner:
+                                      | {
+                                          type: "user"
+                                          user:
+                                            | {
+                                                type: "person"
+                                                person: { email: string }
+                                                name: string | null
+                                                avatar_url: string | null
+                                                id: IdRequest
+                                                object: "user"
+                                              }
+                                            | { id: IdRequest; object: "user" }
+                                        }
+                                      | { type: "workspace"; workspace: true }
+                                  }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                      }
+                    | {
+                        type: "date"
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
                         }
-                      | {
-                          type: "bot"
-                          bot:
-                            | EmptyObject
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
+                      }
+                    | {
+                        type: "link_preview"
+                        link_preview: { url: TextRequest }
+                      }
+                    | { type: "page"; page: { id: IdRequest } }
+                    | { type: "database"; database: { id: IdRequest } }
+                  annotations: {
+                    bold: boolean
+                    italic: boolean
+                    strikethrough: boolean
+                    underline: boolean
+                    code: boolean
+                    color:
+                      | "default"
+                      | "gray"
+                      | "brown"
+                      | "orange"
+                      | "yellow"
+                      | "green"
+                      | "blue"
+                      | "purple"
+                      | "pink"
+                      | "red"
+                      | "gray_background"
+                      | "brown_background"
+                      | "orange_background"
+                      | "yellow_background"
+                      | "green_background"
+                      | "blue_background"
+                      | "purple_background"
+                      | "pink_background"
+                      | "red_background"
+                  }
+                  plain_text: string
+                  href: string | null
+                }
+              | {
+                  type: "equation"
+                  equation: { expression: TextRequest }
+                  annotations: {
+                    bold: boolean
+                    italic: boolean
+                    strikethrough: boolean
+                    underline: boolean
+                    code: boolean
+                    color:
+                      | "default"
+                      | "gray"
+                      | "brown"
+                      | "orange"
+                      | "yellow"
+                      | "green"
+                      | "blue"
+                      | "purple"
+                      | "pink"
+                      | "red"
+                      | "gray_background"
+                      | "brown_background"
+                      | "orange_background"
+                      | "yellow_background"
+                      | "green_background"
+                      | "blue_background"
+                      | "purple_background"
+                      | "pink_background"
+                      | "red_background"
+                  }
+                  plain_text: string
+                  href: string | null
+                }
+            >
+            id: string
+          }
+        | {
+            type: "rich_text"
+            rich_text: Array<
+              | {
+                  type: "text"
+                  text: { content: string; link: { url: TextRequest } | null }
+                  annotations: {
+                    bold: boolean
+                    italic: boolean
+                    strikethrough: boolean
+                    underline: boolean
+                    code: boolean
+                    color:
+                      | "default"
+                      | "gray"
+                      | "brown"
+                      | "orange"
+                      | "yellow"
+                      | "green"
+                      | "blue"
+                      | "purple"
+                      | "pink"
+                      | "red"
+                      | "gray_background"
+                      | "brown_background"
+                      | "orange_background"
+                      | "yellow_background"
+                      | "green_background"
+                      | "blue_background"
+                      | "purple_background"
+                      | "pink_background"
+                      | "red_background"
+                  }
+                  plain_text: string
+                  href: string | null
+                }
+              | {
+                  type: "mention"
+                  mention:
+                    | {
+                        type: "user"
+                        user:
+                          | { id: IdRequest; object: "user" }
+                          | {
+                              type: "person"
+                              person: { email?: string }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                          | {
+                              type: "bot"
+                              bot:
+                                | EmptyObject
+                                | {
+                                    owner:
+                                      | {
+                                          type: "user"
+                                          user:
+                                            | {
+                                                type: "person"
+                                                person: { email: string }
+                                                name: string | null
+                                                avatar_url: string | null
+                                                id: IdRequest
+                                                object: "user"
+                                              }
+                                            | { id: IdRequest; object: "user" }
+                                        }
+                                      | { type: "workspace"; workspace: true }
+                                  }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                      }
+                    | {
+                        type: "date"
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
                         }
+                      }
+                    | {
+                        type: "link_preview"
+                        link_preview: { url: TextRequest }
+                      }
+                    | { type: "page"; page: { id: IdRequest } }
+                    | { type: "database"; database: { id: IdRequest } }
+                  annotations: {
+                    bold: boolean
+                    italic: boolean
+                    strikethrough: boolean
+                    underline: boolean
+                    code: boolean
+                    color:
+                      | "default"
+                      | "gray"
+                      | "brown"
+                      | "orange"
+                      | "yellow"
+                      | "green"
+                      | "blue"
+                      | "purple"
+                      | "pink"
+                      | "red"
+                      | "gray_background"
+                      | "brown_background"
+                      | "orange_background"
+                      | "yellow_background"
+                      | "green_background"
+                      | "blue_background"
+                      | "purple_background"
+                      | "pink_background"
+                      | "red_background"
                   }
-                | {
-                    type: "date"
-                    date: {
-                      start: string
-                      end: string | null
-                      time_zone: TimeZoneRequest | null
-                    }
+                  plain_text: string
+                  href: string | null
+                }
+              | {
+                  type: "equation"
+                  equation: { expression: TextRequest }
+                  annotations: {
+                    bold: boolean
+                    italic: boolean
+                    strikethrough: boolean
+                    underline: boolean
+                    code: boolean
+                    color:
+                      | "default"
+                      | "gray"
+                      | "brown"
+                      | "orange"
+                      | "yellow"
+                      | "green"
+                      | "blue"
+                      | "purple"
+                      | "pink"
+                      | "red"
+                      | "gray_background"
+                      | "brown_background"
+                      | "orange_background"
+                      | "yellow_background"
+                      | "green_background"
+                      | "blue_background"
+                      | "purple_background"
+                      | "pink_background"
+                      | "red_background"
                   }
-                | { type: "link_preview"; link_preview: { url: TextRequest } }
-                | { type: "page"; page: { id: IdRequest } }
-                | { type: "database"; database: { id: IdRequest } }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color:
-                  | "default"
-                  | "gray"
-                  | "brown"
-                  | "orange"
-                  | "yellow"
-                  | "green"
-                  | "blue"
-                  | "purple"
-                  | "pink"
-                  | "red"
-                  | "gray_background"
-                  | "brown_background"
-                  | "orange_background"
-                  | "yellow_background"
-                  | "green_background"
-                  | "blue_background"
-                  | "purple_background"
-                  | "pink_background"
-                  | "red_background"
-              }
-              plain_text: string
-              href: string | null
-            }
-          | {
-              type: "equation"
-              equation: { expression: TextRequest }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color:
-                  | "default"
-                  | "gray"
-                  | "brown"
-                  | "orange"
-                  | "yellow"
-                  | "green"
-                  | "blue"
-                  | "purple"
-                  | "pink"
-                  | "red"
-                  | "gray_background"
-                  | "brown_background"
-                  | "orange_background"
-                  | "yellow_background"
-                  | "green_background"
-                  | "blue_background"
-                  | "purple_background"
-                  | "pink_background"
-                  | "red_background"
-              }
-              plain_text: string
-              href: string | null
-            }
-        >
-        id: string
-      }
-    | { type: "number"; number: number | null; id: string }
-    | { type: "url"; url: string | null; id: string }
-    | {
-        type: "select"
-        select: {
-          id: StringRequest
-          name: StringRequest
-          color:
-            | "default"
-            | "gray"
-            | "brown"
-            | "orange"
-            | "yellow"
-            | "green"
-            | "blue"
-            | "purple"
-            | "pink"
-            | "red"
-        } | null
-        id: string
-      }
-    | {
-        type: "multi_select"
-        multi_select: Array<{
-          id: StringRequest
-          name: StringRequest
-          color:
-            | "default"
-            | "gray"
-            | "brown"
-            | "orange"
-            | "yellow"
-            | "green"
-            | "blue"
-            | "purple"
-            | "pink"
-            | "red"
-        }>
-        id: string
-      }
-    | {
-        type: "people"
-        people: Array<
-          | { id: IdRequest; object: "user" }
-          | {
-              type: "person"
-              person: { email: string }
-              name: string | null
-              avatar_url: string | null
-              id: IdRequest
-              object: "user"
-            }
-          | {
-              type: "bot"
-              bot:
-                | EmptyObject
-                | {
-                    owner:
-                      | {
-                          type: "user"
-                          user:
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | { id: IdRequest; object: "user" }
-                        }
-                      | { type: "workspace"; workspace: true }
-                  }
-              name: string | null
-              avatar_url: string | null
-              id: IdRequest
-              object: "user"
-            }
-        >
-        id: string
-      }
-    | { type: "email"; email: string | null; id: string }
-    | { type: "phone_number"; phone_number: string | null; id: string }
-    | {
-        type: "date"
-        date: {
-          start: string
-          end: string | null
-          time_zone: TimeZoneRequest | null
-        } | null
-        id: string
-      }
-    | {
-        type: "files"
-        files: Array<
-          | {
-              file: { url: string; expiry_time: string }
+                  plain_text: string
+                  href: string | null
+                }
+            >
+            id: string
+          }
+        | { type: "number"; number: number | null; id: string }
+        | { type: "url"; url: string | null; id: string }
+        | {
+            type: "select"
+            select: {
+              id: StringRequest
               name: StringRequest
-              type?: "file"
-            }
-          | {
-              external: { url: TextRequest }
+              color:
+                | "default"
+                | "gray"
+                | "brown"
+                | "orange"
+                | "yellow"
+                | "green"
+                | "blue"
+                | "purple"
+                | "pink"
+                | "red"
+            } | null
+            id: string
+          }
+        | {
+            type: "multi_select"
+            multi_select: Array<{
+              id: StringRequest
               name: StringRequest
-              type?: "external"
-            }
-        >
-        id: string
-      }
-    | { type: "checkbox"; checkbox: boolean; id: string }
-    | {
-        type: "formula"
-        formula:
-          | { type: "string"; string: string | null }
-          | {
-              type: "date"
-              date: {
-                start: string
-                end: string | null
-                time_zone: TimeZoneRequest | null
-              } | null
-            }
-          | { type: "number"; number: number | null }
-          | { type: "boolean"; boolean: boolean | null }
-        id: string
-      }
-    | { type: "relation"; relation: Array<{ id: string }>; id: string }
-    | { type: "created_time"; created_time: string; id: string }
-    | {
-        type: "created_by"
-        created_by:
-          | { id: IdRequest; object: "user" }
-          | {
-              type: "person"
-              person: { email: string }
-              name: string | null
-              avatar_url: string | null
-              id: IdRequest
-              object: "user"
-            }
-          | {
-              type: "bot"
-              bot:
-                | EmptyObject
-                | {
-                    owner:
-                      | {
-                          type: "user"
-                          user:
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
+              color:
+                | "default"
+                | "gray"
+                | "brown"
+                | "orange"
+                | "yellow"
+                | "green"
+                | "blue"
+                | "purple"
+                | "pink"
+                | "red"
+            }>
+            id: string
+          }
+        | {
+            type: "people"
+            people: Array<
+              | { id: IdRequest; object: "user" }
+              | {
+                  type: "person"
+                  person: { email?: string }
+                  name: string | null
+                  avatar_url: string | null
+                  id: IdRequest
+                  object: "user"
+                }
+              | {
+                  type: "bot"
+                  bot:
+                    | EmptyObject
+                    | {
+                        owner:
+                          | {
+                              type: "user"
+                              user:
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | { id: IdRequest; object: "user" }
+                            }
+                          | { type: "workspace"; workspace: true }
+                      }
+                  name: string | null
+                  avatar_url: string | null
+                  id: IdRequest
+                  object: "user"
+                }
+            >
+            id: string
+          }
+        | { type: "email"; email: string | null; id: string }
+        | { type: "phone_number"; phone_number: string | null; id: string }
+        | {
+            type: "date"
+            date: {
+              start: string
+              end: string | null
+              time_zone: TimeZoneRequest | null
+            } | null
+            id: string
+          }
+        | {
+            type: "files"
+            files: Array<
+              | {
+                  file: { url: string; expiry_time: string }
+                  name: StringRequest
+                  type?: "file"
+                }
+              | {
+                  external: { url: TextRequest }
+                  name: StringRequest
+                  type?: "external"
+                }
+            >
+            id: string
+          }
+        | { type: "checkbox"; checkbox: boolean; id: string }
+        | {
+            type: "formula"
+            formula:
+              | { type: "string"; string: string | null }
+              | {
+                  type: "date"
+                  date: {
+                    start: string
+                    end: string | null
+                    time_zone: TimeZoneRequest | null
+                  } | null
+                }
+              | { type: "number"; number: number | null }
+              | { type: "boolean"; boolean: boolean | null }
+            id: string
+          }
+        | { type: "relation"; relation: Array<{ id: string }>; id: string }
+        | { type: "created_time"; created_time: string; id: string }
+        | {
+            type: "created_by"
+            created_by:
+              | { id: IdRequest; object: "user" }
+              | {
+                  type: "person"
+                  person: { email?: string }
+                  name: string | null
+                  avatar_url: string | null
+                  id: IdRequest
+                  object: "user"
+                }
+              | {
+                  type: "bot"
+                  bot:
+                    | EmptyObject
+                    | {
+                        owner:
+                          | {
+                              type: "user"
+                              user:
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | { id: IdRequest; object: "user" }
+                            }
+                          | { type: "workspace"; workspace: true }
+                      }
+                  name: string | null
+                  avatar_url: string | null
+                  id: IdRequest
+                  object: "user"
+                }
+            id: string
+          }
+        | { type: "last_edited_time"; last_edited_time: string; id: string }
+        | {
+            type: "last_edited_by"
+            last_edited_by:
+              | { id: IdRequest; object: "user" }
+              | {
+                  type: "person"
+                  person: { email?: string }
+                  name: string | null
+                  avatar_url: string | null
+                  id: IdRequest
+                  object: "user"
+                }
+              | {
+                  type: "bot"
+                  bot:
+                    | EmptyObject
+                    | {
+                        owner:
+                          | {
+                              type: "user"
+                              user:
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | { id: IdRequest; object: "user" }
+                            }
+                          | { type: "workspace"; workspace: true }
+                      }
+                  name: string | null
+                  avatar_url: string | null
+                  id: IdRequest
+                  object: "user"
+                }
+            id: string
+          }
+        | {
+            type: "rollup"
+            rollup:
+              | {
+                  type: "number"
+                  number: number | null
+                  function:
+                    | "count"
+                    | "count_values"
+                    | "empty"
+                    | "not_empty"
+                    | "unique"
+                    | "show_unique"
+                    | "percent_empty"
+                    | "percent_not_empty"
+                    | "sum"
+                    | "average"
+                    | "median"
+                    | "min"
+                    | "max"
+                    | "range"
+                    | "earliest_date"
+                    | "latest_date"
+                    | "date_range"
+                    | "checked"
+                    | "unchecked"
+                    | "percent_checked"
+                    | "percent_unchecked"
+                    | "show_original"
+                }
+              | {
+                  type: "date"
+                  date: {
+                    start: string
+                    end: string | null
+                    time_zone: TimeZoneRequest | null
+                  } | null
+                  function:
+                    | "count"
+                    | "count_values"
+                    | "empty"
+                    | "not_empty"
+                    | "unique"
+                    | "show_unique"
+                    | "percent_empty"
+                    | "percent_not_empty"
+                    | "sum"
+                    | "average"
+                    | "median"
+                    | "min"
+                    | "max"
+                    | "range"
+                    | "earliest_date"
+                    | "latest_date"
+                    | "date_range"
+                    | "checked"
+                    | "unchecked"
+                    | "percent_checked"
+                    | "percent_unchecked"
+                    | "show_original"
+                }
+              | {
+                  type: "array"
+                  array: Array<
+                    | {
+                        type: "title"
+                        title: Array<
+                          | {
+                              type: "text"
+                              text: {
+                                content: string
+                                link: { url: TextRequest } | null
                               }
-                            | { id: IdRequest; object: "user" }
-                        }
-                      | { type: "workspace"; workspace: true }
-                  }
-              name: string | null
-              avatar_url: string | null
-              id: IdRequest
-              object: "user"
-            }
-        id: string
-      }
-    | { type: "last_edited_time"; last_edited_time: string; id: string }
-    | {
-        type: "last_edited_by"
-        last_edited_by:
-          | { id: IdRequest; object: "user" }
-          | {
-              type: "person"
-              person: { email: string }
-              name: string | null
-              avatar_url: string | null
-              id: IdRequest
-              object: "user"
-            }
-          | {
-              type: "bot"
-              bot:
-                | EmptyObject
-                | {
-                    owner:
-                      | {
-                          type: "user"
-                          user:
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
+                              annotations: {
+                                bold: boolean
+                                italic: boolean
+                                strikethrough: boolean
+                                underline: boolean
+                                code: boolean
+                                color:
+                                  | "default"
+                                  | "gray"
+                                  | "brown"
+                                  | "orange"
+                                  | "yellow"
+                                  | "green"
+                                  | "blue"
+                                  | "purple"
+                                  | "pink"
+                                  | "red"
+                                  | "gray_background"
+                                  | "brown_background"
+                                  | "orange_background"
+                                  | "yellow_background"
+                                  | "green_background"
+                                  | "blue_background"
+                                  | "purple_background"
+                                  | "pink_background"
+                                  | "red_background"
                               }
-                            | { id: IdRequest; object: "user" }
-                        }
-                      | { type: "workspace"; workspace: true }
-                  }
-              name: string | null
-              avatar_url: string | null
-              id: IdRequest
-              object: "user"
-            }
-        id: string
-      }
-    | {
-        type: "rollup"
-        rollup:
-          | {
-              type: "number"
-              number: number | null
-              function:
-                | "count"
-                | "count_values"
-                | "empty"
-                | "not_empty"
-                | "unique"
-                | "show_unique"
-                | "percent_empty"
-                | "percent_not_empty"
-                | "sum"
-                | "average"
-                | "median"
-                | "min"
-                | "max"
-                | "range"
-                | "earliest_date"
-                | "latest_date"
-                | "date_range"
-                | "checked"
-                | "unchecked"
-                | "percent_checked"
-                | "percent_unchecked"
-                | "show_original"
-            }
-          | {
-              type: "date"
-              date: {
-                start: string
-                end: string | null
-                time_zone: TimeZoneRequest | null
-              } | null
-              function:
-                | "count"
-                | "count_values"
-                | "empty"
-                | "not_empty"
-                | "unique"
-                | "show_unique"
-                | "percent_empty"
-                | "percent_not_empty"
-                | "sum"
-                | "average"
-                | "median"
-                | "min"
-                | "max"
-                | "range"
-                | "earliest_date"
-                | "latest_date"
-                | "date_range"
-                | "checked"
-                | "unchecked"
-                | "percent_checked"
-                | "percent_unchecked"
-                | "show_original"
-            }
-          | {
-              type: "array"
-              array: Array<
-                | {
-                    type: "title"
-                    title: Array<
-                      | {
-                          type: "text"
-                          text: {
-                            content: string
-                            link: { url: TextRequest } | null
-                          }
-                          annotations: {
-                            bold: boolean
-                            italic: boolean
-                            strikethrough: boolean
-                            underline: boolean
-                            code: boolean
-                            color:
-                              | "default"
-                              | "gray"
-                              | "brown"
-                              | "orange"
-                              | "yellow"
-                              | "green"
-                              | "blue"
-                              | "purple"
-                              | "pink"
-                              | "red"
-                              | "gray_background"
-                              | "brown_background"
-                              | "orange_background"
-                              | "yellow_background"
-                              | "green_background"
-                              | "blue_background"
-                              | "purple_background"
-                              | "pink_background"
-                              | "red_background"
-                          }
-                          plain_text: string
-                          href: string | null
-                        }
-                      | {
-                          type: "mention"
-                          mention:
-                            | {
-                                type: "user"
-                                user:
-                                  | { id: IdRequest; object: "user" }
-                                  | {
-                                      type: "person"
-                                      person: { email: string }
-                                      name: string | null
-                                      avatar_url: string | null
-                                      id: IdRequest
-                                      object: "user"
+                              plain_text: string
+                              href: string | null
+                            }
+                          | {
+                              type: "mention"
+                              mention:
+                                | {
+                                    type: "user"
+                                    user:
+                                      | { id: IdRequest; object: "user" }
+                                      | {
+                                          type: "person"
+                                          person: { email?: string }
+                                          name: string | null
+                                          avatar_url: string | null
+                                          id: IdRequest
+                                          object: "user"
+                                        }
+                                      | {
+                                          type: "bot"
+                                          bot:
+                                            | EmptyObject
+                                            | {
+                                                owner:
+                                                  | {
+                                                      type: "user"
+                                                      user:
+                                                        | {
+                                                            type: "person"
+                                                            person: {
+                                                              email: string
+                                                            }
+                                                            name: string | null
+                                                            avatar_url:
+                                                              | string
+                                                              | null
+                                                            id: IdRequest
+                                                            object: "user"
+                                                          }
+                                                        | {
+                                                            id: IdRequest
+                                                            object: "user"
+                                                          }
+                                                    }
+                                                  | {
+                                                      type: "workspace"
+                                                      workspace: true
+                                                    }
+                                              }
+                                          name: string | null
+                                          avatar_url: string | null
+                                          id: IdRequest
+                                          object: "user"
+                                        }
+                                  }
+                                | {
+                                    type: "date"
+                                    date: {
+                                      start: string
+                                      end: string | null
+                                      time_zone: TimeZoneRequest | null
                                     }
-                                  | {
-                                      type: "bot"
-                                      bot:
-                                        | EmptyObject
-                                        | {
-                                            owner:
-                                              | {
-                                                  type: "user"
-                                                  user:
-                                                    | {
-                                                        type: "person"
-                                                        person: {
-                                                          email: string
-                                                        }
-                                                        name: string | null
-                                                        avatar_url:
-                                                          | string
-                                                          | null
-                                                        id: IdRequest
-                                                        object: "user"
-                                                      }
-                                                    | {
-                                                        id: IdRequest
-                                                        object: "user"
-                                                      }
-                                                }
-                                              | {
-                                                  type: "workspace"
-                                                  workspace: true
-                                                }
-                                          }
-                                      name: string | null
-                                      avatar_url: string | null
-                                      id: IdRequest
-                                      object: "user"
+                                  }
+                                | {
+                                    type: "link_preview"
+                                    link_preview: { url: TextRequest }
+                                  }
+                                | { type: "page"; page: { id: IdRequest } }
+                                | {
+                                    type: "database"
+                                    database: { id: IdRequest }
+                                  }
+                              annotations: {
+                                bold: boolean
+                                italic: boolean
+                                strikethrough: boolean
+                                underline: boolean
+                                code: boolean
+                                color:
+                                  | "default"
+                                  | "gray"
+                                  | "brown"
+                                  | "orange"
+                                  | "yellow"
+                                  | "green"
+                                  | "blue"
+                                  | "purple"
+                                  | "pink"
+                                  | "red"
+                                  | "gray_background"
+                                  | "brown_background"
+                                  | "orange_background"
+                                  | "yellow_background"
+                                  | "green_background"
+                                  | "blue_background"
+                                  | "purple_background"
+                                  | "pink_background"
+                                  | "red_background"
+                              }
+                              plain_text: string
+                              href: string | null
+                            }
+                          | {
+                              type: "equation"
+                              equation: { expression: TextRequest }
+                              annotations: {
+                                bold: boolean
+                                italic: boolean
+                                strikethrough: boolean
+                                underline: boolean
+                                code: boolean
+                                color:
+                                  | "default"
+                                  | "gray"
+                                  | "brown"
+                                  | "orange"
+                                  | "yellow"
+                                  | "green"
+                                  | "blue"
+                                  | "purple"
+                                  | "pink"
+                                  | "red"
+                                  | "gray_background"
+                                  | "brown_background"
+                                  | "orange_background"
+                                  | "yellow_background"
+                                  | "green_background"
+                                  | "blue_background"
+                                  | "purple_background"
+                                  | "pink_background"
+                                  | "red_background"
+                              }
+                              plain_text: string
+                              href: string | null
+                            }
+                        >
+                      }
+                    | {
+                        type: "rich_text"
+                        rich_text: Array<
+                          | {
+                              type: "text"
+                              text: {
+                                content: string
+                                link: { url: TextRequest } | null
+                              }
+                              annotations: {
+                                bold: boolean
+                                italic: boolean
+                                strikethrough: boolean
+                                underline: boolean
+                                code: boolean
+                                color:
+                                  | "default"
+                                  | "gray"
+                                  | "brown"
+                                  | "orange"
+                                  | "yellow"
+                                  | "green"
+                                  | "blue"
+                                  | "purple"
+                                  | "pink"
+                                  | "red"
+                                  | "gray_background"
+                                  | "brown_background"
+                                  | "orange_background"
+                                  | "yellow_background"
+                                  | "green_background"
+                                  | "blue_background"
+                                  | "purple_background"
+                                  | "pink_background"
+                                  | "red_background"
+                              }
+                              plain_text: string
+                              href: string | null
+                            }
+                          | {
+                              type: "mention"
+                              mention:
+                                | {
+                                    type: "user"
+                                    user:
+                                      | { id: IdRequest; object: "user" }
+                                      | {
+                                          type: "person"
+                                          person: { email?: string }
+                                          name: string | null
+                                          avatar_url: string | null
+                                          id: IdRequest
+                                          object: "user"
+                                        }
+                                      | {
+                                          type: "bot"
+                                          bot:
+                                            | EmptyObject
+                                            | {
+                                                owner:
+                                                  | {
+                                                      type: "user"
+                                                      user:
+                                                        | {
+                                                            type: "person"
+                                                            person: {
+                                                              email: string
+                                                            }
+                                                            name: string | null
+                                                            avatar_url:
+                                                              | string
+                                                              | null
+                                                            id: IdRequest
+                                                            object: "user"
+                                                          }
+                                                        | {
+                                                            id: IdRequest
+                                                            object: "user"
+                                                          }
+                                                    }
+                                                  | {
+                                                      type: "workspace"
+                                                      workspace: true
+                                                    }
+                                              }
+                                          name: string | null
+                                          avatar_url: string | null
+                                          id: IdRequest
+                                          object: "user"
+                                        }
+                                  }
+                                | {
+                                    type: "date"
+                                    date: {
+                                      start: string
+                                      end: string | null
+                                      time_zone: TimeZoneRequest | null
                                     }
+                                  }
+                                | {
+                                    type: "link_preview"
+                                    link_preview: { url: TextRequest }
+                                  }
+                                | { type: "page"; page: { id: IdRequest } }
+                                | {
+                                    type: "database"
+                                    database: { id: IdRequest }
+                                  }
+                              annotations: {
+                                bold: boolean
+                                italic: boolean
+                                strikethrough: boolean
+                                underline: boolean
+                                code: boolean
+                                color:
+                                  | "default"
+                                  | "gray"
+                                  | "brown"
+                                  | "orange"
+                                  | "yellow"
+                                  | "green"
+                                  | "blue"
+                                  | "purple"
+                                  | "pink"
+                                  | "red"
+                                  | "gray_background"
+                                  | "brown_background"
+                                  | "orange_background"
+                                  | "yellow_background"
+                                  | "green_background"
+                                  | "blue_background"
+                                  | "purple_background"
+                                  | "pink_background"
+                                  | "red_background"
                               }
-                            | {
-                                type: "date"
-                                date: {
-                                  start: string
-                                  end: string | null
-                                  time_zone: TimeZoneRequest | null
-                                }
+                              plain_text: string
+                              href: string | null
+                            }
+                          | {
+                              type: "equation"
+                              equation: { expression: TextRequest }
+                              annotations: {
+                                bold: boolean
+                                italic: boolean
+                                strikethrough: boolean
+                                underline: boolean
+                                code: boolean
+                                color:
+                                  | "default"
+                                  | "gray"
+                                  | "brown"
+                                  | "orange"
+                                  | "yellow"
+                                  | "green"
+                                  | "blue"
+                                  | "purple"
+                                  | "pink"
+                                  | "red"
+                                  | "gray_background"
+                                  | "brown_background"
+                                  | "orange_background"
+                                  | "yellow_background"
+                                  | "green_background"
+                                  | "blue_background"
+                                  | "purple_background"
+                                  | "pink_background"
+                                  | "red_background"
                               }
-                            | {
-                                type: "link_preview"
-                                link_preview: { url: TextRequest }
-                              }
-                            | { type: "page"; page: { id: IdRequest } }
-                            | { type: "database"; database: { id: IdRequest } }
-                          annotations: {
-                            bold: boolean
-                            italic: boolean
-                            strikethrough: boolean
-                            underline: boolean
-                            code: boolean
-                            color:
-                              | "default"
-                              | "gray"
-                              | "brown"
-                              | "orange"
-                              | "yellow"
-                              | "green"
-                              | "blue"
-                              | "purple"
-                              | "pink"
-                              | "red"
-                              | "gray_background"
-                              | "brown_background"
-                              | "orange_background"
-                              | "yellow_background"
-                              | "green_background"
-                              | "blue_background"
-                              | "purple_background"
-                              | "pink_background"
-                              | "red_background"
-                          }
-                          plain_text: string
-                          href: string | null
-                        }
-                      | {
-                          type: "equation"
-                          equation: { expression: TextRequest }
-                          annotations: {
-                            bold: boolean
-                            italic: boolean
-                            strikethrough: boolean
-                            underline: boolean
-                            code: boolean
-                            color:
-                              | "default"
-                              | "gray"
-                              | "brown"
-                              | "orange"
-                              | "yellow"
-                              | "green"
-                              | "blue"
-                              | "purple"
-                              | "pink"
-                              | "red"
-                              | "gray_background"
-                              | "brown_background"
-                              | "orange_background"
-                              | "yellow_background"
-                              | "green_background"
-                              | "blue_background"
-                              | "purple_background"
-                              | "pink_background"
-                              | "red_background"
-                          }
-                          plain_text: string
-                          href: string | null
-                        }
-                    >
-                  }
-                | {
-                    type: "rich_text"
-                    rich_text: Array<
-                      | {
-                          type: "text"
-                          text: {
-                            content: string
-                            link: { url: TextRequest } | null
-                          }
-                          annotations: {
-                            bold: boolean
-                            italic: boolean
-                            strikethrough: boolean
-                            underline: boolean
-                            code: boolean
-                            color:
-                              | "default"
-                              | "gray"
-                              | "brown"
-                              | "orange"
-                              | "yellow"
-                              | "green"
-                              | "blue"
-                              | "purple"
-                              | "pink"
-                              | "red"
-                              | "gray_background"
-                              | "brown_background"
-                              | "orange_background"
-                              | "yellow_background"
-                              | "green_background"
-                              | "blue_background"
-                              | "purple_background"
-                              | "pink_background"
-                              | "red_background"
-                          }
-                          plain_text: string
-                          href: string | null
-                        }
-                      | {
-                          type: "mention"
-                          mention:
-                            | {
-                                type: "user"
-                                user:
-                                  | { id: IdRequest; object: "user" }
-                                  | {
-                                      type: "person"
-                                      person: { email: string }
-                                      name: string | null
-                                      avatar_url: string | null
-                                      id: IdRequest
-                                      object: "user"
-                                    }
-                                  | {
-                                      type: "bot"
-                                      bot:
-                                        | EmptyObject
-                                        | {
-                                            owner:
-                                              | {
-                                                  type: "user"
-                                                  user:
-                                                    | {
-                                                        type: "person"
-                                                        person: {
-                                                          email: string
-                                                        }
-                                                        name: string | null
-                                                        avatar_url:
-                                                          | string
-                                                          | null
-                                                        id: IdRequest
-                                                        object: "user"
-                                                      }
-                                                    | {
-                                                        id: IdRequest
-                                                        object: "user"
-                                                      }
-                                                }
-                                              | {
-                                                  type: "workspace"
-                                                  workspace: true
-                                                }
-                                          }
-                                      name: string | null
-                                      avatar_url: string | null
-                                      id: IdRequest
-                                      object: "user"
-                                    }
-                              }
-                            | {
-                                type: "date"
-                                date: {
-                                  start: string
-                                  end: string | null
-                                  time_zone: TimeZoneRequest | null
-                                }
-                              }
-                            | {
-                                type: "link_preview"
-                                link_preview: { url: TextRequest }
-                              }
-                            | { type: "page"; page: { id: IdRequest } }
-                            | { type: "database"; database: { id: IdRequest } }
-                          annotations: {
-                            bold: boolean
-                            italic: boolean
-                            strikethrough: boolean
-                            underline: boolean
-                            code: boolean
-                            color:
-                              | "default"
-                              | "gray"
-                              | "brown"
-                              | "orange"
-                              | "yellow"
-                              | "green"
-                              | "blue"
-                              | "purple"
-                              | "pink"
-                              | "red"
-                              | "gray_background"
-                              | "brown_background"
-                              | "orange_background"
-                              | "yellow_background"
-                              | "green_background"
-                              | "blue_background"
-                              | "purple_background"
-                              | "pink_background"
-                              | "red_background"
-                          }
-                          plain_text: string
-                          href: string | null
-                        }
-                      | {
-                          type: "equation"
-                          equation: { expression: TextRequest }
-                          annotations: {
-                            bold: boolean
-                            italic: boolean
-                            strikethrough: boolean
-                            underline: boolean
-                            code: boolean
-                            color:
-                              | "default"
-                              | "gray"
-                              | "brown"
-                              | "orange"
-                              | "yellow"
-                              | "green"
-                              | "blue"
-                              | "purple"
-                              | "pink"
-                              | "red"
-                              | "gray_background"
-                              | "brown_background"
-                              | "orange_background"
-                              | "yellow_background"
-                              | "green_background"
-                              | "blue_background"
-                              | "purple_background"
-                              | "pink_background"
-                              | "red_background"
-                          }
-                          plain_text: string
-                          href: string | null
-                        }
-                    >
-                  }
-                | { type: "number"; number: number | null }
-                | { type: "url"; url: string | null }
-                | {
-                    type: "select"
-                    select: {
-                      id: StringRequest
-                      name: StringRequest
-                      color:
-                        | "default"
-                        | "gray"
-                        | "brown"
-                        | "orange"
-                        | "yellow"
-                        | "green"
-                        | "blue"
-                        | "purple"
-                        | "pink"
-                        | "red"
-                    } | null
-                  }
-                | {
-                    type: "multi_select"
-                    multi_select: Array<{
-                      id: StringRequest
-                      name: StringRequest
-                      color:
-                        | "default"
-                        | "gray"
-                        | "brown"
-                        | "orange"
-                        | "yellow"
-                        | "green"
-                        | "blue"
-                        | "purple"
-                        | "pink"
-                        | "red"
-                    }>
-                  }
-                | {
-                    type: "people"
-                    people: Array<
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | EmptyObject
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                    >
-                  }
-                | { type: "email"; email: string | null }
-                | { type: "phone_number"; phone_number: string | null }
-                | {
-                    type: "date"
-                    date: {
-                      start: string
-                      end: string | null
-                      time_zone: TimeZoneRequest | null
-                    } | null
-                  }
-                | {
-                    type: "files"
-                    files: Array<
-                      | {
-                          file: { url: string; expiry_time: string }
+                              plain_text: string
+                              href: string | null
+                            }
+                        >
+                      }
+                    | { type: "number"; number: number | null }
+                    | { type: "url"; url: string | null }
+                    | {
+                        type: "select"
+                        select: {
+                          id: StringRequest
                           name: StringRequest
-                          type?: "file"
-                        }
-                      | {
-                          external: { url: TextRequest }
+                          color:
+                            | "default"
+                            | "gray"
+                            | "brown"
+                            | "orange"
+                            | "yellow"
+                            | "green"
+                            | "blue"
+                            | "purple"
+                            | "pink"
+                            | "red"
+                        } | null
+                      }
+                    | {
+                        type: "multi_select"
+                        multi_select: Array<{
+                          id: StringRequest
                           name: StringRequest
-                          type?: "external"
-                        }
-                    >
-                  }
-                | { type: "checkbox"; checkbox: boolean }
-                | {
-                    type: "formula"
-                    formula:
-                      | { type: "string"; string: string | null }
-                      | {
-                          type: "date"
-                          date: {
-                            start: string
-                            end: string | null
-                            time_zone: TimeZoneRequest | null
-                          } | null
-                        }
-                      | { type: "number"; number: number | null }
-                      | { type: "boolean"; boolean: boolean | null }
-                  }
-                | { type: "relation"; relation: Array<{ id: string }> }
-                | { type: "created_time"; created_time: string }
-                | {
-                    type: "created_by"
-                    created_by:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | EmptyObject
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                  }
-                | { type: "last_edited_time"; last_edited_time: string }
-                | {
-                    type: "last_edited_by"
-                    last_edited_by:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | EmptyObject
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                  }
-              >
-              function:
-                | "count"
-                | "count_values"
-                | "empty"
-                | "not_empty"
-                | "unique"
-                | "show_unique"
-                | "percent_empty"
-                | "percent_not_empty"
-                | "sum"
-                | "average"
-                | "median"
-                | "min"
-                | "max"
-                | "range"
-                | "earliest_date"
-                | "latest_date"
-                | "date_range"
-                | "checked"
-                | "unchecked"
-                | "percent_checked"
-                | "percent_unchecked"
-                | "show_original"
-            }
-          | {
-              type: "unsupported"
-              unsupported: EmptyObject
-              function:
-                | "count"
-                | "count_values"
-                | "empty"
-                | "not_empty"
-                | "unique"
-                | "show_unique"
-                | "percent_empty"
-                | "percent_not_empty"
-                | "sum"
-                | "average"
-                | "median"
-                | "min"
-                | "max"
-                | "range"
-                | "earliest_date"
-                | "latest_date"
-                | "date_range"
-                | "checked"
-                | "unchecked"
-                | "percent_checked"
-                | "percent_unchecked"
-                | "show_original"
-            }
-        id: string
-      }
-  >
-  icon:
-    | { type: "emoji"; emoji: EmojiRequest }
-    | null
-    | { type: "external"; external: { url: TextRequest } }
-    | null
-    | { type: "file"; file: { url: string; expiry_time: string } }
-    | null
-  cover:
-    | { type: "external"; external: { url: TextRequest } }
-    | null
-    | { type: "file"; file: { url: string; expiry_time: string } }
-    | null
-  object: "page"
-  id: string
-  created_time: string
-  last_edited_time: string
-  archived: boolean
-  url: string
-}
+                          color:
+                            | "default"
+                            | "gray"
+                            | "brown"
+                            | "orange"
+                            | "yellow"
+                            | "green"
+                            | "blue"
+                            | "purple"
+                            | "pink"
+                            | "red"
+                        }>
+                      }
+                    | {
+                        type: "people"
+                        people: Array<
+                          | { id: IdRequest; object: "user" }
+                          | {
+                              type: "person"
+                              person: { email?: string }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                          | {
+                              type: "bot"
+                              bot:
+                                | EmptyObject
+                                | {
+                                    owner:
+                                      | {
+                                          type: "user"
+                                          user:
+                                            | {
+                                                type: "person"
+                                                person: { email: string }
+                                                name: string | null
+                                                avatar_url: string | null
+                                                id: IdRequest
+                                                object: "user"
+                                              }
+                                            | { id: IdRequest; object: "user" }
+                                        }
+                                      | { type: "workspace"; workspace: true }
+                                  }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                        >
+                      }
+                    | { type: "email"; email: string | null }
+                    | { type: "phone_number"; phone_number: string | null }
+                    | {
+                        type: "date"
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
+                        } | null
+                      }
+                    | {
+                        type: "files"
+                        files: Array<
+                          | {
+                              file: { url: string; expiry_time: string }
+                              name: StringRequest
+                              type?: "file"
+                            }
+                          | {
+                              external: { url: TextRequest }
+                              name: StringRequest
+                              type?: "external"
+                            }
+                        >
+                      }
+                    | { type: "checkbox"; checkbox: boolean }
+                    | {
+                        type: "formula"
+                        formula:
+                          | { type: "string"; string: string | null }
+                          | {
+                              type: "date"
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              } | null
+                            }
+                          | { type: "number"; number: number | null }
+                          | { type: "boolean"; boolean: boolean | null }
+                      }
+                    | { type: "relation"; relation: Array<{ id: string }> }
+                    | { type: "created_time"; created_time: string }
+                    | {
+                        type: "created_by"
+                        created_by:
+                          | { id: IdRequest; object: "user" }
+                          | {
+                              type: "person"
+                              person: { email?: string }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                          | {
+                              type: "bot"
+                              bot:
+                                | EmptyObject
+                                | {
+                                    owner:
+                                      | {
+                                          type: "user"
+                                          user:
+                                            | {
+                                                type: "person"
+                                                person: { email: string }
+                                                name: string | null
+                                                avatar_url: string | null
+                                                id: IdRequest
+                                                object: "user"
+                                              }
+                                            | { id: IdRequest; object: "user" }
+                                        }
+                                      | { type: "workspace"; workspace: true }
+                                  }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                      }
+                    | { type: "last_edited_time"; last_edited_time: string }
+                    | {
+                        type: "last_edited_by"
+                        last_edited_by:
+                          | { id: IdRequest; object: "user" }
+                          | {
+                              type: "person"
+                              person: { email?: string }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                          | {
+                              type: "bot"
+                              bot:
+                                | EmptyObject
+                                | {
+                                    owner:
+                                      | {
+                                          type: "user"
+                                          user:
+                                            | {
+                                                type: "person"
+                                                person: { email: string }
+                                                name: string | null
+                                                avatar_url: string | null
+                                                id: IdRequest
+                                                object: "user"
+                                              }
+                                            | { id: IdRequest; object: "user" }
+                                        }
+                                      | { type: "workspace"; workspace: true }
+                                  }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                      }
+                  >
+                  function:
+                    | "count"
+                    | "count_values"
+                    | "empty"
+                    | "not_empty"
+                    | "unique"
+                    | "show_unique"
+                    | "percent_empty"
+                    | "percent_not_empty"
+                    | "sum"
+                    | "average"
+                    | "median"
+                    | "min"
+                    | "max"
+                    | "range"
+                    | "earliest_date"
+                    | "latest_date"
+                    | "date_range"
+                    | "checked"
+                    | "unchecked"
+                    | "percent_checked"
+                    | "percent_unchecked"
+                    | "show_original"
+                }
+              | {
+                  type: "unsupported"
+                  unsupported: EmptyObject
+                  function:
+                    | "count"
+                    | "count_values"
+                    | "empty"
+                    | "not_empty"
+                    | "unique"
+                    | "show_unique"
+                    | "percent_empty"
+                    | "percent_not_empty"
+                    | "sum"
+                    | "average"
+                    | "median"
+                    | "min"
+                    | "max"
+                    | "range"
+                    | "earliest_date"
+                    | "latest_date"
+                    | "date_range"
+                    | "checked"
+                    | "unchecked"
+                    | "percent_checked"
+                    | "percent_unchecked"
+                    | "show_original"
+                }
+            id: string
+          }
+      >
+      icon:
+        | { type: "emoji"; emoji: EmojiRequest }
+        | null
+        | { type: "external"; external: { url: TextRequest } }
+        | null
+        | { type: "file"; file: { url: string; expiry_time: string } }
+        | null
+      cover:
+        | { type: "external"; external: { url: TextRequest } }
+        | null
+        | { type: "file"; file: { url: string; expiry_time: string } }
+        | null
+      object: "page"
+      id: string
+      created_time: string
+      last_edited_time: string
+      archived: boolean
+      url: string
+    }
+  | { object: "page"; id: string }
 
 export const createPage = {
   method: "post",
@@ -9007,1209 +9021,1223 @@ type GetPagePathParameters = {
 
 export type GetPageParameters = GetPagePathParameters
 
-export type GetPageResponse = {
-  parent:
-    | { type: "database_id"; database_id: IdRequest }
-    | { type: "page_id"; page_id: IdRequest }
-    | { type: "workspace"; workspace: true }
-  properties: Record<
-    string,
-    | {
-        type: "title"
-        title: Array<
-          | {
-              type: "text"
-              text: { content: string; link: { url: TextRequest } | null }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color:
-                  | "default"
-                  | "gray"
-                  | "brown"
-                  | "orange"
-                  | "yellow"
-                  | "green"
-                  | "blue"
-                  | "purple"
-                  | "pink"
-                  | "red"
-                  | "gray_background"
-                  | "brown_background"
-                  | "orange_background"
-                  | "yellow_background"
-                  | "green_background"
-                  | "blue_background"
-                  | "purple_background"
-                  | "pink_background"
-                  | "red_background"
-              }
-              plain_text: string
-              href: string | null
-            }
-          | {
-              type: "mention"
-              mention:
-                | {
-                    type: "user"
-                    user:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | EmptyObject
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
+export type GetPageResponse =
+  | {
+      parent:
+        | { type: "database_id"; database_id: IdRequest }
+        | { type: "page_id"; page_id: IdRequest }
+        | { type: "workspace"; workspace: true }
+      properties: Record<
+        string,
+        | {
+            type: "title"
+            title: Array<
+              | {
+                  type: "text"
+                  text: { content: string; link: { url: TextRequest } | null }
+                  annotations: {
+                    bold: boolean
+                    italic: boolean
+                    strikethrough: boolean
+                    underline: boolean
+                    code: boolean
+                    color:
+                      | "default"
+                      | "gray"
+                      | "brown"
+                      | "orange"
+                      | "yellow"
+                      | "green"
+                      | "blue"
+                      | "purple"
+                      | "pink"
+                      | "red"
+                      | "gray_background"
+                      | "brown_background"
+                      | "orange_background"
+                      | "yellow_background"
+                      | "green_background"
+                      | "blue_background"
+                      | "purple_background"
+                      | "pink_background"
+                      | "red_background"
                   }
-                | {
-                    type: "date"
-                    date: {
-                      start: string
-                      end: string | null
-                      time_zone: TimeZoneRequest | null
-                    }
-                  }
-                | { type: "link_preview"; link_preview: { url: TextRequest } }
-                | { type: "page"; page: { id: IdRequest } }
-                | { type: "database"; database: { id: IdRequest } }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color:
-                  | "default"
-                  | "gray"
-                  | "brown"
-                  | "orange"
-                  | "yellow"
-                  | "green"
-                  | "blue"
-                  | "purple"
-                  | "pink"
-                  | "red"
-                  | "gray_background"
-                  | "brown_background"
-                  | "orange_background"
-                  | "yellow_background"
-                  | "green_background"
-                  | "blue_background"
-                  | "purple_background"
-                  | "pink_background"
-                  | "red_background"
-              }
-              plain_text: string
-              href: string | null
-            }
-          | {
-              type: "equation"
-              equation: { expression: TextRequest }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color:
-                  | "default"
-                  | "gray"
-                  | "brown"
-                  | "orange"
-                  | "yellow"
-                  | "green"
-                  | "blue"
-                  | "purple"
-                  | "pink"
-                  | "red"
-                  | "gray_background"
-                  | "brown_background"
-                  | "orange_background"
-                  | "yellow_background"
-                  | "green_background"
-                  | "blue_background"
-                  | "purple_background"
-                  | "pink_background"
-                  | "red_background"
-              }
-              plain_text: string
-              href: string | null
-            }
-        >
-        id: string
-      }
-    | {
-        type: "rich_text"
-        rich_text: Array<
-          | {
-              type: "text"
-              text: { content: string; link: { url: TextRequest } | null }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color:
-                  | "default"
-                  | "gray"
-                  | "brown"
-                  | "orange"
-                  | "yellow"
-                  | "green"
-                  | "blue"
-                  | "purple"
-                  | "pink"
-                  | "red"
-                  | "gray_background"
-                  | "brown_background"
-                  | "orange_background"
-                  | "yellow_background"
-                  | "green_background"
-                  | "blue_background"
-                  | "purple_background"
-                  | "pink_background"
-                  | "red_background"
-              }
-              plain_text: string
-              href: string | null
-            }
-          | {
-              type: "mention"
-              mention:
-                | {
-                    type: "user"
-                    user:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
+                  plain_text: string
+                  href: string | null
+                }
+              | {
+                  type: "mention"
+                  mention:
+                    | {
+                        type: "user"
+                        user:
+                          | { id: IdRequest; object: "user" }
+                          | {
+                              type: "person"
+                              person: { email?: string }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                          | {
+                              type: "bot"
+                              bot:
+                                | EmptyObject
+                                | {
+                                    owner:
+                                      | {
+                                          type: "user"
+                                          user:
+                                            | {
+                                                type: "person"
+                                                person: { email: string }
+                                                name: string | null
+                                                avatar_url: string | null
+                                                id: IdRequest
+                                                object: "user"
+                                              }
+                                            | { id: IdRequest; object: "user" }
+                                        }
+                                      | { type: "workspace"; workspace: true }
+                                  }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                      }
+                    | {
+                        type: "date"
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
                         }
-                      | {
-                          type: "bot"
-                          bot:
-                            | EmptyObject
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
+                      }
+                    | {
+                        type: "link_preview"
+                        link_preview: { url: TextRequest }
+                      }
+                    | { type: "page"; page: { id: IdRequest } }
+                    | { type: "database"; database: { id: IdRequest } }
+                  annotations: {
+                    bold: boolean
+                    italic: boolean
+                    strikethrough: boolean
+                    underline: boolean
+                    code: boolean
+                    color:
+                      | "default"
+                      | "gray"
+                      | "brown"
+                      | "orange"
+                      | "yellow"
+                      | "green"
+                      | "blue"
+                      | "purple"
+                      | "pink"
+                      | "red"
+                      | "gray_background"
+                      | "brown_background"
+                      | "orange_background"
+                      | "yellow_background"
+                      | "green_background"
+                      | "blue_background"
+                      | "purple_background"
+                      | "pink_background"
+                      | "red_background"
+                  }
+                  plain_text: string
+                  href: string | null
+                }
+              | {
+                  type: "equation"
+                  equation: { expression: TextRequest }
+                  annotations: {
+                    bold: boolean
+                    italic: boolean
+                    strikethrough: boolean
+                    underline: boolean
+                    code: boolean
+                    color:
+                      | "default"
+                      | "gray"
+                      | "brown"
+                      | "orange"
+                      | "yellow"
+                      | "green"
+                      | "blue"
+                      | "purple"
+                      | "pink"
+                      | "red"
+                      | "gray_background"
+                      | "brown_background"
+                      | "orange_background"
+                      | "yellow_background"
+                      | "green_background"
+                      | "blue_background"
+                      | "purple_background"
+                      | "pink_background"
+                      | "red_background"
+                  }
+                  plain_text: string
+                  href: string | null
+                }
+            >
+            id: string
+          }
+        | {
+            type: "rich_text"
+            rich_text: Array<
+              | {
+                  type: "text"
+                  text: { content: string; link: { url: TextRequest } | null }
+                  annotations: {
+                    bold: boolean
+                    italic: boolean
+                    strikethrough: boolean
+                    underline: boolean
+                    code: boolean
+                    color:
+                      | "default"
+                      | "gray"
+                      | "brown"
+                      | "orange"
+                      | "yellow"
+                      | "green"
+                      | "blue"
+                      | "purple"
+                      | "pink"
+                      | "red"
+                      | "gray_background"
+                      | "brown_background"
+                      | "orange_background"
+                      | "yellow_background"
+                      | "green_background"
+                      | "blue_background"
+                      | "purple_background"
+                      | "pink_background"
+                      | "red_background"
+                  }
+                  plain_text: string
+                  href: string | null
+                }
+              | {
+                  type: "mention"
+                  mention:
+                    | {
+                        type: "user"
+                        user:
+                          | { id: IdRequest; object: "user" }
+                          | {
+                              type: "person"
+                              person: { email?: string }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                          | {
+                              type: "bot"
+                              bot:
+                                | EmptyObject
+                                | {
+                                    owner:
+                                      | {
+                                          type: "user"
+                                          user:
+                                            | {
+                                                type: "person"
+                                                person: { email: string }
+                                                name: string | null
+                                                avatar_url: string | null
+                                                id: IdRequest
+                                                object: "user"
+                                              }
+                                            | { id: IdRequest; object: "user" }
+                                        }
+                                      | { type: "workspace"; workspace: true }
+                                  }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                      }
+                    | {
+                        type: "date"
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
                         }
+                      }
+                    | {
+                        type: "link_preview"
+                        link_preview: { url: TextRequest }
+                      }
+                    | { type: "page"; page: { id: IdRequest } }
+                    | { type: "database"; database: { id: IdRequest } }
+                  annotations: {
+                    bold: boolean
+                    italic: boolean
+                    strikethrough: boolean
+                    underline: boolean
+                    code: boolean
+                    color:
+                      | "default"
+                      | "gray"
+                      | "brown"
+                      | "orange"
+                      | "yellow"
+                      | "green"
+                      | "blue"
+                      | "purple"
+                      | "pink"
+                      | "red"
+                      | "gray_background"
+                      | "brown_background"
+                      | "orange_background"
+                      | "yellow_background"
+                      | "green_background"
+                      | "blue_background"
+                      | "purple_background"
+                      | "pink_background"
+                      | "red_background"
                   }
-                | {
-                    type: "date"
-                    date: {
-                      start: string
-                      end: string | null
-                      time_zone: TimeZoneRequest | null
-                    }
+                  plain_text: string
+                  href: string | null
+                }
+              | {
+                  type: "equation"
+                  equation: { expression: TextRequest }
+                  annotations: {
+                    bold: boolean
+                    italic: boolean
+                    strikethrough: boolean
+                    underline: boolean
+                    code: boolean
+                    color:
+                      | "default"
+                      | "gray"
+                      | "brown"
+                      | "orange"
+                      | "yellow"
+                      | "green"
+                      | "blue"
+                      | "purple"
+                      | "pink"
+                      | "red"
+                      | "gray_background"
+                      | "brown_background"
+                      | "orange_background"
+                      | "yellow_background"
+                      | "green_background"
+                      | "blue_background"
+                      | "purple_background"
+                      | "pink_background"
+                      | "red_background"
                   }
-                | { type: "link_preview"; link_preview: { url: TextRequest } }
-                | { type: "page"; page: { id: IdRequest } }
-                | { type: "database"; database: { id: IdRequest } }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color:
-                  | "default"
-                  | "gray"
-                  | "brown"
-                  | "orange"
-                  | "yellow"
-                  | "green"
-                  | "blue"
-                  | "purple"
-                  | "pink"
-                  | "red"
-                  | "gray_background"
-                  | "brown_background"
-                  | "orange_background"
-                  | "yellow_background"
-                  | "green_background"
-                  | "blue_background"
-                  | "purple_background"
-                  | "pink_background"
-                  | "red_background"
-              }
-              plain_text: string
-              href: string | null
-            }
-          | {
-              type: "equation"
-              equation: { expression: TextRequest }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color:
-                  | "default"
-                  | "gray"
-                  | "brown"
-                  | "orange"
-                  | "yellow"
-                  | "green"
-                  | "blue"
-                  | "purple"
-                  | "pink"
-                  | "red"
-                  | "gray_background"
-                  | "brown_background"
-                  | "orange_background"
-                  | "yellow_background"
-                  | "green_background"
-                  | "blue_background"
-                  | "purple_background"
-                  | "pink_background"
-                  | "red_background"
-              }
-              plain_text: string
-              href: string | null
-            }
-        >
-        id: string
-      }
-    | { type: "number"; number: number | null; id: string }
-    | { type: "url"; url: string | null; id: string }
-    | {
-        type: "select"
-        select: {
-          id: StringRequest
-          name: StringRequest
-          color:
-            | "default"
-            | "gray"
-            | "brown"
-            | "orange"
-            | "yellow"
-            | "green"
-            | "blue"
-            | "purple"
-            | "pink"
-            | "red"
-        } | null
-        id: string
-      }
-    | {
-        type: "multi_select"
-        multi_select: Array<{
-          id: StringRequest
-          name: StringRequest
-          color:
-            | "default"
-            | "gray"
-            | "brown"
-            | "orange"
-            | "yellow"
-            | "green"
-            | "blue"
-            | "purple"
-            | "pink"
-            | "red"
-        }>
-        id: string
-      }
-    | {
-        type: "people"
-        people: Array<
-          | { id: IdRequest; object: "user" }
-          | {
-              type: "person"
-              person: { email: string }
-              name: string | null
-              avatar_url: string | null
-              id: IdRequest
-              object: "user"
-            }
-          | {
-              type: "bot"
-              bot:
-                | EmptyObject
-                | {
-                    owner:
-                      | {
-                          type: "user"
-                          user:
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | { id: IdRequest; object: "user" }
-                        }
-                      | { type: "workspace"; workspace: true }
-                  }
-              name: string | null
-              avatar_url: string | null
-              id: IdRequest
-              object: "user"
-            }
-        >
-        id: string
-      }
-    | { type: "email"; email: string | null; id: string }
-    | { type: "phone_number"; phone_number: string | null; id: string }
-    | {
-        type: "date"
-        date: {
-          start: string
-          end: string | null
-          time_zone: TimeZoneRequest | null
-        } | null
-        id: string
-      }
-    | {
-        type: "files"
-        files: Array<
-          | {
-              file: { url: string; expiry_time: string }
+                  plain_text: string
+                  href: string | null
+                }
+            >
+            id: string
+          }
+        | { type: "number"; number: number | null; id: string }
+        | { type: "url"; url: string | null; id: string }
+        | {
+            type: "select"
+            select: {
+              id: StringRequest
               name: StringRequest
-              type?: "file"
-            }
-          | {
-              external: { url: TextRequest }
+              color:
+                | "default"
+                | "gray"
+                | "brown"
+                | "orange"
+                | "yellow"
+                | "green"
+                | "blue"
+                | "purple"
+                | "pink"
+                | "red"
+            } | null
+            id: string
+          }
+        | {
+            type: "multi_select"
+            multi_select: Array<{
+              id: StringRequest
               name: StringRequest
-              type?: "external"
-            }
-        >
-        id: string
-      }
-    | { type: "checkbox"; checkbox: boolean; id: string }
-    | {
-        type: "formula"
-        formula:
-          | { type: "string"; string: string | null }
-          | {
-              type: "date"
-              date: {
-                start: string
-                end: string | null
-                time_zone: TimeZoneRequest | null
-              } | null
-            }
-          | { type: "number"; number: number | null }
-          | { type: "boolean"; boolean: boolean | null }
-        id: string
-      }
-    | { type: "relation"; relation: Array<{ id: string }>; id: string }
-    | { type: "created_time"; created_time: string; id: string }
-    | {
-        type: "created_by"
-        created_by:
-          | { id: IdRequest; object: "user" }
-          | {
-              type: "person"
-              person: { email: string }
-              name: string | null
-              avatar_url: string | null
-              id: IdRequest
-              object: "user"
-            }
-          | {
-              type: "bot"
-              bot:
-                | EmptyObject
-                | {
-                    owner:
-                      | {
-                          type: "user"
-                          user:
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
+              color:
+                | "default"
+                | "gray"
+                | "brown"
+                | "orange"
+                | "yellow"
+                | "green"
+                | "blue"
+                | "purple"
+                | "pink"
+                | "red"
+            }>
+            id: string
+          }
+        | {
+            type: "people"
+            people: Array<
+              | { id: IdRequest; object: "user" }
+              | {
+                  type: "person"
+                  person: { email?: string }
+                  name: string | null
+                  avatar_url: string | null
+                  id: IdRequest
+                  object: "user"
+                }
+              | {
+                  type: "bot"
+                  bot:
+                    | EmptyObject
+                    | {
+                        owner:
+                          | {
+                              type: "user"
+                              user:
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | { id: IdRequest; object: "user" }
+                            }
+                          | { type: "workspace"; workspace: true }
+                      }
+                  name: string | null
+                  avatar_url: string | null
+                  id: IdRequest
+                  object: "user"
+                }
+            >
+            id: string
+          }
+        | { type: "email"; email: string | null; id: string }
+        | { type: "phone_number"; phone_number: string | null; id: string }
+        | {
+            type: "date"
+            date: {
+              start: string
+              end: string | null
+              time_zone: TimeZoneRequest | null
+            } | null
+            id: string
+          }
+        | {
+            type: "files"
+            files: Array<
+              | {
+                  file: { url: string; expiry_time: string }
+                  name: StringRequest
+                  type?: "file"
+                }
+              | {
+                  external: { url: TextRequest }
+                  name: StringRequest
+                  type?: "external"
+                }
+            >
+            id: string
+          }
+        | { type: "checkbox"; checkbox: boolean; id: string }
+        | {
+            type: "formula"
+            formula:
+              | { type: "string"; string: string | null }
+              | {
+                  type: "date"
+                  date: {
+                    start: string
+                    end: string | null
+                    time_zone: TimeZoneRequest | null
+                  } | null
+                }
+              | { type: "number"; number: number | null }
+              | { type: "boolean"; boolean: boolean | null }
+            id: string
+          }
+        | { type: "relation"; relation: Array<{ id: string }>; id: string }
+        | { type: "created_time"; created_time: string; id: string }
+        | {
+            type: "created_by"
+            created_by:
+              | { id: IdRequest; object: "user" }
+              | {
+                  type: "person"
+                  person: { email?: string }
+                  name: string | null
+                  avatar_url: string | null
+                  id: IdRequest
+                  object: "user"
+                }
+              | {
+                  type: "bot"
+                  bot:
+                    | EmptyObject
+                    | {
+                        owner:
+                          | {
+                              type: "user"
+                              user:
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | { id: IdRequest; object: "user" }
+                            }
+                          | { type: "workspace"; workspace: true }
+                      }
+                  name: string | null
+                  avatar_url: string | null
+                  id: IdRequest
+                  object: "user"
+                }
+            id: string
+          }
+        | { type: "last_edited_time"; last_edited_time: string; id: string }
+        | {
+            type: "last_edited_by"
+            last_edited_by:
+              | { id: IdRequest; object: "user" }
+              | {
+                  type: "person"
+                  person: { email?: string }
+                  name: string | null
+                  avatar_url: string | null
+                  id: IdRequest
+                  object: "user"
+                }
+              | {
+                  type: "bot"
+                  bot:
+                    | EmptyObject
+                    | {
+                        owner:
+                          | {
+                              type: "user"
+                              user:
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | { id: IdRequest; object: "user" }
+                            }
+                          | { type: "workspace"; workspace: true }
+                      }
+                  name: string | null
+                  avatar_url: string | null
+                  id: IdRequest
+                  object: "user"
+                }
+            id: string
+          }
+        | {
+            type: "rollup"
+            rollup:
+              | {
+                  type: "number"
+                  number: number | null
+                  function:
+                    | "count"
+                    | "count_values"
+                    | "empty"
+                    | "not_empty"
+                    | "unique"
+                    | "show_unique"
+                    | "percent_empty"
+                    | "percent_not_empty"
+                    | "sum"
+                    | "average"
+                    | "median"
+                    | "min"
+                    | "max"
+                    | "range"
+                    | "earliest_date"
+                    | "latest_date"
+                    | "date_range"
+                    | "checked"
+                    | "unchecked"
+                    | "percent_checked"
+                    | "percent_unchecked"
+                    | "show_original"
+                }
+              | {
+                  type: "date"
+                  date: {
+                    start: string
+                    end: string | null
+                    time_zone: TimeZoneRequest | null
+                  } | null
+                  function:
+                    | "count"
+                    | "count_values"
+                    | "empty"
+                    | "not_empty"
+                    | "unique"
+                    | "show_unique"
+                    | "percent_empty"
+                    | "percent_not_empty"
+                    | "sum"
+                    | "average"
+                    | "median"
+                    | "min"
+                    | "max"
+                    | "range"
+                    | "earliest_date"
+                    | "latest_date"
+                    | "date_range"
+                    | "checked"
+                    | "unchecked"
+                    | "percent_checked"
+                    | "percent_unchecked"
+                    | "show_original"
+                }
+              | {
+                  type: "array"
+                  array: Array<
+                    | {
+                        type: "title"
+                        title: Array<
+                          | {
+                              type: "text"
+                              text: {
+                                content: string
+                                link: { url: TextRequest } | null
                               }
-                            | { id: IdRequest; object: "user" }
-                        }
-                      | { type: "workspace"; workspace: true }
-                  }
-              name: string | null
-              avatar_url: string | null
-              id: IdRequest
-              object: "user"
-            }
-        id: string
-      }
-    | { type: "last_edited_time"; last_edited_time: string; id: string }
-    | {
-        type: "last_edited_by"
-        last_edited_by:
-          | { id: IdRequest; object: "user" }
-          | {
-              type: "person"
-              person: { email: string }
-              name: string | null
-              avatar_url: string | null
-              id: IdRequest
-              object: "user"
-            }
-          | {
-              type: "bot"
-              bot:
-                | EmptyObject
-                | {
-                    owner:
-                      | {
-                          type: "user"
-                          user:
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
+                              annotations: {
+                                bold: boolean
+                                italic: boolean
+                                strikethrough: boolean
+                                underline: boolean
+                                code: boolean
+                                color:
+                                  | "default"
+                                  | "gray"
+                                  | "brown"
+                                  | "orange"
+                                  | "yellow"
+                                  | "green"
+                                  | "blue"
+                                  | "purple"
+                                  | "pink"
+                                  | "red"
+                                  | "gray_background"
+                                  | "brown_background"
+                                  | "orange_background"
+                                  | "yellow_background"
+                                  | "green_background"
+                                  | "blue_background"
+                                  | "purple_background"
+                                  | "pink_background"
+                                  | "red_background"
                               }
-                            | { id: IdRequest; object: "user" }
-                        }
-                      | { type: "workspace"; workspace: true }
-                  }
-              name: string | null
-              avatar_url: string | null
-              id: IdRequest
-              object: "user"
-            }
-        id: string
-      }
-    | {
-        type: "rollup"
-        rollup:
-          | {
-              type: "number"
-              number: number | null
-              function:
-                | "count"
-                | "count_values"
-                | "empty"
-                | "not_empty"
-                | "unique"
-                | "show_unique"
-                | "percent_empty"
-                | "percent_not_empty"
-                | "sum"
-                | "average"
-                | "median"
-                | "min"
-                | "max"
-                | "range"
-                | "earliest_date"
-                | "latest_date"
-                | "date_range"
-                | "checked"
-                | "unchecked"
-                | "percent_checked"
-                | "percent_unchecked"
-                | "show_original"
-            }
-          | {
-              type: "date"
-              date: {
-                start: string
-                end: string | null
-                time_zone: TimeZoneRequest | null
-              } | null
-              function:
-                | "count"
-                | "count_values"
-                | "empty"
-                | "not_empty"
-                | "unique"
-                | "show_unique"
-                | "percent_empty"
-                | "percent_not_empty"
-                | "sum"
-                | "average"
-                | "median"
-                | "min"
-                | "max"
-                | "range"
-                | "earliest_date"
-                | "latest_date"
-                | "date_range"
-                | "checked"
-                | "unchecked"
-                | "percent_checked"
-                | "percent_unchecked"
-                | "show_original"
-            }
-          | {
-              type: "array"
-              array: Array<
-                | {
-                    type: "title"
-                    title: Array<
-                      | {
-                          type: "text"
-                          text: {
-                            content: string
-                            link: { url: TextRequest } | null
-                          }
-                          annotations: {
-                            bold: boolean
-                            italic: boolean
-                            strikethrough: boolean
-                            underline: boolean
-                            code: boolean
-                            color:
-                              | "default"
-                              | "gray"
-                              | "brown"
-                              | "orange"
-                              | "yellow"
-                              | "green"
-                              | "blue"
-                              | "purple"
-                              | "pink"
-                              | "red"
-                              | "gray_background"
-                              | "brown_background"
-                              | "orange_background"
-                              | "yellow_background"
-                              | "green_background"
-                              | "blue_background"
-                              | "purple_background"
-                              | "pink_background"
-                              | "red_background"
-                          }
-                          plain_text: string
-                          href: string | null
-                        }
-                      | {
-                          type: "mention"
-                          mention:
-                            | {
-                                type: "user"
-                                user:
-                                  | { id: IdRequest; object: "user" }
-                                  | {
-                                      type: "person"
-                                      person: { email: string }
-                                      name: string | null
-                                      avatar_url: string | null
-                                      id: IdRequest
-                                      object: "user"
+                              plain_text: string
+                              href: string | null
+                            }
+                          | {
+                              type: "mention"
+                              mention:
+                                | {
+                                    type: "user"
+                                    user:
+                                      | { id: IdRequest; object: "user" }
+                                      | {
+                                          type: "person"
+                                          person: { email?: string }
+                                          name: string | null
+                                          avatar_url: string | null
+                                          id: IdRequest
+                                          object: "user"
+                                        }
+                                      | {
+                                          type: "bot"
+                                          bot:
+                                            | EmptyObject
+                                            | {
+                                                owner:
+                                                  | {
+                                                      type: "user"
+                                                      user:
+                                                        | {
+                                                            type: "person"
+                                                            person: {
+                                                              email: string
+                                                            }
+                                                            name: string | null
+                                                            avatar_url:
+                                                              | string
+                                                              | null
+                                                            id: IdRequest
+                                                            object: "user"
+                                                          }
+                                                        | {
+                                                            id: IdRequest
+                                                            object: "user"
+                                                          }
+                                                    }
+                                                  | {
+                                                      type: "workspace"
+                                                      workspace: true
+                                                    }
+                                              }
+                                          name: string | null
+                                          avatar_url: string | null
+                                          id: IdRequest
+                                          object: "user"
+                                        }
+                                  }
+                                | {
+                                    type: "date"
+                                    date: {
+                                      start: string
+                                      end: string | null
+                                      time_zone: TimeZoneRequest | null
                                     }
-                                  | {
-                                      type: "bot"
-                                      bot:
-                                        | EmptyObject
-                                        | {
-                                            owner:
-                                              | {
-                                                  type: "user"
-                                                  user:
-                                                    | {
-                                                        type: "person"
-                                                        person: {
-                                                          email: string
-                                                        }
-                                                        name: string | null
-                                                        avatar_url:
-                                                          | string
-                                                          | null
-                                                        id: IdRequest
-                                                        object: "user"
-                                                      }
-                                                    | {
-                                                        id: IdRequest
-                                                        object: "user"
-                                                      }
-                                                }
-                                              | {
-                                                  type: "workspace"
-                                                  workspace: true
-                                                }
-                                          }
-                                      name: string | null
-                                      avatar_url: string | null
-                                      id: IdRequest
-                                      object: "user"
+                                  }
+                                | {
+                                    type: "link_preview"
+                                    link_preview: { url: TextRequest }
+                                  }
+                                | { type: "page"; page: { id: IdRequest } }
+                                | {
+                                    type: "database"
+                                    database: { id: IdRequest }
+                                  }
+                              annotations: {
+                                bold: boolean
+                                italic: boolean
+                                strikethrough: boolean
+                                underline: boolean
+                                code: boolean
+                                color:
+                                  | "default"
+                                  | "gray"
+                                  | "brown"
+                                  | "orange"
+                                  | "yellow"
+                                  | "green"
+                                  | "blue"
+                                  | "purple"
+                                  | "pink"
+                                  | "red"
+                                  | "gray_background"
+                                  | "brown_background"
+                                  | "orange_background"
+                                  | "yellow_background"
+                                  | "green_background"
+                                  | "blue_background"
+                                  | "purple_background"
+                                  | "pink_background"
+                                  | "red_background"
+                              }
+                              plain_text: string
+                              href: string | null
+                            }
+                          | {
+                              type: "equation"
+                              equation: { expression: TextRequest }
+                              annotations: {
+                                bold: boolean
+                                italic: boolean
+                                strikethrough: boolean
+                                underline: boolean
+                                code: boolean
+                                color:
+                                  | "default"
+                                  | "gray"
+                                  | "brown"
+                                  | "orange"
+                                  | "yellow"
+                                  | "green"
+                                  | "blue"
+                                  | "purple"
+                                  | "pink"
+                                  | "red"
+                                  | "gray_background"
+                                  | "brown_background"
+                                  | "orange_background"
+                                  | "yellow_background"
+                                  | "green_background"
+                                  | "blue_background"
+                                  | "purple_background"
+                                  | "pink_background"
+                                  | "red_background"
+                              }
+                              plain_text: string
+                              href: string | null
+                            }
+                        >
+                      }
+                    | {
+                        type: "rich_text"
+                        rich_text: Array<
+                          | {
+                              type: "text"
+                              text: {
+                                content: string
+                                link: { url: TextRequest } | null
+                              }
+                              annotations: {
+                                bold: boolean
+                                italic: boolean
+                                strikethrough: boolean
+                                underline: boolean
+                                code: boolean
+                                color:
+                                  | "default"
+                                  | "gray"
+                                  | "brown"
+                                  | "orange"
+                                  | "yellow"
+                                  | "green"
+                                  | "blue"
+                                  | "purple"
+                                  | "pink"
+                                  | "red"
+                                  | "gray_background"
+                                  | "brown_background"
+                                  | "orange_background"
+                                  | "yellow_background"
+                                  | "green_background"
+                                  | "blue_background"
+                                  | "purple_background"
+                                  | "pink_background"
+                                  | "red_background"
+                              }
+                              plain_text: string
+                              href: string | null
+                            }
+                          | {
+                              type: "mention"
+                              mention:
+                                | {
+                                    type: "user"
+                                    user:
+                                      | { id: IdRequest; object: "user" }
+                                      | {
+                                          type: "person"
+                                          person: { email?: string }
+                                          name: string | null
+                                          avatar_url: string | null
+                                          id: IdRequest
+                                          object: "user"
+                                        }
+                                      | {
+                                          type: "bot"
+                                          bot:
+                                            | EmptyObject
+                                            | {
+                                                owner:
+                                                  | {
+                                                      type: "user"
+                                                      user:
+                                                        | {
+                                                            type: "person"
+                                                            person: {
+                                                              email: string
+                                                            }
+                                                            name: string | null
+                                                            avatar_url:
+                                                              | string
+                                                              | null
+                                                            id: IdRequest
+                                                            object: "user"
+                                                          }
+                                                        | {
+                                                            id: IdRequest
+                                                            object: "user"
+                                                          }
+                                                    }
+                                                  | {
+                                                      type: "workspace"
+                                                      workspace: true
+                                                    }
+                                              }
+                                          name: string | null
+                                          avatar_url: string | null
+                                          id: IdRequest
+                                          object: "user"
+                                        }
+                                  }
+                                | {
+                                    type: "date"
+                                    date: {
+                                      start: string
+                                      end: string | null
+                                      time_zone: TimeZoneRequest | null
                                     }
+                                  }
+                                | {
+                                    type: "link_preview"
+                                    link_preview: { url: TextRequest }
+                                  }
+                                | { type: "page"; page: { id: IdRequest } }
+                                | {
+                                    type: "database"
+                                    database: { id: IdRequest }
+                                  }
+                              annotations: {
+                                bold: boolean
+                                italic: boolean
+                                strikethrough: boolean
+                                underline: boolean
+                                code: boolean
+                                color:
+                                  | "default"
+                                  | "gray"
+                                  | "brown"
+                                  | "orange"
+                                  | "yellow"
+                                  | "green"
+                                  | "blue"
+                                  | "purple"
+                                  | "pink"
+                                  | "red"
+                                  | "gray_background"
+                                  | "brown_background"
+                                  | "orange_background"
+                                  | "yellow_background"
+                                  | "green_background"
+                                  | "blue_background"
+                                  | "purple_background"
+                                  | "pink_background"
+                                  | "red_background"
                               }
-                            | {
-                                type: "date"
-                                date: {
-                                  start: string
-                                  end: string | null
-                                  time_zone: TimeZoneRequest | null
-                                }
+                              plain_text: string
+                              href: string | null
+                            }
+                          | {
+                              type: "equation"
+                              equation: { expression: TextRequest }
+                              annotations: {
+                                bold: boolean
+                                italic: boolean
+                                strikethrough: boolean
+                                underline: boolean
+                                code: boolean
+                                color:
+                                  | "default"
+                                  | "gray"
+                                  | "brown"
+                                  | "orange"
+                                  | "yellow"
+                                  | "green"
+                                  | "blue"
+                                  | "purple"
+                                  | "pink"
+                                  | "red"
+                                  | "gray_background"
+                                  | "brown_background"
+                                  | "orange_background"
+                                  | "yellow_background"
+                                  | "green_background"
+                                  | "blue_background"
+                                  | "purple_background"
+                                  | "pink_background"
+                                  | "red_background"
                               }
-                            | {
-                                type: "link_preview"
-                                link_preview: { url: TextRequest }
-                              }
-                            | { type: "page"; page: { id: IdRequest } }
-                            | { type: "database"; database: { id: IdRequest } }
-                          annotations: {
-                            bold: boolean
-                            italic: boolean
-                            strikethrough: boolean
-                            underline: boolean
-                            code: boolean
-                            color:
-                              | "default"
-                              | "gray"
-                              | "brown"
-                              | "orange"
-                              | "yellow"
-                              | "green"
-                              | "blue"
-                              | "purple"
-                              | "pink"
-                              | "red"
-                              | "gray_background"
-                              | "brown_background"
-                              | "orange_background"
-                              | "yellow_background"
-                              | "green_background"
-                              | "blue_background"
-                              | "purple_background"
-                              | "pink_background"
-                              | "red_background"
-                          }
-                          plain_text: string
-                          href: string | null
-                        }
-                      | {
-                          type: "equation"
-                          equation: { expression: TextRequest }
-                          annotations: {
-                            bold: boolean
-                            italic: boolean
-                            strikethrough: boolean
-                            underline: boolean
-                            code: boolean
-                            color:
-                              | "default"
-                              | "gray"
-                              | "brown"
-                              | "orange"
-                              | "yellow"
-                              | "green"
-                              | "blue"
-                              | "purple"
-                              | "pink"
-                              | "red"
-                              | "gray_background"
-                              | "brown_background"
-                              | "orange_background"
-                              | "yellow_background"
-                              | "green_background"
-                              | "blue_background"
-                              | "purple_background"
-                              | "pink_background"
-                              | "red_background"
-                          }
-                          plain_text: string
-                          href: string | null
-                        }
-                    >
-                  }
-                | {
-                    type: "rich_text"
-                    rich_text: Array<
-                      | {
-                          type: "text"
-                          text: {
-                            content: string
-                            link: { url: TextRequest } | null
-                          }
-                          annotations: {
-                            bold: boolean
-                            italic: boolean
-                            strikethrough: boolean
-                            underline: boolean
-                            code: boolean
-                            color:
-                              | "default"
-                              | "gray"
-                              | "brown"
-                              | "orange"
-                              | "yellow"
-                              | "green"
-                              | "blue"
-                              | "purple"
-                              | "pink"
-                              | "red"
-                              | "gray_background"
-                              | "brown_background"
-                              | "orange_background"
-                              | "yellow_background"
-                              | "green_background"
-                              | "blue_background"
-                              | "purple_background"
-                              | "pink_background"
-                              | "red_background"
-                          }
-                          plain_text: string
-                          href: string | null
-                        }
-                      | {
-                          type: "mention"
-                          mention:
-                            | {
-                                type: "user"
-                                user:
-                                  | { id: IdRequest; object: "user" }
-                                  | {
-                                      type: "person"
-                                      person: { email: string }
-                                      name: string | null
-                                      avatar_url: string | null
-                                      id: IdRequest
-                                      object: "user"
-                                    }
-                                  | {
-                                      type: "bot"
-                                      bot:
-                                        | EmptyObject
-                                        | {
-                                            owner:
-                                              | {
-                                                  type: "user"
-                                                  user:
-                                                    | {
-                                                        type: "person"
-                                                        person: {
-                                                          email: string
-                                                        }
-                                                        name: string | null
-                                                        avatar_url:
-                                                          | string
-                                                          | null
-                                                        id: IdRequest
-                                                        object: "user"
-                                                      }
-                                                    | {
-                                                        id: IdRequest
-                                                        object: "user"
-                                                      }
-                                                }
-                                              | {
-                                                  type: "workspace"
-                                                  workspace: true
-                                                }
-                                          }
-                                      name: string | null
-                                      avatar_url: string | null
-                                      id: IdRequest
-                                      object: "user"
-                                    }
-                              }
-                            | {
-                                type: "date"
-                                date: {
-                                  start: string
-                                  end: string | null
-                                  time_zone: TimeZoneRequest | null
-                                }
-                              }
-                            | {
-                                type: "link_preview"
-                                link_preview: { url: TextRequest }
-                              }
-                            | { type: "page"; page: { id: IdRequest } }
-                            | { type: "database"; database: { id: IdRequest } }
-                          annotations: {
-                            bold: boolean
-                            italic: boolean
-                            strikethrough: boolean
-                            underline: boolean
-                            code: boolean
-                            color:
-                              | "default"
-                              | "gray"
-                              | "brown"
-                              | "orange"
-                              | "yellow"
-                              | "green"
-                              | "blue"
-                              | "purple"
-                              | "pink"
-                              | "red"
-                              | "gray_background"
-                              | "brown_background"
-                              | "orange_background"
-                              | "yellow_background"
-                              | "green_background"
-                              | "blue_background"
-                              | "purple_background"
-                              | "pink_background"
-                              | "red_background"
-                          }
-                          plain_text: string
-                          href: string | null
-                        }
-                      | {
-                          type: "equation"
-                          equation: { expression: TextRequest }
-                          annotations: {
-                            bold: boolean
-                            italic: boolean
-                            strikethrough: boolean
-                            underline: boolean
-                            code: boolean
-                            color:
-                              | "default"
-                              | "gray"
-                              | "brown"
-                              | "orange"
-                              | "yellow"
-                              | "green"
-                              | "blue"
-                              | "purple"
-                              | "pink"
-                              | "red"
-                              | "gray_background"
-                              | "brown_background"
-                              | "orange_background"
-                              | "yellow_background"
-                              | "green_background"
-                              | "blue_background"
-                              | "purple_background"
-                              | "pink_background"
-                              | "red_background"
-                          }
-                          plain_text: string
-                          href: string | null
-                        }
-                    >
-                  }
-                | { type: "number"; number: number | null }
-                | { type: "url"; url: string | null }
-                | {
-                    type: "select"
-                    select: {
-                      id: StringRequest
-                      name: StringRequest
-                      color:
-                        | "default"
-                        | "gray"
-                        | "brown"
-                        | "orange"
-                        | "yellow"
-                        | "green"
-                        | "blue"
-                        | "purple"
-                        | "pink"
-                        | "red"
-                    } | null
-                  }
-                | {
-                    type: "multi_select"
-                    multi_select: Array<{
-                      id: StringRequest
-                      name: StringRequest
-                      color:
-                        | "default"
-                        | "gray"
-                        | "brown"
-                        | "orange"
-                        | "yellow"
-                        | "green"
-                        | "blue"
-                        | "purple"
-                        | "pink"
-                        | "red"
-                    }>
-                  }
-                | {
-                    type: "people"
-                    people: Array<
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | EmptyObject
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                    >
-                  }
-                | { type: "email"; email: string | null }
-                | { type: "phone_number"; phone_number: string | null }
-                | {
-                    type: "date"
-                    date: {
-                      start: string
-                      end: string | null
-                      time_zone: TimeZoneRequest | null
-                    } | null
-                  }
-                | {
-                    type: "files"
-                    files: Array<
-                      | {
-                          file: { url: string; expiry_time: string }
+                              plain_text: string
+                              href: string | null
+                            }
+                        >
+                      }
+                    | { type: "number"; number: number | null }
+                    | { type: "url"; url: string | null }
+                    | {
+                        type: "select"
+                        select: {
+                          id: StringRequest
                           name: StringRequest
-                          type?: "file"
-                        }
-                      | {
-                          external: { url: TextRequest }
+                          color:
+                            | "default"
+                            | "gray"
+                            | "brown"
+                            | "orange"
+                            | "yellow"
+                            | "green"
+                            | "blue"
+                            | "purple"
+                            | "pink"
+                            | "red"
+                        } | null
+                      }
+                    | {
+                        type: "multi_select"
+                        multi_select: Array<{
+                          id: StringRequest
                           name: StringRequest
-                          type?: "external"
-                        }
-                    >
-                  }
-                | { type: "checkbox"; checkbox: boolean }
-                | {
-                    type: "formula"
-                    formula:
-                      | { type: "string"; string: string | null }
-                      | {
-                          type: "date"
-                          date: {
-                            start: string
-                            end: string | null
-                            time_zone: TimeZoneRequest | null
-                          } | null
-                        }
-                      | { type: "number"; number: number | null }
-                      | { type: "boolean"; boolean: boolean | null }
-                  }
-                | { type: "relation"; relation: Array<{ id: string }> }
-                | { type: "created_time"; created_time: string }
-                | {
-                    type: "created_by"
-                    created_by:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | EmptyObject
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                  }
-                | { type: "last_edited_time"; last_edited_time: string }
-                | {
-                    type: "last_edited_by"
-                    last_edited_by:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | EmptyObject
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                  }
-              >
-              function:
-                | "count"
-                | "count_values"
-                | "empty"
-                | "not_empty"
-                | "unique"
-                | "show_unique"
-                | "percent_empty"
-                | "percent_not_empty"
-                | "sum"
-                | "average"
-                | "median"
-                | "min"
-                | "max"
-                | "range"
-                | "earliest_date"
-                | "latest_date"
-                | "date_range"
-                | "checked"
-                | "unchecked"
-                | "percent_checked"
-                | "percent_unchecked"
-                | "show_original"
-            }
-          | {
-              type: "unsupported"
-              unsupported: EmptyObject
-              function:
-                | "count"
-                | "count_values"
-                | "empty"
-                | "not_empty"
-                | "unique"
-                | "show_unique"
-                | "percent_empty"
-                | "percent_not_empty"
-                | "sum"
-                | "average"
-                | "median"
-                | "min"
-                | "max"
-                | "range"
-                | "earliest_date"
-                | "latest_date"
-                | "date_range"
-                | "checked"
-                | "unchecked"
-                | "percent_checked"
-                | "percent_unchecked"
-                | "show_original"
-            }
-        id: string
-      }
-  >
-  icon:
-    | { type: "emoji"; emoji: EmojiRequest }
-    | null
-    | { type: "external"; external: { url: TextRequest } }
-    | null
-    | { type: "file"; file: { url: string; expiry_time: string } }
-    | null
-  cover:
-    | { type: "external"; external: { url: TextRequest } }
-    | null
-    | { type: "file"; file: { url: string; expiry_time: string } }
-    | null
-  object: "page"
-  id: string
-  created_time: string
-  last_edited_time: string
-  archived: boolean
-  url: string
-}
+                          color:
+                            | "default"
+                            | "gray"
+                            | "brown"
+                            | "orange"
+                            | "yellow"
+                            | "green"
+                            | "blue"
+                            | "purple"
+                            | "pink"
+                            | "red"
+                        }>
+                      }
+                    | {
+                        type: "people"
+                        people: Array<
+                          | { id: IdRequest; object: "user" }
+                          | {
+                              type: "person"
+                              person: { email?: string }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                          | {
+                              type: "bot"
+                              bot:
+                                | EmptyObject
+                                | {
+                                    owner:
+                                      | {
+                                          type: "user"
+                                          user:
+                                            | {
+                                                type: "person"
+                                                person: { email: string }
+                                                name: string | null
+                                                avatar_url: string | null
+                                                id: IdRequest
+                                                object: "user"
+                                              }
+                                            | { id: IdRequest; object: "user" }
+                                        }
+                                      | { type: "workspace"; workspace: true }
+                                  }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                        >
+                      }
+                    | { type: "email"; email: string | null }
+                    | { type: "phone_number"; phone_number: string | null }
+                    | {
+                        type: "date"
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
+                        } | null
+                      }
+                    | {
+                        type: "files"
+                        files: Array<
+                          | {
+                              file: { url: string; expiry_time: string }
+                              name: StringRequest
+                              type?: "file"
+                            }
+                          | {
+                              external: { url: TextRequest }
+                              name: StringRequest
+                              type?: "external"
+                            }
+                        >
+                      }
+                    | { type: "checkbox"; checkbox: boolean }
+                    | {
+                        type: "formula"
+                        formula:
+                          | { type: "string"; string: string | null }
+                          | {
+                              type: "date"
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              } | null
+                            }
+                          | { type: "number"; number: number | null }
+                          | { type: "boolean"; boolean: boolean | null }
+                      }
+                    | { type: "relation"; relation: Array<{ id: string }> }
+                    | { type: "created_time"; created_time: string }
+                    | {
+                        type: "created_by"
+                        created_by:
+                          | { id: IdRequest; object: "user" }
+                          | {
+                              type: "person"
+                              person: { email?: string }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                          | {
+                              type: "bot"
+                              bot:
+                                | EmptyObject
+                                | {
+                                    owner:
+                                      | {
+                                          type: "user"
+                                          user:
+                                            | {
+                                                type: "person"
+                                                person: { email: string }
+                                                name: string | null
+                                                avatar_url: string | null
+                                                id: IdRequest
+                                                object: "user"
+                                              }
+                                            | { id: IdRequest; object: "user" }
+                                        }
+                                      | { type: "workspace"; workspace: true }
+                                  }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                      }
+                    | { type: "last_edited_time"; last_edited_time: string }
+                    | {
+                        type: "last_edited_by"
+                        last_edited_by:
+                          | { id: IdRequest; object: "user" }
+                          | {
+                              type: "person"
+                              person: { email?: string }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                          | {
+                              type: "bot"
+                              bot:
+                                | EmptyObject
+                                | {
+                                    owner:
+                                      | {
+                                          type: "user"
+                                          user:
+                                            | {
+                                                type: "person"
+                                                person: { email: string }
+                                                name: string | null
+                                                avatar_url: string | null
+                                                id: IdRequest
+                                                object: "user"
+                                              }
+                                            | { id: IdRequest; object: "user" }
+                                        }
+                                      | { type: "workspace"; workspace: true }
+                                  }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                      }
+                  >
+                  function:
+                    | "count"
+                    | "count_values"
+                    | "empty"
+                    | "not_empty"
+                    | "unique"
+                    | "show_unique"
+                    | "percent_empty"
+                    | "percent_not_empty"
+                    | "sum"
+                    | "average"
+                    | "median"
+                    | "min"
+                    | "max"
+                    | "range"
+                    | "earliest_date"
+                    | "latest_date"
+                    | "date_range"
+                    | "checked"
+                    | "unchecked"
+                    | "percent_checked"
+                    | "percent_unchecked"
+                    | "show_original"
+                }
+              | {
+                  type: "unsupported"
+                  unsupported: EmptyObject
+                  function:
+                    | "count"
+                    | "count_values"
+                    | "empty"
+                    | "not_empty"
+                    | "unique"
+                    | "show_unique"
+                    | "percent_empty"
+                    | "percent_not_empty"
+                    | "sum"
+                    | "average"
+                    | "median"
+                    | "min"
+                    | "max"
+                    | "range"
+                    | "earliest_date"
+                    | "latest_date"
+                    | "date_range"
+                    | "checked"
+                    | "unchecked"
+                    | "percent_checked"
+                    | "percent_unchecked"
+                    | "show_original"
+                }
+            id: string
+          }
+      >
+      icon:
+        | { type: "emoji"; emoji: EmojiRequest }
+        | null
+        | { type: "external"; external: { url: TextRequest } }
+        | null
+        | { type: "file"; file: { url: string; expiry_time: string } }
+        | null
+      cover:
+        | { type: "external"; external: { url: TextRequest } }
+        | null
+        | { type: "file"; file: { url: string; expiry_time: string } }
+        | null
+      object: "page"
+      id: string
+      created_time: string
+      last_edited_time: string
+      archived: boolean
+      url: string
+    }
+  | { object: "page"; id: string }
 
 export const getPage = {
   method: "get",
@@ -10306,7 +10334,7 @@ type UpdatePageBodyParameters = {
             people: Array<
               | { id: IdRequest }
               | {
-                  person: { email: string }
+                  person: { email?: string }
                   id: IdRequest
                   type?: "person"
                   name?: string | null
@@ -10445,7 +10473,7 @@ type UpdatePageBodyParameters = {
         | Array<
             | { id: IdRequest }
             | {
-                person: { email: string }
+                person: { email?: string }
                 id: IdRequest
                 type?: "person"
                 name?: string | null
@@ -10516,1209 +10544,1223 @@ type UpdatePageBodyParameters = {
 export type UpdatePageParameters = UpdatePagePathParameters &
   UpdatePageBodyParameters
 
-export type UpdatePageResponse = {
-  parent:
-    | { type: "database_id"; database_id: IdRequest }
-    | { type: "page_id"; page_id: IdRequest }
-    | { type: "workspace"; workspace: true }
-  properties: Record<
-    string,
-    | {
-        type: "title"
-        title: Array<
-          | {
-              type: "text"
-              text: { content: string; link: { url: TextRequest } | null }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color:
-                  | "default"
-                  | "gray"
-                  | "brown"
-                  | "orange"
-                  | "yellow"
-                  | "green"
-                  | "blue"
-                  | "purple"
-                  | "pink"
-                  | "red"
-                  | "gray_background"
-                  | "brown_background"
-                  | "orange_background"
-                  | "yellow_background"
-                  | "green_background"
-                  | "blue_background"
-                  | "purple_background"
-                  | "pink_background"
-                  | "red_background"
-              }
-              plain_text: string
-              href: string | null
-            }
-          | {
-              type: "mention"
-              mention:
-                | {
-                    type: "user"
-                    user:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | EmptyObject
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
+export type UpdatePageResponse =
+  | {
+      parent:
+        | { type: "database_id"; database_id: IdRequest }
+        | { type: "page_id"; page_id: IdRequest }
+        | { type: "workspace"; workspace: true }
+      properties: Record<
+        string,
+        | {
+            type: "title"
+            title: Array<
+              | {
+                  type: "text"
+                  text: { content: string; link: { url: TextRequest } | null }
+                  annotations: {
+                    bold: boolean
+                    italic: boolean
+                    strikethrough: boolean
+                    underline: boolean
+                    code: boolean
+                    color:
+                      | "default"
+                      | "gray"
+                      | "brown"
+                      | "orange"
+                      | "yellow"
+                      | "green"
+                      | "blue"
+                      | "purple"
+                      | "pink"
+                      | "red"
+                      | "gray_background"
+                      | "brown_background"
+                      | "orange_background"
+                      | "yellow_background"
+                      | "green_background"
+                      | "blue_background"
+                      | "purple_background"
+                      | "pink_background"
+                      | "red_background"
                   }
-                | {
-                    type: "date"
-                    date: {
-                      start: string
-                      end: string | null
-                      time_zone: TimeZoneRequest | null
-                    }
-                  }
-                | { type: "link_preview"; link_preview: { url: TextRequest } }
-                | { type: "page"; page: { id: IdRequest } }
-                | { type: "database"; database: { id: IdRequest } }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color:
-                  | "default"
-                  | "gray"
-                  | "brown"
-                  | "orange"
-                  | "yellow"
-                  | "green"
-                  | "blue"
-                  | "purple"
-                  | "pink"
-                  | "red"
-                  | "gray_background"
-                  | "brown_background"
-                  | "orange_background"
-                  | "yellow_background"
-                  | "green_background"
-                  | "blue_background"
-                  | "purple_background"
-                  | "pink_background"
-                  | "red_background"
-              }
-              plain_text: string
-              href: string | null
-            }
-          | {
-              type: "equation"
-              equation: { expression: TextRequest }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color:
-                  | "default"
-                  | "gray"
-                  | "brown"
-                  | "orange"
-                  | "yellow"
-                  | "green"
-                  | "blue"
-                  | "purple"
-                  | "pink"
-                  | "red"
-                  | "gray_background"
-                  | "brown_background"
-                  | "orange_background"
-                  | "yellow_background"
-                  | "green_background"
-                  | "blue_background"
-                  | "purple_background"
-                  | "pink_background"
-                  | "red_background"
-              }
-              plain_text: string
-              href: string | null
-            }
-        >
-        id: string
-      }
-    | {
-        type: "rich_text"
-        rich_text: Array<
-          | {
-              type: "text"
-              text: { content: string; link: { url: TextRequest } | null }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color:
-                  | "default"
-                  | "gray"
-                  | "brown"
-                  | "orange"
-                  | "yellow"
-                  | "green"
-                  | "blue"
-                  | "purple"
-                  | "pink"
-                  | "red"
-                  | "gray_background"
-                  | "brown_background"
-                  | "orange_background"
-                  | "yellow_background"
-                  | "green_background"
-                  | "blue_background"
-                  | "purple_background"
-                  | "pink_background"
-                  | "red_background"
-              }
-              plain_text: string
-              href: string | null
-            }
-          | {
-              type: "mention"
-              mention:
-                | {
-                    type: "user"
-                    user:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
+                  plain_text: string
+                  href: string | null
+                }
+              | {
+                  type: "mention"
+                  mention:
+                    | {
+                        type: "user"
+                        user:
+                          | { id: IdRequest; object: "user" }
+                          | {
+                              type: "person"
+                              person: { email?: string }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                          | {
+                              type: "bot"
+                              bot:
+                                | EmptyObject
+                                | {
+                                    owner:
+                                      | {
+                                          type: "user"
+                                          user:
+                                            | {
+                                                type: "person"
+                                                person: { email: string }
+                                                name: string | null
+                                                avatar_url: string | null
+                                                id: IdRequest
+                                                object: "user"
+                                              }
+                                            | { id: IdRequest; object: "user" }
+                                        }
+                                      | { type: "workspace"; workspace: true }
+                                  }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                      }
+                    | {
+                        type: "date"
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
                         }
-                      | {
-                          type: "bot"
-                          bot:
-                            | EmptyObject
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
+                      }
+                    | {
+                        type: "link_preview"
+                        link_preview: { url: TextRequest }
+                      }
+                    | { type: "page"; page: { id: IdRequest } }
+                    | { type: "database"; database: { id: IdRequest } }
+                  annotations: {
+                    bold: boolean
+                    italic: boolean
+                    strikethrough: boolean
+                    underline: boolean
+                    code: boolean
+                    color:
+                      | "default"
+                      | "gray"
+                      | "brown"
+                      | "orange"
+                      | "yellow"
+                      | "green"
+                      | "blue"
+                      | "purple"
+                      | "pink"
+                      | "red"
+                      | "gray_background"
+                      | "brown_background"
+                      | "orange_background"
+                      | "yellow_background"
+                      | "green_background"
+                      | "blue_background"
+                      | "purple_background"
+                      | "pink_background"
+                      | "red_background"
+                  }
+                  plain_text: string
+                  href: string | null
+                }
+              | {
+                  type: "equation"
+                  equation: { expression: TextRequest }
+                  annotations: {
+                    bold: boolean
+                    italic: boolean
+                    strikethrough: boolean
+                    underline: boolean
+                    code: boolean
+                    color:
+                      | "default"
+                      | "gray"
+                      | "brown"
+                      | "orange"
+                      | "yellow"
+                      | "green"
+                      | "blue"
+                      | "purple"
+                      | "pink"
+                      | "red"
+                      | "gray_background"
+                      | "brown_background"
+                      | "orange_background"
+                      | "yellow_background"
+                      | "green_background"
+                      | "blue_background"
+                      | "purple_background"
+                      | "pink_background"
+                      | "red_background"
+                  }
+                  plain_text: string
+                  href: string | null
+                }
+            >
+            id: string
+          }
+        | {
+            type: "rich_text"
+            rich_text: Array<
+              | {
+                  type: "text"
+                  text: { content: string; link: { url: TextRequest } | null }
+                  annotations: {
+                    bold: boolean
+                    italic: boolean
+                    strikethrough: boolean
+                    underline: boolean
+                    code: boolean
+                    color:
+                      | "default"
+                      | "gray"
+                      | "brown"
+                      | "orange"
+                      | "yellow"
+                      | "green"
+                      | "blue"
+                      | "purple"
+                      | "pink"
+                      | "red"
+                      | "gray_background"
+                      | "brown_background"
+                      | "orange_background"
+                      | "yellow_background"
+                      | "green_background"
+                      | "blue_background"
+                      | "purple_background"
+                      | "pink_background"
+                      | "red_background"
+                  }
+                  plain_text: string
+                  href: string | null
+                }
+              | {
+                  type: "mention"
+                  mention:
+                    | {
+                        type: "user"
+                        user:
+                          | { id: IdRequest; object: "user" }
+                          | {
+                              type: "person"
+                              person: { email?: string }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                          | {
+                              type: "bot"
+                              bot:
+                                | EmptyObject
+                                | {
+                                    owner:
+                                      | {
+                                          type: "user"
+                                          user:
+                                            | {
+                                                type: "person"
+                                                person: { email: string }
+                                                name: string | null
+                                                avatar_url: string | null
+                                                id: IdRequest
+                                                object: "user"
+                                              }
+                                            | { id: IdRequest; object: "user" }
+                                        }
+                                      | { type: "workspace"; workspace: true }
+                                  }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                      }
+                    | {
+                        type: "date"
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
                         }
+                      }
+                    | {
+                        type: "link_preview"
+                        link_preview: { url: TextRequest }
+                      }
+                    | { type: "page"; page: { id: IdRequest } }
+                    | { type: "database"; database: { id: IdRequest } }
+                  annotations: {
+                    bold: boolean
+                    italic: boolean
+                    strikethrough: boolean
+                    underline: boolean
+                    code: boolean
+                    color:
+                      | "default"
+                      | "gray"
+                      | "brown"
+                      | "orange"
+                      | "yellow"
+                      | "green"
+                      | "blue"
+                      | "purple"
+                      | "pink"
+                      | "red"
+                      | "gray_background"
+                      | "brown_background"
+                      | "orange_background"
+                      | "yellow_background"
+                      | "green_background"
+                      | "blue_background"
+                      | "purple_background"
+                      | "pink_background"
+                      | "red_background"
                   }
-                | {
-                    type: "date"
-                    date: {
-                      start: string
-                      end: string | null
-                      time_zone: TimeZoneRequest | null
-                    }
+                  plain_text: string
+                  href: string | null
+                }
+              | {
+                  type: "equation"
+                  equation: { expression: TextRequest }
+                  annotations: {
+                    bold: boolean
+                    italic: boolean
+                    strikethrough: boolean
+                    underline: boolean
+                    code: boolean
+                    color:
+                      | "default"
+                      | "gray"
+                      | "brown"
+                      | "orange"
+                      | "yellow"
+                      | "green"
+                      | "blue"
+                      | "purple"
+                      | "pink"
+                      | "red"
+                      | "gray_background"
+                      | "brown_background"
+                      | "orange_background"
+                      | "yellow_background"
+                      | "green_background"
+                      | "blue_background"
+                      | "purple_background"
+                      | "pink_background"
+                      | "red_background"
                   }
-                | { type: "link_preview"; link_preview: { url: TextRequest } }
-                | { type: "page"; page: { id: IdRequest } }
-                | { type: "database"; database: { id: IdRequest } }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color:
-                  | "default"
-                  | "gray"
-                  | "brown"
-                  | "orange"
-                  | "yellow"
-                  | "green"
-                  | "blue"
-                  | "purple"
-                  | "pink"
-                  | "red"
-                  | "gray_background"
-                  | "brown_background"
-                  | "orange_background"
-                  | "yellow_background"
-                  | "green_background"
-                  | "blue_background"
-                  | "purple_background"
-                  | "pink_background"
-                  | "red_background"
-              }
-              plain_text: string
-              href: string | null
-            }
-          | {
-              type: "equation"
-              equation: { expression: TextRequest }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color:
-                  | "default"
-                  | "gray"
-                  | "brown"
-                  | "orange"
-                  | "yellow"
-                  | "green"
-                  | "blue"
-                  | "purple"
-                  | "pink"
-                  | "red"
-                  | "gray_background"
-                  | "brown_background"
-                  | "orange_background"
-                  | "yellow_background"
-                  | "green_background"
-                  | "blue_background"
-                  | "purple_background"
-                  | "pink_background"
-                  | "red_background"
-              }
-              plain_text: string
-              href: string | null
-            }
-        >
-        id: string
-      }
-    | { type: "number"; number: number | null; id: string }
-    | { type: "url"; url: string | null; id: string }
-    | {
-        type: "select"
-        select: {
-          id: StringRequest
-          name: StringRequest
-          color:
-            | "default"
-            | "gray"
-            | "brown"
-            | "orange"
-            | "yellow"
-            | "green"
-            | "blue"
-            | "purple"
-            | "pink"
-            | "red"
-        } | null
-        id: string
-      }
-    | {
-        type: "multi_select"
-        multi_select: Array<{
-          id: StringRequest
-          name: StringRequest
-          color:
-            | "default"
-            | "gray"
-            | "brown"
-            | "orange"
-            | "yellow"
-            | "green"
-            | "blue"
-            | "purple"
-            | "pink"
-            | "red"
-        }>
-        id: string
-      }
-    | {
-        type: "people"
-        people: Array<
-          | { id: IdRequest; object: "user" }
-          | {
-              type: "person"
-              person: { email: string }
-              name: string | null
-              avatar_url: string | null
-              id: IdRequest
-              object: "user"
-            }
-          | {
-              type: "bot"
-              bot:
-                | EmptyObject
-                | {
-                    owner:
-                      | {
-                          type: "user"
-                          user:
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | { id: IdRequest; object: "user" }
-                        }
-                      | { type: "workspace"; workspace: true }
-                  }
-              name: string | null
-              avatar_url: string | null
-              id: IdRequest
-              object: "user"
-            }
-        >
-        id: string
-      }
-    | { type: "email"; email: string | null; id: string }
-    | { type: "phone_number"; phone_number: string | null; id: string }
-    | {
-        type: "date"
-        date: {
-          start: string
-          end: string | null
-          time_zone: TimeZoneRequest | null
-        } | null
-        id: string
-      }
-    | {
-        type: "files"
-        files: Array<
-          | {
-              file: { url: string; expiry_time: string }
+                  plain_text: string
+                  href: string | null
+                }
+            >
+            id: string
+          }
+        | { type: "number"; number: number | null; id: string }
+        | { type: "url"; url: string | null; id: string }
+        | {
+            type: "select"
+            select: {
+              id: StringRequest
               name: StringRequest
-              type?: "file"
-            }
-          | {
-              external: { url: TextRequest }
+              color:
+                | "default"
+                | "gray"
+                | "brown"
+                | "orange"
+                | "yellow"
+                | "green"
+                | "blue"
+                | "purple"
+                | "pink"
+                | "red"
+            } | null
+            id: string
+          }
+        | {
+            type: "multi_select"
+            multi_select: Array<{
+              id: StringRequest
               name: StringRequest
-              type?: "external"
-            }
-        >
-        id: string
-      }
-    | { type: "checkbox"; checkbox: boolean; id: string }
-    | {
-        type: "formula"
-        formula:
-          | { type: "string"; string: string | null }
-          | {
-              type: "date"
-              date: {
-                start: string
-                end: string | null
-                time_zone: TimeZoneRequest | null
-              } | null
-            }
-          | { type: "number"; number: number | null }
-          | { type: "boolean"; boolean: boolean | null }
-        id: string
-      }
-    | { type: "relation"; relation: Array<{ id: string }>; id: string }
-    | { type: "created_time"; created_time: string; id: string }
-    | {
-        type: "created_by"
-        created_by:
-          | { id: IdRequest; object: "user" }
-          | {
-              type: "person"
-              person: { email: string }
-              name: string | null
-              avatar_url: string | null
-              id: IdRequest
-              object: "user"
-            }
-          | {
-              type: "bot"
-              bot:
-                | EmptyObject
-                | {
-                    owner:
-                      | {
-                          type: "user"
-                          user:
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
+              color:
+                | "default"
+                | "gray"
+                | "brown"
+                | "orange"
+                | "yellow"
+                | "green"
+                | "blue"
+                | "purple"
+                | "pink"
+                | "red"
+            }>
+            id: string
+          }
+        | {
+            type: "people"
+            people: Array<
+              | { id: IdRequest; object: "user" }
+              | {
+                  type: "person"
+                  person: { email?: string }
+                  name: string | null
+                  avatar_url: string | null
+                  id: IdRequest
+                  object: "user"
+                }
+              | {
+                  type: "bot"
+                  bot:
+                    | EmptyObject
+                    | {
+                        owner:
+                          | {
+                              type: "user"
+                              user:
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | { id: IdRequest; object: "user" }
+                            }
+                          | { type: "workspace"; workspace: true }
+                      }
+                  name: string | null
+                  avatar_url: string | null
+                  id: IdRequest
+                  object: "user"
+                }
+            >
+            id: string
+          }
+        | { type: "email"; email: string | null; id: string }
+        | { type: "phone_number"; phone_number: string | null; id: string }
+        | {
+            type: "date"
+            date: {
+              start: string
+              end: string | null
+              time_zone: TimeZoneRequest | null
+            } | null
+            id: string
+          }
+        | {
+            type: "files"
+            files: Array<
+              | {
+                  file: { url: string; expiry_time: string }
+                  name: StringRequest
+                  type?: "file"
+                }
+              | {
+                  external: { url: TextRequest }
+                  name: StringRequest
+                  type?: "external"
+                }
+            >
+            id: string
+          }
+        | { type: "checkbox"; checkbox: boolean; id: string }
+        | {
+            type: "formula"
+            formula:
+              | { type: "string"; string: string | null }
+              | {
+                  type: "date"
+                  date: {
+                    start: string
+                    end: string | null
+                    time_zone: TimeZoneRequest | null
+                  } | null
+                }
+              | { type: "number"; number: number | null }
+              | { type: "boolean"; boolean: boolean | null }
+            id: string
+          }
+        | { type: "relation"; relation: Array<{ id: string }>; id: string }
+        | { type: "created_time"; created_time: string; id: string }
+        | {
+            type: "created_by"
+            created_by:
+              | { id: IdRequest; object: "user" }
+              | {
+                  type: "person"
+                  person: { email?: string }
+                  name: string | null
+                  avatar_url: string | null
+                  id: IdRequest
+                  object: "user"
+                }
+              | {
+                  type: "bot"
+                  bot:
+                    | EmptyObject
+                    | {
+                        owner:
+                          | {
+                              type: "user"
+                              user:
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | { id: IdRequest; object: "user" }
+                            }
+                          | { type: "workspace"; workspace: true }
+                      }
+                  name: string | null
+                  avatar_url: string | null
+                  id: IdRequest
+                  object: "user"
+                }
+            id: string
+          }
+        | { type: "last_edited_time"; last_edited_time: string; id: string }
+        | {
+            type: "last_edited_by"
+            last_edited_by:
+              | { id: IdRequest; object: "user" }
+              | {
+                  type: "person"
+                  person: { email?: string }
+                  name: string | null
+                  avatar_url: string | null
+                  id: IdRequest
+                  object: "user"
+                }
+              | {
+                  type: "bot"
+                  bot:
+                    | EmptyObject
+                    | {
+                        owner:
+                          | {
+                              type: "user"
+                              user:
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | { id: IdRequest; object: "user" }
+                            }
+                          | { type: "workspace"; workspace: true }
+                      }
+                  name: string | null
+                  avatar_url: string | null
+                  id: IdRequest
+                  object: "user"
+                }
+            id: string
+          }
+        | {
+            type: "rollup"
+            rollup:
+              | {
+                  type: "number"
+                  number: number | null
+                  function:
+                    | "count"
+                    | "count_values"
+                    | "empty"
+                    | "not_empty"
+                    | "unique"
+                    | "show_unique"
+                    | "percent_empty"
+                    | "percent_not_empty"
+                    | "sum"
+                    | "average"
+                    | "median"
+                    | "min"
+                    | "max"
+                    | "range"
+                    | "earliest_date"
+                    | "latest_date"
+                    | "date_range"
+                    | "checked"
+                    | "unchecked"
+                    | "percent_checked"
+                    | "percent_unchecked"
+                    | "show_original"
+                }
+              | {
+                  type: "date"
+                  date: {
+                    start: string
+                    end: string | null
+                    time_zone: TimeZoneRequest | null
+                  } | null
+                  function:
+                    | "count"
+                    | "count_values"
+                    | "empty"
+                    | "not_empty"
+                    | "unique"
+                    | "show_unique"
+                    | "percent_empty"
+                    | "percent_not_empty"
+                    | "sum"
+                    | "average"
+                    | "median"
+                    | "min"
+                    | "max"
+                    | "range"
+                    | "earliest_date"
+                    | "latest_date"
+                    | "date_range"
+                    | "checked"
+                    | "unchecked"
+                    | "percent_checked"
+                    | "percent_unchecked"
+                    | "show_original"
+                }
+              | {
+                  type: "array"
+                  array: Array<
+                    | {
+                        type: "title"
+                        title: Array<
+                          | {
+                              type: "text"
+                              text: {
+                                content: string
+                                link: { url: TextRequest } | null
                               }
-                            | { id: IdRequest; object: "user" }
-                        }
-                      | { type: "workspace"; workspace: true }
-                  }
-              name: string | null
-              avatar_url: string | null
-              id: IdRequest
-              object: "user"
-            }
-        id: string
-      }
-    | { type: "last_edited_time"; last_edited_time: string; id: string }
-    | {
-        type: "last_edited_by"
-        last_edited_by:
-          | { id: IdRequest; object: "user" }
-          | {
-              type: "person"
-              person: { email: string }
-              name: string | null
-              avatar_url: string | null
-              id: IdRequest
-              object: "user"
-            }
-          | {
-              type: "bot"
-              bot:
-                | EmptyObject
-                | {
-                    owner:
-                      | {
-                          type: "user"
-                          user:
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
+                              annotations: {
+                                bold: boolean
+                                italic: boolean
+                                strikethrough: boolean
+                                underline: boolean
+                                code: boolean
+                                color:
+                                  | "default"
+                                  | "gray"
+                                  | "brown"
+                                  | "orange"
+                                  | "yellow"
+                                  | "green"
+                                  | "blue"
+                                  | "purple"
+                                  | "pink"
+                                  | "red"
+                                  | "gray_background"
+                                  | "brown_background"
+                                  | "orange_background"
+                                  | "yellow_background"
+                                  | "green_background"
+                                  | "blue_background"
+                                  | "purple_background"
+                                  | "pink_background"
+                                  | "red_background"
                               }
-                            | { id: IdRequest; object: "user" }
-                        }
-                      | { type: "workspace"; workspace: true }
-                  }
-              name: string | null
-              avatar_url: string | null
-              id: IdRequest
-              object: "user"
-            }
-        id: string
-      }
-    | {
-        type: "rollup"
-        rollup:
-          | {
-              type: "number"
-              number: number | null
-              function:
-                | "count"
-                | "count_values"
-                | "empty"
-                | "not_empty"
-                | "unique"
-                | "show_unique"
-                | "percent_empty"
-                | "percent_not_empty"
-                | "sum"
-                | "average"
-                | "median"
-                | "min"
-                | "max"
-                | "range"
-                | "earliest_date"
-                | "latest_date"
-                | "date_range"
-                | "checked"
-                | "unchecked"
-                | "percent_checked"
-                | "percent_unchecked"
-                | "show_original"
-            }
-          | {
-              type: "date"
-              date: {
-                start: string
-                end: string | null
-                time_zone: TimeZoneRequest | null
-              } | null
-              function:
-                | "count"
-                | "count_values"
-                | "empty"
-                | "not_empty"
-                | "unique"
-                | "show_unique"
-                | "percent_empty"
-                | "percent_not_empty"
-                | "sum"
-                | "average"
-                | "median"
-                | "min"
-                | "max"
-                | "range"
-                | "earliest_date"
-                | "latest_date"
-                | "date_range"
-                | "checked"
-                | "unchecked"
-                | "percent_checked"
-                | "percent_unchecked"
-                | "show_original"
-            }
-          | {
-              type: "array"
-              array: Array<
-                | {
-                    type: "title"
-                    title: Array<
-                      | {
-                          type: "text"
-                          text: {
-                            content: string
-                            link: { url: TextRequest } | null
-                          }
-                          annotations: {
-                            bold: boolean
-                            italic: boolean
-                            strikethrough: boolean
-                            underline: boolean
-                            code: boolean
-                            color:
-                              | "default"
-                              | "gray"
-                              | "brown"
-                              | "orange"
-                              | "yellow"
-                              | "green"
-                              | "blue"
-                              | "purple"
-                              | "pink"
-                              | "red"
-                              | "gray_background"
-                              | "brown_background"
-                              | "orange_background"
-                              | "yellow_background"
-                              | "green_background"
-                              | "blue_background"
-                              | "purple_background"
-                              | "pink_background"
-                              | "red_background"
-                          }
-                          plain_text: string
-                          href: string | null
-                        }
-                      | {
-                          type: "mention"
-                          mention:
-                            | {
-                                type: "user"
-                                user:
-                                  | { id: IdRequest; object: "user" }
-                                  | {
-                                      type: "person"
-                                      person: { email: string }
-                                      name: string | null
-                                      avatar_url: string | null
-                                      id: IdRequest
-                                      object: "user"
+                              plain_text: string
+                              href: string | null
+                            }
+                          | {
+                              type: "mention"
+                              mention:
+                                | {
+                                    type: "user"
+                                    user:
+                                      | { id: IdRequest; object: "user" }
+                                      | {
+                                          type: "person"
+                                          person: { email?: string }
+                                          name: string | null
+                                          avatar_url: string | null
+                                          id: IdRequest
+                                          object: "user"
+                                        }
+                                      | {
+                                          type: "bot"
+                                          bot:
+                                            | EmptyObject
+                                            | {
+                                                owner:
+                                                  | {
+                                                      type: "user"
+                                                      user:
+                                                        | {
+                                                            type: "person"
+                                                            person: {
+                                                              email: string
+                                                            }
+                                                            name: string | null
+                                                            avatar_url:
+                                                              | string
+                                                              | null
+                                                            id: IdRequest
+                                                            object: "user"
+                                                          }
+                                                        | {
+                                                            id: IdRequest
+                                                            object: "user"
+                                                          }
+                                                    }
+                                                  | {
+                                                      type: "workspace"
+                                                      workspace: true
+                                                    }
+                                              }
+                                          name: string | null
+                                          avatar_url: string | null
+                                          id: IdRequest
+                                          object: "user"
+                                        }
+                                  }
+                                | {
+                                    type: "date"
+                                    date: {
+                                      start: string
+                                      end: string | null
+                                      time_zone: TimeZoneRequest | null
                                     }
-                                  | {
-                                      type: "bot"
-                                      bot:
-                                        | EmptyObject
-                                        | {
-                                            owner:
-                                              | {
-                                                  type: "user"
-                                                  user:
-                                                    | {
-                                                        type: "person"
-                                                        person: {
-                                                          email: string
-                                                        }
-                                                        name: string | null
-                                                        avatar_url:
-                                                          | string
-                                                          | null
-                                                        id: IdRequest
-                                                        object: "user"
-                                                      }
-                                                    | {
-                                                        id: IdRequest
-                                                        object: "user"
-                                                      }
-                                                }
-                                              | {
-                                                  type: "workspace"
-                                                  workspace: true
-                                                }
-                                          }
-                                      name: string | null
-                                      avatar_url: string | null
-                                      id: IdRequest
-                                      object: "user"
+                                  }
+                                | {
+                                    type: "link_preview"
+                                    link_preview: { url: TextRequest }
+                                  }
+                                | { type: "page"; page: { id: IdRequest } }
+                                | {
+                                    type: "database"
+                                    database: { id: IdRequest }
+                                  }
+                              annotations: {
+                                bold: boolean
+                                italic: boolean
+                                strikethrough: boolean
+                                underline: boolean
+                                code: boolean
+                                color:
+                                  | "default"
+                                  | "gray"
+                                  | "brown"
+                                  | "orange"
+                                  | "yellow"
+                                  | "green"
+                                  | "blue"
+                                  | "purple"
+                                  | "pink"
+                                  | "red"
+                                  | "gray_background"
+                                  | "brown_background"
+                                  | "orange_background"
+                                  | "yellow_background"
+                                  | "green_background"
+                                  | "blue_background"
+                                  | "purple_background"
+                                  | "pink_background"
+                                  | "red_background"
+                              }
+                              plain_text: string
+                              href: string | null
+                            }
+                          | {
+                              type: "equation"
+                              equation: { expression: TextRequest }
+                              annotations: {
+                                bold: boolean
+                                italic: boolean
+                                strikethrough: boolean
+                                underline: boolean
+                                code: boolean
+                                color:
+                                  | "default"
+                                  | "gray"
+                                  | "brown"
+                                  | "orange"
+                                  | "yellow"
+                                  | "green"
+                                  | "blue"
+                                  | "purple"
+                                  | "pink"
+                                  | "red"
+                                  | "gray_background"
+                                  | "brown_background"
+                                  | "orange_background"
+                                  | "yellow_background"
+                                  | "green_background"
+                                  | "blue_background"
+                                  | "purple_background"
+                                  | "pink_background"
+                                  | "red_background"
+                              }
+                              plain_text: string
+                              href: string | null
+                            }
+                        >
+                      }
+                    | {
+                        type: "rich_text"
+                        rich_text: Array<
+                          | {
+                              type: "text"
+                              text: {
+                                content: string
+                                link: { url: TextRequest } | null
+                              }
+                              annotations: {
+                                bold: boolean
+                                italic: boolean
+                                strikethrough: boolean
+                                underline: boolean
+                                code: boolean
+                                color:
+                                  | "default"
+                                  | "gray"
+                                  | "brown"
+                                  | "orange"
+                                  | "yellow"
+                                  | "green"
+                                  | "blue"
+                                  | "purple"
+                                  | "pink"
+                                  | "red"
+                                  | "gray_background"
+                                  | "brown_background"
+                                  | "orange_background"
+                                  | "yellow_background"
+                                  | "green_background"
+                                  | "blue_background"
+                                  | "purple_background"
+                                  | "pink_background"
+                                  | "red_background"
+                              }
+                              plain_text: string
+                              href: string | null
+                            }
+                          | {
+                              type: "mention"
+                              mention:
+                                | {
+                                    type: "user"
+                                    user:
+                                      | { id: IdRequest; object: "user" }
+                                      | {
+                                          type: "person"
+                                          person: { email?: string }
+                                          name: string | null
+                                          avatar_url: string | null
+                                          id: IdRequest
+                                          object: "user"
+                                        }
+                                      | {
+                                          type: "bot"
+                                          bot:
+                                            | EmptyObject
+                                            | {
+                                                owner:
+                                                  | {
+                                                      type: "user"
+                                                      user:
+                                                        | {
+                                                            type: "person"
+                                                            person: {
+                                                              email: string
+                                                            }
+                                                            name: string | null
+                                                            avatar_url:
+                                                              | string
+                                                              | null
+                                                            id: IdRequest
+                                                            object: "user"
+                                                          }
+                                                        | {
+                                                            id: IdRequest
+                                                            object: "user"
+                                                          }
+                                                    }
+                                                  | {
+                                                      type: "workspace"
+                                                      workspace: true
+                                                    }
+                                              }
+                                          name: string | null
+                                          avatar_url: string | null
+                                          id: IdRequest
+                                          object: "user"
+                                        }
+                                  }
+                                | {
+                                    type: "date"
+                                    date: {
+                                      start: string
+                                      end: string | null
+                                      time_zone: TimeZoneRequest | null
                                     }
+                                  }
+                                | {
+                                    type: "link_preview"
+                                    link_preview: { url: TextRequest }
+                                  }
+                                | { type: "page"; page: { id: IdRequest } }
+                                | {
+                                    type: "database"
+                                    database: { id: IdRequest }
+                                  }
+                              annotations: {
+                                bold: boolean
+                                italic: boolean
+                                strikethrough: boolean
+                                underline: boolean
+                                code: boolean
+                                color:
+                                  | "default"
+                                  | "gray"
+                                  | "brown"
+                                  | "orange"
+                                  | "yellow"
+                                  | "green"
+                                  | "blue"
+                                  | "purple"
+                                  | "pink"
+                                  | "red"
+                                  | "gray_background"
+                                  | "brown_background"
+                                  | "orange_background"
+                                  | "yellow_background"
+                                  | "green_background"
+                                  | "blue_background"
+                                  | "purple_background"
+                                  | "pink_background"
+                                  | "red_background"
                               }
-                            | {
-                                type: "date"
-                                date: {
-                                  start: string
-                                  end: string | null
-                                  time_zone: TimeZoneRequest | null
-                                }
+                              plain_text: string
+                              href: string | null
+                            }
+                          | {
+                              type: "equation"
+                              equation: { expression: TextRequest }
+                              annotations: {
+                                bold: boolean
+                                italic: boolean
+                                strikethrough: boolean
+                                underline: boolean
+                                code: boolean
+                                color:
+                                  | "default"
+                                  | "gray"
+                                  | "brown"
+                                  | "orange"
+                                  | "yellow"
+                                  | "green"
+                                  | "blue"
+                                  | "purple"
+                                  | "pink"
+                                  | "red"
+                                  | "gray_background"
+                                  | "brown_background"
+                                  | "orange_background"
+                                  | "yellow_background"
+                                  | "green_background"
+                                  | "blue_background"
+                                  | "purple_background"
+                                  | "pink_background"
+                                  | "red_background"
                               }
-                            | {
-                                type: "link_preview"
-                                link_preview: { url: TextRequest }
-                              }
-                            | { type: "page"; page: { id: IdRequest } }
-                            | { type: "database"; database: { id: IdRequest } }
-                          annotations: {
-                            bold: boolean
-                            italic: boolean
-                            strikethrough: boolean
-                            underline: boolean
-                            code: boolean
-                            color:
-                              | "default"
-                              | "gray"
-                              | "brown"
-                              | "orange"
-                              | "yellow"
-                              | "green"
-                              | "blue"
-                              | "purple"
-                              | "pink"
-                              | "red"
-                              | "gray_background"
-                              | "brown_background"
-                              | "orange_background"
-                              | "yellow_background"
-                              | "green_background"
-                              | "blue_background"
-                              | "purple_background"
-                              | "pink_background"
-                              | "red_background"
-                          }
-                          plain_text: string
-                          href: string | null
-                        }
-                      | {
-                          type: "equation"
-                          equation: { expression: TextRequest }
-                          annotations: {
-                            bold: boolean
-                            italic: boolean
-                            strikethrough: boolean
-                            underline: boolean
-                            code: boolean
-                            color:
-                              | "default"
-                              | "gray"
-                              | "brown"
-                              | "orange"
-                              | "yellow"
-                              | "green"
-                              | "blue"
-                              | "purple"
-                              | "pink"
-                              | "red"
-                              | "gray_background"
-                              | "brown_background"
-                              | "orange_background"
-                              | "yellow_background"
-                              | "green_background"
-                              | "blue_background"
-                              | "purple_background"
-                              | "pink_background"
-                              | "red_background"
-                          }
-                          plain_text: string
-                          href: string | null
-                        }
-                    >
-                  }
-                | {
-                    type: "rich_text"
-                    rich_text: Array<
-                      | {
-                          type: "text"
-                          text: {
-                            content: string
-                            link: { url: TextRequest } | null
-                          }
-                          annotations: {
-                            bold: boolean
-                            italic: boolean
-                            strikethrough: boolean
-                            underline: boolean
-                            code: boolean
-                            color:
-                              | "default"
-                              | "gray"
-                              | "brown"
-                              | "orange"
-                              | "yellow"
-                              | "green"
-                              | "blue"
-                              | "purple"
-                              | "pink"
-                              | "red"
-                              | "gray_background"
-                              | "brown_background"
-                              | "orange_background"
-                              | "yellow_background"
-                              | "green_background"
-                              | "blue_background"
-                              | "purple_background"
-                              | "pink_background"
-                              | "red_background"
-                          }
-                          plain_text: string
-                          href: string | null
-                        }
-                      | {
-                          type: "mention"
-                          mention:
-                            | {
-                                type: "user"
-                                user:
-                                  | { id: IdRequest; object: "user" }
-                                  | {
-                                      type: "person"
-                                      person: { email: string }
-                                      name: string | null
-                                      avatar_url: string | null
-                                      id: IdRequest
-                                      object: "user"
-                                    }
-                                  | {
-                                      type: "bot"
-                                      bot:
-                                        | EmptyObject
-                                        | {
-                                            owner:
-                                              | {
-                                                  type: "user"
-                                                  user:
-                                                    | {
-                                                        type: "person"
-                                                        person: {
-                                                          email: string
-                                                        }
-                                                        name: string | null
-                                                        avatar_url:
-                                                          | string
-                                                          | null
-                                                        id: IdRequest
-                                                        object: "user"
-                                                      }
-                                                    | {
-                                                        id: IdRequest
-                                                        object: "user"
-                                                      }
-                                                }
-                                              | {
-                                                  type: "workspace"
-                                                  workspace: true
-                                                }
-                                          }
-                                      name: string | null
-                                      avatar_url: string | null
-                                      id: IdRequest
-                                      object: "user"
-                                    }
-                              }
-                            | {
-                                type: "date"
-                                date: {
-                                  start: string
-                                  end: string | null
-                                  time_zone: TimeZoneRequest | null
-                                }
-                              }
-                            | {
-                                type: "link_preview"
-                                link_preview: { url: TextRequest }
-                              }
-                            | { type: "page"; page: { id: IdRequest } }
-                            | { type: "database"; database: { id: IdRequest } }
-                          annotations: {
-                            bold: boolean
-                            italic: boolean
-                            strikethrough: boolean
-                            underline: boolean
-                            code: boolean
-                            color:
-                              | "default"
-                              | "gray"
-                              | "brown"
-                              | "orange"
-                              | "yellow"
-                              | "green"
-                              | "blue"
-                              | "purple"
-                              | "pink"
-                              | "red"
-                              | "gray_background"
-                              | "brown_background"
-                              | "orange_background"
-                              | "yellow_background"
-                              | "green_background"
-                              | "blue_background"
-                              | "purple_background"
-                              | "pink_background"
-                              | "red_background"
-                          }
-                          plain_text: string
-                          href: string | null
-                        }
-                      | {
-                          type: "equation"
-                          equation: { expression: TextRequest }
-                          annotations: {
-                            bold: boolean
-                            italic: boolean
-                            strikethrough: boolean
-                            underline: boolean
-                            code: boolean
-                            color:
-                              | "default"
-                              | "gray"
-                              | "brown"
-                              | "orange"
-                              | "yellow"
-                              | "green"
-                              | "blue"
-                              | "purple"
-                              | "pink"
-                              | "red"
-                              | "gray_background"
-                              | "brown_background"
-                              | "orange_background"
-                              | "yellow_background"
-                              | "green_background"
-                              | "blue_background"
-                              | "purple_background"
-                              | "pink_background"
-                              | "red_background"
-                          }
-                          plain_text: string
-                          href: string | null
-                        }
-                    >
-                  }
-                | { type: "number"; number: number | null }
-                | { type: "url"; url: string | null }
-                | {
-                    type: "select"
-                    select: {
-                      id: StringRequest
-                      name: StringRequest
-                      color:
-                        | "default"
-                        | "gray"
-                        | "brown"
-                        | "orange"
-                        | "yellow"
-                        | "green"
-                        | "blue"
-                        | "purple"
-                        | "pink"
-                        | "red"
-                    } | null
-                  }
-                | {
-                    type: "multi_select"
-                    multi_select: Array<{
-                      id: StringRequest
-                      name: StringRequest
-                      color:
-                        | "default"
-                        | "gray"
-                        | "brown"
-                        | "orange"
-                        | "yellow"
-                        | "green"
-                        | "blue"
-                        | "purple"
-                        | "pink"
-                        | "red"
-                    }>
-                  }
-                | {
-                    type: "people"
-                    people: Array<
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | EmptyObject
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                    >
-                  }
-                | { type: "email"; email: string | null }
-                | { type: "phone_number"; phone_number: string | null }
-                | {
-                    type: "date"
-                    date: {
-                      start: string
-                      end: string | null
-                      time_zone: TimeZoneRequest | null
-                    } | null
-                  }
-                | {
-                    type: "files"
-                    files: Array<
-                      | {
-                          file: { url: string; expiry_time: string }
+                              plain_text: string
+                              href: string | null
+                            }
+                        >
+                      }
+                    | { type: "number"; number: number | null }
+                    | { type: "url"; url: string | null }
+                    | {
+                        type: "select"
+                        select: {
+                          id: StringRequest
                           name: StringRequest
-                          type?: "file"
-                        }
-                      | {
-                          external: { url: TextRequest }
+                          color:
+                            | "default"
+                            | "gray"
+                            | "brown"
+                            | "orange"
+                            | "yellow"
+                            | "green"
+                            | "blue"
+                            | "purple"
+                            | "pink"
+                            | "red"
+                        } | null
+                      }
+                    | {
+                        type: "multi_select"
+                        multi_select: Array<{
+                          id: StringRequest
                           name: StringRequest
-                          type?: "external"
-                        }
-                    >
-                  }
-                | { type: "checkbox"; checkbox: boolean }
-                | {
-                    type: "formula"
-                    formula:
-                      | { type: "string"; string: string | null }
-                      | {
-                          type: "date"
-                          date: {
-                            start: string
-                            end: string | null
-                            time_zone: TimeZoneRequest | null
-                          } | null
-                        }
-                      | { type: "number"; number: number | null }
-                      | { type: "boolean"; boolean: boolean | null }
-                  }
-                | { type: "relation"; relation: Array<{ id: string }> }
-                | { type: "created_time"; created_time: string }
-                | {
-                    type: "created_by"
-                    created_by:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | EmptyObject
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                  }
-                | { type: "last_edited_time"; last_edited_time: string }
-                | {
-                    type: "last_edited_by"
-                    last_edited_by:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | EmptyObject
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                  }
-              >
-              function:
-                | "count"
-                | "count_values"
-                | "empty"
-                | "not_empty"
-                | "unique"
-                | "show_unique"
-                | "percent_empty"
-                | "percent_not_empty"
-                | "sum"
-                | "average"
-                | "median"
-                | "min"
-                | "max"
-                | "range"
-                | "earliest_date"
-                | "latest_date"
-                | "date_range"
-                | "checked"
-                | "unchecked"
-                | "percent_checked"
-                | "percent_unchecked"
-                | "show_original"
-            }
-          | {
-              type: "unsupported"
-              unsupported: EmptyObject
-              function:
-                | "count"
-                | "count_values"
-                | "empty"
-                | "not_empty"
-                | "unique"
-                | "show_unique"
-                | "percent_empty"
-                | "percent_not_empty"
-                | "sum"
-                | "average"
-                | "median"
-                | "min"
-                | "max"
-                | "range"
-                | "earliest_date"
-                | "latest_date"
-                | "date_range"
-                | "checked"
-                | "unchecked"
-                | "percent_checked"
-                | "percent_unchecked"
-                | "show_original"
-            }
-        id: string
-      }
-  >
-  icon:
-    | { type: "emoji"; emoji: EmojiRequest }
-    | null
-    | { type: "external"; external: { url: TextRequest } }
-    | null
-    | { type: "file"; file: { url: string; expiry_time: string } }
-    | null
-  cover:
-    | { type: "external"; external: { url: TextRequest } }
-    | null
-    | { type: "file"; file: { url: string; expiry_time: string } }
-    | null
-  object: "page"
-  id: string
-  created_time: string
-  last_edited_time: string
-  archived: boolean
-  url: string
-}
+                          color:
+                            | "default"
+                            | "gray"
+                            | "brown"
+                            | "orange"
+                            | "yellow"
+                            | "green"
+                            | "blue"
+                            | "purple"
+                            | "pink"
+                            | "red"
+                        }>
+                      }
+                    | {
+                        type: "people"
+                        people: Array<
+                          | { id: IdRequest; object: "user" }
+                          | {
+                              type: "person"
+                              person: { email?: string }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                          | {
+                              type: "bot"
+                              bot:
+                                | EmptyObject
+                                | {
+                                    owner:
+                                      | {
+                                          type: "user"
+                                          user:
+                                            | {
+                                                type: "person"
+                                                person: { email: string }
+                                                name: string | null
+                                                avatar_url: string | null
+                                                id: IdRequest
+                                                object: "user"
+                                              }
+                                            | { id: IdRequest; object: "user" }
+                                        }
+                                      | { type: "workspace"; workspace: true }
+                                  }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                        >
+                      }
+                    | { type: "email"; email: string | null }
+                    | { type: "phone_number"; phone_number: string | null }
+                    | {
+                        type: "date"
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
+                        } | null
+                      }
+                    | {
+                        type: "files"
+                        files: Array<
+                          | {
+                              file: { url: string; expiry_time: string }
+                              name: StringRequest
+                              type?: "file"
+                            }
+                          | {
+                              external: { url: TextRequest }
+                              name: StringRequest
+                              type?: "external"
+                            }
+                        >
+                      }
+                    | { type: "checkbox"; checkbox: boolean }
+                    | {
+                        type: "formula"
+                        formula:
+                          | { type: "string"; string: string | null }
+                          | {
+                              type: "date"
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              } | null
+                            }
+                          | { type: "number"; number: number | null }
+                          | { type: "boolean"; boolean: boolean | null }
+                      }
+                    | { type: "relation"; relation: Array<{ id: string }> }
+                    | { type: "created_time"; created_time: string }
+                    | {
+                        type: "created_by"
+                        created_by:
+                          | { id: IdRequest; object: "user" }
+                          | {
+                              type: "person"
+                              person: { email?: string }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                          | {
+                              type: "bot"
+                              bot:
+                                | EmptyObject
+                                | {
+                                    owner:
+                                      | {
+                                          type: "user"
+                                          user:
+                                            | {
+                                                type: "person"
+                                                person: { email: string }
+                                                name: string | null
+                                                avatar_url: string | null
+                                                id: IdRequest
+                                                object: "user"
+                                              }
+                                            | { id: IdRequest; object: "user" }
+                                        }
+                                      | { type: "workspace"; workspace: true }
+                                  }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                      }
+                    | { type: "last_edited_time"; last_edited_time: string }
+                    | {
+                        type: "last_edited_by"
+                        last_edited_by:
+                          | { id: IdRequest; object: "user" }
+                          | {
+                              type: "person"
+                              person: { email?: string }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                          | {
+                              type: "bot"
+                              bot:
+                                | EmptyObject
+                                | {
+                                    owner:
+                                      | {
+                                          type: "user"
+                                          user:
+                                            | {
+                                                type: "person"
+                                                person: { email: string }
+                                                name: string | null
+                                                avatar_url: string | null
+                                                id: IdRequest
+                                                object: "user"
+                                              }
+                                            | { id: IdRequest; object: "user" }
+                                        }
+                                      | { type: "workspace"; workspace: true }
+                                  }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                      }
+                  >
+                  function:
+                    | "count"
+                    | "count_values"
+                    | "empty"
+                    | "not_empty"
+                    | "unique"
+                    | "show_unique"
+                    | "percent_empty"
+                    | "percent_not_empty"
+                    | "sum"
+                    | "average"
+                    | "median"
+                    | "min"
+                    | "max"
+                    | "range"
+                    | "earliest_date"
+                    | "latest_date"
+                    | "date_range"
+                    | "checked"
+                    | "unchecked"
+                    | "percent_checked"
+                    | "percent_unchecked"
+                    | "show_original"
+                }
+              | {
+                  type: "unsupported"
+                  unsupported: EmptyObject
+                  function:
+                    | "count"
+                    | "count_values"
+                    | "empty"
+                    | "not_empty"
+                    | "unique"
+                    | "show_unique"
+                    | "percent_empty"
+                    | "percent_not_empty"
+                    | "sum"
+                    | "average"
+                    | "median"
+                    | "min"
+                    | "max"
+                    | "range"
+                    | "earliest_date"
+                    | "latest_date"
+                    | "date_range"
+                    | "checked"
+                    | "unchecked"
+                    | "percent_checked"
+                    | "percent_unchecked"
+                    | "show_original"
+                }
+            id: string
+          }
+      >
+      icon:
+        | { type: "emoji"; emoji: EmojiRequest }
+        | null
+        | { type: "external"; external: { url: TextRequest } }
+        | null
+        | { type: "file"; file: { url: string; expiry_time: string } }
+        | null
+      cover:
+        | { type: "external"; external: { url: TextRequest } }
+        | null
+        | { type: "file"; file: { url: string; expiry_time: string } }
+        | null
+      object: "page"
+      id: string
+      created_time: string
+      last_edited_time: string
+      archived: boolean
+      url: string
+    }
+  | { object: "page"; id: string }
 
 export const updatePage = {
   method: "patch",
@@ -11820,7 +11862,7 @@ export type GetPagePropertyResponse =
         | { id: IdRequest; object: "user" }
         | {
             type: "person"
-            person: { email: string }
+            person: { email?: string }
             name: string | null
             avatar_url: string | null
             id: IdRequest
@@ -11861,7 +11903,7 @@ export type GetPagePropertyResponse =
         | { id: IdRequest; object: "user" }
         | {
             type: "person"
-            person: { email: string }
+            person: { email?: string }
             name: string | null
             avatar_url: string | null
             id: IdRequest
@@ -11961,7 +12003,7 @@ export type GetPagePropertyResponse =
                     | { id: IdRequest; object: "user" }
                     | {
                         type: "person"
-                        person: { email: string }
+                        person: { email?: string }
                         name: string | null
                         avatar_url: string | null
                         id: IdRequest
@@ -12115,7 +12157,7 @@ export type GetPagePropertyResponse =
                     | { id: IdRequest; object: "user" }
                     | {
                         type: "person"
-                        person: { email: string }
+                        person: { email?: string }
                         name: string | null
                         avatar_url: string | null
                         id: IdRequest
@@ -12230,7 +12272,7 @@ export type GetPagePropertyResponse =
         | { id: IdRequest; object: "user" }
         | {
             type: "person"
-            person: { email: string }
+            person: { email?: string }
             name: string | null
             avatar_url: string | null
             id: IdRequest
@@ -12377,7 +12419,7 @@ export type GetPagePropertyResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -12543,7 +12585,7 @@ export type GetPagePropertyResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -12705,7 +12747,7 @@ export type GetPagePropertyResponse =
                     | { id: IdRequest; object: "user" }
                     | {
                         type: "person"
-                        person: { email: string }
+                        person: { email?: string }
                         name: string | null
                         avatar_url: string | null
                         id: IdRequest
@@ -12788,7 +12830,7 @@ export type GetPagePropertyResponse =
                     | { id: IdRequest; object: "user" }
                     | {
                         type: "person"
-                        person: { email: string }
+                        person: { email?: string }
                         name: string | null
                         avatar_url: string | null
                         id: IdRequest
@@ -12828,7 +12870,7 @@ export type GetPagePropertyResponse =
                     | { id: IdRequest; object: "user" }
                     | {
                         type: "person"
-                        person: { email: string }
+                        person: { email?: string }
                         name: string | null
                         avatar_url: string | null
                         id: IdRequest
@@ -12993,7 +13035,7 @@ export type GetPagePropertyResponse =
               | { id: IdRequest; object: "user" }
               | {
                   type: "person"
-                  person: { email: string }
+                  person: { email?: string }
                   name: string | null
                   avatar_url: string | null
                   id: IdRequest
@@ -13038,7 +13080,7 @@ export type GetPagePropertyResponse =
               | { id: IdRequest; object: "user" }
               | {
                   type: "person"
-                  person: { email: string }
+                  person: { email?: string }
                   name: string | null
                   avatar_url: string | null
                   id: IdRequest
@@ -13138,7 +13180,7 @@ export type GetPagePropertyResponse =
                           | { id: IdRequest; object: "user" }
                           | {
                               type: "person"
-                              person: { email: string }
+                              person: { email?: string }
                               name: string | null
                               avatar_url: string | null
                               id: IdRequest
@@ -13295,7 +13337,7 @@ export type GetPagePropertyResponse =
                           | { id: IdRequest; object: "user" }
                           | {
                               type: "person"
-                              person: { email: string }
+                              person: { email?: string }
                               name: string | null
                               avatar_url: string | null
                               id: IdRequest
@@ -13413,7 +13455,7 @@ export type GetPagePropertyResponse =
               | { id: IdRequest; object: "user" }
               | {
                   type: "person"
-                  person: { email: string }
+                  person: { email?: string }
                   name: string | null
                   avatar_url: string | null
                   id: IdRequest
@@ -13537,7 +13579,7 @@ export type GetPagePropertyResponse =
               | { id: IdRequest; object: "user" }
               | {
                   type: "person"
-                  person: { email: string }
+                  person: { email?: string }
                   name: string | null
                   avatar_url: string | null
                   id: IdRequest
@@ -13582,7 +13624,7 @@ export type GetPagePropertyResponse =
               | { id: IdRequest; object: "user" }
               | {
                   type: "person"
-                  person: { email: string }
+                  person: { email?: string }
                   name: string | null
                   avatar_url: string | null
                   id: IdRequest
@@ -13682,7 +13724,7 @@ export type GetPagePropertyResponse =
                           | { id: IdRequest; object: "user" }
                           | {
                               type: "person"
-                              person: { email: string }
+                              person: { email?: string }
                               name: string | null
                               avatar_url: string | null
                               id: IdRequest
@@ -13839,7 +13881,7 @@ export type GetPagePropertyResponse =
                           | { id: IdRequest; object: "user" }
                           | {
                               type: "person"
-                              person: { email: string }
+                              person: { email?: string }
                               name: string | null
                               avatar_url: string | null
                               id: IdRequest
@@ -13957,7 +13999,7 @@ export type GetPagePropertyResponse =
               | { id: IdRequest; object: "user" }
               | {
                   type: "person"
-                  person: { email: string }
+                  person: { email?: string }
                   name: string | null
                   avatar_url: string | null
                   id: IdRequest
@@ -14017,6 +14059,7 @@ type GetBlockPathParameters = {
 export type GetBlockParameters = GetBlockPathParameters
 
 export type GetBlockResponse =
+  | { object: "block"; id: string }
   | {
       type: "paragraph"
       paragraph: {
@@ -14063,7 +14106,7 @@ export type GetBlockResponse =
                       | { id: IdRequest; object: "user" }
                       | {
                           type: "person"
-                          person: { email: string }
+                          person: { email?: string }
                           name: string | null
                           avatar_url: string | null
                           id: IdRequest
@@ -14225,7 +14268,7 @@ export type GetBlockResponse =
                       | { id: IdRequest; object: "user" }
                       | {
                           type: "person"
-                          person: { email: string }
+                          person: { email?: string }
                           name: string | null
                           avatar_url: string | null
                           id: IdRequest
@@ -14387,7 +14430,7 @@ export type GetBlockResponse =
                       | { id: IdRequest; object: "user" }
                       | {
                           type: "person"
-                          person: { email: string }
+                          person: { email?: string }
                           name: string | null
                           avatar_url: string | null
                           id: IdRequest
@@ -14549,7 +14592,7 @@ export type GetBlockResponse =
                       | { id: IdRequest; object: "user" }
                       | {
                           type: "person"
-                          person: { email: string }
+                          person: { email?: string }
                           name: string | null
                           avatar_url: string | null
                           id: IdRequest
@@ -14711,7 +14754,7 @@ export type GetBlockResponse =
                       | { id: IdRequest; object: "user" }
                       | {
                           type: "person"
-                          person: { email: string }
+                          person: { email?: string }
                           name: string | null
                           avatar_url: string | null
                           id: IdRequest
@@ -14873,7 +14916,7 @@ export type GetBlockResponse =
                       | { id: IdRequest; object: "user" }
                       | {
                           type: "person"
-                          person: { email: string }
+                          person: { email?: string }
                           name: string | null
                           avatar_url: string | null
                           id: IdRequest
@@ -15035,7 +15078,7 @@ export type GetBlockResponse =
                       | { id: IdRequest; object: "user" }
                       | {
                           type: "person"
-                          person: { email: string }
+                          person: { email?: string }
                           name: string | null
                           avatar_url: string | null
                           id: IdRequest
@@ -15197,7 +15240,7 @@ export type GetBlockResponse =
                       | { id: IdRequest; object: "user" }
                       | {
                           type: "person"
-                          person: { email: string }
+                          person: { email?: string }
                           name: string | null
                           avatar_url: string | null
                           id: IdRequest
@@ -15360,7 +15403,7 @@ export type GetBlockResponse =
                       | { id: IdRequest; object: "user" }
                       | {
                           type: "person"
-                          person: { email: string }
+                          person: { email?: string }
                           name: string | null
                           avatar_url: string | null
                           id: IdRequest
@@ -15522,7 +15565,7 @@ export type GetBlockResponse =
                       | { id: IdRequest; object: "user" }
                       | {
                           type: "person"
-                          person: { email: string }
+                          person: { email?: string }
                           name: string | null
                           avatar_url: string | null
                           id: IdRequest
@@ -15726,7 +15769,7 @@ export type GetBlockResponse =
                       | { id: IdRequest; object: "user" }
                       | {
                           type: "person"
-                          person: { email: string }
+                          person: { email?: string }
                           name: string | null
                           avatar_url: string | null
                           id: IdRequest
@@ -15889,7 +15932,7 @@ export type GetBlockResponse =
                       | { id: IdRequest; object: "user" }
                       | {
                           type: "person"
-                          person: { email: string }
+                          person: { email?: string }
                           name: string | null
                           avatar_url: string | null
                           id: IdRequest
@@ -16121,7 +16164,7 @@ export type GetBlockResponse =
                       | { id: IdRequest; object: "user" }
                       | {
                           type: "person"
-                          person: { email: string }
+                          person: { email?: string }
                           name: string | null
                           avatar_url: string | null
                           id: IdRequest
@@ -16284,7 +16327,7 @@ export type GetBlockResponse =
                       | { id: IdRequest; object: "user" }
                       | {
                           type: "person"
-                          person: { email: string }
+                          person: { email?: string }
                           name: string | null
                           avatar_url: string | null
                           id: IdRequest
@@ -16449,7 +16492,7 @@ export type GetBlockResponse =
                           | { id: IdRequest; object: "user" }
                           | {
                               type: "person"
-                              person: { email: string }
+                              person: { email?: string }
                               name: string | null
                               avatar_url: string | null
                               id: IdRequest
@@ -16607,7 +16650,7 @@ export type GetBlockResponse =
                           | { id: IdRequest; object: "user" }
                           | {
                               type: "person"
-                              person: { email: string }
+                              person: { email?: string }
                               name: string | null
                               avatar_url: string | null
                               id: IdRequest
@@ -16775,7 +16818,7 @@ export type GetBlockResponse =
                           | { id: IdRequest; object: "user" }
                           | {
                               type: "person"
-                              person: { email: string }
+                              person: { email?: string }
                               name: string | null
                               avatar_url: string | null
                               id: IdRequest
@@ -16933,7 +16976,7 @@ export type GetBlockResponse =
                           | { id: IdRequest; object: "user" }
                           | {
                               type: "person"
-                              person: { email: string }
+                              person: { email?: string }
                               name: string | null
                               avatar_url: string | null
                               id: IdRequest
@@ -17101,7 +17144,7 @@ export type GetBlockResponse =
                           | { id: IdRequest; object: "user" }
                           | {
                               type: "person"
-                              person: { email: string }
+                              person: { email?: string }
                               name: string | null
                               avatar_url: string | null
                               id: IdRequest
@@ -17259,7 +17302,7 @@ export type GetBlockResponse =
                           | { id: IdRequest; object: "user" }
                           | {
                               type: "person"
-                              person: { email: string }
+                              person: { email?: string }
                               name: string | null
                               avatar_url: string | null
                               id: IdRequest
@@ -17427,7 +17470,7 @@ export type GetBlockResponse =
                           | { id: IdRequest; object: "user" }
                           | {
                               type: "person"
-                              person: { email: string }
+                              person: { email?: string }
                               name: string | null
                               avatar_url: string | null
                               id: IdRequest
@@ -17585,7 +17628,7 @@ export type GetBlockResponse =
                           | { id: IdRequest; object: "user" }
                           | {
                               type: "person"
-                              person: { email: string }
+                              person: { email?: string }
                               name: string | null
                               avatar_url: string | null
                               id: IdRequest
@@ -17753,7 +17796,7 @@ export type GetBlockResponse =
                           | { id: IdRequest; object: "user" }
                           | {
                               type: "person"
-                              person: { email: string }
+                              person: { email?: string }
                               name: string | null
                               avatar_url: string | null
                               id: IdRequest
@@ -17911,7 +17954,7 @@ export type GetBlockResponse =
                           | { id: IdRequest; object: "user" }
                           | {
                               type: "person"
-                              person: { email: string }
+                              person: { email?: string }
                               name: string | null
                               avatar_url: string | null
                               id: IdRequest
@@ -18207,6 +18250,7 @@ export type UpdateBlockParameters = UpdateBlockPathParameters &
   UpdateBlockBodyParameters
 
 export type UpdateBlockResponse =
+  | { object: "block"; id: string }
   | {
       type: "paragraph"
       paragraph: {
@@ -18253,7 +18297,7 @@ export type UpdateBlockResponse =
                       | { id: IdRequest; object: "user" }
                       | {
                           type: "person"
-                          person: { email: string }
+                          person: { email?: string }
                           name: string | null
                           avatar_url: string | null
                           id: IdRequest
@@ -18415,7 +18459,7 @@ export type UpdateBlockResponse =
                       | { id: IdRequest; object: "user" }
                       | {
                           type: "person"
-                          person: { email: string }
+                          person: { email?: string }
                           name: string | null
                           avatar_url: string | null
                           id: IdRequest
@@ -18577,7 +18621,7 @@ export type UpdateBlockResponse =
                       | { id: IdRequest; object: "user" }
                       | {
                           type: "person"
-                          person: { email: string }
+                          person: { email?: string }
                           name: string | null
                           avatar_url: string | null
                           id: IdRequest
@@ -18739,7 +18783,7 @@ export type UpdateBlockResponse =
                       | { id: IdRequest; object: "user" }
                       | {
                           type: "person"
-                          person: { email: string }
+                          person: { email?: string }
                           name: string | null
                           avatar_url: string | null
                           id: IdRequest
@@ -18901,7 +18945,7 @@ export type UpdateBlockResponse =
                       | { id: IdRequest; object: "user" }
                       | {
                           type: "person"
-                          person: { email: string }
+                          person: { email?: string }
                           name: string | null
                           avatar_url: string | null
                           id: IdRequest
@@ -19063,7 +19107,7 @@ export type UpdateBlockResponse =
                       | { id: IdRequest; object: "user" }
                       | {
                           type: "person"
-                          person: { email: string }
+                          person: { email?: string }
                           name: string | null
                           avatar_url: string | null
                           id: IdRequest
@@ -19225,7 +19269,7 @@ export type UpdateBlockResponse =
                       | { id: IdRequest; object: "user" }
                       | {
                           type: "person"
-                          person: { email: string }
+                          person: { email?: string }
                           name: string | null
                           avatar_url: string | null
                           id: IdRequest
@@ -19387,7 +19431,7 @@ export type UpdateBlockResponse =
                       | { id: IdRequest; object: "user" }
                       | {
                           type: "person"
-                          person: { email: string }
+                          person: { email?: string }
                           name: string | null
                           avatar_url: string | null
                           id: IdRequest
@@ -19550,7 +19594,7 @@ export type UpdateBlockResponse =
                       | { id: IdRequest; object: "user" }
                       | {
                           type: "person"
-                          person: { email: string }
+                          person: { email?: string }
                           name: string | null
                           avatar_url: string | null
                           id: IdRequest
@@ -19712,7 +19756,7 @@ export type UpdateBlockResponse =
                       | { id: IdRequest; object: "user" }
                       | {
                           type: "person"
-                          person: { email: string }
+                          person: { email?: string }
                           name: string | null
                           avatar_url: string | null
                           id: IdRequest
@@ -19916,7 +19960,7 @@ export type UpdateBlockResponse =
                       | { id: IdRequest; object: "user" }
                       | {
                           type: "person"
-                          person: { email: string }
+                          person: { email?: string }
                           name: string | null
                           avatar_url: string | null
                           id: IdRequest
@@ -20079,7 +20123,7 @@ export type UpdateBlockResponse =
                       | { id: IdRequest; object: "user" }
                       | {
                           type: "person"
-                          person: { email: string }
+                          person: { email?: string }
                           name: string | null
                           avatar_url: string | null
                           id: IdRequest
@@ -20311,7 +20355,7 @@ export type UpdateBlockResponse =
                       | { id: IdRequest; object: "user" }
                       | {
                           type: "person"
-                          person: { email: string }
+                          person: { email?: string }
                           name: string | null
                           avatar_url: string | null
                           id: IdRequest
@@ -20474,7 +20518,7 @@ export type UpdateBlockResponse =
                       | { id: IdRequest; object: "user" }
                       | {
                           type: "person"
-                          person: { email: string }
+                          person: { email?: string }
                           name: string | null
                           avatar_url: string | null
                           id: IdRequest
@@ -20639,7 +20683,7 @@ export type UpdateBlockResponse =
                           | { id: IdRequest; object: "user" }
                           | {
                               type: "person"
-                              person: { email: string }
+                              person: { email?: string }
                               name: string | null
                               avatar_url: string | null
                               id: IdRequest
@@ -20797,7 +20841,7 @@ export type UpdateBlockResponse =
                           | { id: IdRequest; object: "user" }
                           | {
                               type: "person"
-                              person: { email: string }
+                              person: { email?: string }
                               name: string | null
                               avatar_url: string | null
                               id: IdRequest
@@ -20965,7 +21009,7 @@ export type UpdateBlockResponse =
                           | { id: IdRequest; object: "user" }
                           | {
                               type: "person"
-                              person: { email: string }
+                              person: { email?: string }
                               name: string | null
                               avatar_url: string | null
                               id: IdRequest
@@ -21123,7 +21167,7 @@ export type UpdateBlockResponse =
                           | { id: IdRequest; object: "user" }
                           | {
                               type: "person"
-                              person: { email: string }
+                              person: { email?: string }
                               name: string | null
                               avatar_url: string | null
                               id: IdRequest
@@ -21291,7 +21335,7 @@ export type UpdateBlockResponse =
                           | { id: IdRequest; object: "user" }
                           | {
                               type: "person"
-                              person: { email: string }
+                              person: { email?: string }
                               name: string | null
                               avatar_url: string | null
                               id: IdRequest
@@ -21449,7 +21493,7 @@ export type UpdateBlockResponse =
                           | { id: IdRequest; object: "user" }
                           | {
                               type: "person"
-                              person: { email: string }
+                              person: { email?: string }
                               name: string | null
                               avatar_url: string | null
                               id: IdRequest
@@ -21617,7 +21661,7 @@ export type UpdateBlockResponse =
                           | { id: IdRequest; object: "user" }
                           | {
                               type: "person"
-                              person: { email: string }
+                              person: { email?: string }
                               name: string | null
                               avatar_url: string | null
                               id: IdRequest
@@ -21775,7 +21819,7 @@ export type UpdateBlockResponse =
                           | { id: IdRequest; object: "user" }
                           | {
                               type: "person"
-                              person: { email: string }
+                              person: { email?: string }
                               name: string | null
                               avatar_url: string | null
                               id: IdRequest
@@ -21943,7 +21987,7 @@ export type UpdateBlockResponse =
                           | { id: IdRequest; object: "user" }
                           | {
                               type: "person"
-                              person: { email: string }
+                              person: { email?: string }
                               name: string | null
                               avatar_url: string | null
                               id: IdRequest
@@ -22101,7 +22145,7 @@ export type UpdateBlockResponse =
                           | { id: IdRequest; object: "user" }
                           | {
                               type: "person"
-                              person: { email: string }
+                              person: { email?: string }
                               name: string | null
                               avatar_url: string | null
                               id: IdRequest
@@ -22284,6 +22328,7 @@ type DeleteBlockPathParameters = {
 export type DeleteBlockParameters = DeleteBlockPathParameters
 
 export type DeleteBlockResponse =
+  | { object: "block"; id: string }
   | {
       type: "paragraph"
       paragraph: {
@@ -22330,7 +22375,7 @@ export type DeleteBlockResponse =
                       | { id: IdRequest; object: "user" }
                       | {
                           type: "person"
-                          person: { email: string }
+                          person: { email?: string }
                           name: string | null
                           avatar_url: string | null
                           id: IdRequest
@@ -22492,7 +22537,7 @@ export type DeleteBlockResponse =
                       | { id: IdRequest; object: "user" }
                       | {
                           type: "person"
-                          person: { email: string }
+                          person: { email?: string }
                           name: string | null
                           avatar_url: string | null
                           id: IdRequest
@@ -22654,7 +22699,7 @@ export type DeleteBlockResponse =
                       | { id: IdRequest; object: "user" }
                       | {
                           type: "person"
-                          person: { email: string }
+                          person: { email?: string }
                           name: string | null
                           avatar_url: string | null
                           id: IdRequest
@@ -22816,7 +22861,7 @@ export type DeleteBlockResponse =
                       | { id: IdRequest; object: "user" }
                       | {
                           type: "person"
-                          person: { email: string }
+                          person: { email?: string }
                           name: string | null
                           avatar_url: string | null
                           id: IdRequest
@@ -22978,7 +23023,7 @@ export type DeleteBlockResponse =
                       | { id: IdRequest; object: "user" }
                       | {
                           type: "person"
-                          person: { email: string }
+                          person: { email?: string }
                           name: string | null
                           avatar_url: string | null
                           id: IdRequest
@@ -23140,7 +23185,7 @@ export type DeleteBlockResponse =
                       | { id: IdRequest; object: "user" }
                       | {
                           type: "person"
-                          person: { email: string }
+                          person: { email?: string }
                           name: string | null
                           avatar_url: string | null
                           id: IdRequest
@@ -23302,7 +23347,7 @@ export type DeleteBlockResponse =
                       | { id: IdRequest; object: "user" }
                       | {
                           type: "person"
-                          person: { email: string }
+                          person: { email?: string }
                           name: string | null
                           avatar_url: string | null
                           id: IdRequest
@@ -23464,7 +23509,7 @@ export type DeleteBlockResponse =
                       | { id: IdRequest; object: "user" }
                       | {
                           type: "person"
-                          person: { email: string }
+                          person: { email?: string }
                           name: string | null
                           avatar_url: string | null
                           id: IdRequest
@@ -23627,7 +23672,7 @@ export type DeleteBlockResponse =
                       | { id: IdRequest; object: "user" }
                       | {
                           type: "person"
-                          person: { email: string }
+                          person: { email?: string }
                           name: string | null
                           avatar_url: string | null
                           id: IdRequest
@@ -23789,7 +23834,7 @@ export type DeleteBlockResponse =
                       | { id: IdRequest; object: "user" }
                       | {
                           type: "person"
-                          person: { email: string }
+                          person: { email?: string }
                           name: string | null
                           avatar_url: string | null
                           id: IdRequest
@@ -23993,7 +24038,7 @@ export type DeleteBlockResponse =
                       | { id: IdRequest; object: "user" }
                       | {
                           type: "person"
-                          person: { email: string }
+                          person: { email?: string }
                           name: string | null
                           avatar_url: string | null
                           id: IdRequest
@@ -24156,7 +24201,7 @@ export type DeleteBlockResponse =
                       | { id: IdRequest; object: "user" }
                       | {
                           type: "person"
-                          person: { email: string }
+                          person: { email?: string }
                           name: string | null
                           avatar_url: string | null
                           id: IdRequest
@@ -24388,7 +24433,7 @@ export type DeleteBlockResponse =
                       | { id: IdRequest; object: "user" }
                       | {
                           type: "person"
-                          person: { email: string }
+                          person: { email?: string }
                           name: string | null
                           avatar_url: string | null
                           id: IdRequest
@@ -24551,7 +24596,7 @@ export type DeleteBlockResponse =
                       | { id: IdRequest; object: "user" }
                       | {
                           type: "person"
-                          person: { email: string }
+                          person: { email?: string }
                           name: string | null
                           avatar_url: string | null
                           id: IdRequest
@@ -24716,7 +24761,7 @@ export type DeleteBlockResponse =
                           | { id: IdRequest; object: "user" }
                           | {
                               type: "person"
-                              person: { email: string }
+                              person: { email?: string }
                               name: string | null
                               avatar_url: string | null
                               id: IdRequest
@@ -24874,7 +24919,7 @@ export type DeleteBlockResponse =
                           | { id: IdRequest; object: "user" }
                           | {
                               type: "person"
-                              person: { email: string }
+                              person: { email?: string }
                               name: string | null
                               avatar_url: string | null
                               id: IdRequest
@@ -25042,7 +25087,7 @@ export type DeleteBlockResponse =
                           | { id: IdRequest; object: "user" }
                           | {
                               type: "person"
-                              person: { email: string }
+                              person: { email?: string }
                               name: string | null
                               avatar_url: string | null
                               id: IdRequest
@@ -25200,7 +25245,7 @@ export type DeleteBlockResponse =
                           | { id: IdRequest; object: "user" }
                           | {
                               type: "person"
-                              person: { email: string }
+                              person: { email?: string }
                               name: string | null
                               avatar_url: string | null
                               id: IdRequest
@@ -25368,7 +25413,7 @@ export type DeleteBlockResponse =
                           | { id: IdRequest; object: "user" }
                           | {
                               type: "person"
-                              person: { email: string }
+                              person: { email?: string }
                               name: string | null
                               avatar_url: string | null
                               id: IdRequest
@@ -25526,7 +25571,7 @@ export type DeleteBlockResponse =
                           | { id: IdRequest; object: "user" }
                           | {
                               type: "person"
-                              person: { email: string }
+                              person: { email?: string }
                               name: string | null
                               avatar_url: string | null
                               id: IdRequest
@@ -25694,7 +25739,7 @@ export type DeleteBlockResponse =
                           | { id: IdRequest; object: "user" }
                           | {
                               type: "person"
-                              person: { email: string }
+                              person: { email?: string }
                               name: string | null
                               avatar_url: string | null
                               id: IdRequest
@@ -25852,7 +25897,7 @@ export type DeleteBlockResponse =
                           | { id: IdRequest; object: "user" }
                           | {
                               type: "person"
-                              person: { email: string }
+                              person: { email?: string }
                               name: string | null
                               avatar_url: string | null
                               id: IdRequest
@@ -26020,7 +26065,7 @@ export type DeleteBlockResponse =
                           | { id: IdRequest; object: "user" }
                           | {
                               type: "person"
-                              person: { email: string }
+                              person: { email?: string }
                               name: string | null
                               avatar_url: string | null
                               id: IdRequest
@@ -26178,7 +26223,7 @@ export type DeleteBlockResponse =
                           | { id: IdRequest; object: "user" }
                           | {
                               type: "person"
-                              person: { email: string }
+                              person: { email?: string }
                               name: string | null
                               avatar_url: string | null
                               id: IdRequest
@@ -26451,7 +26496,7 @@ export type ListBlockChildrenResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -26617,7 +26662,7 @@ export type ListBlockChildrenResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -26779,7 +26824,7 @@ export type ListBlockChildrenResponse =
                     | { id: IdRequest; object: "user" }
                     | {
                         type: "person"
-                        person: { email: string }
+                        person: { email?: string }
                         name: string | null
                         avatar_url: string | null
                         id: IdRequest
@@ -26862,7 +26907,7 @@ export type ListBlockChildrenResponse =
                     | { id: IdRequest; object: "user" }
                     | {
                         type: "person"
-                        person: { email: string }
+                        person: { email?: string }
                         name: string | null
                         avatar_url: string | null
                         id: IdRequest
@@ -26902,7 +26947,7 @@ export type ListBlockChildrenResponse =
                     | { id: IdRequest; object: "user" }
                     | {
                         type: "person"
-                        person: { email: string }
+                        person: { email?: string }
                         name: string | null
                         avatar_url: string | null
                         id: IdRequest
@@ -26989,6 +27034,7 @@ export type ListBlockChildrenResponse =
           }
       object: "list"
       results: Array<
+        | { object: "block"; id: string }
         | {
             type: "paragraph"
             paragraph: {
@@ -27035,7 +27081,7 @@ export type ListBlockChildrenResponse =
                             | { id: IdRequest; object: "user" }
                             | {
                                 type: "person"
-                                person: { email: string }
+                                person: { email?: string }
                                 name: string | null
                                 avatar_url: string | null
                                 id: IdRequest
@@ -27203,7 +27249,7 @@ export type ListBlockChildrenResponse =
                             | { id: IdRequest; object: "user" }
                             | {
                                 type: "person"
-                                person: { email: string }
+                                person: { email?: string }
                                 name: string | null
                                 avatar_url: string | null
                                 id: IdRequest
@@ -27371,7 +27417,7 @@ export type ListBlockChildrenResponse =
                             | { id: IdRequest; object: "user" }
                             | {
                                 type: "person"
-                                person: { email: string }
+                                person: { email?: string }
                                 name: string | null
                                 avatar_url: string | null
                                 id: IdRequest
@@ -27539,7 +27585,7 @@ export type ListBlockChildrenResponse =
                             | { id: IdRequest; object: "user" }
                             | {
                                 type: "person"
-                                person: { email: string }
+                                person: { email?: string }
                                 name: string | null
                                 avatar_url: string | null
                                 id: IdRequest
@@ -27707,7 +27753,7 @@ export type ListBlockChildrenResponse =
                             | { id: IdRequest; object: "user" }
                             | {
                                 type: "person"
-                                person: { email: string }
+                                person: { email?: string }
                                 name: string | null
                                 avatar_url: string | null
                                 id: IdRequest
@@ -27875,7 +27921,7 @@ export type ListBlockChildrenResponse =
                             | { id: IdRequest; object: "user" }
                             | {
                                 type: "person"
-                                person: { email: string }
+                                person: { email?: string }
                                 name: string | null
                                 avatar_url: string | null
                                 id: IdRequest
@@ -28043,7 +28089,7 @@ export type ListBlockChildrenResponse =
                             | { id: IdRequest; object: "user" }
                             | {
                                 type: "person"
-                                person: { email: string }
+                                person: { email?: string }
                                 name: string | null
                                 avatar_url: string | null
                                 id: IdRequest
@@ -28211,7 +28257,7 @@ export type ListBlockChildrenResponse =
                             | { id: IdRequest; object: "user" }
                             | {
                                 type: "person"
-                                person: { email: string }
+                                person: { email?: string }
                                 name: string | null
                                 avatar_url: string | null
                                 id: IdRequest
@@ -28380,7 +28426,7 @@ export type ListBlockChildrenResponse =
                             | { id: IdRequest; object: "user" }
                             | {
                                 type: "person"
-                                person: { email: string }
+                                person: { email?: string }
                                 name: string | null
                                 avatar_url: string | null
                                 id: IdRequest
@@ -28548,7 +28594,7 @@ export type ListBlockChildrenResponse =
                             | { id: IdRequest; object: "user" }
                             | {
                                 type: "person"
-                                person: { email: string }
+                                person: { email?: string }
                                 name: string | null
                                 avatar_url: string | null
                                 id: IdRequest
@@ -28758,7 +28804,7 @@ export type ListBlockChildrenResponse =
                             | { id: IdRequest; object: "user" }
                             | {
                                 type: "person"
-                                person: { email: string }
+                                person: { email?: string }
                                 name: string | null
                                 avatar_url: string | null
                                 id: IdRequest
@@ -28927,7 +28973,7 @@ export type ListBlockChildrenResponse =
                             | { id: IdRequest; object: "user" }
                             | {
                                 type: "person"
-                                person: { email: string }
+                                person: { email?: string }
                                 name: string | null
                                 avatar_url: string | null
                                 id: IdRequest
@@ -29165,7 +29211,7 @@ export type ListBlockChildrenResponse =
                             | { id: IdRequest; object: "user" }
                             | {
                                 type: "person"
-                                person: { email: string }
+                                person: { email?: string }
                                 name: string | null
                                 avatar_url: string | null
                                 id: IdRequest
@@ -29334,7 +29380,7 @@ export type ListBlockChildrenResponse =
                             | { id: IdRequest; object: "user" }
                             | {
                                 type: "person"
-                                person: { email: string }
+                                person: { email?: string }
                                 name: string | null
                                 avatar_url: string | null
                                 id: IdRequest
@@ -29508,7 +29554,7 @@ export type ListBlockChildrenResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -29675,7 +29721,7 @@ export type ListBlockChildrenResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -29852,7 +29898,7 @@ export type ListBlockChildrenResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -30019,7 +30065,7 @@ export type ListBlockChildrenResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -30196,7 +30242,7 @@ export type ListBlockChildrenResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -30363,7 +30409,7 @@ export type ListBlockChildrenResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -30540,7 +30586,7 @@ export type ListBlockChildrenResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -30707,7 +30753,7 @@ export type ListBlockChildrenResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -30884,7 +30930,7 @@ export type ListBlockChildrenResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -31051,7 +31097,7 @@ export type ListBlockChildrenResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -31203,6 +31249,7 @@ export type ListBlockChildrenResponse =
   | {
       object: "list"
       results: Array<
+        | { object: "block"; id: string }
         | {
             type: "paragraph"
             paragraph: {
@@ -31249,7 +31296,7 @@ export type ListBlockChildrenResponse =
                             | { id: IdRequest; object: "user" }
                             | {
                                 type: "person"
-                                person: { email: string }
+                                person: { email?: string }
                                 name: string | null
                                 avatar_url: string | null
                                 id: IdRequest
@@ -31417,7 +31464,7 @@ export type ListBlockChildrenResponse =
                             | { id: IdRequest; object: "user" }
                             | {
                                 type: "person"
-                                person: { email: string }
+                                person: { email?: string }
                                 name: string | null
                                 avatar_url: string | null
                                 id: IdRequest
@@ -31585,7 +31632,7 @@ export type ListBlockChildrenResponse =
                             | { id: IdRequest; object: "user" }
                             | {
                                 type: "person"
-                                person: { email: string }
+                                person: { email?: string }
                                 name: string | null
                                 avatar_url: string | null
                                 id: IdRequest
@@ -31753,7 +31800,7 @@ export type ListBlockChildrenResponse =
                             | { id: IdRequest; object: "user" }
                             | {
                                 type: "person"
-                                person: { email: string }
+                                person: { email?: string }
                                 name: string | null
                                 avatar_url: string | null
                                 id: IdRequest
@@ -31921,7 +31968,7 @@ export type ListBlockChildrenResponse =
                             | { id: IdRequest; object: "user" }
                             | {
                                 type: "person"
-                                person: { email: string }
+                                person: { email?: string }
                                 name: string | null
                                 avatar_url: string | null
                                 id: IdRequest
@@ -32089,7 +32136,7 @@ export type ListBlockChildrenResponse =
                             | { id: IdRequest; object: "user" }
                             | {
                                 type: "person"
-                                person: { email: string }
+                                person: { email?: string }
                                 name: string | null
                                 avatar_url: string | null
                                 id: IdRequest
@@ -32257,7 +32304,7 @@ export type ListBlockChildrenResponse =
                             | { id: IdRequest; object: "user" }
                             | {
                                 type: "person"
-                                person: { email: string }
+                                person: { email?: string }
                                 name: string | null
                                 avatar_url: string | null
                                 id: IdRequest
@@ -32425,7 +32472,7 @@ export type ListBlockChildrenResponse =
                             | { id: IdRequest; object: "user" }
                             | {
                                 type: "person"
-                                person: { email: string }
+                                person: { email?: string }
                                 name: string | null
                                 avatar_url: string | null
                                 id: IdRequest
@@ -32594,7 +32641,7 @@ export type ListBlockChildrenResponse =
                             | { id: IdRequest; object: "user" }
                             | {
                                 type: "person"
-                                person: { email: string }
+                                person: { email?: string }
                                 name: string | null
                                 avatar_url: string | null
                                 id: IdRequest
@@ -32762,7 +32809,7 @@ export type ListBlockChildrenResponse =
                             | { id: IdRequest; object: "user" }
                             | {
                                 type: "person"
-                                person: { email: string }
+                                person: { email?: string }
                                 name: string | null
                                 avatar_url: string | null
                                 id: IdRequest
@@ -32972,7 +33019,7 @@ export type ListBlockChildrenResponse =
                             | { id: IdRequest; object: "user" }
                             | {
                                 type: "person"
-                                person: { email: string }
+                                person: { email?: string }
                                 name: string | null
                                 avatar_url: string | null
                                 id: IdRequest
@@ -33141,7 +33188,7 @@ export type ListBlockChildrenResponse =
                             | { id: IdRequest; object: "user" }
                             | {
                                 type: "person"
-                                person: { email: string }
+                                person: { email?: string }
                                 name: string | null
                                 avatar_url: string | null
                                 id: IdRequest
@@ -33379,7 +33426,7 @@ export type ListBlockChildrenResponse =
                             | { id: IdRequest; object: "user" }
                             | {
                                 type: "person"
-                                person: { email: string }
+                                person: { email?: string }
                                 name: string | null
                                 avatar_url: string | null
                                 id: IdRequest
@@ -33548,7 +33595,7 @@ export type ListBlockChildrenResponse =
                             | { id: IdRequest; object: "user" }
                             | {
                                 type: "person"
-                                person: { email: string }
+                                person: { email?: string }
                                 name: string | null
                                 avatar_url: string | null
                                 id: IdRequest
@@ -33722,7 +33769,7 @@ export type ListBlockChildrenResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -33889,7 +33936,7 @@ export type ListBlockChildrenResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -34066,7 +34113,7 @@ export type ListBlockChildrenResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -34233,7 +34280,7 @@ export type ListBlockChildrenResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -34410,7 +34457,7 @@ export type ListBlockChildrenResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -34577,7 +34624,7 @@ export type ListBlockChildrenResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -34754,7 +34801,7 @@ export type ListBlockChildrenResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -34921,7 +34968,7 @@ export type ListBlockChildrenResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -35098,7 +35145,7 @@ export type ListBlockChildrenResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -35265,7 +35312,7 @@ export type ListBlockChildrenResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -35546,7 +35593,7 @@ export type AppendBlockChildrenResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -35712,7 +35759,7 @@ export type AppendBlockChildrenResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -35874,7 +35921,7 @@ export type AppendBlockChildrenResponse =
                     | { id: IdRequest; object: "user" }
                     | {
                         type: "person"
-                        person: { email: string }
+                        person: { email?: string }
                         name: string | null
                         avatar_url: string | null
                         id: IdRequest
@@ -35957,7 +36004,7 @@ export type AppendBlockChildrenResponse =
                     | { id: IdRequest; object: "user" }
                     | {
                         type: "person"
-                        person: { email: string }
+                        person: { email?: string }
                         name: string | null
                         avatar_url: string | null
                         id: IdRequest
@@ -35997,7 +36044,7 @@ export type AppendBlockChildrenResponse =
                     | { id: IdRequest; object: "user" }
                     | {
                         type: "person"
-                        person: { email: string }
+                        person: { email?: string }
                         name: string | null
                         avatar_url: string | null
                         id: IdRequest
@@ -36084,6 +36131,7 @@ export type AppendBlockChildrenResponse =
           }
       object: "list"
       results: Array<
+        | { object: "block"; id: string }
         | {
             type: "paragraph"
             paragraph: {
@@ -36130,7 +36178,7 @@ export type AppendBlockChildrenResponse =
                             | { id: IdRequest; object: "user" }
                             | {
                                 type: "person"
-                                person: { email: string }
+                                person: { email?: string }
                                 name: string | null
                                 avatar_url: string | null
                                 id: IdRequest
@@ -36298,7 +36346,7 @@ export type AppendBlockChildrenResponse =
                             | { id: IdRequest; object: "user" }
                             | {
                                 type: "person"
-                                person: { email: string }
+                                person: { email?: string }
                                 name: string | null
                                 avatar_url: string | null
                                 id: IdRequest
@@ -36466,7 +36514,7 @@ export type AppendBlockChildrenResponse =
                             | { id: IdRequest; object: "user" }
                             | {
                                 type: "person"
-                                person: { email: string }
+                                person: { email?: string }
                                 name: string | null
                                 avatar_url: string | null
                                 id: IdRequest
@@ -36634,7 +36682,7 @@ export type AppendBlockChildrenResponse =
                             | { id: IdRequest; object: "user" }
                             | {
                                 type: "person"
-                                person: { email: string }
+                                person: { email?: string }
                                 name: string | null
                                 avatar_url: string | null
                                 id: IdRequest
@@ -36802,7 +36850,7 @@ export type AppendBlockChildrenResponse =
                             | { id: IdRequest; object: "user" }
                             | {
                                 type: "person"
-                                person: { email: string }
+                                person: { email?: string }
                                 name: string | null
                                 avatar_url: string | null
                                 id: IdRequest
@@ -36970,7 +37018,7 @@ export type AppendBlockChildrenResponse =
                             | { id: IdRequest; object: "user" }
                             | {
                                 type: "person"
-                                person: { email: string }
+                                person: { email?: string }
                                 name: string | null
                                 avatar_url: string | null
                                 id: IdRequest
@@ -37138,7 +37186,7 @@ export type AppendBlockChildrenResponse =
                             | { id: IdRequest; object: "user" }
                             | {
                                 type: "person"
-                                person: { email: string }
+                                person: { email?: string }
                                 name: string | null
                                 avatar_url: string | null
                                 id: IdRequest
@@ -37306,7 +37354,7 @@ export type AppendBlockChildrenResponse =
                             | { id: IdRequest; object: "user" }
                             | {
                                 type: "person"
-                                person: { email: string }
+                                person: { email?: string }
                                 name: string | null
                                 avatar_url: string | null
                                 id: IdRequest
@@ -37475,7 +37523,7 @@ export type AppendBlockChildrenResponse =
                             | { id: IdRequest; object: "user" }
                             | {
                                 type: "person"
-                                person: { email: string }
+                                person: { email?: string }
                                 name: string | null
                                 avatar_url: string | null
                                 id: IdRequest
@@ -37643,7 +37691,7 @@ export type AppendBlockChildrenResponse =
                             | { id: IdRequest; object: "user" }
                             | {
                                 type: "person"
-                                person: { email: string }
+                                person: { email?: string }
                                 name: string | null
                                 avatar_url: string | null
                                 id: IdRequest
@@ -37853,7 +37901,7 @@ export type AppendBlockChildrenResponse =
                             | { id: IdRequest; object: "user" }
                             | {
                                 type: "person"
-                                person: { email: string }
+                                person: { email?: string }
                                 name: string | null
                                 avatar_url: string | null
                                 id: IdRequest
@@ -38022,7 +38070,7 @@ export type AppendBlockChildrenResponse =
                             | { id: IdRequest; object: "user" }
                             | {
                                 type: "person"
-                                person: { email: string }
+                                person: { email?: string }
                                 name: string | null
                                 avatar_url: string | null
                                 id: IdRequest
@@ -38260,7 +38308,7 @@ export type AppendBlockChildrenResponse =
                             | { id: IdRequest; object: "user" }
                             | {
                                 type: "person"
-                                person: { email: string }
+                                person: { email?: string }
                                 name: string | null
                                 avatar_url: string | null
                                 id: IdRequest
@@ -38429,7 +38477,7 @@ export type AppendBlockChildrenResponse =
                             | { id: IdRequest; object: "user" }
                             | {
                                 type: "person"
-                                person: { email: string }
+                                person: { email?: string }
                                 name: string | null
                                 avatar_url: string | null
                                 id: IdRequest
@@ -38603,7 +38651,7 @@ export type AppendBlockChildrenResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -38770,7 +38818,7 @@ export type AppendBlockChildrenResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -38947,7 +38995,7 @@ export type AppendBlockChildrenResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -39114,7 +39162,7 @@ export type AppendBlockChildrenResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -39291,7 +39339,7 @@ export type AppendBlockChildrenResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -39458,7 +39506,7 @@ export type AppendBlockChildrenResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -39635,7 +39683,7 @@ export type AppendBlockChildrenResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -39802,7 +39850,7 @@ export type AppendBlockChildrenResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -39979,7 +40027,7 @@ export type AppendBlockChildrenResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -40146,7 +40194,7 @@ export type AppendBlockChildrenResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -40298,6 +40346,7 @@ export type AppendBlockChildrenResponse =
   | {
       object: "list"
       results: Array<
+        | { object: "block"; id: string }
         | {
             type: "paragraph"
             paragraph: {
@@ -40344,7 +40393,7 @@ export type AppendBlockChildrenResponse =
                             | { id: IdRequest; object: "user" }
                             | {
                                 type: "person"
-                                person: { email: string }
+                                person: { email?: string }
                                 name: string | null
                                 avatar_url: string | null
                                 id: IdRequest
@@ -40512,7 +40561,7 @@ export type AppendBlockChildrenResponse =
                             | { id: IdRequest; object: "user" }
                             | {
                                 type: "person"
-                                person: { email: string }
+                                person: { email?: string }
                                 name: string | null
                                 avatar_url: string | null
                                 id: IdRequest
@@ -40680,7 +40729,7 @@ export type AppendBlockChildrenResponse =
                             | { id: IdRequest; object: "user" }
                             | {
                                 type: "person"
-                                person: { email: string }
+                                person: { email?: string }
                                 name: string | null
                                 avatar_url: string | null
                                 id: IdRequest
@@ -40848,7 +40897,7 @@ export type AppendBlockChildrenResponse =
                             | { id: IdRequest; object: "user" }
                             | {
                                 type: "person"
-                                person: { email: string }
+                                person: { email?: string }
                                 name: string | null
                                 avatar_url: string | null
                                 id: IdRequest
@@ -41016,7 +41065,7 @@ export type AppendBlockChildrenResponse =
                             | { id: IdRequest; object: "user" }
                             | {
                                 type: "person"
-                                person: { email: string }
+                                person: { email?: string }
                                 name: string | null
                                 avatar_url: string | null
                                 id: IdRequest
@@ -41184,7 +41233,7 @@ export type AppendBlockChildrenResponse =
                             | { id: IdRequest; object: "user" }
                             | {
                                 type: "person"
-                                person: { email: string }
+                                person: { email?: string }
                                 name: string | null
                                 avatar_url: string | null
                                 id: IdRequest
@@ -41352,7 +41401,7 @@ export type AppendBlockChildrenResponse =
                             | { id: IdRequest; object: "user" }
                             | {
                                 type: "person"
-                                person: { email: string }
+                                person: { email?: string }
                                 name: string | null
                                 avatar_url: string | null
                                 id: IdRequest
@@ -41520,7 +41569,7 @@ export type AppendBlockChildrenResponse =
                             | { id: IdRequest; object: "user" }
                             | {
                                 type: "person"
-                                person: { email: string }
+                                person: { email?: string }
                                 name: string | null
                                 avatar_url: string | null
                                 id: IdRequest
@@ -41689,7 +41738,7 @@ export type AppendBlockChildrenResponse =
                             | { id: IdRequest; object: "user" }
                             | {
                                 type: "person"
-                                person: { email: string }
+                                person: { email?: string }
                                 name: string | null
                                 avatar_url: string | null
                                 id: IdRequest
@@ -41857,7 +41906,7 @@ export type AppendBlockChildrenResponse =
                             | { id: IdRequest; object: "user" }
                             | {
                                 type: "person"
-                                person: { email: string }
+                                person: { email?: string }
                                 name: string | null
                                 avatar_url: string | null
                                 id: IdRequest
@@ -42067,7 +42116,7 @@ export type AppendBlockChildrenResponse =
                             | { id: IdRequest; object: "user" }
                             | {
                                 type: "person"
-                                person: { email: string }
+                                person: { email?: string }
                                 name: string | null
                                 avatar_url: string | null
                                 id: IdRequest
@@ -42236,7 +42285,7 @@ export type AppendBlockChildrenResponse =
                             | { id: IdRequest; object: "user" }
                             | {
                                 type: "person"
-                                person: { email: string }
+                                person: { email?: string }
                                 name: string | null
                                 avatar_url: string | null
                                 id: IdRequest
@@ -42474,7 +42523,7 @@ export type AppendBlockChildrenResponse =
                             | { id: IdRequest; object: "user" }
                             | {
                                 type: "person"
-                                person: { email: string }
+                                person: { email?: string }
                                 name: string | null
                                 avatar_url: string | null
                                 id: IdRequest
@@ -42643,7 +42692,7 @@ export type AppendBlockChildrenResponse =
                             | { id: IdRequest; object: "user" }
                             | {
                                 type: "person"
-                                person: { email: string }
+                                person: { email?: string }
                                 name: string | null
                                 avatar_url: string | null
                                 id: IdRequest
@@ -42817,7 +42866,7 @@ export type AppendBlockChildrenResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -42984,7 +43033,7 @@ export type AppendBlockChildrenResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -43161,7 +43210,7 @@ export type AppendBlockChildrenResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -43328,7 +43377,7 @@ export type AppendBlockChildrenResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -43505,7 +43554,7 @@ export type AppendBlockChildrenResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -43672,7 +43721,7 @@ export type AppendBlockChildrenResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -43849,7 +43898,7 @@ export type AppendBlockChildrenResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -44016,7 +44065,7 @@ export type AppendBlockChildrenResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -44193,7 +44242,7 @@ export type AppendBlockChildrenResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -44360,7 +44409,7 @@ export type AppendBlockChildrenResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -44525,355 +44574,556 @@ type GetDatabasePathParameters = {
 
 export type GetDatabaseParameters = GetDatabasePathParameters
 
-export type GetDatabaseResponse = {
-  title: Array<
-    | {
-        type: "text"
-        text: { content: string; link: { url: TextRequest } | null }
-        annotations: {
-          bold: boolean
-          italic: boolean
-          strikethrough: boolean
-          underline: boolean
-          code: boolean
-          color:
-            | "default"
-            | "gray"
-            | "brown"
-            | "orange"
-            | "yellow"
-            | "green"
-            | "blue"
-            | "purple"
-            | "pink"
-            | "red"
-            | "gray_background"
-            | "brown_background"
-            | "orange_background"
-            | "yellow_background"
-            | "green_background"
-            | "blue_background"
-            | "purple_background"
-            | "pink_background"
-            | "red_background"
-        }
-        plain_text: string
-        href: string | null
-      }
-    | {
-        type: "mention"
-        mention:
-          | {
-              type: "user"
-              user:
-                | { id: IdRequest; object: "user" }
-                | {
-                    type: "person"
-                    person: { email: string }
-                    name: string | null
-                    avatar_url: string | null
-                    id: IdRequest
-                    object: "user"
-                  }
-                | {
-                    type: "bot"
-                    bot:
-                      | EmptyObject
-                      | {
-                          owner:
-                            | {
-                                type: "user"
-                                user:
-                                  | {
-                                      type: "person"
-                                      person: { email: string }
-                                      name: string | null
-                                      avatar_url: string | null
-                                      id: IdRequest
-                                      object: "user"
-                                    }
-                                  | { id: IdRequest; object: "user" }
-                              }
-                            | { type: "workspace"; workspace: true }
-                        }
-                    name: string | null
-                    avatar_url: string | null
-                    id: IdRequest
-                    object: "user"
-                  }
+export type GetDatabaseResponse =
+  | {
+      object: "database"
+      id: string
+      properties: Record<
+        string,
+        | {
+            type: "number"
+            number: {
+              format:
+                | "number"
+                | "number_with_commas"
+                | "percent"
+                | "dollar"
+                | "canadian_dollar"
+                | "euro"
+                | "pound"
+                | "yen"
+                | "ruble"
+                | "rupee"
+                | "won"
+                | "yuan"
+                | "real"
+                | "lira"
+                | "rupiah"
+                | "franc"
+                | "hong_kong_dollar"
+                | "new_zealand_dollar"
+                | "krona"
+                | "norwegian_krone"
+                | "mexican_peso"
+                | "rand"
+                | "new_taiwan_dollar"
+                | "danish_krone"
+                | "zloty"
+                | "baht"
+                | "forint"
+                | "koruna"
+                | "shekel"
+                | "chilean_peso"
+                | "philippine_peso"
+                | "dirham"
+                | "colombian_peso"
+                | "riyal"
+                | "ringgit"
+                | "leu"
+                | "argentine_peso"
+                | "uruguayan_peso"
             }
-          | {
-              type: "date"
-              date: {
-                start: string
-                end: string | null
-                time_zone: TimeZoneRequest | null
-              }
+            id: string
+            name: string
+          }
+        | {
+            type: "formula"
+            formula: { expression: string }
+            id: string
+            name: string
+          }
+        | {
+            type: "select"
+            select: {
+              options: Array<{
+                name: StringRequest
+                id?: StringRequest
+                color?:
+                  | "default"
+                  | "gray"
+                  | "brown"
+                  | "orange"
+                  | "yellow"
+                  | "green"
+                  | "blue"
+                  | "purple"
+                  | "pink"
+                  | "red"
+              }>
             }
-          | { type: "link_preview"; link_preview: { url: TextRequest } }
-          | { type: "page"; page: { id: IdRequest } }
-          | { type: "database"; database: { id: IdRequest } }
-        annotations: {
-          bold: boolean
-          italic: boolean
-          strikethrough: boolean
-          underline: boolean
-          code: boolean
-          color:
-            | "default"
-            | "gray"
-            | "brown"
-            | "orange"
-            | "yellow"
-            | "green"
-            | "blue"
-            | "purple"
-            | "pink"
-            | "red"
-            | "gray_background"
-            | "brown_background"
-            | "orange_background"
-            | "yellow_background"
-            | "green_background"
-            | "blue_background"
-            | "purple_background"
-            | "pink_background"
-            | "red_background"
-        }
-        plain_text: string
-        href: string | null
-      }
-    | {
-        type: "equation"
-        equation: { expression: TextRequest }
-        annotations: {
-          bold: boolean
-          italic: boolean
-          strikethrough: boolean
-          underline: boolean
-          code: boolean
-          color:
-            | "default"
-            | "gray"
-            | "brown"
-            | "orange"
-            | "yellow"
-            | "green"
-            | "blue"
-            | "purple"
-            | "pink"
-            | "red"
-            | "gray_background"
-            | "brown_background"
-            | "orange_background"
-            | "yellow_background"
-            | "green_background"
-            | "blue_background"
-            | "purple_background"
-            | "pink_background"
-            | "red_background"
-        }
-        plain_text: string
-        href: string | null
-      }
-  >
-  icon:
-    | { type: "emoji"; emoji: EmojiRequest }
-    | null
-    | { type: "external"; external: { url: TextRequest } }
-    | null
-    | { type: "file"; file: { url: string; expiry_time: string } }
-    | null
-  cover:
-    | { type: "external"; external: { url: TextRequest } }
-    | null
-    | { type: "file"; file: { url: string; expiry_time: string } }
-    | null
-  properties: Record<
-    string,
-    | {
-        type: "number"
-        number: {
-          format:
-            | "number"
-            | "number_with_commas"
-            | "percent"
-            | "dollar"
-            | "canadian_dollar"
-            | "euro"
-            | "pound"
-            | "yen"
-            | "ruble"
-            | "rupee"
-            | "won"
-            | "yuan"
-            | "real"
-            | "lira"
-            | "rupiah"
-            | "franc"
-            | "hong_kong_dollar"
-            | "new_zealand_dollar"
-            | "krona"
-            | "norwegian_krone"
-            | "mexican_peso"
-            | "rand"
-            | "new_taiwan_dollar"
-            | "danish_krone"
-            | "zloty"
-            | "baht"
-            | "forint"
-            | "koruna"
-            | "shekel"
-            | "chilean_peso"
-            | "philippine_peso"
-            | "dirham"
-            | "colombian_peso"
-            | "riyal"
-            | "ringgit"
-            | "leu"
-            | "argentine_peso"
-            | "uruguayan_peso"
-        }
-        id: string
-        name: string
-      }
-    | {
-        type: "formula"
-        formula: { expression: string }
-        id: string
-        name: string
-      }
-    | {
-        type: "select"
-        select: {
-          options: Array<{
-            name: StringRequest
-            id?: StringRequest
-            color?:
-              | "default"
-              | "gray"
-              | "brown"
-              | "orange"
-              | "yellow"
-              | "green"
-              | "blue"
-              | "purple"
-              | "pink"
-              | "red"
-          }>
-        }
-        id: string
-        name: string
-      }
-    | {
-        type: "multi_select"
-        multi_select: {
-          options: Array<{
-            name: StringRequest
-            id?: StringRequest
-            color?:
-              | "default"
-              | "gray"
-              | "brown"
-              | "orange"
-              | "yellow"
-              | "green"
-              | "blue"
-              | "purple"
-              | "pink"
-              | "red"
-          }>
-        }
-        id: string
-        name: string
-      }
-    | {
-        type: "relation"
-        relation: {
-          database_id: IdRequest
-          synced_property_id: StringRequest
-          synced_property_name: StringRequest
-        }
-        id: string
-        name: string
-      }
-    | {
-        type: "rollup"
-        rollup: {
-          rollup_property_name: string
-          relation_property_name: string
-          rollup_property_id: string
-          relation_property_id: string
-          function:
-            | "count"
-            | "count_values"
-            | "empty"
-            | "not_empty"
-            | "unique"
-            | "show_unique"
-            | "percent_empty"
-            | "percent_not_empty"
-            | "sum"
-            | "average"
-            | "median"
-            | "min"
-            | "max"
-            | "range"
-            | "earliest_date"
-            | "latest_date"
-            | "date_range"
-            | "checked"
-            | "unchecked"
-            | "percent_checked"
-            | "percent_unchecked"
-            | "show_original"
-        }
-        id: string
-        name: string
-      }
-    | { type: "title"; title: EmptyObject; id: string; name: string }
-    | { type: "rich_text"; rich_text: EmptyObject; id: string; name: string }
-    | { type: "url"; url: EmptyObject; id: string; name: string }
-    | { type: "people"; people: EmptyObject; id: string; name: string }
-    | { type: "files"; files: EmptyObject; id: string; name: string }
-    | { type: "email"; email: EmptyObject; id: string; name: string }
-    | {
-        type: "phone_number"
-        phone_number: EmptyObject
-        id: string
-        name: string
-      }
-    | { type: "date"; date: EmptyObject; id: string; name: string }
-    | { type: "checkbox"; checkbox: EmptyObject; id: string; name: string }
-    | { type: "created_by"; created_by: EmptyObject; id: string; name: string }
-    | {
-        type: "created_time"
-        created_time: EmptyObject
-        id: string
-        name: string
-      }
-    | {
-        type: "last_edited_by"
-        last_edited_by: EmptyObject
-        id: string
-        name: string
-      }
-    | {
-        type: "last_edited_time"
-        last_edited_time: EmptyObject
-        id: string
-        name: string
-      }
-  >
-  parent:
-    | { type: "page_id"; page_id: string }
-    | { type: "workspace"; workspace: true }
-  object: "database"
-  id: string
-  created_time: string
-  last_edited_time: string
-  url: string
-}
+            id: string
+            name: string
+          }
+        | {
+            type: "multi_select"
+            multi_select: {
+              options: Array<{
+                name: StringRequest
+                id?: StringRequest
+                color?:
+                  | "default"
+                  | "gray"
+                  | "brown"
+                  | "orange"
+                  | "yellow"
+                  | "green"
+                  | "blue"
+                  | "purple"
+                  | "pink"
+                  | "red"
+              }>
+            }
+            id: string
+            name: string
+          }
+        | {
+            type: "relation"
+            relation: {
+              database_id: IdRequest
+              synced_property_id: StringRequest
+              synced_property_name: StringRequest
+            }
+            id: string
+            name: string
+          }
+        | {
+            type: "rollup"
+            rollup: {
+              rollup_property_name: string
+              relation_property_name: string
+              rollup_property_id: string
+              relation_property_id: string
+              function:
+                | "count"
+                | "count_values"
+                | "empty"
+                | "not_empty"
+                | "unique"
+                | "show_unique"
+                | "percent_empty"
+                | "percent_not_empty"
+                | "sum"
+                | "average"
+                | "median"
+                | "min"
+                | "max"
+                | "range"
+                | "earliest_date"
+                | "latest_date"
+                | "date_range"
+                | "checked"
+                | "unchecked"
+                | "percent_checked"
+                | "percent_unchecked"
+                | "show_original"
+            }
+            id: string
+            name: string
+          }
+        | { type: "title"; title: EmptyObject; id: string; name: string }
+        | {
+            type: "rich_text"
+            rich_text: EmptyObject
+            id: string
+            name: string
+          }
+        | { type: "url"; url: EmptyObject; id: string; name: string }
+        | { type: "people"; people: EmptyObject; id: string; name: string }
+        | { type: "files"; files: EmptyObject; id: string; name: string }
+        | { type: "email"; email: EmptyObject; id: string; name: string }
+        | {
+            type: "phone_number"
+            phone_number: EmptyObject
+            id: string
+            name: string
+          }
+        | { type: "date"; date: EmptyObject; id: string; name: string }
+        | { type: "checkbox"; checkbox: EmptyObject; id: string; name: string }
+        | {
+            type: "created_by"
+            created_by: EmptyObject
+            id: string
+            name: string
+          }
+        | {
+            type: "created_time"
+            created_time: EmptyObject
+            id: string
+            name: string
+          }
+        | {
+            type: "last_edited_by"
+            last_edited_by: EmptyObject
+            id: string
+            name: string
+          }
+        | {
+            type: "last_edited_time"
+            last_edited_time: EmptyObject
+            id: string
+            name: string
+          }
+      >
+    }
+  | {
+      title: Array<
+        | {
+            type: "text"
+            text: { content: string; link: { url: TextRequest } | null }
+            annotations: {
+              bold: boolean
+              italic: boolean
+              strikethrough: boolean
+              underline: boolean
+              code: boolean
+              color:
+                | "default"
+                | "gray"
+                | "brown"
+                | "orange"
+                | "yellow"
+                | "green"
+                | "blue"
+                | "purple"
+                | "pink"
+                | "red"
+                | "gray_background"
+                | "brown_background"
+                | "orange_background"
+                | "yellow_background"
+                | "green_background"
+                | "blue_background"
+                | "purple_background"
+                | "pink_background"
+                | "red_background"
+            }
+            plain_text: string
+            href: string | null
+          }
+        | {
+            type: "mention"
+            mention:
+              | {
+                  type: "user"
+                  user:
+                    | { id: IdRequest; object: "user" }
+                    | {
+                        type: "person"
+                        person: { email?: string }
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
+                    | {
+                        type: "bot"
+                        bot:
+                          | EmptyObject
+                          | {
+                              owner:
+                                | {
+                                    type: "user"
+                                    user:
+                                      | {
+                                          type: "person"
+                                          person: { email: string }
+                                          name: string | null
+                                          avatar_url: string | null
+                                          id: IdRequest
+                                          object: "user"
+                                        }
+                                      | { id: IdRequest; object: "user" }
+                                  }
+                                | { type: "workspace"; workspace: true }
+                            }
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
+                }
+              | {
+                  type: "date"
+                  date: {
+                    start: string
+                    end: string | null
+                    time_zone: TimeZoneRequest | null
+                  }
+                }
+              | { type: "link_preview"; link_preview: { url: TextRequest } }
+              | { type: "page"; page: { id: IdRequest } }
+              | { type: "database"; database: { id: IdRequest } }
+            annotations: {
+              bold: boolean
+              italic: boolean
+              strikethrough: boolean
+              underline: boolean
+              code: boolean
+              color:
+                | "default"
+                | "gray"
+                | "brown"
+                | "orange"
+                | "yellow"
+                | "green"
+                | "blue"
+                | "purple"
+                | "pink"
+                | "red"
+                | "gray_background"
+                | "brown_background"
+                | "orange_background"
+                | "yellow_background"
+                | "green_background"
+                | "blue_background"
+                | "purple_background"
+                | "pink_background"
+                | "red_background"
+            }
+            plain_text: string
+            href: string | null
+          }
+        | {
+            type: "equation"
+            equation: { expression: TextRequest }
+            annotations: {
+              bold: boolean
+              italic: boolean
+              strikethrough: boolean
+              underline: boolean
+              code: boolean
+              color:
+                | "default"
+                | "gray"
+                | "brown"
+                | "orange"
+                | "yellow"
+                | "green"
+                | "blue"
+                | "purple"
+                | "pink"
+                | "red"
+                | "gray_background"
+                | "brown_background"
+                | "orange_background"
+                | "yellow_background"
+                | "green_background"
+                | "blue_background"
+                | "purple_background"
+                | "pink_background"
+                | "red_background"
+            }
+            plain_text: string
+            href: string | null
+          }
+      >
+      icon:
+        | { type: "emoji"; emoji: EmojiRequest }
+        | null
+        | { type: "external"; external: { url: TextRequest } }
+        | null
+        | { type: "file"; file: { url: string; expiry_time: string } }
+        | null
+      cover:
+        | { type: "external"; external: { url: TextRequest } }
+        | null
+        | { type: "file"; file: { url: string; expiry_time: string } }
+        | null
+      properties: Record<
+        string,
+        | {
+            type: "number"
+            number: {
+              format:
+                | "number"
+                | "number_with_commas"
+                | "percent"
+                | "dollar"
+                | "canadian_dollar"
+                | "euro"
+                | "pound"
+                | "yen"
+                | "ruble"
+                | "rupee"
+                | "won"
+                | "yuan"
+                | "real"
+                | "lira"
+                | "rupiah"
+                | "franc"
+                | "hong_kong_dollar"
+                | "new_zealand_dollar"
+                | "krona"
+                | "norwegian_krone"
+                | "mexican_peso"
+                | "rand"
+                | "new_taiwan_dollar"
+                | "danish_krone"
+                | "zloty"
+                | "baht"
+                | "forint"
+                | "koruna"
+                | "shekel"
+                | "chilean_peso"
+                | "philippine_peso"
+                | "dirham"
+                | "colombian_peso"
+                | "riyal"
+                | "ringgit"
+                | "leu"
+                | "argentine_peso"
+                | "uruguayan_peso"
+            }
+            id: string
+            name: string
+          }
+        | {
+            type: "formula"
+            formula: { expression: string }
+            id: string
+            name: string
+          }
+        | {
+            type: "select"
+            select: {
+              options: Array<{
+                name: StringRequest
+                id?: StringRequest
+                color?:
+                  | "default"
+                  | "gray"
+                  | "brown"
+                  | "orange"
+                  | "yellow"
+                  | "green"
+                  | "blue"
+                  | "purple"
+                  | "pink"
+                  | "red"
+              }>
+            }
+            id: string
+            name: string
+          }
+        | {
+            type: "multi_select"
+            multi_select: {
+              options: Array<{
+                name: StringRequest
+                id?: StringRequest
+                color?:
+                  | "default"
+                  | "gray"
+                  | "brown"
+                  | "orange"
+                  | "yellow"
+                  | "green"
+                  | "blue"
+                  | "purple"
+                  | "pink"
+                  | "red"
+              }>
+            }
+            id: string
+            name: string
+          }
+        | {
+            type: "relation"
+            relation: {
+              database_id: IdRequest
+              synced_property_id: StringRequest
+              synced_property_name: StringRequest
+            }
+            id: string
+            name: string
+          }
+        | {
+            type: "rollup"
+            rollup: {
+              rollup_property_name: string
+              relation_property_name: string
+              rollup_property_id: string
+              relation_property_id: string
+              function:
+                | "count"
+                | "count_values"
+                | "empty"
+                | "not_empty"
+                | "unique"
+                | "show_unique"
+                | "percent_empty"
+                | "percent_not_empty"
+                | "sum"
+                | "average"
+                | "median"
+                | "min"
+                | "max"
+                | "range"
+                | "earliest_date"
+                | "latest_date"
+                | "date_range"
+                | "checked"
+                | "unchecked"
+                | "percent_checked"
+                | "percent_unchecked"
+                | "show_original"
+            }
+            id: string
+            name: string
+          }
+        | { type: "title"; title: EmptyObject; id: string; name: string }
+        | {
+            type: "rich_text"
+            rich_text: EmptyObject
+            id: string
+            name: string
+          }
+        | { type: "url"; url: EmptyObject; id: string; name: string }
+        | { type: "people"; people: EmptyObject; id: string; name: string }
+        | { type: "files"; files: EmptyObject; id: string; name: string }
+        | { type: "email"; email: EmptyObject; id: string; name: string }
+        | {
+            type: "phone_number"
+            phone_number: EmptyObject
+            id: string
+            name: string
+          }
+        | { type: "date"; date: EmptyObject; id: string; name: string }
+        | { type: "checkbox"; checkbox: EmptyObject; id: string; name: string }
+        | {
+            type: "created_by"
+            created_by: EmptyObject
+            id: string
+            name: string
+          }
+        | {
+            type: "created_time"
+            created_time: EmptyObject
+            id: string
+            name: string
+          }
+        | {
+            type: "last_edited_by"
+            last_edited_by: EmptyObject
+            id: string
+            name: string
+          }
+        | {
+            type: "last_edited_time"
+            last_edited_time: EmptyObject
+            id: string
+            name: string
+          }
+      >
+      parent:
+        | { type: "page_id"; page_id: string }
+        | { type: "workspace"; workspace: true }
+      object: "database"
+      id: string
+      created_time: string
+      last_edited_time: string
+      url: string
+    }
 
 export const getDatabase = {
   method: "get",
@@ -45185,355 +45435,556 @@ type UpdateDatabaseBodyParameters = {
 export type UpdateDatabaseParameters = UpdateDatabasePathParameters &
   UpdateDatabaseBodyParameters
 
-export type UpdateDatabaseResponse = {
-  title: Array<
-    | {
-        type: "text"
-        text: { content: string; link: { url: TextRequest } | null }
-        annotations: {
-          bold: boolean
-          italic: boolean
-          strikethrough: boolean
-          underline: boolean
-          code: boolean
-          color:
-            | "default"
-            | "gray"
-            | "brown"
-            | "orange"
-            | "yellow"
-            | "green"
-            | "blue"
-            | "purple"
-            | "pink"
-            | "red"
-            | "gray_background"
-            | "brown_background"
-            | "orange_background"
-            | "yellow_background"
-            | "green_background"
-            | "blue_background"
-            | "purple_background"
-            | "pink_background"
-            | "red_background"
-        }
-        plain_text: string
-        href: string | null
-      }
-    | {
-        type: "mention"
-        mention:
-          | {
-              type: "user"
-              user:
-                | { id: IdRequest; object: "user" }
-                | {
-                    type: "person"
-                    person: { email: string }
-                    name: string | null
-                    avatar_url: string | null
-                    id: IdRequest
-                    object: "user"
-                  }
-                | {
-                    type: "bot"
-                    bot:
-                      | EmptyObject
-                      | {
-                          owner:
-                            | {
-                                type: "user"
-                                user:
-                                  | {
-                                      type: "person"
-                                      person: { email: string }
-                                      name: string | null
-                                      avatar_url: string | null
-                                      id: IdRequest
-                                      object: "user"
-                                    }
-                                  | { id: IdRequest; object: "user" }
-                              }
-                            | { type: "workspace"; workspace: true }
-                        }
-                    name: string | null
-                    avatar_url: string | null
-                    id: IdRequest
-                    object: "user"
-                  }
+export type UpdateDatabaseResponse =
+  | {
+      object: "database"
+      id: string
+      properties: Record<
+        string,
+        | {
+            type: "number"
+            number: {
+              format:
+                | "number"
+                | "number_with_commas"
+                | "percent"
+                | "dollar"
+                | "canadian_dollar"
+                | "euro"
+                | "pound"
+                | "yen"
+                | "ruble"
+                | "rupee"
+                | "won"
+                | "yuan"
+                | "real"
+                | "lira"
+                | "rupiah"
+                | "franc"
+                | "hong_kong_dollar"
+                | "new_zealand_dollar"
+                | "krona"
+                | "norwegian_krone"
+                | "mexican_peso"
+                | "rand"
+                | "new_taiwan_dollar"
+                | "danish_krone"
+                | "zloty"
+                | "baht"
+                | "forint"
+                | "koruna"
+                | "shekel"
+                | "chilean_peso"
+                | "philippine_peso"
+                | "dirham"
+                | "colombian_peso"
+                | "riyal"
+                | "ringgit"
+                | "leu"
+                | "argentine_peso"
+                | "uruguayan_peso"
             }
-          | {
-              type: "date"
-              date: {
-                start: string
-                end: string | null
-                time_zone: TimeZoneRequest | null
-              }
+            id: string
+            name: string
+          }
+        | {
+            type: "formula"
+            formula: { expression: string }
+            id: string
+            name: string
+          }
+        | {
+            type: "select"
+            select: {
+              options: Array<{
+                name: StringRequest
+                id?: StringRequest
+                color?:
+                  | "default"
+                  | "gray"
+                  | "brown"
+                  | "orange"
+                  | "yellow"
+                  | "green"
+                  | "blue"
+                  | "purple"
+                  | "pink"
+                  | "red"
+              }>
             }
-          | { type: "link_preview"; link_preview: { url: TextRequest } }
-          | { type: "page"; page: { id: IdRequest } }
-          | { type: "database"; database: { id: IdRequest } }
-        annotations: {
-          bold: boolean
-          italic: boolean
-          strikethrough: boolean
-          underline: boolean
-          code: boolean
-          color:
-            | "default"
-            | "gray"
-            | "brown"
-            | "orange"
-            | "yellow"
-            | "green"
-            | "blue"
-            | "purple"
-            | "pink"
-            | "red"
-            | "gray_background"
-            | "brown_background"
-            | "orange_background"
-            | "yellow_background"
-            | "green_background"
-            | "blue_background"
-            | "purple_background"
-            | "pink_background"
-            | "red_background"
-        }
-        plain_text: string
-        href: string | null
-      }
-    | {
-        type: "equation"
-        equation: { expression: TextRequest }
-        annotations: {
-          bold: boolean
-          italic: boolean
-          strikethrough: boolean
-          underline: boolean
-          code: boolean
-          color:
-            | "default"
-            | "gray"
-            | "brown"
-            | "orange"
-            | "yellow"
-            | "green"
-            | "blue"
-            | "purple"
-            | "pink"
-            | "red"
-            | "gray_background"
-            | "brown_background"
-            | "orange_background"
-            | "yellow_background"
-            | "green_background"
-            | "blue_background"
-            | "purple_background"
-            | "pink_background"
-            | "red_background"
-        }
-        plain_text: string
-        href: string | null
-      }
-  >
-  icon:
-    | { type: "emoji"; emoji: EmojiRequest }
-    | null
-    | { type: "external"; external: { url: TextRequest } }
-    | null
-    | { type: "file"; file: { url: string; expiry_time: string } }
-    | null
-  cover:
-    | { type: "external"; external: { url: TextRequest } }
-    | null
-    | { type: "file"; file: { url: string; expiry_time: string } }
-    | null
-  properties: Record<
-    string,
-    | {
-        type: "number"
-        number: {
-          format:
-            | "number"
-            | "number_with_commas"
-            | "percent"
-            | "dollar"
-            | "canadian_dollar"
-            | "euro"
-            | "pound"
-            | "yen"
-            | "ruble"
-            | "rupee"
-            | "won"
-            | "yuan"
-            | "real"
-            | "lira"
-            | "rupiah"
-            | "franc"
-            | "hong_kong_dollar"
-            | "new_zealand_dollar"
-            | "krona"
-            | "norwegian_krone"
-            | "mexican_peso"
-            | "rand"
-            | "new_taiwan_dollar"
-            | "danish_krone"
-            | "zloty"
-            | "baht"
-            | "forint"
-            | "koruna"
-            | "shekel"
-            | "chilean_peso"
-            | "philippine_peso"
-            | "dirham"
-            | "colombian_peso"
-            | "riyal"
-            | "ringgit"
-            | "leu"
-            | "argentine_peso"
-            | "uruguayan_peso"
-        }
-        id: string
-        name: string
-      }
-    | {
-        type: "formula"
-        formula: { expression: string }
-        id: string
-        name: string
-      }
-    | {
-        type: "select"
-        select: {
-          options: Array<{
-            name: StringRequest
-            id?: StringRequest
-            color?:
-              | "default"
-              | "gray"
-              | "brown"
-              | "orange"
-              | "yellow"
-              | "green"
-              | "blue"
-              | "purple"
-              | "pink"
-              | "red"
-          }>
-        }
-        id: string
-        name: string
-      }
-    | {
-        type: "multi_select"
-        multi_select: {
-          options: Array<{
-            name: StringRequest
-            id?: StringRequest
-            color?:
-              | "default"
-              | "gray"
-              | "brown"
-              | "orange"
-              | "yellow"
-              | "green"
-              | "blue"
-              | "purple"
-              | "pink"
-              | "red"
-          }>
-        }
-        id: string
-        name: string
-      }
-    | {
-        type: "relation"
-        relation: {
-          database_id: IdRequest
-          synced_property_id: StringRequest
-          synced_property_name: StringRequest
-        }
-        id: string
-        name: string
-      }
-    | {
-        type: "rollup"
-        rollup: {
-          rollup_property_name: string
-          relation_property_name: string
-          rollup_property_id: string
-          relation_property_id: string
-          function:
-            | "count"
-            | "count_values"
-            | "empty"
-            | "not_empty"
-            | "unique"
-            | "show_unique"
-            | "percent_empty"
-            | "percent_not_empty"
-            | "sum"
-            | "average"
-            | "median"
-            | "min"
-            | "max"
-            | "range"
-            | "earliest_date"
-            | "latest_date"
-            | "date_range"
-            | "checked"
-            | "unchecked"
-            | "percent_checked"
-            | "percent_unchecked"
-            | "show_original"
-        }
-        id: string
-        name: string
-      }
-    | { type: "title"; title: EmptyObject; id: string; name: string }
-    | { type: "rich_text"; rich_text: EmptyObject; id: string; name: string }
-    | { type: "url"; url: EmptyObject; id: string; name: string }
-    | { type: "people"; people: EmptyObject; id: string; name: string }
-    | { type: "files"; files: EmptyObject; id: string; name: string }
-    | { type: "email"; email: EmptyObject; id: string; name: string }
-    | {
-        type: "phone_number"
-        phone_number: EmptyObject
-        id: string
-        name: string
-      }
-    | { type: "date"; date: EmptyObject; id: string; name: string }
-    | { type: "checkbox"; checkbox: EmptyObject; id: string; name: string }
-    | { type: "created_by"; created_by: EmptyObject; id: string; name: string }
-    | {
-        type: "created_time"
-        created_time: EmptyObject
-        id: string
-        name: string
-      }
-    | {
-        type: "last_edited_by"
-        last_edited_by: EmptyObject
-        id: string
-        name: string
-      }
-    | {
-        type: "last_edited_time"
-        last_edited_time: EmptyObject
-        id: string
-        name: string
-      }
-  >
-  parent:
-    | { type: "page_id"; page_id: string }
-    | { type: "workspace"; workspace: true }
-  object: "database"
-  id: string
-  created_time: string
-  last_edited_time: string
-  url: string
-}
+            id: string
+            name: string
+          }
+        | {
+            type: "multi_select"
+            multi_select: {
+              options: Array<{
+                name: StringRequest
+                id?: StringRequest
+                color?:
+                  | "default"
+                  | "gray"
+                  | "brown"
+                  | "orange"
+                  | "yellow"
+                  | "green"
+                  | "blue"
+                  | "purple"
+                  | "pink"
+                  | "red"
+              }>
+            }
+            id: string
+            name: string
+          }
+        | {
+            type: "relation"
+            relation: {
+              database_id: IdRequest
+              synced_property_id: StringRequest
+              synced_property_name: StringRequest
+            }
+            id: string
+            name: string
+          }
+        | {
+            type: "rollup"
+            rollup: {
+              rollup_property_name: string
+              relation_property_name: string
+              rollup_property_id: string
+              relation_property_id: string
+              function:
+                | "count"
+                | "count_values"
+                | "empty"
+                | "not_empty"
+                | "unique"
+                | "show_unique"
+                | "percent_empty"
+                | "percent_not_empty"
+                | "sum"
+                | "average"
+                | "median"
+                | "min"
+                | "max"
+                | "range"
+                | "earliest_date"
+                | "latest_date"
+                | "date_range"
+                | "checked"
+                | "unchecked"
+                | "percent_checked"
+                | "percent_unchecked"
+                | "show_original"
+            }
+            id: string
+            name: string
+          }
+        | { type: "title"; title: EmptyObject; id: string; name: string }
+        | {
+            type: "rich_text"
+            rich_text: EmptyObject
+            id: string
+            name: string
+          }
+        | { type: "url"; url: EmptyObject; id: string; name: string }
+        | { type: "people"; people: EmptyObject; id: string; name: string }
+        | { type: "files"; files: EmptyObject; id: string; name: string }
+        | { type: "email"; email: EmptyObject; id: string; name: string }
+        | {
+            type: "phone_number"
+            phone_number: EmptyObject
+            id: string
+            name: string
+          }
+        | { type: "date"; date: EmptyObject; id: string; name: string }
+        | { type: "checkbox"; checkbox: EmptyObject; id: string; name: string }
+        | {
+            type: "created_by"
+            created_by: EmptyObject
+            id: string
+            name: string
+          }
+        | {
+            type: "created_time"
+            created_time: EmptyObject
+            id: string
+            name: string
+          }
+        | {
+            type: "last_edited_by"
+            last_edited_by: EmptyObject
+            id: string
+            name: string
+          }
+        | {
+            type: "last_edited_time"
+            last_edited_time: EmptyObject
+            id: string
+            name: string
+          }
+      >
+    }
+  | {
+      title: Array<
+        | {
+            type: "text"
+            text: { content: string; link: { url: TextRequest } | null }
+            annotations: {
+              bold: boolean
+              italic: boolean
+              strikethrough: boolean
+              underline: boolean
+              code: boolean
+              color:
+                | "default"
+                | "gray"
+                | "brown"
+                | "orange"
+                | "yellow"
+                | "green"
+                | "blue"
+                | "purple"
+                | "pink"
+                | "red"
+                | "gray_background"
+                | "brown_background"
+                | "orange_background"
+                | "yellow_background"
+                | "green_background"
+                | "blue_background"
+                | "purple_background"
+                | "pink_background"
+                | "red_background"
+            }
+            plain_text: string
+            href: string | null
+          }
+        | {
+            type: "mention"
+            mention:
+              | {
+                  type: "user"
+                  user:
+                    | { id: IdRequest; object: "user" }
+                    | {
+                        type: "person"
+                        person: { email?: string }
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
+                    | {
+                        type: "bot"
+                        bot:
+                          | EmptyObject
+                          | {
+                              owner:
+                                | {
+                                    type: "user"
+                                    user:
+                                      | {
+                                          type: "person"
+                                          person: { email: string }
+                                          name: string | null
+                                          avatar_url: string | null
+                                          id: IdRequest
+                                          object: "user"
+                                        }
+                                      | { id: IdRequest; object: "user" }
+                                  }
+                                | { type: "workspace"; workspace: true }
+                            }
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
+                }
+              | {
+                  type: "date"
+                  date: {
+                    start: string
+                    end: string | null
+                    time_zone: TimeZoneRequest | null
+                  }
+                }
+              | { type: "link_preview"; link_preview: { url: TextRequest } }
+              | { type: "page"; page: { id: IdRequest } }
+              | { type: "database"; database: { id: IdRequest } }
+            annotations: {
+              bold: boolean
+              italic: boolean
+              strikethrough: boolean
+              underline: boolean
+              code: boolean
+              color:
+                | "default"
+                | "gray"
+                | "brown"
+                | "orange"
+                | "yellow"
+                | "green"
+                | "blue"
+                | "purple"
+                | "pink"
+                | "red"
+                | "gray_background"
+                | "brown_background"
+                | "orange_background"
+                | "yellow_background"
+                | "green_background"
+                | "blue_background"
+                | "purple_background"
+                | "pink_background"
+                | "red_background"
+            }
+            plain_text: string
+            href: string | null
+          }
+        | {
+            type: "equation"
+            equation: { expression: TextRequest }
+            annotations: {
+              bold: boolean
+              italic: boolean
+              strikethrough: boolean
+              underline: boolean
+              code: boolean
+              color:
+                | "default"
+                | "gray"
+                | "brown"
+                | "orange"
+                | "yellow"
+                | "green"
+                | "blue"
+                | "purple"
+                | "pink"
+                | "red"
+                | "gray_background"
+                | "brown_background"
+                | "orange_background"
+                | "yellow_background"
+                | "green_background"
+                | "blue_background"
+                | "purple_background"
+                | "pink_background"
+                | "red_background"
+            }
+            plain_text: string
+            href: string | null
+          }
+      >
+      icon:
+        | { type: "emoji"; emoji: EmojiRequest }
+        | null
+        | { type: "external"; external: { url: TextRequest } }
+        | null
+        | { type: "file"; file: { url: string; expiry_time: string } }
+        | null
+      cover:
+        | { type: "external"; external: { url: TextRequest } }
+        | null
+        | { type: "file"; file: { url: string; expiry_time: string } }
+        | null
+      properties: Record<
+        string,
+        | {
+            type: "number"
+            number: {
+              format:
+                | "number"
+                | "number_with_commas"
+                | "percent"
+                | "dollar"
+                | "canadian_dollar"
+                | "euro"
+                | "pound"
+                | "yen"
+                | "ruble"
+                | "rupee"
+                | "won"
+                | "yuan"
+                | "real"
+                | "lira"
+                | "rupiah"
+                | "franc"
+                | "hong_kong_dollar"
+                | "new_zealand_dollar"
+                | "krona"
+                | "norwegian_krone"
+                | "mexican_peso"
+                | "rand"
+                | "new_taiwan_dollar"
+                | "danish_krone"
+                | "zloty"
+                | "baht"
+                | "forint"
+                | "koruna"
+                | "shekel"
+                | "chilean_peso"
+                | "philippine_peso"
+                | "dirham"
+                | "colombian_peso"
+                | "riyal"
+                | "ringgit"
+                | "leu"
+                | "argentine_peso"
+                | "uruguayan_peso"
+            }
+            id: string
+            name: string
+          }
+        | {
+            type: "formula"
+            formula: { expression: string }
+            id: string
+            name: string
+          }
+        | {
+            type: "select"
+            select: {
+              options: Array<{
+                name: StringRequest
+                id?: StringRequest
+                color?:
+                  | "default"
+                  | "gray"
+                  | "brown"
+                  | "orange"
+                  | "yellow"
+                  | "green"
+                  | "blue"
+                  | "purple"
+                  | "pink"
+                  | "red"
+              }>
+            }
+            id: string
+            name: string
+          }
+        | {
+            type: "multi_select"
+            multi_select: {
+              options: Array<{
+                name: StringRequest
+                id?: StringRequest
+                color?:
+                  | "default"
+                  | "gray"
+                  | "brown"
+                  | "orange"
+                  | "yellow"
+                  | "green"
+                  | "blue"
+                  | "purple"
+                  | "pink"
+                  | "red"
+              }>
+            }
+            id: string
+            name: string
+          }
+        | {
+            type: "relation"
+            relation: {
+              database_id: IdRequest
+              synced_property_id: StringRequest
+              synced_property_name: StringRequest
+            }
+            id: string
+            name: string
+          }
+        | {
+            type: "rollup"
+            rollup: {
+              rollup_property_name: string
+              relation_property_name: string
+              rollup_property_id: string
+              relation_property_id: string
+              function:
+                | "count"
+                | "count_values"
+                | "empty"
+                | "not_empty"
+                | "unique"
+                | "show_unique"
+                | "percent_empty"
+                | "percent_not_empty"
+                | "sum"
+                | "average"
+                | "median"
+                | "min"
+                | "max"
+                | "range"
+                | "earliest_date"
+                | "latest_date"
+                | "date_range"
+                | "checked"
+                | "unchecked"
+                | "percent_checked"
+                | "percent_unchecked"
+                | "show_original"
+            }
+            id: string
+            name: string
+          }
+        | { type: "title"; title: EmptyObject; id: string; name: string }
+        | {
+            type: "rich_text"
+            rich_text: EmptyObject
+            id: string
+            name: string
+          }
+        | { type: "url"; url: EmptyObject; id: string; name: string }
+        | { type: "people"; people: EmptyObject; id: string; name: string }
+        | { type: "files"; files: EmptyObject; id: string; name: string }
+        | { type: "email"; email: EmptyObject; id: string; name: string }
+        | {
+            type: "phone_number"
+            phone_number: EmptyObject
+            id: string
+            name: string
+          }
+        | { type: "date"; date: EmptyObject; id: string; name: string }
+        | { type: "checkbox"; checkbox: EmptyObject; id: string; name: string }
+        | {
+            type: "created_by"
+            created_by: EmptyObject
+            id: string
+            name: string
+          }
+        | {
+            type: "created_time"
+            created_time: EmptyObject
+            id: string
+            name: string
+          }
+        | {
+            type: "last_edited_by"
+            last_edited_by: EmptyObject
+            id: string
+            name: string
+          }
+        | {
+            type: "last_edited_time"
+            last_edited_time: EmptyObject
+            id: string
+            name: string
+          }
+      >
+      parent:
+        | { type: "page_id"; page_id: string }
+        | { type: "workspace"; workspace: true }
+      object: "database"
+      id: string
+      created_time: string
+      last_edited_time: string
+      url: string
+    }
 
 export const updateDatabase = {
   method: "patch",
@@ -49425,7 +49876,7 @@ export type QueryDatabaseResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -49591,7 +50042,7 @@ export type QueryDatabaseResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -49753,7 +50204,7 @@ export type QueryDatabaseResponse =
                     | { id: IdRequest; object: "user" }
                     | {
                         type: "person"
-                        person: { email: string }
+                        person: { email?: string }
                         name: string | null
                         avatar_url: string | null
                         id: IdRequest
@@ -49836,7 +50287,7 @@ export type QueryDatabaseResponse =
                     | { id: IdRequest; object: "user" }
                     | {
                         type: "person"
-                        person: { email: string }
+                        person: { email?: string }
                         name: string | null
                         avatar_url: string | null
                         id: IdRequest
@@ -49876,7 +50327,7 @@ export type QueryDatabaseResponse =
                     | { id: IdRequest; object: "user" }
                     | {
                         type: "person"
-                        person: { email: string }
+                        person: { email?: string }
                         name: string | null
                         avatar_url: string | null
                         id: IdRequest
@@ -49962,2479 +50413,2581 @@ export type QueryDatabaseResponse =
               | "show_original"
           }
       object: "list"
-      results: Array<{
-        parent:
-          | { type: "database_id"; database_id: IdRequest }
-          | { type: "page_id"; page_id: IdRequest }
-          | { type: "workspace"; workspace: true }
-        properties: Record<
-          string,
-          | {
-              type: "title"
-              title: Array<
-                | {
-                    type: "text"
-                    text: { content: string; link: { url: TextRequest } | null }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color:
-                        | "default"
-                        | "gray"
-                        | "brown"
-                        | "orange"
-                        | "yellow"
-                        | "green"
-                        | "blue"
-                        | "purple"
-                        | "pink"
-                        | "red"
-                        | "gray_background"
-                        | "brown_background"
-                        | "orange_background"
-                        | "yellow_background"
-                        | "green_background"
-                        | "blue_background"
-                        | "purple_background"
-                        | "pink_background"
-                        | "red_background"
-                    }
-                    plain_text: string
-                    href: string | null
-                  }
-                | {
-                    type: "mention"
-                    mention:
-                      | {
-                          type: "user"
-                          user:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
+      results: Array<
+        | {
+            parent:
+              | { type: "database_id"; database_id: IdRequest }
+              | { type: "page_id"; page_id: IdRequest }
+              | { type: "workspace"; workspace: true }
+            properties: Record<
+              string,
+              | {
+                  type: "title"
+                  title: Array<
+                    | {
+                        type: "text"
+                        text: {
+                          content: string
+                          link: { url: TextRequest } | null
+                        }
+                        annotations: {
+                          bold: boolean
+                          italic: boolean
+                          strikethrough: boolean
+                          underline: boolean
+                          code: boolean
+                          color:
+                            | "default"
+                            | "gray"
+                            | "brown"
+                            | "orange"
+                            | "yellow"
+                            | "green"
+                            | "blue"
+                            | "purple"
+                            | "pink"
+                            | "red"
+                            | "gray_background"
+                            | "brown_background"
+                            | "orange_background"
+                            | "yellow_background"
+                            | "green_background"
+                            | "blue_background"
+                            | "purple_background"
+                            | "pink_background"
+                            | "red_background"
+                        }
+                        plain_text: string
+                        href: string | null
+                      }
+                    | {
+                        type: "mention"
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email?: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot:
+                                      | EmptyObject
+                                      | {
+                                          owner:
+                                            | {
+                                                type: "user"
+                                                user:
+                                                  | {
+                                                      type: "person"
+                                                      person: { email: string }
+                                                      name: string | null
+                                                      avatar_url: string | null
+                                                      id: IdRequest
+                                                      object: "user"
+                                                    }
+                                                  | {
+                                                      id: IdRequest
+                                                      object: "user"
+                                                    }
+                                              }
+                                            | {
+                                                type: "workspace"
+                                                workspace: true
+                                              }
+                                        }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
                               }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | EmptyObject
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
+                            }
+                          | {
+                              type: "link_preview"
+                              link_preview: { url: TextRequest }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
+                        annotations: {
+                          bold: boolean
+                          italic: boolean
+                          strikethrough: boolean
+                          underline: boolean
+                          code: boolean
+                          color:
+                            | "default"
+                            | "gray"
+                            | "brown"
+                            | "orange"
+                            | "yellow"
+                            | "green"
+                            | "blue"
+                            | "purple"
+                            | "pink"
+                            | "red"
+                            | "gray_background"
+                            | "brown_background"
+                            | "orange_background"
+                            | "yellow_background"
+                            | "green_background"
+                            | "blue_background"
+                            | "purple_background"
+                            | "pink_background"
+                            | "red_background"
+                        }
+                        plain_text: string
+                        href: string | null
+                      }
+                    | {
+                        type: "equation"
+                        equation: { expression: TextRequest }
+                        annotations: {
+                          bold: boolean
+                          italic: boolean
+                          strikethrough: boolean
+                          underline: boolean
+                          code: boolean
+                          color:
+                            | "default"
+                            | "gray"
+                            | "brown"
+                            | "orange"
+                            | "yellow"
+                            | "green"
+                            | "blue"
+                            | "purple"
+                            | "pink"
+                            | "red"
+                            | "gray_background"
+                            | "brown_background"
+                            | "orange_background"
+                            | "yellow_background"
+                            | "green_background"
+                            | "blue_background"
+                            | "purple_background"
+                            | "pink_background"
+                            | "red_background"
+                        }
+                        plain_text: string
+                        href: string | null
+                      }
+                  >
+                  id: string
+                }
+              | {
+                  type: "rich_text"
+                  rich_text: Array<
+                    | {
+                        type: "text"
+                        text: {
+                          content: string
+                          link: { url: TextRequest } | null
+                        }
+                        annotations: {
+                          bold: boolean
+                          italic: boolean
+                          strikethrough: boolean
+                          underline: boolean
+                          code: boolean
+                          color:
+                            | "default"
+                            | "gray"
+                            | "brown"
+                            | "orange"
+                            | "yellow"
+                            | "green"
+                            | "blue"
+                            | "purple"
+                            | "pink"
+                            | "red"
+                            | "gray_background"
+                            | "brown_background"
+                            | "orange_background"
+                            | "yellow_background"
+                            | "green_background"
+                            | "blue_background"
+                            | "purple_background"
+                            | "pink_background"
+                            | "red_background"
+                        }
+                        plain_text: string
+                        href: string | null
+                      }
+                    | {
+                        type: "mention"
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email?: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot:
+                                      | EmptyObject
+                                      | {
+                                          owner:
+                                            | {
+                                                type: "user"
+                                                user:
+                                                  | {
+                                                      type: "person"
+                                                      person: { email: string }
+                                                      name: string | null
+                                                      avatar_url: string | null
+                                                      id: IdRequest
+                                                      object: "user"
+                                                    }
+                                                  | {
+                                                      id: IdRequest
+                                                      object: "user"
+                                                    }
+                                              }
+                                            | {
+                                                type: "workspace"
+                                                workspace: true
+                                              }
+                                        }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
                               }
+                            }
+                          | {
+                              type: "link_preview"
+                              link_preview: { url: TextRequest }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
+                        annotations: {
+                          bold: boolean
+                          italic: boolean
+                          strikethrough: boolean
+                          underline: boolean
+                          code: boolean
+                          color:
+                            | "default"
+                            | "gray"
+                            | "brown"
+                            | "orange"
+                            | "yellow"
+                            | "green"
+                            | "blue"
+                            | "purple"
+                            | "pink"
+                            | "red"
+                            | "gray_background"
+                            | "brown_background"
+                            | "orange_background"
+                            | "yellow_background"
+                            | "green_background"
+                            | "blue_background"
+                            | "purple_background"
+                            | "pink_background"
+                            | "red_background"
                         }
-                      | {
-                          type: "date"
-                          date: {
-                            start: string
-                            end: string | null
-                            time_zone: TimeZoneRequest | null
-                          }
+                        plain_text: string
+                        href: string | null
+                      }
+                    | {
+                        type: "equation"
+                        equation: { expression: TextRequest }
+                        annotations: {
+                          bold: boolean
+                          italic: boolean
+                          strikethrough: boolean
+                          underline: boolean
+                          code: boolean
+                          color:
+                            | "default"
+                            | "gray"
+                            | "brown"
+                            | "orange"
+                            | "yellow"
+                            | "green"
+                            | "blue"
+                            | "purple"
+                            | "pink"
+                            | "red"
+                            | "gray_background"
+                            | "brown_background"
+                            | "orange_background"
+                            | "yellow_background"
+                            | "green_background"
+                            | "blue_background"
+                            | "purple_background"
+                            | "pink_background"
+                            | "red_background"
                         }
-                      | {
-                          type: "link_preview"
-                          link_preview: { url: TextRequest }
-                        }
-                      | { type: "page"; page: { id: IdRequest } }
-                      | { type: "database"; database: { id: IdRequest } }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color:
-                        | "default"
-                        | "gray"
-                        | "brown"
-                        | "orange"
-                        | "yellow"
-                        | "green"
-                        | "blue"
-                        | "purple"
-                        | "pink"
-                        | "red"
-                        | "gray_background"
-                        | "brown_background"
-                        | "orange_background"
-                        | "yellow_background"
-                        | "green_background"
-                        | "blue_background"
-                        | "purple_background"
-                        | "pink_background"
-                        | "red_background"
-                    }
-                    plain_text: string
-                    href: string | null
-                  }
-                | {
-                    type: "equation"
-                    equation: { expression: TextRequest }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color:
-                        | "default"
-                        | "gray"
-                        | "brown"
-                        | "orange"
-                        | "yellow"
-                        | "green"
-                        | "blue"
-                        | "purple"
-                        | "pink"
-                        | "red"
-                        | "gray_background"
-                        | "brown_background"
-                        | "orange_background"
-                        | "yellow_background"
-                        | "green_background"
-                        | "blue_background"
-                        | "purple_background"
-                        | "pink_background"
-                        | "red_background"
-                    }
-                    plain_text: string
-                    href: string | null
-                  }
-              >
-              id: string
-            }
-          | {
-              type: "rich_text"
-              rich_text: Array<
-                | {
-                    type: "text"
-                    text: { content: string; link: { url: TextRequest } | null }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color:
-                        | "default"
-                        | "gray"
-                        | "brown"
-                        | "orange"
-                        | "yellow"
-                        | "green"
-                        | "blue"
-                        | "purple"
-                        | "pink"
-                        | "red"
-                        | "gray_background"
-                        | "brown_background"
-                        | "orange_background"
-                        | "yellow_background"
-                        | "green_background"
-                        | "blue_background"
-                        | "purple_background"
-                        | "pink_background"
-                        | "red_background"
-                    }
-                    plain_text: string
-                    href: string | null
-                  }
-                | {
-                    type: "mention"
-                    mention:
-                      | {
-                          type: "user"
-                          user:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | EmptyObject
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                      | {
-                          type: "date"
-                          date: {
-                            start: string
-                            end: string | null
-                            time_zone: TimeZoneRequest | null
-                          }
-                        }
-                      | {
-                          type: "link_preview"
-                          link_preview: { url: TextRequest }
-                        }
-                      | { type: "page"; page: { id: IdRequest } }
-                      | { type: "database"; database: { id: IdRequest } }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color:
-                        | "default"
-                        | "gray"
-                        | "brown"
-                        | "orange"
-                        | "yellow"
-                        | "green"
-                        | "blue"
-                        | "purple"
-                        | "pink"
-                        | "red"
-                        | "gray_background"
-                        | "brown_background"
-                        | "orange_background"
-                        | "yellow_background"
-                        | "green_background"
-                        | "blue_background"
-                        | "purple_background"
-                        | "pink_background"
-                        | "red_background"
-                    }
-                    plain_text: string
-                    href: string | null
-                  }
-                | {
-                    type: "equation"
-                    equation: { expression: TextRequest }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color:
-                        | "default"
-                        | "gray"
-                        | "brown"
-                        | "orange"
-                        | "yellow"
-                        | "green"
-                        | "blue"
-                        | "purple"
-                        | "pink"
-                        | "red"
-                        | "gray_background"
-                        | "brown_background"
-                        | "orange_background"
-                        | "yellow_background"
-                        | "green_background"
-                        | "blue_background"
-                        | "purple_background"
-                        | "pink_background"
-                        | "red_background"
-                    }
-                    plain_text: string
-                    href: string | null
-                  }
-              >
-              id: string
-            }
-          | { type: "number"; number: number | null; id: string }
-          | { type: "url"; url: string | null; id: string }
-          | {
-              type: "select"
-              select: {
-                id: StringRequest
-                name: StringRequest
-                color:
-                  | "default"
-                  | "gray"
-                  | "brown"
-                  | "orange"
-                  | "yellow"
-                  | "green"
-                  | "blue"
-                  | "purple"
-                  | "pink"
-                  | "red"
-              } | null
-              id: string
-            }
-          | {
-              type: "multi_select"
-              multi_select: Array<{
-                id: StringRequest
-                name: StringRequest
-                color:
-                  | "default"
-                  | "gray"
-                  | "brown"
-                  | "orange"
-                  | "yellow"
-                  | "green"
-                  | "blue"
-                  | "purple"
-                  | "pink"
-                  | "red"
-              }>
-              id: string
-            }
-          | {
-              type: "people"
-              people: Array<
-                | { id: IdRequest; object: "user" }
-                | {
-                    type: "person"
-                    person: { email: string }
-                    name: string | null
-                    avatar_url: string | null
-                    id: IdRequest
-                    object: "user"
-                  }
-                | {
-                    type: "bot"
-                    bot:
-                      | EmptyObject
-                      | {
-                          owner:
-                            | {
-                                type: "user"
-                                user:
-                                  | {
-                                      type: "person"
-                                      person: { email: string }
-                                      name: string | null
-                                      avatar_url: string | null
-                                      id: IdRequest
-                                      object: "user"
-                                    }
-                                  | { id: IdRequest; object: "user" }
-                              }
-                            | { type: "workspace"; workspace: true }
-                        }
-                    name: string | null
-                    avatar_url: string | null
-                    id: IdRequest
-                    object: "user"
-                  }
-              >
-              id: string
-            }
-          | { type: "email"; email: string | null; id: string }
-          | { type: "phone_number"; phone_number: string | null; id: string }
-          | {
-              type: "date"
-              date: {
-                start: string
-                end: string | null
-                time_zone: TimeZoneRequest | null
-              } | null
-              id: string
-            }
-          | {
-              type: "files"
-              files: Array<
-                | {
-                    file: { url: string; expiry_time: string }
+                        plain_text: string
+                        href: string | null
+                      }
+                  >
+                  id: string
+                }
+              | { type: "number"; number: number | null; id: string }
+              | { type: "url"; url: string | null; id: string }
+              | {
+                  type: "select"
+                  select: {
+                    id: StringRequest
                     name: StringRequest
-                    type?: "file"
-                  }
-                | {
-                    external: { url: TextRequest }
+                    color:
+                      | "default"
+                      | "gray"
+                      | "brown"
+                      | "orange"
+                      | "yellow"
+                      | "green"
+                      | "blue"
+                      | "purple"
+                      | "pink"
+                      | "red"
+                  } | null
+                  id: string
+                }
+              | {
+                  type: "multi_select"
+                  multi_select: Array<{
+                    id: StringRequest
                     name: StringRequest
-                    type?: "external"
-                  }
-              >
-              id: string
-            }
-          | { type: "checkbox"; checkbox: boolean; id: string }
-          | {
-              type: "formula"
-              formula:
-                | { type: "string"; string: string | null }
-                | {
-                    type: "date"
-                    date: {
-                      start: string
-                      end: string | null
-                      time_zone: TimeZoneRequest | null
-                    } | null
-                  }
-                | { type: "number"; number: number | null }
-                | { type: "boolean"; boolean: boolean | null }
-              id: string
-            }
-          | { type: "relation"; relation: Array<{ id: string }>; id: string }
-          | { type: "created_time"; created_time: string; id: string }
-          | {
-              type: "created_by"
-              created_by:
-                | { id: IdRequest; object: "user" }
-                | {
-                    type: "person"
-                    person: { email: string }
-                    name: string | null
-                    avatar_url: string | null
-                    id: IdRequest
-                    object: "user"
-                  }
-                | {
-                    type: "bot"
-                    bot:
-                      | EmptyObject
-                      | {
-                          owner:
-                            | {
-                                type: "user"
-                                user:
-                                  | {
-                                      type: "person"
-                                      person: { email: string }
-                                      name: string | null
-                                      avatar_url: string | null
-                                      id: IdRequest
-                                      object: "user"
+                    color:
+                      | "default"
+                      | "gray"
+                      | "brown"
+                      | "orange"
+                      | "yellow"
+                      | "green"
+                      | "blue"
+                      | "purple"
+                      | "pink"
+                      | "red"
+                  }>
+                  id: string
+                }
+              | {
+                  type: "people"
+                  people: Array<
+                    | { id: IdRequest; object: "user" }
+                    | {
+                        type: "person"
+                        person: { email?: string }
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
+                    | {
+                        type: "bot"
+                        bot:
+                          | EmptyObject
+                          | {
+                              owner:
+                                | {
+                                    type: "user"
+                                    user:
+                                      | {
+                                          type: "person"
+                                          person: { email: string }
+                                          name: string | null
+                                          avatar_url: string | null
+                                          id: IdRequest
+                                          object: "user"
+                                        }
+                                      | { id: IdRequest; object: "user" }
+                                  }
+                                | { type: "workspace"; workspace: true }
+                            }
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
+                  >
+                  id: string
+                }
+              | { type: "email"; email: string | null; id: string }
+              | {
+                  type: "phone_number"
+                  phone_number: string | null
+                  id: string
+                }
+              | {
+                  type: "date"
+                  date: {
+                    start: string
+                    end: string | null
+                    time_zone: TimeZoneRequest | null
+                  } | null
+                  id: string
+                }
+              | {
+                  type: "files"
+                  files: Array<
+                    | {
+                        file: { url: string; expiry_time: string }
+                        name: StringRequest
+                        type?: "file"
+                      }
+                    | {
+                        external: { url: TextRequest }
+                        name: StringRequest
+                        type?: "external"
+                      }
+                  >
+                  id: string
+                }
+              | { type: "checkbox"; checkbox: boolean; id: string }
+              | {
+                  type: "formula"
+                  formula:
+                    | { type: "string"; string: string | null }
+                    | {
+                        type: "date"
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
+                        } | null
+                      }
+                    | { type: "number"; number: number | null }
+                    | { type: "boolean"; boolean: boolean | null }
+                  id: string
+                }
+              | {
+                  type: "relation"
+                  relation: Array<{ id: string }>
+                  id: string
+                }
+              | { type: "created_time"; created_time: string; id: string }
+              | {
+                  type: "created_by"
+                  created_by:
+                    | { id: IdRequest; object: "user" }
+                    | {
+                        type: "person"
+                        person: { email?: string }
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
+                    | {
+                        type: "bot"
+                        bot:
+                          | EmptyObject
+                          | {
+                              owner:
+                                | {
+                                    type: "user"
+                                    user:
+                                      | {
+                                          type: "person"
+                                          person: { email: string }
+                                          name: string | null
+                                          avatar_url: string | null
+                                          id: IdRequest
+                                          object: "user"
+                                        }
+                                      | { id: IdRequest; object: "user" }
+                                  }
+                                | { type: "workspace"; workspace: true }
+                            }
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
+                  id: string
+                }
+              | {
+                  type: "last_edited_time"
+                  last_edited_time: string
+                  id: string
+                }
+              | {
+                  type: "last_edited_by"
+                  last_edited_by:
+                    | { id: IdRequest; object: "user" }
+                    | {
+                        type: "person"
+                        person: { email?: string }
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
+                    | {
+                        type: "bot"
+                        bot:
+                          | EmptyObject
+                          | {
+                              owner:
+                                | {
+                                    type: "user"
+                                    user:
+                                      | {
+                                          type: "person"
+                                          person: { email: string }
+                                          name: string | null
+                                          avatar_url: string | null
+                                          id: IdRequest
+                                          object: "user"
+                                        }
+                                      | { id: IdRequest; object: "user" }
+                                  }
+                                | { type: "workspace"; workspace: true }
+                            }
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
+                  id: string
+                }
+              | {
+                  type: "rollup"
+                  rollup:
+                    | {
+                        type: "number"
+                        number: number | null
+                        function:
+                          | "count"
+                          | "count_values"
+                          | "empty"
+                          | "not_empty"
+                          | "unique"
+                          | "show_unique"
+                          | "percent_empty"
+                          | "percent_not_empty"
+                          | "sum"
+                          | "average"
+                          | "median"
+                          | "min"
+                          | "max"
+                          | "range"
+                          | "earliest_date"
+                          | "latest_date"
+                          | "date_range"
+                          | "checked"
+                          | "unchecked"
+                          | "percent_checked"
+                          | "percent_unchecked"
+                          | "show_original"
+                      }
+                    | {
+                        type: "date"
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
+                        } | null
+                        function:
+                          | "count"
+                          | "count_values"
+                          | "empty"
+                          | "not_empty"
+                          | "unique"
+                          | "show_unique"
+                          | "percent_empty"
+                          | "percent_not_empty"
+                          | "sum"
+                          | "average"
+                          | "median"
+                          | "min"
+                          | "max"
+                          | "range"
+                          | "earliest_date"
+                          | "latest_date"
+                          | "date_range"
+                          | "checked"
+                          | "unchecked"
+                          | "percent_checked"
+                          | "percent_unchecked"
+                          | "show_original"
+                      }
+                    | {
+                        type: "array"
+                        array: Array<
+                          | {
+                              type: "title"
+                              title: Array<
+                                | {
+                                    type: "text"
+                                    text: {
+                                      content: string
+                                      link: { url: TextRequest } | null
                                     }
-                                  | { id: IdRequest; object: "user" }
-                              }
-                            | { type: "workspace"; workspace: true }
-                        }
-                    name: string | null
-                    avatar_url: string | null
-                    id: IdRequest
-                    object: "user"
-                  }
-              id: string
-            }
-          | { type: "last_edited_time"; last_edited_time: string; id: string }
-          | {
-              type: "last_edited_by"
-              last_edited_by:
-                | { id: IdRequest; object: "user" }
-                | {
-                    type: "person"
-                    person: { email: string }
-                    name: string | null
-                    avatar_url: string | null
-                    id: IdRequest
-                    object: "user"
-                  }
-                | {
-                    type: "bot"
-                    bot:
-                      | EmptyObject
-                      | {
-                          owner:
-                            | {
-                                type: "user"
-                                user:
-                                  | {
-                                      type: "person"
-                                      person: { email: string }
-                                      name: string | null
-                                      avatar_url: string | null
-                                      id: IdRequest
-                                      object: "user"
+                                    annotations: {
+                                      bold: boolean
+                                      italic: boolean
+                                      strikethrough: boolean
+                                      underline: boolean
+                                      code: boolean
+                                      color:
+                                        | "default"
+                                        | "gray"
+                                        | "brown"
+                                        | "orange"
+                                        | "yellow"
+                                        | "green"
+                                        | "blue"
+                                        | "purple"
+                                        | "pink"
+                                        | "red"
+                                        | "gray_background"
+                                        | "brown_background"
+                                        | "orange_background"
+                                        | "yellow_background"
+                                        | "green_background"
+                                        | "blue_background"
+                                        | "purple_background"
+                                        | "pink_background"
+                                        | "red_background"
                                     }
-                                  | { id: IdRequest; object: "user" }
-                              }
-                            | { type: "workspace"; workspace: true }
-                        }
-                    name: string | null
-                    avatar_url: string | null
-                    id: IdRequest
-                    object: "user"
-                  }
-              id: string
-            }
-          | {
-              type: "rollup"
-              rollup:
-                | {
-                    type: "number"
-                    number: number | null
-                    function:
-                      | "count"
-                      | "count_values"
-                      | "empty"
-                      | "not_empty"
-                      | "unique"
-                      | "show_unique"
-                      | "percent_empty"
-                      | "percent_not_empty"
-                      | "sum"
-                      | "average"
-                      | "median"
-                      | "min"
-                      | "max"
-                      | "range"
-                      | "earliest_date"
-                      | "latest_date"
-                      | "date_range"
-                      | "checked"
-                      | "unchecked"
-                      | "percent_checked"
-                      | "percent_unchecked"
-                      | "show_original"
-                  }
-                | {
-                    type: "date"
-                    date: {
-                      start: string
-                      end: string | null
-                      time_zone: TimeZoneRequest | null
-                    } | null
-                    function:
-                      | "count"
-                      | "count_values"
-                      | "empty"
-                      | "not_empty"
-                      | "unique"
-                      | "show_unique"
-                      | "percent_empty"
-                      | "percent_not_empty"
-                      | "sum"
-                      | "average"
-                      | "median"
-                      | "min"
-                      | "max"
-                      | "range"
-                      | "earliest_date"
-                      | "latest_date"
-                      | "date_range"
-                      | "checked"
-                      | "unchecked"
-                      | "percent_checked"
-                      | "percent_unchecked"
-                      | "show_original"
-                  }
-                | {
-                    type: "array"
-                    array: Array<
-                      | {
-                          type: "title"
-                          title: Array<
-                            | {
-                                type: "text"
-                                text: {
-                                  content: string
-                                  link: { url: TextRequest } | null
-                                }
-                                annotations: {
-                                  bold: boolean
-                                  italic: boolean
-                                  strikethrough: boolean
-                                  underline: boolean
-                                  code: boolean
-                                  color:
-                                    | "default"
-                                    | "gray"
-                                    | "brown"
-                                    | "orange"
-                                    | "yellow"
-                                    | "green"
-                                    | "blue"
-                                    | "purple"
-                                    | "pink"
-                                    | "red"
-                                    | "gray_background"
-                                    | "brown_background"
-                                    | "orange_background"
-                                    | "yellow_background"
-                                    | "green_background"
-                                    | "blue_background"
-                                    | "purple_background"
-                                    | "pink_background"
-                                    | "red_background"
-                                }
-                                plain_text: string
-                                href: string | null
-                              }
-                            | {
-                                type: "mention"
-                                mention:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | { id: IdRequest; object: "user" }
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
+                                    plain_text: string
+                                    href: string | null
+                                  }
+                                | {
+                                    type: "mention"
+                                    mention:
+                                      | {
+                                          type: "user"
+                                          user:
+                                            | { id: IdRequest; object: "user" }
+                                            | {
+                                                type: "person"
+                                                person: { email?: string }
+                                                name: string | null
+                                                avatar_url: string | null
+                                                id: IdRequest
+                                                object: "user"
+                                              }
+                                            | {
+                                                type: "bot"
+                                                bot:
+                                                  | EmptyObject
+                                                  | {
+                                                      owner:
+                                                        | {
+                                                            type: "user"
+                                                            user:
+                                                              | {
+                                                                  type: "person"
+                                                                  person: {
+                                                                    email: string
+                                                                  }
+                                                                  name:
+                                                                    | string
+                                                                    | null
+                                                                  avatar_url:
+                                                                    | string
+                                                                    | null
+                                                                  id: IdRequest
+                                                                  object: "user"
+                                                                }
+                                                              | {
+                                                                  id: IdRequest
+                                                                  object: "user"
+                                                                }
+                                                          }
+                                                        | {
+                                                            type: "workspace"
+                                                            workspace: true
+                                                          }
+                                                    }
+                                                name: string | null
+                                                avatar_url: string | null
+                                                id: IdRequest
+                                                object: "user"
+                                              }
+                                        }
+                                      | {
+                                          type: "date"
+                                          date: {
+                                            start: string
+                                            end: string | null
+                                            time_zone: TimeZoneRequest | null
                                           }
-                                        | {
-                                            type: "bot"
-                                            bot:
-                                              | EmptyObject
-                                              | {
-                                                  owner:
-                                                    | {
-                                                        type: "user"
-                                                        user:
-                                                          | {
-                                                              type: "person"
-                                                              person: {
-                                                                email: string
-                                                              }
-                                                              name:
-                                                                | string
-                                                                | null
-                                                              avatar_url:
-                                                                | string
-                                                                | null
-                                                              id: IdRequest
-                                                              object: "user"
-                                                            }
-                                                          | {
-                                                              id: IdRequest
-                                                              object: "user"
-                                                            }
-                                                      }
-                                                    | {
-                                                        type: "workspace"
-                                                        workspace: true
-                                                      }
-                                                }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
+                                        }
+                                      | {
+                                          type: "link_preview"
+                                          link_preview: { url: TextRequest }
+                                        }
+                                      | {
+                                          type: "page"
+                                          page: { id: IdRequest }
+                                        }
+                                      | {
+                                          type: "database"
+                                          database: { id: IdRequest }
+                                        }
+                                    annotations: {
+                                      bold: boolean
+                                      italic: boolean
+                                      strikethrough: boolean
+                                      underline: boolean
+                                      code: boolean
+                                      color:
+                                        | "default"
+                                        | "gray"
+                                        | "brown"
+                                        | "orange"
+                                        | "yellow"
+                                        | "green"
+                                        | "blue"
+                                        | "purple"
+                                        | "pink"
+                                        | "red"
+                                        | "gray_background"
+                                        | "brown_background"
+                                        | "orange_background"
+                                        | "yellow_background"
+                                        | "green_background"
+                                        | "blue_background"
+                                        | "purple_background"
+                                        | "pink_background"
+                                        | "red_background"
+                                    }
+                                    plain_text: string
+                                    href: string | null
+                                  }
+                                | {
+                                    type: "equation"
+                                    equation: { expression: TextRequest }
+                                    annotations: {
+                                      bold: boolean
+                                      italic: boolean
+                                      strikethrough: boolean
+                                      underline: boolean
+                                      code: boolean
+                                      color:
+                                        | "default"
+                                        | "gray"
+                                        | "brown"
+                                        | "orange"
+                                        | "yellow"
+                                        | "green"
+                                        | "blue"
+                                        | "purple"
+                                        | "pink"
+                                        | "red"
+                                        | "gray_background"
+                                        | "brown_background"
+                                        | "orange_background"
+                                        | "yellow_background"
+                                        | "green_background"
+                                        | "blue_background"
+                                        | "purple_background"
+                                        | "pink_background"
+                                        | "red_background"
+                                    }
+                                    plain_text: string
+                                    href: string | null
+                                  }
+                              >
+                            }
+                          | {
+                              type: "rich_text"
+                              rich_text: Array<
+                                | {
+                                    type: "text"
+                                    text: {
+                                      content: string
+                                      link: { url: TextRequest } | null
+                                    }
+                                    annotations: {
+                                      bold: boolean
+                                      italic: boolean
+                                      strikethrough: boolean
+                                      underline: boolean
+                                      code: boolean
+                                      color:
+                                        | "default"
+                                        | "gray"
+                                        | "brown"
+                                        | "orange"
+                                        | "yellow"
+                                        | "green"
+                                        | "blue"
+                                        | "purple"
+                                        | "pink"
+                                        | "red"
+                                        | "gray_background"
+                                        | "brown_background"
+                                        | "orange_background"
+                                        | "yellow_background"
+                                        | "green_background"
+                                        | "blue_background"
+                                        | "purple_background"
+                                        | "pink_background"
+                                        | "red_background"
+                                    }
+                                    plain_text: string
+                                    href: string | null
+                                  }
+                                | {
+                                    type: "mention"
+                                    mention:
+                                      | {
+                                          type: "user"
+                                          user:
+                                            | { id: IdRequest; object: "user" }
+                                            | {
+                                                type: "person"
+                                                person: { email?: string }
+                                                name: string | null
+                                                avatar_url: string | null
+                                                id: IdRequest
+                                                object: "user"
+                                              }
+                                            | {
+                                                type: "bot"
+                                                bot:
+                                                  | EmptyObject
+                                                  | {
+                                                      owner:
+                                                        | {
+                                                            type: "user"
+                                                            user:
+                                                              | {
+                                                                  type: "person"
+                                                                  person: {
+                                                                    email: string
+                                                                  }
+                                                                  name:
+                                                                    | string
+                                                                    | null
+                                                                  avatar_url:
+                                                                    | string
+                                                                    | null
+                                                                  id: IdRequest
+                                                                  object: "user"
+                                                                }
+                                                              | {
+                                                                  id: IdRequest
+                                                                  object: "user"
+                                                                }
+                                                          }
+                                                        | {
+                                                            type: "workspace"
+                                                            workspace: true
+                                                          }
+                                                    }
+                                                name: string | null
+                                                avatar_url: string | null
+                                                id: IdRequest
+                                                object: "user"
+                                              }
+                                        }
+                                      | {
+                                          type: "date"
+                                          date: {
+                                            start: string
+                                            end: string | null
+                                            time_zone: TimeZoneRequest | null
                                           }
+                                        }
+                                      | {
+                                          type: "link_preview"
+                                          link_preview: { url: TextRequest }
+                                        }
+                                      | {
+                                          type: "page"
+                                          page: { id: IdRequest }
+                                        }
+                                      | {
+                                          type: "database"
+                                          database: { id: IdRequest }
+                                        }
+                                    annotations: {
+                                      bold: boolean
+                                      italic: boolean
+                                      strikethrough: boolean
+                                      underline: boolean
+                                      code: boolean
+                                      color:
+                                        | "default"
+                                        | "gray"
+                                        | "brown"
+                                        | "orange"
+                                        | "yellow"
+                                        | "green"
+                                        | "blue"
+                                        | "purple"
+                                        | "pink"
+                                        | "red"
+                                        | "gray_background"
+                                        | "brown_background"
+                                        | "orange_background"
+                                        | "yellow_background"
+                                        | "green_background"
+                                        | "blue_background"
+                                        | "purple_background"
+                                        | "pink_background"
+                                        | "red_background"
                                     }
-                                  | {
-                                      type: "date"
-                                      date: {
-                                        start: string
-                                        end: string | null
-                                        time_zone: TimeZoneRequest | null
-                                      }
+                                    plain_text: string
+                                    href: string | null
+                                  }
+                                | {
+                                    type: "equation"
+                                    equation: { expression: TextRequest }
+                                    annotations: {
+                                      bold: boolean
+                                      italic: boolean
+                                      strikethrough: boolean
+                                      underline: boolean
+                                      code: boolean
+                                      color:
+                                        | "default"
+                                        | "gray"
+                                        | "brown"
+                                        | "orange"
+                                        | "yellow"
+                                        | "green"
+                                        | "blue"
+                                        | "purple"
+                                        | "pink"
+                                        | "red"
+                                        | "gray_background"
+                                        | "brown_background"
+                                        | "orange_background"
+                                        | "yellow_background"
+                                        | "green_background"
+                                        | "blue_background"
+                                        | "purple_background"
+                                        | "pink_background"
+                                        | "red_background"
                                     }
-                                  | {
-                                      type: "link_preview"
-                                      link_preview: { url: TextRequest }
-                                    }
-                                  | { type: "page"; page: { id: IdRequest } }
-                                  | {
-                                      type: "database"
-                                      database: { id: IdRequest }
-                                    }
-                                annotations: {
-                                  bold: boolean
-                                  italic: boolean
-                                  strikethrough: boolean
-                                  underline: boolean
-                                  code: boolean
-                                  color:
-                                    | "default"
-                                    | "gray"
-                                    | "brown"
-                                    | "orange"
-                                    | "yellow"
-                                    | "green"
-                                    | "blue"
-                                    | "purple"
-                                    | "pink"
-                                    | "red"
-                                    | "gray_background"
-                                    | "brown_background"
-                                    | "orange_background"
-                                    | "yellow_background"
-                                    | "green_background"
-                                    | "blue_background"
-                                    | "purple_background"
-                                    | "pink_background"
-                                    | "red_background"
-                                }
-                                plain_text: string
-                                href: string | null
-                              }
-                            | {
-                                type: "equation"
-                                equation: { expression: TextRequest }
-                                annotations: {
-                                  bold: boolean
-                                  italic: boolean
-                                  strikethrough: boolean
-                                  underline: boolean
-                                  code: boolean
-                                  color:
-                                    | "default"
-                                    | "gray"
-                                    | "brown"
-                                    | "orange"
-                                    | "yellow"
-                                    | "green"
-                                    | "blue"
-                                    | "purple"
-                                    | "pink"
-                                    | "red"
-                                    | "gray_background"
-                                    | "brown_background"
-                                    | "orange_background"
-                                    | "yellow_background"
-                                    | "green_background"
-                                    | "blue_background"
-                                    | "purple_background"
-                                    | "pink_background"
-                                    | "red_background"
-                                }
-                                plain_text: string
-                                href: string | null
-                              }
-                          >
-                        }
-                      | {
-                          type: "rich_text"
-                          rich_text: Array<
-                            | {
-                                type: "text"
-                                text: {
-                                  content: string
-                                  link: { url: TextRequest } | null
-                                }
-                                annotations: {
-                                  bold: boolean
-                                  italic: boolean
-                                  strikethrough: boolean
-                                  underline: boolean
-                                  code: boolean
-                                  color:
-                                    | "default"
-                                    | "gray"
-                                    | "brown"
-                                    | "orange"
-                                    | "yellow"
-                                    | "green"
-                                    | "blue"
-                                    | "purple"
-                                    | "pink"
-                                    | "red"
-                                    | "gray_background"
-                                    | "brown_background"
-                                    | "orange_background"
-                                    | "yellow_background"
-                                    | "green_background"
-                                    | "blue_background"
-                                    | "purple_background"
-                                    | "pink_background"
-                                    | "red_background"
-                                }
-                                plain_text: string
-                                href: string | null
-                              }
-                            | {
-                                type: "mention"
-                                mention:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | { id: IdRequest; object: "user" }
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | {
-                                            type: "bot"
-                                            bot:
-                                              | EmptyObject
-                                              | {
-                                                  owner:
-                                                    | {
-                                                        type: "user"
-                                                        user:
-                                                          | {
-                                                              type: "person"
-                                                              person: {
-                                                                email: string
-                                                              }
-                                                              name:
-                                                                | string
-                                                                | null
-                                                              avatar_url:
-                                                                | string
-                                                                | null
-                                                              id: IdRequest
-                                                              object: "user"
-                                                            }
-                                                          | {
-                                                              id: IdRequest
-                                                              object: "user"
-                                                            }
-                                                      }
-                                                    | {
-                                                        type: "workspace"
-                                                        workspace: true
-                                                      }
-                                                }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                    }
-                                  | {
-                                      type: "date"
-                                      date: {
-                                        start: string
-                                        end: string | null
-                                        time_zone: TimeZoneRequest | null
-                                      }
-                                    }
-                                  | {
-                                      type: "link_preview"
-                                      link_preview: { url: TextRequest }
-                                    }
-                                  | { type: "page"; page: { id: IdRequest } }
-                                  | {
-                                      type: "database"
-                                      database: { id: IdRequest }
-                                    }
-                                annotations: {
-                                  bold: boolean
-                                  italic: boolean
-                                  strikethrough: boolean
-                                  underline: boolean
-                                  code: boolean
-                                  color:
-                                    | "default"
-                                    | "gray"
-                                    | "brown"
-                                    | "orange"
-                                    | "yellow"
-                                    | "green"
-                                    | "blue"
-                                    | "purple"
-                                    | "pink"
-                                    | "red"
-                                    | "gray_background"
-                                    | "brown_background"
-                                    | "orange_background"
-                                    | "yellow_background"
-                                    | "green_background"
-                                    | "blue_background"
-                                    | "purple_background"
-                                    | "pink_background"
-                                    | "red_background"
-                                }
-                                plain_text: string
-                                href: string | null
-                              }
-                            | {
-                                type: "equation"
-                                equation: { expression: TextRequest }
-                                annotations: {
-                                  bold: boolean
-                                  italic: boolean
-                                  strikethrough: boolean
-                                  underline: boolean
-                                  code: boolean
-                                  color:
-                                    | "default"
-                                    | "gray"
-                                    | "brown"
-                                    | "orange"
-                                    | "yellow"
-                                    | "green"
-                                    | "blue"
-                                    | "purple"
-                                    | "pink"
-                                    | "red"
-                                    | "gray_background"
-                                    | "brown_background"
-                                    | "orange_background"
-                                    | "yellow_background"
-                                    | "green_background"
-                                    | "blue_background"
-                                    | "purple_background"
-                                    | "pink_background"
-                                    | "red_background"
-                                }
-                                plain_text: string
-                                href: string | null
-                              }
-                          >
-                        }
-                      | { type: "number"; number: number | null }
-                      | { type: "url"; url: string | null }
-                      | {
-                          type: "select"
-                          select: {
-                            id: StringRequest
-                            name: StringRequest
-                            color:
-                              | "default"
-                              | "gray"
-                              | "brown"
-                              | "orange"
-                              | "yellow"
-                              | "green"
-                              | "blue"
-                              | "purple"
-                              | "pink"
-                              | "red"
-                          } | null
-                        }
-                      | {
-                          type: "multi_select"
-                          multi_select: Array<{
-                            id: StringRequest
-                            name: StringRequest
-                            color:
-                              | "default"
-                              | "gray"
-                              | "brown"
-                              | "orange"
-                              | "yellow"
-                              | "green"
-                              | "blue"
-                              | "purple"
-                              | "pink"
-                              | "red"
-                          }>
-                        }
-                      | {
-                          type: "people"
-                          people: Array<
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | EmptyObject
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                          >
-                        }
-                      | { type: "email"; email: string | null }
-                      | { type: "phone_number"; phone_number: string | null }
-                      | {
-                          type: "date"
-                          date: {
-                            start: string
-                            end: string | null
-                            time_zone: TimeZoneRequest | null
-                          } | null
-                        }
-                      | {
-                          type: "files"
-                          files: Array<
-                            | {
-                                file: { url: string; expiry_time: string }
+                                    plain_text: string
+                                    href: string | null
+                                  }
+                              >
+                            }
+                          | { type: "number"; number: number | null }
+                          | { type: "url"; url: string | null }
+                          | {
+                              type: "select"
+                              select: {
+                                id: StringRequest
                                 name: StringRequest
-                                type?: "file"
-                              }
-                            | {
-                                external: { url: TextRequest }
+                                color:
+                                  | "default"
+                                  | "gray"
+                                  | "brown"
+                                  | "orange"
+                                  | "yellow"
+                                  | "green"
+                                  | "blue"
+                                  | "purple"
+                                  | "pink"
+                                  | "red"
+                              } | null
+                            }
+                          | {
+                              type: "multi_select"
+                              multi_select: Array<{
+                                id: StringRequest
                                 name: StringRequest
-                                type?: "external"
-                              }
-                          >
-                        }
-                      | { type: "checkbox"; checkbox: boolean }
-                      | {
-                          type: "formula"
-                          formula:
-                            | { type: "string"; string: string | null }
-                            | {
-                                type: "date"
-                                date: {
-                                  start: string
-                                  end: string | null
-                                  time_zone: TimeZoneRequest | null
-                                } | null
-                              }
-                            | { type: "number"; number: number | null }
-                            | { type: "boolean"; boolean: boolean | null }
-                        }
-                      | { type: "relation"; relation: Array<{ id: string }> }
-                      | { type: "created_time"; created_time: string }
-                      | {
-                          type: "created_by"
-                          created_by:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | EmptyObject
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                      | { type: "last_edited_time"; last_edited_time: string }
-                      | {
-                          type: "last_edited_by"
-                          last_edited_by:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | EmptyObject
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                    >
-                    function:
-                      | "count"
-                      | "count_values"
-                      | "empty"
-                      | "not_empty"
-                      | "unique"
-                      | "show_unique"
-                      | "percent_empty"
-                      | "percent_not_empty"
-                      | "sum"
-                      | "average"
-                      | "median"
-                      | "min"
-                      | "max"
-                      | "range"
-                      | "earliest_date"
-                      | "latest_date"
-                      | "date_range"
-                      | "checked"
-                      | "unchecked"
-                      | "percent_checked"
-                      | "percent_unchecked"
-                      | "show_original"
-                  }
-                | {
-                    type: "unsupported"
-                    unsupported: EmptyObject
-                    function:
-                      | "count"
-                      | "count_values"
-                      | "empty"
-                      | "not_empty"
-                      | "unique"
-                      | "show_unique"
-                      | "percent_empty"
-                      | "percent_not_empty"
-                      | "sum"
-                      | "average"
-                      | "median"
-                      | "min"
-                      | "max"
-                      | "range"
-                      | "earliest_date"
-                      | "latest_date"
-                      | "date_range"
-                      | "checked"
-                      | "unchecked"
-                      | "percent_checked"
-                      | "percent_unchecked"
-                      | "show_original"
-                  }
-              id: string
-            }
-        >
-        icon:
-          | { type: "emoji"; emoji: EmojiRequest }
-          | null
-          | { type: "external"; external: { url: TextRequest } }
-          | null
-          | { type: "file"; file: { url: string; expiry_time: string } }
-          | null
-        cover:
-          | { type: "external"; external: { url: TextRequest } }
-          | null
-          | { type: "file"; file: { url: string; expiry_time: string } }
-          | null
-        object: "page"
-        id: string
-        created_time: string
-        last_edited_time: string
-        archived: boolean
-        url: string
-      }>
+                                color:
+                                  | "default"
+                                  | "gray"
+                                  | "brown"
+                                  | "orange"
+                                  | "yellow"
+                                  | "green"
+                                  | "blue"
+                                  | "purple"
+                                  | "pink"
+                                  | "red"
+                              }>
+                            }
+                          | {
+                              type: "people"
+                              people: Array<
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email?: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot:
+                                      | EmptyObject
+                                      | {
+                                          owner:
+                                            | {
+                                                type: "user"
+                                                user:
+                                                  | {
+                                                      type: "person"
+                                                      person: { email: string }
+                                                      name: string | null
+                                                      avatar_url: string | null
+                                                      id: IdRequest
+                                                      object: "user"
+                                                    }
+                                                  | {
+                                                      id: IdRequest
+                                                      object: "user"
+                                                    }
+                                              }
+                                            | {
+                                                type: "workspace"
+                                                workspace: true
+                                              }
+                                        }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                              >
+                            }
+                          | { type: "email"; email: string | null }
+                          | {
+                              type: "phone_number"
+                              phone_number: string | null
+                            }
+                          | {
+                              type: "date"
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              } | null
+                            }
+                          | {
+                              type: "files"
+                              files: Array<
+                                | {
+                                    file: { url: string; expiry_time: string }
+                                    name: StringRequest
+                                    type?: "file"
+                                  }
+                                | {
+                                    external: { url: TextRequest }
+                                    name: StringRequest
+                                    type?: "external"
+                                  }
+                              >
+                            }
+                          | { type: "checkbox"; checkbox: boolean }
+                          | {
+                              type: "formula"
+                              formula:
+                                | { type: "string"; string: string | null }
+                                | {
+                                    type: "date"
+                                    date: {
+                                      start: string
+                                      end: string | null
+                                      time_zone: TimeZoneRequest | null
+                                    } | null
+                                  }
+                                | { type: "number"; number: number | null }
+                                | { type: "boolean"; boolean: boolean | null }
+                            }
+                          | {
+                              type: "relation"
+                              relation: Array<{ id: string }>
+                            }
+                          | { type: "created_time"; created_time: string }
+                          | {
+                              type: "created_by"
+                              created_by:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email?: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot:
+                                      | EmptyObject
+                                      | {
+                                          owner:
+                                            | {
+                                                type: "user"
+                                                user:
+                                                  | {
+                                                      type: "person"
+                                                      person: { email: string }
+                                                      name: string | null
+                                                      avatar_url: string | null
+                                                      id: IdRequest
+                                                      object: "user"
+                                                    }
+                                                  | {
+                                                      id: IdRequest
+                                                      object: "user"
+                                                    }
+                                              }
+                                            | {
+                                                type: "workspace"
+                                                workspace: true
+                                              }
+                                        }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "last_edited_time"
+                              last_edited_time: string
+                            }
+                          | {
+                              type: "last_edited_by"
+                              last_edited_by:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email?: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot:
+                                      | EmptyObject
+                                      | {
+                                          owner:
+                                            | {
+                                                type: "user"
+                                                user:
+                                                  | {
+                                                      type: "person"
+                                                      person: { email: string }
+                                                      name: string | null
+                                                      avatar_url: string | null
+                                                      id: IdRequest
+                                                      object: "user"
+                                                    }
+                                                  | {
+                                                      id: IdRequest
+                                                      object: "user"
+                                                    }
+                                              }
+                                            | {
+                                                type: "workspace"
+                                                workspace: true
+                                              }
+                                        }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                        >
+                        function:
+                          | "count"
+                          | "count_values"
+                          | "empty"
+                          | "not_empty"
+                          | "unique"
+                          | "show_unique"
+                          | "percent_empty"
+                          | "percent_not_empty"
+                          | "sum"
+                          | "average"
+                          | "median"
+                          | "min"
+                          | "max"
+                          | "range"
+                          | "earliest_date"
+                          | "latest_date"
+                          | "date_range"
+                          | "checked"
+                          | "unchecked"
+                          | "percent_checked"
+                          | "percent_unchecked"
+                          | "show_original"
+                      }
+                    | {
+                        type: "unsupported"
+                        unsupported: EmptyObject
+                        function:
+                          | "count"
+                          | "count_values"
+                          | "empty"
+                          | "not_empty"
+                          | "unique"
+                          | "show_unique"
+                          | "percent_empty"
+                          | "percent_not_empty"
+                          | "sum"
+                          | "average"
+                          | "median"
+                          | "min"
+                          | "max"
+                          | "range"
+                          | "earliest_date"
+                          | "latest_date"
+                          | "date_range"
+                          | "checked"
+                          | "unchecked"
+                          | "percent_checked"
+                          | "percent_unchecked"
+                          | "show_original"
+                      }
+                  id: string
+                }
+            >
+            icon:
+              | { type: "emoji"; emoji: EmojiRequest }
+              | null
+              | { type: "external"; external: { url: TextRequest } }
+              | null
+              | { type: "file"; file: { url: string; expiry_time: string } }
+              | null
+            cover:
+              | { type: "external"; external: { url: TextRequest } }
+              | null
+              | { type: "file"; file: { url: string; expiry_time: string } }
+              | null
+            object: "page"
+            id: string
+            created_time: string
+            last_edited_time: string
+            archived: boolean
+            url: string
+          }
+        | { object: "page"; id: string }
+      >
       next_cursor: string | null
       has_more: boolean
     }
   | {
       object: "list"
-      results: Array<{
-        parent:
-          | { type: "database_id"; database_id: IdRequest }
-          | { type: "page_id"; page_id: IdRequest }
-          | { type: "workspace"; workspace: true }
-        properties: Record<
-          string,
-          | {
-              type: "title"
-              title: Array<
-                | {
-                    type: "text"
-                    text: { content: string; link: { url: TextRequest } | null }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color:
-                        | "default"
-                        | "gray"
-                        | "brown"
-                        | "orange"
-                        | "yellow"
-                        | "green"
-                        | "blue"
-                        | "purple"
-                        | "pink"
-                        | "red"
-                        | "gray_background"
-                        | "brown_background"
-                        | "orange_background"
-                        | "yellow_background"
-                        | "green_background"
-                        | "blue_background"
-                        | "purple_background"
-                        | "pink_background"
-                        | "red_background"
-                    }
-                    plain_text: string
-                    href: string | null
-                  }
-                | {
-                    type: "mention"
-                    mention:
-                      | {
-                          type: "user"
-                          user:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
+      results: Array<
+        | {
+            parent:
+              | { type: "database_id"; database_id: IdRequest }
+              | { type: "page_id"; page_id: IdRequest }
+              | { type: "workspace"; workspace: true }
+            properties: Record<
+              string,
+              | {
+                  type: "title"
+                  title: Array<
+                    | {
+                        type: "text"
+                        text: {
+                          content: string
+                          link: { url: TextRequest } | null
+                        }
+                        annotations: {
+                          bold: boolean
+                          italic: boolean
+                          strikethrough: boolean
+                          underline: boolean
+                          code: boolean
+                          color:
+                            | "default"
+                            | "gray"
+                            | "brown"
+                            | "orange"
+                            | "yellow"
+                            | "green"
+                            | "blue"
+                            | "purple"
+                            | "pink"
+                            | "red"
+                            | "gray_background"
+                            | "brown_background"
+                            | "orange_background"
+                            | "yellow_background"
+                            | "green_background"
+                            | "blue_background"
+                            | "purple_background"
+                            | "pink_background"
+                            | "red_background"
+                        }
+                        plain_text: string
+                        href: string | null
+                      }
+                    | {
+                        type: "mention"
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email?: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot:
+                                      | EmptyObject
+                                      | {
+                                          owner:
+                                            | {
+                                                type: "user"
+                                                user:
+                                                  | {
+                                                      type: "person"
+                                                      person: { email: string }
+                                                      name: string | null
+                                                      avatar_url: string | null
+                                                      id: IdRequest
+                                                      object: "user"
+                                                    }
+                                                  | {
+                                                      id: IdRequest
+                                                      object: "user"
+                                                    }
+                                              }
+                                            | {
+                                                type: "workspace"
+                                                workspace: true
+                                              }
+                                        }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
                               }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | EmptyObject
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
+                            }
+                          | {
+                              type: "link_preview"
+                              link_preview: { url: TextRequest }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
+                        annotations: {
+                          bold: boolean
+                          italic: boolean
+                          strikethrough: boolean
+                          underline: boolean
+                          code: boolean
+                          color:
+                            | "default"
+                            | "gray"
+                            | "brown"
+                            | "orange"
+                            | "yellow"
+                            | "green"
+                            | "blue"
+                            | "purple"
+                            | "pink"
+                            | "red"
+                            | "gray_background"
+                            | "brown_background"
+                            | "orange_background"
+                            | "yellow_background"
+                            | "green_background"
+                            | "blue_background"
+                            | "purple_background"
+                            | "pink_background"
+                            | "red_background"
+                        }
+                        plain_text: string
+                        href: string | null
+                      }
+                    | {
+                        type: "equation"
+                        equation: { expression: TextRequest }
+                        annotations: {
+                          bold: boolean
+                          italic: boolean
+                          strikethrough: boolean
+                          underline: boolean
+                          code: boolean
+                          color:
+                            | "default"
+                            | "gray"
+                            | "brown"
+                            | "orange"
+                            | "yellow"
+                            | "green"
+                            | "blue"
+                            | "purple"
+                            | "pink"
+                            | "red"
+                            | "gray_background"
+                            | "brown_background"
+                            | "orange_background"
+                            | "yellow_background"
+                            | "green_background"
+                            | "blue_background"
+                            | "purple_background"
+                            | "pink_background"
+                            | "red_background"
+                        }
+                        plain_text: string
+                        href: string | null
+                      }
+                  >
+                  id: string
+                }
+              | {
+                  type: "rich_text"
+                  rich_text: Array<
+                    | {
+                        type: "text"
+                        text: {
+                          content: string
+                          link: { url: TextRequest } | null
+                        }
+                        annotations: {
+                          bold: boolean
+                          italic: boolean
+                          strikethrough: boolean
+                          underline: boolean
+                          code: boolean
+                          color:
+                            | "default"
+                            | "gray"
+                            | "brown"
+                            | "orange"
+                            | "yellow"
+                            | "green"
+                            | "blue"
+                            | "purple"
+                            | "pink"
+                            | "red"
+                            | "gray_background"
+                            | "brown_background"
+                            | "orange_background"
+                            | "yellow_background"
+                            | "green_background"
+                            | "blue_background"
+                            | "purple_background"
+                            | "pink_background"
+                            | "red_background"
+                        }
+                        plain_text: string
+                        href: string | null
+                      }
+                    | {
+                        type: "mention"
+                        mention:
+                          | {
+                              type: "user"
+                              user:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email?: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot:
+                                      | EmptyObject
+                                      | {
+                                          owner:
+                                            | {
+                                                type: "user"
+                                                user:
+                                                  | {
+                                                      type: "person"
+                                                      person: { email: string }
+                                                      name: string | null
+                                                      avatar_url: string | null
+                                                      id: IdRequest
+                                                      object: "user"
+                                                    }
+                                                  | {
+                                                      id: IdRequest
+                                                      object: "user"
+                                                    }
+                                              }
+                                            | {
+                                                type: "workspace"
+                                                workspace: true
+                                              }
+                                        }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "date"
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
                               }
+                            }
+                          | {
+                              type: "link_preview"
+                              link_preview: { url: TextRequest }
+                            }
+                          | { type: "page"; page: { id: IdRequest } }
+                          | { type: "database"; database: { id: IdRequest } }
+                        annotations: {
+                          bold: boolean
+                          italic: boolean
+                          strikethrough: boolean
+                          underline: boolean
+                          code: boolean
+                          color:
+                            | "default"
+                            | "gray"
+                            | "brown"
+                            | "orange"
+                            | "yellow"
+                            | "green"
+                            | "blue"
+                            | "purple"
+                            | "pink"
+                            | "red"
+                            | "gray_background"
+                            | "brown_background"
+                            | "orange_background"
+                            | "yellow_background"
+                            | "green_background"
+                            | "blue_background"
+                            | "purple_background"
+                            | "pink_background"
+                            | "red_background"
                         }
-                      | {
-                          type: "date"
-                          date: {
-                            start: string
-                            end: string | null
-                            time_zone: TimeZoneRequest | null
-                          }
+                        plain_text: string
+                        href: string | null
+                      }
+                    | {
+                        type: "equation"
+                        equation: { expression: TextRequest }
+                        annotations: {
+                          bold: boolean
+                          italic: boolean
+                          strikethrough: boolean
+                          underline: boolean
+                          code: boolean
+                          color:
+                            | "default"
+                            | "gray"
+                            | "brown"
+                            | "orange"
+                            | "yellow"
+                            | "green"
+                            | "blue"
+                            | "purple"
+                            | "pink"
+                            | "red"
+                            | "gray_background"
+                            | "brown_background"
+                            | "orange_background"
+                            | "yellow_background"
+                            | "green_background"
+                            | "blue_background"
+                            | "purple_background"
+                            | "pink_background"
+                            | "red_background"
                         }
-                      | {
-                          type: "link_preview"
-                          link_preview: { url: TextRequest }
-                        }
-                      | { type: "page"; page: { id: IdRequest } }
-                      | { type: "database"; database: { id: IdRequest } }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color:
-                        | "default"
-                        | "gray"
-                        | "brown"
-                        | "orange"
-                        | "yellow"
-                        | "green"
-                        | "blue"
-                        | "purple"
-                        | "pink"
-                        | "red"
-                        | "gray_background"
-                        | "brown_background"
-                        | "orange_background"
-                        | "yellow_background"
-                        | "green_background"
-                        | "blue_background"
-                        | "purple_background"
-                        | "pink_background"
-                        | "red_background"
-                    }
-                    plain_text: string
-                    href: string | null
-                  }
-                | {
-                    type: "equation"
-                    equation: { expression: TextRequest }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color:
-                        | "default"
-                        | "gray"
-                        | "brown"
-                        | "orange"
-                        | "yellow"
-                        | "green"
-                        | "blue"
-                        | "purple"
-                        | "pink"
-                        | "red"
-                        | "gray_background"
-                        | "brown_background"
-                        | "orange_background"
-                        | "yellow_background"
-                        | "green_background"
-                        | "blue_background"
-                        | "purple_background"
-                        | "pink_background"
-                        | "red_background"
-                    }
-                    plain_text: string
-                    href: string | null
-                  }
-              >
-              id: string
-            }
-          | {
-              type: "rich_text"
-              rich_text: Array<
-                | {
-                    type: "text"
-                    text: { content: string; link: { url: TextRequest } | null }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color:
-                        | "default"
-                        | "gray"
-                        | "brown"
-                        | "orange"
-                        | "yellow"
-                        | "green"
-                        | "blue"
-                        | "purple"
-                        | "pink"
-                        | "red"
-                        | "gray_background"
-                        | "brown_background"
-                        | "orange_background"
-                        | "yellow_background"
-                        | "green_background"
-                        | "blue_background"
-                        | "purple_background"
-                        | "pink_background"
-                        | "red_background"
-                    }
-                    plain_text: string
-                    href: string | null
-                  }
-                | {
-                    type: "mention"
-                    mention:
-                      | {
-                          type: "user"
-                          user:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | EmptyObject
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                      | {
-                          type: "date"
-                          date: {
-                            start: string
-                            end: string | null
-                            time_zone: TimeZoneRequest | null
-                          }
-                        }
-                      | {
-                          type: "link_preview"
-                          link_preview: { url: TextRequest }
-                        }
-                      | { type: "page"; page: { id: IdRequest } }
-                      | { type: "database"; database: { id: IdRequest } }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color:
-                        | "default"
-                        | "gray"
-                        | "brown"
-                        | "orange"
-                        | "yellow"
-                        | "green"
-                        | "blue"
-                        | "purple"
-                        | "pink"
-                        | "red"
-                        | "gray_background"
-                        | "brown_background"
-                        | "orange_background"
-                        | "yellow_background"
-                        | "green_background"
-                        | "blue_background"
-                        | "purple_background"
-                        | "pink_background"
-                        | "red_background"
-                    }
-                    plain_text: string
-                    href: string | null
-                  }
-                | {
-                    type: "equation"
-                    equation: { expression: TextRequest }
-                    annotations: {
-                      bold: boolean
-                      italic: boolean
-                      strikethrough: boolean
-                      underline: boolean
-                      code: boolean
-                      color:
-                        | "default"
-                        | "gray"
-                        | "brown"
-                        | "orange"
-                        | "yellow"
-                        | "green"
-                        | "blue"
-                        | "purple"
-                        | "pink"
-                        | "red"
-                        | "gray_background"
-                        | "brown_background"
-                        | "orange_background"
-                        | "yellow_background"
-                        | "green_background"
-                        | "blue_background"
-                        | "purple_background"
-                        | "pink_background"
-                        | "red_background"
-                    }
-                    plain_text: string
-                    href: string | null
-                  }
-              >
-              id: string
-            }
-          | { type: "number"; number: number | null; id: string }
-          | { type: "url"; url: string | null; id: string }
-          | {
-              type: "select"
-              select: {
-                id: StringRequest
-                name: StringRequest
-                color:
-                  | "default"
-                  | "gray"
-                  | "brown"
-                  | "orange"
-                  | "yellow"
-                  | "green"
-                  | "blue"
-                  | "purple"
-                  | "pink"
-                  | "red"
-              } | null
-              id: string
-            }
-          | {
-              type: "multi_select"
-              multi_select: Array<{
-                id: StringRequest
-                name: StringRequest
-                color:
-                  | "default"
-                  | "gray"
-                  | "brown"
-                  | "orange"
-                  | "yellow"
-                  | "green"
-                  | "blue"
-                  | "purple"
-                  | "pink"
-                  | "red"
-              }>
-              id: string
-            }
-          | {
-              type: "people"
-              people: Array<
-                | { id: IdRequest; object: "user" }
-                | {
-                    type: "person"
-                    person: { email: string }
-                    name: string | null
-                    avatar_url: string | null
-                    id: IdRequest
-                    object: "user"
-                  }
-                | {
-                    type: "bot"
-                    bot:
-                      | EmptyObject
-                      | {
-                          owner:
-                            | {
-                                type: "user"
-                                user:
-                                  | {
-                                      type: "person"
-                                      person: { email: string }
-                                      name: string | null
-                                      avatar_url: string | null
-                                      id: IdRequest
-                                      object: "user"
-                                    }
-                                  | { id: IdRequest; object: "user" }
-                              }
-                            | { type: "workspace"; workspace: true }
-                        }
-                    name: string | null
-                    avatar_url: string | null
-                    id: IdRequest
-                    object: "user"
-                  }
-              >
-              id: string
-            }
-          | { type: "email"; email: string | null; id: string }
-          | { type: "phone_number"; phone_number: string | null; id: string }
-          | {
-              type: "date"
-              date: {
-                start: string
-                end: string | null
-                time_zone: TimeZoneRequest | null
-              } | null
-              id: string
-            }
-          | {
-              type: "files"
-              files: Array<
-                | {
-                    file: { url: string; expiry_time: string }
+                        plain_text: string
+                        href: string | null
+                      }
+                  >
+                  id: string
+                }
+              | { type: "number"; number: number | null; id: string }
+              | { type: "url"; url: string | null; id: string }
+              | {
+                  type: "select"
+                  select: {
+                    id: StringRequest
                     name: StringRequest
-                    type?: "file"
-                  }
-                | {
-                    external: { url: TextRequest }
+                    color:
+                      | "default"
+                      | "gray"
+                      | "brown"
+                      | "orange"
+                      | "yellow"
+                      | "green"
+                      | "blue"
+                      | "purple"
+                      | "pink"
+                      | "red"
+                  } | null
+                  id: string
+                }
+              | {
+                  type: "multi_select"
+                  multi_select: Array<{
+                    id: StringRequest
                     name: StringRequest
-                    type?: "external"
-                  }
-              >
-              id: string
-            }
-          | { type: "checkbox"; checkbox: boolean; id: string }
-          | {
-              type: "formula"
-              formula:
-                | { type: "string"; string: string | null }
-                | {
-                    type: "date"
-                    date: {
-                      start: string
-                      end: string | null
-                      time_zone: TimeZoneRequest | null
-                    } | null
-                  }
-                | { type: "number"; number: number | null }
-                | { type: "boolean"; boolean: boolean | null }
-              id: string
-            }
-          | { type: "relation"; relation: Array<{ id: string }>; id: string }
-          | { type: "created_time"; created_time: string; id: string }
-          | {
-              type: "created_by"
-              created_by:
-                | { id: IdRequest; object: "user" }
-                | {
-                    type: "person"
-                    person: { email: string }
-                    name: string | null
-                    avatar_url: string | null
-                    id: IdRequest
-                    object: "user"
-                  }
-                | {
-                    type: "bot"
-                    bot:
-                      | EmptyObject
-                      | {
-                          owner:
-                            | {
-                                type: "user"
-                                user:
-                                  | {
-                                      type: "person"
-                                      person: { email: string }
-                                      name: string | null
-                                      avatar_url: string | null
-                                      id: IdRequest
-                                      object: "user"
+                    color:
+                      | "default"
+                      | "gray"
+                      | "brown"
+                      | "orange"
+                      | "yellow"
+                      | "green"
+                      | "blue"
+                      | "purple"
+                      | "pink"
+                      | "red"
+                  }>
+                  id: string
+                }
+              | {
+                  type: "people"
+                  people: Array<
+                    | { id: IdRequest; object: "user" }
+                    | {
+                        type: "person"
+                        person: { email?: string }
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
+                    | {
+                        type: "bot"
+                        bot:
+                          | EmptyObject
+                          | {
+                              owner:
+                                | {
+                                    type: "user"
+                                    user:
+                                      | {
+                                          type: "person"
+                                          person: { email: string }
+                                          name: string | null
+                                          avatar_url: string | null
+                                          id: IdRequest
+                                          object: "user"
+                                        }
+                                      | { id: IdRequest; object: "user" }
+                                  }
+                                | { type: "workspace"; workspace: true }
+                            }
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
+                  >
+                  id: string
+                }
+              | { type: "email"; email: string | null; id: string }
+              | {
+                  type: "phone_number"
+                  phone_number: string | null
+                  id: string
+                }
+              | {
+                  type: "date"
+                  date: {
+                    start: string
+                    end: string | null
+                    time_zone: TimeZoneRequest | null
+                  } | null
+                  id: string
+                }
+              | {
+                  type: "files"
+                  files: Array<
+                    | {
+                        file: { url: string; expiry_time: string }
+                        name: StringRequest
+                        type?: "file"
+                      }
+                    | {
+                        external: { url: TextRequest }
+                        name: StringRequest
+                        type?: "external"
+                      }
+                  >
+                  id: string
+                }
+              | { type: "checkbox"; checkbox: boolean; id: string }
+              | {
+                  type: "formula"
+                  formula:
+                    | { type: "string"; string: string | null }
+                    | {
+                        type: "date"
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
+                        } | null
+                      }
+                    | { type: "number"; number: number | null }
+                    | { type: "boolean"; boolean: boolean | null }
+                  id: string
+                }
+              | {
+                  type: "relation"
+                  relation: Array<{ id: string }>
+                  id: string
+                }
+              | { type: "created_time"; created_time: string; id: string }
+              | {
+                  type: "created_by"
+                  created_by:
+                    | { id: IdRequest; object: "user" }
+                    | {
+                        type: "person"
+                        person: { email?: string }
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
+                    | {
+                        type: "bot"
+                        bot:
+                          | EmptyObject
+                          | {
+                              owner:
+                                | {
+                                    type: "user"
+                                    user:
+                                      | {
+                                          type: "person"
+                                          person: { email: string }
+                                          name: string | null
+                                          avatar_url: string | null
+                                          id: IdRequest
+                                          object: "user"
+                                        }
+                                      | { id: IdRequest; object: "user" }
+                                  }
+                                | { type: "workspace"; workspace: true }
+                            }
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
+                  id: string
+                }
+              | {
+                  type: "last_edited_time"
+                  last_edited_time: string
+                  id: string
+                }
+              | {
+                  type: "last_edited_by"
+                  last_edited_by:
+                    | { id: IdRequest; object: "user" }
+                    | {
+                        type: "person"
+                        person: { email?: string }
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
+                    | {
+                        type: "bot"
+                        bot:
+                          | EmptyObject
+                          | {
+                              owner:
+                                | {
+                                    type: "user"
+                                    user:
+                                      | {
+                                          type: "person"
+                                          person: { email: string }
+                                          name: string | null
+                                          avatar_url: string | null
+                                          id: IdRequest
+                                          object: "user"
+                                        }
+                                      | { id: IdRequest; object: "user" }
+                                  }
+                                | { type: "workspace"; workspace: true }
+                            }
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
+                  id: string
+                }
+              | {
+                  type: "rollup"
+                  rollup:
+                    | {
+                        type: "number"
+                        number: number | null
+                        function:
+                          | "count"
+                          | "count_values"
+                          | "empty"
+                          | "not_empty"
+                          | "unique"
+                          | "show_unique"
+                          | "percent_empty"
+                          | "percent_not_empty"
+                          | "sum"
+                          | "average"
+                          | "median"
+                          | "min"
+                          | "max"
+                          | "range"
+                          | "earliest_date"
+                          | "latest_date"
+                          | "date_range"
+                          | "checked"
+                          | "unchecked"
+                          | "percent_checked"
+                          | "percent_unchecked"
+                          | "show_original"
+                      }
+                    | {
+                        type: "date"
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
+                        } | null
+                        function:
+                          | "count"
+                          | "count_values"
+                          | "empty"
+                          | "not_empty"
+                          | "unique"
+                          | "show_unique"
+                          | "percent_empty"
+                          | "percent_not_empty"
+                          | "sum"
+                          | "average"
+                          | "median"
+                          | "min"
+                          | "max"
+                          | "range"
+                          | "earliest_date"
+                          | "latest_date"
+                          | "date_range"
+                          | "checked"
+                          | "unchecked"
+                          | "percent_checked"
+                          | "percent_unchecked"
+                          | "show_original"
+                      }
+                    | {
+                        type: "array"
+                        array: Array<
+                          | {
+                              type: "title"
+                              title: Array<
+                                | {
+                                    type: "text"
+                                    text: {
+                                      content: string
+                                      link: { url: TextRequest } | null
                                     }
-                                  | { id: IdRequest; object: "user" }
-                              }
-                            | { type: "workspace"; workspace: true }
-                        }
-                    name: string | null
-                    avatar_url: string | null
-                    id: IdRequest
-                    object: "user"
-                  }
-              id: string
-            }
-          | { type: "last_edited_time"; last_edited_time: string; id: string }
-          | {
-              type: "last_edited_by"
-              last_edited_by:
-                | { id: IdRequest; object: "user" }
-                | {
-                    type: "person"
-                    person: { email: string }
-                    name: string | null
-                    avatar_url: string | null
-                    id: IdRequest
-                    object: "user"
-                  }
-                | {
-                    type: "bot"
-                    bot:
-                      | EmptyObject
-                      | {
-                          owner:
-                            | {
-                                type: "user"
-                                user:
-                                  | {
-                                      type: "person"
-                                      person: { email: string }
-                                      name: string | null
-                                      avatar_url: string | null
-                                      id: IdRequest
-                                      object: "user"
+                                    annotations: {
+                                      bold: boolean
+                                      italic: boolean
+                                      strikethrough: boolean
+                                      underline: boolean
+                                      code: boolean
+                                      color:
+                                        | "default"
+                                        | "gray"
+                                        | "brown"
+                                        | "orange"
+                                        | "yellow"
+                                        | "green"
+                                        | "blue"
+                                        | "purple"
+                                        | "pink"
+                                        | "red"
+                                        | "gray_background"
+                                        | "brown_background"
+                                        | "orange_background"
+                                        | "yellow_background"
+                                        | "green_background"
+                                        | "blue_background"
+                                        | "purple_background"
+                                        | "pink_background"
+                                        | "red_background"
                                     }
-                                  | { id: IdRequest; object: "user" }
-                              }
-                            | { type: "workspace"; workspace: true }
-                        }
-                    name: string | null
-                    avatar_url: string | null
-                    id: IdRequest
-                    object: "user"
-                  }
-              id: string
-            }
-          | {
-              type: "rollup"
-              rollup:
-                | {
-                    type: "number"
-                    number: number | null
-                    function:
-                      | "count"
-                      | "count_values"
-                      | "empty"
-                      | "not_empty"
-                      | "unique"
-                      | "show_unique"
-                      | "percent_empty"
-                      | "percent_not_empty"
-                      | "sum"
-                      | "average"
-                      | "median"
-                      | "min"
-                      | "max"
-                      | "range"
-                      | "earliest_date"
-                      | "latest_date"
-                      | "date_range"
-                      | "checked"
-                      | "unchecked"
-                      | "percent_checked"
-                      | "percent_unchecked"
-                      | "show_original"
-                  }
-                | {
-                    type: "date"
-                    date: {
-                      start: string
-                      end: string | null
-                      time_zone: TimeZoneRequest | null
-                    } | null
-                    function:
-                      | "count"
-                      | "count_values"
-                      | "empty"
-                      | "not_empty"
-                      | "unique"
-                      | "show_unique"
-                      | "percent_empty"
-                      | "percent_not_empty"
-                      | "sum"
-                      | "average"
-                      | "median"
-                      | "min"
-                      | "max"
-                      | "range"
-                      | "earliest_date"
-                      | "latest_date"
-                      | "date_range"
-                      | "checked"
-                      | "unchecked"
-                      | "percent_checked"
-                      | "percent_unchecked"
-                      | "show_original"
-                  }
-                | {
-                    type: "array"
-                    array: Array<
-                      | {
-                          type: "title"
-                          title: Array<
-                            | {
-                                type: "text"
-                                text: {
-                                  content: string
-                                  link: { url: TextRequest } | null
-                                }
-                                annotations: {
-                                  bold: boolean
-                                  italic: boolean
-                                  strikethrough: boolean
-                                  underline: boolean
-                                  code: boolean
-                                  color:
-                                    | "default"
-                                    | "gray"
-                                    | "brown"
-                                    | "orange"
-                                    | "yellow"
-                                    | "green"
-                                    | "blue"
-                                    | "purple"
-                                    | "pink"
-                                    | "red"
-                                    | "gray_background"
-                                    | "brown_background"
-                                    | "orange_background"
-                                    | "yellow_background"
-                                    | "green_background"
-                                    | "blue_background"
-                                    | "purple_background"
-                                    | "pink_background"
-                                    | "red_background"
-                                }
-                                plain_text: string
-                                href: string | null
-                              }
-                            | {
-                                type: "mention"
-                                mention:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | { id: IdRequest; object: "user" }
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
+                                    plain_text: string
+                                    href: string | null
+                                  }
+                                | {
+                                    type: "mention"
+                                    mention:
+                                      | {
+                                          type: "user"
+                                          user:
+                                            | { id: IdRequest; object: "user" }
+                                            | {
+                                                type: "person"
+                                                person: { email?: string }
+                                                name: string | null
+                                                avatar_url: string | null
+                                                id: IdRequest
+                                                object: "user"
+                                              }
+                                            | {
+                                                type: "bot"
+                                                bot:
+                                                  | EmptyObject
+                                                  | {
+                                                      owner:
+                                                        | {
+                                                            type: "user"
+                                                            user:
+                                                              | {
+                                                                  type: "person"
+                                                                  person: {
+                                                                    email: string
+                                                                  }
+                                                                  name:
+                                                                    | string
+                                                                    | null
+                                                                  avatar_url:
+                                                                    | string
+                                                                    | null
+                                                                  id: IdRequest
+                                                                  object: "user"
+                                                                }
+                                                              | {
+                                                                  id: IdRequest
+                                                                  object: "user"
+                                                                }
+                                                          }
+                                                        | {
+                                                            type: "workspace"
+                                                            workspace: true
+                                                          }
+                                                    }
+                                                name: string | null
+                                                avatar_url: string | null
+                                                id: IdRequest
+                                                object: "user"
+                                              }
+                                        }
+                                      | {
+                                          type: "date"
+                                          date: {
+                                            start: string
+                                            end: string | null
+                                            time_zone: TimeZoneRequest | null
                                           }
-                                        | {
-                                            type: "bot"
-                                            bot:
-                                              | EmptyObject
-                                              | {
-                                                  owner:
-                                                    | {
-                                                        type: "user"
-                                                        user:
-                                                          | {
-                                                              type: "person"
-                                                              person: {
-                                                                email: string
-                                                              }
-                                                              name:
-                                                                | string
-                                                                | null
-                                                              avatar_url:
-                                                                | string
-                                                                | null
-                                                              id: IdRequest
-                                                              object: "user"
-                                                            }
-                                                          | {
-                                                              id: IdRequest
-                                                              object: "user"
-                                                            }
-                                                      }
-                                                    | {
-                                                        type: "workspace"
-                                                        workspace: true
-                                                      }
-                                                }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
+                                        }
+                                      | {
+                                          type: "link_preview"
+                                          link_preview: { url: TextRequest }
+                                        }
+                                      | {
+                                          type: "page"
+                                          page: { id: IdRequest }
+                                        }
+                                      | {
+                                          type: "database"
+                                          database: { id: IdRequest }
+                                        }
+                                    annotations: {
+                                      bold: boolean
+                                      italic: boolean
+                                      strikethrough: boolean
+                                      underline: boolean
+                                      code: boolean
+                                      color:
+                                        | "default"
+                                        | "gray"
+                                        | "brown"
+                                        | "orange"
+                                        | "yellow"
+                                        | "green"
+                                        | "blue"
+                                        | "purple"
+                                        | "pink"
+                                        | "red"
+                                        | "gray_background"
+                                        | "brown_background"
+                                        | "orange_background"
+                                        | "yellow_background"
+                                        | "green_background"
+                                        | "blue_background"
+                                        | "purple_background"
+                                        | "pink_background"
+                                        | "red_background"
+                                    }
+                                    plain_text: string
+                                    href: string | null
+                                  }
+                                | {
+                                    type: "equation"
+                                    equation: { expression: TextRequest }
+                                    annotations: {
+                                      bold: boolean
+                                      italic: boolean
+                                      strikethrough: boolean
+                                      underline: boolean
+                                      code: boolean
+                                      color:
+                                        | "default"
+                                        | "gray"
+                                        | "brown"
+                                        | "orange"
+                                        | "yellow"
+                                        | "green"
+                                        | "blue"
+                                        | "purple"
+                                        | "pink"
+                                        | "red"
+                                        | "gray_background"
+                                        | "brown_background"
+                                        | "orange_background"
+                                        | "yellow_background"
+                                        | "green_background"
+                                        | "blue_background"
+                                        | "purple_background"
+                                        | "pink_background"
+                                        | "red_background"
+                                    }
+                                    plain_text: string
+                                    href: string | null
+                                  }
+                              >
+                            }
+                          | {
+                              type: "rich_text"
+                              rich_text: Array<
+                                | {
+                                    type: "text"
+                                    text: {
+                                      content: string
+                                      link: { url: TextRequest } | null
+                                    }
+                                    annotations: {
+                                      bold: boolean
+                                      italic: boolean
+                                      strikethrough: boolean
+                                      underline: boolean
+                                      code: boolean
+                                      color:
+                                        | "default"
+                                        | "gray"
+                                        | "brown"
+                                        | "orange"
+                                        | "yellow"
+                                        | "green"
+                                        | "blue"
+                                        | "purple"
+                                        | "pink"
+                                        | "red"
+                                        | "gray_background"
+                                        | "brown_background"
+                                        | "orange_background"
+                                        | "yellow_background"
+                                        | "green_background"
+                                        | "blue_background"
+                                        | "purple_background"
+                                        | "pink_background"
+                                        | "red_background"
+                                    }
+                                    plain_text: string
+                                    href: string | null
+                                  }
+                                | {
+                                    type: "mention"
+                                    mention:
+                                      | {
+                                          type: "user"
+                                          user:
+                                            | { id: IdRequest; object: "user" }
+                                            | {
+                                                type: "person"
+                                                person: { email?: string }
+                                                name: string | null
+                                                avatar_url: string | null
+                                                id: IdRequest
+                                                object: "user"
+                                              }
+                                            | {
+                                                type: "bot"
+                                                bot:
+                                                  | EmptyObject
+                                                  | {
+                                                      owner:
+                                                        | {
+                                                            type: "user"
+                                                            user:
+                                                              | {
+                                                                  type: "person"
+                                                                  person: {
+                                                                    email: string
+                                                                  }
+                                                                  name:
+                                                                    | string
+                                                                    | null
+                                                                  avatar_url:
+                                                                    | string
+                                                                    | null
+                                                                  id: IdRequest
+                                                                  object: "user"
+                                                                }
+                                                              | {
+                                                                  id: IdRequest
+                                                                  object: "user"
+                                                                }
+                                                          }
+                                                        | {
+                                                            type: "workspace"
+                                                            workspace: true
+                                                          }
+                                                    }
+                                                name: string | null
+                                                avatar_url: string | null
+                                                id: IdRequest
+                                                object: "user"
+                                              }
+                                        }
+                                      | {
+                                          type: "date"
+                                          date: {
+                                            start: string
+                                            end: string | null
+                                            time_zone: TimeZoneRequest | null
                                           }
+                                        }
+                                      | {
+                                          type: "link_preview"
+                                          link_preview: { url: TextRequest }
+                                        }
+                                      | {
+                                          type: "page"
+                                          page: { id: IdRequest }
+                                        }
+                                      | {
+                                          type: "database"
+                                          database: { id: IdRequest }
+                                        }
+                                    annotations: {
+                                      bold: boolean
+                                      italic: boolean
+                                      strikethrough: boolean
+                                      underline: boolean
+                                      code: boolean
+                                      color:
+                                        | "default"
+                                        | "gray"
+                                        | "brown"
+                                        | "orange"
+                                        | "yellow"
+                                        | "green"
+                                        | "blue"
+                                        | "purple"
+                                        | "pink"
+                                        | "red"
+                                        | "gray_background"
+                                        | "brown_background"
+                                        | "orange_background"
+                                        | "yellow_background"
+                                        | "green_background"
+                                        | "blue_background"
+                                        | "purple_background"
+                                        | "pink_background"
+                                        | "red_background"
                                     }
-                                  | {
-                                      type: "date"
-                                      date: {
-                                        start: string
-                                        end: string | null
-                                        time_zone: TimeZoneRequest | null
-                                      }
+                                    plain_text: string
+                                    href: string | null
+                                  }
+                                | {
+                                    type: "equation"
+                                    equation: { expression: TextRequest }
+                                    annotations: {
+                                      bold: boolean
+                                      italic: boolean
+                                      strikethrough: boolean
+                                      underline: boolean
+                                      code: boolean
+                                      color:
+                                        | "default"
+                                        | "gray"
+                                        | "brown"
+                                        | "orange"
+                                        | "yellow"
+                                        | "green"
+                                        | "blue"
+                                        | "purple"
+                                        | "pink"
+                                        | "red"
+                                        | "gray_background"
+                                        | "brown_background"
+                                        | "orange_background"
+                                        | "yellow_background"
+                                        | "green_background"
+                                        | "blue_background"
+                                        | "purple_background"
+                                        | "pink_background"
+                                        | "red_background"
                                     }
-                                  | {
-                                      type: "link_preview"
-                                      link_preview: { url: TextRequest }
-                                    }
-                                  | { type: "page"; page: { id: IdRequest } }
-                                  | {
-                                      type: "database"
-                                      database: { id: IdRequest }
-                                    }
-                                annotations: {
-                                  bold: boolean
-                                  italic: boolean
-                                  strikethrough: boolean
-                                  underline: boolean
-                                  code: boolean
-                                  color:
-                                    | "default"
-                                    | "gray"
-                                    | "brown"
-                                    | "orange"
-                                    | "yellow"
-                                    | "green"
-                                    | "blue"
-                                    | "purple"
-                                    | "pink"
-                                    | "red"
-                                    | "gray_background"
-                                    | "brown_background"
-                                    | "orange_background"
-                                    | "yellow_background"
-                                    | "green_background"
-                                    | "blue_background"
-                                    | "purple_background"
-                                    | "pink_background"
-                                    | "red_background"
-                                }
-                                plain_text: string
-                                href: string | null
-                              }
-                            | {
-                                type: "equation"
-                                equation: { expression: TextRequest }
-                                annotations: {
-                                  bold: boolean
-                                  italic: boolean
-                                  strikethrough: boolean
-                                  underline: boolean
-                                  code: boolean
-                                  color:
-                                    | "default"
-                                    | "gray"
-                                    | "brown"
-                                    | "orange"
-                                    | "yellow"
-                                    | "green"
-                                    | "blue"
-                                    | "purple"
-                                    | "pink"
-                                    | "red"
-                                    | "gray_background"
-                                    | "brown_background"
-                                    | "orange_background"
-                                    | "yellow_background"
-                                    | "green_background"
-                                    | "blue_background"
-                                    | "purple_background"
-                                    | "pink_background"
-                                    | "red_background"
-                                }
-                                plain_text: string
-                                href: string | null
-                              }
-                          >
-                        }
-                      | {
-                          type: "rich_text"
-                          rich_text: Array<
-                            | {
-                                type: "text"
-                                text: {
-                                  content: string
-                                  link: { url: TextRequest } | null
-                                }
-                                annotations: {
-                                  bold: boolean
-                                  italic: boolean
-                                  strikethrough: boolean
-                                  underline: boolean
-                                  code: boolean
-                                  color:
-                                    | "default"
-                                    | "gray"
-                                    | "brown"
-                                    | "orange"
-                                    | "yellow"
-                                    | "green"
-                                    | "blue"
-                                    | "purple"
-                                    | "pink"
-                                    | "red"
-                                    | "gray_background"
-                                    | "brown_background"
-                                    | "orange_background"
-                                    | "yellow_background"
-                                    | "green_background"
-                                    | "blue_background"
-                                    | "purple_background"
-                                    | "pink_background"
-                                    | "red_background"
-                                }
-                                plain_text: string
-                                href: string | null
-                              }
-                            | {
-                                type: "mention"
-                                mention:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | { id: IdRequest; object: "user" }
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | {
-                                            type: "bot"
-                                            bot:
-                                              | EmptyObject
-                                              | {
-                                                  owner:
-                                                    | {
-                                                        type: "user"
-                                                        user:
-                                                          | {
-                                                              type: "person"
-                                                              person: {
-                                                                email: string
-                                                              }
-                                                              name:
-                                                                | string
-                                                                | null
-                                                              avatar_url:
-                                                                | string
-                                                                | null
-                                                              id: IdRequest
-                                                              object: "user"
-                                                            }
-                                                          | {
-                                                              id: IdRequest
-                                                              object: "user"
-                                                            }
-                                                      }
-                                                    | {
-                                                        type: "workspace"
-                                                        workspace: true
-                                                      }
-                                                }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                    }
-                                  | {
-                                      type: "date"
-                                      date: {
-                                        start: string
-                                        end: string | null
-                                        time_zone: TimeZoneRequest | null
-                                      }
-                                    }
-                                  | {
-                                      type: "link_preview"
-                                      link_preview: { url: TextRequest }
-                                    }
-                                  | { type: "page"; page: { id: IdRequest } }
-                                  | {
-                                      type: "database"
-                                      database: { id: IdRequest }
-                                    }
-                                annotations: {
-                                  bold: boolean
-                                  italic: boolean
-                                  strikethrough: boolean
-                                  underline: boolean
-                                  code: boolean
-                                  color:
-                                    | "default"
-                                    | "gray"
-                                    | "brown"
-                                    | "orange"
-                                    | "yellow"
-                                    | "green"
-                                    | "blue"
-                                    | "purple"
-                                    | "pink"
-                                    | "red"
-                                    | "gray_background"
-                                    | "brown_background"
-                                    | "orange_background"
-                                    | "yellow_background"
-                                    | "green_background"
-                                    | "blue_background"
-                                    | "purple_background"
-                                    | "pink_background"
-                                    | "red_background"
-                                }
-                                plain_text: string
-                                href: string | null
-                              }
-                            | {
-                                type: "equation"
-                                equation: { expression: TextRequest }
-                                annotations: {
-                                  bold: boolean
-                                  italic: boolean
-                                  strikethrough: boolean
-                                  underline: boolean
-                                  code: boolean
-                                  color:
-                                    | "default"
-                                    | "gray"
-                                    | "brown"
-                                    | "orange"
-                                    | "yellow"
-                                    | "green"
-                                    | "blue"
-                                    | "purple"
-                                    | "pink"
-                                    | "red"
-                                    | "gray_background"
-                                    | "brown_background"
-                                    | "orange_background"
-                                    | "yellow_background"
-                                    | "green_background"
-                                    | "blue_background"
-                                    | "purple_background"
-                                    | "pink_background"
-                                    | "red_background"
-                                }
-                                plain_text: string
-                                href: string | null
-                              }
-                          >
-                        }
-                      | { type: "number"; number: number | null }
-                      | { type: "url"; url: string | null }
-                      | {
-                          type: "select"
-                          select: {
-                            id: StringRequest
-                            name: StringRequest
-                            color:
-                              | "default"
-                              | "gray"
-                              | "brown"
-                              | "orange"
-                              | "yellow"
-                              | "green"
-                              | "blue"
-                              | "purple"
-                              | "pink"
-                              | "red"
-                          } | null
-                        }
-                      | {
-                          type: "multi_select"
-                          multi_select: Array<{
-                            id: StringRequest
-                            name: StringRequest
-                            color:
-                              | "default"
-                              | "gray"
-                              | "brown"
-                              | "orange"
-                              | "yellow"
-                              | "green"
-                              | "blue"
-                              | "purple"
-                              | "pink"
-                              | "red"
-                          }>
-                        }
-                      | {
-                          type: "people"
-                          people: Array<
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | EmptyObject
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                          >
-                        }
-                      | { type: "email"; email: string | null }
-                      | { type: "phone_number"; phone_number: string | null }
-                      | {
-                          type: "date"
-                          date: {
-                            start: string
-                            end: string | null
-                            time_zone: TimeZoneRequest | null
-                          } | null
-                        }
-                      | {
-                          type: "files"
-                          files: Array<
-                            | {
-                                file: { url: string; expiry_time: string }
+                                    plain_text: string
+                                    href: string | null
+                                  }
+                              >
+                            }
+                          | { type: "number"; number: number | null }
+                          | { type: "url"; url: string | null }
+                          | {
+                              type: "select"
+                              select: {
+                                id: StringRequest
                                 name: StringRequest
-                                type?: "file"
-                              }
-                            | {
-                                external: { url: TextRequest }
+                                color:
+                                  | "default"
+                                  | "gray"
+                                  | "brown"
+                                  | "orange"
+                                  | "yellow"
+                                  | "green"
+                                  | "blue"
+                                  | "purple"
+                                  | "pink"
+                                  | "red"
+                              } | null
+                            }
+                          | {
+                              type: "multi_select"
+                              multi_select: Array<{
+                                id: StringRequest
                                 name: StringRequest
-                                type?: "external"
-                              }
-                          >
-                        }
-                      | { type: "checkbox"; checkbox: boolean }
-                      | {
-                          type: "formula"
-                          formula:
-                            | { type: "string"; string: string | null }
-                            | {
-                                type: "date"
-                                date: {
-                                  start: string
-                                  end: string | null
-                                  time_zone: TimeZoneRequest | null
-                                } | null
-                              }
-                            | { type: "number"; number: number | null }
-                            | { type: "boolean"; boolean: boolean | null }
-                        }
-                      | { type: "relation"; relation: Array<{ id: string }> }
-                      | { type: "created_time"; created_time: string }
-                      | {
-                          type: "created_by"
-                          created_by:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | EmptyObject
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                      | { type: "last_edited_time"; last_edited_time: string }
-                      | {
-                          type: "last_edited_by"
-                          last_edited_by:
-                            | { id: IdRequest; object: "user" }
-                            | {
-                                type: "person"
-                                person: { email: string }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                            | {
-                                type: "bot"
-                                bot:
-                                  | EmptyObject
-                                  | {
-                                      owner:
-                                        | {
-                                            type: "user"
-                                            user:
-                                              | {
-                                                  type: "person"
-                                                  person: { email: string }
-                                                  name: string | null
-                                                  avatar_url: string | null
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                              | {
-                                                  id: IdRequest
-                                                  object: "user"
-                                                }
-                                          }
-                                        | { type: "workspace"; workspace: true }
-                                    }
-                                name: string | null
-                                avatar_url: string | null
-                                id: IdRequest
-                                object: "user"
-                              }
-                        }
-                    >
-                    function:
-                      | "count"
-                      | "count_values"
-                      | "empty"
-                      | "not_empty"
-                      | "unique"
-                      | "show_unique"
-                      | "percent_empty"
-                      | "percent_not_empty"
-                      | "sum"
-                      | "average"
-                      | "median"
-                      | "min"
-                      | "max"
-                      | "range"
-                      | "earliest_date"
-                      | "latest_date"
-                      | "date_range"
-                      | "checked"
-                      | "unchecked"
-                      | "percent_checked"
-                      | "percent_unchecked"
-                      | "show_original"
-                  }
-                | {
-                    type: "unsupported"
-                    unsupported: EmptyObject
-                    function:
-                      | "count"
-                      | "count_values"
-                      | "empty"
-                      | "not_empty"
-                      | "unique"
-                      | "show_unique"
-                      | "percent_empty"
-                      | "percent_not_empty"
-                      | "sum"
-                      | "average"
-                      | "median"
-                      | "min"
-                      | "max"
-                      | "range"
-                      | "earliest_date"
-                      | "latest_date"
-                      | "date_range"
-                      | "checked"
-                      | "unchecked"
-                      | "percent_checked"
-                      | "percent_unchecked"
-                      | "show_original"
-                  }
-              id: string
-            }
-        >
-        icon:
-          | { type: "emoji"; emoji: EmojiRequest }
-          | null
-          | { type: "external"; external: { url: TextRequest } }
-          | null
-          | { type: "file"; file: { url: string; expiry_time: string } }
-          | null
-        cover:
-          | { type: "external"; external: { url: TextRequest } }
-          | null
-          | { type: "file"; file: { url: string; expiry_time: string } }
-          | null
-        object: "page"
-        id: string
-        created_time: string
-        last_edited_time: string
-        archived: boolean
-        url: string
-      }>
+                                color:
+                                  | "default"
+                                  | "gray"
+                                  | "brown"
+                                  | "orange"
+                                  | "yellow"
+                                  | "green"
+                                  | "blue"
+                                  | "purple"
+                                  | "pink"
+                                  | "red"
+                              }>
+                            }
+                          | {
+                              type: "people"
+                              people: Array<
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email?: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot:
+                                      | EmptyObject
+                                      | {
+                                          owner:
+                                            | {
+                                                type: "user"
+                                                user:
+                                                  | {
+                                                      type: "person"
+                                                      person: { email: string }
+                                                      name: string | null
+                                                      avatar_url: string | null
+                                                      id: IdRequest
+                                                      object: "user"
+                                                    }
+                                                  | {
+                                                      id: IdRequest
+                                                      object: "user"
+                                                    }
+                                              }
+                                            | {
+                                                type: "workspace"
+                                                workspace: true
+                                              }
+                                        }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                              >
+                            }
+                          | { type: "email"; email: string | null }
+                          | {
+                              type: "phone_number"
+                              phone_number: string | null
+                            }
+                          | {
+                              type: "date"
+                              date: {
+                                start: string
+                                end: string | null
+                                time_zone: TimeZoneRequest | null
+                              } | null
+                            }
+                          | {
+                              type: "files"
+                              files: Array<
+                                | {
+                                    file: { url: string; expiry_time: string }
+                                    name: StringRequest
+                                    type?: "file"
+                                  }
+                                | {
+                                    external: { url: TextRequest }
+                                    name: StringRequest
+                                    type?: "external"
+                                  }
+                              >
+                            }
+                          | { type: "checkbox"; checkbox: boolean }
+                          | {
+                              type: "formula"
+                              formula:
+                                | { type: "string"; string: string | null }
+                                | {
+                                    type: "date"
+                                    date: {
+                                      start: string
+                                      end: string | null
+                                      time_zone: TimeZoneRequest | null
+                                    } | null
+                                  }
+                                | { type: "number"; number: number | null }
+                                | { type: "boolean"; boolean: boolean | null }
+                            }
+                          | {
+                              type: "relation"
+                              relation: Array<{ id: string }>
+                            }
+                          | { type: "created_time"; created_time: string }
+                          | {
+                              type: "created_by"
+                              created_by:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email?: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot:
+                                      | EmptyObject
+                                      | {
+                                          owner:
+                                            | {
+                                                type: "user"
+                                                user:
+                                                  | {
+                                                      type: "person"
+                                                      person: { email: string }
+                                                      name: string | null
+                                                      avatar_url: string | null
+                                                      id: IdRequest
+                                                      object: "user"
+                                                    }
+                                                  | {
+                                                      id: IdRequest
+                                                      object: "user"
+                                                    }
+                                              }
+                                            | {
+                                                type: "workspace"
+                                                workspace: true
+                                              }
+                                        }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                          | {
+                              type: "last_edited_time"
+                              last_edited_time: string
+                            }
+                          | {
+                              type: "last_edited_by"
+                              last_edited_by:
+                                | { id: IdRequest; object: "user" }
+                                | {
+                                    type: "person"
+                                    person: { email?: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | {
+                                    type: "bot"
+                                    bot:
+                                      | EmptyObject
+                                      | {
+                                          owner:
+                                            | {
+                                                type: "user"
+                                                user:
+                                                  | {
+                                                      type: "person"
+                                                      person: { email: string }
+                                                      name: string | null
+                                                      avatar_url: string | null
+                                                      id: IdRequest
+                                                      object: "user"
+                                                    }
+                                                  | {
+                                                      id: IdRequest
+                                                      object: "user"
+                                                    }
+                                              }
+                                            | {
+                                                type: "workspace"
+                                                workspace: true
+                                              }
+                                        }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                            }
+                        >
+                        function:
+                          | "count"
+                          | "count_values"
+                          | "empty"
+                          | "not_empty"
+                          | "unique"
+                          | "show_unique"
+                          | "percent_empty"
+                          | "percent_not_empty"
+                          | "sum"
+                          | "average"
+                          | "median"
+                          | "min"
+                          | "max"
+                          | "range"
+                          | "earliest_date"
+                          | "latest_date"
+                          | "date_range"
+                          | "checked"
+                          | "unchecked"
+                          | "percent_checked"
+                          | "percent_unchecked"
+                          | "show_original"
+                      }
+                    | {
+                        type: "unsupported"
+                        unsupported: EmptyObject
+                        function:
+                          | "count"
+                          | "count_values"
+                          | "empty"
+                          | "not_empty"
+                          | "unique"
+                          | "show_unique"
+                          | "percent_empty"
+                          | "percent_not_empty"
+                          | "sum"
+                          | "average"
+                          | "median"
+                          | "min"
+                          | "max"
+                          | "range"
+                          | "earliest_date"
+                          | "latest_date"
+                          | "date_range"
+                          | "checked"
+                          | "unchecked"
+                          | "percent_checked"
+                          | "percent_unchecked"
+                          | "show_original"
+                      }
+                  id: string
+                }
+            >
+            icon:
+              | { type: "emoji"; emoji: EmojiRequest }
+              | null
+              | { type: "external"; external: { url: TextRequest } }
+              | null
+              | { type: "file"; file: { url: string; expiry_time: string } }
+              | null
+            cover:
+              | { type: "external"; external: { url: TextRequest } }
+              | null
+              | { type: "file"; file: { url: string; expiry_time: string } }
+              | null
+            object: "page"
+            id: string
+            created_time: string
+            last_edited_time: string
+            archived: boolean
+            url: string
+          }
+        | { object: "page"; id: string }
+      >
       next_cursor: string | null
       has_more: boolean
     }
@@ -52568,7 +53121,7 @@ export type ListDatabasesResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -52734,7 +53287,7 @@ export type ListDatabasesResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -52896,7 +53449,7 @@ export type ListDatabasesResponse =
                     | { id: IdRequest; object: "user" }
                     | {
                         type: "person"
-                        person: { email: string }
+                        person: { email?: string }
                         name: string | null
                         avatar_url: string | null
                         id: IdRequest
@@ -52979,7 +53532,7 @@ export type ListDatabasesResponse =
                     | { id: IdRequest; object: "user" }
                     | {
                         type: "person"
-                        person: { email: string }
+                        person: { email?: string }
                         name: string | null
                         avatar_url: string | null
                         id: IdRequest
@@ -53019,7 +53572,7 @@ export type ListDatabasesResponse =
                     | { id: IdRequest; object: "user" }
                     | {
                         type: "person"
-                        person: { email: string }
+                        person: { email?: string }
                         name: string | null
                         avatar_url: string | null
                         id: IdRequest
@@ -53105,739 +53658,1159 @@ export type ListDatabasesResponse =
               | "show_original"
           }
       object: "list"
-      results: Array<{
-        title: Array<
-          | {
-              type: "text"
-              text: { content: string; link: { url: TextRequest } | null }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color:
-                  | "default"
-                  | "gray"
-                  | "brown"
-                  | "orange"
-                  | "yellow"
-                  | "green"
-                  | "blue"
-                  | "purple"
-                  | "pink"
-                  | "red"
-                  | "gray_background"
-                  | "brown_background"
-                  | "orange_background"
-                  | "yellow_background"
-                  | "green_background"
-                  | "blue_background"
-                  | "purple_background"
-                  | "pink_background"
-                  | "red_background"
-              }
-              plain_text: string
-              href: string | null
-            }
-          | {
-              type: "mention"
-              mention:
-                | {
-                    type: "user"
-                    user:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | EmptyObject
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
+      results: Array<
+        | {
+            object: "database"
+            id: string
+            properties: Record<
+              string,
+              | {
+                  type: "number"
+                  number: {
+                    format:
+                      | "number"
+                      | "number_with_commas"
+                      | "percent"
+                      | "dollar"
+                      | "canadian_dollar"
+                      | "euro"
+                      | "pound"
+                      | "yen"
+                      | "ruble"
+                      | "rupee"
+                      | "won"
+                      | "yuan"
+                      | "real"
+                      | "lira"
+                      | "rupiah"
+                      | "franc"
+                      | "hong_kong_dollar"
+                      | "new_zealand_dollar"
+                      | "krona"
+                      | "norwegian_krone"
+                      | "mexican_peso"
+                      | "rand"
+                      | "new_taiwan_dollar"
+                      | "danish_krone"
+                      | "zloty"
+                      | "baht"
+                      | "forint"
+                      | "koruna"
+                      | "shekel"
+                      | "chilean_peso"
+                      | "philippine_peso"
+                      | "dirham"
+                      | "colombian_peso"
+                      | "riyal"
+                      | "ringgit"
+                      | "leu"
+                      | "argentine_peso"
+                      | "uruguayan_peso"
                   }
-                | {
-                    type: "date"
-                    date: {
-                      start: string
-                      end: string | null
-                      time_zone: TimeZoneRequest | null
-                    }
+                  id: string
+                  name: string
+                }
+              | {
+                  type: "formula"
+                  formula: { expression: string }
+                  id: string
+                  name: string
+                }
+              | {
+                  type: "select"
+                  select: {
+                    options: Array<{
+                      name: StringRequest
+                      id?: StringRequest
+                      color?:
+                        | "default"
+                        | "gray"
+                        | "brown"
+                        | "orange"
+                        | "yellow"
+                        | "green"
+                        | "blue"
+                        | "purple"
+                        | "pink"
+                        | "red"
+                    }>
                   }
-                | { type: "link_preview"; link_preview: { url: TextRequest } }
-                | { type: "page"; page: { id: IdRequest } }
-                | { type: "database"; database: { id: IdRequest } }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color:
-                  | "default"
-                  | "gray"
-                  | "brown"
-                  | "orange"
-                  | "yellow"
-                  | "green"
-                  | "blue"
-                  | "purple"
-                  | "pink"
-                  | "red"
-                  | "gray_background"
-                  | "brown_background"
-                  | "orange_background"
-                  | "yellow_background"
-                  | "green_background"
-                  | "blue_background"
-                  | "purple_background"
-                  | "pink_background"
-                  | "red_background"
-              }
-              plain_text: string
-              href: string | null
-            }
-          | {
-              type: "equation"
-              equation: { expression: TextRequest }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color:
-                  | "default"
-                  | "gray"
-                  | "brown"
-                  | "orange"
-                  | "yellow"
-                  | "green"
-                  | "blue"
-                  | "purple"
-                  | "pink"
-                  | "red"
-                  | "gray_background"
-                  | "brown_background"
-                  | "orange_background"
-                  | "yellow_background"
-                  | "green_background"
-                  | "blue_background"
-                  | "purple_background"
-                  | "pink_background"
-                  | "red_background"
-              }
-              plain_text: string
-              href: string | null
-            }
-        >
-        icon:
-          | { type: "emoji"; emoji: EmojiRequest }
-          | null
-          | { type: "external"; external: { url: TextRequest } }
-          | null
-          | { type: "file"; file: { url: string; expiry_time: string } }
-          | null
-        cover:
-          | { type: "external"; external: { url: TextRequest } }
-          | null
-          | { type: "file"; file: { url: string; expiry_time: string } }
-          | null
-        properties: Record<
-          string,
-          | {
-              type: "number"
-              number: {
-                format:
-                  | "number"
-                  | "number_with_commas"
-                  | "percent"
-                  | "dollar"
-                  | "canadian_dollar"
-                  | "euro"
-                  | "pound"
-                  | "yen"
-                  | "ruble"
-                  | "rupee"
-                  | "won"
-                  | "yuan"
-                  | "real"
-                  | "lira"
-                  | "rupiah"
-                  | "franc"
-                  | "hong_kong_dollar"
-                  | "new_zealand_dollar"
-                  | "krona"
-                  | "norwegian_krone"
-                  | "mexican_peso"
-                  | "rand"
-                  | "new_taiwan_dollar"
-                  | "danish_krone"
-                  | "zloty"
-                  | "baht"
-                  | "forint"
-                  | "koruna"
-                  | "shekel"
-                  | "chilean_peso"
-                  | "philippine_peso"
-                  | "dirham"
-                  | "colombian_peso"
-                  | "riyal"
-                  | "ringgit"
-                  | "leu"
-                  | "argentine_peso"
-                  | "uruguayan_peso"
-              }
-              id: string
-              name: string
-            }
-          | {
-              type: "formula"
-              formula: { expression: string }
-              id: string
-              name: string
-            }
-          | {
-              type: "select"
-              select: {
-                options: Array<{
-                  name: StringRequest
-                  id?: StringRequest
-                  color?:
-                    | "default"
-                    | "gray"
-                    | "brown"
-                    | "orange"
-                    | "yellow"
-                    | "green"
-                    | "blue"
-                    | "purple"
-                    | "pink"
-                    | "red"
-                }>
-              }
-              id: string
-              name: string
-            }
-          | {
-              type: "multi_select"
-              multi_select: {
-                options: Array<{
-                  name: StringRequest
-                  id?: StringRequest
-                  color?:
-                    | "default"
-                    | "gray"
-                    | "brown"
-                    | "orange"
-                    | "yellow"
-                    | "green"
-                    | "blue"
-                    | "purple"
-                    | "pink"
-                    | "red"
-                }>
-              }
-              id: string
-              name: string
-            }
-          | {
-              type: "relation"
-              relation: {
-                database_id: IdRequest
-                synced_property_id: StringRequest
-                synced_property_name: StringRequest
-              }
-              id: string
-              name: string
-            }
-          | {
-              type: "rollup"
-              rollup: {
-                rollup_property_name: string
-                relation_property_name: string
-                rollup_property_id: string
-                relation_property_id: string
-                function:
-                  | "count"
-                  | "count_values"
-                  | "empty"
-                  | "not_empty"
-                  | "unique"
-                  | "show_unique"
-                  | "percent_empty"
-                  | "percent_not_empty"
-                  | "sum"
-                  | "average"
-                  | "median"
-                  | "min"
-                  | "max"
-                  | "range"
-                  | "earliest_date"
-                  | "latest_date"
-                  | "date_range"
-                  | "checked"
-                  | "unchecked"
-                  | "percent_checked"
-                  | "percent_unchecked"
-                  | "show_original"
-              }
-              id: string
-              name: string
-            }
-          | { type: "title"; title: EmptyObject; id: string; name: string }
-          | {
-              type: "rich_text"
-              rich_text: EmptyObject
-              id: string
-              name: string
-            }
-          | { type: "url"; url: EmptyObject; id: string; name: string }
-          | { type: "people"; people: EmptyObject; id: string; name: string }
-          | { type: "files"; files: EmptyObject; id: string; name: string }
-          | { type: "email"; email: EmptyObject; id: string; name: string }
-          | {
-              type: "phone_number"
-              phone_number: EmptyObject
-              id: string
-              name: string
-            }
-          | { type: "date"; date: EmptyObject; id: string; name: string }
-          | {
-              type: "checkbox"
-              checkbox: EmptyObject
-              id: string
-              name: string
-            }
-          | {
-              type: "created_by"
-              created_by: EmptyObject
-              id: string
-              name: string
-            }
-          | {
-              type: "created_time"
-              created_time: EmptyObject
-              id: string
-              name: string
-            }
-          | {
-              type: "last_edited_by"
-              last_edited_by: EmptyObject
-              id: string
-              name: string
-            }
-          | {
-              type: "last_edited_time"
-              last_edited_time: EmptyObject
-              id: string
-              name: string
-            }
-        >
-        parent:
-          | { type: "page_id"; page_id: string }
-          | { type: "workspace"; workspace: true }
-        object: "database"
-        id: string
-        created_time: string
-        last_edited_time: string
-        url: string
-      }>
+                  id: string
+                  name: string
+                }
+              | {
+                  type: "multi_select"
+                  multi_select: {
+                    options: Array<{
+                      name: StringRequest
+                      id?: StringRequest
+                      color?:
+                        | "default"
+                        | "gray"
+                        | "brown"
+                        | "orange"
+                        | "yellow"
+                        | "green"
+                        | "blue"
+                        | "purple"
+                        | "pink"
+                        | "red"
+                    }>
+                  }
+                  id: string
+                  name: string
+                }
+              | {
+                  type: "relation"
+                  relation: {
+                    database_id: IdRequest
+                    synced_property_id: StringRequest
+                    synced_property_name: StringRequest
+                  }
+                  id: string
+                  name: string
+                }
+              | {
+                  type: "rollup"
+                  rollup: {
+                    rollup_property_name: string
+                    relation_property_name: string
+                    rollup_property_id: string
+                    relation_property_id: string
+                    function:
+                      | "count"
+                      | "count_values"
+                      | "empty"
+                      | "not_empty"
+                      | "unique"
+                      | "show_unique"
+                      | "percent_empty"
+                      | "percent_not_empty"
+                      | "sum"
+                      | "average"
+                      | "median"
+                      | "min"
+                      | "max"
+                      | "range"
+                      | "earliest_date"
+                      | "latest_date"
+                      | "date_range"
+                      | "checked"
+                      | "unchecked"
+                      | "percent_checked"
+                      | "percent_unchecked"
+                      | "show_original"
+                  }
+                  id: string
+                  name: string
+                }
+              | { type: "title"; title: EmptyObject; id: string; name: string }
+              | {
+                  type: "rich_text"
+                  rich_text: EmptyObject
+                  id: string
+                  name: string
+                }
+              | { type: "url"; url: EmptyObject; id: string; name: string }
+              | {
+                  type: "people"
+                  people: EmptyObject
+                  id: string
+                  name: string
+                }
+              | { type: "files"; files: EmptyObject; id: string; name: string }
+              | { type: "email"; email: EmptyObject; id: string; name: string }
+              | {
+                  type: "phone_number"
+                  phone_number: EmptyObject
+                  id: string
+                  name: string
+                }
+              | { type: "date"; date: EmptyObject; id: string; name: string }
+              | {
+                  type: "checkbox"
+                  checkbox: EmptyObject
+                  id: string
+                  name: string
+                }
+              | {
+                  type: "created_by"
+                  created_by: EmptyObject
+                  id: string
+                  name: string
+                }
+              | {
+                  type: "created_time"
+                  created_time: EmptyObject
+                  id: string
+                  name: string
+                }
+              | {
+                  type: "last_edited_by"
+                  last_edited_by: EmptyObject
+                  id: string
+                  name: string
+                }
+              | {
+                  type: "last_edited_time"
+                  last_edited_time: EmptyObject
+                  id: string
+                  name: string
+                }
+            >
+          }
+        | {
+            title: Array<
+              | {
+                  type: "text"
+                  text: { content: string; link: { url: TextRequest } | null }
+                  annotations: {
+                    bold: boolean
+                    italic: boolean
+                    strikethrough: boolean
+                    underline: boolean
+                    code: boolean
+                    color:
+                      | "default"
+                      | "gray"
+                      | "brown"
+                      | "orange"
+                      | "yellow"
+                      | "green"
+                      | "blue"
+                      | "purple"
+                      | "pink"
+                      | "red"
+                      | "gray_background"
+                      | "brown_background"
+                      | "orange_background"
+                      | "yellow_background"
+                      | "green_background"
+                      | "blue_background"
+                      | "purple_background"
+                      | "pink_background"
+                      | "red_background"
+                  }
+                  plain_text: string
+                  href: string | null
+                }
+              | {
+                  type: "mention"
+                  mention:
+                    | {
+                        type: "user"
+                        user:
+                          | { id: IdRequest; object: "user" }
+                          | {
+                              type: "person"
+                              person: { email?: string }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                          | {
+                              type: "bot"
+                              bot:
+                                | EmptyObject
+                                | {
+                                    owner:
+                                      | {
+                                          type: "user"
+                                          user:
+                                            | {
+                                                type: "person"
+                                                person: { email: string }
+                                                name: string | null
+                                                avatar_url: string | null
+                                                id: IdRequest
+                                                object: "user"
+                                              }
+                                            | { id: IdRequest; object: "user" }
+                                        }
+                                      | { type: "workspace"; workspace: true }
+                                  }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                      }
+                    | {
+                        type: "date"
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
+                        }
+                      }
+                    | {
+                        type: "link_preview"
+                        link_preview: { url: TextRequest }
+                      }
+                    | { type: "page"; page: { id: IdRequest } }
+                    | { type: "database"; database: { id: IdRequest } }
+                  annotations: {
+                    bold: boolean
+                    italic: boolean
+                    strikethrough: boolean
+                    underline: boolean
+                    code: boolean
+                    color:
+                      | "default"
+                      | "gray"
+                      | "brown"
+                      | "orange"
+                      | "yellow"
+                      | "green"
+                      | "blue"
+                      | "purple"
+                      | "pink"
+                      | "red"
+                      | "gray_background"
+                      | "brown_background"
+                      | "orange_background"
+                      | "yellow_background"
+                      | "green_background"
+                      | "blue_background"
+                      | "purple_background"
+                      | "pink_background"
+                      | "red_background"
+                  }
+                  plain_text: string
+                  href: string | null
+                }
+              | {
+                  type: "equation"
+                  equation: { expression: TextRequest }
+                  annotations: {
+                    bold: boolean
+                    italic: boolean
+                    strikethrough: boolean
+                    underline: boolean
+                    code: boolean
+                    color:
+                      | "default"
+                      | "gray"
+                      | "brown"
+                      | "orange"
+                      | "yellow"
+                      | "green"
+                      | "blue"
+                      | "purple"
+                      | "pink"
+                      | "red"
+                      | "gray_background"
+                      | "brown_background"
+                      | "orange_background"
+                      | "yellow_background"
+                      | "green_background"
+                      | "blue_background"
+                      | "purple_background"
+                      | "pink_background"
+                      | "red_background"
+                  }
+                  plain_text: string
+                  href: string | null
+                }
+            >
+            icon:
+              | { type: "emoji"; emoji: EmojiRequest }
+              | null
+              | { type: "external"; external: { url: TextRequest } }
+              | null
+              | { type: "file"; file: { url: string; expiry_time: string } }
+              | null
+            cover:
+              | { type: "external"; external: { url: TextRequest } }
+              | null
+              | { type: "file"; file: { url: string; expiry_time: string } }
+              | null
+            properties: Record<
+              string,
+              | {
+                  type: "number"
+                  number: {
+                    format:
+                      | "number"
+                      | "number_with_commas"
+                      | "percent"
+                      | "dollar"
+                      | "canadian_dollar"
+                      | "euro"
+                      | "pound"
+                      | "yen"
+                      | "ruble"
+                      | "rupee"
+                      | "won"
+                      | "yuan"
+                      | "real"
+                      | "lira"
+                      | "rupiah"
+                      | "franc"
+                      | "hong_kong_dollar"
+                      | "new_zealand_dollar"
+                      | "krona"
+                      | "norwegian_krone"
+                      | "mexican_peso"
+                      | "rand"
+                      | "new_taiwan_dollar"
+                      | "danish_krone"
+                      | "zloty"
+                      | "baht"
+                      | "forint"
+                      | "koruna"
+                      | "shekel"
+                      | "chilean_peso"
+                      | "philippine_peso"
+                      | "dirham"
+                      | "colombian_peso"
+                      | "riyal"
+                      | "ringgit"
+                      | "leu"
+                      | "argentine_peso"
+                      | "uruguayan_peso"
+                  }
+                  id: string
+                  name: string
+                }
+              | {
+                  type: "formula"
+                  formula: { expression: string }
+                  id: string
+                  name: string
+                }
+              | {
+                  type: "select"
+                  select: {
+                    options: Array<{
+                      name: StringRequest
+                      id?: StringRequest
+                      color?:
+                        | "default"
+                        | "gray"
+                        | "brown"
+                        | "orange"
+                        | "yellow"
+                        | "green"
+                        | "blue"
+                        | "purple"
+                        | "pink"
+                        | "red"
+                    }>
+                  }
+                  id: string
+                  name: string
+                }
+              | {
+                  type: "multi_select"
+                  multi_select: {
+                    options: Array<{
+                      name: StringRequest
+                      id?: StringRequest
+                      color?:
+                        | "default"
+                        | "gray"
+                        | "brown"
+                        | "orange"
+                        | "yellow"
+                        | "green"
+                        | "blue"
+                        | "purple"
+                        | "pink"
+                        | "red"
+                    }>
+                  }
+                  id: string
+                  name: string
+                }
+              | {
+                  type: "relation"
+                  relation: {
+                    database_id: IdRequest
+                    synced_property_id: StringRequest
+                    synced_property_name: StringRequest
+                  }
+                  id: string
+                  name: string
+                }
+              | {
+                  type: "rollup"
+                  rollup: {
+                    rollup_property_name: string
+                    relation_property_name: string
+                    rollup_property_id: string
+                    relation_property_id: string
+                    function:
+                      | "count"
+                      | "count_values"
+                      | "empty"
+                      | "not_empty"
+                      | "unique"
+                      | "show_unique"
+                      | "percent_empty"
+                      | "percent_not_empty"
+                      | "sum"
+                      | "average"
+                      | "median"
+                      | "min"
+                      | "max"
+                      | "range"
+                      | "earliest_date"
+                      | "latest_date"
+                      | "date_range"
+                      | "checked"
+                      | "unchecked"
+                      | "percent_checked"
+                      | "percent_unchecked"
+                      | "show_original"
+                  }
+                  id: string
+                  name: string
+                }
+              | { type: "title"; title: EmptyObject; id: string; name: string }
+              | {
+                  type: "rich_text"
+                  rich_text: EmptyObject
+                  id: string
+                  name: string
+                }
+              | { type: "url"; url: EmptyObject; id: string; name: string }
+              | {
+                  type: "people"
+                  people: EmptyObject
+                  id: string
+                  name: string
+                }
+              | { type: "files"; files: EmptyObject; id: string; name: string }
+              | { type: "email"; email: EmptyObject; id: string; name: string }
+              | {
+                  type: "phone_number"
+                  phone_number: EmptyObject
+                  id: string
+                  name: string
+                }
+              | { type: "date"; date: EmptyObject; id: string; name: string }
+              | {
+                  type: "checkbox"
+                  checkbox: EmptyObject
+                  id: string
+                  name: string
+                }
+              | {
+                  type: "created_by"
+                  created_by: EmptyObject
+                  id: string
+                  name: string
+                }
+              | {
+                  type: "created_time"
+                  created_time: EmptyObject
+                  id: string
+                  name: string
+                }
+              | {
+                  type: "last_edited_by"
+                  last_edited_by: EmptyObject
+                  id: string
+                  name: string
+                }
+              | {
+                  type: "last_edited_time"
+                  last_edited_time: EmptyObject
+                  id: string
+                  name: string
+                }
+            >
+            parent:
+              | { type: "page_id"; page_id: string }
+              | { type: "workspace"; workspace: true }
+            object: "database"
+            id: string
+            created_time: string
+            last_edited_time: string
+            url: string
+          }
+      >
       next_cursor: string | null
       has_more: boolean
     }
   | {
       object: "list"
-      results: Array<{
-        title: Array<
-          | {
-              type: "text"
-              text: { content: string; link: { url: TextRequest } | null }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color:
-                  | "default"
-                  | "gray"
-                  | "brown"
-                  | "orange"
-                  | "yellow"
-                  | "green"
-                  | "blue"
-                  | "purple"
-                  | "pink"
-                  | "red"
-                  | "gray_background"
-                  | "brown_background"
-                  | "orange_background"
-                  | "yellow_background"
-                  | "green_background"
-                  | "blue_background"
-                  | "purple_background"
-                  | "pink_background"
-                  | "red_background"
-              }
-              plain_text: string
-              href: string | null
-            }
-          | {
-              type: "mention"
-              mention:
-                | {
-                    type: "user"
-                    user:
-                      | { id: IdRequest; object: "user" }
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | {
-                          type: "bot"
-                          bot:
-                            | EmptyObject
-                            | {
-                                owner:
-                                  | {
-                                      type: "user"
-                                      user:
-                                        | {
-                                            type: "person"
-                                            person: { email: string }
-                                            name: string | null
-                                            avatar_url: string | null
-                                            id: IdRequest
-                                            object: "user"
-                                          }
-                                        | { id: IdRequest; object: "user" }
-                                    }
-                                  | { type: "workspace"; workspace: true }
-                              }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
+      results: Array<
+        | {
+            object: "database"
+            id: string
+            properties: Record<
+              string,
+              | {
+                  type: "number"
+                  number: {
+                    format:
+                      | "number"
+                      | "number_with_commas"
+                      | "percent"
+                      | "dollar"
+                      | "canadian_dollar"
+                      | "euro"
+                      | "pound"
+                      | "yen"
+                      | "ruble"
+                      | "rupee"
+                      | "won"
+                      | "yuan"
+                      | "real"
+                      | "lira"
+                      | "rupiah"
+                      | "franc"
+                      | "hong_kong_dollar"
+                      | "new_zealand_dollar"
+                      | "krona"
+                      | "norwegian_krone"
+                      | "mexican_peso"
+                      | "rand"
+                      | "new_taiwan_dollar"
+                      | "danish_krone"
+                      | "zloty"
+                      | "baht"
+                      | "forint"
+                      | "koruna"
+                      | "shekel"
+                      | "chilean_peso"
+                      | "philippine_peso"
+                      | "dirham"
+                      | "colombian_peso"
+                      | "riyal"
+                      | "ringgit"
+                      | "leu"
+                      | "argentine_peso"
+                      | "uruguayan_peso"
                   }
-                | {
-                    type: "date"
-                    date: {
-                      start: string
-                      end: string | null
-                      time_zone: TimeZoneRequest | null
-                    }
+                  id: string
+                  name: string
+                }
+              | {
+                  type: "formula"
+                  formula: { expression: string }
+                  id: string
+                  name: string
+                }
+              | {
+                  type: "select"
+                  select: {
+                    options: Array<{
+                      name: StringRequest
+                      id?: StringRequest
+                      color?:
+                        | "default"
+                        | "gray"
+                        | "brown"
+                        | "orange"
+                        | "yellow"
+                        | "green"
+                        | "blue"
+                        | "purple"
+                        | "pink"
+                        | "red"
+                    }>
                   }
-                | { type: "link_preview"; link_preview: { url: TextRequest } }
-                | { type: "page"; page: { id: IdRequest } }
-                | { type: "database"; database: { id: IdRequest } }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color:
-                  | "default"
-                  | "gray"
-                  | "brown"
-                  | "orange"
-                  | "yellow"
-                  | "green"
-                  | "blue"
-                  | "purple"
-                  | "pink"
-                  | "red"
-                  | "gray_background"
-                  | "brown_background"
-                  | "orange_background"
-                  | "yellow_background"
-                  | "green_background"
-                  | "blue_background"
-                  | "purple_background"
-                  | "pink_background"
-                  | "red_background"
-              }
-              plain_text: string
-              href: string | null
-            }
-          | {
-              type: "equation"
-              equation: { expression: TextRequest }
-              annotations: {
-                bold: boolean
-                italic: boolean
-                strikethrough: boolean
-                underline: boolean
-                code: boolean
-                color:
-                  | "default"
-                  | "gray"
-                  | "brown"
-                  | "orange"
-                  | "yellow"
-                  | "green"
-                  | "blue"
-                  | "purple"
-                  | "pink"
-                  | "red"
-                  | "gray_background"
-                  | "brown_background"
-                  | "orange_background"
-                  | "yellow_background"
-                  | "green_background"
-                  | "blue_background"
-                  | "purple_background"
-                  | "pink_background"
-                  | "red_background"
-              }
-              plain_text: string
-              href: string | null
-            }
-        >
-        icon:
-          | { type: "emoji"; emoji: EmojiRequest }
-          | null
-          | { type: "external"; external: { url: TextRequest } }
-          | null
-          | { type: "file"; file: { url: string; expiry_time: string } }
-          | null
-        cover:
-          | { type: "external"; external: { url: TextRequest } }
-          | null
-          | { type: "file"; file: { url: string; expiry_time: string } }
-          | null
-        properties: Record<
-          string,
-          | {
-              type: "number"
-              number: {
-                format:
-                  | "number"
-                  | "number_with_commas"
-                  | "percent"
-                  | "dollar"
-                  | "canadian_dollar"
-                  | "euro"
-                  | "pound"
-                  | "yen"
-                  | "ruble"
-                  | "rupee"
-                  | "won"
-                  | "yuan"
-                  | "real"
-                  | "lira"
-                  | "rupiah"
-                  | "franc"
-                  | "hong_kong_dollar"
-                  | "new_zealand_dollar"
-                  | "krona"
-                  | "norwegian_krone"
-                  | "mexican_peso"
-                  | "rand"
-                  | "new_taiwan_dollar"
-                  | "danish_krone"
-                  | "zloty"
-                  | "baht"
-                  | "forint"
-                  | "koruna"
-                  | "shekel"
-                  | "chilean_peso"
-                  | "philippine_peso"
-                  | "dirham"
-                  | "colombian_peso"
-                  | "riyal"
-                  | "ringgit"
-                  | "leu"
-                  | "argentine_peso"
-                  | "uruguayan_peso"
-              }
-              id: string
-              name: string
-            }
-          | {
-              type: "formula"
-              formula: { expression: string }
-              id: string
-              name: string
-            }
-          | {
-              type: "select"
-              select: {
-                options: Array<{
-                  name: StringRequest
-                  id?: StringRequest
-                  color?:
-                    | "default"
-                    | "gray"
-                    | "brown"
-                    | "orange"
-                    | "yellow"
-                    | "green"
-                    | "blue"
-                    | "purple"
-                    | "pink"
-                    | "red"
-                }>
-              }
-              id: string
-              name: string
-            }
-          | {
-              type: "multi_select"
-              multi_select: {
-                options: Array<{
-                  name: StringRequest
-                  id?: StringRequest
-                  color?:
-                    | "default"
-                    | "gray"
-                    | "brown"
-                    | "orange"
-                    | "yellow"
-                    | "green"
-                    | "blue"
-                    | "purple"
-                    | "pink"
-                    | "red"
-                }>
-              }
-              id: string
-              name: string
-            }
-          | {
-              type: "relation"
-              relation: {
-                database_id: IdRequest
-                synced_property_id: StringRequest
-                synced_property_name: StringRequest
-              }
-              id: string
-              name: string
-            }
-          | {
-              type: "rollup"
-              rollup: {
-                rollup_property_name: string
-                relation_property_name: string
-                rollup_property_id: string
-                relation_property_id: string
-                function:
-                  | "count"
-                  | "count_values"
-                  | "empty"
-                  | "not_empty"
-                  | "unique"
-                  | "show_unique"
-                  | "percent_empty"
-                  | "percent_not_empty"
-                  | "sum"
-                  | "average"
-                  | "median"
-                  | "min"
-                  | "max"
-                  | "range"
-                  | "earliest_date"
-                  | "latest_date"
-                  | "date_range"
-                  | "checked"
-                  | "unchecked"
-                  | "percent_checked"
-                  | "percent_unchecked"
-                  | "show_original"
-              }
-              id: string
-              name: string
-            }
-          | { type: "title"; title: EmptyObject; id: string; name: string }
-          | {
-              type: "rich_text"
-              rich_text: EmptyObject
-              id: string
-              name: string
-            }
-          | { type: "url"; url: EmptyObject; id: string; name: string }
-          | { type: "people"; people: EmptyObject; id: string; name: string }
-          | { type: "files"; files: EmptyObject; id: string; name: string }
-          | { type: "email"; email: EmptyObject; id: string; name: string }
-          | {
-              type: "phone_number"
-              phone_number: EmptyObject
-              id: string
-              name: string
-            }
-          | { type: "date"; date: EmptyObject; id: string; name: string }
-          | {
-              type: "checkbox"
-              checkbox: EmptyObject
-              id: string
-              name: string
-            }
-          | {
-              type: "created_by"
-              created_by: EmptyObject
-              id: string
-              name: string
-            }
-          | {
-              type: "created_time"
-              created_time: EmptyObject
-              id: string
-              name: string
-            }
-          | {
-              type: "last_edited_by"
-              last_edited_by: EmptyObject
-              id: string
-              name: string
-            }
-          | {
-              type: "last_edited_time"
-              last_edited_time: EmptyObject
-              id: string
-              name: string
-            }
-        >
-        parent:
-          | { type: "page_id"; page_id: string }
-          | { type: "workspace"; workspace: true }
-        object: "database"
-        id: string
-        created_time: string
-        last_edited_time: string
-        url: string
-      }>
+                  id: string
+                  name: string
+                }
+              | {
+                  type: "multi_select"
+                  multi_select: {
+                    options: Array<{
+                      name: StringRequest
+                      id?: StringRequest
+                      color?:
+                        | "default"
+                        | "gray"
+                        | "brown"
+                        | "orange"
+                        | "yellow"
+                        | "green"
+                        | "blue"
+                        | "purple"
+                        | "pink"
+                        | "red"
+                    }>
+                  }
+                  id: string
+                  name: string
+                }
+              | {
+                  type: "relation"
+                  relation: {
+                    database_id: IdRequest
+                    synced_property_id: StringRequest
+                    synced_property_name: StringRequest
+                  }
+                  id: string
+                  name: string
+                }
+              | {
+                  type: "rollup"
+                  rollup: {
+                    rollup_property_name: string
+                    relation_property_name: string
+                    rollup_property_id: string
+                    relation_property_id: string
+                    function:
+                      | "count"
+                      | "count_values"
+                      | "empty"
+                      | "not_empty"
+                      | "unique"
+                      | "show_unique"
+                      | "percent_empty"
+                      | "percent_not_empty"
+                      | "sum"
+                      | "average"
+                      | "median"
+                      | "min"
+                      | "max"
+                      | "range"
+                      | "earliest_date"
+                      | "latest_date"
+                      | "date_range"
+                      | "checked"
+                      | "unchecked"
+                      | "percent_checked"
+                      | "percent_unchecked"
+                      | "show_original"
+                  }
+                  id: string
+                  name: string
+                }
+              | { type: "title"; title: EmptyObject; id: string; name: string }
+              | {
+                  type: "rich_text"
+                  rich_text: EmptyObject
+                  id: string
+                  name: string
+                }
+              | { type: "url"; url: EmptyObject; id: string; name: string }
+              | {
+                  type: "people"
+                  people: EmptyObject
+                  id: string
+                  name: string
+                }
+              | { type: "files"; files: EmptyObject; id: string; name: string }
+              | { type: "email"; email: EmptyObject; id: string; name: string }
+              | {
+                  type: "phone_number"
+                  phone_number: EmptyObject
+                  id: string
+                  name: string
+                }
+              | { type: "date"; date: EmptyObject; id: string; name: string }
+              | {
+                  type: "checkbox"
+                  checkbox: EmptyObject
+                  id: string
+                  name: string
+                }
+              | {
+                  type: "created_by"
+                  created_by: EmptyObject
+                  id: string
+                  name: string
+                }
+              | {
+                  type: "created_time"
+                  created_time: EmptyObject
+                  id: string
+                  name: string
+                }
+              | {
+                  type: "last_edited_by"
+                  last_edited_by: EmptyObject
+                  id: string
+                  name: string
+                }
+              | {
+                  type: "last_edited_time"
+                  last_edited_time: EmptyObject
+                  id: string
+                  name: string
+                }
+            >
+          }
+        | {
+            title: Array<
+              | {
+                  type: "text"
+                  text: { content: string; link: { url: TextRequest } | null }
+                  annotations: {
+                    bold: boolean
+                    italic: boolean
+                    strikethrough: boolean
+                    underline: boolean
+                    code: boolean
+                    color:
+                      | "default"
+                      | "gray"
+                      | "brown"
+                      | "orange"
+                      | "yellow"
+                      | "green"
+                      | "blue"
+                      | "purple"
+                      | "pink"
+                      | "red"
+                      | "gray_background"
+                      | "brown_background"
+                      | "orange_background"
+                      | "yellow_background"
+                      | "green_background"
+                      | "blue_background"
+                      | "purple_background"
+                      | "pink_background"
+                      | "red_background"
+                  }
+                  plain_text: string
+                  href: string | null
+                }
+              | {
+                  type: "mention"
+                  mention:
+                    | {
+                        type: "user"
+                        user:
+                          | { id: IdRequest; object: "user" }
+                          | {
+                              type: "person"
+                              person: { email?: string }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                          | {
+                              type: "bot"
+                              bot:
+                                | EmptyObject
+                                | {
+                                    owner:
+                                      | {
+                                          type: "user"
+                                          user:
+                                            | {
+                                                type: "person"
+                                                person: { email: string }
+                                                name: string | null
+                                                avatar_url: string | null
+                                                id: IdRequest
+                                                object: "user"
+                                              }
+                                            | { id: IdRequest; object: "user" }
+                                        }
+                                      | { type: "workspace"; workspace: true }
+                                  }
+                              name: string | null
+                              avatar_url: string | null
+                              id: IdRequest
+                              object: "user"
+                            }
+                      }
+                    | {
+                        type: "date"
+                        date: {
+                          start: string
+                          end: string | null
+                          time_zone: TimeZoneRequest | null
+                        }
+                      }
+                    | {
+                        type: "link_preview"
+                        link_preview: { url: TextRequest }
+                      }
+                    | { type: "page"; page: { id: IdRequest } }
+                    | { type: "database"; database: { id: IdRequest } }
+                  annotations: {
+                    bold: boolean
+                    italic: boolean
+                    strikethrough: boolean
+                    underline: boolean
+                    code: boolean
+                    color:
+                      | "default"
+                      | "gray"
+                      | "brown"
+                      | "orange"
+                      | "yellow"
+                      | "green"
+                      | "blue"
+                      | "purple"
+                      | "pink"
+                      | "red"
+                      | "gray_background"
+                      | "brown_background"
+                      | "orange_background"
+                      | "yellow_background"
+                      | "green_background"
+                      | "blue_background"
+                      | "purple_background"
+                      | "pink_background"
+                      | "red_background"
+                  }
+                  plain_text: string
+                  href: string | null
+                }
+              | {
+                  type: "equation"
+                  equation: { expression: TextRequest }
+                  annotations: {
+                    bold: boolean
+                    italic: boolean
+                    strikethrough: boolean
+                    underline: boolean
+                    code: boolean
+                    color:
+                      | "default"
+                      | "gray"
+                      | "brown"
+                      | "orange"
+                      | "yellow"
+                      | "green"
+                      | "blue"
+                      | "purple"
+                      | "pink"
+                      | "red"
+                      | "gray_background"
+                      | "brown_background"
+                      | "orange_background"
+                      | "yellow_background"
+                      | "green_background"
+                      | "blue_background"
+                      | "purple_background"
+                      | "pink_background"
+                      | "red_background"
+                  }
+                  plain_text: string
+                  href: string | null
+                }
+            >
+            icon:
+              | { type: "emoji"; emoji: EmojiRequest }
+              | null
+              | { type: "external"; external: { url: TextRequest } }
+              | null
+              | { type: "file"; file: { url: string; expiry_time: string } }
+              | null
+            cover:
+              | { type: "external"; external: { url: TextRequest } }
+              | null
+              | { type: "file"; file: { url: string; expiry_time: string } }
+              | null
+            properties: Record<
+              string,
+              | {
+                  type: "number"
+                  number: {
+                    format:
+                      | "number"
+                      | "number_with_commas"
+                      | "percent"
+                      | "dollar"
+                      | "canadian_dollar"
+                      | "euro"
+                      | "pound"
+                      | "yen"
+                      | "ruble"
+                      | "rupee"
+                      | "won"
+                      | "yuan"
+                      | "real"
+                      | "lira"
+                      | "rupiah"
+                      | "franc"
+                      | "hong_kong_dollar"
+                      | "new_zealand_dollar"
+                      | "krona"
+                      | "norwegian_krone"
+                      | "mexican_peso"
+                      | "rand"
+                      | "new_taiwan_dollar"
+                      | "danish_krone"
+                      | "zloty"
+                      | "baht"
+                      | "forint"
+                      | "koruna"
+                      | "shekel"
+                      | "chilean_peso"
+                      | "philippine_peso"
+                      | "dirham"
+                      | "colombian_peso"
+                      | "riyal"
+                      | "ringgit"
+                      | "leu"
+                      | "argentine_peso"
+                      | "uruguayan_peso"
+                  }
+                  id: string
+                  name: string
+                }
+              | {
+                  type: "formula"
+                  formula: { expression: string }
+                  id: string
+                  name: string
+                }
+              | {
+                  type: "select"
+                  select: {
+                    options: Array<{
+                      name: StringRequest
+                      id?: StringRequest
+                      color?:
+                        | "default"
+                        | "gray"
+                        | "brown"
+                        | "orange"
+                        | "yellow"
+                        | "green"
+                        | "blue"
+                        | "purple"
+                        | "pink"
+                        | "red"
+                    }>
+                  }
+                  id: string
+                  name: string
+                }
+              | {
+                  type: "multi_select"
+                  multi_select: {
+                    options: Array<{
+                      name: StringRequest
+                      id?: StringRequest
+                      color?:
+                        | "default"
+                        | "gray"
+                        | "brown"
+                        | "orange"
+                        | "yellow"
+                        | "green"
+                        | "blue"
+                        | "purple"
+                        | "pink"
+                        | "red"
+                    }>
+                  }
+                  id: string
+                  name: string
+                }
+              | {
+                  type: "relation"
+                  relation: {
+                    database_id: IdRequest
+                    synced_property_id: StringRequest
+                    synced_property_name: StringRequest
+                  }
+                  id: string
+                  name: string
+                }
+              | {
+                  type: "rollup"
+                  rollup: {
+                    rollup_property_name: string
+                    relation_property_name: string
+                    rollup_property_id: string
+                    relation_property_id: string
+                    function:
+                      | "count"
+                      | "count_values"
+                      | "empty"
+                      | "not_empty"
+                      | "unique"
+                      | "show_unique"
+                      | "percent_empty"
+                      | "percent_not_empty"
+                      | "sum"
+                      | "average"
+                      | "median"
+                      | "min"
+                      | "max"
+                      | "range"
+                      | "earliest_date"
+                      | "latest_date"
+                      | "date_range"
+                      | "checked"
+                      | "unchecked"
+                      | "percent_checked"
+                      | "percent_unchecked"
+                      | "show_original"
+                  }
+                  id: string
+                  name: string
+                }
+              | { type: "title"; title: EmptyObject; id: string; name: string }
+              | {
+                  type: "rich_text"
+                  rich_text: EmptyObject
+                  id: string
+                  name: string
+                }
+              | { type: "url"; url: EmptyObject; id: string; name: string }
+              | {
+                  type: "people"
+                  people: EmptyObject
+                  id: string
+                  name: string
+                }
+              | { type: "files"; files: EmptyObject; id: string; name: string }
+              | { type: "email"; email: EmptyObject; id: string; name: string }
+              | {
+                  type: "phone_number"
+                  phone_number: EmptyObject
+                  id: string
+                  name: string
+                }
+              | { type: "date"; date: EmptyObject; id: string; name: string }
+              | {
+                  type: "checkbox"
+                  checkbox: EmptyObject
+                  id: string
+                  name: string
+                }
+              | {
+                  type: "created_by"
+                  created_by: EmptyObject
+                  id: string
+                  name: string
+                }
+              | {
+                  type: "created_time"
+                  created_time: EmptyObject
+                  id: string
+                  name: string
+                }
+              | {
+                  type: "last_edited_by"
+                  last_edited_by: EmptyObject
+                  id: string
+                  name: string
+                }
+              | {
+                  type: "last_edited_time"
+                  last_edited_time: EmptyObject
+                  id: string
+                  name: string
+                }
+            >
+            parent:
+              | { type: "page_id"; page_id: string }
+              | { type: "workspace"; workspace: true }
+            object: "database"
+            id: string
+            created_time: string
+            last_edited_time: string
+            url: string
+          }
+      >
       next_cursor: string | null
       has_more: boolean
     }
@@ -54083,355 +55056,556 @@ type CreateDatabaseBodyParameters = {
 
 export type CreateDatabaseParameters = CreateDatabaseBodyParameters
 
-export type CreateDatabaseResponse = {
-  title: Array<
-    | {
-        type: "text"
-        text: { content: string; link: { url: TextRequest } | null }
-        annotations: {
-          bold: boolean
-          italic: boolean
-          strikethrough: boolean
-          underline: boolean
-          code: boolean
-          color:
-            | "default"
-            | "gray"
-            | "brown"
-            | "orange"
-            | "yellow"
-            | "green"
-            | "blue"
-            | "purple"
-            | "pink"
-            | "red"
-            | "gray_background"
-            | "brown_background"
-            | "orange_background"
-            | "yellow_background"
-            | "green_background"
-            | "blue_background"
-            | "purple_background"
-            | "pink_background"
-            | "red_background"
-        }
-        plain_text: string
-        href: string | null
-      }
-    | {
-        type: "mention"
-        mention:
-          | {
-              type: "user"
-              user:
-                | { id: IdRequest; object: "user" }
-                | {
-                    type: "person"
-                    person: { email: string }
-                    name: string | null
-                    avatar_url: string | null
-                    id: IdRequest
-                    object: "user"
-                  }
-                | {
-                    type: "bot"
-                    bot:
-                      | EmptyObject
-                      | {
-                          owner:
-                            | {
-                                type: "user"
-                                user:
-                                  | {
-                                      type: "person"
-                                      person: { email: string }
-                                      name: string | null
-                                      avatar_url: string | null
-                                      id: IdRequest
-                                      object: "user"
-                                    }
-                                  | { id: IdRequest; object: "user" }
-                              }
-                            | { type: "workspace"; workspace: true }
-                        }
-                    name: string | null
-                    avatar_url: string | null
-                    id: IdRequest
-                    object: "user"
-                  }
+export type CreateDatabaseResponse =
+  | {
+      object: "database"
+      id: string
+      properties: Record<
+        string,
+        | {
+            type: "number"
+            number: {
+              format:
+                | "number"
+                | "number_with_commas"
+                | "percent"
+                | "dollar"
+                | "canadian_dollar"
+                | "euro"
+                | "pound"
+                | "yen"
+                | "ruble"
+                | "rupee"
+                | "won"
+                | "yuan"
+                | "real"
+                | "lira"
+                | "rupiah"
+                | "franc"
+                | "hong_kong_dollar"
+                | "new_zealand_dollar"
+                | "krona"
+                | "norwegian_krone"
+                | "mexican_peso"
+                | "rand"
+                | "new_taiwan_dollar"
+                | "danish_krone"
+                | "zloty"
+                | "baht"
+                | "forint"
+                | "koruna"
+                | "shekel"
+                | "chilean_peso"
+                | "philippine_peso"
+                | "dirham"
+                | "colombian_peso"
+                | "riyal"
+                | "ringgit"
+                | "leu"
+                | "argentine_peso"
+                | "uruguayan_peso"
             }
-          | {
-              type: "date"
-              date: {
-                start: string
-                end: string | null
-                time_zone: TimeZoneRequest | null
-              }
+            id: string
+            name: string
+          }
+        | {
+            type: "formula"
+            formula: { expression: string }
+            id: string
+            name: string
+          }
+        | {
+            type: "select"
+            select: {
+              options: Array<{
+                name: StringRequest
+                id?: StringRequest
+                color?:
+                  | "default"
+                  | "gray"
+                  | "brown"
+                  | "orange"
+                  | "yellow"
+                  | "green"
+                  | "blue"
+                  | "purple"
+                  | "pink"
+                  | "red"
+              }>
             }
-          | { type: "link_preview"; link_preview: { url: TextRequest } }
-          | { type: "page"; page: { id: IdRequest } }
-          | { type: "database"; database: { id: IdRequest } }
-        annotations: {
-          bold: boolean
-          italic: boolean
-          strikethrough: boolean
-          underline: boolean
-          code: boolean
-          color:
-            | "default"
-            | "gray"
-            | "brown"
-            | "orange"
-            | "yellow"
-            | "green"
-            | "blue"
-            | "purple"
-            | "pink"
-            | "red"
-            | "gray_background"
-            | "brown_background"
-            | "orange_background"
-            | "yellow_background"
-            | "green_background"
-            | "blue_background"
-            | "purple_background"
-            | "pink_background"
-            | "red_background"
-        }
-        plain_text: string
-        href: string | null
-      }
-    | {
-        type: "equation"
-        equation: { expression: TextRequest }
-        annotations: {
-          bold: boolean
-          italic: boolean
-          strikethrough: boolean
-          underline: boolean
-          code: boolean
-          color:
-            | "default"
-            | "gray"
-            | "brown"
-            | "orange"
-            | "yellow"
-            | "green"
-            | "blue"
-            | "purple"
-            | "pink"
-            | "red"
-            | "gray_background"
-            | "brown_background"
-            | "orange_background"
-            | "yellow_background"
-            | "green_background"
-            | "blue_background"
-            | "purple_background"
-            | "pink_background"
-            | "red_background"
-        }
-        plain_text: string
-        href: string | null
-      }
-  >
-  icon:
-    | { type: "emoji"; emoji: EmojiRequest }
-    | null
-    | { type: "external"; external: { url: TextRequest } }
-    | null
-    | { type: "file"; file: { url: string; expiry_time: string } }
-    | null
-  cover:
-    | { type: "external"; external: { url: TextRequest } }
-    | null
-    | { type: "file"; file: { url: string; expiry_time: string } }
-    | null
-  properties: Record<
-    string,
-    | {
-        type: "number"
-        number: {
-          format:
-            | "number"
-            | "number_with_commas"
-            | "percent"
-            | "dollar"
-            | "canadian_dollar"
-            | "euro"
-            | "pound"
-            | "yen"
-            | "ruble"
-            | "rupee"
-            | "won"
-            | "yuan"
-            | "real"
-            | "lira"
-            | "rupiah"
-            | "franc"
-            | "hong_kong_dollar"
-            | "new_zealand_dollar"
-            | "krona"
-            | "norwegian_krone"
-            | "mexican_peso"
-            | "rand"
-            | "new_taiwan_dollar"
-            | "danish_krone"
-            | "zloty"
-            | "baht"
-            | "forint"
-            | "koruna"
-            | "shekel"
-            | "chilean_peso"
-            | "philippine_peso"
-            | "dirham"
-            | "colombian_peso"
-            | "riyal"
-            | "ringgit"
-            | "leu"
-            | "argentine_peso"
-            | "uruguayan_peso"
-        }
-        id: string
-        name: string
-      }
-    | {
-        type: "formula"
-        formula: { expression: string }
-        id: string
-        name: string
-      }
-    | {
-        type: "select"
-        select: {
-          options: Array<{
-            name: StringRequest
-            id?: StringRequest
-            color?:
-              | "default"
-              | "gray"
-              | "brown"
-              | "orange"
-              | "yellow"
-              | "green"
-              | "blue"
-              | "purple"
-              | "pink"
-              | "red"
-          }>
-        }
-        id: string
-        name: string
-      }
-    | {
-        type: "multi_select"
-        multi_select: {
-          options: Array<{
-            name: StringRequest
-            id?: StringRequest
-            color?:
-              | "default"
-              | "gray"
-              | "brown"
-              | "orange"
-              | "yellow"
-              | "green"
-              | "blue"
-              | "purple"
-              | "pink"
-              | "red"
-          }>
-        }
-        id: string
-        name: string
-      }
-    | {
-        type: "relation"
-        relation: {
-          database_id: IdRequest
-          synced_property_id: StringRequest
-          synced_property_name: StringRequest
-        }
-        id: string
-        name: string
-      }
-    | {
-        type: "rollup"
-        rollup: {
-          rollup_property_name: string
-          relation_property_name: string
-          rollup_property_id: string
-          relation_property_id: string
-          function:
-            | "count"
-            | "count_values"
-            | "empty"
-            | "not_empty"
-            | "unique"
-            | "show_unique"
-            | "percent_empty"
-            | "percent_not_empty"
-            | "sum"
-            | "average"
-            | "median"
-            | "min"
-            | "max"
-            | "range"
-            | "earliest_date"
-            | "latest_date"
-            | "date_range"
-            | "checked"
-            | "unchecked"
-            | "percent_checked"
-            | "percent_unchecked"
-            | "show_original"
-        }
-        id: string
-        name: string
-      }
-    | { type: "title"; title: EmptyObject; id: string; name: string }
-    | { type: "rich_text"; rich_text: EmptyObject; id: string; name: string }
-    | { type: "url"; url: EmptyObject; id: string; name: string }
-    | { type: "people"; people: EmptyObject; id: string; name: string }
-    | { type: "files"; files: EmptyObject; id: string; name: string }
-    | { type: "email"; email: EmptyObject; id: string; name: string }
-    | {
-        type: "phone_number"
-        phone_number: EmptyObject
-        id: string
-        name: string
-      }
-    | { type: "date"; date: EmptyObject; id: string; name: string }
-    | { type: "checkbox"; checkbox: EmptyObject; id: string; name: string }
-    | { type: "created_by"; created_by: EmptyObject; id: string; name: string }
-    | {
-        type: "created_time"
-        created_time: EmptyObject
-        id: string
-        name: string
-      }
-    | {
-        type: "last_edited_by"
-        last_edited_by: EmptyObject
-        id: string
-        name: string
-      }
-    | {
-        type: "last_edited_time"
-        last_edited_time: EmptyObject
-        id: string
-        name: string
-      }
-  >
-  parent:
-    | { type: "page_id"; page_id: string }
-    | { type: "workspace"; workspace: true }
-  object: "database"
-  id: string
-  created_time: string
-  last_edited_time: string
-  url: string
-}
+            id: string
+            name: string
+          }
+        | {
+            type: "multi_select"
+            multi_select: {
+              options: Array<{
+                name: StringRequest
+                id?: StringRequest
+                color?:
+                  | "default"
+                  | "gray"
+                  | "brown"
+                  | "orange"
+                  | "yellow"
+                  | "green"
+                  | "blue"
+                  | "purple"
+                  | "pink"
+                  | "red"
+              }>
+            }
+            id: string
+            name: string
+          }
+        | {
+            type: "relation"
+            relation: {
+              database_id: IdRequest
+              synced_property_id: StringRequest
+              synced_property_name: StringRequest
+            }
+            id: string
+            name: string
+          }
+        | {
+            type: "rollup"
+            rollup: {
+              rollup_property_name: string
+              relation_property_name: string
+              rollup_property_id: string
+              relation_property_id: string
+              function:
+                | "count"
+                | "count_values"
+                | "empty"
+                | "not_empty"
+                | "unique"
+                | "show_unique"
+                | "percent_empty"
+                | "percent_not_empty"
+                | "sum"
+                | "average"
+                | "median"
+                | "min"
+                | "max"
+                | "range"
+                | "earliest_date"
+                | "latest_date"
+                | "date_range"
+                | "checked"
+                | "unchecked"
+                | "percent_checked"
+                | "percent_unchecked"
+                | "show_original"
+            }
+            id: string
+            name: string
+          }
+        | { type: "title"; title: EmptyObject; id: string; name: string }
+        | {
+            type: "rich_text"
+            rich_text: EmptyObject
+            id: string
+            name: string
+          }
+        | { type: "url"; url: EmptyObject; id: string; name: string }
+        | { type: "people"; people: EmptyObject; id: string; name: string }
+        | { type: "files"; files: EmptyObject; id: string; name: string }
+        | { type: "email"; email: EmptyObject; id: string; name: string }
+        | {
+            type: "phone_number"
+            phone_number: EmptyObject
+            id: string
+            name: string
+          }
+        | { type: "date"; date: EmptyObject; id: string; name: string }
+        | { type: "checkbox"; checkbox: EmptyObject; id: string; name: string }
+        | {
+            type: "created_by"
+            created_by: EmptyObject
+            id: string
+            name: string
+          }
+        | {
+            type: "created_time"
+            created_time: EmptyObject
+            id: string
+            name: string
+          }
+        | {
+            type: "last_edited_by"
+            last_edited_by: EmptyObject
+            id: string
+            name: string
+          }
+        | {
+            type: "last_edited_time"
+            last_edited_time: EmptyObject
+            id: string
+            name: string
+          }
+      >
+    }
+  | {
+      title: Array<
+        | {
+            type: "text"
+            text: { content: string; link: { url: TextRequest } | null }
+            annotations: {
+              bold: boolean
+              italic: boolean
+              strikethrough: boolean
+              underline: boolean
+              code: boolean
+              color:
+                | "default"
+                | "gray"
+                | "brown"
+                | "orange"
+                | "yellow"
+                | "green"
+                | "blue"
+                | "purple"
+                | "pink"
+                | "red"
+                | "gray_background"
+                | "brown_background"
+                | "orange_background"
+                | "yellow_background"
+                | "green_background"
+                | "blue_background"
+                | "purple_background"
+                | "pink_background"
+                | "red_background"
+            }
+            plain_text: string
+            href: string | null
+          }
+        | {
+            type: "mention"
+            mention:
+              | {
+                  type: "user"
+                  user:
+                    | { id: IdRequest; object: "user" }
+                    | {
+                        type: "person"
+                        person: { email?: string }
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
+                    | {
+                        type: "bot"
+                        bot:
+                          | EmptyObject
+                          | {
+                              owner:
+                                | {
+                                    type: "user"
+                                    user:
+                                      | {
+                                          type: "person"
+                                          person: { email: string }
+                                          name: string | null
+                                          avatar_url: string | null
+                                          id: IdRequest
+                                          object: "user"
+                                        }
+                                      | { id: IdRequest; object: "user" }
+                                  }
+                                | { type: "workspace"; workspace: true }
+                            }
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
+                }
+              | {
+                  type: "date"
+                  date: {
+                    start: string
+                    end: string | null
+                    time_zone: TimeZoneRequest | null
+                  }
+                }
+              | { type: "link_preview"; link_preview: { url: TextRequest } }
+              | { type: "page"; page: { id: IdRequest } }
+              | { type: "database"; database: { id: IdRequest } }
+            annotations: {
+              bold: boolean
+              italic: boolean
+              strikethrough: boolean
+              underline: boolean
+              code: boolean
+              color:
+                | "default"
+                | "gray"
+                | "brown"
+                | "orange"
+                | "yellow"
+                | "green"
+                | "blue"
+                | "purple"
+                | "pink"
+                | "red"
+                | "gray_background"
+                | "brown_background"
+                | "orange_background"
+                | "yellow_background"
+                | "green_background"
+                | "blue_background"
+                | "purple_background"
+                | "pink_background"
+                | "red_background"
+            }
+            plain_text: string
+            href: string | null
+          }
+        | {
+            type: "equation"
+            equation: { expression: TextRequest }
+            annotations: {
+              bold: boolean
+              italic: boolean
+              strikethrough: boolean
+              underline: boolean
+              code: boolean
+              color:
+                | "default"
+                | "gray"
+                | "brown"
+                | "orange"
+                | "yellow"
+                | "green"
+                | "blue"
+                | "purple"
+                | "pink"
+                | "red"
+                | "gray_background"
+                | "brown_background"
+                | "orange_background"
+                | "yellow_background"
+                | "green_background"
+                | "blue_background"
+                | "purple_background"
+                | "pink_background"
+                | "red_background"
+            }
+            plain_text: string
+            href: string | null
+          }
+      >
+      icon:
+        | { type: "emoji"; emoji: EmojiRequest }
+        | null
+        | { type: "external"; external: { url: TextRequest } }
+        | null
+        | { type: "file"; file: { url: string; expiry_time: string } }
+        | null
+      cover:
+        | { type: "external"; external: { url: TextRequest } }
+        | null
+        | { type: "file"; file: { url: string; expiry_time: string } }
+        | null
+      properties: Record<
+        string,
+        | {
+            type: "number"
+            number: {
+              format:
+                | "number"
+                | "number_with_commas"
+                | "percent"
+                | "dollar"
+                | "canadian_dollar"
+                | "euro"
+                | "pound"
+                | "yen"
+                | "ruble"
+                | "rupee"
+                | "won"
+                | "yuan"
+                | "real"
+                | "lira"
+                | "rupiah"
+                | "franc"
+                | "hong_kong_dollar"
+                | "new_zealand_dollar"
+                | "krona"
+                | "norwegian_krone"
+                | "mexican_peso"
+                | "rand"
+                | "new_taiwan_dollar"
+                | "danish_krone"
+                | "zloty"
+                | "baht"
+                | "forint"
+                | "koruna"
+                | "shekel"
+                | "chilean_peso"
+                | "philippine_peso"
+                | "dirham"
+                | "colombian_peso"
+                | "riyal"
+                | "ringgit"
+                | "leu"
+                | "argentine_peso"
+                | "uruguayan_peso"
+            }
+            id: string
+            name: string
+          }
+        | {
+            type: "formula"
+            formula: { expression: string }
+            id: string
+            name: string
+          }
+        | {
+            type: "select"
+            select: {
+              options: Array<{
+                name: StringRequest
+                id?: StringRequest
+                color?:
+                  | "default"
+                  | "gray"
+                  | "brown"
+                  | "orange"
+                  | "yellow"
+                  | "green"
+                  | "blue"
+                  | "purple"
+                  | "pink"
+                  | "red"
+              }>
+            }
+            id: string
+            name: string
+          }
+        | {
+            type: "multi_select"
+            multi_select: {
+              options: Array<{
+                name: StringRequest
+                id?: StringRequest
+                color?:
+                  | "default"
+                  | "gray"
+                  | "brown"
+                  | "orange"
+                  | "yellow"
+                  | "green"
+                  | "blue"
+                  | "purple"
+                  | "pink"
+                  | "red"
+              }>
+            }
+            id: string
+            name: string
+          }
+        | {
+            type: "relation"
+            relation: {
+              database_id: IdRequest
+              synced_property_id: StringRequest
+              synced_property_name: StringRequest
+            }
+            id: string
+            name: string
+          }
+        | {
+            type: "rollup"
+            rollup: {
+              rollup_property_name: string
+              relation_property_name: string
+              rollup_property_id: string
+              relation_property_id: string
+              function:
+                | "count"
+                | "count_values"
+                | "empty"
+                | "not_empty"
+                | "unique"
+                | "show_unique"
+                | "percent_empty"
+                | "percent_not_empty"
+                | "sum"
+                | "average"
+                | "median"
+                | "min"
+                | "max"
+                | "range"
+                | "earliest_date"
+                | "latest_date"
+                | "date_range"
+                | "checked"
+                | "unchecked"
+                | "percent_checked"
+                | "percent_unchecked"
+                | "show_original"
+            }
+            id: string
+            name: string
+          }
+        | { type: "title"; title: EmptyObject; id: string; name: string }
+        | {
+            type: "rich_text"
+            rich_text: EmptyObject
+            id: string
+            name: string
+          }
+        | { type: "url"; url: EmptyObject; id: string; name: string }
+        | { type: "people"; people: EmptyObject; id: string; name: string }
+        | { type: "files"; files: EmptyObject; id: string; name: string }
+        | { type: "email"; email: EmptyObject; id: string; name: string }
+        | {
+            type: "phone_number"
+            phone_number: EmptyObject
+            id: string
+            name: string
+          }
+        | { type: "date"; date: EmptyObject; id: string; name: string }
+        | { type: "checkbox"; checkbox: EmptyObject; id: string; name: string }
+        | {
+            type: "created_by"
+            created_by: EmptyObject
+            id: string
+            name: string
+          }
+        | {
+            type: "created_time"
+            created_time: EmptyObject
+            id: string
+            name: string
+          }
+        | {
+            type: "last_edited_by"
+            last_edited_by: EmptyObject
+            id: string
+            name: string
+          }
+        | {
+            type: "last_edited_time"
+            last_edited_time: EmptyObject
+            id: string
+            name: string
+          }
+      >
+      parent:
+        | { type: "page_id"; page_id: string }
+        | { type: "workspace"; workspace: true }
+      object: "database"
+      id: string
+      created_time: string
+      last_edited_time: string
+      url: string
+    }
 
 export const createDatabase = {
   method: "post",
@@ -54567,7 +55741,7 @@ export type SearchResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -54733,7 +55907,7 @@ export type SearchResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -54895,7 +56069,7 @@ export type SearchResponse =
                     | { id: IdRequest; object: "user" }
                     | {
                         type: "person"
-                        person: { email: string }
+                        person: { email?: string }
                         name: string | null
                         avatar_url: string | null
                         id: IdRequest
@@ -54978,7 +56152,7 @@ export type SearchResponse =
                     | { id: IdRequest; object: "user" }
                     | {
                         type: "person"
-                        person: { email: string }
+                        person: { email?: string }
                         name: string | null
                         avatar_url: string | null
                         id: IdRequest
@@ -55018,7 +56192,7 @@ export type SearchResponse =
                     | { id: IdRequest; object: "user" }
                     | {
                         type: "person"
-                        person: { email: string }
+                        person: { email?: string }
                         name: string | null
                         avatar_url: string | null
                         id: IdRequest
@@ -55160,7 +56334,7 @@ export type SearchResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -55327,7 +56501,7 @@ export type SearchResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -55492,7 +56666,7 @@ export type SearchResponse =
                     | { id: IdRequest; object: "user" }
                     | {
                         type: "person"
-                        person: { email: string }
+                        person: { email?: string }
                         name: string | null
                         avatar_url: string | null
                         id: IdRequest
@@ -55587,7 +56761,7 @@ export type SearchResponse =
                     | { id: IdRequest; object: "user" }
                     | {
                         type: "person"
-                        person: { email: string }
+                        person: { email?: string }
                         name: string | null
                         avatar_url: string | null
                         id: IdRequest
@@ -55632,7 +56806,7 @@ export type SearchResponse =
                     | { id: IdRequest; object: "user" }
                     | {
                         type: "person"
-                        person: { email: string }
+                        person: { email?: string }
                         name: string | null
                         avatar_url: string | null
                         id: IdRequest
@@ -55778,7 +56952,7 @@ export type SearchResponse =
                                             | { id: IdRequest; object: "user" }
                                             | {
                                                 type: "person"
-                                                person: { email: string }
+                                                person: { email?: string }
                                                 name: string | null
                                                 avatar_url: string | null
                                                 id: IdRequest
@@ -55956,7 +57130,7 @@ export type SearchResponse =
                                             | { id: IdRequest; object: "user" }
                                             | {
                                                 type: "person"
-                                                person: { email: string }
+                                                person: { email?: string }
                                                 name: string | null
                                                 avatar_url: string | null
                                                 id: IdRequest
@@ -56130,7 +57304,7 @@ export type SearchResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -56225,7 +57399,7 @@ export type SearchResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -56274,7 +57448,7 @@ export type SearchResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -56387,6 +57561,207 @@ export type SearchResponse =
             archived: boolean
             url: string
           }
+        | { object: "page"; id: string }
+        | {
+            object: "database"
+            id: string
+            properties: Record<
+              string,
+              | {
+                  type: "number"
+                  number: {
+                    format:
+                      | "number"
+                      | "number_with_commas"
+                      | "percent"
+                      | "dollar"
+                      | "canadian_dollar"
+                      | "euro"
+                      | "pound"
+                      | "yen"
+                      | "ruble"
+                      | "rupee"
+                      | "won"
+                      | "yuan"
+                      | "real"
+                      | "lira"
+                      | "rupiah"
+                      | "franc"
+                      | "hong_kong_dollar"
+                      | "new_zealand_dollar"
+                      | "krona"
+                      | "norwegian_krone"
+                      | "mexican_peso"
+                      | "rand"
+                      | "new_taiwan_dollar"
+                      | "danish_krone"
+                      | "zloty"
+                      | "baht"
+                      | "forint"
+                      | "koruna"
+                      | "shekel"
+                      | "chilean_peso"
+                      | "philippine_peso"
+                      | "dirham"
+                      | "colombian_peso"
+                      | "riyal"
+                      | "ringgit"
+                      | "leu"
+                      | "argentine_peso"
+                      | "uruguayan_peso"
+                  }
+                  id: string
+                  name: string
+                }
+              | {
+                  type: "formula"
+                  formula: { expression: string }
+                  id: string
+                  name: string
+                }
+              | {
+                  type: "select"
+                  select: {
+                    options: Array<{
+                      name: StringRequest
+                      id?: StringRequest
+                      color?:
+                        | "default"
+                        | "gray"
+                        | "brown"
+                        | "orange"
+                        | "yellow"
+                        | "green"
+                        | "blue"
+                        | "purple"
+                        | "pink"
+                        | "red"
+                    }>
+                  }
+                  id: string
+                  name: string
+                }
+              | {
+                  type: "multi_select"
+                  multi_select: {
+                    options: Array<{
+                      name: StringRequest
+                      id?: StringRequest
+                      color?:
+                        | "default"
+                        | "gray"
+                        | "brown"
+                        | "orange"
+                        | "yellow"
+                        | "green"
+                        | "blue"
+                        | "purple"
+                        | "pink"
+                        | "red"
+                    }>
+                  }
+                  id: string
+                  name: string
+                }
+              | {
+                  type: "relation"
+                  relation: {
+                    database_id: IdRequest
+                    synced_property_id: StringRequest
+                    synced_property_name: StringRequest
+                  }
+                  id: string
+                  name: string
+                }
+              | {
+                  type: "rollup"
+                  rollup: {
+                    rollup_property_name: string
+                    relation_property_name: string
+                    rollup_property_id: string
+                    relation_property_id: string
+                    function:
+                      | "count"
+                      | "count_values"
+                      | "empty"
+                      | "not_empty"
+                      | "unique"
+                      | "show_unique"
+                      | "percent_empty"
+                      | "percent_not_empty"
+                      | "sum"
+                      | "average"
+                      | "median"
+                      | "min"
+                      | "max"
+                      | "range"
+                      | "earliest_date"
+                      | "latest_date"
+                      | "date_range"
+                      | "checked"
+                      | "unchecked"
+                      | "percent_checked"
+                      | "percent_unchecked"
+                      | "show_original"
+                  }
+                  id: string
+                  name: string
+                }
+              | { type: "title"; title: EmptyObject; id: string; name: string }
+              | {
+                  type: "rich_text"
+                  rich_text: EmptyObject
+                  id: string
+                  name: string
+                }
+              | { type: "url"; url: EmptyObject; id: string; name: string }
+              | {
+                  type: "people"
+                  people: EmptyObject
+                  id: string
+                  name: string
+                }
+              | { type: "files"; files: EmptyObject; id: string; name: string }
+              | { type: "email"; email: EmptyObject; id: string; name: string }
+              | {
+                  type: "phone_number"
+                  phone_number: EmptyObject
+                  id: string
+                  name: string
+                }
+              | { type: "date"; date: EmptyObject; id: string; name: string }
+              | {
+                  type: "checkbox"
+                  checkbox: EmptyObject
+                  id: string
+                  name: string
+                }
+              | {
+                  type: "created_by"
+                  created_by: EmptyObject
+                  id: string
+                  name: string
+                }
+              | {
+                  type: "created_time"
+                  created_time: EmptyObject
+                  id: string
+                  name: string
+                }
+              | {
+                  type: "last_edited_by"
+                  last_edited_by: EmptyObject
+                  id: string
+                  name: string
+                }
+              | {
+                  type: "last_edited_time"
+                  last_edited_time: EmptyObject
+                  id: string
+                  name: string
+                }
+            >
+          }
         | {
             title: Array<
               | {
@@ -56431,7 +57806,7 @@ export type SearchResponse =
                           | { id: IdRequest; object: "user" }
                           | {
                               type: "person"
-                              person: { email: string }
+                              person: { email?: string }
                               name: string | null
                               avatar_url: string | null
                               id: IdRequest
@@ -56821,7 +58196,7 @@ export type SearchResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -56988,7 +58363,7 @@ export type SearchResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -57153,7 +58528,7 @@ export type SearchResponse =
                     | { id: IdRequest; object: "user" }
                     | {
                         type: "person"
-                        person: { email: string }
+                        person: { email?: string }
                         name: string | null
                         avatar_url: string | null
                         id: IdRequest
@@ -57248,7 +58623,7 @@ export type SearchResponse =
                     | { id: IdRequest; object: "user" }
                     | {
                         type: "person"
-                        person: { email: string }
+                        person: { email?: string }
                         name: string | null
                         avatar_url: string | null
                         id: IdRequest
@@ -57293,7 +58668,7 @@ export type SearchResponse =
                     | { id: IdRequest; object: "user" }
                     | {
                         type: "person"
-                        person: { email: string }
+                        person: { email?: string }
                         name: string | null
                         avatar_url: string | null
                         id: IdRequest
@@ -57439,7 +58814,7 @@ export type SearchResponse =
                                             | { id: IdRequest; object: "user" }
                                             | {
                                                 type: "person"
-                                                person: { email: string }
+                                                person: { email?: string }
                                                 name: string | null
                                                 avatar_url: string | null
                                                 id: IdRequest
@@ -57617,7 +58992,7 @@ export type SearchResponse =
                                             | { id: IdRequest; object: "user" }
                                             | {
                                                 type: "person"
-                                                person: { email: string }
+                                                person: { email?: string }
                                                 name: string | null
                                                 avatar_url: string | null
                                                 id: IdRequest
@@ -57791,7 +59166,7 @@ export type SearchResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -57886,7 +59261,7 @@ export type SearchResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -57935,7 +59310,7 @@ export type SearchResponse =
                                 | { id: IdRequest; object: "user" }
                                 | {
                                     type: "person"
-                                    person: { email: string }
+                                    person: { email?: string }
                                     name: string | null
                                     avatar_url: string | null
                                     id: IdRequest
@@ -58048,6 +59423,207 @@ export type SearchResponse =
             archived: boolean
             url: string
           }
+        | { object: "page"; id: string }
+        | {
+            object: "database"
+            id: string
+            properties: Record<
+              string,
+              | {
+                  type: "number"
+                  number: {
+                    format:
+                      | "number"
+                      | "number_with_commas"
+                      | "percent"
+                      | "dollar"
+                      | "canadian_dollar"
+                      | "euro"
+                      | "pound"
+                      | "yen"
+                      | "ruble"
+                      | "rupee"
+                      | "won"
+                      | "yuan"
+                      | "real"
+                      | "lira"
+                      | "rupiah"
+                      | "franc"
+                      | "hong_kong_dollar"
+                      | "new_zealand_dollar"
+                      | "krona"
+                      | "norwegian_krone"
+                      | "mexican_peso"
+                      | "rand"
+                      | "new_taiwan_dollar"
+                      | "danish_krone"
+                      | "zloty"
+                      | "baht"
+                      | "forint"
+                      | "koruna"
+                      | "shekel"
+                      | "chilean_peso"
+                      | "philippine_peso"
+                      | "dirham"
+                      | "colombian_peso"
+                      | "riyal"
+                      | "ringgit"
+                      | "leu"
+                      | "argentine_peso"
+                      | "uruguayan_peso"
+                  }
+                  id: string
+                  name: string
+                }
+              | {
+                  type: "formula"
+                  formula: { expression: string }
+                  id: string
+                  name: string
+                }
+              | {
+                  type: "select"
+                  select: {
+                    options: Array<{
+                      name: StringRequest
+                      id?: StringRequest
+                      color?:
+                        | "default"
+                        | "gray"
+                        | "brown"
+                        | "orange"
+                        | "yellow"
+                        | "green"
+                        | "blue"
+                        | "purple"
+                        | "pink"
+                        | "red"
+                    }>
+                  }
+                  id: string
+                  name: string
+                }
+              | {
+                  type: "multi_select"
+                  multi_select: {
+                    options: Array<{
+                      name: StringRequest
+                      id?: StringRequest
+                      color?:
+                        | "default"
+                        | "gray"
+                        | "brown"
+                        | "orange"
+                        | "yellow"
+                        | "green"
+                        | "blue"
+                        | "purple"
+                        | "pink"
+                        | "red"
+                    }>
+                  }
+                  id: string
+                  name: string
+                }
+              | {
+                  type: "relation"
+                  relation: {
+                    database_id: IdRequest
+                    synced_property_id: StringRequest
+                    synced_property_name: StringRequest
+                  }
+                  id: string
+                  name: string
+                }
+              | {
+                  type: "rollup"
+                  rollup: {
+                    rollup_property_name: string
+                    relation_property_name: string
+                    rollup_property_id: string
+                    relation_property_id: string
+                    function:
+                      | "count"
+                      | "count_values"
+                      | "empty"
+                      | "not_empty"
+                      | "unique"
+                      | "show_unique"
+                      | "percent_empty"
+                      | "percent_not_empty"
+                      | "sum"
+                      | "average"
+                      | "median"
+                      | "min"
+                      | "max"
+                      | "range"
+                      | "earliest_date"
+                      | "latest_date"
+                      | "date_range"
+                      | "checked"
+                      | "unchecked"
+                      | "percent_checked"
+                      | "percent_unchecked"
+                      | "show_original"
+                  }
+                  id: string
+                  name: string
+                }
+              | { type: "title"; title: EmptyObject; id: string; name: string }
+              | {
+                  type: "rich_text"
+                  rich_text: EmptyObject
+                  id: string
+                  name: string
+                }
+              | { type: "url"; url: EmptyObject; id: string; name: string }
+              | {
+                  type: "people"
+                  people: EmptyObject
+                  id: string
+                  name: string
+                }
+              | { type: "files"; files: EmptyObject; id: string; name: string }
+              | { type: "email"; email: EmptyObject; id: string; name: string }
+              | {
+                  type: "phone_number"
+                  phone_number: EmptyObject
+                  id: string
+                  name: string
+                }
+              | { type: "date"; date: EmptyObject; id: string; name: string }
+              | {
+                  type: "checkbox"
+                  checkbox: EmptyObject
+                  id: string
+                  name: string
+                }
+              | {
+                  type: "created_by"
+                  created_by: EmptyObject
+                  id: string
+                  name: string
+                }
+              | {
+                  type: "created_time"
+                  created_time: EmptyObject
+                  id: string
+                  name: string
+                }
+              | {
+                  type: "last_edited_by"
+                  last_edited_by: EmptyObject
+                  id: string
+                  name: string
+                }
+              | {
+                  type: "last_edited_time"
+                  last_edited_time: EmptyObject
+                  id: string
+                  name: string
+                }
+            >
+          }
         | {
             title: Array<
               | {
@@ -58092,7 +59668,7 @@ export type SearchResponse =
                           | { id: IdRequest; object: "user" }
                           | {
                               type: "person"
-                              person: { email: string }
+                              person: { email?: string }
                               name: string | null
                               avatar_url: string | null
                               id: IdRequest
