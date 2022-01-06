@@ -36,7 +36,7 @@ Make a request to any Notion API endpoint.
 
 ```js
 ;(async () => {
-  const listUsersResponse = await notion.users.list()
+  const listUsersResponse = await notion.users.list({})
 })()
 ```
 
