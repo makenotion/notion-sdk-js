@@ -4384,21 +4384,6 @@ type LanguageRequest =
 
 type BlockObjectRequestWithoutChildren =
   | {
-      heading_1: { text: Array<RichTextItemRequest> }
-      type?: "heading_1"
-      object?: "block"
-    }
-  | {
-      heading_2: { text: Array<RichTextItemRequest> }
-      type?: "heading_2"
-      object?: "block"
-    }
-  | {
-      heading_3: { text: Array<RichTextItemRequest> }
-      type?: "heading_3"
-      object?: "block"
-    }
-  | {
       embed: { url: string; caption?: Array<RichTextItemRequest> }
       type?: "embed"
       object?: "block"
@@ -4471,6 +4456,26 @@ type BlockObjectRequestWithoutChildren =
         | { page_id: IdRequest; type?: "page_id" }
         | { database_id: IdRequest; type?: "database_id" }
       type?: "link_to_page"
+      object?: "block"
+    }
+  | {
+      table_row: { cells: Array<Array<RichTextItemRequest>> }
+      type?: "table_row"
+      object?: "block"
+    }
+  | {
+      heading_1: { text: Array<RichTextItemRequest> }
+      type?: "heading_1"
+      object?: "block"
+    }
+  | {
+      heading_2: { text: Array<RichTextItemRequest> }
+      type?: "heading_2"
+      object?: "block"
+    }
+  | {
+      heading_3: { text: Array<RichTextItemRequest> }
+      type?: "heading_3"
       object?: "block"
     }
   | {
@@ -4528,21 +4533,6 @@ type BlockObjectRequestWithoutChildren =
 
 type BlockObjectRequest =
   | {
-      heading_1: { text: Array<RichTextItemRequest> }
-      type?: "heading_1"
-      object?: "block"
-    }
-  | {
-      heading_2: { text: Array<RichTextItemRequest> }
-      type?: "heading_2"
-      object?: "block"
-    }
-  | {
-      heading_3: { text: Array<RichTextItemRequest> }
-      type?: "heading_3"
-      object?: "block"
-    }
-  | {
       embed: { url: string; caption?: Array<RichTextItemRequest> }
       type?: "embed"
       object?: "block"
@@ -4618,25 +4608,15 @@ type BlockObjectRequest =
       object?: "block"
     }
   | {
+      table_row: { cells: Array<Array<RichTextItemRequest>> }
+      type?: "table_row"
+      object?: "block"
+    }
+  | {
       column_list: {
         children: Array<{
           column: {
             children: Array<
-              | {
-                  heading_1: { text: Array<RichTextItemRequest> }
-                  type?: "heading_1"
-                  object?: "block"
-                }
-              | {
-                  heading_2: { text: Array<RichTextItemRequest> }
-                  type?: "heading_2"
-                  object?: "block"
-                }
-              | {
-                  heading_3: { text: Array<RichTextItemRequest> }
-                  type?: "heading_3"
-                  object?: "block"
-                }
               | {
                   embed: { url: string; caption?: Array<RichTextItemRequest> }
                   type?: "embed"
@@ -4724,6 +4704,35 @@ type BlockObjectRequest =
                     | { page_id: IdRequest; type?: "page_id" }
                     | { database_id: IdRequest; type?: "database_id" }
                   type?: "link_to_page"
+                  object?: "block"
+                }
+              | {
+                  table_row: { cells: Array<Array<RichTextItemRequest>> }
+                  type?: "table_row"
+                  object?: "block"
+                }
+              | {
+                  heading_1: {
+                    text: Array<RichTextItemRequest>
+                    children?: Array<BlockObjectRequestWithoutChildren>
+                  }
+                  type?: "heading_1"
+                  object?: "block"
+                }
+              | {
+                  heading_2: {
+                    text: Array<RichTextItemRequest>
+                    children?: Array<BlockObjectRequestWithoutChildren>
+                  }
+                  type?: "heading_2"
+                  object?: "block"
+                }
+              | {
+                  heading_3: {
+                    text: Array<RichTextItemRequest>
+                    children?: Array<BlockObjectRequestWithoutChildren>
+                  }
+                  type?: "heading_3"
                   object?: "block"
                 }
               | {
@@ -4818,21 +4827,6 @@ type BlockObjectRequest =
       column: {
         children: Array<
           | {
-              heading_1: { text: Array<RichTextItemRequest> }
-              type?: "heading_1"
-              object?: "block"
-            }
-          | {
-              heading_2: { text: Array<RichTextItemRequest> }
-              type?: "heading_2"
-              object?: "block"
-            }
-          | {
-              heading_3: { text: Array<RichTextItemRequest> }
-              type?: "heading_3"
-              object?: "block"
-            }
-          | {
               embed: { url: string; caption?: Array<RichTextItemRequest> }
               type?: "embed"
               object?: "block"
@@ -4912,6 +4906,35 @@ type BlockObjectRequest =
                 | { page_id: IdRequest; type?: "page_id" }
                 | { database_id: IdRequest; type?: "database_id" }
               type?: "link_to_page"
+              object?: "block"
+            }
+          | {
+              table_row: { cells: Array<Array<RichTextItemRequest>> }
+              type?: "table_row"
+              object?: "block"
+            }
+          | {
+              heading_1: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+              }
+              type?: "heading_1"
+              object?: "block"
+            }
+          | {
+              heading_2: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+              }
+              type?: "heading_2"
+              object?: "block"
+            }
+          | {
+              heading_3: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+              }
+              type?: "heading_3"
               object?: "block"
             }
           | {
@@ -4996,24 +5019,19 @@ type BlockObjectRequest =
       object?: "block"
     }
   | {
-      paragraph: {
+      table: {
+        table_width: number
+        children: Array<BlockObjectRequestWithoutChildren>
+        has_column_header?: boolean
+        has_row_header?: boolean
+      }
+      type?: "table"
+      object?: "block"
+    }
+  | {
+      heading_1: {
         text: Array<RichTextItemRequest>
         children?: Array<
-          | {
-              heading_1: { text: Array<RichTextItemRequest> }
-              type?: "heading_1"
-              object?: "block"
-            }
-          | {
-              heading_2: { text: Array<RichTextItemRequest> }
-              type?: "heading_2"
-              object?: "block"
-            }
-          | {
-              heading_3: { text: Array<RichTextItemRequest> }
-              type?: "heading_3"
-              object?: "block"
-            }
           | {
               embed: { url: string; caption?: Array<RichTextItemRequest> }
               type?: "embed"
@@ -5094,6 +5112,623 @@ type BlockObjectRequest =
                 | { page_id: IdRequest; type?: "page_id" }
                 | { database_id: IdRequest; type?: "database_id" }
               type?: "link_to_page"
+              object?: "block"
+            }
+          | {
+              table_row: { cells: Array<Array<RichTextItemRequest>> }
+              type?: "table_row"
+              object?: "block"
+            }
+          | {
+              heading_1: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+              }
+              type?: "heading_1"
+              object?: "block"
+            }
+          | {
+              heading_2: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+              }
+              type?: "heading_2"
+              object?: "block"
+            }
+          | {
+              heading_3: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+              }
+              type?: "heading_3"
+              object?: "block"
+            }
+          | {
+              paragraph: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+              }
+              type?: "paragraph"
+              object?: "block"
+            }
+          | {
+              bulleted_list_item: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+              }
+              type?: "bulleted_list_item"
+              object?: "block"
+            }
+          | {
+              numbered_list_item: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+              }
+              type?: "numbered_list_item"
+              object?: "block"
+            }
+          | {
+              quote: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+              }
+              type?: "quote"
+              object?: "block"
+            }
+          | {
+              to_do: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+                checked?: boolean
+              }
+              type?: "to_do"
+              object?: "block"
+            }
+          | {
+              toggle: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+              }
+              type?: "toggle"
+              object?: "block"
+            }
+          | {
+              template: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+              }
+              type?: "template"
+              object?: "block"
+            }
+          | {
+              callout: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+                icon?:
+                  | { emoji: EmojiRequest; type?: "emoji" }
+                  | { external: { url: TextRequest }; type?: "external" }
+              }
+              type?: "callout"
+              object?: "block"
+            }
+          | {
+              synced_block: {
+                synced_from: { block_id: IdRequest; type?: "block_id" } | null
+                children?: Array<BlockObjectRequestWithoutChildren>
+              }
+              type?: "synced_block"
+              object?: "block"
+            }
+        >
+      }
+      type?: "heading_1"
+      object?: "block"
+    }
+  | {
+      heading_2: {
+        text: Array<RichTextItemRequest>
+        children?: Array<
+          | {
+              embed: { url: string; caption?: Array<RichTextItemRequest> }
+              type?: "embed"
+              object?: "block"
+            }
+          | {
+              bookmark: { url: string; caption?: Array<RichTextItemRequest> }
+              type?: "bookmark"
+              object?: "block"
+            }
+          | {
+              image: {
+                external: { url: TextRequest }
+                type?: "external"
+                caption?: Array<RichTextItemRequest>
+              }
+              type?: "image"
+              object?: "block"
+            }
+          | {
+              video: {
+                external: { url: TextRequest }
+                type?: "external"
+                caption?: Array<RichTextItemRequest>
+              }
+              type?: "video"
+              object?: "block"
+            }
+          | {
+              pdf: {
+                external: { url: TextRequest }
+                type?: "external"
+                caption?: Array<RichTextItemRequest>
+              }
+              type?: "pdf"
+              object?: "block"
+            }
+          | {
+              file: {
+                external: { url: TextRequest }
+                type?: "external"
+                caption?: Array<RichTextItemRequest>
+              }
+              type?: "file"
+              object?: "block"
+            }
+          | {
+              audio: {
+                external: { url: TextRequest }
+                type?: "external"
+                caption?: Array<RichTextItemRequest>
+              }
+              type?: "audio"
+              object?: "block"
+            }
+          | {
+              code: {
+                text: Array<RichTextItemRequest>
+                language: LanguageRequest
+              }
+              type?: "code"
+              object?: "block"
+            }
+          | {
+              equation: { expression: string }
+              type?: "equation"
+              object?: "block"
+            }
+          | { divider: EmptyObject; type?: "divider"; object?: "block" }
+          | { breadcrumb: EmptyObject; type?: "breadcrumb"; object?: "block" }
+          | {
+              table_of_contents: EmptyObject
+              type?: "table_of_contents"
+              object?: "block"
+            }
+          | {
+              link_to_page:
+                | { page_id: IdRequest; type?: "page_id" }
+                | { database_id: IdRequest; type?: "database_id" }
+              type?: "link_to_page"
+              object?: "block"
+            }
+          | {
+              table_row: { cells: Array<Array<RichTextItemRequest>> }
+              type?: "table_row"
+              object?: "block"
+            }
+          | {
+              heading_1: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+              }
+              type?: "heading_1"
+              object?: "block"
+            }
+          | {
+              heading_2: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+              }
+              type?: "heading_2"
+              object?: "block"
+            }
+          | {
+              heading_3: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+              }
+              type?: "heading_3"
+              object?: "block"
+            }
+          | {
+              paragraph: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+              }
+              type?: "paragraph"
+              object?: "block"
+            }
+          | {
+              bulleted_list_item: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+              }
+              type?: "bulleted_list_item"
+              object?: "block"
+            }
+          | {
+              numbered_list_item: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+              }
+              type?: "numbered_list_item"
+              object?: "block"
+            }
+          | {
+              quote: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+              }
+              type?: "quote"
+              object?: "block"
+            }
+          | {
+              to_do: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+                checked?: boolean
+              }
+              type?: "to_do"
+              object?: "block"
+            }
+          | {
+              toggle: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+              }
+              type?: "toggle"
+              object?: "block"
+            }
+          | {
+              template: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+              }
+              type?: "template"
+              object?: "block"
+            }
+          | {
+              callout: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+                icon?:
+                  | { emoji: EmojiRequest; type?: "emoji" }
+                  | { external: { url: TextRequest }; type?: "external" }
+              }
+              type?: "callout"
+              object?: "block"
+            }
+          | {
+              synced_block: {
+                synced_from: { block_id: IdRequest; type?: "block_id" } | null
+                children?: Array<BlockObjectRequestWithoutChildren>
+              }
+              type?: "synced_block"
+              object?: "block"
+            }
+        >
+      }
+      type?: "heading_2"
+      object?: "block"
+    }
+  | {
+      heading_3: {
+        text: Array<RichTextItemRequest>
+        children?: Array<
+          | {
+              embed: { url: string; caption?: Array<RichTextItemRequest> }
+              type?: "embed"
+              object?: "block"
+            }
+          | {
+              bookmark: { url: string; caption?: Array<RichTextItemRequest> }
+              type?: "bookmark"
+              object?: "block"
+            }
+          | {
+              image: {
+                external: { url: TextRequest }
+                type?: "external"
+                caption?: Array<RichTextItemRequest>
+              }
+              type?: "image"
+              object?: "block"
+            }
+          | {
+              video: {
+                external: { url: TextRequest }
+                type?: "external"
+                caption?: Array<RichTextItemRequest>
+              }
+              type?: "video"
+              object?: "block"
+            }
+          | {
+              pdf: {
+                external: { url: TextRequest }
+                type?: "external"
+                caption?: Array<RichTextItemRequest>
+              }
+              type?: "pdf"
+              object?: "block"
+            }
+          | {
+              file: {
+                external: { url: TextRequest }
+                type?: "external"
+                caption?: Array<RichTextItemRequest>
+              }
+              type?: "file"
+              object?: "block"
+            }
+          | {
+              audio: {
+                external: { url: TextRequest }
+                type?: "external"
+                caption?: Array<RichTextItemRequest>
+              }
+              type?: "audio"
+              object?: "block"
+            }
+          | {
+              code: {
+                text: Array<RichTextItemRequest>
+                language: LanguageRequest
+              }
+              type?: "code"
+              object?: "block"
+            }
+          | {
+              equation: { expression: string }
+              type?: "equation"
+              object?: "block"
+            }
+          | { divider: EmptyObject; type?: "divider"; object?: "block" }
+          | { breadcrumb: EmptyObject; type?: "breadcrumb"; object?: "block" }
+          | {
+              table_of_contents: EmptyObject
+              type?: "table_of_contents"
+              object?: "block"
+            }
+          | {
+              link_to_page:
+                | { page_id: IdRequest; type?: "page_id" }
+                | { database_id: IdRequest; type?: "database_id" }
+              type?: "link_to_page"
+              object?: "block"
+            }
+          | {
+              table_row: { cells: Array<Array<RichTextItemRequest>> }
+              type?: "table_row"
+              object?: "block"
+            }
+          | {
+              heading_1: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+              }
+              type?: "heading_1"
+              object?: "block"
+            }
+          | {
+              heading_2: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+              }
+              type?: "heading_2"
+              object?: "block"
+            }
+          | {
+              heading_3: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+              }
+              type?: "heading_3"
+              object?: "block"
+            }
+          | {
+              paragraph: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+              }
+              type?: "paragraph"
+              object?: "block"
+            }
+          | {
+              bulleted_list_item: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+              }
+              type?: "bulleted_list_item"
+              object?: "block"
+            }
+          | {
+              numbered_list_item: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+              }
+              type?: "numbered_list_item"
+              object?: "block"
+            }
+          | {
+              quote: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+              }
+              type?: "quote"
+              object?: "block"
+            }
+          | {
+              to_do: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+                checked?: boolean
+              }
+              type?: "to_do"
+              object?: "block"
+            }
+          | {
+              toggle: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+              }
+              type?: "toggle"
+              object?: "block"
+            }
+          | {
+              template: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+              }
+              type?: "template"
+              object?: "block"
+            }
+          | {
+              callout: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+                icon?:
+                  | { emoji: EmojiRequest; type?: "emoji" }
+                  | { external: { url: TextRequest }; type?: "external" }
+              }
+              type?: "callout"
+              object?: "block"
+            }
+          | {
+              synced_block: {
+                synced_from: { block_id: IdRequest; type?: "block_id" } | null
+                children?: Array<BlockObjectRequestWithoutChildren>
+              }
+              type?: "synced_block"
+              object?: "block"
+            }
+        >
+      }
+      type?: "heading_3"
+      object?: "block"
+    }
+  | {
+      paragraph: {
+        text: Array<RichTextItemRequest>
+        children?: Array<
+          | {
+              embed: { url: string; caption?: Array<RichTextItemRequest> }
+              type?: "embed"
+              object?: "block"
+            }
+          | {
+              bookmark: { url: string; caption?: Array<RichTextItemRequest> }
+              type?: "bookmark"
+              object?: "block"
+            }
+          | {
+              image: {
+                external: { url: TextRequest }
+                type?: "external"
+                caption?: Array<RichTextItemRequest>
+              }
+              type?: "image"
+              object?: "block"
+            }
+          | {
+              video: {
+                external: { url: TextRequest }
+                type?: "external"
+                caption?: Array<RichTextItemRequest>
+              }
+              type?: "video"
+              object?: "block"
+            }
+          | {
+              pdf: {
+                external: { url: TextRequest }
+                type?: "external"
+                caption?: Array<RichTextItemRequest>
+              }
+              type?: "pdf"
+              object?: "block"
+            }
+          | {
+              file: {
+                external: { url: TextRequest }
+                type?: "external"
+                caption?: Array<RichTextItemRequest>
+              }
+              type?: "file"
+              object?: "block"
+            }
+          | {
+              audio: {
+                external: { url: TextRequest }
+                type?: "external"
+                caption?: Array<RichTextItemRequest>
+              }
+              type?: "audio"
+              object?: "block"
+            }
+          | {
+              code: {
+                text: Array<RichTextItemRequest>
+                language: LanguageRequest
+              }
+              type?: "code"
+              object?: "block"
+            }
+          | {
+              equation: { expression: string }
+              type?: "equation"
+              object?: "block"
+            }
+          | { divider: EmptyObject; type?: "divider"; object?: "block" }
+          | { breadcrumb: EmptyObject; type?: "breadcrumb"; object?: "block" }
+          | {
+              table_of_contents: EmptyObject
+              type?: "table_of_contents"
+              object?: "block"
+            }
+          | {
+              link_to_page:
+                | { page_id: IdRequest; type?: "page_id" }
+                | { database_id: IdRequest; type?: "database_id" }
+              type?: "link_to_page"
+              object?: "block"
+            }
+          | {
+              table_row: { cells: Array<Array<RichTextItemRequest>> }
+              type?: "table_row"
+              object?: "block"
+            }
+          | {
+              heading_1: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+              }
+              type?: "heading_1"
+              object?: "block"
+            }
+          | {
+              heading_2: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+              }
+              type?: "heading_2"
+              object?: "block"
+            }
+          | {
+              heading_3: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+              }
+              type?: "heading_3"
               object?: "block"
             }
           | {
@@ -5182,21 +5817,6 @@ type BlockObjectRequest =
         text: Array<RichTextItemRequest>
         children?: Array<
           | {
-              heading_1: { text: Array<RichTextItemRequest> }
-              type?: "heading_1"
-              object?: "block"
-            }
-          | {
-              heading_2: { text: Array<RichTextItemRequest> }
-              type?: "heading_2"
-              object?: "block"
-            }
-          | {
-              heading_3: { text: Array<RichTextItemRequest> }
-              type?: "heading_3"
-              object?: "block"
-            }
-          | {
               embed: { url: string; caption?: Array<RichTextItemRequest> }
               type?: "embed"
               object?: "block"
@@ -5276,6 +5896,35 @@ type BlockObjectRequest =
                 | { page_id: IdRequest; type?: "page_id" }
                 | { database_id: IdRequest; type?: "database_id" }
               type?: "link_to_page"
+              object?: "block"
+            }
+          | {
+              table_row: { cells: Array<Array<RichTextItemRequest>> }
+              type?: "table_row"
+              object?: "block"
+            }
+          | {
+              heading_1: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+              }
+              type?: "heading_1"
+              object?: "block"
+            }
+          | {
+              heading_2: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+              }
+              type?: "heading_2"
+              object?: "block"
+            }
+          | {
+              heading_3: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+              }
+              type?: "heading_3"
               object?: "block"
             }
           | {
@@ -5364,21 +6013,6 @@ type BlockObjectRequest =
         text: Array<RichTextItemRequest>
         children?: Array<
           | {
-              heading_1: { text: Array<RichTextItemRequest> }
-              type?: "heading_1"
-              object?: "block"
-            }
-          | {
-              heading_2: { text: Array<RichTextItemRequest> }
-              type?: "heading_2"
-              object?: "block"
-            }
-          | {
-              heading_3: { text: Array<RichTextItemRequest> }
-              type?: "heading_3"
-              object?: "block"
-            }
-          | {
               embed: { url: string; caption?: Array<RichTextItemRequest> }
               type?: "embed"
               object?: "block"
@@ -5458,6 +6092,35 @@ type BlockObjectRequest =
                 | { page_id: IdRequest; type?: "page_id" }
                 | { database_id: IdRequest; type?: "database_id" }
               type?: "link_to_page"
+              object?: "block"
+            }
+          | {
+              table_row: { cells: Array<Array<RichTextItemRequest>> }
+              type?: "table_row"
+              object?: "block"
+            }
+          | {
+              heading_1: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+              }
+              type?: "heading_1"
+              object?: "block"
+            }
+          | {
+              heading_2: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+              }
+              type?: "heading_2"
+              object?: "block"
+            }
+          | {
+              heading_3: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+              }
+              type?: "heading_3"
               object?: "block"
             }
           | {
@@ -5546,21 +6209,6 @@ type BlockObjectRequest =
         text: Array<RichTextItemRequest>
         children?: Array<
           | {
-              heading_1: { text: Array<RichTextItemRequest> }
-              type?: "heading_1"
-              object?: "block"
-            }
-          | {
-              heading_2: { text: Array<RichTextItemRequest> }
-              type?: "heading_2"
-              object?: "block"
-            }
-          | {
-              heading_3: { text: Array<RichTextItemRequest> }
-              type?: "heading_3"
-              object?: "block"
-            }
-          | {
               embed: { url: string; caption?: Array<RichTextItemRequest> }
               type?: "embed"
               object?: "block"
@@ -5640,6 +6288,35 @@ type BlockObjectRequest =
                 | { page_id: IdRequest; type?: "page_id" }
                 | { database_id: IdRequest; type?: "database_id" }
               type?: "link_to_page"
+              object?: "block"
+            }
+          | {
+              table_row: { cells: Array<Array<RichTextItemRequest>> }
+              type?: "table_row"
+              object?: "block"
+            }
+          | {
+              heading_1: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+              }
+              type?: "heading_1"
+              object?: "block"
+            }
+          | {
+              heading_2: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+              }
+              type?: "heading_2"
+              object?: "block"
+            }
+          | {
+              heading_3: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+              }
+              type?: "heading_3"
               object?: "block"
             }
           | {
@@ -5728,21 +6405,6 @@ type BlockObjectRequest =
         text: Array<RichTextItemRequest>
         children?: Array<
           | {
-              heading_1: { text: Array<RichTextItemRequest> }
-              type?: "heading_1"
-              object?: "block"
-            }
-          | {
-              heading_2: { text: Array<RichTextItemRequest> }
-              type?: "heading_2"
-              object?: "block"
-            }
-          | {
-              heading_3: { text: Array<RichTextItemRequest> }
-              type?: "heading_3"
-              object?: "block"
-            }
-          | {
               embed: { url: string; caption?: Array<RichTextItemRequest> }
               type?: "embed"
               object?: "block"
@@ -5822,6 +6484,35 @@ type BlockObjectRequest =
                 | { page_id: IdRequest; type?: "page_id" }
                 | { database_id: IdRequest; type?: "database_id" }
               type?: "link_to_page"
+              object?: "block"
+            }
+          | {
+              table_row: { cells: Array<Array<RichTextItemRequest>> }
+              type?: "table_row"
+              object?: "block"
+            }
+          | {
+              heading_1: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+              }
+              type?: "heading_1"
+              object?: "block"
+            }
+          | {
+              heading_2: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+              }
+              type?: "heading_2"
+              object?: "block"
+            }
+          | {
+              heading_3: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+              }
+              type?: "heading_3"
               object?: "block"
             }
           | {
@@ -5911,21 +6602,6 @@ type BlockObjectRequest =
         text: Array<RichTextItemRequest>
         children?: Array<
           | {
-              heading_1: { text: Array<RichTextItemRequest> }
-              type?: "heading_1"
-              object?: "block"
-            }
-          | {
-              heading_2: { text: Array<RichTextItemRequest> }
-              type?: "heading_2"
-              object?: "block"
-            }
-          | {
-              heading_3: { text: Array<RichTextItemRequest> }
-              type?: "heading_3"
-              object?: "block"
-            }
-          | {
               embed: { url: string; caption?: Array<RichTextItemRequest> }
               type?: "embed"
               object?: "block"
@@ -6005,6 +6681,35 @@ type BlockObjectRequest =
                 | { page_id: IdRequest; type?: "page_id" }
                 | { database_id: IdRequest; type?: "database_id" }
               type?: "link_to_page"
+              object?: "block"
+            }
+          | {
+              table_row: { cells: Array<Array<RichTextItemRequest>> }
+              type?: "table_row"
+              object?: "block"
+            }
+          | {
+              heading_1: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+              }
+              type?: "heading_1"
+              object?: "block"
+            }
+          | {
+              heading_2: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+              }
+              type?: "heading_2"
+              object?: "block"
+            }
+          | {
+              heading_3: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+              }
+              type?: "heading_3"
               object?: "block"
             }
           | {
@@ -6093,21 +6798,6 @@ type BlockObjectRequest =
         text: Array<RichTextItemRequest>
         children?: Array<
           | {
-              heading_1: { text: Array<RichTextItemRequest> }
-              type?: "heading_1"
-              object?: "block"
-            }
-          | {
-              heading_2: { text: Array<RichTextItemRequest> }
-              type?: "heading_2"
-              object?: "block"
-            }
-          | {
-              heading_3: { text: Array<RichTextItemRequest> }
-              type?: "heading_3"
-              object?: "block"
-            }
-          | {
               embed: { url: string; caption?: Array<RichTextItemRequest> }
               type?: "embed"
               object?: "block"
@@ -6187,6 +6877,35 @@ type BlockObjectRequest =
                 | { page_id: IdRequest; type?: "page_id" }
                 | { database_id: IdRequest; type?: "database_id" }
               type?: "link_to_page"
+              object?: "block"
+            }
+          | {
+              table_row: { cells: Array<Array<RichTextItemRequest>> }
+              type?: "table_row"
+              object?: "block"
+            }
+          | {
+              heading_1: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+              }
+              type?: "heading_1"
+              object?: "block"
+            }
+          | {
+              heading_2: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+              }
+              type?: "heading_2"
+              object?: "block"
+            }
+          | {
+              heading_3: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+              }
+              type?: "heading_3"
               object?: "block"
             }
           | {
@@ -6275,21 +6994,6 @@ type BlockObjectRequest =
         text: Array<RichTextItemRequest>
         children?: Array<
           | {
-              heading_1: { text: Array<RichTextItemRequest> }
-              type?: "heading_1"
-              object?: "block"
-            }
-          | {
-              heading_2: { text: Array<RichTextItemRequest> }
-              type?: "heading_2"
-              object?: "block"
-            }
-          | {
-              heading_3: { text: Array<RichTextItemRequest> }
-              type?: "heading_3"
-              object?: "block"
-            }
-          | {
               embed: { url: string; caption?: Array<RichTextItemRequest> }
               type?: "embed"
               object?: "block"
@@ -6369,6 +7073,35 @@ type BlockObjectRequest =
                 | { page_id: IdRequest; type?: "page_id" }
                 | { database_id: IdRequest; type?: "database_id" }
               type?: "link_to_page"
+              object?: "block"
+            }
+          | {
+              table_row: { cells: Array<Array<RichTextItemRequest>> }
+              type?: "table_row"
+              object?: "block"
+            }
+          | {
+              heading_1: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+              }
+              type?: "heading_1"
+              object?: "block"
+            }
+          | {
+              heading_2: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+              }
+              type?: "heading_2"
+              object?: "block"
+            }
+          | {
+              heading_3: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+              }
+              type?: "heading_3"
               object?: "block"
             }
           | {
@@ -6460,21 +7193,6 @@ type BlockObjectRequest =
         synced_from: { block_id: IdRequest; type?: "block_id" } | null
         children?: Array<
           | {
-              heading_1: { text: Array<RichTextItemRequest> }
-              type?: "heading_1"
-              object?: "block"
-            }
-          | {
-              heading_2: { text: Array<RichTextItemRequest> }
-              type?: "heading_2"
-              object?: "block"
-            }
-          | {
-              heading_3: { text: Array<RichTextItemRequest> }
-              type?: "heading_3"
-              object?: "block"
-            }
-          | {
               embed: { url: string; caption?: Array<RichTextItemRequest> }
               type?: "embed"
               object?: "block"
@@ -6554,6 +7272,35 @@ type BlockObjectRequest =
                 | { page_id: IdRequest; type?: "page_id" }
                 | { database_id: IdRequest; type?: "database_id" }
               type?: "link_to_page"
+              object?: "block"
+            }
+          | {
+              table_row: { cells: Array<Array<RichTextItemRequest>> }
+              type?: "table_row"
+              object?: "block"
+            }
+          | {
+              heading_1: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+              }
+              type?: "heading_1"
+              object?: "block"
+            }
+          | {
+              heading_2: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+              }
+              type?: "heading_2"
+              object?: "block"
+            }
+          | {
+              heading_3: {
+                text: Array<RichTextItemRequest>
+                children?: Array<BlockObjectRequestWithoutChildren>
+              }
+              type?: "heading_3"
               object?: "block"
             }
           | {
@@ -16118,6 +16865,184 @@ export type GetBlockResponse =
       archived: boolean
     }
   | {
+      type: "table"
+      table: {
+        has_column_header: boolean
+        has_row_header: boolean
+        table_width: number
+      }
+      object: "block"
+      id: string
+      created_time: string
+      last_edited_time: string
+      has_children: boolean
+      archived: boolean
+    }
+  | {
+      type: "table_row"
+      table_row: {
+        cells: Array<
+          Array<
+            | {
+                type: "text"
+                text: { content: string; link: { url: TextRequest } | null }
+                annotations: {
+                  bold: boolean
+                  italic: boolean
+                  strikethrough: boolean
+                  underline: boolean
+                  code: boolean
+                  color:
+                    | "default"
+                    | "gray"
+                    | "brown"
+                    | "orange"
+                    | "yellow"
+                    | "green"
+                    | "blue"
+                    | "purple"
+                    | "pink"
+                    | "red"
+                    | "gray_background"
+                    | "brown_background"
+                    | "orange_background"
+                    | "yellow_background"
+                    | "green_background"
+                    | "blue_background"
+                    | "purple_background"
+                    | "pink_background"
+                    | "red_background"
+                }
+                plain_text: string
+                href: string | null
+              }
+            | {
+                type: "mention"
+                mention:
+                  | {
+                      type: "user"
+                      user:
+                        | { id: IdRequest; object: "user" }
+                        | {
+                            type: "person"
+                            person: { email?: string }
+                            name: string | null
+                            avatar_url: string | null
+                            id: IdRequest
+                            object: "user"
+                          }
+                        | {
+                            type: "bot"
+                            bot:
+                              | EmptyObject
+                              | {
+                                  owner:
+                                    | {
+                                        type: "user"
+                                        user:
+                                          | {
+                                              type: "person"
+                                              person: { email: string }
+                                              name: string | null
+                                              avatar_url: string | null
+                                              id: IdRequest
+                                              object: "user"
+                                            }
+                                          | { id: IdRequest; object: "user" }
+                                      }
+                                    | { type: "workspace"; workspace: true }
+                                }
+                            name: string | null
+                            avatar_url: string | null
+                            id: IdRequest
+                            object: "user"
+                          }
+                    }
+                  | {
+                      type: "date"
+                      date: {
+                        start: string
+                        end: string | null
+                        time_zone: TimeZoneRequest | null
+                      }
+                    }
+                  | { type: "link_preview"; link_preview: { url: TextRequest } }
+                  | { type: "page"; page: { id: IdRequest } }
+                  | { type: "database"; database: { id: IdRequest } }
+                annotations: {
+                  bold: boolean
+                  italic: boolean
+                  strikethrough: boolean
+                  underline: boolean
+                  code: boolean
+                  color:
+                    | "default"
+                    | "gray"
+                    | "brown"
+                    | "orange"
+                    | "yellow"
+                    | "green"
+                    | "blue"
+                    | "purple"
+                    | "pink"
+                    | "red"
+                    | "gray_background"
+                    | "brown_background"
+                    | "orange_background"
+                    | "yellow_background"
+                    | "green_background"
+                    | "blue_background"
+                    | "purple_background"
+                    | "pink_background"
+                    | "red_background"
+                }
+                plain_text: string
+                href: string | null
+              }
+            | {
+                type: "equation"
+                equation: { expression: TextRequest }
+                annotations: {
+                  bold: boolean
+                  italic: boolean
+                  strikethrough: boolean
+                  underline: boolean
+                  code: boolean
+                  color:
+                    | "default"
+                    | "gray"
+                    | "brown"
+                    | "orange"
+                    | "yellow"
+                    | "green"
+                    | "blue"
+                    | "purple"
+                    | "pink"
+                    | "red"
+                    | "gray_background"
+                    | "brown_background"
+                    | "orange_background"
+                    | "yellow_background"
+                    | "green_background"
+                    | "blue_background"
+                    | "purple_background"
+                    | "pink_background"
+                    | "red_background"
+                }
+                plain_text: string
+                href: string | null
+              }
+          >
+        >
+      }
+      object: "block"
+      id: string
+      created_time: string
+      last_edited_time: string
+      has_children: boolean
+      archived: boolean
+    }
+  | {
       type: "embed"
       embed: {
         url: string
@@ -18108,21 +19033,6 @@ type UpdateBlockPathParameters = {
 
 type UpdateBlockBodyParameters =
   | {
-      heading_1: { text: Array<RichTextItemRequest> }
-      type?: "heading_1"
-      archived?: boolean
-    }
-  | {
-      heading_2: { text: Array<RichTextItemRequest> }
-      type?: "heading_2"
-      archived?: boolean
-    }
-  | {
-      heading_3: { text: Array<RichTextItemRequest> }
-      type?: "heading_3"
-      archived?: boolean
-    }
-  | {
       embed: { url?: string; caption?: Array<RichTextItemRequest> }
       type?: "embed"
       archived?: boolean
@@ -18193,6 +19103,26 @@ type UpdateBlockBodyParameters =
       archived?: boolean
     }
   | {
+      table_row: { cells: Array<Array<RichTextItemRequest>> }
+      type?: "table_row"
+      archived?: boolean
+    }
+  | {
+      heading_1: { text: Array<RichTextItemRequest> }
+      type?: "heading_1"
+      archived?: boolean
+    }
+  | {
+      heading_2: { text: Array<RichTextItemRequest> }
+      type?: "heading_2"
+      archived?: boolean
+    }
+  | {
+      heading_3: { text: Array<RichTextItemRequest> }
+      type?: "heading_3"
+      archived?: boolean
+    }
+  | {
       paragraph: { text: Array<RichTextItemRequest> }
       type?: "paragraph"
       archived?: boolean
@@ -18242,6 +19172,11 @@ type UpdateBlockBodyParameters =
         synced_from: { block_id: IdRequest; type?: "block_id" } | null
       }
       type?: "synced_block"
+      archived?: boolean
+    }
+  | {
+      table: { has_column_header?: boolean; has_row_header?: boolean }
+      type?: "table"
       archived?: boolean
     }
   | { archived?: boolean }
@@ -20309,6 +21244,184 @@ export type UpdateBlockResponse =
       archived: boolean
     }
   | {
+      type: "table"
+      table: {
+        has_column_header: boolean
+        has_row_header: boolean
+        table_width: number
+      }
+      object: "block"
+      id: string
+      created_time: string
+      last_edited_time: string
+      has_children: boolean
+      archived: boolean
+    }
+  | {
+      type: "table_row"
+      table_row: {
+        cells: Array<
+          Array<
+            | {
+                type: "text"
+                text: { content: string; link: { url: TextRequest } | null }
+                annotations: {
+                  bold: boolean
+                  italic: boolean
+                  strikethrough: boolean
+                  underline: boolean
+                  code: boolean
+                  color:
+                    | "default"
+                    | "gray"
+                    | "brown"
+                    | "orange"
+                    | "yellow"
+                    | "green"
+                    | "blue"
+                    | "purple"
+                    | "pink"
+                    | "red"
+                    | "gray_background"
+                    | "brown_background"
+                    | "orange_background"
+                    | "yellow_background"
+                    | "green_background"
+                    | "blue_background"
+                    | "purple_background"
+                    | "pink_background"
+                    | "red_background"
+                }
+                plain_text: string
+                href: string | null
+              }
+            | {
+                type: "mention"
+                mention:
+                  | {
+                      type: "user"
+                      user:
+                        | { id: IdRequest; object: "user" }
+                        | {
+                            type: "person"
+                            person: { email?: string }
+                            name: string | null
+                            avatar_url: string | null
+                            id: IdRequest
+                            object: "user"
+                          }
+                        | {
+                            type: "bot"
+                            bot:
+                              | EmptyObject
+                              | {
+                                  owner:
+                                    | {
+                                        type: "user"
+                                        user:
+                                          | {
+                                              type: "person"
+                                              person: { email: string }
+                                              name: string | null
+                                              avatar_url: string | null
+                                              id: IdRequest
+                                              object: "user"
+                                            }
+                                          | { id: IdRequest; object: "user" }
+                                      }
+                                    | { type: "workspace"; workspace: true }
+                                }
+                            name: string | null
+                            avatar_url: string | null
+                            id: IdRequest
+                            object: "user"
+                          }
+                    }
+                  | {
+                      type: "date"
+                      date: {
+                        start: string
+                        end: string | null
+                        time_zone: TimeZoneRequest | null
+                      }
+                    }
+                  | { type: "link_preview"; link_preview: { url: TextRequest } }
+                  | { type: "page"; page: { id: IdRequest } }
+                  | { type: "database"; database: { id: IdRequest } }
+                annotations: {
+                  bold: boolean
+                  italic: boolean
+                  strikethrough: boolean
+                  underline: boolean
+                  code: boolean
+                  color:
+                    | "default"
+                    | "gray"
+                    | "brown"
+                    | "orange"
+                    | "yellow"
+                    | "green"
+                    | "blue"
+                    | "purple"
+                    | "pink"
+                    | "red"
+                    | "gray_background"
+                    | "brown_background"
+                    | "orange_background"
+                    | "yellow_background"
+                    | "green_background"
+                    | "blue_background"
+                    | "purple_background"
+                    | "pink_background"
+                    | "red_background"
+                }
+                plain_text: string
+                href: string | null
+              }
+            | {
+                type: "equation"
+                equation: { expression: TextRequest }
+                annotations: {
+                  bold: boolean
+                  italic: boolean
+                  strikethrough: boolean
+                  underline: boolean
+                  code: boolean
+                  color:
+                    | "default"
+                    | "gray"
+                    | "brown"
+                    | "orange"
+                    | "yellow"
+                    | "green"
+                    | "blue"
+                    | "purple"
+                    | "pink"
+                    | "red"
+                    | "gray_background"
+                    | "brown_background"
+                    | "orange_background"
+                    | "yellow_background"
+                    | "green_background"
+                    | "blue_background"
+                    | "purple_background"
+                    | "pink_background"
+                    | "red_background"
+                }
+                plain_text: string
+                href: string | null
+              }
+          >
+        >
+      }
+      object: "block"
+      id: string
+      created_time: string
+      last_edited_time: string
+      has_children: boolean
+      archived: boolean
+    }
+  | {
       type: "embed"
       embed: {
         url: string
@@ -22290,12 +23403,9 @@ export const updateBlock = {
   pathParams: ["block_id"],
   queryParams: [],
   bodyParams: [
-    "heading_1",
+    "embed",
     "type",
     "archived",
-    "heading_2",
-    "heading_3",
-    "embed",
     "bookmark",
     "image",
     "video",
@@ -22308,6 +23418,10 @@ export const updateBlock = {
     "breadcrumb",
     "table_of_contents",
     "link_to_page",
+    "table_row",
+    "heading_1",
+    "heading_2",
+    "heading_3",
     "paragraph",
     "bulleted_list_item",
     "numbered_list_item",
@@ -22317,6 +23431,7 @@ export const updateBlock = {
     "template",
     "callout",
     "synced_block",
+    "table",
   ],
   path: (p: UpdateBlockPathParameters): string => `blocks/${p.block_id}`,
 } as const
@@ -24379,6 +25494,184 @@ export type DeleteBlockResponse =
       link_to_page:
         | { type: "page_id"; page_id: IdRequest }
         | { type: "database_id"; database_id: IdRequest }
+      object: "block"
+      id: string
+      created_time: string
+      last_edited_time: string
+      has_children: boolean
+      archived: boolean
+    }
+  | {
+      type: "table"
+      table: {
+        has_column_header: boolean
+        has_row_header: boolean
+        table_width: number
+      }
+      object: "block"
+      id: string
+      created_time: string
+      last_edited_time: string
+      has_children: boolean
+      archived: boolean
+    }
+  | {
+      type: "table_row"
+      table_row: {
+        cells: Array<
+          Array<
+            | {
+                type: "text"
+                text: { content: string; link: { url: TextRequest } | null }
+                annotations: {
+                  bold: boolean
+                  italic: boolean
+                  strikethrough: boolean
+                  underline: boolean
+                  code: boolean
+                  color:
+                    | "default"
+                    | "gray"
+                    | "brown"
+                    | "orange"
+                    | "yellow"
+                    | "green"
+                    | "blue"
+                    | "purple"
+                    | "pink"
+                    | "red"
+                    | "gray_background"
+                    | "brown_background"
+                    | "orange_background"
+                    | "yellow_background"
+                    | "green_background"
+                    | "blue_background"
+                    | "purple_background"
+                    | "pink_background"
+                    | "red_background"
+                }
+                plain_text: string
+                href: string | null
+              }
+            | {
+                type: "mention"
+                mention:
+                  | {
+                      type: "user"
+                      user:
+                        | { id: IdRequest; object: "user" }
+                        | {
+                            type: "person"
+                            person: { email?: string }
+                            name: string | null
+                            avatar_url: string | null
+                            id: IdRequest
+                            object: "user"
+                          }
+                        | {
+                            type: "bot"
+                            bot:
+                              | EmptyObject
+                              | {
+                                  owner:
+                                    | {
+                                        type: "user"
+                                        user:
+                                          | {
+                                              type: "person"
+                                              person: { email: string }
+                                              name: string | null
+                                              avatar_url: string | null
+                                              id: IdRequest
+                                              object: "user"
+                                            }
+                                          | { id: IdRequest; object: "user" }
+                                      }
+                                    | { type: "workspace"; workspace: true }
+                                }
+                            name: string | null
+                            avatar_url: string | null
+                            id: IdRequest
+                            object: "user"
+                          }
+                    }
+                  | {
+                      type: "date"
+                      date: {
+                        start: string
+                        end: string | null
+                        time_zone: TimeZoneRequest | null
+                      }
+                    }
+                  | { type: "link_preview"; link_preview: { url: TextRequest } }
+                  | { type: "page"; page: { id: IdRequest } }
+                  | { type: "database"; database: { id: IdRequest } }
+                annotations: {
+                  bold: boolean
+                  italic: boolean
+                  strikethrough: boolean
+                  underline: boolean
+                  code: boolean
+                  color:
+                    | "default"
+                    | "gray"
+                    | "brown"
+                    | "orange"
+                    | "yellow"
+                    | "green"
+                    | "blue"
+                    | "purple"
+                    | "pink"
+                    | "red"
+                    | "gray_background"
+                    | "brown_background"
+                    | "orange_background"
+                    | "yellow_background"
+                    | "green_background"
+                    | "blue_background"
+                    | "purple_background"
+                    | "pink_background"
+                    | "red_background"
+                }
+                plain_text: string
+                href: string | null
+              }
+            | {
+                type: "equation"
+                equation: { expression: TextRequest }
+                annotations: {
+                  bold: boolean
+                  italic: boolean
+                  strikethrough: boolean
+                  underline: boolean
+                  code: boolean
+                  color:
+                    | "default"
+                    | "gray"
+                    | "brown"
+                    | "orange"
+                    | "yellow"
+                    | "green"
+                    | "blue"
+                    | "purple"
+                    | "pink"
+                    | "red"
+                    | "gray_background"
+                    | "brown_background"
+                    | "orange_background"
+                    | "yellow_background"
+                    | "green_background"
+                    | "blue_background"
+                    | "purple_background"
+                    | "pink_background"
+                    | "red_background"
+                }
+                plain_text: string
+                href: string | null
+              }
+          >
+        >
+      }
       object: "block"
       id: string
       created_time: string
@@ -29165,6 +30458,196 @@ export type ListBlockChildrenResponse =
             archived: boolean
           }
         | {
+            type: "table"
+            table: {
+              has_column_header: boolean
+              has_row_header: boolean
+              table_width: number
+            }
+            object: "block"
+            id: string
+            created_time: string
+            last_edited_time: string
+            has_children: boolean
+            archived: boolean
+          }
+        | {
+            type: "table_row"
+            table_row: {
+              cells: Array<
+                Array<
+                  | {
+                      type: "text"
+                      text: {
+                        content: string
+                        link: { url: TextRequest } | null
+                      }
+                      annotations: {
+                        bold: boolean
+                        italic: boolean
+                        strikethrough: boolean
+                        underline: boolean
+                        code: boolean
+                        color:
+                          | "default"
+                          | "gray"
+                          | "brown"
+                          | "orange"
+                          | "yellow"
+                          | "green"
+                          | "blue"
+                          | "purple"
+                          | "pink"
+                          | "red"
+                          | "gray_background"
+                          | "brown_background"
+                          | "orange_background"
+                          | "yellow_background"
+                          | "green_background"
+                          | "blue_background"
+                          | "purple_background"
+                          | "pink_background"
+                          | "red_background"
+                      }
+                      plain_text: string
+                      href: string | null
+                    }
+                  | {
+                      type: "mention"
+                      mention:
+                        | {
+                            type: "user"
+                            user:
+                              | { id: IdRequest; object: "user" }
+                              | {
+                                  type: "person"
+                                  person: { email?: string }
+                                  name: string | null
+                                  avatar_url: string | null
+                                  id: IdRequest
+                                  object: "user"
+                                }
+                              | {
+                                  type: "bot"
+                                  bot:
+                                    | EmptyObject
+                                    | {
+                                        owner:
+                                          | {
+                                              type: "user"
+                                              user:
+                                                | {
+                                                    type: "person"
+                                                    person: { email: string }
+                                                    name: string | null
+                                                    avatar_url: string | null
+                                                    id: IdRequest
+                                                    object: "user"
+                                                  }
+                                                | {
+                                                    id: IdRequest
+                                                    object: "user"
+                                                  }
+                                            }
+                                          | {
+                                              type: "workspace"
+                                              workspace: true
+                                            }
+                                      }
+                                  name: string | null
+                                  avatar_url: string | null
+                                  id: IdRequest
+                                  object: "user"
+                                }
+                          }
+                        | {
+                            type: "date"
+                            date: {
+                              start: string
+                              end: string | null
+                              time_zone: TimeZoneRequest | null
+                            }
+                          }
+                        | {
+                            type: "link_preview"
+                            link_preview: { url: TextRequest }
+                          }
+                        | { type: "page"; page: { id: IdRequest } }
+                        | { type: "database"; database: { id: IdRequest } }
+                      annotations: {
+                        bold: boolean
+                        italic: boolean
+                        strikethrough: boolean
+                        underline: boolean
+                        code: boolean
+                        color:
+                          | "default"
+                          | "gray"
+                          | "brown"
+                          | "orange"
+                          | "yellow"
+                          | "green"
+                          | "blue"
+                          | "purple"
+                          | "pink"
+                          | "red"
+                          | "gray_background"
+                          | "brown_background"
+                          | "orange_background"
+                          | "yellow_background"
+                          | "green_background"
+                          | "blue_background"
+                          | "purple_background"
+                          | "pink_background"
+                          | "red_background"
+                      }
+                      plain_text: string
+                      href: string | null
+                    }
+                  | {
+                      type: "equation"
+                      equation: { expression: TextRequest }
+                      annotations: {
+                        bold: boolean
+                        italic: boolean
+                        strikethrough: boolean
+                        underline: boolean
+                        code: boolean
+                        color:
+                          | "default"
+                          | "gray"
+                          | "brown"
+                          | "orange"
+                          | "yellow"
+                          | "green"
+                          | "blue"
+                          | "purple"
+                          | "pink"
+                          | "red"
+                          | "gray_background"
+                          | "brown_background"
+                          | "orange_background"
+                          | "yellow_background"
+                          | "green_background"
+                          | "blue_background"
+                          | "purple_background"
+                          | "pink_background"
+                          | "red_background"
+                      }
+                      plain_text: string
+                      href: string | null
+                    }
+                >
+              >
+            }
+            object: "block"
+            id: string
+            created_time: string
+            last_edited_time: string
+            has_children: boolean
+            archived: boolean
+          }
+        | {
             type: "embed"
             embed: {
               url: string
@@ -33372,6 +34855,196 @@ export type ListBlockChildrenResponse =
             link_to_page:
               | { type: "page_id"; page_id: IdRequest }
               | { type: "database_id"; database_id: IdRequest }
+            object: "block"
+            id: string
+            created_time: string
+            last_edited_time: string
+            has_children: boolean
+            archived: boolean
+          }
+        | {
+            type: "table"
+            table: {
+              has_column_header: boolean
+              has_row_header: boolean
+              table_width: number
+            }
+            object: "block"
+            id: string
+            created_time: string
+            last_edited_time: string
+            has_children: boolean
+            archived: boolean
+          }
+        | {
+            type: "table_row"
+            table_row: {
+              cells: Array<
+                Array<
+                  | {
+                      type: "text"
+                      text: {
+                        content: string
+                        link: { url: TextRequest } | null
+                      }
+                      annotations: {
+                        bold: boolean
+                        italic: boolean
+                        strikethrough: boolean
+                        underline: boolean
+                        code: boolean
+                        color:
+                          | "default"
+                          | "gray"
+                          | "brown"
+                          | "orange"
+                          | "yellow"
+                          | "green"
+                          | "blue"
+                          | "purple"
+                          | "pink"
+                          | "red"
+                          | "gray_background"
+                          | "brown_background"
+                          | "orange_background"
+                          | "yellow_background"
+                          | "green_background"
+                          | "blue_background"
+                          | "purple_background"
+                          | "pink_background"
+                          | "red_background"
+                      }
+                      plain_text: string
+                      href: string | null
+                    }
+                  | {
+                      type: "mention"
+                      mention:
+                        | {
+                            type: "user"
+                            user:
+                              | { id: IdRequest; object: "user" }
+                              | {
+                                  type: "person"
+                                  person: { email?: string }
+                                  name: string | null
+                                  avatar_url: string | null
+                                  id: IdRequest
+                                  object: "user"
+                                }
+                              | {
+                                  type: "bot"
+                                  bot:
+                                    | EmptyObject
+                                    | {
+                                        owner:
+                                          | {
+                                              type: "user"
+                                              user:
+                                                | {
+                                                    type: "person"
+                                                    person: { email: string }
+                                                    name: string | null
+                                                    avatar_url: string | null
+                                                    id: IdRequest
+                                                    object: "user"
+                                                  }
+                                                | {
+                                                    id: IdRequest
+                                                    object: "user"
+                                                  }
+                                            }
+                                          | {
+                                              type: "workspace"
+                                              workspace: true
+                                            }
+                                      }
+                                  name: string | null
+                                  avatar_url: string | null
+                                  id: IdRequest
+                                  object: "user"
+                                }
+                          }
+                        | {
+                            type: "date"
+                            date: {
+                              start: string
+                              end: string | null
+                              time_zone: TimeZoneRequest | null
+                            }
+                          }
+                        | {
+                            type: "link_preview"
+                            link_preview: { url: TextRequest }
+                          }
+                        | { type: "page"; page: { id: IdRequest } }
+                        | { type: "database"; database: { id: IdRequest } }
+                      annotations: {
+                        bold: boolean
+                        italic: boolean
+                        strikethrough: boolean
+                        underline: boolean
+                        code: boolean
+                        color:
+                          | "default"
+                          | "gray"
+                          | "brown"
+                          | "orange"
+                          | "yellow"
+                          | "green"
+                          | "blue"
+                          | "purple"
+                          | "pink"
+                          | "red"
+                          | "gray_background"
+                          | "brown_background"
+                          | "orange_background"
+                          | "yellow_background"
+                          | "green_background"
+                          | "blue_background"
+                          | "purple_background"
+                          | "pink_background"
+                          | "red_background"
+                      }
+                      plain_text: string
+                      href: string | null
+                    }
+                  | {
+                      type: "equation"
+                      equation: { expression: TextRequest }
+                      annotations: {
+                        bold: boolean
+                        italic: boolean
+                        strikethrough: boolean
+                        underline: boolean
+                        code: boolean
+                        color:
+                          | "default"
+                          | "gray"
+                          | "brown"
+                          | "orange"
+                          | "yellow"
+                          | "green"
+                          | "blue"
+                          | "purple"
+                          | "pink"
+                          | "red"
+                          | "gray_background"
+                          | "brown_background"
+                          | "orange_background"
+                          | "yellow_background"
+                          | "green_background"
+                          | "blue_background"
+                          | "purple_background"
+                          | "pink_background"
+                          | "red_background"
+                      }
+                      plain_text: string
+                      href: string | null
+                    }
+                >
+              >
+            }
             object: "block"
             id: string
             created_time: string
@@ -38262,6 +39935,196 @@ export type AppendBlockChildrenResponse =
             archived: boolean
           }
         | {
+            type: "table"
+            table: {
+              has_column_header: boolean
+              has_row_header: boolean
+              table_width: number
+            }
+            object: "block"
+            id: string
+            created_time: string
+            last_edited_time: string
+            has_children: boolean
+            archived: boolean
+          }
+        | {
+            type: "table_row"
+            table_row: {
+              cells: Array<
+                Array<
+                  | {
+                      type: "text"
+                      text: {
+                        content: string
+                        link: { url: TextRequest } | null
+                      }
+                      annotations: {
+                        bold: boolean
+                        italic: boolean
+                        strikethrough: boolean
+                        underline: boolean
+                        code: boolean
+                        color:
+                          | "default"
+                          | "gray"
+                          | "brown"
+                          | "orange"
+                          | "yellow"
+                          | "green"
+                          | "blue"
+                          | "purple"
+                          | "pink"
+                          | "red"
+                          | "gray_background"
+                          | "brown_background"
+                          | "orange_background"
+                          | "yellow_background"
+                          | "green_background"
+                          | "blue_background"
+                          | "purple_background"
+                          | "pink_background"
+                          | "red_background"
+                      }
+                      plain_text: string
+                      href: string | null
+                    }
+                  | {
+                      type: "mention"
+                      mention:
+                        | {
+                            type: "user"
+                            user:
+                              | { id: IdRequest; object: "user" }
+                              | {
+                                  type: "person"
+                                  person: { email?: string }
+                                  name: string | null
+                                  avatar_url: string | null
+                                  id: IdRequest
+                                  object: "user"
+                                }
+                              | {
+                                  type: "bot"
+                                  bot:
+                                    | EmptyObject
+                                    | {
+                                        owner:
+                                          | {
+                                              type: "user"
+                                              user:
+                                                | {
+                                                    type: "person"
+                                                    person: { email: string }
+                                                    name: string | null
+                                                    avatar_url: string | null
+                                                    id: IdRequest
+                                                    object: "user"
+                                                  }
+                                                | {
+                                                    id: IdRequest
+                                                    object: "user"
+                                                  }
+                                            }
+                                          | {
+                                              type: "workspace"
+                                              workspace: true
+                                            }
+                                      }
+                                  name: string | null
+                                  avatar_url: string | null
+                                  id: IdRequest
+                                  object: "user"
+                                }
+                          }
+                        | {
+                            type: "date"
+                            date: {
+                              start: string
+                              end: string | null
+                              time_zone: TimeZoneRequest | null
+                            }
+                          }
+                        | {
+                            type: "link_preview"
+                            link_preview: { url: TextRequest }
+                          }
+                        | { type: "page"; page: { id: IdRequest } }
+                        | { type: "database"; database: { id: IdRequest } }
+                      annotations: {
+                        bold: boolean
+                        italic: boolean
+                        strikethrough: boolean
+                        underline: boolean
+                        code: boolean
+                        color:
+                          | "default"
+                          | "gray"
+                          | "brown"
+                          | "orange"
+                          | "yellow"
+                          | "green"
+                          | "blue"
+                          | "purple"
+                          | "pink"
+                          | "red"
+                          | "gray_background"
+                          | "brown_background"
+                          | "orange_background"
+                          | "yellow_background"
+                          | "green_background"
+                          | "blue_background"
+                          | "purple_background"
+                          | "pink_background"
+                          | "red_background"
+                      }
+                      plain_text: string
+                      href: string | null
+                    }
+                  | {
+                      type: "equation"
+                      equation: { expression: TextRequest }
+                      annotations: {
+                        bold: boolean
+                        italic: boolean
+                        strikethrough: boolean
+                        underline: boolean
+                        code: boolean
+                        color:
+                          | "default"
+                          | "gray"
+                          | "brown"
+                          | "orange"
+                          | "yellow"
+                          | "green"
+                          | "blue"
+                          | "purple"
+                          | "pink"
+                          | "red"
+                          | "gray_background"
+                          | "brown_background"
+                          | "orange_background"
+                          | "yellow_background"
+                          | "green_background"
+                          | "blue_background"
+                          | "purple_background"
+                          | "pink_background"
+                          | "red_background"
+                      }
+                      plain_text: string
+                      href: string | null
+                    }
+                >
+              >
+            }
+            object: "block"
+            id: string
+            created_time: string
+            last_edited_time: string
+            has_children: boolean
+            archived: boolean
+          }
+        | {
             type: "embed"
             embed: {
               url: string
@@ -42469,6 +44332,196 @@ export type AppendBlockChildrenResponse =
             link_to_page:
               | { type: "page_id"; page_id: IdRequest }
               | { type: "database_id"; database_id: IdRequest }
+            object: "block"
+            id: string
+            created_time: string
+            last_edited_time: string
+            has_children: boolean
+            archived: boolean
+          }
+        | {
+            type: "table"
+            table: {
+              has_column_header: boolean
+              has_row_header: boolean
+              table_width: number
+            }
+            object: "block"
+            id: string
+            created_time: string
+            last_edited_time: string
+            has_children: boolean
+            archived: boolean
+          }
+        | {
+            type: "table_row"
+            table_row: {
+              cells: Array<
+                Array<
+                  | {
+                      type: "text"
+                      text: {
+                        content: string
+                        link: { url: TextRequest } | null
+                      }
+                      annotations: {
+                        bold: boolean
+                        italic: boolean
+                        strikethrough: boolean
+                        underline: boolean
+                        code: boolean
+                        color:
+                          | "default"
+                          | "gray"
+                          | "brown"
+                          | "orange"
+                          | "yellow"
+                          | "green"
+                          | "blue"
+                          | "purple"
+                          | "pink"
+                          | "red"
+                          | "gray_background"
+                          | "brown_background"
+                          | "orange_background"
+                          | "yellow_background"
+                          | "green_background"
+                          | "blue_background"
+                          | "purple_background"
+                          | "pink_background"
+                          | "red_background"
+                      }
+                      plain_text: string
+                      href: string | null
+                    }
+                  | {
+                      type: "mention"
+                      mention:
+                        | {
+                            type: "user"
+                            user:
+                              | { id: IdRequest; object: "user" }
+                              | {
+                                  type: "person"
+                                  person: { email?: string }
+                                  name: string | null
+                                  avatar_url: string | null
+                                  id: IdRequest
+                                  object: "user"
+                                }
+                              | {
+                                  type: "bot"
+                                  bot:
+                                    | EmptyObject
+                                    | {
+                                        owner:
+                                          | {
+                                              type: "user"
+                                              user:
+                                                | {
+                                                    type: "person"
+                                                    person: { email: string }
+                                                    name: string | null
+                                                    avatar_url: string | null
+                                                    id: IdRequest
+                                                    object: "user"
+                                                  }
+                                                | {
+                                                    id: IdRequest
+                                                    object: "user"
+                                                  }
+                                            }
+                                          | {
+                                              type: "workspace"
+                                              workspace: true
+                                            }
+                                      }
+                                  name: string | null
+                                  avatar_url: string | null
+                                  id: IdRequest
+                                  object: "user"
+                                }
+                          }
+                        | {
+                            type: "date"
+                            date: {
+                              start: string
+                              end: string | null
+                              time_zone: TimeZoneRequest | null
+                            }
+                          }
+                        | {
+                            type: "link_preview"
+                            link_preview: { url: TextRequest }
+                          }
+                        | { type: "page"; page: { id: IdRequest } }
+                        | { type: "database"; database: { id: IdRequest } }
+                      annotations: {
+                        bold: boolean
+                        italic: boolean
+                        strikethrough: boolean
+                        underline: boolean
+                        code: boolean
+                        color:
+                          | "default"
+                          | "gray"
+                          | "brown"
+                          | "orange"
+                          | "yellow"
+                          | "green"
+                          | "blue"
+                          | "purple"
+                          | "pink"
+                          | "red"
+                          | "gray_background"
+                          | "brown_background"
+                          | "orange_background"
+                          | "yellow_background"
+                          | "green_background"
+                          | "blue_background"
+                          | "purple_background"
+                          | "pink_background"
+                          | "red_background"
+                      }
+                      plain_text: string
+                      href: string | null
+                    }
+                  | {
+                      type: "equation"
+                      equation: { expression: TextRequest }
+                      annotations: {
+                        bold: boolean
+                        italic: boolean
+                        strikethrough: boolean
+                        underline: boolean
+                        code: boolean
+                        color:
+                          | "default"
+                          | "gray"
+                          | "brown"
+                          | "orange"
+                          | "yellow"
+                          | "green"
+                          | "blue"
+                          | "purple"
+                          | "pink"
+                          | "red"
+                          | "gray_background"
+                          | "brown_background"
+                          | "orange_background"
+                          | "yellow_background"
+                          | "green_background"
+                          | "blue_background"
+                          | "purple_background"
+                          | "pink_background"
+                          | "red_background"
+                      }
+                      plain_text: string
+                      href: string | null
+                    }
+                >
+              >
+            }
             object: "block"
             id: string
             created_time: string
