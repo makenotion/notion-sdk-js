@@ -52467,7 +52467,7 @@ export type QueryDatabaseResponse =
           }
       object: "list"
       results: Array<
-        | {
+        | { object: "page"; id: string } & Partial<{
             parent:
               | { type: "database_id"; database_id: IdRequest }
               | { type: "page_id"; page_id: IdRequest }
@@ -53742,14 +53742,11 @@ export type QueryDatabaseResponse =
               | null
               | { type: "file"; file: { url: string; expiry_time: string } }
               | null
-            object: "page"
-            id: string
             created_time: string
             last_edited_time: string
             archived: boolean
             url: string
-          }
-        | { object: "page"; id: string }
+          }>        
       >
       next_cursor: string | null
       has_more: boolean
@@ -53757,7 +53754,7 @@ export type QueryDatabaseResponse =
   | {
       object: "list"
       results: Array<
-        | {
+        | { object: "page"; id: string } & Partial<{
             parent:
               | { type: "database_id"; database_id: IdRequest }
               | { type: "page_id"; page_id: IdRequest }
@@ -55032,14 +55029,11 @@ export type QueryDatabaseResponse =
               | null
               | { type: "file"; file: { url: string; expiry_time: string } }
               | null
-            object: "page"
-            id: string
             created_time: string
             last_edited_time: string
             archived: boolean
             url: string
-          }
-        | { object: "page"; id: string }
+          }>
       >
       next_cursor: string | null
       has_more: boolean
