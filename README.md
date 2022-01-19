@@ -31,7 +31,7 @@ Make a request to any Notion API endpoint.
 > See the complete list of endpoints in the [API reference](https://developers.notion.com/reference).
 
 ```js
-const listUsersResponse = await notion.users.list()
+const listUsersResponse = await notion.users.list({})
 ```
 
 Each method returns a `Promise` which resolves the response.
