@@ -141,8 +141,10 @@ function findRandomSelectColumnNameAndValue(
   return { name: "", value: undefined }
 }
 
+type Page = Extract<GetPageResponse, { parent: {} }>;
+
 function extractValueToString(
-  property: GetPageResponse["properties"][string]
+  property: Page["properties"][string]
 ): string {
   switch (property.type) {
     case "checkbox":
@@ -261,7 +263,9 @@ async function exerciseReading(
     database_id: databaseId,
   })
   let numOldRows = 0
-  queryResponse.results.map(page => {
+  queryResponse.results.forEach(pageIn => {
+    if (pageIn.object) return
+    const page = pageIn as Extract<typeof pageIn, {parent: {}}>
     const createdTime = new Date(page.created_time)
     if (startTime > createdTime) {
       numOldRows++
