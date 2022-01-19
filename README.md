@@ -174,7 +174,7 @@ try {
 
 This package supports the following minimum versions:
 
-- Runtime: `deno >= ?`
+- Runtime: `deno >= v1.11`
 
 Earlier versions may still work, but we encourage people building new applications to upgrade to the current stable.
 
