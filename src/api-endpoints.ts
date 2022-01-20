@@ -1,11 +1,51 @@
 // cspell:disable-file
 // Note: This is a generated file.
 
-type EmptyObject = Record<string, never>
-
 type IdRequest = string | string
 
+type EmptyObject = Record<string, never>
+
+type UserObjectResponse =
+  | {
+      type: "person"
+      person: { email?: string }
+      name: string | null
+      avatar_url: string | null
+      id: IdRequest
+      object: "user"
+    }
+  | {
+      type: "bot"
+      bot:
+        | EmptyObject
+        | {
+            owner:
+              | {
+                  type: "user"
+                  user:
+                    | {
+                        type: "person"
+                        person: { email: string }
+                        name: string | null
+                        avatar_url: string | null
+                        id: IdRequest
+                        object: "user"
+                      }
+                    | { id: IdRequest; object: "user" }
+                }
+              | { type: "workspace"; workspace: true }
+          }
+      name: string | null
+      avatar_url: string | null
+      id: IdRequest
+      object: "user"
+    }
+
 type TextRequest = string
+
+type PartialUserObjectResponse =
+  | { id: IdRequest; object: "user" }
+  | UserObjectResponse
 
 type TimeZoneRequest =
   | "Africa/Abidjan"
@@ -602,23 +642,23 @@ type TimeZoneRequest =
   | "WET"
   | "Zulu"
 
-type DateRequest = {
+type DateResponse = {
   start: string
-  end?: string | null
-  time_zone?: TimeZoneRequest | null
+  end: string | null
+  time_zone: TimeZoneRequest | null
 }
 
-type RichTextItemRequest =
+type RichTextItemResponse =
   | {
-      text: { content: string; link?: { url: TextRequest } | null }
-      type?: "text"
-      annotations?: {
-        bold?: boolean
-        italic?: boolean
-        strikethrough?: boolean
-        underline?: boolean
-        code?: boolean
-        color?:
+      type: "text"
+      text: { content: string; link: { url: TextRequest } | null }
+      annotations: {
+        bold: boolean
+        italic: boolean
+        strikethrough: boolean
+        underline: boolean
+        code: boolean
+        color:
           | "default"
           | "gray"
           | "brown"
@@ -639,58 +679,24 @@ type RichTextItemRequest =
           | "pink_background"
           | "red_background"
       }
+      plain_text: string
+      href: string | null
     }
   | {
+      type: "mention"
       mention:
-        | {
-            user:
-              | { id: IdRequest }
-              | {
-                  person: { email?: string }
-                  id: IdRequest
-                  type?: "person"
-                  name?: string | null
-                  avatar_url?: string | null
-                  object?: "user"
-                }
-              | {
-                  bot:
-                    | EmptyObject
-                    | {
-                        owner:
-                          | {
-                              type: "user"
-                              user:
-                                | {
-                                    type: "person"
-                                    person: { email: string }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                                | { id: IdRequest; object: "user" }
-                            }
-                          | { type: "workspace"; workspace: true }
-                      }
-                  id: IdRequest
-                  type?: "bot"
-                  name?: string | null
-                  avatar_url?: string | null
-                  object?: "user"
-                }
-          }
-        | { date: DateRequest }
-        | { page: { id: IdRequest } }
-        | { database: { id: IdRequest } }
-      type?: "mention"
-      annotations?: {
-        bold?: boolean
-        italic?: boolean
-        strikethrough?: boolean
-        underline?: boolean
-        code?: boolean
-        color?:
+        | { type: "user"; user: PartialUserObjectResponse }
+        | { type: "date"; date: DateResponse }
+        | { type: "link_preview"; link_preview: { url: TextRequest } }
+        | { type: "page"; page: { id: IdRequest } }
+        | { type: "database"; database: { id: IdRequest } }
+      annotations: {
+        bold: boolean
+        italic: boolean
+        strikethrough: boolean
+        underline: boolean
+        code: boolean
+        color:
           | "default"
           | "gray"
           | "brown"
@@ -711,17 +717,19 @@ type RichTextItemRequest =
           | "pink_background"
           | "red_background"
       }
+      plain_text: string
+      href: string | null
     }
   | {
+      type: "equation"
       equation: { expression: TextRequest }
-      type?: "equation"
-      annotations?: {
-        bold?: boolean
-        italic?: boolean
-        strikethrough?: boolean
-        underline?: boolean
-        code?: boolean
-        color?:
+      annotations: {
+        bold: boolean
+        italic: boolean
+        strikethrough: boolean
+        underline: boolean
+        code: boolean
+        color:
           | "default"
           | "gray"
           | "brown"
@@ -742,6 +750,8 @@ type RichTextItemRequest =
           | "pink_background"
           | "red_background"
       }
+      plain_text: string
+      href: string | null
     }
 
 type StringRequest = string
@@ -757,6 +767,36 @@ type SelectColor =
   | "purple"
   | "pink"
   | "red"
+
+type SelectPropertyResponse = {
+  id: StringRequest
+  name: StringRequest
+  color: SelectColor
+}
+
+type RollupFunction =
+  | "count"
+  | "count_values"
+  | "empty"
+  | "not_empty"
+  | "unique"
+  | "show_unique"
+  | "percent_empty"
+  | "percent_not_empty"
+  | "sum"
+  | "average"
+  | "median"
+  | "min"
+  | "max"
+  | "range"
+  | "earliest_date"
+  | "latest_date"
+  | "date_range"
+  | "checked"
+  | "unchecked"
+  | "percent_checked"
+  | "percent_unchecked"
+  | "show_original"
 
 type EmojiRequest =
   | "😀"
@@ -4319,6 +4359,48 @@ type EmojiRequest =
   | "🏴󠁧󠁢󠁳󠁣󠁴󠁿"
   | "🏴󠁧󠁢󠁷󠁬󠁳󠁿"
 
+type NumberFormat =
+  | "number"
+  | "number_with_commas"
+  | "percent"
+  | "dollar"
+  | "canadian_dollar"
+  | "euro"
+  | "pound"
+  | "yen"
+  | "ruble"
+  | "rupee"
+  | "won"
+  | "yuan"
+  | "real"
+  | "lira"
+  | "rupiah"
+  | "franc"
+  | "hong_kong_dollar"
+  | "new_zealand_dollar"
+  | "krona"
+  | "norwegian_krone"
+  | "mexican_peso"
+  | "rand"
+  | "new_taiwan_dollar"
+  | "danish_krone"
+  | "zloty"
+  | "baht"
+  | "forint"
+  | "koruna"
+  | "shekel"
+  | "chilean_peso"
+  | "philippine_peso"
+  | "dirham"
+  | "colombian_peso"
+  | "riyal"
+  | "ringgit"
+  | "leu"
+  | "argentine_peso"
+  | "uruguayan_peso"
+
+type PartialBlockObjectResponse = { object: "block"; id: string }
+
 type LanguageRequest =
   | "abap"
   | "arduino"
@@ -4393,6 +4475,551 @@ type LanguageRequest =
   | "xml"
   | "yaml"
   | "java/c/c++/c#"
+
+type BlockObjectResponse =
+  | {
+      type: "paragraph"
+      paragraph: { text: Array<RichTextItemResponse> }
+      object: "block"
+      id: string
+      created_time: string
+      last_edited_time: string
+      has_children: boolean
+      archived: boolean
+    }
+  | {
+      type: "heading_1"
+      heading_1: { text: Array<RichTextItemResponse> }
+      object: "block"
+      id: string
+      created_time: string
+      last_edited_time: string
+      has_children: boolean
+      archived: boolean
+    }
+  | {
+      type: "heading_2"
+      heading_2: { text: Array<RichTextItemResponse> }
+      object: "block"
+      id: string
+      created_time: string
+      last_edited_time: string
+      has_children: boolean
+      archived: boolean
+    }
+  | {
+      type: "heading_3"
+      heading_3: { text: Array<RichTextItemResponse> }
+      object: "block"
+      id: string
+      created_time: string
+      last_edited_time: string
+      has_children: boolean
+      archived: boolean
+    }
+  | {
+      type: "bulleted_list_item"
+      bulleted_list_item: { text: Array<RichTextItemResponse> }
+      object: "block"
+      id: string
+      created_time: string
+      last_edited_time: string
+      has_children: boolean
+      archived: boolean
+    }
+  | {
+      type: "numbered_list_item"
+      numbered_list_item: { text: Array<RichTextItemResponse> }
+      object: "block"
+      id: string
+      created_time: string
+      last_edited_time: string
+      has_children: boolean
+      archived: boolean
+    }
+  | {
+      type: "quote"
+      quote: { text: Array<RichTextItemResponse> }
+      object: "block"
+      id: string
+      created_time: string
+      last_edited_time: string
+      has_children: boolean
+      archived: boolean
+    }
+  | {
+      type: "to_do"
+      to_do: { text: Array<RichTextItemResponse>; checked: boolean }
+      object: "block"
+      id: string
+      created_time: string
+      last_edited_time: string
+      has_children: boolean
+      archived: boolean
+    }
+  | {
+      type: "toggle"
+      toggle: { text: Array<RichTextItemResponse> }
+      object: "block"
+      id: string
+      created_time: string
+      last_edited_time: string
+      has_children: boolean
+      archived: boolean
+    }
+  | {
+      type: "template"
+      template: { text: Array<RichTextItemResponse> }
+      object: "block"
+      id: string
+      created_time: string
+      last_edited_time: string
+      has_children: boolean
+      archived: boolean
+    }
+  | {
+      type: "synced_block"
+      synced_block: {
+        synced_from: { type: "block_id"; block_id: IdRequest } | null
+      }
+      object: "block"
+      id: string
+      created_time: string
+      last_edited_time: string
+      has_children: boolean
+      archived: boolean
+    }
+  | {
+      type: "child_page"
+      child_page: { title: string }
+      object: "block"
+      id: string
+      created_time: string
+      last_edited_time: string
+      has_children: boolean
+      archived: boolean
+    }
+  | {
+      type: "child_database"
+      child_database: { title: string }
+      object: "block"
+      id: string
+      created_time: string
+      last_edited_time: string
+      has_children: boolean
+      archived: boolean
+    }
+  | {
+      type: "equation"
+      equation: { expression: string }
+      object: "block"
+      id: string
+      created_time: string
+      last_edited_time: string
+      has_children: boolean
+      archived: boolean
+    }
+  | {
+      type: "code"
+      code: {
+        text: Array<RichTextItemResponse>
+        caption: Array<RichTextItemResponse>
+        language: LanguageRequest
+      }
+      object: "block"
+      id: string
+      created_time: string
+      last_edited_time: string
+      has_children: boolean
+      archived: boolean
+    }
+  | {
+      type: "callout"
+      callout: {
+        text: Array<RichTextItemResponse>
+        icon:
+          | { type: "emoji"; emoji: EmojiRequest }
+          | null
+          | { type: "external"; external: { url: TextRequest } }
+          | null
+          | { type: "file"; file: { url: string; expiry_time: string } }
+          | null
+      }
+      object: "block"
+      id: string
+      created_time: string
+      last_edited_time: string
+      has_children: boolean
+      archived: boolean
+    }
+  | {
+      type: "divider"
+      divider: EmptyObject
+      object: "block"
+      id: string
+      created_time: string
+      last_edited_time: string
+      has_children: boolean
+      archived: boolean
+    }
+  | {
+      type: "breadcrumb"
+      breadcrumb: EmptyObject
+      object: "block"
+      id: string
+      created_time: string
+      last_edited_time: string
+      has_children: boolean
+      archived: boolean
+    }
+  | {
+      type: "table_of_contents"
+      table_of_contents: EmptyObject
+      object: "block"
+      id: string
+      created_time: string
+      last_edited_time: string
+      has_children: boolean
+      archived: boolean
+    }
+  | {
+      type: "column_list"
+      column_list: EmptyObject
+      object: "block"
+      id: string
+      created_time: string
+      last_edited_time: string
+      has_children: boolean
+      archived: boolean
+    }
+  | {
+      type: "column"
+      column: EmptyObject
+      object: "block"
+      id: string
+      created_time: string
+      last_edited_time: string
+      has_children: boolean
+      archived: boolean
+    }
+  | {
+      type: "link_to_page"
+      link_to_page:
+        | { type: "page_id"; page_id: IdRequest }
+        | { type: "database_id"; database_id: IdRequest }
+      object: "block"
+      id: string
+      created_time: string
+      last_edited_time: string
+      has_children: boolean
+      archived: boolean
+    }
+  | {
+      type: "table"
+      table: {
+        has_column_header: boolean
+        has_row_header: boolean
+        table_width: number
+      }
+      object: "block"
+      id: string
+      created_time: string
+      last_edited_time: string
+      has_children: boolean
+      archived: boolean
+    }
+  | {
+      type: "table_row"
+      table_row: { cells: Array<Array<RichTextItemResponse>> }
+      object: "block"
+      id: string
+      created_time: string
+      last_edited_time: string
+      has_children: boolean
+      archived: boolean
+    }
+  | {
+      type: "embed"
+      embed: { url: string; caption: Array<RichTextItemResponse> }
+      object: "block"
+      id: string
+      created_time: string
+      last_edited_time: string
+      has_children: boolean
+      archived: boolean
+    }
+  | {
+      type: "bookmark"
+      bookmark: { url: string; caption: Array<RichTextItemResponse> }
+      object: "block"
+      id: string
+      created_time: string
+      last_edited_time: string
+      has_children: boolean
+      archived: boolean
+    }
+  | {
+      type: "image"
+      image:
+        | {
+            type: "external"
+            external: { url: TextRequest }
+            caption: Array<RichTextItemResponse>
+          }
+        | {
+            type: "file"
+            file: { url: string; expiry_time: string }
+            caption: Array<RichTextItemResponse>
+          }
+      object: "block"
+      id: string
+      created_time: string
+      last_edited_time: string
+      has_children: boolean
+      archived: boolean
+    }
+  | {
+      type: "video"
+      video:
+        | {
+            type: "external"
+            external: { url: TextRequest }
+            caption: Array<RichTextItemResponse>
+          }
+        | {
+            type: "file"
+            file: { url: string; expiry_time: string }
+            caption: Array<RichTextItemResponse>
+          }
+      object: "block"
+      id: string
+      created_time: string
+      last_edited_time: string
+      has_children: boolean
+      archived: boolean
+    }
+  | {
+      type: "pdf"
+      pdf:
+        | {
+            type: "external"
+            external: { url: TextRequest }
+            caption: Array<RichTextItemResponse>
+          }
+        | {
+            type: "file"
+            file: { url: string; expiry_time: string }
+            caption: Array<RichTextItemResponse>
+          }
+      object: "block"
+      id: string
+      created_time: string
+      last_edited_time: string
+      has_children: boolean
+      archived: boolean
+    }
+  | {
+      type: "file"
+      file:
+        | {
+            type: "external"
+            external: { url: TextRequest }
+            caption: Array<RichTextItemResponse>
+          }
+        | {
+            type: "file"
+            file: { url: string; expiry_time: string }
+            caption: Array<RichTextItemResponse>
+          }
+      object: "block"
+      id: string
+      created_time: string
+      last_edited_time: string
+      has_children: boolean
+      archived: boolean
+    }
+  | {
+      type: "audio"
+      audio:
+        | {
+            type: "external"
+            external: { url: TextRequest }
+            caption: Array<RichTextItemResponse>
+          }
+        | {
+            type: "file"
+            file: { url: string; expiry_time: string }
+            caption: Array<RichTextItemResponse>
+          }
+      object: "block"
+      id: string
+      created_time: string
+      last_edited_time: string
+      has_children: boolean
+      archived: boolean
+    }
+  | {
+      type: "link_preview"
+      link_preview: { url: TextRequest }
+      object: "block"
+      id: string
+      created_time: string
+      last_edited_time: string
+      has_children: boolean
+      archived: boolean
+    }
+  | {
+      type: "unsupported"
+      unsupported: EmptyObject
+      object: "block"
+      id: string
+      created_time: string
+      last_edited_time: string
+      has_children: boolean
+      archived: boolean
+    }
+
+type DateRequest = {
+  start: string
+  end?: string | null
+  time_zone?: TimeZoneRequest | null
+}
+
+type RichTextItemRequest =
+  | {
+      text: { content: string; link?: { url: TextRequest } | null }
+      type?: "text"
+      annotations?: {
+        bold?: boolean
+        italic?: boolean
+        strikethrough?: boolean
+        underline?: boolean
+        code?: boolean
+        color?:
+          | "default"
+          | "gray"
+          | "brown"
+          | "orange"
+          | "yellow"
+          | "green"
+          | "blue"
+          | "purple"
+          | "pink"
+          | "red"
+          | "gray_background"
+          | "brown_background"
+          | "orange_background"
+          | "yellow_background"
+          | "green_background"
+          | "blue_background"
+          | "purple_background"
+          | "pink_background"
+          | "red_background"
+      }
+    }
+  | {
+      mention:
+        | {
+            user:
+              | { id: IdRequest }
+              | {
+                  person: { email?: string }
+                  id: IdRequest
+                  type?: "person"
+                  name?: string | null
+                  avatar_url?: string | null
+                  object?: "user"
+                }
+              | {
+                  bot:
+                    | EmptyObject
+                    | {
+                        owner:
+                          | {
+                              type: "user"
+                              user:
+                                | {
+                                    type: "person"
+                                    person: { email: string }
+                                    name: string | null
+                                    avatar_url: string | null
+                                    id: IdRequest
+                                    object: "user"
+                                  }
+                                | { id: IdRequest; object: "user" }
+                            }
+                          | { type: "workspace"; workspace: true }
+                      }
+                  id: IdRequest
+                  type?: "bot"
+                  name?: string | null
+                  avatar_url?: string | null
+                  object?: "user"
+                }
+          }
+        | { date: DateRequest }
+        | { page: { id: IdRequest } }
+        | { database: { id: IdRequest } }
+      type?: "mention"
+      annotations?: {
+        bold?: boolean
+        italic?: boolean
+        strikethrough?: boolean
+        underline?: boolean
+        code?: boolean
+        color?:
+          | "default"
+          | "gray"
+          | "brown"
+          | "orange"
+          | "yellow"
+          | "green"
+          | "blue"
+          | "purple"
+          | "pink"
+          | "red"
+          | "gray_background"
+          | "brown_background"
+          | "orange_background"
+          | "yellow_background"
+          | "green_background"
+          | "blue_background"
+          | "purple_background"
+          | "pink_background"
+          | "red_background"
+      }
+    }
+  | {
+      equation: { expression: TextRequest }
+      type?: "equation"
+      annotations?: {
+        bold?: boolean
+        italic?: boolean
+        strikethrough?: boolean
+        underline?: boolean
+        code?: boolean
+        color?:
+          | "default"
+          | "gray"
+          | "brown"
+          | "orange"
+          | "yellow"
+          | "green"
+          | "blue"
+          | "purple"
+          | "pink"
+          | "red"
+          | "gray_background"
+          | "brown_background"
+          | "orange_background"
+          | "yellow_background"
+          | "green_background"
+          | "blue_background"
+          | "purple_background"
+          | "pink_background"
+          | "red_background"
+      }
+    }
 
 type BlockObjectRequestWithoutChildren =
   | {
@@ -7931,70 +8558,6 @@ type PropertyFilter =
       property: string
       type?: "rollup"
     }
-
-type NumberFormat =
-  | "number"
-  | "number_with_commas"
-  | "percent"
-  | "dollar"
-  | "canadian_dollar"
-  | "euro"
-  | "pound"
-  | "yen"
-  | "ruble"
-  | "rupee"
-  | "won"
-  | "yuan"
-  | "real"
-  | "lira"
-  | "rupiah"
-  | "franc"
-  | "hong_kong_dollar"
-  | "new_zealand_dollar"
-  | "krona"
-  | "norwegian_krone"
-  | "mexican_peso"
-  | "rand"
-  | "new_taiwan_dollar"
-  | "danish_krone"
-  | "zloty"
-  | "baht"
-  | "forint"
-  | "koruna"
-  | "shekel"
-  | "chilean_peso"
-  | "philippine_peso"
-  | "dirham"
-  | "colombian_peso"
-  | "riyal"
-  | "ringgit"
-  | "leu"
-  | "argentine_peso"
-  | "uruguayan_peso"
-
-type RollupFunction =
-  | "count"
-  | "count_values"
-  | "empty"
-  | "not_empty"
-  | "unique"
-  | "show_unique"
-  | "percent_empty"
-  | "percent_not_empty"
-  | "sum"
-  | "average"
-  | "median"
-  | "min"
-  | "max"
-  | "range"
-  | "earliest_date"
-  | "latest_date"
-  | "date_range"
-  | "checked"
-  | "unchecked"
-  | "percent_checked"
-  | "percent_unchecked"
-  | "show_original"
 export type GetSelfParameters = Record<string, never>
 
 export type GetSelfResponse = UserObjectResponse
