@@ -4479,101 +4479,121 @@ type LanguageRequest =
 type BlockObjectResponse =
   | {
       type: "paragraph"
-      paragraph: { text: Array<RichTextItemResponse> }
+      paragraph: { rich_text: Array<RichTextItemResponse> }
       object: "block"
       id: string
       created_time: string
+      created_by: { id: IdRequest; object: "user" }
       last_edited_time: string
+      last_edited_by: { id: IdRequest; object: "user" }
       has_children: boolean
       archived: boolean
     }
   | {
       type: "heading_1"
-      heading_1: { text: Array<RichTextItemResponse> }
+      heading_1: { rich_text: Array<RichTextItemResponse> }
       object: "block"
       id: string
       created_time: string
+      created_by: { id: IdRequest; object: "user" }
       last_edited_time: string
+      last_edited_by: { id: IdRequest; object: "user" }
       has_children: boolean
       archived: boolean
     }
   | {
       type: "heading_2"
-      heading_2: { text: Array<RichTextItemResponse> }
+      heading_2: { rich_text: Array<RichTextItemResponse> }
       object: "block"
       id: string
       created_time: string
+      created_by: { id: IdRequest; object: "user" }
       last_edited_time: string
+      last_edited_by: { id: IdRequest; object: "user" }
       has_children: boolean
       archived: boolean
     }
   | {
       type: "heading_3"
-      heading_3: { text: Array<RichTextItemResponse> }
+      heading_3: { rich_text: Array<RichTextItemResponse> }
       object: "block"
       id: string
       created_time: string
+      created_by: { id: IdRequest; object: "user" }
       last_edited_time: string
+      last_edited_by: { id: IdRequest; object: "user" }
       has_children: boolean
       archived: boolean
     }
   | {
       type: "bulleted_list_item"
-      bulleted_list_item: { text: Array<RichTextItemResponse> }
+      bulleted_list_item: { rich_text: Array<RichTextItemResponse> }
       object: "block"
       id: string
       created_time: string
+      created_by: { id: IdRequest; object: "user" }
       last_edited_time: string
+      last_edited_by: { id: IdRequest; object: "user" }
       has_children: boolean
       archived: boolean
     }
   | {
       type: "numbered_list_item"
-      numbered_list_item: { text: Array<RichTextItemResponse> }
+      numbered_list_item: { rich_text: Array<RichTextItemResponse> }
       object: "block"
       id: string
       created_time: string
+      created_by: { id: IdRequest; object: "user" }
       last_edited_time: string
+      last_edited_by: { id: IdRequest; object: "user" }
       has_children: boolean
       archived: boolean
     }
   | {
       type: "quote"
-      quote: { text: Array<RichTextItemResponse> }
+      quote: { rich_text: Array<RichTextItemResponse> }
       object: "block"
       id: string
       created_time: string
+      created_by: { id: IdRequest; object: "user" }
       last_edited_time: string
+      last_edited_by: { id: IdRequest; object: "user" }
       has_children: boolean
       archived: boolean
     }
   | {
       type: "to_do"
-      to_do: { text: Array<RichTextItemResponse>; checked: boolean }
+      to_do: { rich_text: Array<RichTextItemResponse>; checked: boolean }
       object: "block"
       id: string
       created_time: string
+      created_by: { id: IdRequest; object: "user" }
       last_edited_time: string
+      last_edited_by: { id: IdRequest; object: "user" }
       has_children: boolean
       archived: boolean
     }
   | {
       type: "toggle"
-      toggle: { text: Array<RichTextItemResponse> }
+      toggle: { rich_text: Array<RichTextItemResponse> }
       object: "block"
       id: string
       created_time: string
+      created_by: { id: IdRequest; object: "user" }
       last_edited_time: string
+      last_edited_by: { id: IdRequest; object: "user" }
       has_children: boolean
       archived: boolean
     }
   | {
       type: "template"
-      template: { text: Array<RichTextItemResponse> }
+      template: { rich_text: Array<RichTextItemResponse> }
       object: "block"
       id: string
       created_time: string
+      created_by: { id: IdRequest; object: "user" }
       last_edited_time: string
+      last_edited_by: { id: IdRequest; object: "user" }
       has_children: boolean
       archived: boolean
     }
@@ -4585,7 +4605,9 @@ type BlockObjectResponse =
       object: "block"
       id: string
       created_time: string
+      created_by: { id: IdRequest; object: "user" }
       last_edited_time: string
+      last_edited_by: { id: IdRequest; object: "user" }
       has_children: boolean
       archived: boolean
     }
@@ -4595,7 +4617,9 @@ type BlockObjectResponse =
       object: "block"
       id: string
       created_time: string
+      created_by: { id: IdRequest; object: "user" }
       last_edited_time: string
+      last_edited_by: { id: IdRequest; object: "user" }
       has_children: boolean
       archived: boolean
     }
@@ -4605,7 +4629,9 @@ type BlockObjectResponse =
       object: "block"
       id: string
       created_time: string
+      created_by: { id: IdRequest; object: "user" }
       last_edited_time: string
+      last_edited_by: { id: IdRequest; object: "user" }
       has_children: boolean
       archived: boolean
     }
@@ -4615,28 +4641,32 @@ type BlockObjectResponse =
       object: "block"
       id: string
       created_time: string
+      created_by: { id: IdRequest; object: "user" }
       last_edited_time: string
+      last_edited_by: { id: IdRequest; object: "user" }
       has_children: boolean
       archived: boolean
     }
   | {
       type: "code"
       code: {
-        text: Array<RichTextItemResponse>
+        rich_text: Array<RichTextItemResponse>
         caption: Array<RichTextItemResponse>
         language: LanguageRequest
       }
       object: "block"
       id: string
       created_time: string
+      created_by: { id: IdRequest; object: "user" }
       last_edited_time: string
+      last_edited_by: { id: IdRequest; object: "user" }
       has_children: boolean
       archived: boolean
     }
   | {
       type: "callout"
       callout: {
-        text: Array<RichTextItemResponse>
+        rich_text: Array<RichTextItemResponse>
         icon:
           | { type: "emoji"; emoji: EmojiRequest }
           | null
@@ -4648,7 +4678,9 @@ type BlockObjectResponse =
       object: "block"
       id: string
       created_time: string
+      created_by: { id: IdRequest; object: "user" }
       last_edited_time: string
+      last_edited_by: { id: IdRequest; object: "user" }
       has_children: boolean
       archived: boolean
     }
@@ -4658,7 +4690,9 @@ type BlockObjectResponse =
       object: "block"
       id: string
       created_time: string
+      created_by: { id: IdRequest; object: "user" }
       last_edited_time: string
+      last_edited_by: { id: IdRequest; object: "user" }
       has_children: boolean
       archived: boolean
     }
@@ -4668,7 +4702,9 @@ type BlockObjectResponse =
       object: "block"
       id: string
       created_time: string
+      created_by: { id: IdRequest; object: "user" }
       last_edited_time: string
+      last_edited_by: { id: IdRequest; object: "user" }
       has_children: boolean
       archived: boolean
     }
@@ -4678,7 +4714,9 @@ type BlockObjectResponse =
       object: "block"
       id: string
       created_time: string
+      created_by: { id: IdRequest; object: "user" }
       last_edited_time: string
+      last_edited_by: { id: IdRequest; object: "user" }
       has_children: boolean
       archived: boolean
     }
@@ -4688,7 +4726,9 @@ type BlockObjectResponse =
       object: "block"
       id: string
       created_time: string
+      created_by: { id: IdRequest; object: "user" }
       last_edited_time: string
+      last_edited_by: { id: IdRequest; object: "user" }
       has_children: boolean
       archived: boolean
     }
@@ -4698,7 +4738,9 @@ type BlockObjectResponse =
       object: "block"
       id: string
       created_time: string
+      created_by: { id: IdRequest; object: "user" }
       last_edited_time: string
+      last_edited_by: { id: IdRequest; object: "user" }
       has_children: boolean
       archived: boolean
     }
@@ -4710,7 +4752,9 @@ type BlockObjectResponse =
       object: "block"
       id: string
       created_time: string
+      created_by: { id: IdRequest; object: "user" }
       last_edited_time: string
+      last_edited_by: { id: IdRequest; object: "user" }
       has_children: boolean
       archived: boolean
     }
@@ -4724,7 +4768,9 @@ type BlockObjectResponse =
       object: "block"
       id: string
       created_time: string
+      created_by: { id: IdRequest; object: "user" }
       last_edited_time: string
+      last_edited_by: { id: IdRequest; object: "user" }
       has_children: boolean
       archived: boolean
     }
@@ -4734,7 +4780,9 @@ type BlockObjectResponse =
       object: "block"
       id: string
       created_time: string
+      created_by: { id: IdRequest; object: "user" }
       last_edited_time: string
+      last_edited_by: { id: IdRequest; object: "user" }
       has_children: boolean
       archived: boolean
     }
@@ -4744,7 +4792,9 @@ type BlockObjectResponse =
       object: "block"
       id: string
       created_time: string
+      created_by: { id: IdRequest; object: "user" }
       last_edited_time: string
+      last_edited_by: { id: IdRequest; object: "user" }
       has_children: boolean
       archived: boolean
     }
@@ -4754,7 +4804,9 @@ type BlockObjectResponse =
       object: "block"
       id: string
       created_time: string
+      created_by: { id: IdRequest; object: "user" }
       last_edited_time: string
+      last_edited_by: { id: IdRequest; object: "user" }
       has_children: boolean
       archived: boolean
     }
@@ -4774,7 +4826,9 @@ type BlockObjectResponse =
       object: "block"
       id: string
       created_time: string
+      created_by: { id: IdRequest; object: "user" }
       last_edited_time: string
+      last_edited_by: { id: IdRequest; object: "user" }
       has_children: boolean
       archived: boolean
     }
@@ -4794,7 +4848,9 @@ type BlockObjectResponse =
       object: "block"
       id: string
       created_time: string
+      created_by: { id: IdRequest; object: "user" }
       last_edited_time: string
+      last_edited_by: { id: IdRequest; object: "user" }
       has_children: boolean
       archived: boolean
     }
@@ -4814,7 +4870,9 @@ type BlockObjectResponse =
       object: "block"
       id: string
       created_time: string
+      created_by: { id: IdRequest; object: "user" }
       last_edited_time: string
+      last_edited_by: { id: IdRequest; object: "user" }
       has_children: boolean
       archived: boolean
     }
@@ -4834,7 +4892,9 @@ type BlockObjectResponse =
       object: "block"
       id: string
       created_time: string
+      created_by: { id: IdRequest; object: "user" }
       last_edited_time: string
+      last_edited_by: { id: IdRequest; object: "user" }
       has_children: boolean
       archived: boolean
     }
@@ -4854,7 +4914,9 @@ type BlockObjectResponse =
       object: "block"
       id: string
       created_time: string
+      created_by: { id: IdRequest; object: "user" }
       last_edited_time: string
+      last_edited_by: { id: IdRequest; object: "user" }
       has_children: boolean
       archived: boolean
     }
@@ -4864,7 +4926,9 @@ type BlockObjectResponse =
       object: "block"
       id: string
       created_time: string
+      created_by: { id: IdRequest; object: "user" }
       last_edited_time: string
+      last_edited_by: { id: IdRequest; object: "user" }
       has_children: boolean
       archived: boolean
     }
@@ -4874,7 +4938,9 @@ type BlockObjectResponse =
       object: "block"
       id: string
       created_time: string
+      created_by: { id: IdRequest; object: "user" }
       last_edited_time: string
+      last_edited_by: { id: IdRequest; object: "user" }
       has_children: boolean
       archived: boolean
     }
@@ -5079,7 +5145,7 @@ type BlockObjectRequestWithoutChildren =
     }
   | {
       code: {
-        text: Array<RichTextItemRequest>
+        rich_text: Array<RichTextItemRequest>
         language: LanguageRequest
         caption?: Array<RichTextItemRequest>
       }
@@ -5107,58 +5173,58 @@ type BlockObjectRequestWithoutChildren =
       object?: "block"
     }
   | {
-      heading_1: { text: Array<RichTextItemRequest> }
+      heading_1: { rich_text: Array<RichTextItemRequest> }
       type?: "heading_1"
       object?: "block"
     }
   | {
-      heading_2: { text: Array<RichTextItemRequest> }
+      heading_2: { rich_text: Array<RichTextItemRequest> }
       type?: "heading_2"
       object?: "block"
     }
   | {
-      heading_3: { text: Array<RichTextItemRequest> }
+      heading_3: { rich_text: Array<RichTextItemRequest> }
       type?: "heading_3"
       object?: "block"
     }
   | {
-      paragraph: { text: Array<RichTextItemRequest> }
+      paragraph: { rich_text: Array<RichTextItemRequest> }
       type?: "paragraph"
       object?: "block"
     }
   | {
-      bulleted_list_item: { text: Array<RichTextItemRequest> }
+      bulleted_list_item: { rich_text: Array<RichTextItemRequest> }
       type?: "bulleted_list_item"
       object?: "block"
     }
   | {
-      numbered_list_item: { text: Array<RichTextItemRequest> }
+      numbered_list_item: { rich_text: Array<RichTextItemRequest> }
       type?: "numbered_list_item"
       object?: "block"
     }
   | {
-      quote: { text: Array<RichTextItemRequest> }
+      quote: { rich_text: Array<RichTextItemRequest> }
       type?: "quote"
       object?: "block"
     }
   | {
-      to_do: { text: Array<RichTextItemRequest>; checked?: boolean }
+      to_do: { rich_text: Array<RichTextItemRequest>; checked?: boolean }
       type?: "to_do"
       object?: "block"
     }
   | {
-      toggle: { text: Array<RichTextItemRequest> }
+      toggle: { rich_text: Array<RichTextItemRequest> }
       type?: "toggle"
       object?: "block"
     }
   | {
-      template: { text: Array<RichTextItemRequest> }
+      template: { rich_text: Array<RichTextItemRequest> }
       type?: "template"
       object?: "block"
     }
   | {
       callout: {
-        text: Array<RichTextItemRequest>
+        rich_text: Array<RichTextItemRequest>
         icon?:
           | { emoji: EmojiRequest; type?: "emoji" }
           | { external: { url: TextRequest }; type?: "external" }
@@ -5232,7 +5298,7 @@ type BlockObjectRequest =
     }
   | {
       code: {
-        text: Array<RichTextItemRequest>
+        rich_text: Array<RichTextItemRequest>
         language: LanguageRequest
         caption?: Array<RichTextItemRequest>
       }
@@ -5324,7 +5390,7 @@ type BlockObjectRequest =
                 }
               | {
                   code: {
-                    text: Array<RichTextItemRequest>
+                    rich_text: Array<RichTextItemRequest>
                     language: LanguageRequest
                     caption?: Array<RichTextItemRequest>
                   }
@@ -5361,7 +5427,7 @@ type BlockObjectRequest =
                 }
               | {
                   heading_1: {
-                    text: Array<RichTextItemRequest>
+                    rich_text: Array<RichTextItemRequest>
                     children?: Array<BlockObjectRequestWithoutChildren>
                   }
                   type?: "heading_1"
@@ -5369,7 +5435,7 @@ type BlockObjectRequest =
                 }
               | {
                   heading_2: {
-                    text: Array<RichTextItemRequest>
+                    rich_text: Array<RichTextItemRequest>
                     children?: Array<BlockObjectRequestWithoutChildren>
                   }
                   type?: "heading_2"
@@ -5377,7 +5443,7 @@ type BlockObjectRequest =
                 }
               | {
                   heading_3: {
-                    text: Array<RichTextItemRequest>
+                    rich_text: Array<RichTextItemRequest>
                     children?: Array<BlockObjectRequestWithoutChildren>
                   }
                   type?: "heading_3"
@@ -5385,7 +5451,7 @@ type BlockObjectRequest =
                 }
               | {
                   paragraph: {
-                    text: Array<RichTextItemRequest>
+                    rich_text: Array<RichTextItemRequest>
                     children?: Array<BlockObjectRequestWithoutChildren>
                   }
                   type?: "paragraph"
@@ -5393,7 +5459,7 @@ type BlockObjectRequest =
                 }
               | {
                   bulleted_list_item: {
-                    text: Array<RichTextItemRequest>
+                    rich_text: Array<RichTextItemRequest>
                     children?: Array<BlockObjectRequestWithoutChildren>
                   }
                   type?: "bulleted_list_item"
@@ -5401,7 +5467,7 @@ type BlockObjectRequest =
                 }
               | {
                   numbered_list_item: {
-                    text: Array<RichTextItemRequest>
+                    rich_text: Array<RichTextItemRequest>
                     children?: Array<BlockObjectRequestWithoutChildren>
                   }
                   type?: "numbered_list_item"
@@ -5409,7 +5475,7 @@ type BlockObjectRequest =
                 }
               | {
                   quote: {
-                    text: Array<RichTextItemRequest>
+                    rich_text: Array<RichTextItemRequest>
                     children?: Array<BlockObjectRequestWithoutChildren>
                   }
                   type?: "quote"
@@ -5417,7 +5483,7 @@ type BlockObjectRequest =
                 }
               | {
                   to_do: {
-                    text: Array<RichTextItemRequest>
+                    rich_text: Array<RichTextItemRequest>
                     children?: Array<BlockObjectRequestWithoutChildren>
                     checked?: boolean
                   }
@@ -5426,7 +5492,7 @@ type BlockObjectRequest =
                 }
               | {
                   toggle: {
-                    text: Array<RichTextItemRequest>
+                    rich_text: Array<RichTextItemRequest>
                     children?: Array<BlockObjectRequestWithoutChildren>
                   }
                   type?: "toggle"
@@ -5434,7 +5500,7 @@ type BlockObjectRequest =
                 }
               | {
                   template: {
-                    text: Array<RichTextItemRequest>
+                    rich_text: Array<RichTextItemRequest>
                     children?: Array<BlockObjectRequestWithoutChildren>
                   }
                   type?: "template"
@@ -5442,7 +5508,7 @@ type BlockObjectRequest =
                 }
               | {
                   callout: {
-                    text: Array<RichTextItemRequest>
+                    rich_text: Array<RichTextItemRequest>
                     children?: Array<BlockObjectRequestWithoutChildren>
                     icon?:
                       | { emoji: EmojiRequest; type?: "emoji" }
@@ -5531,7 +5597,7 @@ type BlockObjectRequest =
             }
           | {
               code: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 language: LanguageRequest
                 caption?: Array<RichTextItemRequest>
               }
@@ -5564,7 +5630,7 @@ type BlockObjectRequest =
             }
           | {
               heading_1: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_1"
@@ -5572,7 +5638,7 @@ type BlockObjectRequest =
             }
           | {
               heading_2: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_2"
@@ -5580,7 +5646,7 @@ type BlockObjectRequest =
             }
           | {
               heading_3: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_3"
@@ -5588,7 +5654,7 @@ type BlockObjectRequest =
             }
           | {
               paragraph: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "paragraph"
@@ -5596,7 +5662,7 @@ type BlockObjectRequest =
             }
           | {
               bulleted_list_item: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "bulleted_list_item"
@@ -5604,7 +5670,7 @@ type BlockObjectRequest =
             }
           | {
               numbered_list_item: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "numbered_list_item"
@@ -5612,7 +5678,7 @@ type BlockObjectRequest =
             }
           | {
               quote: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "quote"
@@ -5620,7 +5686,7 @@ type BlockObjectRequest =
             }
           | {
               to_do: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
                 checked?: boolean
               }
@@ -5629,7 +5695,7 @@ type BlockObjectRequest =
             }
           | {
               toggle: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "toggle"
@@ -5637,7 +5703,7 @@ type BlockObjectRequest =
             }
           | {
               template: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "template"
@@ -5645,7 +5711,7 @@ type BlockObjectRequest =
             }
           | {
               callout: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
                 icon?:
                   | { emoji: EmojiRequest; type?: "emoji" }
@@ -5679,7 +5745,7 @@ type BlockObjectRequest =
     }
   | {
       heading_1: {
-        text: Array<RichTextItemRequest>
+        rich_text: Array<RichTextItemRequest>
         children?: Array<
           | {
               embed: { url: string; caption?: Array<RichTextItemRequest> }
@@ -5738,7 +5804,7 @@ type BlockObjectRequest =
             }
           | {
               code: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 language: LanguageRequest
                 caption?: Array<RichTextItemRequest>
               }
@@ -5771,7 +5837,7 @@ type BlockObjectRequest =
             }
           | {
               heading_1: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_1"
@@ -5779,7 +5845,7 @@ type BlockObjectRequest =
             }
           | {
               heading_2: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_2"
@@ -5787,7 +5853,7 @@ type BlockObjectRequest =
             }
           | {
               heading_3: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_3"
@@ -5795,7 +5861,7 @@ type BlockObjectRequest =
             }
           | {
               paragraph: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "paragraph"
@@ -5803,7 +5869,7 @@ type BlockObjectRequest =
             }
           | {
               bulleted_list_item: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "bulleted_list_item"
@@ -5811,7 +5877,7 @@ type BlockObjectRequest =
             }
           | {
               numbered_list_item: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "numbered_list_item"
@@ -5819,7 +5885,7 @@ type BlockObjectRequest =
             }
           | {
               quote: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "quote"
@@ -5827,7 +5893,7 @@ type BlockObjectRequest =
             }
           | {
               to_do: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
                 checked?: boolean
               }
@@ -5836,7 +5902,7 @@ type BlockObjectRequest =
             }
           | {
               toggle: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "toggle"
@@ -5844,7 +5910,7 @@ type BlockObjectRequest =
             }
           | {
               template: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "template"
@@ -5852,7 +5918,7 @@ type BlockObjectRequest =
             }
           | {
               callout: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
                 icon?:
                   | { emoji: EmojiRequest; type?: "emoji" }
@@ -5876,7 +5942,7 @@ type BlockObjectRequest =
     }
   | {
       heading_2: {
-        text: Array<RichTextItemRequest>
+        rich_text: Array<RichTextItemRequest>
         children?: Array<
           | {
               embed: { url: string; caption?: Array<RichTextItemRequest> }
@@ -5935,7 +6001,7 @@ type BlockObjectRequest =
             }
           | {
               code: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 language: LanguageRequest
                 caption?: Array<RichTextItemRequest>
               }
@@ -5968,7 +6034,7 @@ type BlockObjectRequest =
             }
           | {
               heading_1: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_1"
@@ -5976,7 +6042,7 @@ type BlockObjectRequest =
             }
           | {
               heading_2: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_2"
@@ -5984,7 +6050,7 @@ type BlockObjectRequest =
             }
           | {
               heading_3: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_3"
@@ -5992,7 +6058,7 @@ type BlockObjectRequest =
             }
           | {
               paragraph: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "paragraph"
@@ -6000,7 +6066,7 @@ type BlockObjectRequest =
             }
           | {
               bulleted_list_item: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "bulleted_list_item"
@@ -6008,7 +6074,7 @@ type BlockObjectRequest =
             }
           | {
               numbered_list_item: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "numbered_list_item"
@@ -6016,7 +6082,7 @@ type BlockObjectRequest =
             }
           | {
               quote: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "quote"
@@ -6024,7 +6090,7 @@ type BlockObjectRequest =
             }
           | {
               to_do: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
                 checked?: boolean
               }
@@ -6033,7 +6099,7 @@ type BlockObjectRequest =
             }
           | {
               toggle: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "toggle"
@@ -6041,7 +6107,7 @@ type BlockObjectRequest =
             }
           | {
               template: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "template"
@@ -6049,7 +6115,7 @@ type BlockObjectRequest =
             }
           | {
               callout: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
                 icon?:
                   | { emoji: EmojiRequest; type?: "emoji" }
@@ -6073,7 +6139,7 @@ type BlockObjectRequest =
     }
   | {
       heading_3: {
-        text: Array<RichTextItemRequest>
+        rich_text: Array<RichTextItemRequest>
         children?: Array<
           | {
               embed: { url: string; caption?: Array<RichTextItemRequest> }
@@ -6132,7 +6198,7 @@ type BlockObjectRequest =
             }
           | {
               code: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 language: LanguageRequest
                 caption?: Array<RichTextItemRequest>
               }
@@ -6165,7 +6231,7 @@ type BlockObjectRequest =
             }
           | {
               heading_1: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_1"
@@ -6173,7 +6239,7 @@ type BlockObjectRequest =
             }
           | {
               heading_2: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_2"
@@ -6181,7 +6247,7 @@ type BlockObjectRequest =
             }
           | {
               heading_3: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_3"
@@ -6189,7 +6255,7 @@ type BlockObjectRequest =
             }
           | {
               paragraph: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "paragraph"
@@ -6197,7 +6263,7 @@ type BlockObjectRequest =
             }
           | {
               bulleted_list_item: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "bulleted_list_item"
@@ -6205,7 +6271,7 @@ type BlockObjectRequest =
             }
           | {
               numbered_list_item: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "numbered_list_item"
@@ -6213,7 +6279,7 @@ type BlockObjectRequest =
             }
           | {
               quote: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "quote"
@@ -6221,7 +6287,7 @@ type BlockObjectRequest =
             }
           | {
               to_do: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
                 checked?: boolean
               }
@@ -6230,7 +6296,7 @@ type BlockObjectRequest =
             }
           | {
               toggle: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "toggle"
@@ -6238,7 +6304,7 @@ type BlockObjectRequest =
             }
           | {
               template: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "template"
@@ -6246,7 +6312,7 @@ type BlockObjectRequest =
             }
           | {
               callout: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
                 icon?:
                   | { emoji: EmojiRequest; type?: "emoji" }
@@ -6270,7 +6336,7 @@ type BlockObjectRequest =
     }
   | {
       paragraph: {
-        text: Array<RichTextItemRequest>
+        rich_text: Array<RichTextItemRequest>
         children?: Array<
           | {
               embed: { url: string; caption?: Array<RichTextItemRequest> }
@@ -6329,7 +6395,7 @@ type BlockObjectRequest =
             }
           | {
               code: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 language: LanguageRequest
                 caption?: Array<RichTextItemRequest>
               }
@@ -6362,7 +6428,7 @@ type BlockObjectRequest =
             }
           | {
               heading_1: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_1"
@@ -6370,7 +6436,7 @@ type BlockObjectRequest =
             }
           | {
               heading_2: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_2"
@@ -6378,7 +6444,7 @@ type BlockObjectRequest =
             }
           | {
               heading_3: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_3"
@@ -6386,7 +6452,7 @@ type BlockObjectRequest =
             }
           | {
               paragraph: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "paragraph"
@@ -6394,7 +6460,7 @@ type BlockObjectRequest =
             }
           | {
               bulleted_list_item: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "bulleted_list_item"
@@ -6402,7 +6468,7 @@ type BlockObjectRequest =
             }
           | {
               numbered_list_item: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "numbered_list_item"
@@ -6410,7 +6476,7 @@ type BlockObjectRequest =
             }
           | {
               quote: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "quote"
@@ -6418,7 +6484,7 @@ type BlockObjectRequest =
             }
           | {
               to_do: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
                 checked?: boolean
               }
@@ -6427,7 +6493,7 @@ type BlockObjectRequest =
             }
           | {
               toggle: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "toggle"
@@ -6435,7 +6501,7 @@ type BlockObjectRequest =
             }
           | {
               template: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "template"
@@ -6443,7 +6509,7 @@ type BlockObjectRequest =
             }
           | {
               callout: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
                 icon?:
                   | { emoji: EmojiRequest; type?: "emoji" }
@@ -6467,7 +6533,7 @@ type BlockObjectRequest =
     }
   | {
       bulleted_list_item: {
-        text: Array<RichTextItemRequest>
+        rich_text: Array<RichTextItemRequest>
         children?: Array<
           | {
               embed: { url: string; caption?: Array<RichTextItemRequest> }
@@ -6526,7 +6592,7 @@ type BlockObjectRequest =
             }
           | {
               code: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 language: LanguageRequest
                 caption?: Array<RichTextItemRequest>
               }
@@ -6559,7 +6625,7 @@ type BlockObjectRequest =
             }
           | {
               heading_1: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_1"
@@ -6567,7 +6633,7 @@ type BlockObjectRequest =
             }
           | {
               heading_2: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_2"
@@ -6575,7 +6641,7 @@ type BlockObjectRequest =
             }
           | {
               heading_3: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_3"
@@ -6583,7 +6649,7 @@ type BlockObjectRequest =
             }
           | {
               paragraph: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "paragraph"
@@ -6591,7 +6657,7 @@ type BlockObjectRequest =
             }
           | {
               bulleted_list_item: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "bulleted_list_item"
@@ -6599,7 +6665,7 @@ type BlockObjectRequest =
             }
           | {
               numbered_list_item: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "numbered_list_item"
@@ -6607,7 +6673,7 @@ type BlockObjectRequest =
             }
           | {
               quote: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "quote"
@@ -6615,7 +6681,7 @@ type BlockObjectRequest =
             }
           | {
               to_do: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
                 checked?: boolean
               }
@@ -6624,7 +6690,7 @@ type BlockObjectRequest =
             }
           | {
               toggle: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "toggle"
@@ -6632,7 +6698,7 @@ type BlockObjectRequest =
             }
           | {
               template: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "template"
@@ -6640,7 +6706,7 @@ type BlockObjectRequest =
             }
           | {
               callout: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
                 icon?:
                   | { emoji: EmojiRequest; type?: "emoji" }
@@ -6664,7 +6730,7 @@ type BlockObjectRequest =
     }
   | {
       numbered_list_item: {
-        text: Array<RichTextItemRequest>
+        rich_text: Array<RichTextItemRequest>
         children?: Array<
           | {
               embed: { url: string; caption?: Array<RichTextItemRequest> }
@@ -6723,7 +6789,7 @@ type BlockObjectRequest =
             }
           | {
               code: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 language: LanguageRequest
                 caption?: Array<RichTextItemRequest>
               }
@@ -6756,7 +6822,7 @@ type BlockObjectRequest =
             }
           | {
               heading_1: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_1"
@@ -6764,7 +6830,7 @@ type BlockObjectRequest =
             }
           | {
               heading_2: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_2"
@@ -6772,7 +6838,7 @@ type BlockObjectRequest =
             }
           | {
               heading_3: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_3"
@@ -6780,7 +6846,7 @@ type BlockObjectRequest =
             }
           | {
               paragraph: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "paragraph"
@@ -6788,7 +6854,7 @@ type BlockObjectRequest =
             }
           | {
               bulleted_list_item: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "bulleted_list_item"
@@ -6796,7 +6862,7 @@ type BlockObjectRequest =
             }
           | {
               numbered_list_item: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "numbered_list_item"
@@ -6804,7 +6870,7 @@ type BlockObjectRequest =
             }
           | {
               quote: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "quote"
@@ -6812,7 +6878,7 @@ type BlockObjectRequest =
             }
           | {
               to_do: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
                 checked?: boolean
               }
@@ -6821,7 +6887,7 @@ type BlockObjectRequest =
             }
           | {
               toggle: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "toggle"
@@ -6829,7 +6895,7 @@ type BlockObjectRequest =
             }
           | {
               template: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "template"
@@ -6837,7 +6903,7 @@ type BlockObjectRequest =
             }
           | {
               callout: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
                 icon?:
                   | { emoji: EmojiRequest; type?: "emoji" }
@@ -6861,7 +6927,7 @@ type BlockObjectRequest =
     }
   | {
       quote: {
-        text: Array<RichTextItemRequest>
+        rich_text: Array<RichTextItemRequest>
         children?: Array<
           | {
               embed: { url: string; caption?: Array<RichTextItemRequest> }
@@ -6920,7 +6986,7 @@ type BlockObjectRequest =
             }
           | {
               code: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 language: LanguageRequest
                 caption?: Array<RichTextItemRequest>
               }
@@ -6953,7 +7019,7 @@ type BlockObjectRequest =
             }
           | {
               heading_1: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_1"
@@ -6961,7 +7027,7 @@ type BlockObjectRequest =
             }
           | {
               heading_2: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_2"
@@ -6969,7 +7035,7 @@ type BlockObjectRequest =
             }
           | {
               heading_3: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_3"
@@ -6977,7 +7043,7 @@ type BlockObjectRequest =
             }
           | {
               paragraph: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "paragraph"
@@ -6985,7 +7051,7 @@ type BlockObjectRequest =
             }
           | {
               bulleted_list_item: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "bulleted_list_item"
@@ -6993,7 +7059,7 @@ type BlockObjectRequest =
             }
           | {
               numbered_list_item: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "numbered_list_item"
@@ -7001,7 +7067,7 @@ type BlockObjectRequest =
             }
           | {
               quote: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "quote"
@@ -7009,7 +7075,7 @@ type BlockObjectRequest =
             }
           | {
               to_do: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
                 checked?: boolean
               }
@@ -7018,7 +7084,7 @@ type BlockObjectRequest =
             }
           | {
               toggle: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "toggle"
@@ -7026,7 +7092,7 @@ type BlockObjectRequest =
             }
           | {
               template: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "template"
@@ -7034,7 +7100,7 @@ type BlockObjectRequest =
             }
           | {
               callout: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
                 icon?:
                   | { emoji: EmojiRequest; type?: "emoji" }
@@ -7058,7 +7124,7 @@ type BlockObjectRequest =
     }
   | {
       to_do: {
-        text: Array<RichTextItemRequest>
+        rich_text: Array<RichTextItemRequest>
         children?: Array<
           | {
               embed: { url: string; caption?: Array<RichTextItemRequest> }
@@ -7117,7 +7183,7 @@ type BlockObjectRequest =
             }
           | {
               code: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 language: LanguageRequest
                 caption?: Array<RichTextItemRequest>
               }
@@ -7150,7 +7216,7 @@ type BlockObjectRequest =
             }
           | {
               heading_1: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_1"
@@ -7158,7 +7224,7 @@ type BlockObjectRequest =
             }
           | {
               heading_2: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_2"
@@ -7166,7 +7232,7 @@ type BlockObjectRequest =
             }
           | {
               heading_3: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_3"
@@ -7174,7 +7240,7 @@ type BlockObjectRequest =
             }
           | {
               paragraph: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "paragraph"
@@ -7182,7 +7248,7 @@ type BlockObjectRequest =
             }
           | {
               bulleted_list_item: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "bulleted_list_item"
@@ -7190,7 +7256,7 @@ type BlockObjectRequest =
             }
           | {
               numbered_list_item: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "numbered_list_item"
@@ -7198,7 +7264,7 @@ type BlockObjectRequest =
             }
           | {
               quote: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "quote"
@@ -7206,7 +7272,7 @@ type BlockObjectRequest =
             }
           | {
               to_do: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
                 checked?: boolean
               }
@@ -7215,7 +7281,7 @@ type BlockObjectRequest =
             }
           | {
               toggle: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "toggle"
@@ -7223,7 +7289,7 @@ type BlockObjectRequest =
             }
           | {
               template: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "template"
@@ -7231,7 +7297,7 @@ type BlockObjectRequest =
             }
           | {
               callout: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
                 icon?:
                   | { emoji: EmojiRequest; type?: "emoji" }
@@ -7256,7 +7322,7 @@ type BlockObjectRequest =
     }
   | {
       toggle: {
-        text: Array<RichTextItemRequest>
+        rich_text: Array<RichTextItemRequest>
         children?: Array<
           | {
               embed: { url: string; caption?: Array<RichTextItemRequest> }
@@ -7315,7 +7381,7 @@ type BlockObjectRequest =
             }
           | {
               code: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 language: LanguageRequest
                 caption?: Array<RichTextItemRequest>
               }
@@ -7348,7 +7414,7 @@ type BlockObjectRequest =
             }
           | {
               heading_1: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_1"
@@ -7356,7 +7422,7 @@ type BlockObjectRequest =
             }
           | {
               heading_2: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_2"
@@ -7364,7 +7430,7 @@ type BlockObjectRequest =
             }
           | {
               heading_3: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_3"
@@ -7372,7 +7438,7 @@ type BlockObjectRequest =
             }
           | {
               paragraph: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "paragraph"
@@ -7380,7 +7446,7 @@ type BlockObjectRequest =
             }
           | {
               bulleted_list_item: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "bulleted_list_item"
@@ -7388,7 +7454,7 @@ type BlockObjectRequest =
             }
           | {
               numbered_list_item: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "numbered_list_item"
@@ -7396,7 +7462,7 @@ type BlockObjectRequest =
             }
           | {
               quote: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "quote"
@@ -7404,7 +7470,7 @@ type BlockObjectRequest =
             }
           | {
               to_do: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
                 checked?: boolean
               }
@@ -7413,7 +7479,7 @@ type BlockObjectRequest =
             }
           | {
               toggle: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "toggle"
@@ -7421,7 +7487,7 @@ type BlockObjectRequest =
             }
           | {
               template: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "template"
@@ -7429,7 +7495,7 @@ type BlockObjectRequest =
             }
           | {
               callout: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
                 icon?:
                   | { emoji: EmojiRequest; type?: "emoji" }
@@ -7453,7 +7519,7 @@ type BlockObjectRequest =
     }
   | {
       template: {
-        text: Array<RichTextItemRequest>
+        rich_text: Array<RichTextItemRequest>
         children?: Array<
           | {
               embed: { url: string; caption?: Array<RichTextItemRequest> }
@@ -7512,7 +7578,7 @@ type BlockObjectRequest =
             }
           | {
               code: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 language: LanguageRequest
                 caption?: Array<RichTextItemRequest>
               }
@@ -7545,7 +7611,7 @@ type BlockObjectRequest =
             }
           | {
               heading_1: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_1"
@@ -7553,7 +7619,7 @@ type BlockObjectRequest =
             }
           | {
               heading_2: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_2"
@@ -7561,7 +7627,7 @@ type BlockObjectRequest =
             }
           | {
               heading_3: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_3"
@@ -7569,7 +7635,7 @@ type BlockObjectRequest =
             }
           | {
               paragraph: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "paragraph"
@@ -7577,7 +7643,7 @@ type BlockObjectRequest =
             }
           | {
               bulleted_list_item: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "bulleted_list_item"
@@ -7585,7 +7651,7 @@ type BlockObjectRequest =
             }
           | {
               numbered_list_item: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "numbered_list_item"
@@ -7593,7 +7659,7 @@ type BlockObjectRequest =
             }
           | {
               quote: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "quote"
@@ -7601,7 +7667,7 @@ type BlockObjectRequest =
             }
           | {
               to_do: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
                 checked?: boolean
               }
@@ -7610,7 +7676,7 @@ type BlockObjectRequest =
             }
           | {
               toggle: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "toggle"
@@ -7618,7 +7684,7 @@ type BlockObjectRequest =
             }
           | {
               template: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "template"
@@ -7626,7 +7692,7 @@ type BlockObjectRequest =
             }
           | {
               callout: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
                 icon?:
                   | { emoji: EmojiRequest; type?: "emoji" }
@@ -7650,7 +7716,7 @@ type BlockObjectRequest =
     }
   | {
       callout: {
-        text: Array<RichTextItemRequest>
+        rich_text: Array<RichTextItemRequest>
         children?: Array<
           | {
               embed: { url: string; caption?: Array<RichTextItemRequest> }
@@ -7709,7 +7775,7 @@ type BlockObjectRequest =
             }
           | {
               code: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 language: LanguageRequest
                 caption?: Array<RichTextItemRequest>
               }
@@ -7742,7 +7808,7 @@ type BlockObjectRequest =
             }
           | {
               heading_1: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_1"
@@ -7750,7 +7816,7 @@ type BlockObjectRequest =
             }
           | {
               heading_2: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_2"
@@ -7758,7 +7824,7 @@ type BlockObjectRequest =
             }
           | {
               heading_3: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_3"
@@ -7766,7 +7832,7 @@ type BlockObjectRequest =
             }
           | {
               paragraph: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "paragraph"
@@ -7774,7 +7840,7 @@ type BlockObjectRequest =
             }
           | {
               bulleted_list_item: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "bulleted_list_item"
@@ -7782,7 +7848,7 @@ type BlockObjectRequest =
             }
           | {
               numbered_list_item: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "numbered_list_item"
@@ -7790,7 +7856,7 @@ type BlockObjectRequest =
             }
           | {
               quote: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "quote"
@@ -7798,7 +7864,7 @@ type BlockObjectRequest =
             }
           | {
               to_do: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
                 checked?: boolean
               }
@@ -7807,7 +7873,7 @@ type BlockObjectRequest =
             }
           | {
               toggle: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "toggle"
@@ -7815,7 +7881,7 @@ type BlockObjectRequest =
             }
           | {
               template: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "template"
@@ -7823,7 +7889,7 @@ type BlockObjectRequest =
             }
           | {
               callout: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
                 icon?:
                   | { emoji: EmojiRequest; type?: "emoji" }
@@ -7909,7 +7975,7 @@ type BlockObjectRequest =
             }
           | {
               code: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 language: LanguageRequest
                 caption?: Array<RichTextItemRequest>
               }
@@ -7942,7 +8008,7 @@ type BlockObjectRequest =
             }
           | {
               heading_1: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_1"
@@ -7950,7 +8016,7 @@ type BlockObjectRequest =
             }
           | {
               heading_2: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_2"
@@ -7958,7 +8024,7 @@ type BlockObjectRequest =
             }
           | {
               heading_3: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_3"
@@ -7966,7 +8032,7 @@ type BlockObjectRequest =
             }
           | {
               paragraph: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "paragraph"
@@ -7974,7 +8040,7 @@ type BlockObjectRequest =
             }
           | {
               bulleted_list_item: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "bulleted_list_item"
@@ -7982,7 +8048,7 @@ type BlockObjectRequest =
             }
           | {
               numbered_list_item: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "numbered_list_item"
@@ -7990,7 +8056,7 @@ type BlockObjectRequest =
             }
           | {
               quote: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "quote"
@@ -7998,7 +8064,7 @@ type BlockObjectRequest =
             }
           | {
               to_do: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
                 checked?: boolean
               }
@@ -8007,7 +8073,7 @@ type BlockObjectRequest =
             }
           | {
               toggle: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "toggle"
@@ -8015,7 +8081,7 @@ type BlockObjectRequest =
             }
           | {
               template: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "template"
@@ -8023,7 +8089,7 @@ type BlockObjectRequest =
             }
           | {
               callout: {
-                text: Array<RichTextItemRequest>
+                rich_text: Array<RichTextItemRequest>
                 children?: Array<BlockObjectRequestWithoutChildren>
                 icon?:
                   | { emoji: EmojiRequest; type?: "emoji" }
@@ -8059,19 +8125,6 @@ type PropertyFilter =
         | { is_not_empty: true }
       property: string
       type?: "title"
-    }
-  | {
-      text:
-        | { equals: string }
-        | { does_not_equal: string }
-        | { contains: string }
-        | { does_not_contain: string }
-        | { starts_with: string }
-        | { ends_with: string }
-        | { is_empty: true }
-        | { is_not_empty: true }
-      property: string
-      type?: "text"
     }
   | {
       rich_text:
@@ -8181,19 +8234,6 @@ type PropertyFilter =
       type?: "email"
     }
   | {
-      phone:
-        | { equals: string }
-        | { does_not_equal: string }
-        | { contains: string }
-        | { does_not_contain: string }
-        | { starts_with: string }
-        | { ends_with: string }
-        | { is_empty: true }
-        | { is_not_empty: true }
-      property: string
-      type?: "phone"
-    }
-  | {
       phone_number:
         | { equals: string }
         | { does_not_equal: string }
@@ -8272,7 +8312,7 @@ type PropertyFilter =
   | {
       formula:
         | {
-            text:
+            string:
               | { equals: string }
               | { does_not_equal: string }
               | { contains: string }
@@ -8318,7 +8358,7 @@ type PropertyFilter =
         | {
             any:
               | {
-                  text:
+                  rich_text:
                     | { equals: string }
                     | { does_not_equal: string }
                     | { contains: string }
@@ -8389,7 +8429,7 @@ type PropertyFilter =
         | {
             none:
               | {
-                  text:
+                  rich_text:
                     | { equals: string }
                     | { does_not_equal: string }
                     | { contains: string }
@@ -8460,7 +8500,7 @@ type PropertyFilter =
         | {
             every:
               | {
-                  text:
+                  rich_text:
                     | { equals: string }
                     | { does_not_equal: string }
                     | { contains: string }
@@ -8593,79 +8633,14 @@ type ListUsersQueryParameters = {
 
 export type ListUsersParameters = ListUsersQueryParameters
 
-export type ListUsersResponse =
-  | {
-      type: "rollup"
-      rollup:
-        | { type: "number"; number: number | null; function: RollupFunction }
-        | { type: "date"; date: DateResponse | null; function: RollupFunction }
-        | {
-            type: "array"
-            array: Array<
-              | { type: "title"; title: Array<RichTextItemResponse> }
-              | { type: "rich_text"; rich_text: Array<RichTextItemResponse> }
-              | { type: "number"; number: number | null }
-              | { type: "url"; url: string | null }
-              | { type: "select"; select: SelectPropertyResponse | null }
-              | {
-                  type: "multi_select"
-                  multi_select: Array<SelectPropertyResponse>
-                }
-              | { type: "people"; people: Array<PartialUserObjectResponse> }
-              | { type: "email"; email: string | null }
-              | { type: "phone_number"; phone_number: string | null }
-              | { type: "date"; date: DateResponse | null }
-              | {
-                  type: "files"
-                  files: Array<
-                    | {
-                        file: { url: string; expiry_time: string }
-                        name: StringRequest
-                        type?: "file"
-                      }
-                    | {
-                        external: { url: TextRequest }
-                        name: StringRequest
-                        type?: "external"
-                      }
-                  >
-                }
-              | { type: "checkbox"; checkbox: boolean }
-              | {
-                  type: "formula"
-                  formula:
-                    | { type: "string"; string: string | null }
-                    | { type: "date"; date: DateResponse | null }
-                    | { type: "number"; number: number | null }
-                    | { type: "boolean"; boolean: boolean | null }
-                }
-              | { type: "relation"; relation: Array<{ id: string }> }
-              | { type: "created_time"; created_time: string }
-              | { type: "created_by"; created_by: PartialUserObjectResponse }
-              | { type: "last_edited_time"; last_edited_time: string }
-              | {
-                  type: "last_edited_by"
-                  last_edited_by: PartialUserObjectResponse
-                }
-            >
-            function: RollupFunction
-          }
-        | {
-            type: "unsupported"
-            unsupported: EmptyObject
-            function: RollupFunction
-          }
-      object: "list"
-      results: Array<UserObjectResponse>
-      next_cursor: string | null
-      has_more: boolean
-    }
-  | {
-      object: "list"
-      results: Array<UserObjectResponse>
-      next_cursor: string | null
-      has_more: boolean
-    }
+export type ListUsersResponse = {
+  type: "user"
+  user: EmptyObject
+  object: "list"
+  next_cursor: string | null
+  has_more: boolean
+  results: Array<UserObjectResponse>
+}
 
 export const listUsers = {
   method: "get",
@@ -9033,6 +9008,11 @@ export type CreatePageResponse =
                   unsupported: EmptyObject
                   function: RollupFunction
                 }
+              | {
+                  type: "incomplete"
+                  incomplete: EmptyObject
+                  function: RollupFunction
+                }
             id: string
           }
       >
@@ -9048,6 +9028,8 @@ export type CreatePageResponse =
         | null
         | { type: "file"; file: { url: string; expiry_time: string } }
         | null
+      created_by: { id: IdRequest; object: "user" }
+      last_edited_by: { id: IdRequest; object: "user" }
       object: "page"
       id: string
       created_time: string
@@ -9218,6 +9200,11 @@ export type GetPageResponse =
                   unsupported: EmptyObject
                   function: RollupFunction
                 }
+              | {
+                  type: "incomplete"
+                  incomplete: EmptyObject
+                  function: RollupFunction
+                }
             id: string
           }
       >
@@ -9233,6 +9220,8 @@ export type GetPageResponse =
         | null
         | { type: "file"; file: { url: string; expiry_time: string } }
         | null
+      created_by: { id: IdRequest; object: "user" }
+      last_edited_by: { id: IdRequest; object: "user" }
       object: "page"
       id: string
       created_time: string
@@ -9571,6 +9560,11 @@ export type UpdatePageResponse =
                   unsupported: EmptyObject
                   function: RollupFunction
                 }
+              | {
+                  type: "incomplete"
+                  incomplete: EmptyObject
+                  function: RollupFunction
+                }
             id: string
           }
       >
@@ -9586,6 +9580,8 @@ export type UpdatePageResponse =
         | null
         | { type: "file"; file: { url: string; expiry_time: string } }
         | null
+      created_by: { id: IdRequest; object: "user" }
+      last_edited_by: { id: IdRequest; object: "user" }
       object: "page"
       id: string
       created_time: string
@@ -9691,67 +9687,100 @@ export type GetPagePropertyResponse =
     }
   | { type: "relation"; relation: { id: string }; object: "property_item" }
   | {
-      type: "rollup"
-      rollup:
-        | { type: "number"; number: number | null; function: RollupFunction }
-        | { type: "date"; date: DateResponse | null; function: RollupFunction }
+      type: "property_item"
+      property_item:
+        | { type: "title"; title: EmptyObject; next_url: string | null }
+        | { type: "rich_text"; rich_text: EmptyObject; next_url: string | null }
+        | { type: "people"; people: EmptyObject; next_url: string | null }
+        | { type: "relation"; relation: EmptyObject; next_url: string | null }
         | {
-            type: "array"
-            array: Array<
-              | { type: "title"; title: Array<RichTextItemResponse> }
-              | { type: "rich_text"; rich_text: Array<RichTextItemResponse> }
-              | { type: "number"; number: number | null }
-              | { type: "url"; url: string | null }
-              | { type: "select"; select: SelectPropertyResponse | null }
+            type: "rollup"
+            rollup:
               | {
-                  type: "multi_select"
-                  multi_select: Array<SelectPropertyResponse>
+                  type: "number"
+                  number: number | null
+                  function: RollupFunction
                 }
-              | { type: "people"; people: Array<PartialUserObjectResponse> }
-              | { type: "email"; email: string | null }
-              | { type: "phone_number"; phone_number: string | null }
-              | { type: "date"; date: DateResponse | null }
               | {
-                  type: "files"
-                  files: Array<
+                  type: "date"
+                  date: DateResponse | null
+                  function: RollupFunction
+                }
+              | {
+                  type: "array"
+                  array: Array<
+                    | { type: "title"; title: Array<RichTextItemResponse> }
                     | {
-                        file: { url: string; expiry_time: string }
-                        name: StringRequest
-                        type?: "file"
+                        type: "rich_text"
+                        rich_text: Array<RichTextItemResponse>
+                      }
+                    | { type: "number"; number: number | null }
+                    | { type: "url"; url: string | null }
+                    | { type: "select"; select: SelectPropertyResponse | null }
+                    | {
+                        type: "multi_select"
+                        multi_select: Array<SelectPropertyResponse>
                       }
                     | {
-                        external: { url: TextRequest }
-                        name: StringRequest
-                        type?: "external"
+                        type: "people"
+                        people: Array<PartialUserObjectResponse>
+                      }
+                    | { type: "email"; email: string | null }
+                    | { type: "phone_number"; phone_number: string | null }
+                    | { type: "date"; date: DateResponse | null }
+                    | {
+                        type: "files"
+                        files: Array<
+                          | {
+                              file: { url: string; expiry_time: string }
+                              name: StringRequest
+                              type?: "file"
+                            }
+                          | {
+                              external: { url: TextRequest }
+                              name: StringRequest
+                              type?: "external"
+                            }
+                        >
+                      }
+                    | { type: "checkbox"; checkbox: boolean }
+                    | {
+                        type: "formula"
+                        formula:
+                          | { type: "string"; string: string | null }
+                          | { type: "date"; date: DateResponse | null }
+                          | { type: "number"; number: number | null }
+                          | { type: "boolean"; boolean: boolean | null }
+                      }
+                    | { type: "relation"; relation: Array<{ id: string }> }
+                    | { type: "created_time"; created_time: string }
+                    | {
+                        type: "created_by"
+                        created_by: PartialUserObjectResponse
+                      }
+                    | { type: "last_edited_time"; last_edited_time: string }
+                    | {
+                        type: "last_edited_by"
+                        last_edited_by: PartialUserObjectResponse
                       }
                   >
+                  function: RollupFunction
                 }
-              | { type: "checkbox"; checkbox: boolean }
               | {
-                  type: "formula"
-                  formula:
-                    | { type: "string"; string: string | null }
-                    | { type: "date"; date: DateResponse | null }
-                    | { type: "number"; number: number | null }
-                    | { type: "boolean"; boolean: boolean | null }
+                  type: "unsupported"
+                  unsupported: EmptyObject
+                  function: RollupFunction
                 }
-              | { type: "relation"; relation: Array<{ id: string }> }
-              | { type: "created_time"; created_time: string }
-              | { type: "created_by"; created_by: PartialUserObjectResponse }
-              | { type: "last_edited_time"; last_edited_time: string }
               | {
-                  type: "last_edited_by"
-                  last_edited_by: PartialUserObjectResponse
+                  type: "incomplete"
+                  incomplete: EmptyObject
+                  function: RollupFunction
                 }
-            >
-            function: RollupFunction
-          }
-        | {
-            type: "unsupported"
-            unsupported: EmptyObject
-            function: RollupFunction
+            next_url: string | null
           }
       object: "list"
+      next_cursor: string | null
+      has_more: boolean
       results: Array<
         | { type: "number"; number: number | null; object: "property_item" }
         | { type: "url"; url: string | null; object: "property_item" }
@@ -9839,100 +9868,6 @@ export type GetPagePropertyResponse =
             object: "property_item"
           }
       >
-      next_cursor: string | null
-      has_more: boolean
-    }
-  | {
-      object: "list"
-      results: Array<
-        | { type: "number"; number: number | null; object: "property_item" }
-        | { type: "url"; url: string | null; object: "property_item" }
-        | {
-            type: "select"
-            select: SelectPropertyResponse | null
-            object: "property_item"
-          }
-        | {
-            type: "multi_select"
-            multi_select: Array<SelectPropertyResponse>
-            object: "property_item"
-          }
-        | { type: "date"; date: DateResponse | null; object: "property_item" }
-        | { type: "email"; email: string | null; object: "property_item" }
-        | {
-            type: "phone_number"
-            phone_number: string | null
-            object: "property_item"
-          }
-        | { type: "checkbox"; checkbox: boolean; object: "property_item" }
-        | {
-            type: "files"
-            files: Array<
-              | {
-                  file: { url: string; expiry_time: string }
-                  name: StringRequest
-                  type?: "file"
-                }
-              | {
-                  external: { url: TextRequest }
-                  name: StringRequest
-                  type?: "external"
-                }
-            >
-            object: "property_item"
-          }
-        | {
-            type: "created_by"
-            created_by: PartialUserObjectResponse
-            object: "property_item"
-          }
-        | {
-            type: "created_time"
-            created_time: string
-            object: "property_item"
-          }
-        | {
-            type: "last_edited_by"
-            last_edited_by: PartialUserObjectResponse
-            object: "property_item"
-          }
-        | {
-            type: "last_edited_time"
-            last_edited_time: string
-            object: "property_item"
-          }
-        | {
-            type: "formula"
-            formula:
-              | { type: "string"; string: string | null }
-              | { type: "date"; date: DateResponse | null }
-              | { type: "number"; number: number | null }
-              | { type: "boolean"; boolean: boolean | null }
-            object: "property_item"
-          }
-        | {
-            type: "title"
-            title: RichTextItemResponse
-            object: "property_item"
-          }
-        | {
-            type: "rich_text"
-            rich_text: RichTextItemResponse
-            object: "property_item"
-          }
-        | {
-            type: "people"
-            people: PartialUserObjectResponse
-            object: "property_item"
-          }
-        | {
-            type: "relation"
-            relation: { id: string }
-            object: "property_item"
-          }
-      >
-      next_cursor: string | null
-      has_more: boolean
     }
 
 export const getPageProperty = {
@@ -10017,7 +9952,7 @@ type UpdateBlockBodyParameters =
     }
   | {
       code: {
-        text?: Array<RichTextItemRequest>
+        rich_text?: Array<RichTextItemRequest>
         language?: LanguageRequest
         caption?: Array<RichTextItemRequest>
       }
@@ -10045,58 +9980,58 @@ type UpdateBlockBodyParameters =
       archived?: boolean
     }
   | {
-      heading_1: { text: Array<RichTextItemRequest> }
+      heading_1: { rich_text: Array<RichTextItemRequest> }
       type?: "heading_1"
       archived?: boolean
     }
   | {
-      heading_2: { text: Array<RichTextItemRequest> }
+      heading_2: { rich_text: Array<RichTextItemRequest> }
       type?: "heading_2"
       archived?: boolean
     }
   | {
-      heading_3: { text: Array<RichTextItemRequest> }
+      heading_3: { rich_text: Array<RichTextItemRequest> }
       type?: "heading_3"
       archived?: boolean
     }
   | {
-      paragraph: { text: Array<RichTextItemRequest> }
+      paragraph: { rich_text: Array<RichTextItemRequest> }
       type?: "paragraph"
       archived?: boolean
     }
   | {
-      bulleted_list_item: { text: Array<RichTextItemRequest> }
+      bulleted_list_item: { rich_text: Array<RichTextItemRequest> }
       type?: "bulleted_list_item"
       archived?: boolean
     }
   | {
-      numbered_list_item: { text: Array<RichTextItemRequest> }
+      numbered_list_item: { rich_text: Array<RichTextItemRequest> }
       type?: "numbered_list_item"
       archived?: boolean
     }
   | {
-      quote: { text: Array<RichTextItemRequest> }
+      quote: { rich_text: Array<RichTextItemRequest> }
       type?: "quote"
       archived?: boolean
     }
   | {
-      to_do: { text?: Array<RichTextItemRequest>; checked?: boolean }
+      to_do: { rich_text?: Array<RichTextItemRequest>; checked?: boolean }
       type?: "to_do"
       archived?: boolean
     }
   | {
-      toggle: { text: Array<RichTextItemRequest> }
+      toggle: { rich_text: Array<RichTextItemRequest> }
       type?: "toggle"
       archived?: boolean
     }
   | {
-      template: { text: Array<RichTextItemRequest> }
+      template: { rich_text: Array<RichTextItemRequest> }
       type?: "template"
       archived?: boolean
     }
   | {
       callout: {
-        text?: Array<RichTextItemRequest>
+        rich_text?: Array<RichTextItemRequest>
         icon?:
           | { emoji: EmojiRequest; type?: "emoji" }
           | { external: { url: TextRequest }; type?: "external" }
@@ -10193,79 +10128,14 @@ type ListBlockChildrenQueryParameters = {
 export type ListBlockChildrenParameters = ListBlockChildrenPathParameters &
   ListBlockChildrenQueryParameters
 
-export type ListBlockChildrenResponse =
-  | {
-      type: "rollup"
-      rollup:
-        | { type: "number"; number: number | null; function: RollupFunction }
-        | { type: "date"; date: DateResponse | null; function: RollupFunction }
-        | {
-            type: "array"
-            array: Array<
-              | { type: "title"; title: Array<RichTextItemResponse> }
-              | { type: "rich_text"; rich_text: Array<RichTextItemResponse> }
-              | { type: "number"; number: number | null }
-              | { type: "url"; url: string | null }
-              | { type: "select"; select: SelectPropertyResponse | null }
-              | {
-                  type: "multi_select"
-                  multi_select: Array<SelectPropertyResponse>
-                }
-              | { type: "people"; people: Array<PartialUserObjectResponse> }
-              | { type: "email"; email: string | null }
-              | { type: "phone_number"; phone_number: string | null }
-              | { type: "date"; date: DateResponse | null }
-              | {
-                  type: "files"
-                  files: Array<
-                    | {
-                        file: { url: string; expiry_time: string }
-                        name: StringRequest
-                        type?: "file"
-                      }
-                    | {
-                        external: { url: TextRequest }
-                        name: StringRequest
-                        type?: "external"
-                      }
-                  >
-                }
-              | { type: "checkbox"; checkbox: boolean }
-              | {
-                  type: "formula"
-                  formula:
-                    | { type: "string"; string: string | null }
-                    | { type: "date"; date: DateResponse | null }
-                    | { type: "number"; number: number | null }
-                    | { type: "boolean"; boolean: boolean | null }
-                }
-              | { type: "relation"; relation: Array<{ id: string }> }
-              | { type: "created_time"; created_time: string }
-              | { type: "created_by"; created_by: PartialUserObjectResponse }
-              | { type: "last_edited_time"; last_edited_time: string }
-              | {
-                  type: "last_edited_by"
-                  last_edited_by: PartialUserObjectResponse
-                }
-            >
-            function: RollupFunction
-          }
-        | {
-            type: "unsupported"
-            unsupported: EmptyObject
-            function: RollupFunction
-          }
-      object: "list"
-      results: Array<PartialBlockObjectResponse | BlockObjectResponse>
-      next_cursor: string | null
-      has_more: boolean
-    }
-  | {
-      object: "list"
-      results: Array<PartialBlockObjectResponse | BlockObjectResponse>
-      next_cursor: string | null
-      has_more: boolean
-    }
+export type ListBlockChildrenResponse = {
+  type: "block"
+  block: EmptyObject
+  object: "list"
+  next_cursor: string | null
+  has_more: boolean
+  results: Array<PartialBlockObjectResponse | BlockObjectResponse>
+}
 
 export const listBlockChildren = {
   method: "get",
@@ -10285,79 +10155,14 @@ type AppendBlockChildrenBodyParameters = { children: Array<BlockObjectRequest> }
 export type AppendBlockChildrenParameters = AppendBlockChildrenPathParameters &
   AppendBlockChildrenBodyParameters
 
-export type AppendBlockChildrenResponse =
-  | {
-      type: "rollup"
-      rollup:
-        | { type: "number"; number: number | null; function: RollupFunction }
-        | { type: "date"; date: DateResponse | null; function: RollupFunction }
-        | {
-            type: "array"
-            array: Array<
-              | { type: "title"; title: Array<RichTextItemResponse> }
-              | { type: "rich_text"; rich_text: Array<RichTextItemResponse> }
-              | { type: "number"; number: number | null }
-              | { type: "url"; url: string | null }
-              | { type: "select"; select: SelectPropertyResponse | null }
-              | {
-                  type: "multi_select"
-                  multi_select: Array<SelectPropertyResponse>
-                }
-              | { type: "people"; people: Array<PartialUserObjectResponse> }
-              | { type: "email"; email: string | null }
-              | { type: "phone_number"; phone_number: string | null }
-              | { type: "date"; date: DateResponse | null }
-              | {
-                  type: "files"
-                  files: Array<
-                    | {
-                        file: { url: string; expiry_time: string }
-                        name: StringRequest
-                        type?: "file"
-                      }
-                    | {
-                        external: { url: TextRequest }
-                        name: StringRequest
-                        type?: "external"
-                      }
-                  >
-                }
-              | { type: "checkbox"; checkbox: boolean }
-              | {
-                  type: "formula"
-                  formula:
-                    | { type: "string"; string: string | null }
-                    | { type: "date"; date: DateResponse | null }
-                    | { type: "number"; number: number | null }
-                    | { type: "boolean"; boolean: boolean | null }
-                }
-              | { type: "relation"; relation: Array<{ id: string }> }
-              | { type: "created_time"; created_time: string }
-              | { type: "created_by"; created_by: PartialUserObjectResponse }
-              | { type: "last_edited_time"; last_edited_time: string }
-              | {
-                  type: "last_edited_by"
-                  last_edited_by: PartialUserObjectResponse
-                }
-            >
-            function: RollupFunction
-          }
-        | {
-            type: "unsupported"
-            unsupported: EmptyObject
-            function: RollupFunction
-          }
-      object: "list"
-      results: Array<PartialBlockObjectResponse | BlockObjectResponse>
-      next_cursor: string | null
-      has_more: boolean
-    }
-  | {
-      object: "list"
-      results: Array<PartialBlockObjectResponse | BlockObjectResponse>
-      next_cursor: string | null
-      has_more: boolean
-    }
+export type AppendBlockChildrenResponse = {
+  type: "block"
+  block: EmptyObject
+  object: "list"
+  next_cursor: string | null
+  has_more: boolean
+  results: Array<PartialBlockObjectResponse | BlockObjectResponse>
+}
 
 export const appendBlockChildren = {
   method: "patch",
@@ -10604,10 +10409,13 @@ export type GetDatabaseResponse =
       parent:
         | { type: "page_id"; page_id: string }
         | { type: "workspace"; workspace: true }
+      created_by: { id: IdRequest; object: "user" }
+      last_edited_by: { id: IdRequest; object: "user" }
       object: "database"
       id: string
       created_time: string
       last_edited_time: string
+      archived: boolean
       url: string
     }
 
@@ -10728,6 +10536,7 @@ type UpdateDatabaseBodyParameters = {
     | { name: string }
     | null
   >
+  archived?: boolean
 }
 
 export type UpdateDatabaseParameters = UpdateDatabasePathParameters &
@@ -10963,10 +10772,13 @@ export type UpdateDatabaseResponse =
       parent:
         | { type: "page_id"; page_id: string }
         | { type: "workspace"; workspace: true }
+      created_by: { id: IdRequest; object: "user" }
+      last_edited_by: { id: IdRequest; object: "user" }
       object: "database"
       id: string
       created_time: string
       last_edited_time: string
+      archived: boolean
       url: string
     }
 
@@ -10974,7 +10786,7 @@ export const updateDatabase = {
   method: "patch",
   pathParams: ["database_id"],
   queryParams: [],
-  bodyParams: ["title", "icon", "cover", "properties"],
+  bodyParams: ["title", "icon", "cover", "properties", "archived"],
   path: (p: UpdateDatabasePathParameters): string =>
     `databases/${p.database_id}`,
 } as const
@@ -11015,489 +10827,198 @@ type QueryDatabaseBodyParameters = {
 export type QueryDatabaseParameters = QueryDatabasePathParameters &
   QueryDatabaseBodyParameters
 
-export type QueryDatabaseResponse =
-  | {
-      type: "rollup"
-      rollup:
-        | { type: "number"; number: number | null; function: RollupFunction }
-        | { type: "date"; date: DateResponse | null; function: RollupFunction }
-        | {
-            type: "array"
-            array: Array<
-              | { type: "title"; title: Array<RichTextItemResponse> }
-              | { type: "rich_text"; rich_text: Array<RichTextItemResponse> }
-              | { type: "number"; number: number | null }
-              | { type: "url"; url: string | null }
-              | { type: "select"; select: SelectPropertyResponse | null }
-              | {
-                  type: "multi_select"
-                  multi_select: Array<SelectPropertyResponse>
-                }
-              | { type: "people"; people: Array<PartialUserObjectResponse> }
-              | { type: "email"; email: string | null }
-              | { type: "phone_number"; phone_number: string | null }
-              | { type: "date"; date: DateResponse | null }
-              | {
-                  type: "files"
-                  files: Array<
-                    | {
-                        file: { url: string; expiry_time: string }
-                        name: StringRequest
-                        type?: "file"
-                      }
-                    | {
-                        external: { url: TextRequest }
-                        name: StringRequest
-                        type?: "external"
-                      }
-                  >
-                }
-              | { type: "checkbox"; checkbox: boolean }
-              | {
-                  type: "formula"
-                  formula:
-                    | { type: "string"; string: string | null }
-                    | { type: "date"; date: DateResponse | null }
-                    | { type: "number"; number: number | null }
-                    | { type: "boolean"; boolean: boolean | null }
-                }
-              | { type: "relation"; relation: Array<{ id: string }> }
-              | { type: "created_time"; created_time: string }
-              | { type: "created_by"; created_by: PartialUserObjectResponse }
-              | { type: "last_edited_time"; last_edited_time: string }
-              | {
-                  type: "last_edited_by"
-                  last_edited_by: PartialUserObjectResponse
-                }
-            >
-            function: RollupFunction
-          }
-        | {
-            type: "unsupported"
-            unsupported: EmptyObject
-            function: RollupFunction
-          }
-      object: "list"
-      results: Array<
-        | {
-            parent:
-              | { type: "database_id"; database_id: IdRequest }
-              | { type: "page_id"; page_id: IdRequest }
-              | { type: "workspace"; workspace: true }
-            properties: Record<
-              string,
-              | {
-                  type: "title"
-                  title: Array<RichTextItemResponse>
-                  id: string
-                }
-              | {
-                  type: "rich_text"
-                  rich_text: Array<RichTextItemResponse>
-                  id: string
-                }
-              | { type: "number"; number: number | null; id: string }
-              | { type: "url"; url: string | null; id: string }
-              | {
-                  type: "select"
-                  select: SelectPropertyResponse | null
-                  id: string
-                }
-              | {
-                  type: "multi_select"
-                  multi_select: Array<SelectPropertyResponse>
-                  id: string
-                }
-              | {
-                  type: "people"
-                  people: Array<PartialUserObjectResponse>
-                  id: string
-                }
-              | { type: "email"; email: string | null; id: string }
-              | {
-                  type: "phone_number"
-                  phone_number: string | null
-                  id: string
-                }
-              | { type: "date"; date: DateResponse | null; id: string }
-              | {
-                  type: "files"
-                  files: Array<
-                    | {
-                        file: { url: string; expiry_time: string }
-                        name: StringRequest
-                        type?: "file"
-                      }
-                    | {
-                        external: { url: TextRequest }
-                        name: StringRequest
-                        type?: "external"
-                      }
-                  >
-                  id: string
-                }
-              | { type: "checkbox"; checkbox: boolean; id: string }
-              | {
-                  type: "formula"
-                  formula:
-                    | { type: "string"; string: string | null }
-                    | { type: "date"; date: DateResponse | null }
-                    | { type: "number"; number: number | null }
-                    | { type: "boolean"; boolean: boolean | null }
-                  id: string
-                }
-              | {
-                  type: "relation"
-                  relation: Array<{ id: string }>
-                  id: string
-                }
-              | { type: "created_time"; created_time: string; id: string }
-              | {
-                  type: "created_by"
-                  created_by: PartialUserObjectResponse
-                  id: string
-                }
-              | {
-                  type: "last_edited_time"
-                  last_edited_time: string
-                  id: string
-                }
-              | {
-                  type: "last_edited_by"
-                  last_edited_by: PartialUserObjectResponse
-                  id: string
-                }
-              | {
-                  type: "rollup"
-                  rollup:
-                    | {
-                        type: "number"
-                        number: number | null
-                        function: RollupFunction
-                      }
-                    | {
-                        type: "date"
-                        date: DateResponse | null
-                        function: RollupFunction
-                      }
-                    | {
-                        type: "array"
-                        array: Array<
-                          | {
-                              type: "title"
-                              title: Array<RichTextItemResponse>
-                            }
-                          | {
-                              type: "rich_text"
-                              rich_text: Array<RichTextItemResponse>
-                            }
-                          | { type: "number"; number: number | null }
-                          | { type: "url"; url: string | null }
-                          | {
-                              type: "select"
-                              select: SelectPropertyResponse | null
-                            }
-                          | {
-                              type: "multi_select"
-                              multi_select: Array<SelectPropertyResponse>
-                            }
-                          | {
-                              type: "people"
-                              people: Array<PartialUserObjectResponse>
-                            }
-                          | { type: "email"; email: string | null }
-                          | {
-                              type: "phone_number"
-                              phone_number: string | null
-                            }
-                          | { type: "date"; date: DateResponse | null }
-                          | {
-                              type: "files"
-                              files: Array<
-                                | {
-                                    file: { url: string; expiry_time: string }
-                                    name: StringRequest
-                                    type?: "file"
-                                  }
-                                | {
-                                    external: { url: TextRequest }
-                                    name: StringRequest
-                                    type?: "external"
-                                  }
-                              >
-                            }
-                          | { type: "checkbox"; checkbox: boolean }
-                          | {
-                              type: "formula"
-                              formula:
-                                | { type: "string"; string: string | null }
-                                | { type: "date"; date: DateResponse | null }
-                                | { type: "number"; number: number | null }
-                                | { type: "boolean"; boolean: boolean | null }
-                            }
-                          | {
-                              type: "relation"
-                              relation: Array<{ id: string }>
-                            }
-                          | { type: "created_time"; created_time: string }
-                          | {
-                              type: "created_by"
-                              created_by: PartialUserObjectResponse
-                            }
-                          | {
-                              type: "last_edited_time"
-                              last_edited_time: string
-                            }
-                          | {
-                              type: "last_edited_by"
-                              last_edited_by: PartialUserObjectResponse
-                            }
-                        >
-                        function: RollupFunction
-                      }
-                    | {
-                        type: "unsupported"
-                        unsupported: EmptyObject
-                        function: RollupFunction
-                      }
-                  id: string
-                }
-            >
-            icon:
-              | { type: "emoji"; emoji: EmojiRequest }
-              | null
-              | { type: "external"; external: { url: TextRequest } }
-              | null
-              | { type: "file"; file: { url: string; expiry_time: string } }
-              | null
-            cover:
-              | { type: "external"; external: { url: TextRequest } }
-              | null
-              | { type: "file"; file: { url: string; expiry_time: string } }
-              | null
-            object: "page"
-            id: string
-            created_time: string
-            last_edited_time: string
-            archived: boolean
-            url: string
-          }
-        | { object: "page"; id: string }
-      >
-      next_cursor: string | null
-      has_more: boolean
-    }
-  | {
-      object: "list"
-      results: Array<
-        | {
-            parent:
-              | { type: "database_id"; database_id: IdRequest }
-              | { type: "page_id"; page_id: IdRequest }
-              | { type: "workspace"; workspace: true }
-            properties: Record<
-              string,
-              | {
-                  type: "title"
-                  title: Array<RichTextItemResponse>
-                  id: string
-                }
-              | {
-                  type: "rich_text"
-                  rich_text: Array<RichTextItemResponse>
-                  id: string
-                }
-              | { type: "number"; number: number | null; id: string }
-              | { type: "url"; url: string | null; id: string }
-              | {
-                  type: "select"
-                  select: SelectPropertyResponse | null
-                  id: string
-                }
-              | {
-                  type: "multi_select"
-                  multi_select: Array<SelectPropertyResponse>
-                  id: string
-                }
-              | {
-                  type: "people"
-                  people: Array<PartialUserObjectResponse>
-                  id: string
-                }
-              | { type: "email"; email: string | null; id: string }
-              | {
-                  type: "phone_number"
-                  phone_number: string | null
-                  id: string
-                }
-              | { type: "date"; date: DateResponse | null; id: string }
-              | {
-                  type: "files"
-                  files: Array<
-                    | {
-                        file: { url: string; expiry_time: string }
-                        name: StringRequest
-                        type?: "file"
-                      }
-                    | {
-                        external: { url: TextRequest }
-                        name: StringRequest
-                        type?: "external"
-                      }
-                  >
-                  id: string
-                }
-              | { type: "checkbox"; checkbox: boolean; id: string }
-              | {
-                  type: "formula"
-                  formula:
-                    | { type: "string"; string: string | null }
-                    | { type: "date"; date: DateResponse | null }
-                    | { type: "number"; number: number | null }
-                    | { type: "boolean"; boolean: boolean | null }
-                  id: string
-                }
-              | {
-                  type: "relation"
-                  relation: Array<{ id: string }>
-                  id: string
-                }
-              | { type: "created_time"; created_time: string; id: string }
-              | {
-                  type: "created_by"
-                  created_by: PartialUserObjectResponse
-                  id: string
-                }
-              | {
-                  type: "last_edited_time"
-                  last_edited_time: string
-                  id: string
-                }
-              | {
-                  type: "last_edited_by"
-                  last_edited_by: PartialUserObjectResponse
-                  id: string
-                }
-              | {
-                  type: "rollup"
-                  rollup:
-                    | {
-                        type: "number"
-                        number: number | null
-                        function: RollupFunction
-                      }
-                    | {
-                        type: "date"
-                        date: DateResponse | null
-                        function: RollupFunction
-                      }
-                    | {
-                        type: "array"
-                        array: Array<
-                          | {
-                              type: "title"
-                              title: Array<RichTextItemResponse>
-                            }
-                          | {
-                              type: "rich_text"
-                              rich_text: Array<RichTextItemResponse>
-                            }
-                          | { type: "number"; number: number | null }
-                          | { type: "url"; url: string | null }
-                          | {
-                              type: "select"
-                              select: SelectPropertyResponse | null
-                            }
-                          | {
-                              type: "multi_select"
-                              multi_select: Array<SelectPropertyResponse>
-                            }
-                          | {
-                              type: "people"
-                              people: Array<PartialUserObjectResponse>
-                            }
-                          | { type: "email"; email: string | null }
-                          | {
-                              type: "phone_number"
-                              phone_number: string | null
-                            }
-                          | { type: "date"; date: DateResponse | null }
-                          | {
-                              type: "files"
-                              files: Array<
-                                | {
-                                    file: { url: string; expiry_time: string }
-                                    name: StringRequest
-                                    type?: "file"
-                                  }
-                                | {
-                                    external: { url: TextRequest }
-                                    name: StringRequest
-                                    type?: "external"
-                                  }
-                              >
-                            }
-                          | { type: "checkbox"; checkbox: boolean }
-                          | {
-                              type: "formula"
-                              formula:
-                                | { type: "string"; string: string | null }
-                                | { type: "date"; date: DateResponse | null }
-                                | { type: "number"; number: number | null }
-                                | { type: "boolean"; boolean: boolean | null }
-                            }
-                          | {
-                              type: "relation"
-                              relation: Array<{ id: string }>
-                            }
-                          | { type: "created_time"; created_time: string }
-                          | {
-                              type: "created_by"
-                              created_by: PartialUserObjectResponse
-                            }
-                          | {
-                              type: "last_edited_time"
-                              last_edited_time: string
-                            }
-                          | {
-                              type: "last_edited_by"
-                              last_edited_by: PartialUserObjectResponse
-                            }
-                        >
-                        function: RollupFunction
-                      }
-                    | {
-                        type: "unsupported"
-                        unsupported: EmptyObject
-                        function: RollupFunction
-                      }
-                  id: string
-                }
-            >
-            icon:
-              | { type: "emoji"; emoji: EmojiRequest }
-              | null
-              | { type: "external"; external: { url: TextRequest } }
-              | null
-              | { type: "file"; file: { url: string; expiry_time: string } }
-              | null
-            cover:
-              | { type: "external"; external: { url: TextRequest } }
-              | null
-              | { type: "file"; file: { url: string; expiry_time: string } }
-              | null
-            object: "page"
-            id: string
-            created_time: string
-            last_edited_time: string
-            archived: boolean
-            url: string
-          }
-        | { object: "page"; id: string }
-      >
-      next_cursor: string | null
-      has_more: boolean
-    }
+export type QueryDatabaseResponse = {
+  type: "page"
+  page: EmptyObject
+  object: "list"
+  next_cursor: string | null
+  has_more: boolean
+  results: Array<
+    | {
+        parent:
+          | { type: "database_id"; database_id: IdRequest }
+          | { type: "page_id"; page_id: IdRequest }
+          | { type: "workspace"; workspace: true }
+        properties: Record<
+          string,
+          | { type: "title"; title: Array<RichTextItemResponse>; id: string }
+          | {
+              type: "rich_text"
+              rich_text: Array<RichTextItemResponse>
+              id: string
+            }
+          | { type: "number"; number: number | null; id: string }
+          | { type: "url"; url: string | null; id: string }
+          | {
+              type: "select"
+              select: SelectPropertyResponse | null
+              id: string
+            }
+          | {
+              type: "multi_select"
+              multi_select: Array<SelectPropertyResponse>
+              id: string
+            }
+          | {
+              type: "people"
+              people: Array<PartialUserObjectResponse>
+              id: string
+            }
+          | { type: "email"; email: string | null; id: string }
+          | { type: "phone_number"; phone_number: string | null; id: string }
+          | { type: "date"; date: DateResponse | null; id: string }
+          | {
+              type: "files"
+              files: Array<
+                | {
+                    file: { url: string; expiry_time: string }
+                    name: StringRequest
+                    type?: "file"
+                  }
+                | {
+                    external: { url: TextRequest }
+                    name: StringRequest
+                    type?: "external"
+                  }
+              >
+              id: string
+            }
+          | { type: "checkbox"; checkbox: boolean; id: string }
+          | {
+              type: "formula"
+              formula:
+                | { type: "string"; string: string | null }
+                | { type: "date"; date: DateResponse | null }
+                | { type: "number"; number: number | null }
+                | { type: "boolean"; boolean: boolean | null }
+              id: string
+            }
+          | { type: "relation"; relation: Array<{ id: string }>; id: string }
+          | { type: "created_time"; created_time: string; id: string }
+          | {
+              type: "created_by"
+              created_by: PartialUserObjectResponse
+              id: string
+            }
+          | { type: "last_edited_time"; last_edited_time: string; id: string }
+          | {
+              type: "last_edited_by"
+              last_edited_by: PartialUserObjectResponse
+              id: string
+            }
+          | {
+              type: "rollup"
+              rollup:
+                | {
+                    type: "number"
+                    number: number | null
+                    function: RollupFunction
+                  }
+                | {
+                    type: "date"
+                    date: DateResponse | null
+                    function: RollupFunction
+                  }
+                | {
+                    type: "array"
+                    array: Array<
+                      | { type: "title"; title: Array<RichTextItemResponse> }
+                      | {
+                          type: "rich_text"
+                          rich_text: Array<RichTextItemResponse>
+                        }
+                      | { type: "number"; number: number | null }
+                      | { type: "url"; url: string | null }
+                      | {
+                          type: "select"
+                          select: SelectPropertyResponse | null
+                        }
+                      | {
+                          type: "multi_select"
+                          multi_select: Array<SelectPropertyResponse>
+                        }
+                      | {
+                          type: "people"
+                          people: Array<PartialUserObjectResponse>
+                        }
+                      | { type: "email"; email: string | null }
+                      | { type: "phone_number"; phone_number: string | null }
+                      | { type: "date"; date: DateResponse | null }
+                      | {
+                          type: "files"
+                          files: Array<
+                            | {
+                                file: { url: string; expiry_time: string }
+                                name: StringRequest
+                                type?: "file"
+                              }
+                            | {
+                                external: { url: TextRequest }
+                                name: StringRequest
+                                type?: "external"
+                              }
+                          >
+                        }
+                      | { type: "checkbox"; checkbox: boolean }
+                      | {
+                          type: "formula"
+                          formula:
+                            | { type: "string"; string: string | null }
+                            | { type: "date"; date: DateResponse | null }
+                            | { type: "number"; number: number | null }
+                            | { type: "boolean"; boolean: boolean | null }
+                        }
+                      | { type: "relation"; relation: Array<{ id: string }> }
+                      | { type: "created_time"; created_time: string }
+                      | {
+                          type: "created_by"
+                          created_by: PartialUserObjectResponse
+                        }
+                      | { type: "last_edited_time"; last_edited_time: string }
+                      | {
+                          type: "last_edited_by"
+                          last_edited_by: PartialUserObjectResponse
+                        }
+                    >
+                    function: RollupFunction
+                  }
+                | {
+                    type: "unsupported"
+                    unsupported: EmptyObject
+                    function: RollupFunction
+                  }
+                | {
+                    type: "incomplete"
+                    incomplete: EmptyObject
+                    function: RollupFunction
+                  }
+              id: string
+            }
+        >
+        icon:
+          | { type: "emoji"; emoji: EmojiRequest }
+          | null
+          | { type: "external"; external: { url: TextRequest } }
+          | null
+          | { type: "file"; file: { url: string; expiry_time: string } }
+          | null
+        cover:
+          | { type: "external"; external: { url: TextRequest } }
+          | null
+          | { type: "file"; file: { url: string; expiry_time: string } }
+          | null
+        created_by: { id: IdRequest; object: "user" }
+        last_edited_by: { id: IdRequest; object: "user" }
+        object: "page"
+        id: string
+        created_time: string
+        last_edited_time: string
+        archived: boolean
+        url: string
+      }
+    | { object: "page"; id: string }
+  >
+}
 
 export const queryDatabase = {
   method: "post",
@@ -11515,591 +11036,263 @@ type ListDatabasesQueryParameters = {
 
 export type ListDatabasesParameters = ListDatabasesQueryParameters
 
-export type ListDatabasesResponse =
-  | {
-      type: "rollup"
-      rollup:
-        | { type: "number"; number: number | null; function: RollupFunction }
-        | { type: "date"; date: DateResponse | null; function: RollupFunction }
-        | {
-            type: "array"
-            array: Array<
-              | { type: "title"; title: Array<RichTextItemResponse> }
-              | { type: "rich_text"; rich_text: Array<RichTextItemResponse> }
-              | { type: "number"; number: number | null }
-              | { type: "url"; url: string | null }
-              | { type: "select"; select: SelectPropertyResponse | null }
-              | {
-                  type: "multi_select"
-                  multi_select: Array<SelectPropertyResponse>
-                }
-              | { type: "people"; people: Array<PartialUserObjectResponse> }
-              | { type: "email"; email: string | null }
-              | { type: "phone_number"; phone_number: string | null }
-              | { type: "date"; date: DateResponse | null }
-              | {
-                  type: "files"
-                  files: Array<
-                    | {
-                        file: { url: string; expiry_time: string }
-                        name: StringRequest
-                        type?: "file"
-                      }
-                    | {
-                        external: { url: TextRequest }
-                        name: StringRequest
-                        type?: "external"
-                      }
-                  >
-                }
-              | { type: "checkbox"; checkbox: boolean }
-              | {
-                  type: "formula"
-                  formula:
-                    | { type: "string"; string: string | null }
-                    | { type: "date"; date: DateResponse | null }
-                    | { type: "number"; number: number | null }
-                    | { type: "boolean"; boolean: boolean | null }
-                }
-              | { type: "relation"; relation: Array<{ id: string }> }
-              | { type: "created_time"; created_time: string }
-              | { type: "created_by"; created_by: PartialUserObjectResponse }
-              | { type: "last_edited_time"; last_edited_time: string }
-              | {
-                  type: "last_edited_by"
-                  last_edited_by: PartialUserObjectResponse
-                }
-            >
-            function: RollupFunction
-          }
-        | {
-            type: "unsupported"
-            unsupported: EmptyObject
-            function: RollupFunction
-          }
-      object: "list"
-      results: Array<
-        | {
-            object: "database"
-            id: string
-            properties: Record<
-              string,
-              | {
-                  type: "number"
-                  number: { format: NumberFormat }
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "formula"
-                  formula: { expression: string }
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "select"
-                  select: {
-                    options: Array<{
-                      name: StringRequest
-                      id?: StringRequest
-                      color?: SelectColor
-                    }>
-                  }
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "multi_select"
-                  multi_select: {
-                    options: Array<{
-                      name: StringRequest
-                      id?: StringRequest
-                      color?: SelectColor
-                    }>
-                  }
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "relation"
-                  relation: {
-                    database_id: IdRequest
-                    synced_property_id: StringRequest
-                    synced_property_name: StringRequest
-                  }
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "rollup"
-                  rollup: {
-                    rollup_property_name: string
-                    relation_property_name: string
-                    rollup_property_id: string
-                    relation_property_id: string
-                    function: RollupFunction
-                  }
-                  id: string
-                  name: string
-                }
-              | { type: "title"; title: EmptyObject; id: string; name: string }
-              | {
-                  type: "rich_text"
-                  rich_text: EmptyObject
-                  id: string
-                  name: string
-                }
-              | { type: "url"; url: EmptyObject; id: string; name: string }
-              | {
-                  type: "people"
-                  people: EmptyObject
-                  id: string
-                  name: string
-                }
-              | { type: "files"; files: EmptyObject; id: string; name: string }
-              | { type: "email"; email: EmptyObject; id: string; name: string }
-              | {
-                  type: "phone_number"
-                  phone_number: EmptyObject
-                  id: string
-                  name: string
-                }
-              | { type: "date"; date: EmptyObject; id: string; name: string }
-              | {
-                  type: "checkbox"
-                  checkbox: EmptyObject
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "created_by"
-                  created_by: EmptyObject
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "created_time"
-                  created_time: EmptyObject
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "last_edited_by"
-                  last_edited_by: EmptyObject
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "last_edited_time"
-                  last_edited_time: EmptyObject
-                  id: string
-                  name: string
-                }
-            >
-          }
-        | {
-            title: Array<RichTextItemResponse>
-            icon:
-              | { type: "emoji"; emoji: EmojiRequest }
-              | null
-              | { type: "external"; external: { url: TextRequest } }
-              | null
-              | { type: "file"; file: { url: string; expiry_time: string } }
-              | null
-            cover:
-              | { type: "external"; external: { url: TextRequest } }
-              | null
-              | { type: "file"; file: { url: string; expiry_time: string } }
-              | null
-            properties: Record<
-              string,
-              | {
-                  type: "number"
-                  number: { format: NumberFormat }
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "formula"
-                  formula: { expression: string }
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "select"
-                  select: {
-                    options: Array<{
-                      name: StringRequest
-                      id?: StringRequest
-                      color?: SelectColor
-                    }>
-                  }
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "multi_select"
-                  multi_select: {
-                    options: Array<{
-                      name: StringRequest
-                      id?: StringRequest
-                      color?: SelectColor
-                    }>
-                  }
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "relation"
-                  relation: {
-                    database_id: IdRequest
-                    synced_property_id: StringRequest
-                    synced_property_name: StringRequest
-                  }
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "rollup"
-                  rollup: {
-                    rollup_property_name: string
-                    relation_property_name: string
-                    rollup_property_id: string
-                    relation_property_id: string
-                    function: RollupFunction
-                  }
-                  id: string
-                  name: string
-                }
-              | { type: "title"; title: EmptyObject; id: string; name: string }
-              | {
-                  type: "rich_text"
-                  rich_text: EmptyObject
-                  id: string
-                  name: string
-                }
-              | { type: "url"; url: EmptyObject; id: string; name: string }
-              | {
-                  type: "people"
-                  people: EmptyObject
-                  id: string
-                  name: string
-                }
-              | { type: "files"; files: EmptyObject; id: string; name: string }
-              | { type: "email"; email: EmptyObject; id: string; name: string }
-              | {
-                  type: "phone_number"
-                  phone_number: EmptyObject
-                  id: string
-                  name: string
-                }
-              | { type: "date"; date: EmptyObject; id: string; name: string }
-              | {
-                  type: "checkbox"
-                  checkbox: EmptyObject
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "created_by"
-                  created_by: EmptyObject
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "created_time"
-                  created_time: EmptyObject
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "last_edited_by"
-                  last_edited_by: EmptyObject
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "last_edited_time"
-                  last_edited_time: EmptyObject
-                  id: string
-                  name: string
-                }
-            >
-            parent:
-              | { type: "page_id"; page_id: string }
-              | { type: "workspace"; workspace: true }
-            object: "database"
-            id: string
-            created_time: string
-            last_edited_time: string
-            url: string
-          }
-      >
-      next_cursor: string | null
-      has_more: boolean
-    }
-  | {
-      object: "list"
-      results: Array<
-        | {
-            object: "database"
-            id: string
-            properties: Record<
-              string,
-              | {
-                  type: "number"
-                  number: { format: NumberFormat }
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "formula"
-                  formula: { expression: string }
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "select"
-                  select: {
-                    options: Array<{
-                      name: StringRequest
-                      id?: StringRequest
-                      color?: SelectColor
-                    }>
-                  }
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "multi_select"
-                  multi_select: {
-                    options: Array<{
-                      name: StringRequest
-                      id?: StringRequest
-                      color?: SelectColor
-                    }>
-                  }
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "relation"
-                  relation: {
-                    database_id: IdRequest
-                    synced_property_id: StringRequest
-                    synced_property_name: StringRequest
-                  }
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "rollup"
-                  rollup: {
-                    rollup_property_name: string
-                    relation_property_name: string
-                    rollup_property_id: string
-                    relation_property_id: string
-                    function: RollupFunction
-                  }
-                  id: string
-                  name: string
-                }
-              | { type: "title"; title: EmptyObject; id: string; name: string }
-              | {
-                  type: "rich_text"
-                  rich_text: EmptyObject
-                  id: string
-                  name: string
-                }
-              | { type: "url"; url: EmptyObject; id: string; name: string }
-              | {
-                  type: "people"
-                  people: EmptyObject
-                  id: string
-                  name: string
-                }
-              | { type: "files"; files: EmptyObject; id: string; name: string }
-              | { type: "email"; email: EmptyObject; id: string; name: string }
-              | {
-                  type: "phone_number"
-                  phone_number: EmptyObject
-                  id: string
-                  name: string
-                }
-              | { type: "date"; date: EmptyObject; id: string; name: string }
-              | {
-                  type: "checkbox"
-                  checkbox: EmptyObject
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "created_by"
-                  created_by: EmptyObject
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "created_time"
-                  created_time: EmptyObject
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "last_edited_by"
-                  last_edited_by: EmptyObject
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "last_edited_time"
-                  last_edited_time: EmptyObject
-                  id: string
-                  name: string
-                }
-            >
-          }
-        | {
-            title: Array<RichTextItemResponse>
-            icon:
-              | { type: "emoji"; emoji: EmojiRequest }
-              | null
-              | { type: "external"; external: { url: TextRequest } }
-              | null
-              | { type: "file"; file: { url: string; expiry_time: string } }
-              | null
-            cover:
-              | { type: "external"; external: { url: TextRequest } }
-              | null
-              | { type: "file"; file: { url: string; expiry_time: string } }
-              | null
-            properties: Record<
-              string,
-              | {
-                  type: "number"
-                  number: { format: NumberFormat }
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "formula"
-                  formula: { expression: string }
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "select"
-                  select: {
-                    options: Array<{
-                      name: StringRequest
-                      id?: StringRequest
-                      color?: SelectColor
-                    }>
-                  }
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "multi_select"
-                  multi_select: {
-                    options: Array<{
-                      name: StringRequest
-                      id?: StringRequest
-                      color?: SelectColor
-                    }>
-                  }
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "relation"
-                  relation: {
-                    database_id: IdRequest
-                    synced_property_id: StringRequest
-                    synced_property_name: StringRequest
-                  }
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "rollup"
-                  rollup: {
-                    rollup_property_name: string
-                    relation_property_name: string
-                    rollup_property_id: string
-                    relation_property_id: string
-                    function: RollupFunction
-                  }
-                  id: string
-                  name: string
-                }
-              | { type: "title"; title: EmptyObject; id: string; name: string }
-              | {
-                  type: "rich_text"
-                  rich_text: EmptyObject
-                  id: string
-                  name: string
-                }
-              | { type: "url"; url: EmptyObject; id: string; name: string }
-              | {
-                  type: "people"
-                  people: EmptyObject
-                  id: string
-                  name: string
-                }
-              | { type: "files"; files: EmptyObject; id: string; name: string }
-              | { type: "email"; email: EmptyObject; id: string; name: string }
-              | {
-                  type: "phone_number"
-                  phone_number: EmptyObject
-                  id: string
-                  name: string
-                }
-              | { type: "date"; date: EmptyObject; id: string; name: string }
-              | {
-                  type: "checkbox"
-                  checkbox: EmptyObject
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "created_by"
-                  created_by: EmptyObject
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "created_time"
-                  created_time: EmptyObject
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "last_edited_by"
-                  last_edited_by: EmptyObject
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "last_edited_time"
-                  last_edited_time: EmptyObject
-                  id: string
-                  name: string
-                }
-            >
-            parent:
-              | { type: "page_id"; page_id: string }
-              | { type: "workspace"; workspace: true }
-            object: "database"
-            id: string
-            created_time: string
-            last_edited_time: string
-            url: string
-          }
-      >
-      next_cursor: string | null
-      has_more: boolean
-    }
+export type ListDatabasesResponse = {
+  type: "database"
+  database: EmptyObject
+  object: "list"
+  next_cursor: string | null
+  has_more: boolean
+  results: Array<
+    | {
+        object: "database"
+        id: string
+        properties: Record<
+          string,
+          | {
+              type: "number"
+              number: { format: NumberFormat }
+              id: string
+              name: string
+            }
+          | {
+              type: "formula"
+              formula: { expression: string }
+              id: string
+              name: string
+            }
+          | {
+              type: "select"
+              select: {
+                options: Array<{
+                  name: StringRequest
+                  id?: StringRequest
+                  color?: SelectColor
+                }>
+              }
+              id: string
+              name: string
+            }
+          | {
+              type: "multi_select"
+              multi_select: {
+                options: Array<{
+                  name: StringRequest
+                  id?: StringRequest
+                  color?: SelectColor
+                }>
+              }
+              id: string
+              name: string
+            }
+          | {
+              type: "relation"
+              relation: {
+                database_id: IdRequest
+                synced_property_id: StringRequest
+                synced_property_name: StringRequest
+              }
+              id: string
+              name: string
+            }
+          | {
+              type: "rollup"
+              rollup: {
+                rollup_property_name: string
+                relation_property_name: string
+                rollup_property_id: string
+                relation_property_id: string
+                function: RollupFunction
+              }
+              id: string
+              name: string
+            }
+          | { type: "title"; title: EmptyObject; id: string; name: string }
+          | {
+              type: "rich_text"
+              rich_text: EmptyObject
+              id: string
+              name: string
+            }
+          | { type: "url"; url: EmptyObject; id: string; name: string }
+          | { type: "people"; people: EmptyObject; id: string; name: string }
+          | { type: "files"; files: EmptyObject; id: string; name: string }
+          | { type: "email"; email: EmptyObject; id: string; name: string }
+          | {
+              type: "phone_number"
+              phone_number: EmptyObject
+              id: string
+              name: string
+            }
+          | { type: "date"; date: EmptyObject; id: string; name: string }
+          | {
+              type: "checkbox"
+              checkbox: EmptyObject
+              id: string
+              name: string
+            }
+          | {
+              type: "created_by"
+              created_by: EmptyObject
+              id: string
+              name: string
+            }
+          | {
+              type: "created_time"
+              created_time: EmptyObject
+              id: string
+              name: string
+            }
+          | {
+              type: "last_edited_by"
+              last_edited_by: EmptyObject
+              id: string
+              name: string
+            }
+          | {
+              type: "last_edited_time"
+              last_edited_time: EmptyObject
+              id: string
+              name: string
+            }
+        >
+      }
+    | {
+        title: Array<RichTextItemResponse>
+        icon:
+          | { type: "emoji"; emoji: EmojiRequest }
+          | null
+          | { type: "external"; external: { url: TextRequest } }
+          | null
+          | { type: "file"; file: { url: string; expiry_time: string } }
+          | null
+        cover:
+          | { type: "external"; external: { url: TextRequest } }
+          | null
+          | { type: "file"; file: { url: string; expiry_time: string } }
+          | null
+        properties: Record<
+          string,
+          | {
+              type: "number"
+              number: { format: NumberFormat }
+              id: string
+              name: string
+            }
+          | {
+              type: "formula"
+              formula: { expression: string }
+              id: string
+              name: string
+            }
+          | {
+              type: "select"
+              select: {
+                options: Array<{
+                  name: StringRequest
+                  id?: StringRequest
+                  color?: SelectColor
+                }>
+              }
+              id: string
+              name: string
+            }
+          | {
+              type: "multi_select"
+              multi_select: {
+                options: Array<{
+                  name: StringRequest
+                  id?: StringRequest
+                  color?: SelectColor
+                }>
+              }
+              id: string
+              name: string
+            }
+          | {
+              type: "relation"
+              relation: {
+                database_id: IdRequest
+                synced_property_id: StringRequest
+                synced_property_name: StringRequest
+              }
+              id: string
+              name: string
+            }
+          | {
+              type: "rollup"
+              rollup: {
+                rollup_property_name: string
+                relation_property_name: string
+                rollup_property_id: string
+                relation_property_id: string
+                function: RollupFunction
+              }
+              id: string
+              name: string
+            }
+          | { type: "title"; title: EmptyObject; id: string; name: string }
+          | {
+              type: "rich_text"
+              rich_text: EmptyObject
+              id: string
+              name: string
+            }
+          | { type: "url"; url: EmptyObject; id: string; name: string }
+          | { type: "people"; people: EmptyObject; id: string; name: string }
+          | { type: "files"; files: EmptyObject; id: string; name: string }
+          | { type: "email"; email: EmptyObject; id: string; name: string }
+          | {
+              type: "phone_number"
+              phone_number: EmptyObject
+              id: string
+              name: string
+            }
+          | { type: "date"; date: EmptyObject; id: string; name: string }
+          | {
+              type: "checkbox"
+              checkbox: EmptyObject
+              id: string
+              name: string
+            }
+          | {
+              type: "created_by"
+              created_by: EmptyObject
+              id: string
+              name: string
+            }
+          | {
+              type: "created_time"
+              created_time: EmptyObject
+              id: string
+              name: string
+            }
+          | {
+              type: "last_edited_by"
+              last_edited_by: EmptyObject
+              id: string
+              name: string
+            }
+          | {
+              type: "last_edited_time"
+              last_edited_time: EmptyObject
+              id: string
+              name: string
+            }
+        >
+        parent:
+          | { type: "page_id"; page_id: string }
+          | { type: "workspace"; workspace: true }
+        created_by: { id: IdRequest; object: "user" }
+        last_edited_by: { id: IdRequest; object: "user" }
+        object: "database"
+        id: string
+        created_time: string
+        last_edited_time: string
+        archived: boolean
+        url: string
+      }
+  >
+}
 
 export const listDatabases = {
   method: "get",
@@ -12415,10 +11608,13 @@ export type CreateDatabaseResponse =
       parent:
         | { type: "page_id"; page_id: string }
         | { type: "workspace"; workspace: true }
+      created_by: { id: IdRequest; object: "user" }
+      last_edited_by: { id: IdRequest; object: "user" }
       object: "database"
       id: string
       created_time: string
       last_edited_time: string
+      archived: boolean
       url: string
     }
 
@@ -12443,999 +11639,446 @@ type SearchBodyParameters = {
 
 export type SearchParameters = SearchBodyParameters
 
-export type SearchResponse =
-  | {
-      type: "rollup"
-      rollup:
-        | { type: "number"; number: number | null; function: RollupFunction }
-        | { type: "date"; date: DateResponse | null; function: RollupFunction }
-        | {
-            type: "array"
-            array: Array<
-              | { type: "title"; title: Array<RichTextItemResponse> }
-              | { type: "rich_text"; rich_text: Array<RichTextItemResponse> }
-              | { type: "number"; number: number | null }
-              | { type: "url"; url: string | null }
-              | { type: "select"; select: SelectPropertyResponse | null }
-              | {
-                  type: "multi_select"
-                  multi_select: Array<SelectPropertyResponse>
-                }
-              | { type: "people"; people: Array<PartialUserObjectResponse> }
-              | { type: "email"; email: string | null }
-              | { type: "phone_number"; phone_number: string | null }
-              | { type: "date"; date: DateResponse | null }
-              | {
-                  type: "files"
-                  files: Array<
-                    | {
-                        file: { url: string; expiry_time: string }
-                        name: StringRequest
-                        type?: "file"
-                      }
-                    | {
-                        external: { url: TextRequest }
-                        name: StringRequest
-                        type?: "external"
-                      }
-                  >
-                }
-              | { type: "checkbox"; checkbox: boolean }
-              | {
-                  type: "formula"
-                  formula:
-                    | { type: "string"; string: string | null }
-                    | { type: "date"; date: DateResponse | null }
-                    | { type: "number"; number: number | null }
-                    | { type: "boolean"; boolean: boolean | null }
-                }
-              | { type: "relation"; relation: Array<{ id: string }> }
-              | { type: "created_time"; created_time: string }
-              | { type: "created_by"; created_by: PartialUserObjectResponse }
-              | { type: "last_edited_time"; last_edited_time: string }
-              | {
-                  type: "last_edited_by"
-                  last_edited_by: PartialUserObjectResponse
-                }
-            >
-            function: RollupFunction
-          }
-        | {
-            type: "unsupported"
-            unsupported: EmptyObject
-            function: RollupFunction
-          }
-      object: "list"
-      results: Array<
-        | {
-            parent:
-              | { type: "database_id"; database_id: IdRequest }
-              | { type: "page_id"; page_id: IdRequest }
-              | { type: "workspace"; workspace: true }
-            properties: Record<
-              string,
-              | {
-                  type: "title"
-                  title: Array<RichTextItemResponse>
-                  id: string
-                }
-              | {
-                  type: "rich_text"
-                  rich_text: Array<RichTextItemResponse>
-                  id: string
-                }
-              | { type: "number"; number: number | null; id: string }
-              | { type: "url"; url: string | null; id: string }
-              | {
-                  type: "select"
-                  select: SelectPropertyResponse | null
-                  id: string
-                }
-              | {
-                  type: "multi_select"
-                  multi_select: Array<SelectPropertyResponse>
-                  id: string
-                }
-              | {
-                  type: "people"
-                  people: Array<PartialUserObjectResponse>
-                  id: string
-                }
-              | { type: "email"; email: string | null; id: string }
-              | {
-                  type: "phone_number"
-                  phone_number: string | null
-                  id: string
-                }
-              | { type: "date"; date: DateResponse | null; id: string }
-              | {
-                  type: "files"
-                  files: Array<
-                    | {
-                        file: { url: string; expiry_time: string }
-                        name: StringRequest
-                        type?: "file"
-                      }
-                    | {
-                        external: { url: TextRequest }
-                        name: StringRequest
-                        type?: "external"
-                      }
-                  >
-                  id: string
-                }
-              | { type: "checkbox"; checkbox: boolean; id: string }
-              | {
-                  type: "formula"
-                  formula:
-                    | { type: "string"; string: string | null }
-                    | { type: "date"; date: DateResponse | null }
-                    | { type: "number"; number: number | null }
-                    | { type: "boolean"; boolean: boolean | null }
-                  id: string
-                }
-              | {
-                  type: "relation"
-                  relation: Array<{ id: string }>
-                  id: string
-                }
-              | { type: "created_time"; created_time: string; id: string }
-              | {
-                  type: "created_by"
-                  created_by: PartialUserObjectResponse
-                  id: string
-                }
-              | {
-                  type: "last_edited_time"
-                  last_edited_time: string
-                  id: string
-                }
-              | {
-                  type: "last_edited_by"
-                  last_edited_by: PartialUserObjectResponse
-                  id: string
-                }
-              | {
-                  type: "rollup"
-                  rollup:
-                    | {
-                        type: "number"
-                        number: number | null
-                        function: RollupFunction
-                      }
-                    | {
-                        type: "date"
-                        date: DateResponse | null
-                        function: RollupFunction
-                      }
-                    | {
-                        type: "array"
-                        array: Array<
-                          | {
-                              type: "title"
-                              title: Array<RichTextItemResponse>
-                            }
-                          | {
-                              type: "rich_text"
-                              rich_text: Array<RichTextItemResponse>
-                            }
-                          | { type: "number"; number: number | null }
-                          | { type: "url"; url: string | null }
-                          | {
-                              type: "select"
-                              select: SelectPropertyResponse | null
-                            }
-                          | {
-                              type: "multi_select"
-                              multi_select: Array<SelectPropertyResponse>
-                            }
-                          | {
-                              type: "people"
-                              people: Array<PartialUserObjectResponse>
-                            }
-                          | { type: "email"; email: string | null }
-                          | {
-                              type: "phone_number"
-                              phone_number: string | null
-                            }
-                          | { type: "date"; date: DateResponse | null }
-                          | {
-                              type: "files"
-                              files: Array<
-                                | {
-                                    file: { url: string; expiry_time: string }
-                                    name: StringRequest
-                                    type?: "file"
-                                  }
-                                | {
-                                    external: { url: TextRequest }
-                                    name: StringRequest
-                                    type?: "external"
-                                  }
-                              >
-                            }
-                          | { type: "checkbox"; checkbox: boolean }
-                          | {
-                              type: "formula"
-                              formula:
-                                | { type: "string"; string: string | null }
-                                | { type: "date"; date: DateResponse | null }
-                                | { type: "number"; number: number | null }
-                                | { type: "boolean"; boolean: boolean | null }
-                            }
-                          | {
-                              type: "relation"
-                              relation: Array<{ id: string }>
-                            }
-                          | { type: "created_time"; created_time: string }
-                          | {
-                              type: "created_by"
-                              created_by: PartialUserObjectResponse
-                            }
-                          | {
-                              type: "last_edited_time"
-                              last_edited_time: string
-                            }
-                          | {
-                              type: "last_edited_by"
-                              last_edited_by: PartialUserObjectResponse
-                            }
-                        >
-                        function: RollupFunction
-                      }
-                    | {
-                        type: "unsupported"
-                        unsupported: EmptyObject
-                        function: RollupFunction
-                      }
-                  id: string
-                }
-            >
-            icon:
-              | { type: "emoji"; emoji: EmojiRequest }
-              | null
-              | { type: "external"; external: { url: TextRequest } }
-              | null
-              | { type: "file"; file: { url: string; expiry_time: string } }
-              | null
-            cover:
-              | { type: "external"; external: { url: TextRequest } }
-              | null
-              | { type: "file"; file: { url: string; expiry_time: string } }
-              | null
-            object: "page"
-            id: string
-            created_time: string
-            last_edited_time: string
-            archived: boolean
-            url: string
-          }
-        | { object: "page"; id: string }
-        | {
-            object: "database"
-            id: string
-            properties: Record<
-              string,
-              | {
-                  type: "number"
-                  number: { format: NumberFormat }
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "formula"
-                  formula: { expression: string }
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "select"
-                  select: {
-                    options: Array<{
-                      name: StringRequest
-                      id?: StringRequest
-                      color?: SelectColor
-                    }>
+export type SearchResponse = {
+  type: "page_or_database"
+  page_or_database: EmptyObject
+  object: "list"
+  next_cursor: string | null
+  has_more: boolean
+  results: Array<
+    | {
+        parent:
+          | { type: "database_id"; database_id: IdRequest }
+          | { type: "page_id"; page_id: IdRequest }
+          | { type: "workspace"; workspace: true }
+        properties: Record<
+          string,
+          | { type: "title"; title: Array<RichTextItemResponse>; id: string }
+          | {
+              type: "rich_text"
+              rich_text: Array<RichTextItemResponse>
+              id: string
+            }
+          | { type: "number"; number: number | null; id: string }
+          | { type: "url"; url: string | null; id: string }
+          | {
+              type: "select"
+              select: SelectPropertyResponse | null
+              id: string
+            }
+          | {
+              type: "multi_select"
+              multi_select: Array<SelectPropertyResponse>
+              id: string
+            }
+          | {
+              type: "people"
+              people: Array<PartialUserObjectResponse>
+              id: string
+            }
+          | { type: "email"; email: string | null; id: string }
+          | { type: "phone_number"; phone_number: string | null; id: string }
+          | { type: "date"; date: DateResponse | null; id: string }
+          | {
+              type: "files"
+              files: Array<
+                | {
+                    file: { url: string; expiry_time: string }
+                    name: StringRequest
+                    type?: "file"
                   }
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "multi_select"
-                  multi_select: {
-                    options: Array<{
-                      name: StringRequest
-                      id?: StringRequest
-                      color?: SelectColor
-                    }>
+                | {
+                    external: { url: TextRequest }
+                    name: StringRequest
+                    type?: "external"
                   }
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "relation"
-                  relation: {
-                    database_id: IdRequest
-                    synced_property_id: StringRequest
-                    synced_property_name: StringRequest
-                  }
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "rollup"
-                  rollup: {
-                    rollup_property_name: string
-                    relation_property_name: string
-                    rollup_property_id: string
-                    relation_property_id: string
+              >
+              id: string
+            }
+          | { type: "checkbox"; checkbox: boolean; id: string }
+          | {
+              type: "formula"
+              formula:
+                | { type: "string"; string: string | null }
+                | { type: "date"; date: DateResponse | null }
+                | { type: "number"; number: number | null }
+                | { type: "boolean"; boolean: boolean | null }
+              id: string
+            }
+          | { type: "relation"; relation: Array<{ id: string }>; id: string }
+          | { type: "created_time"; created_time: string; id: string }
+          | {
+              type: "created_by"
+              created_by: PartialUserObjectResponse
+              id: string
+            }
+          | { type: "last_edited_time"; last_edited_time: string; id: string }
+          | {
+              type: "last_edited_by"
+              last_edited_by: PartialUserObjectResponse
+              id: string
+            }
+          | {
+              type: "rollup"
+              rollup:
+                | {
+                    type: "number"
+                    number: number | null
                     function: RollupFunction
                   }
-                  id: string
-                  name: string
-                }
-              | { type: "title"; title: EmptyObject; id: string; name: string }
-              | {
-                  type: "rich_text"
-                  rich_text: EmptyObject
-                  id: string
-                  name: string
-                }
-              | { type: "url"; url: EmptyObject; id: string; name: string }
-              | {
-                  type: "people"
-                  people: EmptyObject
-                  id: string
-                  name: string
-                }
-              | { type: "files"; files: EmptyObject; id: string; name: string }
-              | { type: "email"; email: EmptyObject; id: string; name: string }
-              | {
-                  type: "phone_number"
-                  phone_number: EmptyObject
-                  id: string
-                  name: string
-                }
-              | { type: "date"; date: EmptyObject; id: string; name: string }
-              | {
-                  type: "checkbox"
-                  checkbox: EmptyObject
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "created_by"
-                  created_by: EmptyObject
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "created_time"
-                  created_time: EmptyObject
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "last_edited_by"
-                  last_edited_by: EmptyObject
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "last_edited_time"
-                  last_edited_time: EmptyObject
-                  id: string
-                  name: string
-                }
-            >
-          }
-        | {
-            title: Array<RichTextItemResponse>
-            icon:
-              | { type: "emoji"; emoji: EmojiRequest }
-              | null
-              | { type: "external"; external: { url: TextRequest } }
-              | null
-              | { type: "file"; file: { url: string; expiry_time: string } }
-              | null
-            cover:
-              | { type: "external"; external: { url: TextRequest } }
-              | null
-              | { type: "file"; file: { url: string; expiry_time: string } }
-              | null
-            properties: Record<
-              string,
-              | {
-                  type: "number"
-                  number: { format: NumberFormat }
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "formula"
-                  formula: { expression: string }
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "select"
-                  select: {
-                    options: Array<{
-                      name: StringRequest
-                      id?: StringRequest
-                      color?: SelectColor
-                    }>
-                  }
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "multi_select"
-                  multi_select: {
-                    options: Array<{
-                      name: StringRequest
-                      id?: StringRequest
-                      color?: SelectColor
-                    }>
-                  }
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "relation"
-                  relation: {
-                    database_id: IdRequest
-                    synced_property_id: StringRequest
-                    synced_property_name: StringRequest
-                  }
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "rollup"
-                  rollup: {
-                    rollup_property_name: string
-                    relation_property_name: string
-                    rollup_property_id: string
-                    relation_property_id: string
+                | {
+                    type: "date"
+                    date: DateResponse | null
                     function: RollupFunction
                   }
-                  id: string
-                  name: string
-                }
-              | { type: "title"; title: EmptyObject; id: string; name: string }
-              | {
-                  type: "rich_text"
-                  rich_text: EmptyObject
-                  id: string
-                  name: string
-                }
-              | { type: "url"; url: EmptyObject; id: string; name: string }
-              | {
-                  type: "people"
-                  people: EmptyObject
-                  id: string
-                  name: string
-                }
-              | { type: "files"; files: EmptyObject; id: string; name: string }
-              | { type: "email"; email: EmptyObject; id: string; name: string }
-              | {
-                  type: "phone_number"
-                  phone_number: EmptyObject
-                  id: string
-                  name: string
-                }
-              | { type: "date"; date: EmptyObject; id: string; name: string }
-              | {
-                  type: "checkbox"
-                  checkbox: EmptyObject
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "created_by"
-                  created_by: EmptyObject
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "created_time"
-                  created_time: EmptyObject
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "last_edited_by"
-                  last_edited_by: EmptyObject
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "last_edited_time"
-                  last_edited_time: EmptyObject
-                  id: string
-                  name: string
-                }
-            >
-            parent:
-              | { type: "page_id"; page_id: string }
-              | { type: "workspace"; workspace: true }
-            object: "database"
-            id: string
-            created_time: string
-            last_edited_time: string
-            url: string
-          }
-      >
-      next_cursor: string | null
-      has_more: boolean
-    }
-  | {
-      object: "list"
-      results: Array<
-        | {
-            parent:
-              | { type: "database_id"; database_id: IdRequest }
-              | { type: "page_id"; page_id: IdRequest }
-              | { type: "workspace"; workspace: true }
-            properties: Record<
-              string,
-              | {
-                  type: "title"
-                  title: Array<RichTextItemResponse>
-                  id: string
-                }
-              | {
-                  type: "rich_text"
-                  rich_text: Array<RichTextItemResponse>
-                  id: string
-                }
-              | { type: "number"; number: number | null; id: string }
-              | { type: "url"; url: string | null; id: string }
-              | {
-                  type: "select"
-                  select: SelectPropertyResponse | null
-                  id: string
-                }
-              | {
-                  type: "multi_select"
-                  multi_select: Array<SelectPropertyResponse>
-                  id: string
-                }
-              | {
-                  type: "people"
-                  people: Array<PartialUserObjectResponse>
-                  id: string
-                }
-              | { type: "email"; email: string | null; id: string }
-              | {
-                  type: "phone_number"
-                  phone_number: string | null
-                  id: string
-                }
-              | { type: "date"; date: DateResponse | null; id: string }
-              | {
-                  type: "files"
-                  files: Array<
-                    | {
-                        file: { url: string; expiry_time: string }
-                        name: StringRequest
-                        type?: "file"
-                      }
-                    | {
-                        external: { url: TextRequest }
-                        name: StringRequest
-                        type?: "external"
-                      }
-                  >
-                  id: string
-                }
-              | { type: "checkbox"; checkbox: boolean; id: string }
-              | {
-                  type: "formula"
-                  formula:
-                    | { type: "string"; string: string | null }
-                    | { type: "date"; date: DateResponse | null }
-                    | { type: "number"; number: number | null }
-                    | { type: "boolean"; boolean: boolean | null }
-                  id: string
-                }
-              | {
-                  type: "relation"
-                  relation: Array<{ id: string }>
-                  id: string
-                }
-              | { type: "created_time"; created_time: string; id: string }
-              | {
-                  type: "created_by"
-                  created_by: PartialUserObjectResponse
-                  id: string
-                }
-              | {
-                  type: "last_edited_time"
-                  last_edited_time: string
-                  id: string
-                }
-              | {
-                  type: "last_edited_by"
-                  last_edited_by: PartialUserObjectResponse
-                  id: string
-                }
-              | {
-                  type: "rollup"
-                  rollup:
-                    | {
-                        type: "number"
-                        number: number | null
-                        function: RollupFunction
-                      }
-                    | {
-                        type: "date"
-                        date: DateResponse | null
-                        function: RollupFunction
-                      }
-                    | {
-                        type: "array"
-                        array: Array<
-                          | {
-                              type: "title"
-                              title: Array<RichTextItemResponse>
-                            }
-                          | {
-                              type: "rich_text"
-                              rich_text: Array<RichTextItemResponse>
-                            }
-                          | { type: "number"; number: number | null }
-                          | { type: "url"; url: string | null }
-                          | {
-                              type: "select"
-                              select: SelectPropertyResponse | null
-                            }
-                          | {
-                              type: "multi_select"
-                              multi_select: Array<SelectPropertyResponse>
-                            }
-                          | {
-                              type: "people"
-                              people: Array<PartialUserObjectResponse>
-                            }
-                          | { type: "email"; email: string | null }
-                          | {
-                              type: "phone_number"
-                              phone_number: string | null
-                            }
-                          | { type: "date"; date: DateResponse | null }
-                          | {
-                              type: "files"
-                              files: Array<
-                                | {
-                                    file: { url: string; expiry_time: string }
-                                    name: StringRequest
-                                    type?: "file"
-                                  }
-                                | {
-                                    external: { url: TextRequest }
-                                    name: StringRequest
-                                    type?: "external"
-                                  }
-                              >
-                            }
-                          | { type: "checkbox"; checkbox: boolean }
-                          | {
-                              type: "formula"
-                              formula:
-                                | { type: "string"; string: string | null }
-                                | { type: "date"; date: DateResponse | null }
-                                | { type: "number"; number: number | null }
-                                | { type: "boolean"; boolean: boolean | null }
-                            }
-                          | {
-                              type: "relation"
-                              relation: Array<{ id: string }>
-                            }
-                          | { type: "created_time"; created_time: string }
-                          | {
-                              type: "created_by"
-                              created_by: PartialUserObjectResponse
-                            }
-                          | {
-                              type: "last_edited_time"
-                              last_edited_time: string
-                            }
-                          | {
-                              type: "last_edited_by"
-                              last_edited_by: PartialUserObjectResponse
-                            }
-                        >
-                        function: RollupFunction
-                      }
-                    | {
-                        type: "unsupported"
-                        unsupported: EmptyObject
-                        function: RollupFunction
-                      }
-                  id: string
-                }
-            >
-            icon:
-              | { type: "emoji"; emoji: EmojiRequest }
-              | null
-              | { type: "external"; external: { url: TextRequest } }
-              | null
-              | { type: "file"; file: { url: string; expiry_time: string } }
-              | null
-            cover:
-              | { type: "external"; external: { url: TextRequest } }
-              | null
-              | { type: "file"; file: { url: string; expiry_time: string } }
-              | null
-            object: "page"
-            id: string
-            created_time: string
-            last_edited_time: string
-            archived: boolean
-            url: string
-          }
-        | { object: "page"; id: string }
-        | {
-            object: "database"
-            id: string
-            properties: Record<
-              string,
-              | {
-                  type: "number"
-                  number: { format: NumberFormat }
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "formula"
-                  formula: { expression: string }
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "select"
-                  select: {
-                    options: Array<{
-                      name: StringRequest
-                      id?: StringRequest
-                      color?: SelectColor
-                    }>
-                  }
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "multi_select"
-                  multi_select: {
-                    options: Array<{
-                      name: StringRequest
-                      id?: StringRequest
-                      color?: SelectColor
-                    }>
-                  }
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "relation"
-                  relation: {
-                    database_id: IdRequest
-                    synced_property_id: StringRequest
-                    synced_property_name: StringRequest
-                  }
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "rollup"
-                  rollup: {
-                    rollup_property_name: string
-                    relation_property_name: string
-                    rollup_property_id: string
-                    relation_property_id: string
+                | {
+                    type: "array"
+                    array: Array<
+                      | { type: "title"; title: Array<RichTextItemResponse> }
+                      | {
+                          type: "rich_text"
+                          rich_text: Array<RichTextItemResponse>
+                        }
+                      | { type: "number"; number: number | null }
+                      | { type: "url"; url: string | null }
+                      | {
+                          type: "select"
+                          select: SelectPropertyResponse | null
+                        }
+                      | {
+                          type: "multi_select"
+                          multi_select: Array<SelectPropertyResponse>
+                        }
+                      | {
+                          type: "people"
+                          people: Array<PartialUserObjectResponse>
+                        }
+                      | { type: "email"; email: string | null }
+                      | { type: "phone_number"; phone_number: string | null }
+                      | { type: "date"; date: DateResponse | null }
+                      | {
+                          type: "files"
+                          files: Array<
+                            | {
+                                file: { url: string; expiry_time: string }
+                                name: StringRequest
+                                type?: "file"
+                              }
+                            | {
+                                external: { url: TextRequest }
+                                name: StringRequest
+                                type?: "external"
+                              }
+                          >
+                        }
+                      | { type: "checkbox"; checkbox: boolean }
+                      | {
+                          type: "formula"
+                          formula:
+                            | { type: "string"; string: string | null }
+                            | { type: "date"; date: DateResponse | null }
+                            | { type: "number"; number: number | null }
+                            | { type: "boolean"; boolean: boolean | null }
+                        }
+                      | { type: "relation"; relation: Array<{ id: string }> }
+                      | { type: "created_time"; created_time: string }
+                      | {
+                          type: "created_by"
+                          created_by: PartialUserObjectResponse
+                        }
+                      | { type: "last_edited_time"; last_edited_time: string }
+                      | {
+                          type: "last_edited_by"
+                          last_edited_by: PartialUserObjectResponse
+                        }
+                    >
                     function: RollupFunction
                   }
-                  id: string
-                  name: string
-                }
-              | { type: "title"; title: EmptyObject; id: string; name: string }
-              | {
-                  type: "rich_text"
-                  rich_text: EmptyObject
-                  id: string
-                  name: string
-                }
-              | { type: "url"; url: EmptyObject; id: string; name: string }
-              | {
-                  type: "people"
-                  people: EmptyObject
-                  id: string
-                  name: string
-                }
-              | { type: "files"; files: EmptyObject; id: string; name: string }
-              | { type: "email"; email: EmptyObject; id: string; name: string }
-              | {
-                  type: "phone_number"
-                  phone_number: EmptyObject
-                  id: string
-                  name: string
-                }
-              | { type: "date"; date: EmptyObject; id: string; name: string }
-              | {
-                  type: "checkbox"
-                  checkbox: EmptyObject
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "created_by"
-                  created_by: EmptyObject
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "created_time"
-                  created_time: EmptyObject
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "last_edited_by"
-                  last_edited_by: EmptyObject
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "last_edited_time"
-                  last_edited_time: EmptyObject
-                  id: string
-                  name: string
-                }
-            >
-          }
-        | {
-            title: Array<RichTextItemResponse>
-            icon:
-              | { type: "emoji"; emoji: EmojiRequest }
-              | null
-              | { type: "external"; external: { url: TextRequest } }
-              | null
-              | { type: "file"; file: { url: string; expiry_time: string } }
-              | null
-            cover:
-              | { type: "external"; external: { url: TextRequest } }
-              | null
-              | { type: "file"; file: { url: string; expiry_time: string } }
-              | null
-            properties: Record<
-              string,
-              | {
-                  type: "number"
-                  number: { format: NumberFormat }
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "formula"
-                  formula: { expression: string }
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "select"
-                  select: {
-                    options: Array<{
-                      name: StringRequest
-                      id?: StringRequest
-                      color?: SelectColor
-                    }>
-                  }
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "multi_select"
-                  multi_select: {
-                    options: Array<{
-                      name: StringRequest
-                      id?: StringRequest
-                      color?: SelectColor
-                    }>
-                  }
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "relation"
-                  relation: {
-                    database_id: IdRequest
-                    synced_property_id: StringRequest
-                    synced_property_name: StringRequest
-                  }
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "rollup"
-                  rollup: {
-                    rollup_property_name: string
-                    relation_property_name: string
-                    rollup_property_id: string
-                    relation_property_id: string
+                | {
+                    type: "unsupported"
+                    unsupported: EmptyObject
                     function: RollupFunction
                   }
-                  id: string
-                  name: string
-                }
-              | { type: "title"; title: EmptyObject; id: string; name: string }
-              | {
-                  type: "rich_text"
-                  rich_text: EmptyObject
-                  id: string
-                  name: string
-                }
-              | { type: "url"; url: EmptyObject; id: string; name: string }
-              | {
-                  type: "people"
-                  people: EmptyObject
-                  id: string
-                  name: string
-                }
-              | { type: "files"; files: EmptyObject; id: string; name: string }
-              | { type: "email"; email: EmptyObject; id: string; name: string }
-              | {
-                  type: "phone_number"
-                  phone_number: EmptyObject
-                  id: string
-                  name: string
-                }
-              | { type: "date"; date: EmptyObject; id: string; name: string }
-              | {
-                  type: "checkbox"
-                  checkbox: EmptyObject
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "created_by"
-                  created_by: EmptyObject
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "created_time"
-                  created_time: EmptyObject
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "last_edited_by"
-                  last_edited_by: EmptyObject
-                  id: string
-                  name: string
-                }
-              | {
-                  type: "last_edited_time"
-                  last_edited_time: EmptyObject
-                  id: string
-                  name: string
-                }
-            >
-            parent:
-              | { type: "page_id"; page_id: string }
-              | { type: "workspace"; workspace: true }
-            object: "database"
-            id: string
-            created_time: string
-            last_edited_time: string
-            url: string
-          }
-      >
-      next_cursor: string | null
-      has_more: boolean
-    }
+                | {
+                    type: "incomplete"
+                    incomplete: EmptyObject
+                    function: RollupFunction
+                  }
+              id: string
+            }
+        >
+        icon:
+          | { type: "emoji"; emoji: EmojiRequest }
+          | null
+          | { type: "external"; external: { url: TextRequest } }
+          | null
+          | { type: "file"; file: { url: string; expiry_time: string } }
+          | null
+        cover:
+          | { type: "external"; external: { url: TextRequest } }
+          | null
+          | { type: "file"; file: { url: string; expiry_time: string } }
+          | null
+        created_by: { id: IdRequest; object: "user" }
+        last_edited_by: { id: IdRequest; object: "user" }
+        object: "page"
+        id: string
+        created_time: string
+        last_edited_time: string
+        archived: boolean
+        url: string
+      }
+    | { object: "page"; id: string }
+    | {
+        object: "database"
+        id: string
+        properties: Record<
+          string,
+          | {
+              type: "number"
+              number: { format: NumberFormat }
+              id: string
+              name: string
+            }
+          | {
+              type: "formula"
+              formula: { expression: string }
+              id: string
+              name: string
+            }
+          | {
+              type: "select"
+              select: {
+                options: Array<{
+                  name: StringRequest
+                  id?: StringRequest
+                  color?: SelectColor
+                }>
+              }
+              id: string
+              name: string
+            }
+          | {
+              type: "multi_select"
+              multi_select: {
+                options: Array<{
+                  name: StringRequest
+                  id?: StringRequest
+                  color?: SelectColor
+                }>
+              }
+              id: string
+              name: string
+            }
+          | {
+              type: "relation"
+              relation: {
+                database_id: IdRequest
+                synced_property_id: StringRequest
+                synced_property_name: StringRequest
+              }
+              id: string
+              name: string
+            }
+          | {
+              type: "rollup"
+              rollup: {
+                rollup_property_name: string
+                relation_property_name: string
+                rollup_property_id: string
+                relation_property_id: string
+                function: RollupFunction
+              }
+              id: string
+              name: string
+            }
+          | { type: "title"; title: EmptyObject; id: string; name: string }
+          | {
+              type: "rich_text"
+              rich_text: EmptyObject
+              id: string
+              name: string
+            }
+          | { type: "url"; url: EmptyObject; id: string; name: string }
+          | { type: "people"; people: EmptyObject; id: string; name: string }
+          | { type: "files"; files: EmptyObject; id: string; name: string }
+          | { type: "email"; email: EmptyObject; id: string; name: string }
+          | {
+              type: "phone_number"
+              phone_number: EmptyObject
+              id: string
+              name: string
+            }
+          | { type: "date"; date: EmptyObject; id: string; name: string }
+          | {
+              type: "checkbox"
+              checkbox: EmptyObject
+              id: string
+              name: string
+            }
+          | {
+              type: "created_by"
+              created_by: EmptyObject
+              id: string
+              name: string
+            }
+          | {
+              type: "created_time"
+              created_time: EmptyObject
+              id: string
+              name: string
+            }
+          | {
+              type: "last_edited_by"
+              last_edited_by: EmptyObject
+              id: string
+              name: string
+            }
+          | {
+              type: "last_edited_time"
+              last_edited_time: EmptyObject
+              id: string
+              name: string
+            }
+        >
+      }
+    | {
+        title: Array<RichTextItemResponse>
+        icon:
+          | { type: "emoji"; emoji: EmojiRequest }
+          | null
+          | { type: "external"; external: { url: TextRequest } }
+          | null
+          | { type: "file"; file: { url: string; expiry_time: string } }
+          | null
+        cover:
+          | { type: "external"; external: { url: TextRequest } }
+          | null
+          | { type: "file"; file: { url: string; expiry_time: string } }
+          | null
+        properties: Record<
+          string,
+          | {
+              type: "number"
+              number: { format: NumberFormat }
+              id: string
+              name: string
+            }
+          | {
+              type: "formula"
+              formula: { expression: string }
+              id: string
+              name: string
+            }
+          | {
+              type: "select"
+              select: {
+                options: Array<{
+                  name: StringRequest
+                  id?: StringRequest
+                  color?: SelectColor
+                }>
+              }
+              id: string
+              name: string
+            }
+          | {
+              type: "multi_select"
+              multi_select: {
+                options: Array<{
+                  name: StringRequest
+                  id?: StringRequest
+                  color?: SelectColor
+                }>
+              }
+              id: string
+              name: string
+            }
+          | {
+              type: "relation"
+              relation: {
+                database_id: IdRequest
+                synced_property_id: StringRequest
+                synced_property_name: StringRequest
+              }
+              id: string
+              name: string
+            }
+          | {
+              type: "rollup"
+              rollup: {
+                rollup_property_name: string
+                relation_property_name: string
+                rollup_property_id: string
+                relation_property_id: string
+                function: RollupFunction
+              }
+              id: string
+              name: string
+            }
+          | { type: "title"; title: EmptyObject; id: string; name: string }
+          | {
+              type: "rich_text"
+              rich_text: EmptyObject
+              id: string
+              name: string
+            }
+          | { type: "url"; url: EmptyObject; id: string; name: string }
+          | { type: "people"; people: EmptyObject; id: string; name: string }
+          | { type: "files"; files: EmptyObject; id: string; name: string }
+          | { type: "email"; email: EmptyObject; id: string; name: string }
+          | {
+              type: "phone_number"
+              phone_number: EmptyObject
+              id: string
+              name: string
+            }
+          | { type: "date"; date: EmptyObject; id: string; name: string }
+          | {
+              type: "checkbox"
+              checkbox: EmptyObject
+              id: string
+              name: string
+            }
+          | {
+              type: "created_by"
+              created_by: EmptyObject
+              id: string
+              name: string
+            }
+          | {
+              type: "created_time"
+              created_time: EmptyObject
+              id: string
+              name: string
+            }
+          | {
+              type: "last_edited_by"
+              last_edited_by: EmptyObject
+              id: string
+              name: string
+            }
+          | {
+              type: "last_edited_time"
+              last_edited_time: EmptyObject
+              id: string
+              name: string
+            }
+        >
+        parent:
+          | { type: "page_id"; page_id: string }
+          | { type: "workspace"; workspace: true }
+        created_by: { id: IdRequest; object: "user" }
+        last_edited_by: { id: IdRequest; object: "user" }
+        object: "database"
+        id: string
+        created_time: string
+        last_edited_time: string
+        archived: boolean
+        url: string
+      }
+  >
+}
 
 export const search = {
   method: "post",
