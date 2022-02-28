@@ -11,6 +11,7 @@ const { Client } = require("@notionhq/client")
 const dotenv = require("dotenv")
 const { Octokit } = require("octokit")
 const _ = require("lodash")
+const { markdownToBlocks } = require("@tryfabric/martian")
 
 dotenv.config()
 const octokit = new Octokit({ auth: process.env.GITHUB_KEY })
@@ -24,6 +25,7 @@ const OPERATION_BATCH_SIZE = 10
  * { [issueId: string]: string }
  */
 const gitHubIssuesIdToNotionPageId = {}
+
 
 /**
  * Initialize local data store.
@@ -164,22 +166,8 @@ async function createPages(pagesToCreate) {
         notion.pages.create({
           parent: { database_id: databaseId },
           properties: getPropertiesFromIssue(issue),
-          children: [
-            {
-              object: 'block',
-              type: 'paragraph',
-              paragraph: {
-                text: [
-                  {
-                    type: 'text',
-                    text: {
-                      content: issue.body,
-                    },
-                  },
-                ],
-              },
-            },
-          ]
+          children: markdownToBlocks(issue.body),
+
         })
       )
     )
