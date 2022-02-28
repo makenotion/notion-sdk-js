@@ -1,6 +1,6 @@
 /* ================================================================================
 
-	notion-github-sync.
+  notion-github-sync.
   
   Glitch example: https://glitch.com/edit/#!/notion-github-sync
   Find the official Notion API client @ https://github.com/makenotion/notion-sdk-js/
@@ -115,6 +115,7 @@ async function getGitHubIssuesForRepository() {
           state: issue.state,
           comment_count: issue.comments,
           url: issue.html_url,
+          body: issue.body,
         })
       }
     }
@@ -163,6 +164,22 @@ async function createPages(pagesToCreate) {
         notion.pages.create({
           parent: { database_id: databaseId },
           properties: getPropertiesFromIssue(issue),
+          children: [
+            {
+              object: 'block',
+              type: 'paragraph',
+              paragraph: {
+                text: [
+                  {
+                    type: 'text',
+                    text: {
+                      content: issue.body,
+                    },
+                  },
+                ],
+              },
+            },
+          ]
         })
       )
     )
