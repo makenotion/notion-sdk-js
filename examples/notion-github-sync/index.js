@@ -208,6 +208,10 @@ async function updatePages(pagesToUpdate) {
  */
 function getPropertiesFromIssue(issue) {
   const { title, number, state, comment_count, url } = issue
+  const task_description = /(Task Description:).*/.exec(issue.body)
+  const skills_needed = /(Skills Needed:).*/.exec(issue.body)
+
+
   return {
     Name: {
       title: [{ type: "text", text: { content: title } }],
@@ -224,5 +228,11 @@ function getPropertiesFromIssue(issue) {
     "Issue URL": {
       url,
     },
+    "Task Description": {
+      rich_text: [{ text: { content: task_description == null ? '' : task_description[0].replace('Task Description:','') } }],
+    },
+    "Skills Needed": {
+      rich_text: [{ text: { content: skills_needed == null ? '' : skills_needed[0].replace('Skills Needed:','') } }],
+    }
   }
 }
