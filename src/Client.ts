@@ -81,7 +81,7 @@ export interface ClientOptions {
   baseUrl?: string
   logLevel?: LogLevel
   logger?: Logger
-  notionVersion?: string
+  notionVersion?: "2022-02-22" | "2021-08-16" | "2021-05-13" | string
   fetch?: SupportedFetch
   /** Silently ignored in the browser */
   agent?: Agent
