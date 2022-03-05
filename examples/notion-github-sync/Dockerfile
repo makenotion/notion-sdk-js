@@ -1,6 +1,10 @@
-FROM node
+FROM alpine/git as intermediate
 WORKDIR /usr/app
-COPY package.json .
+RUN git clone https://github.com/ralsuwaidi/notion-sdk-js.git
+
+
+FROM node
+COPY --from=intermediate /usr/app /usr/app
+WORKDIR /usr/app/notion-sdk-js/examples/notion-github-sync
 RUN npm install --quiet
-COPY . .
 ENTRYPOINT [ "node", "index.js" ]
