@@ -208,9 +208,12 @@ async function updatePages(pagesToUpdate) {
  */
 function getPropertiesFromIssue(issue) {
   const { title, number, state, comment_count, url } = issue
-  const task_description = /(Task Description:).*/.exec(issue.body)
-  const skills_needed = /(Skills Needed:).*/.exec(issue.body)
+  let task_description = /(Task Description:).*/.exec(issue.body)
+  let skills_needed = /(Skills Needed:).*/.exec(issue.body)
 
+  // Replace Task description and Skills Needed with rest of sentence
+  task_description = task_description == null ? '' : task_description[0].replace('Task Description:', '').trim()
+  skills_needed = skills_needed == null ? '' : skills_needed[0].replace('Skills Needed:', '').trim()
 
   return {
     Name: {
@@ -229,10 +232,10 @@ function getPropertiesFromIssue(issue) {
       url,
     },
     "Task Description": {
-      rich_text: [{ text: { content: task_description == null ? '' : task_description[0].replace('Task Description:','') } }],
+      rich_text: [{ text: { content: task_description } }],
     },
     "Skills Needed": {
-      rich_text: [{ text: { content: skills_needed == null ? '' : skills_needed[0].replace('Skills Needed:','') } }],
+      rich_text: [{ text: { content: skills_needed } }],
     }
   }
 }
