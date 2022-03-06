@@ -41,11 +41,25 @@ type UserObjectResponse =
       object: "user"
     }
 
-type TextRequest = string
+type StringRequest = string
 
-type PartialUserObjectResponse =
-  | { id: IdRequest; object: "user" }
-  | UserObjectResponse
+type SelectColor =
+  | "default"
+  | "gray"
+  | "brown"
+  | "orange"
+  | "yellow"
+  | "green"
+  | "blue"
+  | "purple"
+  | "pink"
+  | "red"
+
+type SelectPropertyResponse = {
+  id: StringRequest
+  name: StringRequest
+  color: SelectColor
+}
 
 type TimeZoneRequest =
   | "Africa/Abidjan"
@@ -648,6 +662,12 @@ type DateResponse = {
   time_zone: TimeZoneRequest | null
 }
 
+type TextRequest = string
+
+type PartialUserObjectResponse =
+  | { id: IdRequest; object: "user" }
+  | UserObjectResponse
+
 type RichTextItemResponse =
   | {
       type: "text"
@@ -753,26 +773,6 @@ type RichTextItemResponse =
       plain_text: string
       href: string | null
     }
-
-type StringRequest = string
-
-type SelectColor =
-  | "default"
-  | "gray"
-  | "brown"
-  | "orange"
-  | "yellow"
-  | "green"
-  | "blue"
-  | "purple"
-  | "pink"
-  | "red"
-
-type SelectPropertyResponse = {
-  id: StringRequest
-  name: StringRequest
-  color: SelectColor
-}
 
 type RollupFunction =
   | "count"
@@ -4401,6 +4401,27 @@ type NumberFormat =
 
 type PartialBlockObjectResponse = { object: "block"; id: string }
 
+type ApiColor =
+  | "default"
+  | "gray"
+  | "brown"
+  | "orange"
+  | "yellow"
+  | "green"
+  | "blue"
+  | "purple"
+  | "pink"
+  | "red"
+  | "gray_background"
+  | "brown_background"
+  | "orange_background"
+  | "yellow_background"
+  | "green_background"
+  | "blue_background"
+  | "purple_background"
+  | "pink_background"
+  | "red_background"
+
 type LanguageRequest =
   | "abap"
   | "arduino"
@@ -4479,7 +4500,7 @@ type LanguageRequest =
 type BlockObjectResponse =
   | {
       type: "paragraph"
-      paragraph: { rich_text: Array<RichTextItemResponse> }
+      paragraph: { rich_text: Array<RichTextItemResponse>; color: ApiColor }
       object: "block"
       id: string
       created_time: string
@@ -4491,7 +4512,7 @@ type BlockObjectResponse =
     }
   | {
       type: "heading_1"
-      heading_1: { rich_text: Array<RichTextItemResponse> }
+      heading_1: { rich_text: Array<RichTextItemResponse>; color: ApiColor }
       object: "block"
       id: string
       created_time: string
@@ -4503,7 +4524,7 @@ type BlockObjectResponse =
     }
   | {
       type: "heading_2"
-      heading_2: { rich_text: Array<RichTextItemResponse> }
+      heading_2: { rich_text: Array<RichTextItemResponse>; color: ApiColor }
       object: "block"
       id: string
       created_time: string
@@ -4515,7 +4536,7 @@ type BlockObjectResponse =
     }
   | {
       type: "heading_3"
-      heading_3: { rich_text: Array<RichTextItemResponse> }
+      heading_3: { rich_text: Array<RichTextItemResponse>; color: ApiColor }
       object: "block"
       id: string
       created_time: string
@@ -4527,7 +4548,10 @@ type BlockObjectResponse =
     }
   | {
       type: "bulleted_list_item"
-      bulleted_list_item: { rich_text: Array<RichTextItemResponse> }
+      bulleted_list_item: {
+        rich_text: Array<RichTextItemResponse>
+        color: ApiColor
+      }
       object: "block"
       id: string
       created_time: string
@@ -4539,7 +4563,10 @@ type BlockObjectResponse =
     }
   | {
       type: "numbered_list_item"
-      numbered_list_item: { rich_text: Array<RichTextItemResponse> }
+      numbered_list_item: {
+        rich_text: Array<RichTextItemResponse>
+        color: ApiColor
+      }
       object: "block"
       id: string
       created_time: string
@@ -4551,7 +4578,7 @@ type BlockObjectResponse =
     }
   | {
       type: "quote"
-      quote: { rich_text: Array<RichTextItemResponse> }
+      quote: { rich_text: Array<RichTextItemResponse>; color: ApiColor }
       object: "block"
       id: string
       created_time: string
@@ -4563,7 +4590,11 @@ type BlockObjectResponse =
     }
   | {
       type: "to_do"
-      to_do: { rich_text: Array<RichTextItemResponse>; checked: boolean }
+      to_do: {
+        rich_text: Array<RichTextItemResponse>
+        color: ApiColor
+        checked: boolean
+      }
       object: "block"
       id: string
       created_time: string
@@ -4575,7 +4606,7 @@ type BlockObjectResponse =
     }
   | {
       type: "toggle"
-      toggle: { rich_text: Array<RichTextItemResponse> }
+      toggle: { rich_text: Array<RichTextItemResponse>; color: ApiColor }
       object: "block"
       id: string
       created_time: string
@@ -4667,6 +4698,7 @@ type BlockObjectResponse =
       type: "callout"
       callout: {
         rich_text: Array<RichTextItemResponse>
+        color: ApiColor
         icon:
           | { type: "emoji"; emoji: EmojiRequest }
           | null
@@ -4710,7 +4742,7 @@ type BlockObjectResponse =
     }
   | {
       type: "table_of_contents"
-      table_of_contents: EmptyObject
+      table_of_contents: { color: ApiColor }
       object: "block"
       id: string
       created_time: string
@@ -4776,7 +4808,7 @@ type BlockObjectResponse =
     }
   | {
       type: "table_row"
-      table_row: { cells: Array<Array<RichTextItemResponse>> }
+      table_row: { cells: Array<Array<RichTextItemResponse>>; color: ApiColor }
       object: "block"
       id: string
       created_time: string
@@ -8112,492 +8144,126 @@ type BlockObjectRequest =
       object?: "block"
     }
 
+type ExistencePropertyFilter = { is_empty: true } | { is_not_empty: true }
+
+type TextPropertyFilter =
+  | { equals: string }
+  | { does_not_equal: string }
+  | { contains: string }
+  | { does_not_contain: string }
+  | { starts_with: string }
+  | { ends_with: string }
+  | ExistencePropertyFilter
+
+type NumberPropertyFilter =
+  | { equals: number }
+  | { does_not_equal: number }
+  | { greater_than: number }
+  | { less_than: number }
+  | { greater_than_or_equal_to: number }
+  | { less_than_or_equal_to: number }
+  | ExistencePropertyFilter
+
+type CheckboxPropertyFilter = { equals: boolean } | { does_not_equal: boolean }
+
+type SelectPropertyFilter =
+  | { equals: string }
+  | { does_not_equal: string }
+  | ExistencePropertyFilter
+
+type MultiSelectPropertyFilter =
+  | { contains: string }
+  | { does_not_contain: string }
+  | ExistencePropertyFilter
+
+type DatePropertyFilter =
+  | { equals: string }
+  | { before: string }
+  | { after: string }
+  | { on_or_before: string }
+  | { on_or_after: string }
+  | { past_week: EmptyObject }
+  | { past_month: EmptyObject }
+  | { past_year: EmptyObject }
+  | { next_week: EmptyObject }
+  | { next_month: EmptyObject }
+  | { next_year: EmptyObject }
+  | ExistencePropertyFilter
+
+type PeoplePropertyFilter =
+  | { contains: IdRequest }
+  | { does_not_contain: IdRequest }
+  | ExistencePropertyFilter
+
+type RelationPropertyFilter =
+  | { contains: IdRequest }
+  | { does_not_contain: IdRequest }
+  | ExistencePropertyFilter
+
+type FormulaPropertyFilter =
+  | { string: TextPropertyFilter }
+  | { checkbox: CheckboxPropertyFilter }
+  | { number: NumberPropertyFilter }
+  | { date: DatePropertyFilter }
+
+type RollupSubfilterPropertyFilter =
+  | { rich_text: TextPropertyFilter }
+  | { number: NumberPropertyFilter }
+  | { checkbox: CheckboxPropertyFilter }
+  | { select: SelectPropertyFilter }
+  | { multi_select: MultiSelectPropertyFilter }
+  | { relation: RelationPropertyFilter }
+  | { date: DatePropertyFilter }
+  | { people: PeoplePropertyFilter }
+  | { files: ExistencePropertyFilter }
+
+type RollupPropertyFilter =
+  | { any: RollupSubfilterPropertyFilter }
+  | { none: RollupSubfilterPropertyFilter }
+  | { every: RollupSubfilterPropertyFilter }
+  | { date: DatePropertyFilter }
+  | { number: NumberPropertyFilter }
+
 type PropertyFilter =
+  | { title: TextPropertyFilter; property: string; type?: "title" }
+  | { rich_text: TextPropertyFilter; property: string; type?: "rich_text" }
+  | { number: NumberPropertyFilter; property: string; type?: "number" }
+  | { checkbox: CheckboxPropertyFilter; property: string; type?: "checkbox" }
+  | { select: SelectPropertyFilter; property: string; type?: "select" }
   | {
-      title:
-        | { equals: string }
-        | { does_not_equal: string }
-        | { contains: string }
-        | { does_not_contain: string }
-        | { starts_with: string }
-        | { ends_with: string }
-        | { is_empty: true }
-        | { is_not_empty: true }
-      property: string
-      type?: "title"
-    }
-  | {
-      rich_text:
-        | { equals: string }
-        | { does_not_equal: string }
-        | { contains: string }
-        | { does_not_contain: string }
-        | { starts_with: string }
-        | { ends_with: string }
-        | { is_empty: true }
-        | { is_not_empty: true }
-      property: string
-      type?: "rich_text"
-    }
-  | {
-      number:
-        | { equals: number }
-        | { does_not_equal: number }
-        | { greater_than: number }
-        | { less_than: number }
-        | { greater_than_or_equal_to: number }
-        | { less_than_or_equal_to: number }
-        | { is_empty: true }
-        | { is_not_empty: true }
-      property: string
-      type?: "number"
-    }
-  | {
-      checkbox: { equals: boolean } | { does_not_equal: boolean }
-      property: string
-      type?: "checkbox"
-    }
-  | {
-      select:
-        | { equals: string }
-        | { does_not_equal: string }
-        | { is_empty: true }
-        | { is_not_empty: true }
-      property: string
-      type?: "select"
-    }
-  | {
-      multi_select:
-        | { contains: string }
-        | { does_not_contain: string }
-        | { is_empty: true }
-        | { is_not_empty: true }
+      multi_select: MultiSelectPropertyFilter
       property: string
       type?: "multi_select"
     }
+  | { date: DatePropertyFilter; property: string; type?: "date" }
+  | { people: PeoplePropertyFilter; property: string; type?: "people" }
+  | { files: ExistencePropertyFilter; property: string; type?: "files" }
+  | { url: TextPropertyFilter; property: string; type?: "url" }
+  | { email: TextPropertyFilter; property: string; type?: "email" }
   | {
-      date:
-        | { equals: string }
-        | { before: string }
-        | { after: string }
-        | { on_or_before: string }
-        | { on_or_after: string }
-        | { past_week: EmptyObject }
-        | { past_month: EmptyObject }
-        | { past_year: EmptyObject }
-        | { next_week: EmptyObject }
-        | { next_month: EmptyObject }
-        | { next_year: EmptyObject }
-        | { is_empty: true }
-        | { is_not_empty: true }
-      property: string
-      type?: "date"
-    }
-  | {
-      people:
-        | { contains: IdRequest }
-        | { does_not_contain: IdRequest }
-        | { is_empty: true }
-        | { is_not_empty: true }
-      property: string
-      type?: "people"
-    }
-  | {
-      files: { is_empty: true } | { is_not_empty: true }
-      property: string
-      type?: "files"
-    }
-  | {
-      url:
-        | { equals: string }
-        | { does_not_equal: string }
-        | { contains: string }
-        | { does_not_contain: string }
-        | { starts_with: string }
-        | { ends_with: string }
-        | { is_empty: true }
-        | { is_not_empty: true }
-      property: string
-      type?: "url"
-    }
-  | {
-      email:
-        | { equals: string }
-        | { does_not_equal: string }
-        | { contains: string }
-        | { does_not_contain: string }
-        | { starts_with: string }
-        | { ends_with: string }
-        | { is_empty: true }
-        | { is_not_empty: true }
-      property: string
-      type?: "email"
-    }
-  | {
-      phone_number:
-        | { equals: string }
-        | { does_not_equal: string }
-        | { contains: string }
-        | { does_not_contain: string }
-        | { starts_with: string }
-        | { ends_with: string }
-        | { is_empty: true }
-        | { is_not_empty: true }
+      phone_number: TextPropertyFilter
       property: string
       type?: "phone_number"
     }
+  | { relation: RelationPropertyFilter; property: string; type?: "relation" }
+  | { created_by: PeoplePropertyFilter; property: string; type?: "created_by" }
   | {
-      relation:
-        | { contains: IdRequest }
-        | { does_not_contain: IdRequest }
-        | { is_empty: true }
-        | { is_not_empty: true }
-      property: string
-      type?: "relation"
-    }
-  | {
-      created_by:
-        | { contains: IdRequest }
-        | { does_not_contain: IdRequest }
-        | { is_empty: true }
-        | { is_not_empty: true }
-      property: string
-      type?: "created_by"
-    }
-  | {
-      created_time:
-        | { equals: string }
-        | { before: string }
-        | { after: string }
-        | { on_or_before: string }
-        | { on_or_after: string }
-        | { past_week: EmptyObject }
-        | { past_month: EmptyObject }
-        | { past_year: EmptyObject }
-        | { next_week: EmptyObject }
-        | { next_month: EmptyObject }
-        | { next_year: EmptyObject }
-        | { is_empty: true }
-        | { is_not_empty: true }
+      created_time: DatePropertyFilter
       property: string
       type?: "created_time"
     }
   | {
-      last_edited_by:
-        | { contains: IdRequest }
-        | { does_not_contain: IdRequest }
-        | { is_empty: true }
-        | { is_not_empty: true }
+      last_edited_by: PeoplePropertyFilter
       property: string
       type?: "last_edited_by"
     }
   | {
-      last_edited_time:
-        | { equals: string }
-        | { before: string }
-        | { after: string }
-        | { on_or_before: string }
-        | { on_or_after: string }
-        | { past_week: EmptyObject }
-        | { past_month: EmptyObject }
-        | { past_year: EmptyObject }
-        | { next_week: EmptyObject }
-        | { next_month: EmptyObject }
-        | { next_year: EmptyObject }
-        | { is_empty: true }
-        | { is_not_empty: true }
+      last_edited_time: DatePropertyFilter
       property: string
       type?: "last_edited_time"
     }
-  | {
-      formula:
-        | {
-            string:
-              | { equals: string }
-              | { does_not_equal: string }
-              | { contains: string }
-              | { does_not_contain: string }
-              | { starts_with: string }
-              | { ends_with: string }
-              | { is_empty: true }
-              | { is_not_empty: true }
-          }
-        | { checkbox: { equals: boolean } | { does_not_equal: boolean } }
-        | {
-            number:
-              | { equals: number }
-              | { does_not_equal: number }
-              | { greater_than: number }
-              | { less_than: number }
-              | { greater_than_or_equal_to: number }
-              | { less_than_or_equal_to: number }
-              | { is_empty: true }
-              | { is_not_empty: true }
-          }
-        | {
-            date:
-              | { equals: string }
-              | { before: string }
-              | { after: string }
-              | { on_or_before: string }
-              | { on_or_after: string }
-              | { past_week: EmptyObject }
-              | { past_month: EmptyObject }
-              | { past_year: EmptyObject }
-              | { next_week: EmptyObject }
-              | { next_month: EmptyObject }
-              | { next_year: EmptyObject }
-              | { is_empty: true }
-              | { is_not_empty: true }
-          }
-      property: string
-      type?: "formula"
-    }
-  | {
-      rollup:
-        | {
-            any:
-              | {
-                  rich_text:
-                    | { equals: string }
-                    | { does_not_equal: string }
-                    | { contains: string }
-                    | { does_not_contain: string }
-                    | { starts_with: string }
-                    | { ends_with: string }
-                    | { is_empty: true }
-                    | { is_not_empty: true }
-                }
-              | {
-                  number:
-                    | { equals: number }
-                    | { does_not_equal: number }
-                    | { greater_than: number }
-                    | { less_than: number }
-                    | { greater_than_or_equal_to: number }
-                    | { less_than_or_equal_to: number }
-                    | { is_empty: true }
-                    | { is_not_empty: true }
-                }
-              | { checkbox: { equals: boolean } | { does_not_equal: boolean } }
-              | {
-                  select:
-                    | { equals: string }
-                    | { does_not_equal: string }
-                    | { is_empty: true }
-                    | { is_not_empty: true }
-                }
-              | {
-                  multi_select:
-                    | { contains: string }
-                    | { does_not_contain: string }
-                    | { is_empty: true }
-                    | { is_not_empty: true }
-                }
-              | {
-                  relation:
-                    | { contains: IdRequest }
-                    | { does_not_contain: IdRequest }
-                    | { is_empty: true }
-                    | { is_not_empty: true }
-                }
-              | {
-                  date:
-                    | { equals: string }
-                    | { before: string }
-                    | { after: string }
-                    | { on_or_before: string }
-                    | { on_or_after: string }
-                    | { past_week: EmptyObject }
-                    | { past_month: EmptyObject }
-                    | { past_year: EmptyObject }
-                    | { next_week: EmptyObject }
-                    | { next_month: EmptyObject }
-                    | { next_year: EmptyObject }
-                    | { is_empty: true }
-                    | { is_not_empty: true }
-                }
-              | {
-                  people:
-                    | { contains: IdRequest }
-                    | { does_not_contain: IdRequest }
-                    | { is_empty: true }
-                    | { is_not_empty: true }
-                }
-              | { files: { is_empty: true } | { is_not_empty: true } }
-          }
-        | {
-            none:
-              | {
-                  rich_text:
-                    | { equals: string }
-                    | { does_not_equal: string }
-                    | { contains: string }
-                    | { does_not_contain: string }
-                    | { starts_with: string }
-                    | { ends_with: string }
-                    | { is_empty: true }
-                    | { is_not_empty: true }
-                }
-              | {
-                  number:
-                    | { equals: number }
-                    | { does_not_equal: number }
-                    | { greater_than: number }
-                    | { less_than: number }
-                    | { greater_than_or_equal_to: number }
-                    | { less_than_or_equal_to: number }
-                    | { is_empty: true }
-                    | { is_not_empty: true }
-                }
-              | { checkbox: { equals: boolean } | { does_not_equal: boolean } }
-              | {
-                  select:
-                    | { equals: string }
-                    | { does_not_equal: string }
-                    | { is_empty: true }
-                    | { is_not_empty: true }
-                }
-              | {
-                  multi_select:
-                    | { contains: string }
-                    | { does_not_contain: string }
-                    | { is_empty: true }
-                    | { is_not_empty: true }
-                }
-              | {
-                  relation:
-                    | { contains: IdRequest }
-                    | { does_not_contain: IdRequest }
-                    | { is_empty: true }
-                    | { is_not_empty: true }
-                }
-              | {
-                  date:
-                    | { equals: string }
-                    | { before: string }
-                    | { after: string }
-                    | { on_or_before: string }
-                    | { on_or_after: string }
-                    | { past_week: EmptyObject }
-                    | { past_month: EmptyObject }
-                    | { past_year: EmptyObject }
-                    | { next_week: EmptyObject }
-                    | { next_month: EmptyObject }
-                    | { next_year: EmptyObject }
-                    | { is_empty: true }
-                    | { is_not_empty: true }
-                }
-              | {
-                  people:
-                    | { contains: IdRequest }
-                    | { does_not_contain: IdRequest }
-                    | { is_empty: true }
-                    | { is_not_empty: true }
-                }
-              | { files: { is_empty: true } | { is_not_empty: true } }
-          }
-        | {
-            every:
-              | {
-                  rich_text:
-                    | { equals: string }
-                    | { does_not_equal: string }
-                    | { contains: string }
-                    | { does_not_contain: string }
-                    | { starts_with: string }
-                    | { ends_with: string }
-                    | { is_empty: true }
-                    | { is_not_empty: true }
-                }
-              | {
-                  number:
-                    | { equals: number }
-                    | { does_not_equal: number }
-                    | { greater_than: number }
-                    | { less_than: number }
-                    | { greater_than_or_equal_to: number }
-                    | { less_than_or_equal_to: number }
-                    | { is_empty: true }
-                    | { is_not_empty: true }
-                }
-              | { checkbox: { equals: boolean } | { does_not_equal: boolean } }
-              | {
-                  select:
-                    | { equals: string }
-                    | { does_not_equal: string }
-                    | { is_empty: true }
-                    | { is_not_empty: true }
-                }
-              | {
-                  multi_select:
-                    | { contains: string }
-                    | { does_not_contain: string }
-                    | { is_empty: true }
-                    | { is_not_empty: true }
-                }
-              | {
-                  relation:
-                    | { contains: IdRequest }
-                    | { does_not_contain: IdRequest }
-                    | { is_empty: true }
-                    | { is_not_empty: true }
-                }
-              | {
-                  date:
-                    | { equals: string }
-                    | { before: string }
-                    | { after: string }
-                    | { on_or_before: string }
-                    | { on_or_after: string }
-                    | { past_week: EmptyObject }
-                    | { past_month: EmptyObject }
-                    | { past_year: EmptyObject }
-                    | { next_week: EmptyObject }
-                    | { next_month: EmptyObject }
-                    | { next_year: EmptyObject }
-                    | { is_empty: true }
-                    | { is_not_empty: true }
-                }
-              | {
-                  people:
-                    | { contains: IdRequest }
-                    | { does_not_contain: IdRequest }
-                    | { is_empty: true }
-                    | { is_not_empty: true }
-                }
-              | { files: { is_empty: true } | { is_not_empty: true } }
-          }
-        | {
-            date:
-              | { equals: string }
-              | { before: string }
-              | { after: string }
-              | { on_or_before: string }
-              | { on_or_after: string }
-              | { past_week: EmptyObject }
-              | { past_month: EmptyObject }
-              | { past_year: EmptyObject }
-              | { next_week: EmptyObject }
-              | { next_month: EmptyObject }
-              | { next_year: EmptyObject }
-              | { is_empty: true }
-              | { is_not_empty: true }
-          }
-        | {
-            number:
-              | { equals: number }
-              | { does_not_equal: number }
-              | { greater_than: number }
-              | { less_than: number }
-              | { greater_than_or_equal_to: number }
-              | { less_than_or_equal_to: number }
-              | { is_empty: true }
-              | { is_not_empty: true }
-          }
-      property: string
-      type?: "rollup"
-    }
+  | { formula: FormulaPropertyFilter; property: string; type?: "formula" }
+  | { rollup: RollupPropertyFilter; property: string; type?: "rollup" }
 export type GetSelfParameters = Record<string, never>
 
 export type GetSelfResponse = UserObjectResponse
@@ -8869,12 +8535,6 @@ export type CreatePageResponse =
         | { type: "workspace"; workspace: true }
       properties: Record<
         string,
-        | { type: "title"; title: Array<RichTextItemResponse>; id: string }
-        | {
-            type: "rich_text"
-            rich_text: Array<RichTextItemResponse>
-            id: string
-          }
         | { type: "number"; number: number | null; id: string }
         | { type: "url"; url: string | null; id: string }
         | { type: "select"; select: SelectPropertyResponse | null; id: string }
@@ -8883,14 +8543,10 @@ export type CreatePageResponse =
             multi_select: Array<SelectPropertyResponse>
             id: string
           }
-        | {
-            type: "people"
-            people: Array<PartialUserObjectResponse>
-            id: string
-          }
+        | { type: "date"; date: DateResponse | null; id: string }
         | { type: "email"; email: string | null; id: string }
         | { type: "phone_number"; phone_number: string | null; id: string }
-        | { type: "date"; date: DateResponse | null; id: string }
+        | { type: "checkbox"; checkbox: boolean; id: string }
         | {
             type: "files"
             files: Array<
@@ -8907,7 +8563,18 @@ export type CreatePageResponse =
             >
             id: string
           }
-        | { type: "checkbox"; checkbox: boolean; id: string }
+        | {
+            type: "created_by"
+            created_by: PartialUserObjectResponse
+            id: string
+          }
+        | { type: "created_time"; created_time: string; id: string }
+        | {
+            type: "last_edited_by"
+            last_edited_by: PartialUserObjectResponse
+            id: string
+          }
+        | { type: "last_edited_time"; last_edited_time: string; id: string }
         | {
             type: "formula"
             formula:
@@ -8917,19 +8584,18 @@ export type CreatePageResponse =
               | { type: "boolean"; boolean: boolean | null }
             id: string
           }
+        | { type: "title"; title: Array<RichTextItemResponse>; id: string }
+        | {
+            type: "rich_text"
+            rich_text: Array<RichTextItemResponse>
+            id: string
+          }
+        | {
+            type: "people"
+            people: Array<PartialUserObjectResponse>
+            id: string
+          }
         | { type: "relation"; relation: Array<{ id: string }>; id: string }
-        | { type: "created_time"; created_time: string; id: string }
-        | {
-            type: "created_by"
-            created_by: PartialUserObjectResponse
-            id: string
-          }
-        | { type: "last_edited_time"; last_edited_time: string; id: string }
-        | {
-            type: "last_edited_by"
-            last_edited_by: PartialUserObjectResponse
-            id: string
-          }
         | {
             type: "rollup"
             rollup:
@@ -8951,66 +8617,12 @@ export type CreatePageResponse =
                         type: "rich_text"
                         rich_text: Array<RichTextItemResponse>
                       }
-                    | { type: "number"; number: number | null }
-                    | { type: "url"; url: string | null }
-                    | { type: "select"; select: SelectPropertyResponse | null }
-                    | {
-                        type: "multi_select"
-                        multi_select: Array<SelectPropertyResponse>
-                      }
                     | {
                         type: "people"
                         people: Array<PartialUserObjectResponse>
                       }
-                    | { type: "email"; email: string | null }
-                    | { type: "phone_number"; phone_number: string | null }
-                    | { type: "date"; date: DateResponse | null }
-                    | {
-                        type: "files"
-                        files: Array<
-                          | {
-                              file: { url: string; expiry_time: string }
-                              name: StringRequest
-                              type?: "file"
-                            }
-                          | {
-                              external: { url: TextRequest }
-                              name: StringRequest
-                              type?: "external"
-                            }
-                        >
-                      }
-                    | { type: "checkbox"; checkbox: boolean }
-                    | {
-                        type: "formula"
-                        formula:
-                          | { type: "string"; string: string | null }
-                          | { type: "date"; date: DateResponse | null }
-                          | { type: "number"; number: number | null }
-                          | { type: "boolean"; boolean: boolean | null }
-                      }
                     | { type: "relation"; relation: Array<{ id: string }> }
-                    | { type: "created_time"; created_time: string }
-                    | {
-                        type: "created_by"
-                        created_by: PartialUserObjectResponse
-                      }
-                    | { type: "last_edited_time"; last_edited_time: string }
-                    | {
-                        type: "last_edited_by"
-                        last_edited_by: PartialUserObjectResponse
-                      }
                   >
-                  function: RollupFunction
-                }
-              | {
-                  type: "unsupported"
-                  unsupported: EmptyObject
-                  function: RollupFunction
-                }
-              | {
-                  type: "incomplete"
-                  incomplete: EmptyObject
                   function: RollupFunction
                 }
             id: string
@@ -9061,12 +8673,6 @@ export type GetPageResponse =
         | { type: "workspace"; workspace: true }
       properties: Record<
         string,
-        | { type: "title"; title: Array<RichTextItemResponse>; id: string }
-        | {
-            type: "rich_text"
-            rich_text: Array<RichTextItemResponse>
-            id: string
-          }
         | { type: "number"; number: number | null; id: string }
         | { type: "url"; url: string | null; id: string }
         | { type: "select"; select: SelectPropertyResponse | null; id: string }
@@ -9075,14 +8681,10 @@ export type GetPageResponse =
             multi_select: Array<SelectPropertyResponse>
             id: string
           }
-        | {
-            type: "people"
-            people: Array<PartialUserObjectResponse>
-            id: string
-          }
+        | { type: "date"; date: DateResponse | null; id: string }
         | { type: "email"; email: string | null; id: string }
         | { type: "phone_number"; phone_number: string | null; id: string }
-        | { type: "date"; date: DateResponse | null; id: string }
+        | { type: "checkbox"; checkbox: boolean; id: string }
         | {
             type: "files"
             files: Array<
@@ -9099,7 +8701,18 @@ export type GetPageResponse =
             >
             id: string
           }
-        | { type: "checkbox"; checkbox: boolean; id: string }
+        | {
+            type: "created_by"
+            created_by: PartialUserObjectResponse
+            id: string
+          }
+        | { type: "created_time"; created_time: string; id: string }
+        | {
+            type: "last_edited_by"
+            last_edited_by: PartialUserObjectResponse
+            id: string
+          }
+        | { type: "last_edited_time"; last_edited_time: string; id: string }
         | {
             type: "formula"
             formula:
@@ -9109,19 +8722,18 @@ export type GetPageResponse =
               | { type: "boolean"; boolean: boolean | null }
             id: string
           }
+        | { type: "title"; title: Array<RichTextItemResponse>; id: string }
+        | {
+            type: "rich_text"
+            rich_text: Array<RichTextItemResponse>
+            id: string
+          }
+        | {
+            type: "people"
+            people: Array<PartialUserObjectResponse>
+            id: string
+          }
         | { type: "relation"; relation: Array<{ id: string }>; id: string }
-        | { type: "created_time"; created_time: string; id: string }
-        | {
-            type: "created_by"
-            created_by: PartialUserObjectResponse
-            id: string
-          }
-        | { type: "last_edited_time"; last_edited_time: string; id: string }
-        | {
-            type: "last_edited_by"
-            last_edited_by: PartialUserObjectResponse
-            id: string
-          }
         | {
             type: "rollup"
             rollup:
@@ -9143,66 +8755,12 @@ export type GetPageResponse =
                         type: "rich_text"
                         rich_text: Array<RichTextItemResponse>
                       }
-                    | { type: "number"; number: number | null }
-                    | { type: "url"; url: string | null }
-                    | { type: "select"; select: SelectPropertyResponse | null }
-                    | {
-                        type: "multi_select"
-                        multi_select: Array<SelectPropertyResponse>
-                      }
                     | {
                         type: "people"
                         people: Array<PartialUserObjectResponse>
                       }
-                    | { type: "email"; email: string | null }
-                    | { type: "phone_number"; phone_number: string | null }
-                    | { type: "date"; date: DateResponse | null }
-                    | {
-                        type: "files"
-                        files: Array<
-                          | {
-                              file: { url: string; expiry_time: string }
-                              name: StringRequest
-                              type?: "file"
-                            }
-                          | {
-                              external: { url: TextRequest }
-                              name: StringRequest
-                              type?: "external"
-                            }
-                        >
-                      }
-                    | { type: "checkbox"; checkbox: boolean }
-                    | {
-                        type: "formula"
-                        formula:
-                          | { type: "string"; string: string | null }
-                          | { type: "date"; date: DateResponse | null }
-                          | { type: "number"; number: number | null }
-                          | { type: "boolean"; boolean: boolean | null }
-                      }
                     | { type: "relation"; relation: Array<{ id: string }> }
-                    | { type: "created_time"; created_time: string }
-                    | {
-                        type: "created_by"
-                        created_by: PartialUserObjectResponse
-                      }
-                    | { type: "last_edited_time"; last_edited_time: string }
-                    | {
-                        type: "last_edited_by"
-                        last_edited_by: PartialUserObjectResponse
-                      }
                   >
-                  function: RollupFunction
-                }
-              | {
-                  type: "unsupported"
-                  unsupported: EmptyObject
-                  function: RollupFunction
-                }
-              | {
-                  type: "incomplete"
-                  incomplete: EmptyObject
                   function: RollupFunction
                 }
             id: string
@@ -9421,12 +8979,6 @@ export type UpdatePageResponse =
         | { type: "workspace"; workspace: true }
       properties: Record<
         string,
-        | { type: "title"; title: Array<RichTextItemResponse>; id: string }
-        | {
-            type: "rich_text"
-            rich_text: Array<RichTextItemResponse>
-            id: string
-          }
         | { type: "number"; number: number | null; id: string }
         | { type: "url"; url: string | null; id: string }
         | { type: "select"; select: SelectPropertyResponse | null; id: string }
@@ -9435,14 +8987,10 @@ export type UpdatePageResponse =
             multi_select: Array<SelectPropertyResponse>
             id: string
           }
-        | {
-            type: "people"
-            people: Array<PartialUserObjectResponse>
-            id: string
-          }
+        | { type: "date"; date: DateResponse | null; id: string }
         | { type: "email"; email: string | null; id: string }
         | { type: "phone_number"; phone_number: string | null; id: string }
-        | { type: "date"; date: DateResponse | null; id: string }
+        | { type: "checkbox"; checkbox: boolean; id: string }
         | {
             type: "files"
             files: Array<
@@ -9459,7 +9007,18 @@ export type UpdatePageResponse =
             >
             id: string
           }
-        | { type: "checkbox"; checkbox: boolean; id: string }
+        | {
+            type: "created_by"
+            created_by: PartialUserObjectResponse
+            id: string
+          }
+        | { type: "created_time"; created_time: string; id: string }
+        | {
+            type: "last_edited_by"
+            last_edited_by: PartialUserObjectResponse
+            id: string
+          }
+        | { type: "last_edited_time"; last_edited_time: string; id: string }
         | {
             type: "formula"
             formula:
@@ -9469,19 +9028,18 @@ export type UpdatePageResponse =
               | { type: "boolean"; boolean: boolean | null }
             id: string
           }
+        | { type: "title"; title: Array<RichTextItemResponse>; id: string }
+        | {
+            type: "rich_text"
+            rich_text: Array<RichTextItemResponse>
+            id: string
+          }
+        | {
+            type: "people"
+            people: Array<PartialUserObjectResponse>
+            id: string
+          }
         | { type: "relation"; relation: Array<{ id: string }>; id: string }
-        | { type: "created_time"; created_time: string; id: string }
-        | {
-            type: "created_by"
-            created_by: PartialUserObjectResponse
-            id: string
-          }
-        | { type: "last_edited_time"; last_edited_time: string; id: string }
-        | {
-            type: "last_edited_by"
-            last_edited_by: PartialUserObjectResponse
-            id: string
-          }
         | {
             type: "rollup"
             rollup:
@@ -9503,66 +9061,12 @@ export type UpdatePageResponse =
                         type: "rich_text"
                         rich_text: Array<RichTextItemResponse>
                       }
-                    | { type: "number"; number: number | null }
-                    | { type: "url"; url: string | null }
-                    | { type: "select"; select: SelectPropertyResponse | null }
-                    | {
-                        type: "multi_select"
-                        multi_select: Array<SelectPropertyResponse>
-                      }
                     | {
                         type: "people"
                         people: Array<PartialUserObjectResponse>
                       }
-                    | { type: "email"; email: string | null }
-                    | { type: "phone_number"; phone_number: string | null }
-                    | { type: "date"; date: DateResponse | null }
-                    | {
-                        type: "files"
-                        files: Array<
-                          | {
-                              file: { url: string; expiry_time: string }
-                              name: StringRequest
-                              type?: "file"
-                            }
-                          | {
-                              external: { url: TextRequest }
-                              name: StringRequest
-                              type?: "external"
-                            }
-                        >
-                      }
-                    | { type: "checkbox"; checkbox: boolean }
-                    | {
-                        type: "formula"
-                        formula:
-                          | { type: "string"; string: string | null }
-                          | { type: "date"; date: DateResponse | null }
-                          | { type: "number"; number: number | null }
-                          | { type: "boolean"; boolean: boolean | null }
-                      }
                     | { type: "relation"; relation: Array<{ id: string }> }
-                    | { type: "created_time"; created_time: string }
-                    | {
-                        type: "created_by"
-                        created_by: PartialUserObjectResponse
-                      }
-                    | { type: "last_edited_time"; last_edited_time: string }
-                    | {
-                        type: "last_edited_by"
-                        last_edited_by: PartialUserObjectResponse
-                      }
                   >
-                  function: RollupFunction
-                }
-              | {
-                  type: "unsupported"
-                  unsupported: EmptyObject
-                  function: RollupFunction
-                }
-              | {
-                  type: "incomplete"
-                  incomplete: EmptyObject
                   function: RollupFunction
                 }
             id: string
@@ -9687,6 +9191,24 @@ export type GetPagePropertyResponse =
     }
   | { type: "relation"; relation: { id: string }; object: "property_item" }
   | {
+      type: "rollup"
+      rollup:
+        | { type: "number"; number: number | null; function: RollupFunction }
+        | { type: "date"; date: DateResponse | null; function: RollupFunction }
+        | { type: "array"; array: Array<EmptyObject>; function: RollupFunction }
+        | {
+            type: "unsupported"
+            unsupported: EmptyObject
+            function: RollupFunction
+          }
+        | {
+            type: "incomplete"
+            incomplete: EmptyObject
+            function: RollupFunction
+          }
+      object: "property_item"
+    }
+  | {
       type: "property_item"
       property_item:
         | { type: "title"; title: EmptyObject; next_url: string | null }
@@ -9708,62 +9230,7 @@ export type GetPagePropertyResponse =
                 }
               | {
                   type: "array"
-                  array: Array<
-                    | { type: "title"; title: Array<RichTextItemResponse> }
-                    | {
-                        type: "rich_text"
-                        rich_text: Array<RichTextItemResponse>
-                      }
-                    | { type: "number"; number: number | null }
-                    | { type: "url"; url: string | null }
-                    | { type: "select"; select: SelectPropertyResponse | null }
-                    | {
-                        type: "multi_select"
-                        multi_select: Array<SelectPropertyResponse>
-                      }
-                    | {
-                        type: "people"
-                        people: Array<PartialUserObjectResponse>
-                      }
-                    | { type: "email"; email: string | null }
-                    | { type: "phone_number"; phone_number: string | null }
-                    | { type: "date"; date: DateResponse | null }
-                    | {
-                        type: "files"
-                        files: Array<
-                          | {
-                              file: { url: string; expiry_time: string }
-                              name: StringRequest
-                              type?: "file"
-                            }
-                          | {
-                              external: { url: TextRequest }
-                              name: StringRequest
-                              type?: "external"
-                            }
-                        >
-                      }
-                    | { type: "checkbox"; checkbox: boolean }
-                    | {
-                        type: "formula"
-                        formula:
-                          | { type: "string"; string: string | null }
-                          | { type: "date"; date: DateResponse | null }
-                          | { type: "number"; number: number | null }
-                          | { type: "boolean"; boolean: boolean | null }
-                      }
-                    | { type: "relation"; relation: Array<{ id: string }> }
-                    | { type: "created_time"; created_time: string }
-                    | {
-                        type: "created_by"
-                        created_by: PartialUserObjectResponse
-                      }
-                    | { type: "last_edited_time"; last_edited_time: string }
-                    | {
-                        type: "last_edited_by"
-                        last_edited_by: PartialUserObjectResponse
-                      }
-                  >
+                  array: Array<EmptyObject>
                   function: RollupFunction
                 }
               | {
@@ -9865,6 +9332,36 @@ export type GetPagePropertyResponse =
         | {
             type: "relation"
             relation: { id: string }
+            object: "property_item"
+          }
+        | {
+            type: "rollup"
+            rollup:
+              | {
+                  type: "number"
+                  number: number | null
+                  function: RollupFunction
+                }
+              | {
+                  type: "date"
+                  date: DateResponse | null
+                  function: RollupFunction
+                }
+              | {
+                  type: "array"
+                  array: Array<EmptyObject>
+                  function: RollupFunction
+                }
+              | {
+                  type: "unsupported"
+                  unsupported: EmptyObject
+                  function: RollupFunction
+                }
+              | {
+                  type: "incomplete"
+                  incomplete: EmptyObject
+                  function: RollupFunction
+                }
             object: "property_item"
           }
       >
@@ -10841,12 +10338,6 @@ export type QueryDatabaseResponse = {
           | { type: "workspace"; workspace: true }
         properties: Record<
           string,
-          | { type: "title"; title: Array<RichTextItemResponse>; id: string }
-          | {
-              type: "rich_text"
-              rich_text: Array<RichTextItemResponse>
-              id: string
-            }
           | { type: "number"; number: number | null; id: string }
           | { type: "url"; url: string | null; id: string }
           | {
@@ -10859,14 +10350,10 @@ export type QueryDatabaseResponse = {
               multi_select: Array<SelectPropertyResponse>
               id: string
             }
-          | {
-              type: "people"
-              people: Array<PartialUserObjectResponse>
-              id: string
-            }
+          | { type: "date"; date: DateResponse | null; id: string }
           | { type: "email"; email: string | null; id: string }
           | { type: "phone_number"; phone_number: string | null; id: string }
-          | { type: "date"; date: DateResponse | null; id: string }
+          | { type: "checkbox"; checkbox: boolean; id: string }
           | {
               type: "files"
               files: Array<
@@ -10883,7 +10370,18 @@ export type QueryDatabaseResponse = {
               >
               id: string
             }
-          | { type: "checkbox"; checkbox: boolean; id: string }
+          | {
+              type: "created_by"
+              created_by: PartialUserObjectResponse
+              id: string
+            }
+          | { type: "created_time"; created_time: string; id: string }
+          | {
+              type: "last_edited_by"
+              last_edited_by: PartialUserObjectResponse
+              id: string
+            }
+          | { type: "last_edited_time"; last_edited_time: string; id: string }
           | {
               type: "formula"
               formula:
@@ -10893,19 +10391,18 @@ export type QueryDatabaseResponse = {
                 | { type: "boolean"; boolean: boolean | null }
               id: string
             }
+          | { type: "title"; title: Array<RichTextItemResponse>; id: string }
+          | {
+              type: "rich_text"
+              rich_text: Array<RichTextItemResponse>
+              id: string
+            }
+          | {
+              type: "people"
+              people: Array<PartialUserObjectResponse>
+              id: string
+            }
           | { type: "relation"; relation: Array<{ id: string }>; id: string }
-          | { type: "created_time"; created_time: string; id: string }
-          | {
-              type: "created_by"
-              created_by: PartialUserObjectResponse
-              id: string
-            }
-          | { type: "last_edited_time"; last_edited_time: string; id: string }
-          | {
-              type: "last_edited_by"
-              last_edited_by: PartialUserObjectResponse
-              id: string
-            }
           | {
               type: "rollup"
               rollup:
@@ -10927,69 +10424,12 @@ export type QueryDatabaseResponse = {
                           type: "rich_text"
                           rich_text: Array<RichTextItemResponse>
                         }
-                      | { type: "number"; number: number | null }
-                      | { type: "url"; url: string | null }
-                      | {
-                          type: "select"
-                          select: SelectPropertyResponse | null
-                        }
-                      | {
-                          type: "multi_select"
-                          multi_select: Array<SelectPropertyResponse>
-                        }
                       | {
                           type: "people"
                           people: Array<PartialUserObjectResponse>
                         }
-                      | { type: "email"; email: string | null }
-                      | { type: "phone_number"; phone_number: string | null }
-                      | { type: "date"; date: DateResponse | null }
-                      | {
-                          type: "files"
-                          files: Array<
-                            | {
-                                file: { url: string; expiry_time: string }
-                                name: StringRequest
-                                type?: "file"
-                              }
-                            | {
-                                external: { url: TextRequest }
-                                name: StringRequest
-                                type?: "external"
-                              }
-                          >
-                        }
-                      | { type: "checkbox"; checkbox: boolean }
-                      | {
-                          type: "formula"
-                          formula:
-                            | { type: "string"; string: string | null }
-                            | { type: "date"; date: DateResponse | null }
-                            | { type: "number"; number: number | null }
-                            | { type: "boolean"; boolean: boolean | null }
-                        }
                       | { type: "relation"; relation: Array<{ id: string }> }
-                      | { type: "created_time"; created_time: string }
-                      | {
-                          type: "created_by"
-                          created_by: PartialUserObjectResponse
-                        }
-                      | { type: "last_edited_time"; last_edited_time: string }
-                      | {
-                          type: "last_edited_by"
-                          last_edited_by: PartialUserObjectResponse
-                        }
                     >
-                    function: RollupFunction
-                  }
-                | {
-                    type: "unsupported"
-                    unsupported: EmptyObject
-                    function: RollupFunction
-                  }
-                | {
-                    type: "incomplete"
-                    incomplete: EmptyObject
                     function: RollupFunction
                   }
               id: string
@@ -11653,12 +11093,6 @@ export type SearchResponse = {
           | { type: "workspace"; workspace: true }
         properties: Record<
           string,
-          | { type: "title"; title: Array<RichTextItemResponse>; id: string }
-          | {
-              type: "rich_text"
-              rich_text: Array<RichTextItemResponse>
-              id: string
-            }
           | { type: "number"; number: number | null; id: string }
           | { type: "url"; url: string | null; id: string }
           | {
@@ -11671,14 +11105,10 @@ export type SearchResponse = {
               multi_select: Array<SelectPropertyResponse>
               id: string
             }
-          | {
-              type: "people"
-              people: Array<PartialUserObjectResponse>
-              id: string
-            }
+          | { type: "date"; date: DateResponse | null; id: string }
           | { type: "email"; email: string | null; id: string }
           | { type: "phone_number"; phone_number: string | null; id: string }
-          | { type: "date"; date: DateResponse | null; id: string }
+          | { type: "checkbox"; checkbox: boolean; id: string }
           | {
               type: "files"
               files: Array<
@@ -11695,7 +11125,18 @@ export type SearchResponse = {
               >
               id: string
             }
-          | { type: "checkbox"; checkbox: boolean; id: string }
+          | {
+              type: "created_by"
+              created_by: PartialUserObjectResponse
+              id: string
+            }
+          | { type: "created_time"; created_time: string; id: string }
+          | {
+              type: "last_edited_by"
+              last_edited_by: PartialUserObjectResponse
+              id: string
+            }
+          | { type: "last_edited_time"; last_edited_time: string; id: string }
           | {
               type: "formula"
               formula:
@@ -11705,19 +11146,18 @@ export type SearchResponse = {
                 | { type: "boolean"; boolean: boolean | null }
               id: string
             }
+          | { type: "title"; title: Array<RichTextItemResponse>; id: string }
+          | {
+              type: "rich_text"
+              rich_text: Array<RichTextItemResponse>
+              id: string
+            }
+          | {
+              type: "people"
+              people: Array<PartialUserObjectResponse>
+              id: string
+            }
           | { type: "relation"; relation: Array<{ id: string }>; id: string }
-          | { type: "created_time"; created_time: string; id: string }
-          | {
-              type: "created_by"
-              created_by: PartialUserObjectResponse
-              id: string
-            }
-          | { type: "last_edited_time"; last_edited_time: string; id: string }
-          | {
-              type: "last_edited_by"
-              last_edited_by: PartialUserObjectResponse
-              id: string
-            }
           | {
               type: "rollup"
               rollup:
@@ -11739,69 +11179,12 @@ export type SearchResponse = {
                           type: "rich_text"
                           rich_text: Array<RichTextItemResponse>
                         }
-                      | { type: "number"; number: number | null }
-                      | { type: "url"; url: string | null }
-                      | {
-                          type: "select"
-                          select: SelectPropertyResponse | null
-                        }
-                      | {
-                          type: "multi_select"
-                          multi_select: Array<SelectPropertyResponse>
-                        }
                       | {
                           type: "people"
                           people: Array<PartialUserObjectResponse>
                         }
-                      | { type: "email"; email: string | null }
-                      | { type: "phone_number"; phone_number: string | null }
-                      | { type: "date"; date: DateResponse | null }
-                      | {
-                          type: "files"
-                          files: Array<
-                            | {
-                                file: { url: string; expiry_time: string }
-                                name: StringRequest
-                                type?: "file"
-                              }
-                            | {
-                                external: { url: TextRequest }
-                                name: StringRequest
-                                type?: "external"
-                              }
-                          >
-                        }
-                      | { type: "checkbox"; checkbox: boolean }
-                      | {
-                          type: "formula"
-                          formula:
-                            | { type: "string"; string: string | null }
-                            | { type: "date"; date: DateResponse | null }
-                            | { type: "number"; number: number | null }
-                            | { type: "boolean"; boolean: boolean | null }
-                        }
                       | { type: "relation"; relation: Array<{ id: string }> }
-                      | { type: "created_time"; created_time: string }
-                      | {
-                          type: "created_by"
-                          created_by: PartialUserObjectResponse
-                        }
-                      | { type: "last_edited_time"; last_edited_time: string }
-                      | {
-                          type: "last_edited_by"
-                          last_edited_by: PartialUserObjectResponse
-                        }
                     >
-                    function: RollupFunction
-                  }
-                | {
-                    type: "unsupported"
-                    unsupported: EmptyObject
-                    function: RollupFunction
-                  }
-                | {
-                    type: "incomplete"
-                    incomplete: EmptyObject
                     function: RollupFunction
                   }
               id: string
