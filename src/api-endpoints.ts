@@ -708,6 +708,15 @@ type RichTextItemResponse =
         | { type: "user"; user: PartialUserObjectResponse }
         | { type: "date"; date: DateResponse }
         | { type: "link_preview"; link_preview: { url: TextRequest } }
+        | {
+            type: "template_mention"
+            template_mention:
+              | {
+                  type: "template_mention_date"
+                  template_mention_date: "today" | "now"
+                }
+              | { type: "template_mention_user"; template_mention_user: "me" }
+          }
         | { type: "page"; page: { id: IdRequest } }
         | { type: "database"; database: { id: IdRequest } }
       annotations: {
@@ -4808,7 +4817,7 @@ type BlockObjectResponse =
     }
   | {
       type: "table_row"
-      table_row: { cells: Array<Array<RichTextItemResponse>>; color: ApiColor }
+      table_row: { cells: Array<Array<RichTextItemResponse>> }
       object: "block"
       id: string
       created_time: string
@@ -5188,7 +5197,7 @@ type BlockObjectRequestWithoutChildren =
   | { divider: EmptyObject; type?: "divider"; object?: "block" }
   | { breadcrumb: EmptyObject; type?: "breadcrumb"; object?: "block" }
   | {
-      table_of_contents: EmptyObject
+      table_of_contents: { color?: ApiColor }
       type?: "table_of_contents"
       object?: "block"
     }
@@ -5205,47 +5214,57 @@ type BlockObjectRequestWithoutChildren =
       object?: "block"
     }
   | {
-      heading_1: { rich_text: Array<RichTextItemRequest> }
+      heading_1: { rich_text: Array<RichTextItemRequest>; color?: ApiColor }
       type?: "heading_1"
       object?: "block"
     }
   | {
-      heading_2: { rich_text: Array<RichTextItemRequest> }
+      heading_2: { rich_text: Array<RichTextItemRequest>; color?: ApiColor }
       type?: "heading_2"
       object?: "block"
     }
   | {
-      heading_3: { rich_text: Array<RichTextItemRequest> }
+      heading_3: { rich_text: Array<RichTextItemRequest>; color?: ApiColor }
       type?: "heading_3"
       object?: "block"
     }
   | {
-      paragraph: { rich_text: Array<RichTextItemRequest> }
+      paragraph: { rich_text: Array<RichTextItemRequest>; color?: ApiColor }
       type?: "paragraph"
       object?: "block"
     }
   | {
-      bulleted_list_item: { rich_text: Array<RichTextItemRequest> }
+      bulleted_list_item: {
+        rich_text: Array<RichTextItemRequest>
+        color?: ApiColor
+      }
       type?: "bulleted_list_item"
       object?: "block"
     }
   | {
-      numbered_list_item: { rich_text: Array<RichTextItemRequest> }
+      numbered_list_item: {
+        rich_text: Array<RichTextItemRequest>
+        color?: ApiColor
+      }
       type?: "numbered_list_item"
       object?: "block"
     }
   | {
-      quote: { rich_text: Array<RichTextItemRequest> }
+      quote: { rich_text: Array<RichTextItemRequest>; color?: ApiColor }
       type?: "quote"
       object?: "block"
     }
   | {
-      to_do: { rich_text: Array<RichTextItemRequest>; checked?: boolean }
+      to_do: {
+        rich_text: Array<RichTextItemRequest>
+        checked?: boolean
+        color?: ApiColor
+      }
       type?: "to_do"
       object?: "block"
     }
   | {
-      toggle: { rich_text: Array<RichTextItemRequest> }
+      toggle: { rich_text: Array<RichTextItemRequest>; color?: ApiColor }
       type?: "toggle"
       object?: "block"
     }
@@ -5260,6 +5279,7 @@ type BlockObjectRequestWithoutChildren =
         icon?:
           | { emoji: EmojiRequest; type?: "emoji" }
           | { external: { url: TextRequest }; type?: "external" }
+        color?: ApiColor
       }
       type?: "callout"
       object?: "block"
@@ -5341,7 +5361,7 @@ type BlockObjectRequest =
   | { divider: EmptyObject; type?: "divider"; object?: "block" }
   | { breadcrumb: EmptyObject; type?: "breadcrumb"; object?: "block" }
   | {
-      table_of_contents: EmptyObject
+      table_of_contents: { color?: ApiColor }
       type?: "table_of_contents"
       object?: "block"
     }
@@ -5441,7 +5461,7 @@ type BlockObjectRequest =
                   object?: "block"
                 }
               | {
-                  table_of_contents: EmptyObject
+                  table_of_contents: { color?: ApiColor }
                   type?: "table_of_contents"
                   object?: "block"
                 }
@@ -5460,6 +5480,7 @@ type BlockObjectRequest =
               | {
                   heading_1: {
                     rich_text: Array<RichTextItemRequest>
+                    color?: ApiColor
                     children?: Array<BlockObjectRequestWithoutChildren>
                   }
                   type?: "heading_1"
@@ -5468,6 +5489,7 @@ type BlockObjectRequest =
               | {
                   heading_2: {
                     rich_text: Array<RichTextItemRequest>
+                    color?: ApiColor
                     children?: Array<BlockObjectRequestWithoutChildren>
                   }
                   type?: "heading_2"
@@ -5476,6 +5498,7 @@ type BlockObjectRequest =
               | {
                   heading_3: {
                     rich_text: Array<RichTextItemRequest>
+                    color?: ApiColor
                     children?: Array<BlockObjectRequestWithoutChildren>
                   }
                   type?: "heading_3"
@@ -5484,6 +5507,7 @@ type BlockObjectRequest =
               | {
                   paragraph: {
                     rich_text: Array<RichTextItemRequest>
+                    color?: ApiColor
                     children?: Array<BlockObjectRequestWithoutChildren>
                   }
                   type?: "paragraph"
@@ -5492,6 +5516,7 @@ type BlockObjectRequest =
               | {
                   bulleted_list_item: {
                     rich_text: Array<RichTextItemRequest>
+                    color?: ApiColor
                     children?: Array<BlockObjectRequestWithoutChildren>
                   }
                   type?: "bulleted_list_item"
@@ -5500,6 +5525,7 @@ type BlockObjectRequest =
               | {
                   numbered_list_item: {
                     rich_text: Array<RichTextItemRequest>
+                    color?: ApiColor
                     children?: Array<BlockObjectRequestWithoutChildren>
                   }
                   type?: "numbered_list_item"
@@ -5508,6 +5534,7 @@ type BlockObjectRequest =
               | {
                   quote: {
                     rich_text: Array<RichTextItemRequest>
+                    color?: ApiColor
                     children?: Array<BlockObjectRequestWithoutChildren>
                   }
                   type?: "quote"
@@ -5516,6 +5543,7 @@ type BlockObjectRequest =
               | {
                   to_do: {
                     rich_text: Array<RichTextItemRequest>
+                    color?: ApiColor
                     children?: Array<BlockObjectRequestWithoutChildren>
                     checked?: boolean
                   }
@@ -5525,6 +5553,7 @@ type BlockObjectRequest =
               | {
                   toggle: {
                     rich_text: Array<RichTextItemRequest>
+                    color?: ApiColor
                     children?: Array<BlockObjectRequestWithoutChildren>
                   }
                   type?: "toggle"
@@ -5541,6 +5570,7 @@ type BlockObjectRequest =
               | {
                   callout: {
                     rich_text: Array<RichTextItemRequest>
+                    color?: ApiColor
                     children?: Array<BlockObjectRequestWithoutChildren>
                     icon?:
                       | { emoji: EmojiRequest; type?: "emoji" }
@@ -5644,7 +5674,7 @@ type BlockObjectRequest =
           | { divider: EmptyObject; type?: "divider"; object?: "block" }
           | { breadcrumb: EmptyObject; type?: "breadcrumb"; object?: "block" }
           | {
-              table_of_contents: EmptyObject
+              table_of_contents: { color?: ApiColor }
               type?: "table_of_contents"
               object?: "block"
             }
@@ -5663,6 +5693,7 @@ type BlockObjectRequest =
           | {
               heading_1: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_1"
@@ -5671,6 +5702,7 @@ type BlockObjectRequest =
           | {
               heading_2: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_2"
@@ -5679,6 +5711,7 @@ type BlockObjectRequest =
           | {
               heading_3: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_3"
@@ -5687,6 +5720,7 @@ type BlockObjectRequest =
           | {
               paragraph: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "paragraph"
@@ -5695,6 +5729,7 @@ type BlockObjectRequest =
           | {
               bulleted_list_item: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "bulleted_list_item"
@@ -5703,6 +5738,7 @@ type BlockObjectRequest =
           | {
               numbered_list_item: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "numbered_list_item"
@@ -5711,6 +5747,7 @@ type BlockObjectRequest =
           | {
               quote: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "quote"
@@ -5719,6 +5756,7 @@ type BlockObjectRequest =
           | {
               to_do: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
                 checked?: boolean
               }
@@ -5728,6 +5766,7 @@ type BlockObjectRequest =
           | {
               toggle: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "toggle"
@@ -5744,6 +5783,7 @@ type BlockObjectRequest =
           | {
               callout: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
                 icon?:
                   | { emoji: EmojiRequest; type?: "emoji" }
@@ -5778,6 +5818,7 @@ type BlockObjectRequest =
   | {
       heading_1: {
         rich_text: Array<RichTextItemRequest>
+        color?: ApiColor
         children?: Array<
           | {
               embed: { url: string; caption?: Array<RichTextItemRequest> }
@@ -5851,7 +5892,7 @@ type BlockObjectRequest =
           | { divider: EmptyObject; type?: "divider"; object?: "block" }
           | { breadcrumb: EmptyObject; type?: "breadcrumb"; object?: "block" }
           | {
-              table_of_contents: EmptyObject
+              table_of_contents: { color?: ApiColor }
               type?: "table_of_contents"
               object?: "block"
             }
@@ -5870,6 +5911,7 @@ type BlockObjectRequest =
           | {
               heading_1: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_1"
@@ -5878,6 +5920,7 @@ type BlockObjectRequest =
           | {
               heading_2: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_2"
@@ -5886,6 +5929,7 @@ type BlockObjectRequest =
           | {
               heading_3: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_3"
@@ -5894,6 +5938,7 @@ type BlockObjectRequest =
           | {
               paragraph: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "paragraph"
@@ -5902,6 +5947,7 @@ type BlockObjectRequest =
           | {
               bulleted_list_item: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "bulleted_list_item"
@@ -5910,6 +5956,7 @@ type BlockObjectRequest =
           | {
               numbered_list_item: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "numbered_list_item"
@@ -5918,6 +5965,7 @@ type BlockObjectRequest =
           | {
               quote: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "quote"
@@ -5926,6 +5974,7 @@ type BlockObjectRequest =
           | {
               to_do: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
                 checked?: boolean
               }
@@ -5935,6 +5984,7 @@ type BlockObjectRequest =
           | {
               toggle: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "toggle"
@@ -5951,6 +6001,7 @@ type BlockObjectRequest =
           | {
               callout: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
                 icon?:
                   | { emoji: EmojiRequest; type?: "emoji" }
@@ -5975,6 +6026,7 @@ type BlockObjectRequest =
   | {
       heading_2: {
         rich_text: Array<RichTextItemRequest>
+        color?: ApiColor
         children?: Array<
           | {
               embed: { url: string; caption?: Array<RichTextItemRequest> }
@@ -6048,7 +6100,7 @@ type BlockObjectRequest =
           | { divider: EmptyObject; type?: "divider"; object?: "block" }
           | { breadcrumb: EmptyObject; type?: "breadcrumb"; object?: "block" }
           | {
-              table_of_contents: EmptyObject
+              table_of_contents: { color?: ApiColor }
               type?: "table_of_contents"
               object?: "block"
             }
@@ -6067,6 +6119,7 @@ type BlockObjectRequest =
           | {
               heading_1: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_1"
@@ -6075,6 +6128,7 @@ type BlockObjectRequest =
           | {
               heading_2: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_2"
@@ -6083,6 +6137,7 @@ type BlockObjectRequest =
           | {
               heading_3: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_3"
@@ -6091,6 +6146,7 @@ type BlockObjectRequest =
           | {
               paragraph: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "paragraph"
@@ -6099,6 +6155,7 @@ type BlockObjectRequest =
           | {
               bulleted_list_item: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "bulleted_list_item"
@@ -6107,6 +6164,7 @@ type BlockObjectRequest =
           | {
               numbered_list_item: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "numbered_list_item"
@@ -6115,6 +6173,7 @@ type BlockObjectRequest =
           | {
               quote: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "quote"
@@ -6123,6 +6182,7 @@ type BlockObjectRequest =
           | {
               to_do: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
                 checked?: boolean
               }
@@ -6132,6 +6192,7 @@ type BlockObjectRequest =
           | {
               toggle: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "toggle"
@@ -6148,6 +6209,7 @@ type BlockObjectRequest =
           | {
               callout: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
                 icon?:
                   | { emoji: EmojiRequest; type?: "emoji" }
@@ -6172,6 +6234,7 @@ type BlockObjectRequest =
   | {
       heading_3: {
         rich_text: Array<RichTextItemRequest>
+        color?: ApiColor
         children?: Array<
           | {
               embed: { url: string; caption?: Array<RichTextItemRequest> }
@@ -6245,7 +6308,7 @@ type BlockObjectRequest =
           | { divider: EmptyObject; type?: "divider"; object?: "block" }
           | { breadcrumb: EmptyObject; type?: "breadcrumb"; object?: "block" }
           | {
-              table_of_contents: EmptyObject
+              table_of_contents: { color?: ApiColor }
               type?: "table_of_contents"
               object?: "block"
             }
@@ -6264,6 +6327,7 @@ type BlockObjectRequest =
           | {
               heading_1: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_1"
@@ -6272,6 +6336,7 @@ type BlockObjectRequest =
           | {
               heading_2: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_2"
@@ -6280,6 +6345,7 @@ type BlockObjectRequest =
           | {
               heading_3: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_3"
@@ -6288,6 +6354,7 @@ type BlockObjectRequest =
           | {
               paragraph: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "paragraph"
@@ -6296,6 +6363,7 @@ type BlockObjectRequest =
           | {
               bulleted_list_item: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "bulleted_list_item"
@@ -6304,6 +6372,7 @@ type BlockObjectRequest =
           | {
               numbered_list_item: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "numbered_list_item"
@@ -6312,6 +6381,7 @@ type BlockObjectRequest =
           | {
               quote: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "quote"
@@ -6320,6 +6390,7 @@ type BlockObjectRequest =
           | {
               to_do: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
                 checked?: boolean
               }
@@ -6329,6 +6400,7 @@ type BlockObjectRequest =
           | {
               toggle: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "toggle"
@@ -6345,6 +6417,7 @@ type BlockObjectRequest =
           | {
               callout: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
                 icon?:
                   | { emoji: EmojiRequest; type?: "emoji" }
@@ -6369,6 +6442,7 @@ type BlockObjectRequest =
   | {
       paragraph: {
         rich_text: Array<RichTextItemRequest>
+        color?: ApiColor
         children?: Array<
           | {
               embed: { url: string; caption?: Array<RichTextItemRequest> }
@@ -6442,7 +6516,7 @@ type BlockObjectRequest =
           | { divider: EmptyObject; type?: "divider"; object?: "block" }
           | { breadcrumb: EmptyObject; type?: "breadcrumb"; object?: "block" }
           | {
-              table_of_contents: EmptyObject
+              table_of_contents: { color?: ApiColor }
               type?: "table_of_contents"
               object?: "block"
             }
@@ -6461,6 +6535,7 @@ type BlockObjectRequest =
           | {
               heading_1: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_1"
@@ -6469,6 +6544,7 @@ type BlockObjectRequest =
           | {
               heading_2: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_2"
@@ -6477,6 +6553,7 @@ type BlockObjectRequest =
           | {
               heading_3: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_3"
@@ -6485,6 +6562,7 @@ type BlockObjectRequest =
           | {
               paragraph: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "paragraph"
@@ -6493,6 +6571,7 @@ type BlockObjectRequest =
           | {
               bulleted_list_item: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "bulleted_list_item"
@@ -6501,6 +6580,7 @@ type BlockObjectRequest =
           | {
               numbered_list_item: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "numbered_list_item"
@@ -6509,6 +6589,7 @@ type BlockObjectRequest =
           | {
               quote: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "quote"
@@ -6517,6 +6598,7 @@ type BlockObjectRequest =
           | {
               to_do: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
                 checked?: boolean
               }
@@ -6526,6 +6608,7 @@ type BlockObjectRequest =
           | {
               toggle: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "toggle"
@@ -6542,6 +6625,7 @@ type BlockObjectRequest =
           | {
               callout: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
                 icon?:
                   | { emoji: EmojiRequest; type?: "emoji" }
@@ -6566,6 +6650,7 @@ type BlockObjectRequest =
   | {
       bulleted_list_item: {
         rich_text: Array<RichTextItemRequest>
+        color?: ApiColor
         children?: Array<
           | {
               embed: { url: string; caption?: Array<RichTextItemRequest> }
@@ -6639,7 +6724,7 @@ type BlockObjectRequest =
           | { divider: EmptyObject; type?: "divider"; object?: "block" }
           | { breadcrumb: EmptyObject; type?: "breadcrumb"; object?: "block" }
           | {
-              table_of_contents: EmptyObject
+              table_of_contents: { color?: ApiColor }
               type?: "table_of_contents"
               object?: "block"
             }
@@ -6658,6 +6743,7 @@ type BlockObjectRequest =
           | {
               heading_1: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_1"
@@ -6666,6 +6752,7 @@ type BlockObjectRequest =
           | {
               heading_2: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_2"
@@ -6674,6 +6761,7 @@ type BlockObjectRequest =
           | {
               heading_3: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_3"
@@ -6682,6 +6770,7 @@ type BlockObjectRequest =
           | {
               paragraph: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "paragraph"
@@ -6690,6 +6779,7 @@ type BlockObjectRequest =
           | {
               bulleted_list_item: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "bulleted_list_item"
@@ -6698,6 +6788,7 @@ type BlockObjectRequest =
           | {
               numbered_list_item: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "numbered_list_item"
@@ -6706,6 +6797,7 @@ type BlockObjectRequest =
           | {
               quote: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "quote"
@@ -6714,6 +6806,7 @@ type BlockObjectRequest =
           | {
               to_do: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
                 checked?: boolean
               }
@@ -6723,6 +6816,7 @@ type BlockObjectRequest =
           | {
               toggle: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "toggle"
@@ -6739,6 +6833,7 @@ type BlockObjectRequest =
           | {
               callout: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
                 icon?:
                   | { emoji: EmojiRequest; type?: "emoji" }
@@ -6763,6 +6858,7 @@ type BlockObjectRequest =
   | {
       numbered_list_item: {
         rich_text: Array<RichTextItemRequest>
+        color?: ApiColor
         children?: Array<
           | {
               embed: { url: string; caption?: Array<RichTextItemRequest> }
@@ -6836,7 +6932,7 @@ type BlockObjectRequest =
           | { divider: EmptyObject; type?: "divider"; object?: "block" }
           | { breadcrumb: EmptyObject; type?: "breadcrumb"; object?: "block" }
           | {
-              table_of_contents: EmptyObject
+              table_of_contents: { color?: ApiColor }
               type?: "table_of_contents"
               object?: "block"
             }
@@ -6855,6 +6951,7 @@ type BlockObjectRequest =
           | {
               heading_1: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_1"
@@ -6863,6 +6960,7 @@ type BlockObjectRequest =
           | {
               heading_2: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_2"
@@ -6871,6 +6969,7 @@ type BlockObjectRequest =
           | {
               heading_3: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_3"
@@ -6879,6 +6978,7 @@ type BlockObjectRequest =
           | {
               paragraph: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "paragraph"
@@ -6887,6 +6987,7 @@ type BlockObjectRequest =
           | {
               bulleted_list_item: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "bulleted_list_item"
@@ -6895,6 +6996,7 @@ type BlockObjectRequest =
           | {
               numbered_list_item: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "numbered_list_item"
@@ -6903,6 +7005,7 @@ type BlockObjectRequest =
           | {
               quote: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "quote"
@@ -6911,6 +7014,7 @@ type BlockObjectRequest =
           | {
               to_do: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
                 checked?: boolean
               }
@@ -6920,6 +7024,7 @@ type BlockObjectRequest =
           | {
               toggle: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "toggle"
@@ -6936,6 +7041,7 @@ type BlockObjectRequest =
           | {
               callout: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
                 icon?:
                   | { emoji: EmojiRequest; type?: "emoji" }
@@ -6960,6 +7066,7 @@ type BlockObjectRequest =
   | {
       quote: {
         rich_text: Array<RichTextItemRequest>
+        color?: ApiColor
         children?: Array<
           | {
               embed: { url: string; caption?: Array<RichTextItemRequest> }
@@ -7033,7 +7140,7 @@ type BlockObjectRequest =
           | { divider: EmptyObject; type?: "divider"; object?: "block" }
           | { breadcrumb: EmptyObject; type?: "breadcrumb"; object?: "block" }
           | {
-              table_of_contents: EmptyObject
+              table_of_contents: { color?: ApiColor }
               type?: "table_of_contents"
               object?: "block"
             }
@@ -7052,6 +7159,7 @@ type BlockObjectRequest =
           | {
               heading_1: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_1"
@@ -7060,6 +7168,7 @@ type BlockObjectRequest =
           | {
               heading_2: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_2"
@@ -7068,6 +7177,7 @@ type BlockObjectRequest =
           | {
               heading_3: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_3"
@@ -7076,6 +7186,7 @@ type BlockObjectRequest =
           | {
               paragraph: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "paragraph"
@@ -7084,6 +7195,7 @@ type BlockObjectRequest =
           | {
               bulleted_list_item: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "bulleted_list_item"
@@ -7092,6 +7204,7 @@ type BlockObjectRequest =
           | {
               numbered_list_item: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "numbered_list_item"
@@ -7100,6 +7213,7 @@ type BlockObjectRequest =
           | {
               quote: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "quote"
@@ -7108,6 +7222,7 @@ type BlockObjectRequest =
           | {
               to_do: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
                 checked?: boolean
               }
@@ -7117,6 +7232,7 @@ type BlockObjectRequest =
           | {
               toggle: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "toggle"
@@ -7133,6 +7249,7 @@ type BlockObjectRequest =
           | {
               callout: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
                 icon?:
                   | { emoji: EmojiRequest; type?: "emoji" }
@@ -7157,6 +7274,7 @@ type BlockObjectRequest =
   | {
       to_do: {
         rich_text: Array<RichTextItemRequest>
+        color?: ApiColor
         children?: Array<
           | {
               embed: { url: string; caption?: Array<RichTextItemRequest> }
@@ -7230,7 +7348,7 @@ type BlockObjectRequest =
           | { divider: EmptyObject; type?: "divider"; object?: "block" }
           | { breadcrumb: EmptyObject; type?: "breadcrumb"; object?: "block" }
           | {
-              table_of_contents: EmptyObject
+              table_of_contents: { color?: ApiColor }
               type?: "table_of_contents"
               object?: "block"
             }
@@ -7249,6 +7367,7 @@ type BlockObjectRequest =
           | {
               heading_1: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_1"
@@ -7257,6 +7376,7 @@ type BlockObjectRequest =
           | {
               heading_2: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_2"
@@ -7265,6 +7385,7 @@ type BlockObjectRequest =
           | {
               heading_3: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_3"
@@ -7273,6 +7394,7 @@ type BlockObjectRequest =
           | {
               paragraph: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "paragraph"
@@ -7281,6 +7403,7 @@ type BlockObjectRequest =
           | {
               bulleted_list_item: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "bulleted_list_item"
@@ -7289,6 +7412,7 @@ type BlockObjectRequest =
           | {
               numbered_list_item: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "numbered_list_item"
@@ -7297,6 +7421,7 @@ type BlockObjectRequest =
           | {
               quote: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "quote"
@@ -7305,6 +7430,7 @@ type BlockObjectRequest =
           | {
               to_do: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
                 checked?: boolean
               }
@@ -7314,6 +7440,7 @@ type BlockObjectRequest =
           | {
               toggle: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "toggle"
@@ -7330,6 +7457,7 @@ type BlockObjectRequest =
           | {
               callout: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
                 icon?:
                   | { emoji: EmojiRequest; type?: "emoji" }
@@ -7355,6 +7483,7 @@ type BlockObjectRequest =
   | {
       toggle: {
         rich_text: Array<RichTextItemRequest>
+        color?: ApiColor
         children?: Array<
           | {
               embed: { url: string; caption?: Array<RichTextItemRequest> }
@@ -7428,7 +7557,7 @@ type BlockObjectRequest =
           | { divider: EmptyObject; type?: "divider"; object?: "block" }
           | { breadcrumb: EmptyObject; type?: "breadcrumb"; object?: "block" }
           | {
-              table_of_contents: EmptyObject
+              table_of_contents: { color?: ApiColor }
               type?: "table_of_contents"
               object?: "block"
             }
@@ -7447,6 +7576,7 @@ type BlockObjectRequest =
           | {
               heading_1: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_1"
@@ -7455,6 +7585,7 @@ type BlockObjectRequest =
           | {
               heading_2: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_2"
@@ -7463,6 +7594,7 @@ type BlockObjectRequest =
           | {
               heading_3: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_3"
@@ -7471,6 +7603,7 @@ type BlockObjectRequest =
           | {
               paragraph: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "paragraph"
@@ -7479,6 +7612,7 @@ type BlockObjectRequest =
           | {
               bulleted_list_item: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "bulleted_list_item"
@@ -7487,6 +7621,7 @@ type BlockObjectRequest =
           | {
               numbered_list_item: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "numbered_list_item"
@@ -7495,6 +7630,7 @@ type BlockObjectRequest =
           | {
               quote: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "quote"
@@ -7503,6 +7639,7 @@ type BlockObjectRequest =
           | {
               to_do: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
                 checked?: boolean
               }
@@ -7512,6 +7649,7 @@ type BlockObjectRequest =
           | {
               toggle: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "toggle"
@@ -7528,6 +7666,7 @@ type BlockObjectRequest =
           | {
               callout: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
                 icon?:
                   | { emoji: EmojiRequest; type?: "emoji" }
@@ -7625,7 +7764,7 @@ type BlockObjectRequest =
           | { divider: EmptyObject; type?: "divider"; object?: "block" }
           | { breadcrumb: EmptyObject; type?: "breadcrumb"; object?: "block" }
           | {
-              table_of_contents: EmptyObject
+              table_of_contents: { color?: ApiColor }
               type?: "table_of_contents"
               object?: "block"
             }
@@ -7644,6 +7783,7 @@ type BlockObjectRequest =
           | {
               heading_1: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_1"
@@ -7652,6 +7792,7 @@ type BlockObjectRequest =
           | {
               heading_2: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_2"
@@ -7660,6 +7801,7 @@ type BlockObjectRequest =
           | {
               heading_3: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_3"
@@ -7668,6 +7810,7 @@ type BlockObjectRequest =
           | {
               paragraph: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "paragraph"
@@ -7676,6 +7819,7 @@ type BlockObjectRequest =
           | {
               bulleted_list_item: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "bulleted_list_item"
@@ -7684,6 +7828,7 @@ type BlockObjectRequest =
           | {
               numbered_list_item: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "numbered_list_item"
@@ -7692,6 +7837,7 @@ type BlockObjectRequest =
           | {
               quote: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "quote"
@@ -7700,6 +7846,7 @@ type BlockObjectRequest =
           | {
               to_do: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
                 checked?: boolean
               }
@@ -7709,6 +7856,7 @@ type BlockObjectRequest =
           | {
               toggle: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "toggle"
@@ -7725,6 +7873,7 @@ type BlockObjectRequest =
           | {
               callout: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
                 icon?:
                   | { emoji: EmojiRequest; type?: "emoji" }
@@ -7749,6 +7898,7 @@ type BlockObjectRequest =
   | {
       callout: {
         rich_text: Array<RichTextItemRequest>
+        color?: ApiColor
         children?: Array<
           | {
               embed: { url: string; caption?: Array<RichTextItemRequest> }
@@ -7822,7 +7972,7 @@ type BlockObjectRequest =
           | { divider: EmptyObject; type?: "divider"; object?: "block" }
           | { breadcrumb: EmptyObject; type?: "breadcrumb"; object?: "block" }
           | {
-              table_of_contents: EmptyObject
+              table_of_contents: { color?: ApiColor }
               type?: "table_of_contents"
               object?: "block"
             }
@@ -7841,6 +7991,7 @@ type BlockObjectRequest =
           | {
               heading_1: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_1"
@@ -7849,6 +8000,7 @@ type BlockObjectRequest =
           | {
               heading_2: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_2"
@@ -7857,6 +8009,7 @@ type BlockObjectRequest =
           | {
               heading_3: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_3"
@@ -7865,6 +8018,7 @@ type BlockObjectRequest =
           | {
               paragraph: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "paragraph"
@@ -7873,6 +8027,7 @@ type BlockObjectRequest =
           | {
               bulleted_list_item: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "bulleted_list_item"
@@ -7881,6 +8036,7 @@ type BlockObjectRequest =
           | {
               numbered_list_item: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "numbered_list_item"
@@ -7889,6 +8045,7 @@ type BlockObjectRequest =
           | {
               quote: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "quote"
@@ -7897,6 +8054,7 @@ type BlockObjectRequest =
           | {
               to_do: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
                 checked?: boolean
               }
@@ -7906,6 +8064,7 @@ type BlockObjectRequest =
           | {
               toggle: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "toggle"
@@ -7922,6 +8081,7 @@ type BlockObjectRequest =
           | {
               callout: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
                 icon?:
                   | { emoji: EmojiRequest; type?: "emoji" }
@@ -8022,7 +8182,7 @@ type BlockObjectRequest =
           | { divider: EmptyObject; type?: "divider"; object?: "block" }
           | { breadcrumb: EmptyObject; type?: "breadcrumb"; object?: "block" }
           | {
-              table_of_contents: EmptyObject
+              table_of_contents: { color?: ApiColor }
               type?: "table_of_contents"
               object?: "block"
             }
@@ -8041,6 +8201,7 @@ type BlockObjectRequest =
           | {
               heading_1: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_1"
@@ -8049,6 +8210,7 @@ type BlockObjectRequest =
           | {
               heading_2: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_2"
@@ -8057,6 +8219,7 @@ type BlockObjectRequest =
           | {
               heading_3: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "heading_3"
@@ -8065,6 +8228,7 @@ type BlockObjectRequest =
           | {
               paragraph: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "paragraph"
@@ -8073,6 +8237,7 @@ type BlockObjectRequest =
           | {
               bulleted_list_item: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "bulleted_list_item"
@@ -8081,6 +8246,7 @@ type BlockObjectRequest =
           | {
               numbered_list_item: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "numbered_list_item"
@@ -8089,6 +8255,7 @@ type BlockObjectRequest =
           | {
               quote: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "quote"
@@ -8097,6 +8264,7 @@ type BlockObjectRequest =
           | {
               to_do: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
                 checked?: boolean
               }
@@ -8106,6 +8274,7 @@ type BlockObjectRequest =
           | {
               toggle: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "toggle"
@@ -8122,6 +8291,7 @@ type BlockObjectRequest =
           | {
               callout: {
                 rich_text: Array<RichTextItemRequest>
+                color?: ApiColor
                 children?: Array<BlockObjectRequestWithoutChildren>
                 icon?:
                   | { emoji: EmojiRequest; type?: "emoji" }
@@ -9460,7 +9630,7 @@ type UpdateBlockBodyParameters =
   | { divider: EmptyObject; type?: "divider"; archived?: boolean }
   | { breadcrumb: EmptyObject; type?: "breadcrumb"; archived?: boolean }
   | {
-      table_of_contents: EmptyObject
+      table_of_contents: { color?: ApiColor }
       type?: "table_of_contents"
       archived?: boolean
     }
@@ -9477,47 +9647,57 @@ type UpdateBlockBodyParameters =
       archived?: boolean
     }
   | {
-      heading_1: { rich_text: Array<RichTextItemRequest> }
+      heading_1: { rich_text: Array<RichTextItemRequest>; color?: ApiColor }
       type?: "heading_1"
       archived?: boolean
     }
   | {
-      heading_2: { rich_text: Array<RichTextItemRequest> }
+      heading_2: { rich_text: Array<RichTextItemRequest>; color?: ApiColor }
       type?: "heading_2"
       archived?: boolean
     }
   | {
-      heading_3: { rich_text: Array<RichTextItemRequest> }
+      heading_3: { rich_text: Array<RichTextItemRequest>; color?: ApiColor }
       type?: "heading_3"
       archived?: boolean
     }
   | {
-      paragraph: { rich_text: Array<RichTextItemRequest> }
+      paragraph: { rich_text: Array<RichTextItemRequest>; color?: ApiColor }
       type?: "paragraph"
       archived?: boolean
     }
   | {
-      bulleted_list_item: { rich_text: Array<RichTextItemRequest> }
+      bulleted_list_item: {
+        rich_text: Array<RichTextItemRequest>
+        color?: ApiColor
+      }
       type?: "bulleted_list_item"
       archived?: boolean
     }
   | {
-      numbered_list_item: { rich_text: Array<RichTextItemRequest> }
+      numbered_list_item: {
+        rich_text: Array<RichTextItemRequest>
+        color?: ApiColor
+      }
       type?: "numbered_list_item"
       archived?: boolean
     }
   | {
-      quote: { rich_text: Array<RichTextItemRequest> }
+      quote: { rich_text: Array<RichTextItemRequest>; color?: ApiColor }
       type?: "quote"
       archived?: boolean
     }
   | {
-      to_do: { rich_text?: Array<RichTextItemRequest>; checked?: boolean }
+      to_do: {
+        rich_text?: Array<RichTextItemRequest>
+        checked?: boolean
+        color?: ApiColor
+      }
       type?: "to_do"
       archived?: boolean
     }
   | {
-      toggle: { rich_text: Array<RichTextItemRequest> }
+      toggle: { rich_text: Array<RichTextItemRequest>; color?: ApiColor }
       type?: "toggle"
       archived?: boolean
     }
@@ -9532,6 +9712,7 @@ type UpdateBlockBodyParameters =
         icon?:
           | { emoji: EmojiRequest; type?: "emoji" }
           | { external: { url: TextRequest }; type?: "external" }
+        color?: ApiColor
       }
       type?: "callout"
       archived?: boolean
