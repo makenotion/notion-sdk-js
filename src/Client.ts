@@ -104,7 +104,7 @@ export default class Client {
   #fetch: SupportedFetch
   #userAgent: string
 
-  static readonly defaultNotionVersion = "2021-08-16"
+  static readonly defaultNotionVersion = "2022-02-22"
 
   public constructor(options?: ClientOptions) {
     this.#auth = options?.auth

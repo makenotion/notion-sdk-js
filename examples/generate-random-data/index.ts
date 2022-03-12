@@ -214,8 +214,6 @@ function extractValueToString(
         )
       } else if (property.rollup.type === "array") {
         return JSON.stringify(property.rollup.array)
-      } else if (property.rollup.type === "unsupported") {
-        return "???"
       } else {
         return assertUnreachable(property.rollup)
       }
@@ -333,15 +331,13 @@ async function exerciseFilters(
     `\n\nLooking for text column with id "${textColumnId}" contains letter "${letterToFind}"`
   )
 
-  const textFilter = {
-    property: textColumnId,
-    text: { contains: letterToFind },
-  }
-
   // Check we can search by id
   const matchingTextResults = await notion.databases.query({
     database_id: databaseId,
-    filter: textFilter,
+    filter: {
+      property: textColumnId,
+      rich_text: { contains: letterToFind },
+    },
   })
 
   console.log(
