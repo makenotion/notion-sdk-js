@@ -7943,6 +7943,18 @@ export type PropertyFilter =
     }
   | { formula: FormulaPropertyFilter; property: string; type?: "formula" }
   | { rollup: RollupPropertyFilter; property: string; type?: "rollup" }
+
+export type TimestampCreatedTimeFilter = {
+  created_time: DatePropertyFilter
+  timestamp: "created_time"
+  type?: "created_time"
+}
+
+export type TimestampLastEditedTimeFilter = {
+  last_edited_time: DatePropertyFilter
+  timestamp: "last_edited_time"
+  type?: "last_edited_time"
+}
 export type GetSelfParameters = Record<string, never>
 
 export type GetSelfResponse = UserObjectResponse
@@ -8724,26 +8736,39 @@ export type GetPagePropertyParameters = GetPagePropertyPathParameters &
   GetPagePropertyQueryParameters
 
 export type GetPagePropertyResponse =
-  | { type: "number"; number: number | null; object: "property_item" }
-  | { type: "url"; url: string | null; object: "property_item" }
+  | {
+      type: "number"
+      number: number | null
+      object: "property_item"
+      id: string
+    }
+  | { type: "url"; url: string | null; object: "property_item"; id: string }
   | {
       type: "select"
       select: SelectPropertyResponse | null
       object: "property_item"
+      id: string
     }
   | {
       type: "multi_select"
       multi_select: Array<SelectPropertyResponse>
       object: "property_item"
+      id: string
     }
-  | { type: "date"; date: DateResponse | null; object: "property_item" }
-  | { type: "email"; email: string | null; object: "property_item" }
+  | {
+      type: "date"
+      date: DateResponse | null
+      object: "property_item"
+      id: string
+    }
+  | { type: "email"; email: string | null; object: "property_item"; id: string }
   | {
       type: "phone_number"
       phone_number: string | null
       object: "property_item"
+      id: string
     }
-  | { type: "checkbox"; checkbox: boolean; object: "property_item" }
+  | { type: "checkbox"; checkbox: boolean; object: "property_item"; id: string }
   | {
       type: "files"
       files: Array<
@@ -8759,22 +8784,31 @@ export type GetPagePropertyResponse =
           }
       >
       object: "property_item"
+      id: string
     }
   | {
       type: "created_by"
       created_by: PartialUserObjectResponse
       object: "property_item"
+      id: string
     }
-  | { type: "created_time"; created_time: string; object: "property_item" }
+  | {
+      type: "created_time"
+      created_time: string
+      object: "property_item"
+      id: string
+    }
   | {
       type: "last_edited_by"
       last_edited_by: PartialUserObjectResponse
       object: "property_item"
+      id: string
     }
   | {
       type: "last_edited_time"
       last_edited_time: string
       object: "property_item"
+      id: string
     }
   | {
       type: "formula"
@@ -8784,19 +8818,32 @@ export type GetPagePropertyResponse =
         | { type: "number"; number: number | null }
         | { type: "boolean"; boolean: boolean | null }
       object: "property_item"
+      id: string
     }
-  | { type: "title"; title: RichTextItemResponse; object: "property_item" }
+  | {
+      type: "title"
+      title: RichTextItemResponse
+      object: "property_item"
+      id: string
+    }
   | {
       type: "rich_text"
       rich_text: RichTextItemResponse
       object: "property_item"
+      id: string
     }
   | {
       type: "people"
       people: PartialUserObjectResponse
       object: "property_item"
+      id: string
     }
-  | { type: "relation"; relation: { id: string }; object: "property_item" }
+  | {
+      type: "relation"
+      relation: { id: string }
+      object: "property_item"
+      id: string
+    }
   | {
       type: "rollup"
       rollup:
@@ -8814,14 +8861,35 @@ export type GetPagePropertyResponse =
             function: RollupFunction
           }
       object: "property_item"
+      id: string
     }
   | {
       type: "property_item"
       property_item:
-        | { type: "title"; title: EmptyObject; next_url: string | null }
-        | { type: "rich_text"; rich_text: EmptyObject; next_url: string | null }
-        | { type: "people"; people: EmptyObject; next_url: string | null }
-        | { type: "relation"; relation: EmptyObject; next_url: string | null }
+        | {
+            type: "title"
+            title: EmptyObject
+            next_url: string | null
+            id: string
+          }
+        | {
+            type: "rich_text"
+            rich_text: EmptyObject
+            next_url: string | null
+            id: string
+          }
+        | {
+            type: "people"
+            people: EmptyObject
+            next_url: string | null
+            id: string
+          }
+        | {
+            type: "relation"
+            relation: EmptyObject
+            next_url: string | null
+            id: string
+          }
         | {
             type: "rollup"
             rollup:
@@ -8851,31 +8919,60 @@ export type GetPagePropertyResponse =
                   function: RollupFunction
                 }
             next_url: string | null
+            id: string
           }
       object: "list"
       next_cursor: string | null
       has_more: boolean
       results: Array<
-        | { type: "number"; number: number | null; object: "property_item" }
-        | { type: "url"; url: string | null; object: "property_item" }
+        | {
+            type: "number"
+            number: number | null
+            object: "property_item"
+            id: string
+          }
+        | {
+            type: "url"
+            url: string | null
+            object: "property_item"
+            id: string
+          }
         | {
             type: "select"
             select: SelectPropertyResponse | null
             object: "property_item"
+            id: string
           }
         | {
             type: "multi_select"
             multi_select: Array<SelectPropertyResponse>
             object: "property_item"
+            id: string
           }
-        | { type: "date"; date: DateResponse | null; object: "property_item" }
-        | { type: "email"; email: string | null; object: "property_item" }
+        | {
+            type: "date"
+            date: DateResponse | null
+            object: "property_item"
+            id: string
+          }
+        | {
+            type: "email"
+            email: string | null
+            object: "property_item"
+            id: string
+          }
         | {
             type: "phone_number"
             phone_number: string | null
             object: "property_item"
+            id: string
           }
-        | { type: "checkbox"; checkbox: boolean; object: "property_item" }
+        | {
+            type: "checkbox"
+            checkbox: boolean
+            object: "property_item"
+            id: string
+          }
         | {
             type: "files"
             files: Array<
@@ -8891,26 +8988,31 @@ export type GetPagePropertyResponse =
                 }
             >
             object: "property_item"
+            id: string
           }
         | {
             type: "created_by"
             created_by: PartialUserObjectResponse
             object: "property_item"
+            id: string
           }
         | {
             type: "created_time"
             created_time: string
             object: "property_item"
+            id: string
           }
         | {
             type: "last_edited_by"
             last_edited_by: PartialUserObjectResponse
             object: "property_item"
+            id: string
           }
         | {
             type: "last_edited_time"
             last_edited_time: string
             object: "property_item"
+            id: string
           }
         | {
             type: "formula"
@@ -8920,26 +9022,31 @@ export type GetPagePropertyResponse =
               | { type: "number"; number: number | null }
               | { type: "boolean"; boolean: boolean | null }
             object: "property_item"
+            id: string
           }
         | {
             type: "title"
             title: RichTextItemResponse
             object: "property_item"
+            id: string
           }
         | {
             type: "rich_text"
             rich_text: RichTextItemResponse
             object: "property_item"
+            id: string
           }
         | {
             type: "people"
             people: PartialUserObjectResponse
             object: "property_item"
+            id: string
           }
         | {
             type: "relation"
             relation: { id: string }
             object: "property_item"
+            id: string
           }
         | {
             type: "rollup"
@@ -8970,6 +9077,7 @@ export type GetPagePropertyResponse =
                   function: RollupFunction
                 }
             object: "property_item"
+            id: string
           }
       >
     }
@@ -9922,6 +10030,8 @@ export type QueryDatabaseBodyParameters = {
     | {
         or: Array<
           | PropertyFilter
+          | TimestampCreatedTimeFilter
+          | TimestampLastEditedTimeFilter
           | { or: Array<PropertyFilter> }
           | { and: Array<PropertyFilter> }
         >
@@ -9929,11 +10039,15 @@ export type QueryDatabaseBodyParameters = {
     | {
         and: Array<
           | PropertyFilter
+          | TimestampCreatedTimeFilter
+          | TimestampLastEditedTimeFilter
           | { or: Array<PropertyFilter> }
           | { and: Array<PropertyFilter> }
         >
       }
     | PropertyFilter
+    | TimestampCreatedTimeFilter
+    | TimestampLastEditedTimeFilter
   start_cursor?: string
   page_size?: number
   archived?: boolean
