@@ -17,6 +17,7 @@ jobs:
         - v1.13
         - v1.15
         - v1.17
+        - v1.20
         - canary
       fail-fast: false # run each branch to completion
 

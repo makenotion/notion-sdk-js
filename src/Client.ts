@@ -71,7 +71,6 @@ import {
 //   version as PACKAGE_VERSION,
 //   name as PACKAGE_NAME,
 // } from "../package.json"
-import { SupportedFetch } from "./fetch-types.ts"
 
 const PACKAGE_NAME = "cloudydeno/deno-notion_sdk";
 const PACKAGE_VERSION = "0.4.1";
@@ -83,7 +82,7 @@ export interface ClientOptions {
   logLevel?: LogLevel
   logger?: Logger
   notionVersion?: string
-  fetch?: SupportedFetch
+  fetch?: typeof fetch
 }
 
 export interface RequestParameters {
@@ -101,7 +100,7 @@ export default class Client {
   #prefixUrl: string
   #timeoutMs: number
   #notionVersion: string
-  #fetch: SupportedFetch
+  #fetch: typeof fetch
   #userAgent: string
 
   static readonly defaultNotionVersion = "2022-02-22"
