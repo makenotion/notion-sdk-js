@@ -1,6 +1,6 @@
 #!/usr/bin/env -S deno run
-import { readLines } from "https://deno.land/std@0.110.0/io/mod.ts";
-import { assertEquals } from "https://deno.land/std@0.110.0/testing/asserts.ts";
+import { readLines } from "https://deno.land/std@0.130.0/io/mod.ts";
+import { assertEquals } from "https://deno.land/std@0.130.0/testing/asserts.ts";
 
 type Lookup = {
   identifier: string;
