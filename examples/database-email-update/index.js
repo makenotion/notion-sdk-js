@@ -80,7 +80,7 @@ async function getTasksFromNotionDatabase() {
   console.log(`${pages.length} pages successfully fetched.`)
   return pages.map(page => {
     const statusProperty = page.properties["Status"]
-    const status = statusProperty ? statusProperty.select.name : "No Status"
+    const status = statusProperty.select ? statusProperty.select.name : "No Status"
     const title = page.properties["Name"].title
       .map(({ plain_text }) => plain_text)
       .join("")
