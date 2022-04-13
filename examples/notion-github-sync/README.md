@@ -15,7 +15,7 @@ This Notion integration syncs GitHub Issues for a specific repo to a Notion Data
 git clone https://github.com/makenotion/notion-sdk-js.git
 
 # Switch into this project
-cd notion-sdk-js/examples/github-issue-sync
+cd notion-sdk-js/examples/notion-github-sync
 
 # Install the dependencies
 npm install
