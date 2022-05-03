@@ -345,8 +345,12 @@ async function exerciseFilters(
 
 async function main() {
   // Find the first database this bot has access to
-  // TODO(blackmad): move to notion.search()
-  const databases = await notion.databases.list({})
+  const databases = await notion.search({
+    filter: { 
+      property: "object", 
+      value: "database",
+    }
+  });
 
   if (databases.results.length === 0) {
     throw new Error("This bot doesn't have access to any databases!")
