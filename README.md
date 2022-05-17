@@ -71,7 +71,7 @@ const myPage = await notion.databases.query({
   database_id: "897e5a76-ae52-4b48-9fdf-e71f5945d1af",
   filter: {
     property: "Landmark",
-    text: {
+    rich_text: {
       contains: "Bridge",
     },
   },
@@ -92,7 +92,7 @@ try {
     database_id: databaseId,
     filter: {
       property: "Landmark",
-      text: {
+      rich_text: {
         contains: "Bridge",
       },
     },
