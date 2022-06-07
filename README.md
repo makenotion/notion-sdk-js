@@ -189,4 +189,4 @@ Earlier versions may still work, but we encourage people building new applicatio
 
 If you want to submit a feature request for Notion's API, or are experiencing any issues with the API platform, please email us at `developers@makenotion.com`.
 
-If you found a bug with the library, please [submit an issue](https://github.com/makenotion/notion-sdk-js/issues).
+To report issues with the SDK, it is possible to [submit an issue](https://github.com/makenotion/notion-sdk-js/issues) to this repo. However, we don't monitor these issues very closely. We recommend you reach out to us at `developers@makenotion.com` instead.
