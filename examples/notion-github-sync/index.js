@@ -1,6 +1,6 @@
 /* ================================================================================
 
-	notion-github-sync.
+  notion-github-sync.
   
   Glitch example: https://glitch.com/edit/#!/notion-github-sync
   Find the official Notion API client @ https://github.com/makenotion/notion-sdk-js/
@@ -11,6 +11,7 @@ const { Client } = require("@notionhq/client")
 const dotenv = require("dotenv")
 const { Octokit } = require("octokit")
 const _ = require("lodash")
+const { markdownToBlocks } = require("@tryfabric/martian")
 
 dotenv.config()
 const octokit = new Octokit({ auth: process.env.GITHUB_KEY })
@@ -24,6 +25,7 @@ const OPERATION_BATCH_SIZE = 10
  * { [issueId: string]: string }
  */
 const gitHubIssuesIdToNotionPageId = {}
+
 
 /**
  * Initialize local data store.
@@ -115,6 +117,7 @@ async function getGitHubIssuesForRepository() {
           state: issue.state,
           comment_count: issue.comments,
           url: issue.html_url,
+          body: issue.body,
         })
       }
     }
@@ -163,6 +166,8 @@ async function createPages(pagesToCreate) {
         notion.pages.create({
           parent: { database_id: databaseId },
           properties: getPropertiesFromIssue(issue),
+          children: markdownToBlocks(issue.body),
+
         })
       )
     )
@@ -203,6 +208,13 @@ async function updatePages(pagesToUpdate) {
  */
 function getPropertiesFromIssue(issue) {
   const { title, number, state, comment_count, url } = issue
+  let task_description = /(Task Description:).*/.exec(issue.body)
+  let skills_needed = /(Skills Needed:).*/.exec(issue.body)
+
+  // Replace Task description and Skills Needed with rest of sentence
+  task_description = task_description == null ? '' : task_description[0].replace('Task Description:', '').trim()
+  skills_needed = skills_needed == null ? '' : skills_needed[0].replace('Skills Needed:', '').trim()
+
   return {
     Name: {
       title: [{ type: "text", text: { content: title } }],
@@ -219,5 +231,11 @@ function getPropertiesFromIssue(issue) {
     "Issue URL": {
       url,
     },
+    "Task Description": {
+      rich_text: [{ text: { content: task_description } }],
+    },
+    "Skills Needed": {
+      rich_text: [{ text: { content: skills_needed } }],
+    }
   }
 }
