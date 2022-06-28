@@ -82,12 +82,21 @@ async function getIssuesFromNotionDatabase() {
     cursor = next_cursor
   }
   console.log(`${pages.length} issues successfully fetched.`)
-  return pages.map(page => {
-    return {
+  
+  const issues = []
+  for (const page of pages) {
+    const issueNumberPropertyId = page.properties["Issue Number"].id
+    const propertyResult = await notion.pages.properties.retrieve({
+      page_id: page.id,
+      property_id: issueNumberPropertyId,
+    })
+    issues.push({
       pageId: page.id,
-      issueNumber: page.properties["Issue Number"].number,
-    }
-  })
+      issueNumber: propertyResult.number,
+    })
+  }
+  
+  return issues
 }
 
 /**

@@ -78,18 +78,23 @@ async function getTasksFromNotionDatabase() {
     cursor = next_cursor
   }
   console.log(`${pages.length} pages successfully fetched.`)
-  return pages.map(page => {
-    const statusProperty = page.properties["Status"]
-    const status = statusProperty ? statusProperty.select.name : "No Status"
-    const title = page.properties["Name"].title
-      .map(({ plain_text }) => plain_text)
-      .join("")
-    return {
-      pageId: page.id,
-      status,
-      title,
-    }
-  })
+  
+  const tasks = []
+  for (const page of pages) {
+    const pageId = page.id
+    
+    const statusPropertyId = page.properties["Status"].id
+    const statusPropertyItem = await getPropertyValue({ pageId, propertyId: statusPropertyId })
+    const status = statusPropertyItem.select ? statusPropertyItem.select.name : "No Status"
+
+    const titlePropertyId = page.properties["Name"].id
+    const titlePropertyItems = await getPropertyValue({ pageId, propertyId: titlePropertyId })
+    const title = titlePropertyItems.map(propertyItem => propertyItem.title.plain_text).join("")
+
+    tasks.push({ pageId, status, title })
+  }
+
+  return tasks
 }
 
 /**
@@ -140,4 +145,39 @@ function getPreviousTaskStatus({ pageId, status }) {
     taskPageIdToStatusMap[pageId] = status
   }
   return taskPageIdToStatusMap[pageId]
+}
+
+/**
+ * If property is paginated, returns an array of property items.
+ * 
+ * Otherwise, it will return a single property item.
+ * 
+ * @param {{ pageId: string, propertyId: string }}
+ * @returns {Promise<PropertyItemObject | Array<PropertyItemObject>>}
+ */
+async function getPropertyValue({ pageId, propertyId }) {
+  const propertyItem = await notion.pages.properties.retrieve({
+    page_id: pageId,
+    property_id: propertyId
+  })
+  if (propertyItem.object === "property_item") {
+    return propertyItem
+  }
+  
+  // Property is paginated.
+  let nextCursor = propertyItem.next_cursor
+  const results = propertyItem.results
+  
+  while (nextCursor !== null) {
+    const propertyItem = await notion.pages.properties.retrieve({
+      page_id: pageId,
+      property_id: propertyId,
+      start_cursor: nextCursor
+    })
+
+    nextCursor = propertyItem.next_cursor
+    results.push(...propertyItem.results)
+  }
+
+  return results
 }
