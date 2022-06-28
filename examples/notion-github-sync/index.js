@@ -82,7 +82,7 @@ async function getIssuesFromNotionDatabase() {
     cursor = next_cursor
   }
   console.log(`${pages.length} issues successfully fetched.`)
-  
+
   const issues = []
   for (const page of pages) {
     const issueNumberPropertyId = page.properties["Issue Number"].id
@@ -95,7 +95,7 @@ async function getIssuesFromNotionDatabase() {
       issueNumber: propertyResult.number,
     })
   }
-  
+
   return issues
 }
 
