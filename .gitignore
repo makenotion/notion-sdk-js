@@ -7,5 +7,5 @@ package-lock.json
 /examples/**/package-lock.json
 /examples/**/.env
 
-
+/docs-build
 
