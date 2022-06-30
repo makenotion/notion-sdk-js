@@ -45,6 +45,8 @@
   },
   "devDependencies": {
     "@types/jest": "^28.1.4",
+    "@microsoft/api-documenter": "^7.18.0",
+    "@microsoft/api-extractor": "^7.28.2",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/parser": "^4.22.0",
     "cspell": "^5.4.1",
