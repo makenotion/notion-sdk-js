@@ -10203,6 +10203,7 @@ export type GetDatabaseResponse =
       last_edited_time: string
       archived: boolean
       url: string
+      is_inline: boolean
     }
 
 export const getDatabase = {
@@ -10323,6 +10324,7 @@ type UpdateDatabaseBodyParameters = {
     | null
   >
   archived?: boolean
+  is_inline?: boolean
 }
 
 export type UpdateDatabaseParameters = UpdateDatabasePathParameters &
@@ -10566,13 +10568,14 @@ export type UpdateDatabaseResponse =
       last_edited_time: string
       archived: boolean
       url: string
+      is_inline: boolean
     }
 
 export const updateDatabase = {
   method: "patch",
   pathParams: ["database_id"],
   queryParams: [],
-  bodyParams: ["title", "icon", "cover", "properties", "archived"],
+  bodyParams: ["title", "icon", "cover", "properties", "archived", "is_inline"],
   path: (p: UpdateDatabasePathParameters): string =>
     `databases/${p.database_id}`,
 } as const
@@ -11109,6 +11112,7 @@ type CreateDatabaseBodyParameters = {
     | null
   cover?: { external: { url: TextRequest }; type?: "external" } | null
   title?: Array<RichTextItemRequest>
+  is_inline?: boolean
 }
 
 export type CreateDatabaseParameters = CreateDatabaseBodyParameters
@@ -11351,13 +11355,14 @@ export type CreateDatabaseResponse =
       last_edited_time: string
       archived: boolean
       url: string
+      is_inline: boolean
     }
 
 export const createDatabase = {
   method: "post",
   pathParams: [],
   queryParams: [],
-  bodyParams: ["parent", "properties", "icon", "cover", "title"],
+  bodyParams: ["parent", "properties", "icon", "cover", "title", "is_inline"],
   path: (): string => `databases`,
 } as const
 
