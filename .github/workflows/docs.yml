@@ -37,8 +37,8 @@ jobs:
           echo "have job output: " ${{ needs.setup.outputs.file }}
           echo "root listing:"
           ls /
-          echo "test.md contents:"
-          cat /work/test.md
+          echo "work listing:"
+          ls /work
 
       # - run: |
       #   cd builder
