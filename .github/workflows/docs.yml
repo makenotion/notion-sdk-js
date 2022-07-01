@@ -34,7 +34,8 @@ jobs:
       - run: |
           echo "hello from pandoc?"
           echo "have job output: " ${{ needs.setup.outputs.file }}
-          pandoc -h
+          echo "test.md contents:"
+          cat test.md
 
       # - run: |
       #   cd builder
