@@ -53,3 +53,10 @@ jobs:
           name: html
           path: docs-build/html
       - run: |
+          git ls-files | grep '\.html$' | xargs git rm
+          cp -r docs-build/html/* ./
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add .
+          git commit -m "Automatic docs update"
+          git push origin gh-pages
