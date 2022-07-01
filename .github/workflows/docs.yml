@@ -34,7 +34,7 @@ jobs:
         with:
           name: markdown
           path: docs-build/markdown
-      - run: bash scripts/buildDocsHtml.sh
+      - run: sh scripts/buildDocsHtml.sh
       - uses: actions/upload-artifact@v3
         with:
           name: html
