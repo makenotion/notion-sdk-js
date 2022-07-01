@@ -24,21 +24,35 @@ jobs:
       - run: |
           echo "test.md realpath is: $(realpath test.md)"
           echo "::set-output name=file::$(realpath test.md)"
+      - name: Upload output file
+        uses: actions/upload-artifact@v3
+        with:
+          name: test.md
+          path: test.md
 
   build-html:
     needs: setup
     runs-on: ubuntu-latest
     container:
       image: pandoc/core # TODO: pin to a SHA?
-      options: -v /home/runner/work/notion-sdk-js/notion-sdk-js:/work:rw
+      # Should be able to use the volumes param, but that apparently doesn't work:
+      # https://stackoverflow.com/a/60202672
+      options: -v /home/runner/work/notion-sdk-js/notion-sdk-js:/work
     steps:
+      - name: Download a single artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: test.md
       - run: |
-          echo "hello from pandoc?"
-          echo "have job output: " ${{ needs.setup.outputs.file }}
-          echo "root listing:"
-          ls /
-          echo "work listing:"
-          ls /work
+          echo "test.md contents:"
+          cat test.md
+
+          # echo "hello from pandoc?"
+          # echo "have job output: " ${{ needs.setup.outputs.file }}
+          # echo "root listing:"
+          # ls /
+          # echo "work listing:"
+          # ls /work
 
       # - run: |
       #   cd builder
