@@ -30,12 +30,14 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: pandoc/core # TODO: pin to a SHA?
+    volumes:
+      - /home/runner/work/notion-sdk-js/notion-sdk-js:/work
     steps:
       - run: |
           echo "hello from pandoc?"
           echo "have job output: " ${{ needs.setup.outputs.file }}
           echo "test.md contents:"
-          cat test.md
+          cat /work/test.md
 
       # - run: |
       #   cd builder
