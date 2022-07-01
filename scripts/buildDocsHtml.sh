@@ -2,8 +2,7 @@
 set -xeo pipefail
 
 script_dir=$(dirname "$(readlink -f "$0")")
-repo_root="$(git rev-parse --show-toplevel)"
-build_dir="$repo_root/docs-build"
+build_dir="docs-build"
 
 # TODO: Figure out if we can vendor this.
 wget -qO "$build_dir"/GitHub.html5 "https://raw.githubusercontent.com/tajmone/pandoc-goodies/master/templates/html5/github/GitHub.html5"
