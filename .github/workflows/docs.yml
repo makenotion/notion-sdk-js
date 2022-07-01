@@ -1,0 +1,43 @@
+name: Docs
+
+env:
+  NODE_VERSION: 16.x
+
+on:
+  push:
+    branches: [wcauchois--api-docs] # TEMP while developing.
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - uses: actions/checkout@v3
+        # with:
+        #   path: builder
+      # - uses: actions/checkout@v3
+      #   with:
+      #     path: pages
+      #     ref: gh-pages
+      - run: |
+          echo "test.md realpath is: $(realpath test.md)"
+          echo "::set-output name=file::$(realpath test.md)"
+
+  build-html:
+    needs: setup
+    runs-on: ubuntu-latest
+    container:
+      image: pandoc/core # TODO: pin to a SHA?
+    steps:
+      - run: |
+          echo "hello from pandoc?"
+          echo "have job output: " ${{ needs.setup.outputs.file }}
+          pandoc -h
+
+      # - run: |
+      #   cd builder
+      #   npm install
+      #   npm run build
+      #   ./scripts/buildDocs.sh
