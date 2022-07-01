@@ -15,47 +15,27 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
       - uses: actions/checkout@v3
-        # with:
-        #   path: builder
-      # - uses: actions/checkout@v3
-      #   with:
-      #     path: pages
-      #     ref: gh-pages
       - run: |
-          echo "test.md realpath is: $(realpath test.md)"
-          echo "::set-output name=file::$(realpath test.md)"
-      - name: Upload output file
-        uses: actions/upload-artifact@v3
+          npm install
+          npm run build-docs-markdown
+      - uses: actions/upload-artifact@v3
         with:
-          name: test.md
-          path: test.md
+          name: markdown
+          path: docs-build/markdown
 
   build-html:
     needs: setup
     runs-on: ubuntu-latest
     container:
       image: pandoc/core # TODO: pin to a SHA?
-      # Should be able to use the volumes param, but that apparently doesn't work:
-      # https://stackoverflow.com/a/60202672
-      options: -v /home/runner/work/notion-sdk-js/notion-sdk-js:/work
     steps:
-      - name: Download a single artifact
-        uses: actions/download-artifact@v3
+      - run: mkdir docs-build
+      - uses: actions/download-artifact@v3
         with:
-          name: test.md
-      - run: |
-          echo "test.md contents:"
-          cat test.md
-
-          # echo "hello from pandoc?"
-          # echo "have job output: " ${{ needs.setup.outputs.file }}
-          # echo "root listing:"
-          # ls /
-          # echo "work listing:"
-          # ls /work
-
-      # - run: |
-      #   cd builder
-      #   npm install
-      #   npm run build
-      #   ./scripts/buildDocs.sh
+          name: markdown
+          path: docs-build/markdown
+      - run: bash scripts/buildDocsHtml.sh
+      - uses: actions/upload-artifact@v3
+        with:
+          name: html
+          path: docs-build/html

@@ -31,7 +31,8 @@
     "check-links": "git ls-files | grep md$ | xargs -n 1 markdown-link-check",
     "prebuild": "npm run clean",
     "clean": "rm -rf ./build",
-    "checkLoggedIn": "./scripts/verifyLoggedIn.sh"
+    "checkLoggedIn": "./scripts/verifyLoggedIn.sh",
+    "build-docs-markdown": "api-extractor run --local && api-documenter markdown -i docs-build/input -o docs-build/markdown"
   },
   "author": "",
   "license": "MIT",
