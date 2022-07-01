@@ -95,6 +95,9 @@ export interface RequestParameters {
   auth?: string
 }
 
+/**
+ * The Notion API client. Construct with authentication to use the Notion API.
+ */
 export default class Client {
   #auth?: string
   #logLevel: LogLevel
