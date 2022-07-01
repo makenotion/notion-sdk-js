@@ -8,7 +8,7 @@ on:
     branches: [wcauchois--api-docs] # TEMP while developing.
 
 jobs:
-  setup:
+  setup-and-markdown:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/setup-node@v3
@@ -24,7 +24,7 @@ jobs:
           path: docs-build/markdown
 
   build-html:
-    needs: setup
+    needs: setup-and-markdown
     runs-on: ubuntu-latest
     container:
       # TODO: Figure out an image registry to use.
@@ -41,3 +41,15 @@ jobs:
         with:
           name: html
           path: docs-build/html
+
+  update-github-pages:
+    needs: build-html
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: gh-pages
+      - uses: actions/download-artifact@v3
+        with:
+          name: html
+          path: docs-build/html
+      - run: |
