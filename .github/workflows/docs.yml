@@ -3,6 +3,11 @@ name: Docs
 env:
   NODE_VERSION: 16.x
 
+# Only one docs build may run at a time, so they don't clobber
+# each others' work. This should be fine with the push frequency
+# to the SDK repository.
+concurrency: docs-build
+
 on:
   push:
     branches: [wcauchois--api-docs] # TEMP while developing.

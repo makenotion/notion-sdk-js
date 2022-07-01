@@ -32,7 +32,9 @@
     "prebuild": "npm run clean",
     "clean": "rm -rf ./build",
     "checkLoggedIn": "./scripts/verifyLoggedIn.sh",
-    "build-docs-markdown": "api-extractor run --local && api-documenter markdown -i docs-build/input -o docs-build/markdown"
+    "build-docs-markdown": "npm run build && api-extractor run --local && api-documenter markdown -i docs-build/input -o docs-build/markdown",
+    "local-docs-build": "npm run build-docs-markdown && ./scripts/buildDocsHtml.sh",
+    "local-docs-serve": "http-server docs-build/html -o"
   },
   "author": "",
   "license": "MIT",
@@ -53,6 +55,7 @@
     "cspell": "^5.4.1",
     "eslint": "^7.24.0",
     "jest": "^28.1.2",
+    "http-server": "^14.1.1",
     "markdown-link-check": "^3.8.7",
     "prettier": "^2.3.0",
     "ts-jest": "^28.0.5",
