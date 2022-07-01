@@ -58,9 +58,9 @@ jobs:
           git config user.email "github-actions@github.com"
           git ls-files | grep '\.html$' | xargs git rm
           cp -r docs-build/html/* ./
+          git add .
 
           if ! (git diff --quiet && git diff --staged --quiet); then
-            git add .
             git commit -m "Automatic docs update"
             git push origin gh-pages
           else
