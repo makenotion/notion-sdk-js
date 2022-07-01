@@ -2,8 +2,7 @@
 set -xeo pipefail
 
 script_dir=$(dirname "$(readlink -f "$0")")
-repo_root="$(git rev-parse --show-toplevel)"
-build_dir="$repo_root/docs-build"
+build_dir="docs-build"
 
 npx api-extractor run --local
 npx api-documenter markdown -i docs-build/input -o docs-build/markdown
