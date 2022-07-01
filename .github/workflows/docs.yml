@@ -27,7 +27,8 @@ jobs:
     needs: setup
     runs-on: ubuntu-latest
     container:
-      image: pandoc/core # TODO: pin to a SHA?
+      # TODO: Figure out an image registry to use.
+      image: wcauchois/ubuntu-pandoc
     steps:
       - uses: actions/checkout@v3
       - run: mkdir docs-build
@@ -35,7 +36,7 @@ jobs:
         with:
           name: markdown
           path: docs-build/markdown
-      - run: sh scripts/buildDocsHtml.sh
+      - run: bash scripts/buildDocsHtml.sh
       - uses: actions/upload-artifact@v3
         with:
           name: html
