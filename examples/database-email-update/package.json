@@ -11,9 +11,9 @@
     "start": ""
   },
   "dependencies": {
+    "@notionhq/client": "^2.0.0",
     "@sendgrid/mail": "^7.7.0",
-    "dotenv": "^16.0.1",
-    "@notionhq/client": "^1.0.4"
+    "dotenv": "^16.0.1"
   },
   "author": "Aman Gupta",
   "license": "MIT"
