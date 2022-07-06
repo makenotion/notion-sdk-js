@@ -12,6 +12,10 @@ mkdir -p "$html_dir"
 
 set +x
 for file in "$build_dir/markdown"/*.md; do
+	if [ "$file" = "$build_dir/markdown/index.md" ]; then
+		# index.html is handled specially below.
+		continue
+	fi
 	echo "Converting $file to HTML..."
   pandoc "$file" \
 		--template="$build_dir"/GitHub.html5 \
@@ -22,3 +26,14 @@ for file in "$build_dir/markdown"/*.md; do
 		--lua-filter="$script_dir"/links-to-html.lua
 done
 set -x
+
+cat > "$build_dir/html/index.html" << EOF
+<html>
+  <head>
+    <title></title>
+    <meta http-equiv="refresh" content="0;URL='/client.html'" />
+  </head>
+  <body>
+  </body>
+</html>
+EOF
