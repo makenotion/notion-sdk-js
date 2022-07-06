@@ -50,6 +50,7 @@
     "@types/jest": "^28.1.4",
     "@microsoft/api-documenter": "^7.18.0",
     "@microsoft/api-extractor": "^7.28.2",
+    "@types/fs-extra": "^9.0.13",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/parser": "^4.22.0",
     "cspell": "^5.4.1",
@@ -59,6 +60,9 @@
     "markdown-link-check": "^3.8.7",
     "prettier": "^2.3.0",
     "ts-jest": "^28.0.5",
+    "fs-extra": "^10.1.0",
+    "http-server": "^14.1.1",
+    "ts-node": "^10.8.1",
     "typescript": "^4.2.4"
   }
 }
