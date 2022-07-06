@@ -1,10 +1,19 @@
-import fs from "fs-extra"
+import * as fs from "fs-extra"
+import * as childProcess from "child_process"
+import * as path from "path"
+
+const rootDir = path.join(__dirname, "..")
+const apiEndpointsFile = path.join(rootDir, "src/api-endpoints.ts")
 
 function exportAllTypes(typescriptSource: string) {
   const lines = typescriptSource.split("\n")
-  const transformedLines = lines.map(line => {
-    const m = line.match(/^type [a-zA-Z0-9_\-]+/)
-  })
+  const transformedLines = lines.map(line =>
+    line.replace(
+      /^type ([a-zA-Z0-9_-]+)/,
+      (_match, pattern1) => `export type ${pattern1}`
+    )
+  )
+  return transformedLines.join("\n")
 }
 
 async function withModifiedFile(
@@ -16,13 +25,37 @@ async function withModifiedFile(
   fs.writeFile(path, modifier(originalContents))
   try {
     await body()
-  } catch (err) {
+  } finally {
     await fs.writeFile(path, originalContents)
-    throw err
   }
 }
 
-async function main() {}
+async function runCommand(command: string) {
+  const proc = childProcess.spawn(command, {
+    shell: true,
+    stdio: "inherit",
+  })
+  await new Promise<void>((resolve, reject) => {
+    proc.on("error", err => reject(err))
+    proc.on("exit", code => {
+      if (code !== 0) {
+        reject(new Error(`Command exited with non-zero code: ${code}`))
+      } else {
+        resolve()
+      }
+    })
+  })
+}
+
+async function main() {
+  await withModifiedFile(apiEndpointsFile, exportAllTypes, async () => {
+    await runCommand(`
+      npm run build && \
+        npx api-extractor run --local && \
+        npx api-documenter markdown -i docs-build/input -o docs-build/markdown
+    `)
+  })
+}
 
 main()
   .then(() => process.exit(0))
