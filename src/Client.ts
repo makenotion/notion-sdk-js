@@ -11,7 +11,7 @@ import {
   isNotionClientError,
   RequestTimeoutError,
 } from "./errors"
-import { pick } from "./helpers"
+import { pick } from "./utils"
 import {
   GetBlockParameters,
   GetBlockResponse,
