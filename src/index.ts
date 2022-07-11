@@ -13,3 +13,4 @@ export {
   // Error helpers
   isNotionClientError,
 } from "./errors"
+export { collectPaginatedAPI, iteratePaginatedAPI } from "./helpers"
