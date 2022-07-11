@@ -1,12 +1,12 @@
 /// <reference lib="dom" />
-import type { Assert, Await } from "./type-utils"
+import type { Assert } from "./type-utils"
 import type {
   RequestInit as NodeRequestInit,
   Response as NodeResponse,
 } from "node-fetch"
 
 type FetchFn = typeof fetch
-type FetchResponse = Await<ReturnType<FetchFn>>
+type FetchResponse = Awaited<ReturnType<FetchFn>>
 type RequestInfo = Parameters<FetchFn>[0]
 type RequestInit = NonNullable<Parameters<FetchFn>[1]>
 
