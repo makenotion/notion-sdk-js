@@ -118,3 +118,5 @@ export function isFullUser(
 ): response is UserObjectResponse {
   return "type" in response
 }
+
+export type WithAuth<P> = P & { auth?: string }
