@@ -1,3 +1,14 @@
+import {
+  BlockObjectResponse,
+  DatabaseObjectResponse,
+  PageObjectResponse,
+  PartialBlockObjectResponse,
+  PartialDatabaseObjectResponse,
+  PartialPageObjectResponse,
+  PartialUserObjectResponse,
+  UserObjectResponse,
+} from "./api-endpoints"
+
 interface PaginatedArgs {
   start_cursor?: string
 }
@@ -33,4 +44,28 @@ export async function collectPaginatedAPI<Args extends PaginatedArgs, Item>(
     results.push(item)
   }
   return results
+}
+
+export function isFullBlock(
+  response: BlockObjectResponse | PartialBlockObjectResponse
+): response is BlockObjectResponse {
+  return "type" in response
+}
+
+export function isFullPage(
+  response: PageObjectResponse | PartialPageObjectResponse
+): response is PageObjectResponse {
+  return "url" in response
+}
+
+export function isFullDatabase(
+  response: DatabaseObjectResponse | PartialDatabaseObjectResponse
+): response is DatabaseObjectResponse {
+  return "title" in response
+}
+
+export function isFullUser(
+  response: UserObjectResponse | PartialUserObjectResponse
+): response is UserObjectResponse {
+  return "type" in response
 }
