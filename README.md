@@ -91,10 +91,12 @@ try {
   const myPage = await notion.databases.query({
     database_id: databaseId,
     filter: {
-      property: "Landmark",
-      text: {
-        contains: "Bridge",
-      },
+      and: [{
+        property: "Landmark",
+        text: {
+          contains: "Bridge",
+        },
+      }],
     },
   })
 } catch (error) {
