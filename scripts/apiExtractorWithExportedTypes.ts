@@ -6,6 +6,7 @@ const rootDir = path.join(__dirname, "..")
 const apiEndpointsFile = path.join(rootDir, "src/api-endpoints.ts")
 
 function exportAllTypes(typescriptSource: string) {
+  /*
   const lines = typescriptSource.split("\n")
   const transformedLines = lines.map(line =>
     line.replace(
@@ -14,6 +15,8 @@ function exportAllTypes(typescriptSource: string) {
     )
   )
   return transformedLines.join("\n")
+  */
+  return typescriptSource
 }
 
 async function withModifiedFile(
