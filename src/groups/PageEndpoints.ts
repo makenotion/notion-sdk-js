@@ -10,7 +10,7 @@ import {
   updatePage,
 } from "../api-endpoints"
 import Client from "../Client"
-import { pick, WithAuth } from "../helpers"
+import { pick, WithAuth } from "../utils"
 import { PagePropertyEndpoints } from "./PagePropertyEndpoints"
 
 export class PageEndpoints {

@@ -23,7 +23,8 @@ interface PaginatedList<T> {
 /**
  * Returns an async iterator over the results of any paginated Notion API.
  *
- * Example (given a notion Client called `notion`):
+ * @example
+ * Given a notion Client called `notion`:
  *
  * ```
  * for await (const block of iteratePaginatedAPI(notion.blocks.children.list, {
@@ -57,7 +58,8 @@ export async function* iteratePaginatedAPI<Args extends PaginatedArgs, Item>(
 /**
  * Collect all of the results of paginating an API into an in-memory array.
  *
- * Example (given a notion Client called `notion`):
+ * @example
+ * Given a notion Client called `notion`:
  *
  * ```
  * const blocks = collectPaginatedAPI(notion.blocks.children.list, {
@@ -84,7 +86,7 @@ export async function collectPaginatedAPI<Args extends PaginatedArgs, Item>(
 }
 
 /**
- * @returns `true` if `response` is a full `BlockObjectResponse`.
+ * Type guard testing if `response` is a full `BlockObjectResponse`.
  */
 export function isFullBlock(
   response: BlockObjectResponse | PartialBlockObjectResponse
@@ -93,7 +95,7 @@ export function isFullBlock(
 }
 
 /**
- * @returns `true` if `response` is a full `PageObjectResponse`.
+ * Type guard testing if `response` is a full `PageObjectResponse`.
  */
 export function isFullPage(
   response: PageObjectResponse | PartialPageObjectResponse
@@ -102,7 +104,7 @@ export function isFullPage(
 }
 
 /**
- * @returns `true` if `response` is a full `DatabaseObjectResponse`.
+ * Type guard testing if `response` is a full `DatabaseObjectResponse`.
  */
 export function isFullDatabase(
   response: DatabaseObjectResponse | PartialDatabaseObjectResponse
@@ -111,12 +113,10 @@ export function isFullDatabase(
 }
 
 /**
- * @returns `true` if `response` is a full `UserObjectResponse`.
+ * Type guard testing if `response` is a full `UserObjectResponse`.
  */
 export function isFullUser(
   response: UserObjectResponse | PartialUserObjectResponse
 ): response is UserObjectResponse {
   return "type" in response
 }
-
-export type WithAuth<P> = P & { auth?: string }

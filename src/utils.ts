@@ -22,3 +22,5 @@ export function pick<O extends unknown, K extends AllKeys<O>>(
 export function isObject(o: unknown): o is Record<PropertyKey, unknown> {
   return typeof o === "object" && o !== null
 }
+
+export type WithAuth<P> = P & { auth?: string }

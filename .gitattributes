@@ -1,0 +1,3 @@
+# Makes api-extractor.json not show up as a bunch of errors in GitHub diffs.
+# https://api-extractor.com/pages/setup/invoking/
+api-extractor.json  linguist-language=JSON-with-Comments

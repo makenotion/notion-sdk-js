@@ -55,7 +55,7 @@ import {
   getPageProperty,
 } from "../api-endpoints"
 import Client from "../Client"
-import { pick, WithAuth } from "../helpers"
+import { pick, WithAuth } from "../utils"
 import { BlockChildrenEndpoints } from "./BlockChildrenEndpoints"
 
 export class BlockEndpoints {

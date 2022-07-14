@@ -55,7 +55,7 @@ import {
   getPageProperty,
 } from "../api-endpoints"
 import Client from "../Client"
-import { pick, WithAuth } from "../helpers"
+import { pick, WithAuth } from "../utils"
 import { BlockChildrenEndpoints } from "./BlockChildrenEndpoints"
 
 export class DatabaseEndpoints {
@@ -107,4 +107,6 @@ export class DatabaseEndpoints {
       auth: args?.auth,
     })
   }
+
+  public readonly children = new BlockChildrenEndpoints(this.client)
 }
