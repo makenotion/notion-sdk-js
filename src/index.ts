@@ -21,3 +21,11 @@ export {
   isFullPage,
   isFullUser,
 } from "./helpers"
+
+export { BlockChildrenEndpoints } from "./groups/BlockChildrenEndpoints"
+export { BlockEndpoints } from "./groups/BlockEndpoints"
+export { DatabaseEndpoints } from "./groups/DatabaseEndpoints"
+export { PageEndpoints } from "./groups/PageEndpoints"
+export { PagePropertyEndpoints } from "./groups/PagePropertyEndpoints"
+export { UserEndpoints } from "./groups/UserEndpoints"
+export * from "./api-endpoints"

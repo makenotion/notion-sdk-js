@@ -77,6 +77,7 @@ import { SupportedFetch } from "./fetch-types"
 import { BlockEndpoints } from "./groups/BlockEndpoints"
 import { DatabaseEndpoints } from "./groups/DatabaseEndpoints"
 import { PageEndpoints } from "./groups/PageEndpoints"
+import { UserEndpoints } from "./groups/UserEndpoints"
 
 export interface ClientOptions {
   auth?: string
@@ -216,47 +217,7 @@ export default class Client {
   public readonly blocks = new BlockEndpoints(this)
   public readonly databases = new DatabaseEndpoints(this)
   public readonly pages = new PageEndpoints(this)
-
-  public readonly users = {
-    /**
-     * Retrieve a user
-     */
-    retrieve: (args: WithAuth<GetUserParameters>): Promise<GetUserResponse> => {
-      return this.request<GetUserResponse>({
-        path: getUser.path(args),
-        method: getUser.method,
-        query: pick(args, getUser.queryParams),
-        body: pick(args, getUser.bodyParams),
-        auth: args?.auth,
-      })
-    },
-
-    /**
-     * List all users
-     */
-    list: (args: WithAuth<ListUsersParameters>): Promise<ListUsersResponse> => {
-      return this.request<ListUsersResponse>({
-        path: listUsers.path(),
-        method: listUsers.method,
-        query: pick(args, listUsers.queryParams),
-        body: pick(args, listUsers.bodyParams),
-        auth: args?.auth,
-      })
-    },
-
-    /**
-     * Get details about bot
-     */
-    me: (args: WithAuth<GetSelfParameters>): Promise<GetSelfResponse> => {
-      return this.request<GetSelfResponse>({
-        path: getSelf.path(),
-        method: getSelf.method,
-        query: pick(args, getSelf.queryParams),
-        body: pick(args, getSelf.bodyParams),
-        auth: args?.auth,
-      })
-    },
-  }
+  public readonly users = new UserEndpoints(this)
 
   /**
    * Search
