@@ -165,7 +165,7 @@ export default class Client {
     try {
       const response = await RequestTimeoutError.rejectAfterTimeout(
         this.#fetch(url.toString(), {
-          method,
+          method: method.toUpperCase(),
           headers,
           body: bodyAsJsonString,
           agent: this.#agent,
