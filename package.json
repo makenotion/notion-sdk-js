@@ -1,6 +1,6 @@
 {
   "name": "@notionhq/client",
-  "version": "0.4.11",
+  "version": "2.0.0",
   "description": "A simple and easy to use client for the Notion API",
   "engines": {
     "node": ">=12"
@@ -20,6 +20,7 @@
     "notion-api"
   ],
   "main": "./build/src",
+  "types": "./build/src/index.d.ts",
   "scripts": {
     "prepare": "npm run build",
     "prepublishOnly": "npm run checkLoggedIn && npm run lint && npm run test",
