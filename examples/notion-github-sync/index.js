@@ -43,7 +43,7 @@ async function setInitialGitHubToNotionIdMap() {
 
 async function syncNotionDatabaseWithGitHub() {
   // Get all issues currently in the provided GitHub repository.
-  console.log("\nFetching issues from Notion DB...")
+  console.log("\nFetching issues from GitHub repository...")
   const issues = await getGitHubIssuesForRepository()
   console.log(`Fetched ${issues.length} issues from GitHub repository.`)
 
