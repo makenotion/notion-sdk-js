@@ -1,5 +1,5 @@
 import { SupportedResponse } from "./fetch-types"
-import { isObject } from "./helpers"
+import { isObject } from "./utils"
 import { Assert } from "./type-utils"
 
 /**
