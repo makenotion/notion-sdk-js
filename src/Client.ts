@@ -67,6 +67,12 @@ import {
   GetPagePropertyParameters,
   GetPagePropertyResponse,
   getPageProperty,
+  CreateCommentParameters,
+  CreateCommentResponse,
+  createComment,
+  ListCommentsParameters,
+  ListCommentsResponse,
+  listComments,
 } from "./api-endpoints"
 import nodeFetch from "node-fetch"
 import {
@@ -461,6 +467,38 @@ export default class Client {
         method: getSelf.method,
         query: pick(args, getSelf.queryParams),
         body: pick(args, getSelf.bodyParams),
+        auth: args?.auth,
+      })
+    },
+  }
+
+  public readonly comments = {
+    /**
+     * Create a comment
+     */
+    create: (
+      args: WithAuth<CreateCommentParameters>
+    ): Promise<CreateCommentResponse> => {
+      return this.request<CreateCommentResponse>({
+        path: createComment.path(),
+        method: createComment.method,
+        query: pick(args, createComment.queryParams),
+        body: pick(args, createComment.bodyParams),
+        auth: args?.auth,
+      })
+    },
+
+    /**
+     * List comments
+     */
+    list: (
+      args: WithAuth<ListCommentsParameters>
+    ): Promise<ListCommentsResponse> => {
+      return this.request<ListCommentsResponse>({
+        path: listComments.path(),
+        method: listComments.method,
+        query: pick(args, listComments.queryParams),
+        body: pick(args, listComments.bodyParams),
         auth: args?.auth,
       })
     },

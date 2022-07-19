@@ -5635,6 +5635,21 @@ export type PropertyItemObjectResponse =
   | RelationPropertyItemObjectResponse
   | RollupPropertyItemObjectResponse
 
+export type CommentObjectResponse = {
+  object: "comment"
+  id: string
+  parent:
+    | { type: "page_id"; page_id: IdRequest }
+    | { type: "block_id"; block_id: IdRequest }
+  discussion_id: string
+  rich_text: Array<RichTextItemResponse>
+  created_by: PartialUserObjectResponse
+  created_time: string
+  last_edited_time: string
+}
+
+export type PartialCommentObjectResponse = { object: "comment"; id: string }
+
 export type PropertyItemPropertyItemListResponse = {
   type: "property_item"
   property_item:
@@ -10357,4 +10372,50 @@ export const search = {
   queryParams: [],
   bodyParams: ["sort", "query", "start_cursor", "page_size", "filter"],
   path: (): string => `search`,
+} as const
+
+type CreateCommentBodyParameters =
+  | {
+      parent: { page_id: IdRequest; type?: "page_id" }
+      rich_text: Array<RichTextItemRequest>
+    }
+  | { discussion_id: IdRequest; rich_text: Array<RichTextItemRequest> }
+
+export type CreateCommentParameters = CreateCommentBodyParameters
+
+export type CreateCommentResponse =
+  | CommentObjectResponse
+  | PartialCommentObjectResponse
+
+export const createComment = {
+  method: "post",
+  pathParams: [],
+  queryParams: [],
+  bodyParams: ["parent", "rich_text", "discussion_id"],
+  path: (): string => `comments`,
+} as const
+
+type ListCommentsQueryParameters = {
+  block_id: IdRequest
+  start_cursor?: string
+  page_size?: number
+}
+
+export type ListCommentsParameters = ListCommentsQueryParameters
+
+export type ListCommentsResponse = {
+  type: "comment"
+  comment: EmptyObject
+  object: "list"
+  next_cursor: string | null
+  has_more: boolean
+  results: Array<CommentObjectResponse>
+}
+
+export const listComments = {
+  method: "get",
+  pathParams: [],
+  queryParams: ["block_id", "start_cursor", "page_size"],
+  bodyParams: [],
+  path: (): string => `comments`,
 } as const
