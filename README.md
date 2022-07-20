@@ -88,6 +88,7 @@ The error contains properties from the response, and the most helpful is `code`.
 const { Client, APIErrorCode } = require("@notionhq/client")
 
 try {
+  const notion = new Client({ auth: process.env.NOTION_TOKEN })
   const myPage = await notion.databases.query({
     database_id: databaseId,
     filter: {
