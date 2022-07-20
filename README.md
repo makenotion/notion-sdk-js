@@ -141,7 +141,8 @@ The `Client` supports the following options on initialization. These options are
 
 ### TypeScript
 
-This package contains type definitions for **all request parameters and responses**.
+This package contains type definitions for all request parameters and responses,
+as well as some useful sub-objects from those entities.
 
 Because errors in TypeScript start with type `any` or `unknown`, you should use
 the `isNotionClientError` type guard to handle them in a type-safe way. Each
@@ -174,6 +175,92 @@ try {
     }
   }
 }
+```
+
+#### Type guards
+
+There are several [type guards](https://www.typescriptlang.org/docs/handbook/advanced-types.html#type-guards-and-differentiating-types)
+provided to distinguish between full and partial API responses.
+
+| Type guard function | Purpose                                                        |
+| ------------------- | -------------------------------------------------------------- |
+| `isFullPage`        | Determine whether an object is a full `PageObjectResponse`     |
+| `isFullBlock`       | Determine whether an object is a full `BlockObjectResponse`    |
+| `isFullDatabase`    | Determine whether an object is a full `DatabaseObjectResponse` |
+| `isFullUser`        | Determine whether an object is a full `UserObjectResponse`     |
+
+Here is an example of using a type guard:
+
+```typescript
+const fullOrPartialPages = await notion.databases.query({
+  database_id: "897e5a76-ae52-4b48-9fdf-e71f5945d1af",
+})
+for (const page of fullOrPartialPages) {
+  if (!isFullPage(page)) {
+    continue
+  }
+  // The page variable has been narrowed from PageObjectResponse | PartialPageObjectResponse to PageObjectResponse.
+  console.log("Created at:", page.created_time)
+}
+```
+
+### Utility functions
+
+This package also exports a few utility functions that are helpful for dealing with
+any of our paginated APIs.
+
+#### `iteratePaginatedAPI(listFn, firstPageArgs)`
+
+This utility turns any paginated API into an async iterator.
+
+**Parameters:**
+
+- `listFn`: Any function on the Notion client that represents a paginated API (i.e. accepts
+  `start_cursor`.) Example: `notion.blocks.children.list`.
+- `firstPageArgs`: Arguments that should be passed to the API on the first and subsequent calls
+  to the API, for example a `block_id`.
+
+**Returns:**
+
+An [async iterator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#the_async_iterator_and_async_iterable_protocols)
+over results from the API.
+
+**Example:**
+
+```javascript
+for await (const block of iteratePaginatedAPI(notion.blocks.children.list, {
+  block_id: parentBlockId,
+})) {
+  // Do something with block.
+}
+```
+
+#### `collectPaginatedAPI(listFn, firstPageArgs)`
+
+This utility accepts the same arguments as `iteratePaginatedAPI`, but collects
+the results into an in-memory array.
+
+Before using this utility, check that the data you are dealing with is
+small enough to fit in memory.
+
+**Parameters:**
+
+- `listFn`: Any function on the Notion client that represents a paginated API (i.e. accepts
+  `start_cursor`.) Example: `notion.blocks.children.list`.
+- `firstPageArgs`: Arguments that should be passed to the API on the first and subsequent calls
+  to the API, for example a `block_id`.
+
+**Returns:**
+
+An array with results from the API.
+
+**Example:**
+
+```javascript
+const blocks = collectPaginatedAPI(notion.blocks.children.list, {
+  block_id: parentBlockId,
+})
+// Do something with blocks.
 ```
 
 ## Requirements
