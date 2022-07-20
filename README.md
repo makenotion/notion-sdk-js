@@ -188,6 +188,7 @@ provided to distinguish between full and partial API responses.
 | `isFullBlock`       | Determine whether an object is a full `BlockObjectResponse`    |
 | `isFullDatabase`    | Determine whether an object is a full `DatabaseObjectResponse` |
 | `isFullUser`        | Determine whether an object is a full `UserObjectResponse`     |
+| `isFullComment`     | Determine whether an object is a full `CommentObjectResponse`  |
 
 Here is an example of using a type guard:
 
