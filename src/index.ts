@@ -20,4 +20,5 @@ export {
   isFullDatabase,
   isFullPage,
   isFullUser,
+  isFullComment,
 } from "./helpers"

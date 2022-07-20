@@ -1,8 +1,10 @@
 import {
   BlockObjectResponse,
+  CommentObjectResponse,
   DatabaseObjectResponse,
   PageObjectResponse,
   PartialBlockObjectResponse,
+  PartialCommentObjectResponse,
   PartialDatabaseObjectResponse,
   PartialPageObjectResponse,
   PartialUserObjectResponse,
@@ -117,4 +119,13 @@ export function isFullUser(
   response: UserObjectResponse | PartialUserObjectResponse
 ): response is UserObjectResponse {
   return "type" in response
+}
+
+/**
+ * @returns `true` if `response` is a full `CommentObjectResponse`.
+ */
+export function isFullComment(
+  response: CommentObjectResponse | PartialCommentObjectResponse
+): response is CommentObjectResponse {
+  return "created_by" in response
 }
