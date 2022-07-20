@@ -180,7 +180,7 @@ try {
 #### Type guards
 
 There are several [type guards](https://www.typescriptlang.org/docs/handbook/advanced-types.html#type-guards-and-differentiating-types)
-provided for purposes of distinguishing between full and partial API responses.
+provided to distinguish between full and partial API responses.
 
 | Type guard function | Purpose                                                        |
 | ------------------- | -------------------------------------------------------------- |
