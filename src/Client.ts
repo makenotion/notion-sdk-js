@@ -507,7 +507,9 @@ export default class Client {
   /**
    * Search
    */
-  public search(args: WithAuth<SearchParameters>): Promise<SearchResponse> {
+  public search = (
+    args: WithAuth<SearchParameters>
+  ): Promise<SearchResponse> => {
     return this.request<SearchResponse>({
       path: search.path(),
       method: search.method,
