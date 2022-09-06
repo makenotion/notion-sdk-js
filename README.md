@@ -196,7 +196,7 @@ Here is an example of using a type guard:
 const fullOrPartialPages = await notion.databases.query({
   database_id: "897e5a76-ae52-4b48-9fdf-e71f5945d1af",
 })
-for (const page of fullOrPartialPages) {
+for (const page of fullOrPartialPages.results) {
   if (!isFullPage(page)) {
     continue
   }
