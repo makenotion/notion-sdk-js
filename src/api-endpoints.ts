@@ -36,6 +36,7 @@ export type BotUserObjectResponse = {
                 | PartialUserObjectResponse
             }
           | { type: "workspace"; workspace: true }
+        workspace_name: string | null
       }
   name: string | null
   avatar_url: string | null
@@ -4403,6 +4404,7 @@ export type PageObjectResponse = {
       }
     | { type: "last_edited_time"; last_edited_time: string; id: string }
     | { type: "formula"; formula: FormulaPropertyResponse; id: string }
+    | { type: "button"; button: null; id: string }
     | { type: "title"; title: Array<RichTextItemResponse>; id: string }
     | { type: "rich_text"; rich_text: Array<RichTextItemResponse>; id: string }
     | {
@@ -4681,6 +4683,13 @@ type LastEditedTimeDatabasePropertyConfigResponse = {
   name: string
 }
 
+type ButtonDatabasePropertyConfigResponse = {
+  type: "button"
+  button: EmptyObject
+  id: string
+  name: string
+}
+
 type DatabasePropertyConfigResponse =
   | NumberDatabasePropertyConfigResponse
   | FormulaDatabasePropertyConfigResponse
@@ -4702,6 +4711,7 @@ type DatabasePropertyConfigResponse =
   | CreatedTimeDatabasePropertyConfigResponse
   | LastEditedByDatabasePropertyConfigResponse
   | LastEditedTimeDatabasePropertyConfigResponse
+  | ButtonDatabasePropertyConfigResponse
 
 export type PartialDatabaseObjectResponse = {
   object: "database"
@@ -5259,6 +5269,7 @@ export type LinkToPageBlockObjectResponse = {
   link_to_page:
     | { type: "page_id"; page_id: IdRequest }
     | { type: "database_id"; database_id: IdRequest }
+    | { type: "comment_id"; comment_id: IdRequest }
   parent:
     | { type: "database_id"; database_id: string }
     | { type: "page_id"; page_id: string }
@@ -5673,6 +5684,13 @@ export type FormulaPropertyItemObjectResponse = {
   id: string
 }
 
+export type ButtonPropertyItemObjectResponse = {
+  type: "button"
+  button: null
+  object: "property_item"
+  id: string
+}
+
 export type TitlePropertyItemObjectResponse = {
   type: "title"
   title: RichTextItemResponse
@@ -5733,6 +5751,7 @@ export type PropertyItemObjectResponse =
   | LastEditedByPropertyItemObjectResponse
   | LastEditedTimePropertyItemObjectResponse
   | FormulaPropertyItemObjectResponse
+  | ButtonPropertyItemObjectResponse
   | TitlePropertyItemObjectResponse
   | RichTextPropertyItemObjectResponse
   | PeoplePropertyItemObjectResponse
@@ -5881,6 +5900,7 @@ type RichTextItemRequest =
                                 | PartialUserObjectResponse
                             }
                           | { type: "workspace"; workspace: true }
+                        workspace_name: string | null
                       }
                   id: IdRequest
                   type?: "bot"
@@ -6030,6 +6050,7 @@ type BlockObjectRequestWithoutChildren =
       link_to_page:
         | { page_id: IdRequest; type?: "page_id" }
         | { database_id: IdRequest; type?: "database_id" }
+        | { comment_id: IdRequest; type?: "comment_id" }
       type?: "link_to_page"
       object?: "block"
     }
@@ -6206,6 +6227,7 @@ type BlockObjectRequest =
       link_to_page:
         | { page_id: IdRequest; type?: "page_id" }
         | { database_id: IdRequest; type?: "database_id" }
+        | { comment_id: IdRequest; type?: "comment_id" }
       type?: "link_to_page"
       object?: "block"
     }
@@ -6306,6 +6328,7 @@ type BlockObjectRequest =
                   link_to_page:
                     | { page_id: IdRequest; type?: "page_id" }
                     | { database_id: IdRequest; type?: "database_id" }
+                    | { comment_id: IdRequest; type?: "comment_id" }
                   type?: "link_to_page"
                   object?: "block"
                 }
@@ -6522,6 +6545,7 @@ type BlockObjectRequest =
               link_to_page:
                 | { page_id: IdRequest; type?: "page_id" }
                 | { database_id: IdRequest; type?: "database_id" }
+                | { comment_id: IdRequest; type?: "comment_id" }
               type?: "link_to_page"
               object?: "block"
             }
@@ -6744,6 +6768,7 @@ type BlockObjectRequest =
               link_to_page:
                 | { page_id: IdRequest; type?: "page_id" }
                 | { database_id: IdRequest; type?: "database_id" }
+                | { comment_id: IdRequest; type?: "comment_id" }
               type?: "link_to_page"
               object?: "block"
             }
@@ -6956,6 +6981,7 @@ type BlockObjectRequest =
               link_to_page:
                 | { page_id: IdRequest; type?: "page_id" }
                 | { database_id: IdRequest; type?: "database_id" }
+                | { comment_id: IdRequest; type?: "comment_id" }
               type?: "link_to_page"
               object?: "block"
             }
@@ -7168,6 +7194,7 @@ type BlockObjectRequest =
               link_to_page:
                 | { page_id: IdRequest; type?: "page_id" }
                 | { database_id: IdRequest; type?: "database_id" }
+                | { comment_id: IdRequest; type?: "comment_id" }
               type?: "link_to_page"
               object?: "block"
             }
@@ -7379,6 +7406,7 @@ type BlockObjectRequest =
               link_to_page:
                 | { page_id: IdRequest; type?: "page_id" }
                 | { database_id: IdRequest; type?: "database_id" }
+                | { comment_id: IdRequest; type?: "comment_id" }
               type?: "link_to_page"
               object?: "block"
             }
@@ -7590,6 +7618,7 @@ type BlockObjectRequest =
               link_to_page:
                 | { page_id: IdRequest; type?: "page_id" }
                 | { database_id: IdRequest; type?: "database_id" }
+                | { comment_id: IdRequest; type?: "comment_id" }
               type?: "link_to_page"
               object?: "block"
             }
@@ -7801,6 +7830,7 @@ type BlockObjectRequest =
               link_to_page:
                 | { page_id: IdRequest; type?: "page_id" }
                 | { database_id: IdRequest; type?: "database_id" }
+                | { comment_id: IdRequest; type?: "comment_id" }
               type?: "link_to_page"
               object?: "block"
             }
@@ -8012,6 +8042,7 @@ type BlockObjectRequest =
               link_to_page:
                 | { page_id: IdRequest; type?: "page_id" }
                 | { database_id: IdRequest; type?: "database_id" }
+                | { comment_id: IdRequest; type?: "comment_id" }
               type?: "link_to_page"
               object?: "block"
             }
@@ -8223,6 +8254,7 @@ type BlockObjectRequest =
               link_to_page:
                 | { page_id: IdRequest; type?: "page_id" }
                 | { database_id: IdRequest; type?: "database_id" }
+                | { comment_id: IdRequest; type?: "comment_id" }
               type?: "link_to_page"
               object?: "block"
             }
@@ -8435,6 +8467,7 @@ type BlockObjectRequest =
               link_to_page:
                 | { page_id: IdRequest; type?: "page_id" }
                 | { database_id: IdRequest; type?: "database_id" }
+                | { comment_id: IdRequest; type?: "comment_id" }
               type?: "link_to_page"
               object?: "block"
             }
@@ -8645,6 +8678,7 @@ type BlockObjectRequest =
               link_to_page:
                 | { page_id: IdRequest; type?: "page_id" }
                 | { database_id: IdRequest; type?: "database_id" }
+                | { comment_id: IdRequest; type?: "comment_id" }
               type?: "link_to_page"
               object?: "block"
             }
@@ -8856,6 +8890,7 @@ type BlockObjectRequest =
               link_to_page:
                 | { page_id: IdRequest; type?: "page_id" }
                 | { database_id: IdRequest; type?: "database_id" }
+                | { comment_id: IdRequest; type?: "comment_id" }
               type?: "link_to_page"
               object?: "block"
             }
@@ -9069,6 +9104,7 @@ type BlockObjectRequest =
               link_to_page:
                 | { page_id: IdRequest; type?: "page_id" }
                 | { database_id: IdRequest; type?: "database_id" }
+                | { comment_id: IdRequest; type?: "comment_id" }
               type?: "link_to_page"
               object?: "block"
             }
@@ -9457,6 +9493,7 @@ type CreatePageBodyParameters =
                                     | PartialUserObjectResponse
                                 }
                               | { type: "workspace"; workspace: true }
+                            workspace_name: string | null
                           }
                       id: IdRequest
                       type?: "bot"
@@ -9557,6 +9594,7 @@ type CreatePageBodyParameters =
                                   | PartialUserObjectResponse
                               }
                             | { type: "workspace"; workspace: true }
+                          workspace_name: string | null
                         }
                     id: IdRequest
                     type?: "bot"
@@ -9700,6 +9738,7 @@ type UpdatePageBodyParameters = {
                                 | PartialUserObjectResponse
                             }
                           | { type: "workspace"; workspace: true }
+                        workspace_name: string | null
                       }
                   id: IdRequest
                   type?: "bot"
@@ -9784,6 +9823,7 @@ type UpdatePageBodyParameters = {
                               | PartialUserObjectResponse
                           }
                         | { type: "workspace"; workspace: true }
+                      workspace_name: string | null
                     }
                 id: IdRequest
                 type?: "bot"
@@ -9957,6 +9997,7 @@ type UpdateBlockBodyParameters =
       link_to_page:
         | { page_id: IdRequest; type?: "page_id" }
         | { database_id: IdRequest; type?: "database_id" }
+        | { comment_id: IdRequest; type?: "comment_id" }
       type?: "link_to_page"
       archived?: boolean
     }
@@ -10323,6 +10364,8 @@ type UpdateDatabaseBodyParameters = {
         name?: string
       }
     | null
+    | { button: EmptyObject; type?: "button"; name?: string }
+    | null
     | { name: string }
     | null
   >
@@ -10516,6 +10559,7 @@ type CreateDatabaseBodyParameters = {
     | { created_time: EmptyObject; type?: "created_time" }
     | { last_edited_by: EmptyObject; type?: "last_edited_by" }
     | { last_edited_time: EmptyObject; type?: "last_edited_time" }
+    | { button: EmptyObject; type?: "button" }
   >
   icon?:
     | { emoji: EmojiRequest; type?: "emoji" }
