@@ -4404,7 +4404,6 @@ export type PageObjectResponse = {
       }
     | { type: "last_edited_time"; last_edited_time: string; id: string }
     | { type: "formula"; formula: FormulaPropertyResponse; id: string }
-    | { type: "button"; button: null; id: string }
     | { type: "title"; title: Array<RichTextItemResponse>; id: string }
     | { type: "rich_text"; rich_text: Array<RichTextItemResponse>; id: string }
     | {
@@ -4683,13 +4682,6 @@ type LastEditedTimeDatabasePropertyConfigResponse = {
   name: string
 }
 
-type ButtonDatabasePropertyConfigResponse = {
-  type: "button"
-  button: EmptyObject
-  id: string
-  name: string
-}
-
 type DatabasePropertyConfigResponse =
   | NumberDatabasePropertyConfigResponse
   | FormulaDatabasePropertyConfigResponse
@@ -4711,7 +4703,6 @@ type DatabasePropertyConfigResponse =
   | CreatedTimeDatabasePropertyConfigResponse
   | LastEditedByDatabasePropertyConfigResponse
   | LastEditedTimeDatabasePropertyConfigResponse
-  | ButtonDatabasePropertyConfigResponse
 
 export type PartialDatabaseObjectResponse = {
   object: "database"
@@ -5684,13 +5675,6 @@ export type FormulaPropertyItemObjectResponse = {
   id: string
 }
 
-export type ButtonPropertyItemObjectResponse = {
-  type: "button"
-  button: null
-  object: "property_item"
-  id: string
-}
-
 export type TitlePropertyItemObjectResponse = {
   type: "title"
   title: RichTextItemResponse
@@ -5751,7 +5735,6 @@ export type PropertyItemObjectResponse =
   | LastEditedByPropertyItemObjectResponse
   | LastEditedTimePropertyItemObjectResponse
   | FormulaPropertyItemObjectResponse
-  | ButtonPropertyItemObjectResponse
   | TitlePropertyItemObjectResponse
   | RichTextPropertyItemObjectResponse
   | PeoplePropertyItemObjectResponse
@@ -10364,8 +10347,6 @@ type UpdateDatabaseBodyParameters = {
         name?: string
       }
     | null
-    | { button: EmptyObject; type?: "button"; name?: string }
-    | null
     | { name: string }
     | null
   >
@@ -10559,7 +10540,6 @@ type CreateDatabaseBodyParameters = {
     | { created_time: EmptyObject; type?: "created_time" }
     | { last_edited_by: EmptyObject; type?: "last_edited_by" }
     | { last_edited_time: EmptyObject; type?: "last_edited_time" }
-    | { button: EmptyObject; type?: "button" }
   >
   icon?:
     | { emoji: EmojiRequest; type?: "emoji" }
