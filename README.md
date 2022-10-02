@@ -258,7 +258,7 @@ An array with results from the API.
 **Example:**
 
 ```javascript
-const blocks = collectPaginatedAPI(notion.blocks.children.list, {
+const blocks = await collectPaginatedAPI(notion.blocks.children.list, {
   block_id: parentBlockId,
 })
 // Do something with blocks.
