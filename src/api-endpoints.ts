@@ -9407,7 +9407,7 @@ export const listUsers = {
 
 type CreatePageBodyParameters =
   | {
-      parent: { database_id: IdRequest; type?: "database_id" }
+      parent: { database_id: IdRequest; type?: "database_id" } | { page_id: IdRequest; type?: "page_id" }
       properties:
         | Record<
             string,
