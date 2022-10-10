@@ -5956,7 +5956,7 @@ type RichTextItemRequest =
       }
     }
 
-type BlockObjectRequestWithoutChildren =
+export type BlockObjectRequestWithoutChildren =
   | {
       embed: { url: string; caption?: Array<RichTextItemRequest> }
       type?: "embed"
@@ -6133,7 +6133,7 @@ type BlockObjectRequestWithoutChildren =
       object?: "block"
     }
 
-type BlockObjectRequest =
+export type BlockObjectRequest =
   | {
       embed: { url: string; caption?: Array<RichTextItemRequest> }
       type?: "embed"
