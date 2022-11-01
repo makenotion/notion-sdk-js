@@ -1,4 +1,4 @@
-// cspell:disable-file
+/* spell-checker: disable */
 // Note: This is a generated file.
 
 type IdRequest = string | string
