@@ -4469,6 +4469,7 @@ type NumberFormat =
   | "percent"
   | "dollar"
   | "canadian_dollar"
+  | "singapore_dollar"
   | "euro"
   | "pound"
   | "yen"
