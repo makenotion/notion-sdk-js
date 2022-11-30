@@ -19,12 +19,15 @@
     "rest",
     "notion-api"
   ],
-  "main": "./build/src",
-  "types": "./build/src/index.d.ts",
+  "main": "./build/cjs/index.js",
+  "module": "./build/esm/index.js",
+  "types": "./build/esm/index.d.ts",
   "scripts": {
     "prepare": "npm run build",
     "prepublishOnly": "npm run checkLoggedIn && npm run lint && npm run test",
-    "build": "tsc",
+    "build": "npm run build:cjs && npm run build:esm",
+    "build:cjs": "tsc -b tsconfig.cjs.json",
+    "build:esm": "tsc -b tsconfig.esm.json",
     "prettier": "prettier --write .",
     "lint": "prettier --check . && eslint . --ext .ts && cspell '**/*' ",
     "test": "jest ./test",

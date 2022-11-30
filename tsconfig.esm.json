@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "esnext",
+
+    // Emit sourcemaps
+    "declarationMap": true,
+    "sourceMap": true,
+    "inlineSources": true,
+
+    // Emit location
+    "outDir": "build/esm",
+
+    "rootDir": "src"
+  }
+}

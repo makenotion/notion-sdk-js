@@ -78,7 +78,7 @@ import nodeFetch from "node-fetch"
 import {
   version as PACKAGE_VERSION,
   name as PACKAGE_NAME,
-} from "../package.json"
+} from "./package.json"
 import { SupportedFetch } from "./fetch-types"
 
 export interface ClientOptions {

@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "commonjs",
+
+    // Emit location
+    "outDir": "build/cjs",
+
+    "rootDir": "src"
+  }
+}

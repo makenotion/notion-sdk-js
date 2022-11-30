@@ -11,14 +11,6 @@
     // Overrides default in order to remove "dom" because this package shouldn't assume the presence of browser APIs
     "lib": ["ES2019"],
 
-    // Emit location
-    "outDir": "build",
-
-    // Emit sourcemaps
-    "declarationMap": true,
-    "sourceMap": true,
-    "inlineSources": true,
-
     // Emit type definitions
     "declaration": true,
 
@@ -26,6 +18,7 @@
     "strict": true,
 
     // Allow import package.json
+    "moduleResolution": "node",
     "resolveJsonModule": true,
 
     // Linter style rules
@@ -37,6 +30,6 @@
     "noPropertyAccessFromIndexSignature": true,
     "forceConsistentCasingInFileNames": true
   },
-
-  "include": ["src/**/*", "test/**/*"]
+  "include": ["src/**/*"],
+  "exclude": ["test/**/*"]
 }
