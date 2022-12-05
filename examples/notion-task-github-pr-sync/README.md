@@ -25,7 +25,7 @@ npm install
 In order for this Integration to work with Github, you'll need a Github Personal Access Token. You can create your GitHub Personal Access token by following the guide [here](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token). Make a note of the Personal Access token, we'll need it later. 
 
 ### 3. Setup Github Repository
-If you don't have a Github Repository you may navigate [here] (https://github.com/new) to set one up. 
+If you don't have a Github Repository you may [click here](https://github.com/new) to set one up. 
 
 Once you've created a repository or if you already have one, make a note of the repository owner and repository name, we'll need it later. 
 
@@ -45,7 +45,7 @@ UPDATE_STATUS_IN_NOTION_DB = <true|false>
 in your .env file to true or false. More on this later. 
 
 ### 5. Create Notion Integration 
-In order to leverage the Notion API, we must first create an integration. To do that, navigate [here](https://www.notion.com/my-integrations), and click Create new integration. 
+In order to leverage the Notion API, we must first create an integration. To do that, [click here](https://www.notion.com/my-integrations), and click Create new integration. 
 
 As you progress through the fields, pay close attention to enabling the following permissions:
 
@@ -59,10 +59,10 @@ Once your integration is created, make a note of your Internal Integration Token
 <img src="https://files.readme.io/cbbd7c3-create_integration.gif" alt="drawing" width="500"/>
 
 ### 6. Connect your Integration with your Notion Page
-#### 1. Go to the database page in your workspace.
-#### 2. Click the ••• on the top right corner of the page.
-#### 3. At the bottom of the pop-up, click Add connections.
-#### 4. Search for and select your integration in the Search for connections... menu.
+1. Go to the database page in your workspace.
+2. Click the ••• on the top right corner of the page.
+3. At the bottom of the pop-up, click Add connections.
+4. Search for and select your integration in the Search for connections... menu.
 
 ### 7. Set your environment variables in a `.env` file
 Using the information you noted above, create a `.env` file. 
