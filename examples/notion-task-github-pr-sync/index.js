@@ -2,7 +2,6 @@
 
 	notion-task-github-pr-sync
 
-  Glitch example: https://glitch.com/edit/#!/notion-github-sync
   Find the official Notion API client @ https://github.com/makenotion/notion-sdk-js/
 
 ================================================================================ */
