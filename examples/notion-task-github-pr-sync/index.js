@@ -183,7 +183,7 @@ async function updatePages(pagesToUpdate) {
     console.log("Notion Tasks are already up-to-date")
   } else {
     console.log(
-      "Succesfully updated " + pagesToUpdate.length + " task(s) in Notion"
+      "Successfully updated " + pagesToUpdate.length + " task(s) in Notion"
     )
   }
 }

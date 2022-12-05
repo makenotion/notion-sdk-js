@@ -31,7 +31,7 @@ If you don't have a Github Repository you may [click here](https://github.com/ne
 
 Once you've created a repository or if you already have one, make a note of the repository owner and repository name, we'll need it later.
 
-### 4. Create a Notion Datbase
+### 4. Create a Notion Database
 
 You may skip this step if you have a Notion database to use with this integration.
 
@@ -55,7 +55,7 @@ In order to leverage the Notion API, we must first create an integration. To do 
 
 As you progress through the fields, pay close attention to enabling the following permissions:
 
-Capabilities > Content Capabilites > Read Content, Update Content, Insert Content.
+Capabilities > Content Capabilities > Read Content, Update Content, Insert Content.
 Capabilities > Comment Capabilities > Read Comments, Insert Comments
 
 These capabilities are required to write comments on your Notion Tasks.
