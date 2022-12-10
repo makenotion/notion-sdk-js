@@ -154,7 +154,11 @@ export default class Client {
     if (query) {
       for (const [key, value] of Object.entries(query)) {
         if (value !== undefined) {
-          url.searchParams.append(key, String(value))
+          if (Array.isArray(value)) {
+            value.forEach(val => url.searchParams.append(key, String(val)))
+          } else {
+            url.searchParams.append(key, String(value))
+          }
         }
       }
     }
@@ -558,6 +562,6 @@ export default class Client {
  * Type aliases to support the generic request interface.
  */
 type Method = "get" | "post" | "patch" | "delete"
-type QueryParams = Record<string, string | number> | URLSearchParams
+type QueryParams = Record<string, string | number | string[]> | URLSearchParams
 
 type WithAuth<P> = P & { auth?: string }
