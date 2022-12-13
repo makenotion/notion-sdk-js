@@ -1,4 +1,4 @@
-/* spell-checker: disable */
+// cspell:disable-file
 // Note: This is a generated file.
 
 type IdRequest = string | string
@@ -5957,7 +5957,7 @@ type RichTextItemRequest =
       }
     }
 
-type BlockObjectRequestWithoutChildren =
+export type BlockObjectRequestWithoutChildren =
   | {
       embed: { url: string; caption?: Array<RichTextItemRequest> }
       type?: "embed"
@@ -6134,7 +6134,7 @@ type BlockObjectRequestWithoutChildren =
       object?: "block"
     }
 
-type BlockObjectRequest =
+export type BlockObjectRequest =
   | {
       embed: { url: string; caption?: Array<RichTextItemRequest> }
       type?: "embed"
@@ -9259,6 +9259,7 @@ type DatePropertyFilter =
   | { after: string }
   | { on_or_before: string }
   | { on_or_after: string }
+  | { this_week: EmptyObject }
   | { past_week: EmptyObject }
   | { past_month: EmptyObject }
   | { past_year: EmptyObject }
@@ -9653,14 +9654,18 @@ type GetPagePathParameters = {
   page_id: IdRequest
 }
 
-export type GetPageParameters = GetPagePathParameters
+type GetPageQueryParameters = {
+  filter_properties?: Array<string>
+}
+
+export type GetPageParameters = GetPagePathParameters & GetPageQueryParameters
 
 export type GetPageResponse = PageObjectResponse | PartialPageObjectResponse
 
 export const getPage = {
   method: "get",
   pathParams: ["page_id"],
-  queryParams: [],
+  queryParams: ["filter_properties"],
   bodyParams: [],
   path: (p: GetPagePathParameters): string => `pages/${p.page_id}`,
 } as const
@@ -10383,6 +10388,10 @@ type QueryDatabasePathParameters = {
   database_id: IdRequest
 }
 
+type QueryDatabaseQueryParameters = {
+  filter_properties?: Array<string>
+}
+
 type QueryDatabaseBodyParameters = {
   sorts?: Array<
     | { property: string; direction: "ascending" | "descending" }
@@ -10419,6 +10428,7 @@ type QueryDatabaseBodyParameters = {
 }
 
 export type QueryDatabaseParameters = QueryDatabasePathParameters &
+  QueryDatabaseQueryParameters &
   QueryDatabaseBodyParameters
 
 export type QueryDatabaseResponse = {
@@ -10433,7 +10443,7 @@ export type QueryDatabaseResponse = {
 export const queryDatabase = {
   method: "post",
   pathParams: ["database_id"],
-  queryParams: [],
+  queryParams: ["filter_properties"],
   bodyParams: ["sorts", "filter", "start_cursor", "page_size", "archived"],
   path: (p: QueryDatabasePathParameters): string =>
     `databases/${p.database_id}/query`,
