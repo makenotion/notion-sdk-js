@@ -4,7 +4,7 @@
 
 ## About the Integration
 
-This Notion integration syncs GitHub Issues for a specific repo to a Notion Database. This integration was built using this [database template](https://www.notion.com/367cd67cfe8f49bfaf0ac21305ebb9bf?v=bc79ca62b36e4c54b655ceed4ef06ebd) and [GitHub's Octokit Library](https://github.com/octokit). Changes made to issues in the Notion database will not be reflected in GitHub. For an example which allows you to take actions based on changes in a database [go here.](https://github.com/makenotion/notion-sdk-js/tree/main/examples/database-email-update)
+This Notion integration syncs GitHub Issues for a specific project to a Notion Database. This integration was built using this [database template](https://www.notion.com/367cd67cfe8f49bfaf0ac21305ebb9bf?v=bc79ca62b36e4c54b655ceed4ef06ebd) and [GitHub's Octokit Library](https://github.com/octokit). Changes made to issues in the Notion database will not be reflected in GitHub. For an example which allows you to take actions based on changes in a database [go here.](https://github.com/makenotion/notion-sdk-js/tree/main/examples/database-email-update)
 
 ## Running Locally
 
@@ -15,7 +15,7 @@ This Notion integration syncs GitHub Issues for a specific repo to a Notion Data
 git clone https://github.com/makenotion/notion-sdk-js.git
 
 # Switch into this project
-cd notion-sdk-js/examples/notion-github-sync
+cd notion-sdk-js/examples/notion-github-project-issues-sync
 
 # Install the dependencies
 npm install
@@ -27,8 +27,9 @@ npm install
 GITHUB_KEY=<your-github-personal-access-token>
 NOTION_KEY=<your-notion-api-key>
 NOTION_DATABASE_ID=<notion-database-id>
-GITHUB_REPO_OWNER=<github-owner-username>
-GITHUB_REPO_NAME=<github-repo-name>
+GITHUB_ORGANIZATION_NAME=<github-organization-name>
+GITHUB_PROJECT_NAME=<github-project-name>
+GITHUB_PROJECT_NUMBER=<github-project-number>
 ```
 
 You can create your Notion API key [here](https://www.notion.com/my-integrations).
