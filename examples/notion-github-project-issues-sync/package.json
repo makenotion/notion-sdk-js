@@ -1,7 +1,7 @@
 {
-  "name": "github-issue-sync",
+  "name": "notion-github-project-issues-sync",
   "version": "1.0.0",
-  "description": "Sync GitHub issues with Notion.",
+  "description": "Sync GitHub Project issues with Notion.",
   "main": "index.js",
   "engines": {
     "node": "12.x"
@@ -10,7 +10,15 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": ""
   },
-  "author": "Aman Gupta",
+  "contributors": [
+    {
+      "name": "André Pedralho",
+      "email": "andre.pedralho@gmail.com"
+    },
+    {
+      "name": "Aman Gupta"
+    }
+  ],
   "license": "MIT",
   "dependencies": {
     "@notionhq/client": "file:../../",
