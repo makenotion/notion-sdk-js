@@ -1,19 +1,20 @@
 /* ================================================================================
 
-	notion-github-sync.
+	notion-github-project-issues-sync
   
-  Glitch example: https://glitch.com/edit/#!/notion-github-sync
   Find the official Notion API client @ https://github.com/makenotion/notion-sdk-js/
 
 ================================================================================ */
 
 const { Client } = require("@notionhq/client")
 const dotenv = require("dotenv")
-const { Octokit } = require("octokit")
+const { Octokit } = require("@octokit/core");
+const { paginateGraphql } = require("@octokit/plugin-paginate-graphql");
 const _ = require("lodash")
 
 dotenv.config()
-const octokit = new Octokit({ auth: process.env.GITHUB_KEY })
+const MyOctokit = Octokit.plugin(paginateGraphql);
+const octokit = new MyOctokit({ auth: process.env.GITHUB_KEY })
 const notion = new Client({ auth: process.env.NOTION_KEY })
 
 const databaseId = process.env.NOTION_DATABASE_ID
@@ -42,10 +43,15 @@ async function setInitialGitHubToNotionIdMap() {
 }
 
 async function syncNotionDatabaseWithGitHub() {
-  // Get all issues currently in the provided GitHub repository.
-  console.log("\nFetching issues from GitHub repository...")
-  const issues = await getGitHubIssuesForRepository()
-  console.log(`Fetched ${issues.length} issues from GitHub repository.`)
+  // Get the project id for the provided GitHub project number.
+  console.log("\nFetching project id from GitHub...");
+  const projectId = await getGitHubProjectId();
+  console.log(`Project id: ${projectId}`);
+
+  // Get all issues currently in the provided GitHub project.
+  console.log("\nFetching issues from GitHub project...")
+  const issues = await getGitHubIssuesForProject(projectId)
+  console.log(`Fetched ${issues.length} issues from GitHub project.`)
 
   // Group issues into those that need to be created or updated in the Notion database.
   const { pagesToCreate, pagesToUpdate } = getNotionOperations(issues)
@@ -81,7 +87,7 @@ async function getIssuesFromNotionDatabase() {
     }
     cursor = next_cursor
   }
-  console.log(`${pages.length} issues successfully fetched.`)
+  console.log(`${pages.length} issues successfully fetched from Notion.`)
 
   const issues = []
   for (const page of pages) {
@@ -100,34 +106,85 @@ async function getIssuesFromNotionDatabase() {
 }
 
 /**
- * Gets issues from a GitHub repository. Pull requests are omitted.
+ * Gets project id given the project number and owner.
  *
- * https://docs.github.com/en/rest/guides/traversing-with-pagination
- * https://docs.github.com/en/rest/reference/issues
+ * https://docs.github.com/en/graphql/reference/objects#organization
+ *
+ * @returns organizationId
+ */
+async function getGitHubProjectId() {
+  const { organization } = await octokit.graphql(`
+  {
+    organization(login: "${process.env.GITHUB_ORGANIZATION_NAME}") {
+      projectV2(number: ${process.env.GITHUB_PROJECT_NUMBER}) {
+        id
+      }
+    }
+  }`);
+
+  return organization?.projectV2?.id;
+}
+
+/**
+ * Gets issues from a GitHub project.
+ *
+ * https://docs.github.com/en/graphql/reference/objects#projectv2
+ * https://docs.github.com/en/graphql/reference/objects#projectv2item 
+ * https://docs.github.com/en/graphql/reference/enums#projectv2itemtype
+ * https://docs.github.com/en/graphql/reference/objects#projectv2itemconnection
+ * https://docs.github.com/en/graphql/reference/objects#pageinfo
+ * https://docs.github.com/en/graphql/reference/objects#issue
  *
  * @returns {Promise<Array<{ number: number, title: string, state: "open" | "closed", comment_count: number, url: string }>>}
  */
-async function getGitHubIssuesForRepository() {
+async function getGitHubIssuesForProject(projectId) {
   const issues = []
-  const iterator = octokit.paginate.iterator(octokit.rest.issues.listForRepo, {
-    owner: process.env.GITHUB_REPO_OWNER,
-    repo: process.env.GITHUB_REPO_NAME,
-    state: "all",
-    per_page: 100,
-  })
-  for await (const { data } of iterator) {
-    for (const issue of data) {
-      if (!issue.pull_request) {
-        issues.push({
-          number: issue.number,
-          title: issue.title,
-          state: issue.state,
-          comment_count: issue.comments,
-          url: issue.html_url,
-        })
+
+  const pageIterator = octokit.graphql.paginate.iterator(
+    `query paginate($cursor: String) {
+      node(id: "${projectId}") {
+        ... on ProjectV2 {
+          items(first: 100, after: $cursor) {
+            pageInfo {
+              hasNextPage
+              endCursor
+            }
+            nodes {
+              id
+              type
+              content {
+                ...on Issue {
+                  title
+                  number
+                  state
+                  url
+                  comments(first: 1) {
+                    totalCount
+                  }
+                }
+              }
+            }
+          }
+        }
       }
+    }`
+  );
+
+  for await (const response of pageIterator) {
+    for (const issue of response?.node?.items?.nodes) {
+      // Consider only issues, e.g ignore draft issues and PR's
+      if (issue.type !== 'ISSUE') continue;
+
+      issues.push({
+        number: issue.content?.number,
+        title: issue.content?.title,
+        state: issue.content?.state,
+        comment_count: issue.content?.comments?.totalCount,
+        url: issue.content.url,
+      });
     }
   }
+
   return issues
 }
 
