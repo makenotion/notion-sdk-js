@@ -152,6 +152,18 @@ async function getGitHubIssuesForProject(projectId) {
             nodes {
               id
               type
+              fieldValues(first: 10) {
+                nodes {
+                  ... on ProjectV2ItemFieldSingleSelectValue {
+                    name
+                    field {
+                      ... on ProjectV2FieldCommon {
+                        name
+                      }
+                    }
+                  }
+                }
+              }
               content {
                 ...on Issue {
                   title
@@ -175,10 +187,16 @@ async function getGitHubIssuesForProject(projectId) {
       // Consider only issues, e.g ignore draft issues and PR's
       if (issue.type !== 'ISSUE') continue;
 
+      let status = null;
+      for (const field of issue?.fieldValues?.nodes) {
+        if (field?.field?.name === 'Status') {
+          status = field?.name;
+        }
+      }
       issues.push({
         number: issue.content?.number,
         title: issue.content?.title,
-        state: issue.content?.state,
+        state: status,
         comment_count: issue.content?.comments?.totalCount,
         url: issue.content.url,
       });
