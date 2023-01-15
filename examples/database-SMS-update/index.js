@@ -1,18 +1,21 @@
 /* ================================================================================
 
-	database-update-send-email.
-  
-  Glitch example: https://glitch.com/edit/#!/notion-database-email-update
-  Find the official Notion API client @ https://github.com/makenotion/notion-sdk-js/
+	database-update-send-SMS.
 
 ================================================================================ */
 
 const { Client } = require("@notionhq/client")
 const dotenv = require("dotenv")
-const sendgridMail = require("@sendgrid/mail")
-
 dotenv.config()
-sendgridMail.setApiKey(process.env.SENDGRID_KEY)
+
+//Setting Up Twilio
+const accountSid = process.env.TWILIO_ACCOUNT_SID
+const authToken = process.env.TWILIO_AUTH_TOKEN
+const toNum = process.env.SMS_TO_FIELD
+const fromNum = process.env.SMS_FROM_FIELD
+const client = require('twilio')(accountSid, authToken)
+
+
 const notion = new Client({ auth: process.env.NOTION_KEY })
 
 const databaseId = process.env.NOTION_DATABASE_ID
@@ -53,7 +56,7 @@ async function findAndSendEmailsForUpdatedTasks() {
   // For each updated task, update taskPageIdToStatusMap and send an email notification.
   for (const task of updatedTasks) {
     taskPageIdToStatusMap[task.pageId] = task.status
-    await sendUpdateEmailWithSendgrid(task)
+    await sendUpdateSMSWithTwilio(task)
   }
 }
 
@@ -126,19 +129,22 @@ function findUpdatedTasks(currentTasks) {
  *
  * @param {{ status: string, title: string }} task
  */
-async function sendUpdateEmailWithSendgrid({ title, status }) {
+async function sendUpdateSMSWithTwilio({ title, status }) {
   const message = `Status of Notion task ("${title}") has been updated to "${status}".`
   console.log(message)
 
   try {
-    // Send an email about this change.
-    await sendgridMail.send({
-      to: process.env.EMAIL_TO_FIELD,
-      from: process.env.EMAIL_FROM_FIELD,
-      subject: "Notion Task Status Updated",
-      text: message,
+    // Send an SMS about this change.
+
+    client.messages
+    .create({
+      body: message,
+      from: fromNum,
+      to: toNum
     })
-    console.log("Email Sent")
+    .then(message => console.log(message.sid));
+
+    console.log("SMS Sent")
   } catch (error) {
     console.error(error)
   }
