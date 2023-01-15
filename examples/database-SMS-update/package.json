@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@notionhq/client": "^2.1.1",
-    "@sendgrid/mail": "^7.7.0",
+    "twilio": "^3.55.1",
     "dotenv": "^16.0.1"
   },
   "author": "Aman Gupta",
