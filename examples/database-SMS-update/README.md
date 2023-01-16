@@ -1,6 +1,6 @@
-# Sample Integration: Notion to Email
+# Sample Integration: Notion to SMS
 
-<img src="https://dev.notion.so/front-static/external/readme/images/notion-email-example@2x.png" alt="drawing" width="500"/>
+<img src="https://github.com/Anirudh-Dhoundiyal/notion-sdk-js/blob/main/examples/database-SMS-update/notion-SMS-example@2x.png?raw=true" alt="drawing" width="500"/>
 
 ## About the Integration
 
@@ -38,7 +38,7 @@ You can create your Twilio ASID and Auth Token here [here](https://www.twilio.co
 
 To create a Notion database that will work with this example, duplicate [this template](https://www.notion.com/5b593126d3eb401db62c83cbe362d2d5?v=a44397b3675545f389a6f28282c402ae).
 
-If yu are having trouble finding your database ID, refer to the following stack exchange [Stack Exchange](https://stackoverflow.com/questions/67728038/where-to-find-database-id-for-my-database-in-notion)
+If you are having trouble finding your database ID, refer to the following stack exchange [Stack Exchange](https://stackoverflow.com/questions/67728038/where-to-find-database-id-for-my-database-in-notion)
 
 ### 3. Run code
 
