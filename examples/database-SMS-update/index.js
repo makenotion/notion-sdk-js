@@ -135,16 +135,15 @@ async function sendUpdateSMSWithTwilio({ title, status }) {
 
   try {
     // Send an SMS about this change.
-
     client.messages
     .create({
       body: message,
       from: fromNum,
       to: toNum
     })
-    .then(message => console.log(message.sid));
+    .then(message => console.log("SMS SID: " + message.sid));
 
-    console.log("SMS Sent")
+    console.log("SMS Requested")
   } catch (error) {
     console.error(error)
   }
