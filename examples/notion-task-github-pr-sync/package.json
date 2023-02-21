@@ -1,7 +1,7 @@
 {
-  "name": "database-update-send-email",
+  "name": "notion-task-github-pr-sync",
   "version": "1.0.0",
-  "description": "Send an email with SendGrid when an update is made in Notion.",
+  "description": "Sync Notion tasks with Github PRs",
   "main": "index.js",
   "engines": {
     "node": "12.x"
@@ -10,11 +10,12 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": ""
   },
+  "author": "Sid Verma",
+  "license": "MIT",
   "dependencies": {
     "@notionhq/client": "^2.1.1",
-    "@sendgrid/mail": "^7.7.0",
-    "dotenv": "^16.0.1"
-  },
-  "author": "Aman Gupta",
-  "license": "MIT"
+    "dotenv": "^16.0.1",
+    "lodash": "^4.17.21",
+    "octokit": "^2.0.3"
+  }
 }

@@ -10,7 +10,7 @@ import {
   isNotionClientError,
   RequestTimeoutError,
 } from "./errors.ts"
-import { pick } from "./helpers.ts"
+import { pick } from "./utils.ts"
 import {
   GetBlockParameters,
   GetBlockResponse,
@@ -66,6 +66,12 @@ import {
   GetPagePropertyParameters,
   GetPagePropertyResponse,
   getPageProperty,
+  CreateCommentParameters,
+  CreateCommentResponse,
+  createComment,
+  ListCommentsParameters,
+  ListCommentsResponse,
+  listComments,
 } from "./api-endpoints.ts"
 // import {
 //   version as PACKAGE_VERSION,
@@ -73,7 +79,7 @@ import {
 // } from "../package.json"
 
 const PACKAGE_NAME = "cloudydeno/deno-notion_sdk";
-const PACKAGE_VERSION = "0.4.1";
+const PACKAGE_VERSION = "2.2.3";
 
 export interface ClientOptions {
   auth?: string
@@ -103,7 +109,7 @@ export default class Client {
   #fetch: typeof fetch
   #userAgent: string
 
-  static readonly defaultNotionVersion = "2022-02-22"
+  static readonly defaultNotionVersion = "2022-06-28"
 
   public constructor(options?: ClientOptions) {
     this.#auth = options?.auth
@@ -144,7 +150,11 @@ export default class Client {
     if (query) {
       for (const [key, value] of Object.entries(query)) {
         if (value !== undefined) {
-          url.searchParams.append(key, String(value))
+          if (Array.isArray(value)) {
+            value.forEach(val => url.searchParams.append(key, String(val)))
+          } else {
+            url.searchParams.append(key, String(value))
+          }
         }
       }
     }
@@ -161,7 +171,7 @@ export default class Client {
     try {
       const response = await RequestTimeoutError.rejectAfterTimeout(
         this.#fetch(url.toString(), {
-          method,
+          method: method.toUpperCase(),
           headers,
           body: bodyAsJsonString,
         }),
@@ -461,10 +471,44 @@ export default class Client {
     },
   }
 
+  public readonly comments = {
+    /**
+     * Create a comment
+     */
+    create: (
+      args: WithAuth<CreateCommentParameters>
+    ): Promise<CreateCommentResponse> => {
+      return this.request<CreateCommentResponse>({
+        path: createComment.path(),
+        method: createComment.method,
+        query: pick(args, createComment.queryParams),
+        body: pick(args, createComment.bodyParams),
+        auth: args?.auth,
+      })
+    },
+
+    /**
+     * List comments
+     */
+    list: (
+      args: WithAuth<ListCommentsParameters>
+    ): Promise<ListCommentsResponse> => {
+      return this.request<ListCommentsResponse>({
+        path: listComments.path(),
+        method: listComments.method,
+        query: pick(args, listComments.queryParams),
+        body: pick(args, listComments.bodyParams),
+        auth: args?.auth,
+      })
+    },
+  }
+
   /**
    * Search
    */
-  public search(args: WithAuth<SearchParameters>): Promise<SearchResponse> {
+  public search = (
+    args: WithAuth<SearchParameters>
+  ): Promise<SearchResponse> => {
     return this.request<SearchResponse>({
       path: search.path(),
       method: search.method,
@@ -513,6 +557,6 @@ export default class Client {
  * Type aliases to support the generic request interface.
  */
 type Method = "get" | "post" | "patch" | "delete"
-type QueryParams = Record<string, string | number> | URLSearchParams
+type QueryParams = Record<string, string | number | string[]> | URLSearchParams
 
 type WithAuth<P> = P & { auth?: string }

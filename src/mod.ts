@@ -11,10 +11,17 @@ export {
   RequestTimeoutError,
   // Error helpers
   isNotionClientError,
-} from "./errors.ts"
-export type {
   // Error codes
-  NotionErrorCode,
+  type NotionErrorCode,
   // Error types
-  NotionClientError,
+  type NotionClientError,
 } from "./errors.ts"
+export {
+  collectPaginatedAPI,
+  iteratePaginatedAPI,
+  isFullBlock,
+  isFullDatabase,
+  isFullPage,
+  isFullUser,
+  isFullComment,
+} from "./helpers.ts"

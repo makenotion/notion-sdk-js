@@ -1,10 +1,9 @@
 #!/usr/bin/env -S deno run --allow-env=NOTION_KEY --allow-net=api.notion.com
 import { Client } from "../../src/mod.ts"
 import {
-  CreatePageBodyParameters,
   CreatePageParameters,
   GetDatabaseResponse,
-  GetPageResponse,
+  GetPagePropertyResponse,
 } from "../../src/api-endpoints.ts"
 
 function sample<T>(items: T[]): T {
@@ -24,9 +23,8 @@ startTime.setSeconds(0, 0)
 // random data that can be used to generate new rows in our Notion database.
 function makeFakePropertiesData(
   properties: GetDatabaseResponse["properties"]
-): Record<string, CreatePageBodyParameters["properties"]> {
-  const propertyValues: Record<string, CreatePageBodyParameters["properties"]> =
-    {}
+): Record<string, CreatePageParameters["properties"]> {
+  const propertyValues: Record<string, CreatePageParameters["properties"]> = {}
   Object.entries(properties).forEach(([name, property]) => {
     if (property.type === "date") {
       propertyValues[name] = {
@@ -141,10 +139,8 @@ function findRandomSelectColumnNameAndValue(
   return { name: "", value: undefined }
 }
 
-type Page = Extract<GetPageResponse, { parent: {} }>;
-
-function extractValueToString(
-  property: Page["properties"][string]
+function extractPropertyItemValueToString(
+  property: Extract<GetPagePropertyResponse, { object: "property_item" }>
 ): string {
   switch (property.type) {
     case "checkbox":
@@ -154,15 +150,17 @@ function extractValueToString(
     case "created_time":
       return new Date(property.created_time).toISOString()
     case "date":
-      return property.date ? new Date(property.date.start).toISOString() : ''
+      return property.date ? new Date(property.date.start).toISOString() : ""
     case "email":
-      return property.email || ''
+      return property.email ?? ""
     case "url":
-      return property.url || ''
+      return property.url ?? ""
     case "number":
-      return property.number?.toString() || ''
+      return typeof property.number === "number"
+        ? property.number.toString()
+        : ""
     case "phone_number":
-      return property.phone_number || ''
+      return property.phone_number ?? ""
     case "select":
       if (!property.select) {
         return ""
@@ -176,15 +174,15 @@ function extractValueToString(
         .map(select => `${select.id} ${select.name}`)
         .join(", ")
     case "people":
-      return property.people.map(person => userToString(person)).join(", ")
+      return userToString(property.people)
     case "last_edited_by":
       return userToString(property.last_edited_by)
     case "last_edited_time":
       return new Date(property.last_edited_time).toISOString()
     case "title":
-      return property.title.map(t => t.plain_text).join(", ")
+      return property.title.plain_text
     case "rich_text":
-      return property.rich_text.map(t => t.plain_text).join(", ")
+      return property.rich_text.plain_text
     case "files":
       return property.files.map(file => file.name).join(", ")
     case "formula":
@@ -214,16 +212,35 @@ function extractValueToString(
         )
       } else if (property.rollup.type === "array") {
         return JSON.stringify(property.rollup.array)
+      } else if (
+        property.rollup.type === "incomplete" ||
+        property.rollup.type === "unsupported"
+      ) {
+        return property.rollup.type
       } else {
         return assertUnreachable(property.rollup)
       }
     case "relation":
       if (property.relation) {
-        return property.relation.join(",")
+        return property.relation.id
       }
       return "???"
+    case "status":
+      return property.status?.name ?? ""
   }
   return assertUnreachable(property)
+}
+
+function extractValueToString(property: GetPagePropertyResponse): string {
+  if (property.object === "property_item") {
+    return extractPropertyItemValueToString(property)
+  } else if (property.object === "list") {
+    return property.results
+      .map(result => extractPropertyItemValueToString(result))
+      .join(", ")
+  } else {
+    return assertUnreachable(property)
+  }
 }
 
 async function exerciseWriting(
@@ -261,9 +278,12 @@ async function exerciseReading(
     database_id: databaseId,
   })
   let numOldRows = 0
-  queryResponse.results.forEach(pageIn => {
-    if (pageIn.object) return
-    const page = pageIn as Extract<typeof pageIn, {parent: {}}>
+  for (const page of queryResponse.results) {
+    if (!("url" in page)) {
+      // Skip partial page objects (these shouldn't be returned anyway.)
+      continue
+    }
+
     const createdTime = new Date(page.created_time)
     if (startTime > createdTime) {
       numOldRows++
@@ -272,12 +292,16 @@ async function exerciseReading(
 
     console.log(`New page: ${page.id}`)
 
-    Object.entries(page.properties).forEach(([name, property]) => {
+    for (const [name, property] of Object.entries(page.properties)) {
+      const propertyResponse = await notion.pages.properties.retrieve({
+        page_id: page.id,
+        property_id: property.id,
+      })
       console.log(
-        ` - ${name} ${property.id} - ${extractValueToString(property)}`
+        ` - ${name} ${property.id} - ${extractValueToString(propertyResponse)}`
       )
-    })
-  })
+    }
+  }
   console.log(
     `Skipped printing ${numOldRows} rows that were written before ${startTime}`
   )
@@ -331,13 +355,15 @@ async function exerciseFilters(
     `\n\nLooking for text column with id "${textColumnId}" contains letter "${letterToFind}"`
   )
 
+  const textFilter = {
+    property: textColumnId,
+    rich_text: { contains: letterToFind },
+  }
+
   // Check we can search by id
   const matchingTextResults = await notion.databases.query({
     database_id: databaseId,
-    filter: {
-      property: textColumnId,
-      rich_text: { contains: letterToFind },
-    },
+    filter: textFilter,
   })
 
   console.log(
@@ -349,10 +375,10 @@ async function main() {
   // Find the first database this bot has access to
   const databases = await notion.search({
     filter: {
-      property: 'object',
-      value: 'database',
+      property: "object",
+      value: "database",
     },
-  });
+  })
 
   if (databases.results.length === 0) {
     throw new Error("This bot doesn't have access to any databases!")

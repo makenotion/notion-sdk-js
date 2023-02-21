@@ -1,4 +1,4 @@
-import { isObject } from "./helpers.ts"
+import { isObject } from "./utils.ts"
 import { Assert } from "./type-utils.ts"
 
 /**
