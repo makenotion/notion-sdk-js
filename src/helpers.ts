@@ -62,7 +62,7 @@ export async function* iteratePaginatedAPI<Args extends PaginatedArgs, Item>(
  * Example (given a notion Client called `notion`):
  *
  * ```
- * const blocks = collectPaginatedAPI(notion.blocks.children.list, {
+ * const blocks = await collectPaginatedAPI(notion.blocks.children.list, {
  *   block_id: parentBlockId,
  * })
  * // Do something with blocks.
