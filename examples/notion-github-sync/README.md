@@ -37,6 +37,8 @@ You can create your GitHub Personal Access token by following the guide [here](h
 
 To create a Notion database that will work with this example, duplicate [this empty database template](https://www.notion.com/367cd67cfe8f49bfaf0ac21305ebb9bf?v=bc79ca62b36e4c54b655ceed4ef06ebd).
 
+Your Notion integration will need access to the Notion database you have created. To provide access, follow the instructions found in Notion's [Integration guide](https://developers.notion.com/docs/create-a-notion-integration#step-2-share-a-database-with-your-integration).
+
 ### 3. Run code
 
 ```zsh
