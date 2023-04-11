@@ -3828,7 +3828,6 @@ type EmojiRequest =
   | "↕️"
   | "↕"
   | "↔️"
-  | "↔"
   | "↩️"
   | "↩"
   | "↪️"
@@ -3882,14 +3881,12 @@ type EmojiRequest =
   | "🔁"
   | "🔂"
   | "▶️"
-  | "▶"
   | "⏩"
   | "⏭️"
   | "⏭"
   | "⏯️"
   | "⏯"
   | "◀️"
-  | "◀"
   | "⏪"
   | "⏮️"
   | "⏮"
@@ -3968,7 +3965,6 @@ type EmojiRequest =
   | "®️"
   | "®"
   | "™️"
-  | "™"
   | "#️⃣"
   | "#⃣"
   | "*️⃣"
@@ -5820,6 +5816,10 @@ type DateRequest = {
   time_zone?: TimeZoneRequest | null
 }
 
+type TemplateMentionRequest =
+  | { template_mention_date: "today" | "now"; type?: "template_mention_date" }
+  | { template_mention_user: "me"; type?: "template_mention_user" }
+
 type RichTextItemRequest =
   | {
       text: { content: string; link?: { url: TextRequest } | null }
@@ -5896,6 +5896,7 @@ type RichTextItemRequest =
         | { date: DateRequest }
         | { page: { id: IdRequest } }
         | { database: { id: IdRequest } }
+        | { template_mention: TemplateMentionRequest }
       type?: "mention"
       annotations?: {
         bold?: boolean
@@ -9294,6 +9295,7 @@ type RollupSubfilterPropertyFilter =
   | { date: DatePropertyFilter }
   | { people: PeoplePropertyFilter }
   | { files: ExistencePropertyFilter }
+  | { status: StatusPropertyFilter }
 
 type RollupPropertyFilter =
   | { any: RollupSubfilterPropertyFilter }
