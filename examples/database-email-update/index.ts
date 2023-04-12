@@ -7,12 +7,13 @@
 
 ================================================================================ */
 
-const { Client } = require("@notionhq/client")
-const dotenv = require("dotenv")
-const sendgridMail = require("@sendgrid/mail")
+import { Client } from "@notionhq/client"
+import { config } from "dotenv"
+import SendGrid from "@sendgrid/mail"
+import { PropertyItemObjectResponse } from "../../build/src/api-endpoints"
 
-dotenv.config()
-sendgridMail.setApiKey(process.env.SENDGRID_KEY)
+config()
+SendGrid.setApiKey(process.env.SENDGRID_KEY)
 const notion = new Client({ auth: process.env.NOTION_KEY })
 
 const databaseId = process.env.NOTION_DATABASE_ID
@@ -59,14 +60,15 @@ async function findAndSendEmailsForUpdatedTasks() {
 
 /**
  * Gets tasks from the database.
- *
- * @returns {Promise<Array<{ pageId: string, status: string, title: string }>>}
  */
-async function getTasksFromNotionDatabase() {
+async function getTasksFromNotionDatabase(): Promise<
+  Array<{ pageId: string; status: string; title: string }>
+> {
   const pages = []
   let cursor = undefined
 
-  while (true) {
+  const shouldContinue = true
+  while (shouldContinue) {
     const { results, next_cursor } = await notion.databases.query({
       database_id: databaseId,
       start_cursor: cursor,
@@ -88,18 +90,15 @@ async function getTasksFromNotionDatabase() {
       pageId,
       propertyId: statusPropertyId,
     })
-    const status = statusPropertyItem.select
-      ? statusPropertyItem.select.name
-      : "No Status"
+
+    const status = getStatusPropertyValue(statusPropertyItem)
 
     const titlePropertyId = page.properties["Name"].id
     const titlePropertyItems = await getPropertyValue({
       pageId,
       propertyId: titlePropertyId,
     })
-    const title = titlePropertyItems
-      .map(propertyItem => propertyItem.title.plain_text)
-      .join("")
+    const title = getTitlePropertyValue(titlePropertyItems)
 
     tasks.push({ pageId, status, title })
   }
@@ -108,13 +107,54 @@ async function getTasksFromNotionDatabase() {
 }
 
 /**
+ * Extract status as string from property value
+ */
+function getStatusPropertyValue(
+  property: PropertyItemObjectResponse | Array<PropertyItemObjectResponse>
+): string {
+  if (Array.isArray(property)) {
+    if (property?.[0]?.type === "select") {
+      return property[0].select.name
+    } else {
+      return "No Status"
+    }
+  } else {
+    if (property.type === "select") {
+      return property.select.name
+    } else {
+      return "No Status"
+    }
+  }
+}
+
+/**
+ * Extract title as string from property value
+ */
+function getTitlePropertyValue(
+  property: PropertyItemObjectResponse | Array<PropertyItemObjectResponse>
+): string {
+  if (Array.isArray(property)) {
+    if (property?.[0].type === "title") {
+      return property[0].title.plain_text
+    } else {
+      return "No Title"
+    }
+  } else {
+    if (property.type === "title") {
+      return property.title.plain_text
+    } else {
+      return "No Title"
+    }
+  }
+}
+
+/**
  * Compares task to most recent version of task stored in taskPageIdToStatusMap.
  * Returns any tasks that have a different status than their last version.
- *
- * @param {Array<{ pageId: string, status: string, title: string }>} currentTasks
- * @returns {Array<{ pageId: string, status: string, title: string }>}
  */
-function findUpdatedTasks(currentTasks) {
+function findUpdatedTasks(
+  currentTasks: Array<{ pageId: string; status: string; title: string }>
+): Array<{ pageId: string; status: string; title: string }> {
   return currentTasks.filter(currentTask => {
     const previousStatus = getPreviousTaskStatus(currentTask)
     return currentTask.status !== previousStatus
@@ -123,22 +163,28 @@ function findUpdatedTasks(currentTasks) {
 
 /**
  * Sends task update notification using Sendgrid.
- *
- * @param {{ status: string, title: string }} task
  */
-async function sendUpdateEmailWithSendgrid({ title, status }) {
+async function sendUpdateEmailWithSendgrid({
+  title,
+  status,
+}: {
+  status: string
+  title: string
+}) {
   const message = `Status of Notion task ("${title}") has been updated to "${status}".`
   console.log(message)
 
   try {
     // Send an email about this change.
-    await sendgridMail.send({
+    await SendGrid.send({
       to: process.env.EMAIL_TO_FIELD,
       from: process.env.EMAIL_FROM_FIELD,
       subject: "Notion Task Status Updated",
       text: message,
     })
-    console.log("Email Sent")
+    console.log(
+      `Email Sent to ${process.env.EMAIL_TO_FIELD}, from: ${process.env.EMAIL_FROM_FIELD}`
+    )
   } catch (error) {
     console.error(error)
   }
@@ -146,10 +192,8 @@ async function sendUpdateEmailWithSendgrid({ title, status }) {
 
 /**
  * Finds or creates task in local data store and returns its status.
- * @param {{ pageId: string; status: string }} task
- * @returns {string}
  */
-function getPreviousTaskStatus({ pageId, status }) {
+function getPreviousTaskStatus({ pageId, status }): string {
   // If this task hasn't been seen before, add to local pageId to status map.
   if (!taskPageIdToStatusMap[pageId]) {
     taskPageIdToStatusMap[pageId] = status
@@ -161,12 +205,15 @@ function getPreviousTaskStatus({ pageId, status }) {
  * If property is paginated, returns an array of property items.
  *
  * Otherwise, it will return a single property item.
- *
- * @param {{ pageId: string, propertyId: string }}
- * @returns {Promise<PropertyItemObject | Array<PropertyItemObject>>}
  */
-async function getPropertyValue({ pageId, propertyId }) {
-  const propertyItem = await notion.pages.properties.retrieve({
+async function getPropertyValue({
+  pageId,
+  propertyId,
+}: {
+  pageId: string
+  propertyId: string
+}): Promise<PropertyItemObjectResponse | Array<PropertyItemObjectResponse>> {
+  let propertyItem = await notion.pages.properties.retrieve({
     page_id: pageId,
     property_id: propertyId,
   })
@@ -179,14 +226,18 @@ async function getPropertyValue({ pageId, propertyId }) {
   const results = propertyItem.results
 
   while (nextCursor !== null) {
-    const propertyItem = await notion.pages.properties.retrieve({
+    propertyItem = await notion.pages.properties.retrieve({
       page_id: pageId,
       property_id: propertyId,
       start_cursor: nextCursor,
     })
 
-    nextCursor = propertyItem.next_cursor
-    results.push(...propertyItem.results)
+    if (propertyItem.object === "list") {
+      nextCursor = propertyItem.next_cursor
+      results.push(...propertyItem.results)
+    } else {
+      nextCursor = null
+    }
   }
 
   return results

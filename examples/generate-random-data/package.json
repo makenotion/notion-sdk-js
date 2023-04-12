@@ -1,7 +1,7 @@
 {
   "name": "generate-random-data",
-  "version": "1.0.0",
-  "description": "**TODO**",
+  "version": "1.0.1",
+  "description": "Generate random data in a Notion Database.",
   "main": "index.js",
   "scripts": {
     "ts-run": "node --loader ts-node/esm index.ts"

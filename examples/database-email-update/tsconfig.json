@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "incremental": true,
+    "sourceMap": false,
+
+    "target": "ESNext",
+    "module": "commonjs",
+
+    "moduleResolution": "Node",
+
+    "allowSyntheticDefaultImports": true,
+
+    "useDefineForClassFields": false,
+
+    "strict": false,
+    "suppressImplicitAnyIndexErrors": true,
+
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "noUncheckedIndexedAccess": true,
+    "allowJs": true,
+    "checkJs": false
+  },
+  "include": ["src/**/*"]
+}
