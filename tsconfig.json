@@ -8,7 +8,7 @@
     "module": "commonjs",
     // "esModuleInterop": true,
 
-    // Include `DOM` for the access to the `fetch` global
+    // Include `DOM` for access to the `fetch` global type definition. It won't be included in the built declaration files, but they'll assume the presence of that definition (see #401).
     "lib": ["ES2019", "DOM"],
 
     // Emit location
