@@ -1,4 +1,3 @@
-/// <reference lib="dom" />
 import type { Assert } from "./type-utils"
 import type {
   RequestInit as NodeRequestInit,
