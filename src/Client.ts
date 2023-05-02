@@ -155,7 +155,9 @@ export default class Client {
       for (const [key, value] of Object.entries(query)) {
         if (value !== undefined) {
           if (Array.isArray(value)) {
-            value.forEach(val => url.searchParams.append(key, String(val)))
+            value.forEach(val =>
+              url.searchParams.append(key, decodeURIComponent(val))
+            )
           } else {
             url.searchParams.append(key, String(value))
           }
