@@ -4499,6 +4499,7 @@ type NumberFormat =
   | "leu"
   | "argentine_peso"
   | "uruguayan_peso"
+  | "peruvian_sol"
 
 type NumberDatabasePropertyConfigResponse = {
   type: "number"
