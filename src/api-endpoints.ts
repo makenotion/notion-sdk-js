@@ -4358,6 +4358,14 @@ export type PageObjectResponse = {
     | { type: "workspace"; workspace: true }
   properties: Record<
     string,
+    | {
+        type: "unique_id";
+        unique_id: {
+            prefix: string | null;
+            number: number;
+        };
+        id: string;
+    }
     | { type: "number"; number: number | null; id: string }
     | { type: "url"; url: string | null; id: string }
     | { type: "select"; select: SelectPropertyResponse | null; id: string }
