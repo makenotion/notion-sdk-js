@@ -4400,6 +4400,11 @@ export type PageObjectResponse = {
       }
     | { type: "last_edited_time"; last_edited_time: string; id: string }
     | { type: "formula"; formula: FormulaPropertyResponse; id: string }
+    | {
+        type: "unique_id"
+        unique_id: { prefix: string | null; number: number | null }
+        id: string
+      }
     | { type: "title"; title: Array<RichTextItemResponse>; id: string }
     | { type: "rich_text"; rich_text: Array<RichTextItemResponse>; id: string }
     | {
@@ -4455,6 +4460,7 @@ export type PageObjectResponse = {
   last_edited_time: string
   archived: boolean
   url: string
+  public_url: string | null
 }
 
 export type PartialPageObjectResponse = { object: "page"; id: string }
@@ -4737,6 +4743,7 @@ export type DatabaseObjectResponse = {
   last_edited_time: string
   archived: boolean
   url: string
+  public_url: string | null
 }
 
 export type PartialBlockObjectResponse = { object: "block"; id: string }
@@ -5673,6 +5680,13 @@ export type FormulaPropertyItemObjectResponse = {
   id: string
 }
 
+export type UniqueIdPropertyItemObjectResponse = {
+  type: "unique_id"
+  unique_id: { prefix: string | null; number: number | null }
+  object: "property_item"
+  id: string
+}
+
 export type TitlePropertyItemObjectResponse = {
   type: "title"
   title: RichTextItemResponse
@@ -5733,6 +5747,7 @@ export type PropertyItemObjectResponse =
   | LastEditedByPropertyItemObjectResponse
   | LastEditedTimePropertyItemObjectResponse
   | FormulaPropertyItemObjectResponse
+  | UniqueIdPropertyItemObjectResponse
   | TitlePropertyItemObjectResponse
   | RichTextPropertyItemObjectResponse
   | PeoplePropertyItemObjectResponse
@@ -10192,7 +10207,10 @@ type AppendBlockChildrenPathParameters = {
   block_id: IdRequest
 }
 
-type AppendBlockChildrenBodyParameters = { children: Array<BlockObjectRequest> }
+type AppendBlockChildrenBodyParameters = {
+  children: Array<BlockObjectRequest>
+  after?: IdRequest
+}
 
 export type AppendBlockChildrenParameters = AppendBlockChildrenPathParameters &
   AppendBlockChildrenBodyParameters
@@ -10210,7 +10228,7 @@ export const appendBlockChildren = {
   method: "patch",
   pathParams: ["block_id"],
   queryParams: [],
-  bodyParams: ["children"],
+  bodyParams: ["children", "after"],
   path: (p: AppendBlockChildrenPathParameters): string =>
     `blocks/${p.block_id}/children`,
 } as const
