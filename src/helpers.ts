@@ -113,6 +113,24 @@ export function isFullDatabase(
 }
 
 /**
+ * @returns `true` if `response` is a full `DatabaseObjectResponse` or a full
+ * `PageObjectResponse`.
+ */
+export function isFullPageOrDatabase(
+  response:
+    | DatabaseObjectResponse
+    | PartialDatabaseObjectResponse
+    | PageObjectResponse
+    | PartialPageObjectResponse
+): response is DatabaseObjectResponse | PageObjectResponse {
+  if (response.object === "database") {
+    return isFullDatabase(response)
+  } else {
+    return isFullPage(response)
+  }
+}
+
+/**
  * @returns `true` if `response` is a full `UserObjectResponse`.
  */
 export function isFullUser(
