@@ -13,12 +13,13 @@ const notion = new Client({ auth: apiKey })
 */
 
 // Take rich text array from a block child that supports rich text and return the plain text.
+// Note: All rich text objects include a plain_text field.
 const getPlainTextFromRichText = richText => {
   return richText.map(t => t.plain_text).join(", ")
-  // Note: A page mention block will return "Undefined" as the page name if the page being mentioned is also not shared with the integration.
+  // Note: A page mention will return "Undefined" as the page name if the page has not been shared with the integration. See: https://developers.notion.com/reference/block#mention
 }
 
-// Media blocks (file, video, etc.) wil have an optional caption and a source.
+// Use the source URL and optional caption from media blocks (file, video, etc.)
 const getMediaSourceText = block => {
   let source, caption
 
@@ -34,7 +35,7 @@ const getMediaSourceText = block => {
     caption = getPlainTextFromRichText(block[block.type].caption)
     return caption + ": " + source
   }
-  // If no caption, just return source
+  // If no caption, just return the source URL
   return source
 }
 
@@ -49,7 +50,6 @@ const parseText = block => {
   // Get rich text from blocks that support it
   else if (block[block.type].rich_text) {
     // This will be an empty string if it's an empty line.
-    // Note: All rich text objects include a plain_text field.
     text = getPlainTextFromRichText(block[block.type].rich_text)
   }
   // Get text for block types that don't have rich text
@@ -59,9 +59,9 @@ const parseText = block => {
         text = block.bookmark.url
         break
       case "child_database":
+        text = block.child_database.title
         // Use "Query a database" endpoint to get db rows: https://developers.notion.com/reference/post-database-query
         // Use "Retrieve a database" endpoint to get additional properties: https://developers.notion.com/reference/retrieve-a-database
-        text = block.child_database.title
         break
       case "child_page":
         text = block.child_page.title
@@ -92,15 +92,15 @@ const parseText = block => {
         break
       case "table_of_contents":
         // Does not include text from ToC; just the color
-        text = "Table of contents color: " + block.table_of_contents.color
+        text = "ToC color: " + block.table_of_contents.color
         break
       case "breadcrumb":
       case "column_list":
       case "divider":
-        text = "no text available"
+        text = "No text available"
         break
       default:
-        text = block.type + " needs case added"
+        text = "Needs case added"
         break
     }
   }
@@ -129,7 +129,7 @@ const printBlockText = blocks => {
 
   for (let i = 0; i < blocks.length; i++) {
     const text = parseText(blocks[i])
-    // Print plain text for each block
+    // Print plain text for each block.
     console.log(text)
   }
 }
@@ -138,7 +138,7 @@ async function main() {
   // Make API call to retrieve all block children from the page provided in .env
   const blocks = await retrieveBlockChildren(pageId)
 
-  // Get and print plain text for each block (if available)
+  // Parse and print plain text for each block.
   printBlockText(blocks.results)
 }
 

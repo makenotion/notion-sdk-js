@@ -38,7 +38,7 @@ NOTION_API_KEY=<your-notion-api-key>
 NOTION_PAGE_ID=<notion-page-id>
 ```
 
-`NOTION_API_KEY`: Create a new integration in the [integrations dashboard](https://www.notion.com/my-integrations) and retrieve the API key available in the integration's `Secrets` page.
+`NOTION_API_KEY`: Create a new integration in the [integrations dashboard](https://www.notion.com/my-integrations) and retrieve the API key from the integration's `Secrets` page.
 
 `NOTION_PAGE_ID`: Use the ID of any Notion page with content. A page with a variety of block types is recommended.
 
