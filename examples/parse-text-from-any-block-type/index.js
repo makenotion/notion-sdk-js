@@ -107,7 +107,7 @@ const parseText = block => {
         break
     }
   }
-  // Some blocks with the has_children property will require fetching the child blocks. (Not included in this example.)
+  // Blocks with the has_children property will require fetching the child blocks. (Not included in this example.)
   // e.g. nested bulleted lists
   if (block.has_children) {
     // For now, we'll just flag there are children blocks.
