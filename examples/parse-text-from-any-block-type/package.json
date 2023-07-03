@@ -1,0 +1,23 @@
+{
+  "name": "parse-text-from-any-block-type",
+  "version": "1.0.0",
+  "description": "Retrieve blocks from a Notion page and parse text from any block type.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/makenotion/notion-sdk-js.git"
+  },
+  "author": "Jess Mitchell",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/makenotion/notion-sdk-js/issues"
+  },
+  "dependencies": {
+    "@notionhq/client": "file:../.."
+  }
+}
