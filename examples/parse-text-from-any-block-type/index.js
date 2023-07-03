@@ -27,6 +27,8 @@ const getMediaSourceText = block => {
     source = block[block.type].external.url
   } else if (block[block.type].file) {
     source = block[block.type].file.url
+  } else if (block[block.type].url) {
+    source = block[block.type].url
   } else {
     source = "Missing case for media block types: " + block.type
   }
@@ -66,6 +68,7 @@ const parseText = block => {
       case "child_page":
         text = block.child_page.title
         break
+      case "embed":
       case "video":
       case "file":
       case "image":
