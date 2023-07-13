@@ -44,7 +44,6 @@
     "node-fetch": "^2.6.1"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20230628.0",
     "@types/jest": "^28.1.4",
     "@typescript-eslint/eslint-plugin": "^5.39.0",
     "@typescript-eslint/parser": "^5.39.0",

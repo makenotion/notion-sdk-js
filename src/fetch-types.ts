@@ -6,12 +6,6 @@ import type {
   RequestInit as NodeFetchRequestInit,
   Response as NodeFetchResponse,
 } from "node-fetch"
-import type {
-  RequestInfo as CloudflareRequestInfo,
-  RequestInit as CloudflareRequestInit,
-  Response as CloudflareResponse,
-  fetch as CloudflareFetchFn,
-} from "@cloudflare/workers-types"
 
 type FetchFn = typeof fetch
 
@@ -22,10 +16,6 @@ type _assertSupportedInfoIsSubtypeOfNative = Assert<
 >
 type _assertSupportedInfoIsSubtypeOfNodeFetch = Assert<
   NodeFetchRequestInfo,
-  SupportedRequestInfo
->
-type _assertSupportedInfoIsSubtypeOfCloudflare = Assert<
-  CloudflareRequestInfo,
   SupportedRequestInfo
 >
 
@@ -43,10 +33,6 @@ type _assertSupportedInitIsSubtypeOfNodeFetch = Assert<
   NodeFetchRequestInit,
   SupportedRequestInit
 >
-type _assertSupportedInitIsSubtypeOfCloudflare = Assert<
-  CloudflareRequestInit,
-  SupportedRequestInit
->
 
 export type SupportedResponse = {
   ok: boolean
@@ -62,10 +48,6 @@ type _assertSupportedResponseIsSubtypeOfNodeFetch = Assert<
   SupportedResponse,
   NodeFetchResponse
 >
-type _assertSupportedResponseIsSubtypeOfCloudflare = Assert<
-  SupportedResponse,
-  CloudflareResponse
->
 
 export type SupportedFetch = (
   url: SupportedRequestInfo,
@@ -75,8 +57,4 @@ type _assertSupportedFetchIsSubtypeOfNative = Assert<SupportedFetch, FetchFn>
 type _assertSupportedFetchIsSubtypeOfNodeFetch = Assert<
   SupportedFetch,
   typeof NodeFetchFn
->
-type _assertSupportedFetchIsSubtypeOfCloudflare = Assert<
-  SupportedFetch,
-  typeof CloudflareFetchFn
 >
