@@ -7,13 +7,7 @@ import type {
   Response as NodeFetchResponse,
 } from "node-fetch"
 
-type FetchFn = typeof fetch
-
 export type SupportedRequestInfo = string
-type _assertSupportedInfoIsSubtypeOfNative = Assert<
-  RequestInfo,
-  SupportedRequestInfo
->
 type _assertSupportedInfoIsSubtypeOfNodeFetch = Assert<
   NodeFetchRequestInfo,
   SupportedRequestInfo
@@ -25,10 +19,6 @@ export type SupportedRequestInit = {
   headers?: Record<string, string>
   method?: string
 }
-type _assertSupportedInitIsSubtypeOfNative = Assert<
-  RequestInit,
-  SupportedRequestInit
->
 type _assertSupportedInitIsSubtypeOfNodeFetch = Assert<
   NodeFetchRequestInit,
   SupportedRequestInit
@@ -40,10 +30,6 @@ export type SupportedResponse = {
   headers: unknown
   status: number
 }
-type _assertSupportedResponseIsSubtypeOfNative = Assert<
-  SupportedResponse,
-  Response
->
 type _assertSupportedResponseIsSubtypeOfNodeFetch = Assert<
   SupportedResponse,
   NodeFetchResponse
@@ -53,7 +39,6 @@ export type SupportedFetch = (
   url: SupportedRequestInfo,
   init?: SupportedRequestInit
 ) => Promise<SupportedResponse>
-type _assertSupportedFetchIsSubtypeOfNative = Assert<SupportedFetch, FetchFn>
 type _assertSupportedFetchIsSubtypeOfNodeFetch = Assert<
   SupportedFetch,
   typeof NodeFetchFn
