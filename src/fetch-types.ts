@@ -7,7 +7,9 @@ import type {
   Response as NodeFetchResponse,
 } from "node-fetch"
 
+// The `Supported` types should be kept up to date in order to exactly match what we use in the client. This ensures maximal compatibility with other `fetch` implementations.
 export type SupportedRequestInfo = string
+// We can't assert against the browser or native Node fetch types without complicating the package structure (see #401), so perform a best effort against `node-fetch`, which we use by default.
 type _assertSupportedInfoIsSubtypeOfNodeFetch = Assert<
   NodeFetchRequestInfo,
   SupportedRequestInfo
