@@ -1,31 +1,47 @@
-/// <reference lib="dom" />
+import type { Agent } from "http"
 import type { Assert } from "./type-utils"
+import type NodeFetchFn from "node-fetch"
 import type {
-  RequestInit as NodeRequestInit,
-  Response as NodeResponse,
+  RequestInfo as NodeFetchRequestInfo,
+  RequestInit as NodeFetchRequestInit,
+  Response as NodeFetchResponse,
 } from "node-fetch"
 
-type FetchFn = typeof fetch
-type FetchResponse = Awaited<ReturnType<FetchFn>>
-type RequestInfo = Parameters<FetchFn>[0]
-type RequestInit = NonNullable<Parameters<FetchFn>[1]>
-
+// The `Supported` types should be kept up to date in order to exactly match what we use in the client. This ensures maximal compatibility with other `fetch` implementations.
 export type SupportedRequestInfo = string
-type _assertSupportedInfoIsSubtype = Assert<RequestInfo, SupportedRequestInfo>
+// We can't assert against the browser or native Node fetch types without complicating the package structure (see #401), so perform a best effort against `node-fetch`, which we use by default.
+type _assertSupportedInfoIsSubtypeOfNodeFetch = Assert<
+  NodeFetchRequestInfo,
+  SupportedRequestInfo
+>
 
 export type SupportedRequestInit = {
-  agent?: NodeRequestInit["agent"]
-  body?: NonNullable<RequestInit["body"]> & NonNullable<NodeRequestInit["body"]>
-  headers?: NonNullable<RequestInit["headers"]> &
-    NonNullable<NodeRequestInit["headers"]>
-  method?: RequestInit["method"]
-  redirect?: RequestInit["redirect"]
+  agent?: Agent
+  body?: string
+  headers?: Record<string, string>
+  method?: string
 }
-type _assertSupportedInitIsSubtype = Assert<RequestInit, SupportedRequestInit>
+type _assertSupportedInitIsSubtypeOfNodeFetch = Assert<
+  NodeFetchRequestInit,
+  SupportedRequestInit
+>
 
-export type SupportedResponse = FetchResponse | NodeResponse
+export type SupportedResponse = {
+  ok: boolean
+  text: () => Promise<string>
+  headers: unknown
+  status: number
+}
+type _assertSupportedResponseIsSubtypeOfNodeFetch = Assert<
+  SupportedResponse,
+  NodeFetchResponse
+>
 
 export type SupportedFetch = (
   url: SupportedRequestInfo,
   init?: SupportedRequestInit
 ) => Promise<SupportedResponse>
+type _assertSupportedFetchIsSubtypeOfNodeFetch = Assert<
+  SupportedFetch,
+  typeof NodeFetchFn
+>
