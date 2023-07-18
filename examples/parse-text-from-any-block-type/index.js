@@ -1,4 +1,4 @@
-import { Client } from "@notionhq/client"
+import { Client, iteratePaginatedAPI } from "@notionhq/client"
 import { config } from "dotenv"
 
 config()
@@ -119,10 +119,14 @@ const getTextFromBlock = block => {
 
 async function retrieveBlockChildren(id) {
   console.log("Retrieving blocks (async)...")
+  const blocks = []
 
-  const blocks = await notion.blocks.children.list({
+  // Use iteratePaginatedAPI helper function to get all blocks first-level blocks on the page
+  for await (const block of iteratePaginatedAPI(notion.blocks.children.list, {
     block_id: id, // A page ID can be passed as a block ID: https://developers.notion.com/docs/working-with-page-content#modeling-content-as-blocks
-  })
+  })) {
+    blocks.push(block)
+  }
 
   return blocks
 }
@@ -140,9 +144,8 @@ const printBlockText = blocks => {
 async function main() {
   // Make API call to retrieve all block children from the page provided in .env
   const blocks = await retrieveBlockChildren(pageId)
-
   // Get and print plain text for each block.
-  printBlockText(blocks.results)
+  printBlockText(blocks)
 }
 
 main()
