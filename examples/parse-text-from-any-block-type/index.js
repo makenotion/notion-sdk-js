@@ -15,7 +15,7 @@ const notion = new Client({ auth: apiKey })
 // Take rich text array from a block child that supports rich text and return the plain text.
 // Note: All rich text objects include a plain_text field.
 const getPlainTextFromRichText = richText => {
-  return richText.map(t => t.plain_text).join(", ")
+  return richText.map(t => t.plain_text).join("")
   // Note: A page mention will return "Undefined" as the page name if the page has not been shared with the integration. See: https://developers.notion.com/reference/block#mention
 }
 
@@ -30,7 +30,7 @@ const getMediaSourceText = block => {
   } else if (block[block.type].url) {
     source = block[block.type].url
   } else {
-    source = "Missing case for media block types: " + block.type
+    source = "[Missing case for media block types]: " + block.type
   }
   // If there's a caption, return it with the source
   if (block[block.type].caption.length) {
@@ -41,22 +41,22 @@ const getMediaSourceText = block => {
   return source
 }
 
-// Parse the plain text from any block type supported by the public API.
-const parseText = block => {
+// Get the plain text from any block type supported by the public API.
+const getTextFromBlock = block => {
   let text
 
-  // The public API does not support all block types yet
-  if (block.type === "unsupported") {
-    text = "Unsupported block type"
-  }
   // Get rich text from blocks that support it
-  else if (block[block.type].rich_text) {
+  if (block[block.type].rich_text) {
     // This will be an empty string if it's an empty line.
     text = getPlainTextFromRichText(block[block.type].rich_text)
   }
   // Get text for block types that don't have rich text
   else {
     switch (block.type) {
+      case "unsupported":
+        // The public API does not support all block types yet
+        text = "[Unsupported block type]"
+        break
       case "bookmark":
         text = block.bookmark.url
         break
@@ -103,7 +103,7 @@ const parseText = block => {
         text = "No text available"
         break
       default:
-        text = "Needs case added"
+        text = "[Needs case added]"
         break
     }
   }
@@ -131,7 +131,7 @@ const printBlockText = blocks => {
   console.log("Displaying blocks:")
 
   for (let i = 0; i < blocks.length; i++) {
-    const text = parseText(blocks[i])
+    const text = getTextFromBlock(blocks[i])
     // Print plain text for each block.
     console.log(text)
   }
@@ -141,7 +141,7 @@ async function main() {
   // Make API call to retrieve all block children from the page provided in .env
   const blocks = await retrieveBlockChildren(pageId)
 
-  // Parse and print plain text for each block.
+  // Get and print plain text for each block.
   printBlockText(blocks.results)
 }
 
