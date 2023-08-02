@@ -21,4 +21,5 @@ export {
   isFullPage,
   isFullUser,
   isFullComment,
+  isFullPageOrDatabase,
 } from "./helpers"
