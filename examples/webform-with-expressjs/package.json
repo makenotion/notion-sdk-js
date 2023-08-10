@@ -1,0 +1,31 @@
+{
+  "name": "notion-integration-ui-example",
+  "version": "1.0.0",
+  "description": "Internal Notion intergration demo app using Express.js for a server.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@notionhq/client": "^2.2.7",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2"
+  },
+  "engines": {
+    "node": "14.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/makenotion/notion-sdk-js.git"
+  },
+  "author": "Jess Mitchell",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/makenotion/notion-sdk-js/issues"
+  },
+  "keywords": [
+    "node",
+    "notion",
+    "express"
+  ]
+}
