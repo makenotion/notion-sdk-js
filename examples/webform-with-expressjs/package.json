@@ -1,5 +1,5 @@
 {
-  "name": "notion-integration-ui-example",
+  "name": "webform-with-expressjs-example",
   "version": "1.0.0",
   "description": "Internal Notion intergration demo app using Express.js for a server.",
   "main": "server.js",
