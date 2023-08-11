@@ -688,6 +688,57 @@ type FormulaPropertyResponse =
   | NumberFormulaPropertyResponse
   | BooleanFormulaPropertyResponse
 
+type VerificationPropertyUnverifiedResponse = {
+  state: "unverified"
+  date: null
+  verified_by: null
+}
+
+type VerificationPropertyResponse = {
+  state: "verified" | "expired"
+  date: DateResponse | null
+  verified_by:
+    | { id: IdRequest }
+    | null
+    | {
+        person: { email?: string }
+        id: IdRequest
+        type?: "person"
+        name?: string | null
+        avatar_url?: string | null
+        object?: "user"
+      }
+    | null
+    | {
+        bot:
+          | EmptyObject
+          | {
+              owner:
+                | {
+                    type: "user"
+                    user:
+                      | {
+                          type: "person"
+                          person: { email: string }
+                          name: string | null
+                          avatar_url: string | null
+                          id: IdRequest
+                          object: "user"
+                        }
+                      | PartialUserObjectResponse
+                  }
+                | { type: "workspace"; workspace: true }
+              workspace_name: string | null
+            }
+        id: IdRequest
+        type?: "bot"
+        name?: string | null
+        avatar_url?: string | null
+        object?: "user"
+      }
+    | null
+}
+
 type AnnotationResponse = {
   bold: boolean
   italic: boolean
@@ -4405,6 +4456,15 @@ export type PageObjectResponse = {
         unique_id: { prefix: string | null; number: number | null }
         id: string
       }
+    | {
+        type: "verification"
+        verification:
+          | VerificationPropertyUnverifiedResponse
+          | null
+          | VerificationPropertyResponse
+          | null
+        id: string
+      }
     | { type: "title"; title: Array<RichTextItemResponse>; id: string }
     | { type: "rich_text"; rich_text: Array<RichTextItemResponse>; id: string }
     | {
@@ -4790,7 +4850,11 @@ export type ParagraphBlockObjectResponse = {
 
 export type Heading1BlockObjectResponse = {
   type: "heading_1"
-  heading_1: { rich_text: Array<RichTextItemResponse>; color: ApiColor }
+  heading_1: {
+    rich_text: Array<RichTextItemResponse>
+    color: ApiColor
+    is_toggleable: boolean
+  }
   parent:
     | { type: "database_id"; database_id: string }
     | { type: "page_id"; page_id: string }
@@ -4808,7 +4872,11 @@ export type Heading1BlockObjectResponse = {
 
 export type Heading2BlockObjectResponse = {
   type: "heading_2"
-  heading_2: { rich_text: Array<RichTextItemResponse>; color: ApiColor }
+  heading_2: {
+    rich_text: Array<RichTextItemResponse>
+    color: ApiColor
+    is_toggleable: boolean
+  }
   parent:
     | { type: "database_id"; database_id: string }
     | { type: "page_id"; page_id: string }
@@ -4826,7 +4894,11 @@ export type Heading2BlockObjectResponse = {
 
 export type Heading3BlockObjectResponse = {
   type: "heading_3"
-  heading_3: { rich_text: Array<RichTextItemResponse>; color: ApiColor }
+  heading_3: {
+    rich_text: Array<RichTextItemResponse>
+    color: ApiColor
+    is_toggleable: boolean
+  }
   parent:
     | { type: "database_id"; database_id: string }
     | { type: "page_id"; page_id: string }
@@ -5688,6 +5760,17 @@ export type UniqueIdPropertyItemObjectResponse = {
   id: string
 }
 
+export type VerificationPropertyItemObjectResponse = {
+  type: "verification"
+  verification:
+    | VerificationPropertyUnverifiedResponse
+    | null
+    | VerificationPropertyResponse
+    | null
+  object: "property_item"
+  id: string
+}
+
 export type TitlePropertyItemObjectResponse = {
   type: "title"
   title: RichTextItemResponse
@@ -5749,6 +5832,7 @@ export type PropertyItemObjectResponse =
   | LastEditedTimePropertyItemObjectResponse
   | FormulaPropertyItemObjectResponse
   | UniqueIdPropertyItemObjectResponse
+  | VerificationPropertyItemObjectResponse
   | TitlePropertyItemObjectResponse
   | RichTextPropertyItemObjectResponse
   | PeoplePropertyItemObjectResponse
@@ -10644,4 +10728,46 @@ export const listComments = {
   queryParams: ["block_id", "start_cursor", "page_size"],
   bodyParams: [],
   path: (): string => `comments`,
+} as const
+
+type OauthTokenBodyParameters = {
+  grant_type: string
+  code: string
+  redirect_uri?: string
+  external_account?: { key: string; name: string }
+}
+
+export type OauthTokenParameters = OauthTokenBodyParameters
+
+export type OauthTokenResponse = {
+  access_token: string
+  token_type: "bearer"
+  bot_id: string
+  workspace_icon: string | null
+  workspace_name: string | null
+  workspace_id: string
+  owner:
+    | {
+        type: "user"
+        user:
+          | {
+              type: "person"
+              person: { email: string }
+              name: string | null
+              avatar_url: string | null
+              id: IdRequest
+              object: "user"
+            }
+          | PartialUserObjectResponse
+      }
+    | { type: "workspace"; workspace: true }
+  duplicated_template_id: string | null
+}
+
+export const oauthToken = {
+  method: "post",
+  pathParams: [],
+  queryParams: [],
+  bodyParams: ["grant_type", "code", "redirect_uri", "external_account"],
+  path: (): string => `oauth/token`,
 } as const
