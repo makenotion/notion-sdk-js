@@ -4485,6 +4485,58 @@ export type PageObjectResponse = {
           | {
               type: "array"
               array: Array<
+                | { type: "number"; number: number | null }
+                | { type: "url"; url: string | null }
+                | { type: "select"; select: SelectPropertyResponse | null }
+                | {
+                    type: "multi_select"
+                    multi_select: Array<SelectPropertyResponse>
+                  }
+                | { type: "status"; status: SelectPropertyResponse | null }
+                | { type: "date"; date: DateResponse | null }
+                | { type: "email"; email: string | null }
+                | { type: "phone_number"; phone_number: string | null }
+                | { type: "checkbox"; checkbox: boolean }
+                | {
+                    type: "files"
+                    files: Array<
+                      | {
+                          file: { url: string; expiry_time: string }
+                          name: StringRequest
+                          type?: "file"
+                        }
+                      | {
+                          external: { url: TextRequest }
+                          name: StringRequest
+                          type?: "external"
+                        }
+                    >
+                  }
+                | {
+                    type: "created_by"
+                    created_by: PartialUserObjectResponse | UserObjectResponse
+                  }
+                | { type: "created_time"; created_time: string }
+                | {
+                    type: "last_edited_by"
+                    last_edited_by:
+                      | PartialUserObjectResponse
+                      | UserObjectResponse
+                  }
+                | { type: "last_edited_time"; last_edited_time: string }
+                | { type: "formula"; formula: FormulaPropertyResponse }
+                | {
+                    type: "unique_id"
+                    unique_id: { prefix: string | null; number: number | null }
+                  }
+                | {
+                    type: "verification"
+                    verification:
+                      | VerificationPropertyUnverifiedResponse
+                      | null
+                      | VerificationPropertyResponse
+                      | null
+                  }
                 | { type: "title"; title: Array<RichTextItemResponse> }
                 | { type: "rich_text"; rich_text: Array<RichTextItemResponse> }
                 | {
