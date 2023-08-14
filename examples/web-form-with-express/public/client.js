@@ -9,46 +9,53 @@ const dbForm = document.getElementById("databaseForm")
 const pageForm = document.getElementById("pageForm")
 const blocksForm = document.getElementById("blocksForm")
 const commentForm = document.getElementById("commentForm")
+
 // Table cells where API responses will be appended
-const dbResponse = document.getElementById("dbResponse")
-const pageResponse = document.getElementById("pageResponse")
-const blocksResponse = document.getElementById("blocksResponse")
-const commentResponse = document.getElementById("commentResponse")
+const dbResponseEl = document.getElementById("dbResponse")
+const pageResponseEl = document.getElementById("pageResponse")
+const blocksResponseEl = document.getElementById("blocksResponse")
+const commentResponseEl = document.getElementById("commentResponse")
 
 /**
  * Functions to handle appending new content to /views/index.html
  */
 
 // Appends the API response to the UI
-const appendApiResponse = function (res, el) {
-  console.log(res)
+const appendApiResponse = function (apiResponse, el) {
+  console.log(apiResponse)
 
-  const result = document.createElement("p")
-  result.innerHTML = "Result: " + res.message
-  el.appendChild(result)
+  // Add success message to UI
+  const newParagraphSuccessMsg = document.createElement("p")
+  newParagraphSuccessMsg.innerHTML = "Result: " + apiResponse.message
+  el.appendChild(newParagraphSuccessMsg)
   // See browser console for more information
-  if (res.message === "error") return
+  if (apiResponse.message === "error") return
 
-  const id = document.createElement("p")
-  id.innerHTML = "ID: " + res.data.id
-  el.appendChild(id)
+  // Add ID of Notion item (db, page, comment) to UI
+  const newParagraphId = document.createElement("p")
+  newParagraphId.innerHTML = "ID: " + apiResponse.data.id
+  el.appendChild(newParagraphId)
 
-  if (res.data.url) {
-    let url = document.createElement("a")
-    url.setAttribute("href", res.data.url)
-    url.innerText = res.data.url
-    el.appendChild(url)
+  // Add URL of Notion item (db, page) to UI
+  if (apiResponse.data.url) {
+    const newAnchorTag = document.createElement("a")
+    newAnchorTag.setAttribute("href", apiResponse.data.url)
+    newAnchorTag.innerText = apiResponse.data.url
+    el.appendChild(newAnchorTag)
   }
 }
 
 // Appends the blocks API response to the UI
-const appendBlocksResponse = function (res, el) {
-  const result = document.createElement("p")
-  result.innerHTML = "Result: " + res.message
-  el.appendChild(result)
-  const id = document.createElement("p")
-  id.innerHTML = "ID: " + res.data.results[0].id
-  el.appendChild(id)
+const appendBlocksResponse = function (apiResponse, el) {
+  // Add success message to UI
+  const newParagraphSuccessMsg = document.createElement("p")
+  newParagraphSuccessMsg.innerHTML = "Result: " + apiResponse.message
+  el.appendChild(newParagraphSuccessMsg)
+
+  // Add block ID to UI
+  const newParagraphId = document.createElement("p")
+  newParagraphId.innerHTML = "ID: " + apiResponse.data.results[0].id
+  el.appendChild(newParagraphId)
 }
 
 /**
@@ -58,79 +65,76 @@ const appendBlocksResponse = function (res, el) {
 // Attach submit event to each form
 dbForm.onsubmit = async function (event) {
   event.preventDefault()
-  console.log(event.target.dbName.value)
-  const dbName = event.target.dbName.value
 
+  const dbName = event.target.dbName.value
   const body = JSON.stringify({ dbName })
 
-  const res = await fetch("/databases", {
+  const newDBResponse = await fetch("/databases", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body,
   })
-  const data = await res.json()
+  const newDBData = await newDBResponse.json()
 
-  appendApiResponse(data, dbResponse)
+  appendApiResponse(newDBData, dbResponseEl)
 }
 
 pageForm.onsubmit = async function (event) {
   event.preventDefault()
+
   const dbID = event.target.newPageDB.value
   const pageName = event.target.newPageName.value
   const header = event.target.header.value
-
   const body = JSON.stringify({ dbID, pageName, header })
 
-  const res = await fetch("/pages", {
+  const newPageResponse = await fetch("/pages", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body,
   })
-  const data = await res.json()
 
-  appendApiResponse(data, pageResponse)
+  const newPageData = await newPageResponse.json()
+  appendApiResponse(newPageData, pageResponseEl)
 }
 
 blocksForm.onsubmit = async function (event) {
   event.preventDefault()
+
   const pageID = event.target.pageID.value
   const content = event.target.content.value
-
   const body = JSON.stringify({ pageID, content })
 
-  const res = await fetch("/blocks", {
+  const newBlockResponse = await fetch("/blocks", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body,
   })
-  const data = await res.json()
-  console.log(data)
 
-  appendBlocksResponse(data, blocksResponse)
+  const newBlockData = await newBlockResponse.json()
+  appendBlocksResponse(newBlockData, blocksResponseEl)
 }
 
 commentForm.onsubmit = async function (event) {
   event.preventDefault()
+
   const pageID = event.target.pageIDComment.value
   const comment = event.target.comment.value
-
   const body = JSON.stringify({ pageID, comment })
 
-  const res = await fetch("/comments", {
+  const newCommentResponse = await fetch("/comments", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body,
   })
-  const data = await res.json()
-  console.log(data)
 
-  appendApiResponse(data, commentResponse)
+  const newCommentData = await newCommentResponse.json()
+  appendApiResponse(newCommentData, commentResponseEl)
 }
