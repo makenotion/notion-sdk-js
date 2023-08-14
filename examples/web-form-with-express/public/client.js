@@ -47,6 +47,8 @@ const appendApiResponse = function (apiResponse, el) {
 
 // Appends the blocks API response to the UI
 const appendBlocksResponse = function (apiResponse, el) {
+  console.log(apiResponse)
+
   // Add success message to UI
   const newParagraphSuccessMsg = document.createElement("p")
   newParagraphSuccessMsg.innerHTML = "Result: " + apiResponse.message
