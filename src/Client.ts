@@ -73,6 +73,9 @@ import {
   ListCommentsParameters,
   ListCommentsResponse,
   listComments,
+  OauthTokenResponse,
+  OauthTokenParameters,
+  oauthToken,
 } from "./api-endpoints"
 import nodeFetch from "node-fetch"
 import {
@@ -98,7 +101,17 @@ export interface RequestParameters {
   method: Method
   query?: QueryParams
   body?: Record<string, unknown>
-  auth?: string
+  /**
+   * To authenticate using public API token, `auth` should be passed as a
+   * string. If you are trying to complete OAuth, then `auth` should be an object
+   * containing your integration's client ID and secret.
+   */
+  auth?:
+    | string
+    | {
+        client_id: string
+        client_secret: string
+      }
 }
 
 export default class Client {
@@ -165,8 +178,23 @@ export default class Client {
       }
     }
 
+    // Allow both client ID / client secret based auth as well as token based auth.
+    let authorizationHeader: Record<string, string>
+    if (typeof auth === "object") {
+      // Client ID and secret based auth is **ONLY** supported when using the
+      // `/oauth/token` endpoint. If this is the case, handle formatting the
+      // authorization header as required by `Basic` auth.
+      const unencodedCredential = `${auth.client_id}:${auth.client_secret}`
+      const encodedCredential =
+        Buffer.from(unencodedCredential).toString("base64")
+      authorizationHeader = { authorization: `Basic ${encodedCredential}` }
+    } else {
+      // Otherwise format authorization header as `Bearer` token auth.
+      authorizationHeader = this.authAsHeaders(auth)
+    }
+
     const headers: Record<string, string> = {
-      ...this.authAsHeaders(auth),
+      ...authorizationHeader,
       "Notion-Version": this.#notionVersion,
       "user-agent": this.#userAgent,
     }
@@ -523,6 +551,29 @@ export default class Client {
       body: pick(args, search.bodyParams),
       auth: args?.auth,
     })
+  }
+
+  public readonly oauth = {
+    /**
+     * Get token
+     */
+    token: (
+      args: OauthTokenParameters & {
+        client_id: string
+        client_secret: string
+      }
+    ): Promise<OauthTokenResponse> => {
+      return this.request<OauthTokenResponse>({
+        path: oauthToken.path(),
+        method: oauthToken.method,
+        query: pick(args, oauthToken.queryParams),
+        body: pick(args, oauthToken.bodyParams),
+        auth: {
+          client_id: args.client_id,
+          client_secret: args.client_secret,
+        },
+      })
+    },
   }
 
   /**
