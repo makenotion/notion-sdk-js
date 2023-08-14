@@ -34,7 +34,7 @@ const appendApiResponse = function (res, el) {
   el.appendChild(id)
 
   if (res.data.url) {
-    var url = document.createElement("a")
+    let url = document.createElement("a")
     url.setAttribute("href", res.data.url)
     url.innerText = res.data.url
     el.appendChild(url)
