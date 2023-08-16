@@ -1,0 +1,13 @@
+GET /v1/pages/b55c9c91-384d-452b-81db-d1ef79372b75 HTTP/1.1
+Authorization: Bearer {INTEGRATION_TOKEN}
+
+const { Client } = require("@notionhq/client")
+
+// Initializing a client
+const notion = new Client({
+	auth: process.env.NOTION_TOKEN,
+})
+
+const getUsers = async () => {
+	const listUsersResponse = await notion.users.list({})
+}
