@@ -9749,7 +9749,7 @@ type CreatePageBodyParameters = {
 
 export type CreatePageParameters = CreatePageBodyParameters
 
-export type CreatePageResponse = PageObjectResponse | PartialPageObjectResponse
+export type CreatePageResponse = PageObjectResponse & PartialPageObjectResponse
 
 export const createPage = {
   method: "post",
@@ -9769,7 +9769,7 @@ type GetPageQueryParameters = {
 
 export type GetPageParameters = GetPagePathParameters & GetPageQueryParameters
 
-export type GetPageResponse = PageObjectResponse | PartialPageObjectResponse
+export type GetPageResponse = PageObjectResponse & PartialPageObjectResponse
 
 export const getPage = {
   method: "get",
@@ -9967,7 +9967,7 @@ type UpdatePageBodyParameters = {
 export type UpdatePageParameters = UpdatePagePathParameters &
   UpdatePageBodyParameters
 
-export type UpdatePageResponse = PageObjectResponse | PartialPageObjectResponse
+export type UpdatePageResponse = PageObjectResponse & PartialPageObjectResponse
 
 export const updatePage = {
   method: "patch",
@@ -9990,9 +9990,8 @@ type GetPagePropertyQueryParameters = {
 export type GetPagePropertyParameters = GetPagePropertyPathParameters &
   GetPagePropertyQueryParameters
 
-export type GetPagePropertyResponse =
-  | PropertyItemObjectResponse
-  | PropertyItemListResponse
+export type GetPagePropertyResponse = PropertyItemObjectResponse &
+  PropertyItemListResponse
 
 export const getPageProperty = {
   method: "get",
@@ -10009,7 +10008,7 @@ type GetBlockPathParameters = {
 
 export type GetBlockParameters = GetBlockPathParameters
 
-export type GetBlockResponse = PartialBlockObjectResponse | BlockObjectResponse
+export type GetBlockResponse = PartialBlockObjectResponse & BlockObjectResponse
 
 export const getBlock = {
   method: "get",
@@ -10204,9 +10203,8 @@ type UpdateBlockBodyParameters =
 export type UpdateBlockParameters = UpdateBlockPathParameters &
   UpdateBlockBodyParameters
 
-export type UpdateBlockResponse =
-  | PartialBlockObjectResponse
-  | BlockObjectResponse
+export type UpdateBlockResponse = PartialBlockObjectResponse &
+  BlockObjectResponse
 
 export const updateBlock = {
   method: "patch",
@@ -10252,9 +10250,8 @@ type DeleteBlockPathParameters = {
 
 export type DeleteBlockParameters = DeleteBlockPathParameters
 
-export type DeleteBlockResponse =
-  | PartialBlockObjectResponse
-  | BlockObjectResponse
+export type DeleteBlockResponse = PartialBlockObjectResponse &
+  BlockObjectResponse
 
 export const deleteBlock = {
   method: "delete",
@@ -10282,7 +10279,7 @@ export type ListBlockChildrenResponse = {
   object: "list"
   next_cursor: string | null
   has_more: boolean
-  results: Array<PartialBlockObjectResponse | BlockObjectResponse>
+  results: Array<PartialBlockObjectResponse & BlockObjectResponse>
 }
 
 export const listBlockChildren = {
@@ -10312,7 +10309,7 @@ export type AppendBlockChildrenResponse = {
   object: "list"
   next_cursor: string | null
   has_more: boolean
-  results: Array<PartialBlockObjectResponse | BlockObjectResponse>
+  results: Array<PartialBlockObjectResponse & BlockObjectResponse>
 }
 
 export const appendBlockChildren = {
@@ -10330,9 +10327,8 @@ type GetDatabasePathParameters = {
 
 export type GetDatabaseParameters = GetDatabasePathParameters
 
-export type GetDatabaseResponse =
-  | PartialDatabaseObjectResponse
-  | DatabaseObjectResponse
+export type GetDatabaseResponse = PartialDatabaseObjectResponse &
+  DatabaseObjectResponse
 
 export const getDatabase = {
   method: "get",
@@ -10473,9 +10469,8 @@ type UpdateDatabaseBodyParameters = {
 export type UpdateDatabaseParameters = UpdateDatabasePathParameters &
   UpdateDatabaseBodyParameters
 
-export type UpdateDatabaseResponse =
-  | PartialDatabaseObjectResponse
-  | DatabaseObjectResponse
+export type UpdateDatabaseResponse = PartialDatabaseObjectResponse &
+  DatabaseObjectResponse
 
 export const updateDatabase = {
   method: "patch",
@@ -10548,10 +10543,10 @@ export type QueryDatabaseResponse = {
   next_cursor: string | null
   has_more: boolean
   results: Array<
-    | PageObjectResponse
-    | PartialPageObjectResponse
-    | PartialDatabaseObjectResponse
-    | DatabaseObjectResponse
+    PageObjectResponse &
+      PartialPageObjectResponse &
+      PartialDatabaseObjectResponse &
+      DatabaseObjectResponse
   >
 }
 
@@ -10577,7 +10572,7 @@ export type ListDatabasesResponse = {
   object: "list"
   next_cursor: string | null
   has_more: boolean
-  results: Array<PartialDatabaseObjectResponse | DatabaseObjectResponse>
+  results: Array<PartialDatabaseObjectResponse & DatabaseObjectResponse>
 }
 
 export const listDatabases = {
@@ -10681,9 +10676,8 @@ type CreateDatabaseBodyParameters = {
 
 export type CreateDatabaseParameters = CreateDatabaseBodyParameters
 
-export type CreateDatabaseResponse =
-  | PartialDatabaseObjectResponse
-  | DatabaseObjectResponse
+export type CreateDatabaseResponse = PartialDatabaseObjectResponse &
+  DatabaseObjectResponse
 
 export const createDatabase = {
   method: "post",
@@ -10721,10 +10715,10 @@ export type SearchResponse = {
   next_cursor: string | null
   has_more: boolean
   results: Array<
-    | PageObjectResponse
-    | PartialPageObjectResponse
-    | PartialDatabaseObjectResponse
-    | DatabaseObjectResponse
+    PageObjectResponse &
+      PartialPageObjectResponse &
+      PartialDatabaseObjectResponse &
+      DatabaseObjectResponse
   >
 }
 
@@ -10745,9 +10739,8 @@ type CreateCommentBodyParameters =
 
 export type CreateCommentParameters = CreateCommentBodyParameters
 
-export type CreateCommentResponse =
-  | CommentObjectResponse
-  | PartialCommentObjectResponse
+export type CreateCommentResponse = CommentObjectResponse &
+  PartialCommentObjectResponse
 
 export const createComment = {
   method: "post",
@@ -10809,10 +10802,8 @@ export type OauthTokenResponse = {
               avatar_url: string | null
               id: IdRequest
               object: "user"
-            }
-          | PartialUserObjectResponse
-      }
-    | { type: "workspace"; workspace: true }
+            } & PartialUserObjectResponse
+      } & { type: "workspace"; workspace: true }
   duplicated_template_id: string | null
 }
 
