@@ -87,3 +87,13 @@ For example:
 ```zsh
 node /basic/1-new-block.js
 ```
+
+---
+
+## Additional resources
+
+To learn more, read the [public API docs](https://developers.notion.com/) for additional information on using Notion's API. The API docs include a series of [guides](https://developers.notion.com/docs) and the [API reference](https://developers.notion.com/reference/intro), which has a full list of available endpoints.
+
+To see more examples of what you can build with Notion, see our other sample integrations in the parent `/examples` directory. To learn how to build an internal integration with an interactive frontend, read the [Build your first integration](https://developers.notion.com/docs/create-a-notion-integration) guide.
+
+To connect with other developers building with Notion, join the [Notion Devs Slack group](https://join.slack.com/t/notiondevs/shared_invite/zt-20b5996xv-DzJdLiympy6jP0GGzu3AMg).
