@@ -12,7 +12,14 @@ const notion = new Client({ auth: apiKey })
 ---------------------------------------------------------------------------
 */
 
+/**
+ * Resources:
+ * - Create a database endpoint (notion.databases.create(): https://developers.notion.com/reference/create-a-database)
+ * - Working with databases guide: https://developers.notion.com/docs/working-with-databases
+ */
+
 async function main() {
+  // Create a new database
   const newDatabase = await notion.databases.create({
     parent: {
       type: "page_id",
@@ -27,6 +34,7 @@ async function main() {
       },
     ],
     properties: {
+      // These properties represent columns in the database (i.e. its schema)
       "Grocery item": {
         type: "title",
         title: {},
@@ -43,6 +51,8 @@ async function main() {
       },
     },
   })
+
+  // Print the new database response
   console.log(newDatabase)
 }
 

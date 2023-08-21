@@ -13,16 +13,27 @@ const notion = new Client({ auth: apiKey })
 ---------------------------------------------------------------------------
 */
 
+/**
+ * Resources:
+ * - Create a database endpoint (notion.databases.create(): https://developers.notion.com/reference/create-a-database)
+ * - Create a page endpoint (notion.pages.create(): https://developers.notion.com/reference/post-page)
+ * - Working with databases guide: https://developers.notion.com/docs/working-with-databases
+ * Query a database: https://developers.notion.com/reference/post-database-query
+ * Filter database entries: https://developers.notion.com/reference/post-database-query-filter
+ * Sort database entries: https://developers.notion.com/reference/post-database-query-sort
+ */
+
 async function addNotionPageToDatabase(databaseId, pageProperties) {
   await notion.pages.create({
     parent: {
       database_id: databaseId,
     },
-    properties: pageProperties,
+    properties: pageProperties, // Note: Page properties must match the schema of the database
   })
 }
 
 async function queryAndSortDatabase(databaseId) {
+  // This query will filter and sort database entries. The returned pages will have a "Last ordered" property that is more recent than 2022-12-31. Any database property can be filtered or sorted. Pass multiple sort objects to the "sorts" array to apply more than one sorting rule.
   const lastOrderedIn2023Alphabetical = await notion.databases.query({
     database_id: databaseId,
     filter: {
@@ -34,14 +45,17 @@ async function queryAndSortDatabase(databaseId) {
     sorts: [
       {
         property: "Grocery item",
-        direction: "ascending",
+        direction: "descending",
       },
     ],
   })
+
+  // Print filtered/sorted results
   console.log(lastOrderedIn2023Alphabetical)
 }
 
 async function main() {
+  // Create a new database
   const newDatabase = await notion.databases.create({
     parent: {
       type: "page_id",
@@ -56,6 +70,7 @@ async function main() {
       },
     ],
     properties: {
+      // These properties represent columns in the database (i.e. its schema)
       "Grocery item": {
         type: "title",
         title: {},
@@ -72,15 +87,19 @@ async function main() {
       },
     },
   })
+  // Print the new database's URL. Visit the URL in your browser to see the pages that get created in the next step.
   console.log(newDatabase.url)
 
   const databaseId = newDatabase.id
   if (!databaseId) return
 
+  console.log("Adding new pages...")
   for (let i = 0; i < propertiesForNewPages.length; i++) {
-    addNotionPageToDatabase(databaseId, propertiesForNewPages[i])
+    // Add a few new pages to the database that was just created
+    await addNotionPageToDatabase(databaseId, propertiesForNewPages[i])
   }
 
+  // After adding pages, query the database entries (pages) and sort the results
   queryAndSortDatabase(databaseId)
 }
 
