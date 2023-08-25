@@ -23,3 +23,4 @@ export {
   isFullComment,
   isFullPageOrDatabase,
 } from "./helpers"
+export type * from "./api-endpoints"
