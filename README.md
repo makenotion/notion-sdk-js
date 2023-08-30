@@ -183,13 +183,14 @@ try {
 There are several [type guards](https://www.typescriptlang.org/docs/handbook/advanced-types.html#type-guards-and-differentiating-types)
 provided to distinguish between full and partial API responses.
 
-| Type guard function | Purpose                                                        |
-| ------------------- | -------------------------------------------------------------- |
-| `isFullPage`        | Determine whether an object is a full `PageObjectResponse`     |
-| `isFullBlock`       | Determine whether an object is a full `BlockObjectResponse`    |
-| `isFullDatabase`    | Determine whether an object is a full `DatabaseObjectResponse` |
-| `isFullUser`        | Determine whether an object is a full `UserObjectResponse`     |
-| `isFullComment`     | Determine whether an object is a full `CommentObjectResponse`  |
+| Type guard function     | Purpose                                                                                     |
+| ----------------------- | ------------------------------------------------------------------------------------------- |
+| `isFullPage`            | Determine whether an object is a full `PageObjectResponse`                                  |
+| `isFullBlock`           | Determine whether an object is a full `BlockObjectResponse`                                 |
+| `isFullDatabase`        | Determine whether an object is a full `DatabaseObjectResponse`                              |
+| `isFullPageOrDatabase`  | Determine whether an object is a full `PageObjectResponse` or `DatabaseObjectResponse`      |
+| `isFullUser`            | Determine whether an object is a full `UserObjectResponse`                                  |
+| `isFullComment`         | Determine whether an object is a full `CommentObjectResponse`                               |
 
 Here is an example of using a type guard:
 
@@ -198,10 +199,13 @@ const fullOrPartialPages = await notion.databases.query({
   database_id: "897e5a76-ae52-4b48-9fdf-e71f5945d1af",
 })
 for (const page of fullOrPartialPages.results) {
-  if (!isFullPage(page)) {
+  if (!isFullPageOrDatabase(page)) {
     continue
   }
-  // The page variable has been narrowed from PageObjectResponse | PartialPageObjectResponse to PageObjectResponse.
+  // The page variable has been narrowed from
+	//      PageObjectResponse | PartialPageObjectResponse | DatabaseObjectResponse | PartialDatabaseObjectResponse
+	// to
+	//      PageObjectResponse | DatabaseObjectResponse.
   console.log("Created at:", page.created_time)
 }
 ```
