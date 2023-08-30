@@ -183,14 +183,14 @@ try {
 There are several [type guards](https://www.typescriptlang.org/docs/handbook/advanced-types.html#type-guards-and-differentiating-types)
 provided to distinguish between full and partial API responses.
 
-| Type guard function     | Purpose                                                                                     |
-| ----------------------- | ------------------------------------------------------------------------------------------- |
-| `isFullPage`            | Determine whether an object is a full `PageObjectResponse`                                  |
-| `isFullBlock`           | Determine whether an object is a full `BlockObjectResponse`                                 |
-| `isFullDatabase`        | Determine whether an object is a full `DatabaseObjectResponse`                              |
-| `isFullPageOrDatabase`  | Determine whether an object is a full `PageObjectResponse` or `DatabaseObjectResponse`      |
-| `isFullUser`            | Determine whether an object is a full `UserObjectResponse`                                  |
-| `isFullComment`         | Determine whether an object is a full `CommentObjectResponse`                               |
+| Type guard function    | Purpose                                                                                |
+| ---------------------- | -------------------------------------------------------------------------------------- |
+| `isFullPage`           | Determine whether an object is a full `PageObjectResponse`                             |
+| `isFullBlock`          | Determine whether an object is a full `BlockObjectResponse`                            |
+| `isFullDatabase`       | Determine whether an object is a full `DatabaseObjectResponse`                         |
+| `isFullPageOrDatabase` | Determine whether an object is a full `PageObjectResponse` or `DatabaseObjectResponse` |
+| `isFullUser`           | Determine whether an object is a full `UserObjectResponse`                             |
+| `isFullComment`        | Determine whether an object is a full `CommentObjectResponse`                          |
 
 Here is an example of using a type guard:
 
