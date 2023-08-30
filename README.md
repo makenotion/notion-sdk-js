@@ -203,9 +203,9 @@ for (const page of fullOrPartialPages.results) {
     continue
   }
   // The page variable has been narrowed from
-	//      PageObjectResponse | PartialPageObjectResponse | DatabaseObjectResponse | PartialDatabaseObjectResponse
-	// to
-	//      PageObjectResponse | DatabaseObjectResponse.
+  //      PageObjectResponse | PartialPageObjectResponse | DatabaseObjectResponse | PartialDatabaseObjectResponse
+  // to
+  //      PageObjectResponse | DatabaseObjectResponse.
   console.log("Created at:", page.created_time)
 }
 ```
