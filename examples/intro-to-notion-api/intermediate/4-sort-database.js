@@ -51,6 +51,9 @@ async function queryAndSortDatabase(databaseId) {
   })
 
   // Print filtered/sorted results
+  console.log(
+    'Pages with the "Last ordered" date after 2022-12-31 in descending order:'
+  )
   console.log(lastOrderedIn2023Alphabetical)
 }
 

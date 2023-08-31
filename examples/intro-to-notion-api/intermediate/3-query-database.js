@@ -44,6 +44,7 @@ async function queryDatabase(databaseId) {
   })
 
   // Print filtered results
+  console.log('Pages with the "Last ordered" date after 2022-12-31:')
   console.log(lastOrderedIn2023)
 }
 

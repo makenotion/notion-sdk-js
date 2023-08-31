@@ -4,30 +4,28 @@
 
 Use this sample code to learn how to make public API requests with varying degrees of difficulty.
 
-The sample code is split into three sections:
+The sample code is split into two sections:
 
 1. basic
 2. intermediate
-3. advanced
+
+(An `advanced` section will soon be added, as well.)
 
 If you are new to Notion's SDK for JavaScript, start with the code samples in the `/basic` directory to get more familiar to basic concepts.
 
 The files in each directory will build on each other to increase in complexity. For example, in `/intermediate`, first you will see how to create a database, then how to create a database and add a page to it, and finally create a database, add a page, and query/sort the database.
 
-The `/advanced` section contains standalone examples and do not build on each other.
-
 ## Table of contents
 
 In case you are looking for example code of a specific task, the files are divided as follows:
 
-- `/basic/1-new-block.js`: Create a new block that will be appended to an existing Notion page.
+- `/basic/1-add-block.js`: Create a new block that will be appended to an existing Notion page.
 - `/basic/2-add-linked-block.js`: Add a link to the text of a new block.
-- `/basic/3-styled-block-text.js`: Include styles for a new block's text.
+- `/basic/3-add-styled-block.js`: Include styles for a new block's text.
 - `/intermediate/1-create-a-database.js`: Create a new database with defined properties.
 - `/intermediate/2-add-page-to-database.js`: Add new pages to a newly-created database.
 - `/intermediate/3-query-database.js`: Create a new database with defined properties, add pages to it, and filter the database entries (pages).
 - `/intermediate/4-sort-database.js`: Create a new database with defined properties, add pages to it, and filter/sort the database entries (pages).
-- `/advanced/` // todo: these have not been added yet
 
 ## Running locally
 
@@ -60,7 +58,7 @@ NOTION_PAGE_ID=<notion-page-id>
 
 `NOTION_API_KEY`: Create a new integration in the [integrations dashboard](https://www.notion.com/my-integrations) and retrieve the API key from the integration's `Secrets` page.
 
-`NOTION_PAGE_ID`: Use the ID of any Notion page that you don't mind having content added to. A page specifically for testing is recommended.
+`NOTION_PAGE_ID`: Use the ID of any Notion page that you want to test adding content to.
 
 The page ID is the 32 character string at the end of any page URL.
 ![A Notion page URL with the ID highlighted](./assets/page_id.png)
@@ -85,14 +83,14 @@ To run each individual example, use the `node` command with the file's path.
 For example:
 
 ```zsh
-node /basic/1-new-block.js
+node /basic/1-add-block.js
 ```
 
 ---
 
 ## Additional resources
 
-To learn more, read the [public API docs](https://developers.notion.com/) for additional information on using Notion's API. The API docs include a series of [guides](https://developers.notion.com/docs) and the [API reference](https://developers.notion.com/reference/intro), which has a full list of available endpoints.
+To learn more, read the [Public API docs](https://developers.notion.com/) for additional information on using Notion's API. The API docs include a series of [guides](https://developers.notion.com/docs) and the [API reference](https://developers.notion.com/reference/intro), which has a full list of available endpoints.
 
 To see more examples of what you can build with Notion, see our other sample integrations in the parent `/examples` directory. To learn how to build an internal integration with an interactive frontend, read the [Build your first integration](https://developers.notion.com/docs/create-a-notion-integration) guide.
 
