@@ -94,4 +94,4 @@ To learn more, read the [Public API docs](https://developers.notion.com/) for ad
 
 To see more examples of what you can build with Notion, see our other sample integrations in the parent `/examples` directory. To learn how to build an internal integration with an interactive frontend, read the [Build your first integration](https://developers.notion.com/docs/create-a-notion-integration) guide.
 
-To connect with other developers building with Notion, join the [Notion Devs Slack group](https://join.slack.com/t/notiondevs/shared_invite/zt-20b5996xv-DzJdLiympy6jP0GGzu3AMg).
+To connect with other developers building with Notion, join the [Notion Developers Slack group](https://join.slack.com/t/notiondevs/shared_invite/zt-20b5996xv-DzJdLiympy6jP0GGzu3AMg).

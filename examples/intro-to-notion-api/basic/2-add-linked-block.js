@@ -30,7 +30,7 @@ async function main() {
           rich_text: [
             {
               text: {
-                content: "Lacinato kale", // This is the text that will be displayed in Notion
+                content: "Tuscan  kale", // This is the text that will be displayed in Notion
               },
             },
           ],
@@ -42,10 +42,10 @@ async function main() {
             {
               text: {
                 content:
-                  "Lacinato kale is a variety of kale with a long tradition in Italian cuisine, especially that of Tuscany. It is also known as Tuscan kale, Italian kale, dinosaur kale, kale, flat back kale, palm tree kale, or black Tuscan palm.",
+                  "Tuscan  kale is a variety of kale with a long tradition in Italian cuisine, especially that of Tuscany. It is also known as Tuscan kale, Italian kale, dinosaur kale, kale, flat back kale, palm tree kale, or black Tuscan palm.",
                 link: {
                   // Include a url to make the paragraph a link in Notion
-                  url: "https://en.wikipedia.org/wiki/Lacinato_kale",
+                  url: "https://en.wikipedia.org/wiki/Tuscan _kale",
                 },
               },
             },
