@@ -1,13 +1,13 @@
 # Introduction to using Notion's SDK for JavaScript
 
-## Learn how to make public API requests
+## Learn how to make Public API requests
 
-Use this sample code to learn how to make public API requests with varying degrees of difficulty.
+Use this sample code to learn how to make Public API requests with varying degrees of difficulty.
 
 The sample code is split into two sections:
 
-1. basic
-2. intermediate
+1. `basic`
+2. `intermediate`
 
 (An `advanced` section will soon be added, as well.)
 
@@ -19,13 +19,13 @@ The files in each directory will build on each other to increase in complexity. 
 
 In case you are looking for example code of a specific task, the files are divided as follows:
 
-- `/basic/1-add-block.js`: Create a new block that will be appended to an existing Notion page.
-- `/basic/2-add-linked-block.js`: Add a link to the text of a new block.
-- `/basic/3-add-styled-block.js`: Include styles for a new block's text.
+- `/basic/1-add-block.js`: Create a new block and append it to an existing Notion page.
+- `/basic/2-add-linked-block.js`: Create and append new blocks, and a link to the text of a new block.
+- `/basic/3-add-styled-block.js`: Create and append new blocks, and apply text styles to them.
 - `/intermediate/1-create-a-database.js`: Create a new database with defined properties.
-- `/intermediate/2-add-page-to-database.js`: Add new pages to a newly-created database.
-- `/intermediate/3-query-database.js`: Create a new database with defined properties, add pages to it, and filter the database entries (pages).
-- `/intermediate/4-sort-database.js`: Create a new database with defined properties, add pages to it, and filter/sort the database entries (pages).
+- `/intermediate/2-add-page-to-database.js`: Create a new database and add new pages to it.
+- `/intermediate/3-query-database.js`: Create a new database, add pages to it, and filter the database entries (pages).
+- `/intermediate/4-sort-database.js`: Create a new database, add pages to it, and filter/sort the database entries (pages).
 
 ## Running locally
 
