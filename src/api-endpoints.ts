@@ -4707,6 +4707,13 @@ type RollupDatabasePropertyConfigResponse = {
   name: string
 }
 
+type UniqueIdDatabasePropertyConfigResponse = {
+  type: "unique_id"
+  unique_id: { prefix: string | null }
+  id: string
+  name: string
+}
+
 type TitleDatabasePropertyConfigResponse = {
   type: "title"
   title: EmptyObject
@@ -4806,6 +4813,7 @@ type DatabasePropertyConfigResponse =
   | StatusDatabasePropertyConfigResponse
   | RelationDatabasePropertyConfigResponse
   | RollupDatabasePropertyConfigResponse
+  | UniqueIdDatabasePropertyConfigResponse
   | TitleDatabasePropertyConfigResponse
   | RichTextDatabasePropertyConfigResponse
   | UrlDatabasePropertyConfigResponse
@@ -5210,6 +5218,7 @@ type LanguageRequest =
   | "mathematica"
   | "mermaid"
   | "nix"
+  | "notion formula"
   | "objective-c"
   | "ocaml"
   | "pascal"
@@ -10433,6 +10442,12 @@ type UpdateDatabaseBodyParameters = {
         name?: string
       }
     | null
+    | {
+        unique_id: { prefix?: string | null }
+        type?: "unique_id"
+        name?: string
+      }
+    | null
     | { title: EmptyObject; type?: "title"; name?: string }
     | null
     | { rich_text: EmptyObject; type?: "rich_text"; name?: string }
@@ -10654,6 +10669,7 @@ type CreateDatabaseBodyParameters = {
             }
         type?: "rollup"
       }
+    | { unique_id: { prefix?: string | null }; type?: "unique_id" }
     | { title: EmptyObject; type?: "title" }
     | { rich_text: EmptyObject; type?: "rich_text" }
     | { url: EmptyObject; type?: "url" }
