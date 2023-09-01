@@ -9506,6 +9506,7 @@ type PropertyFilter =
       type?: "last_edited_time"
     }
   | { formula: FormulaPropertyFilter; property: string; type?: "formula" }
+  | { unique_id: NumberPropertyFilter; property: string; type?: "unique_id" }
   | { rollup: RollupPropertyFilter; property: string; type?: "rollup" }
 
 type TimestampCreatedTimeFilter = {
