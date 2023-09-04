@@ -17,10 +17,10 @@ The files in each directory will build on each other to increase in complexity. 
 
 ## Table of contents
 
-In case you are looking for example code of a specific task, the files are divided as follows:
+In case you are looking for example code for a specific task, the files are divided as follows:
 
 - `/basic/1-add-block.js`: Create a new block and append it to an existing Notion page.
-- `/basic/2-add-linked-block.js`: Create and append new blocks, and a link to the text of a new block.
+- `/basic/2-add-linked-block.js`: Create and append new blocks, and add a link to the text of a new block.
 - `/basic/3-add-styled-block.js`: Create and append new blocks, and apply text styles to them.
 - `/intermediate/1-create-a-database.js`: Create a new database with defined properties.
 - `/intermediate/2-add-page-to-database.js`: Create a new database and add new pages to it.
