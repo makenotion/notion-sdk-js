@@ -33,6 +33,7 @@ async function addNotionPageToDatabase(databaseId, pageProperties) {
 }
 
 async function queryAndSortDatabase(databaseId) {
+  console.log("Querying database...")
   // This query will filter and sort database entries. The returned pages will have a "Last ordered" property that is more recent than 2022-12-31. Any database property can be filtered or sorted. Pass multiple sort objects to the "sorts" array to apply more than one sorting rule.
   const lastOrderedIn2023Alphabetical = await notion.databases.query({
     database_id: databaseId,
