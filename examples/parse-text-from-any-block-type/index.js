@@ -97,6 +97,9 @@ const getTextFromBlock = block => {
         // Does not include text from ToC; just the color
         text = "ToC color: " + block.table_of_contents.color
         break
+      case "rich_text": 
+        text = getPlainTextFromRichText(block.rich_text)
+        break;
       case "breadcrumb":
       case "column_list":
       case "divider":
