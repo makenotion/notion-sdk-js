@@ -186,7 +186,10 @@ export default class Client {
       // authorization header as required by `Basic` auth.
       const unencodedCredential = `${auth.client_id}:${auth.client_secret}`
       const encodedCredential =
-        Buffer.from(unencodedCredential).toString("base64")
+        typeof Buffer !== "undefined"
+          ? Buffer.from(unencodedCredential).toString("base64")
+          // Use `btoa` in non-Node environments
+          : btoa(unencodedCredential)
       authorizationHeader = { authorization: `Basic ${encodedCredential}` }
     } else {
       // Otherwise format authorization header as `Bearer` token auth.
