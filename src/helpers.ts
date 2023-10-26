@@ -2,12 +2,15 @@ import {
   BlockObjectResponse,
   CommentObjectResponse,
   DatabaseObjectResponse,
+  EquationRichTextItemResponse,
   PageObjectResponse,
   PartialBlockObjectResponse,
   PartialCommentObjectResponse,
   PartialDatabaseObjectResponse,
   PartialPageObjectResponse,
   PartialUserObjectResponse,
+  RichTextItemResponse,
+  TextRichTextItemResponse,
   UserObjectResponse,
 } from "./api-endpoints"
 
@@ -166,4 +169,31 @@ export function isFullComment(
   response: CommentObjectResponse | PartialCommentObjectResponse
 ): response is CommentObjectResponse {
   return "created_by" in response
+}
+
+/**
+ * @returns `true` if `richText` is a `TextRichTextItemResponse`.
+ */
+export function isTextRichTextItemResponse(
+  richText: RichTextItemResponse
+): richText is TextRichTextItemResponse {
+  return richText.type === "text"
+}
+
+/**
+ * @returns `true` if `richText` is an `EquationRichTextItemResponse`.
+ */
+export function isEquationRichTextItemResponse(
+  richText: RichTextItemResponse
+): richText is EquationRichTextItemResponse {
+  return richText.type === "equation"
+}
+
+/**
+ * @returns `true` if `richText` is an `MentionRichTextItemResponse`.
+ */
+export function isMentionRichTextItemResponse(
+  richText: RichTextItemResponse
+): richText is EquationRichTextItemResponse {
+  return richText.type === "mention"
 }
