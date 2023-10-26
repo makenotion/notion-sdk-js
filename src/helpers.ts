@@ -89,27 +89,45 @@ export async function collectPaginatedAPI<Args extends PaginatedArgs, Item>(
  * @returns `true` if `response` is a full `BlockObjectResponse`.
  */
 export function isFullBlock(
-  response: BlockObjectResponse | PartialBlockObjectResponse
+  response:
+    | PageObjectResponse
+    | PartialPageObjectResponse
+    | DatabaseObjectResponse
+    | PartialDatabaseObjectResponse
+    | BlockObjectResponse
+    | PartialBlockObjectResponse
 ): response is BlockObjectResponse {
-  return "type" in response
+  return response.object === "block" && "type" in response
 }
 
 /**
  * @returns `true` if `response` is a full `PageObjectResponse`.
  */
 export function isFullPage(
-  response: PageObjectResponse | PartialPageObjectResponse
+  response:
+    | PageObjectResponse
+    | PartialPageObjectResponse
+    | DatabaseObjectResponse
+    | PartialDatabaseObjectResponse
+    | BlockObjectResponse
+    | PartialBlockObjectResponse
 ): response is PageObjectResponse {
-  return "url" in response
+  return response.object === "page" && "url" in response
 }
 
 /**
  * @returns `true` if `response` is a full `DatabaseObjectResponse`.
  */
 export function isFullDatabase(
-  response: DatabaseObjectResponse | PartialDatabaseObjectResponse
+  response:
+    | PageObjectResponse
+    | PartialPageObjectResponse
+    | DatabaseObjectResponse
+    | PartialDatabaseObjectResponse
+    | BlockObjectResponse
+    | PartialBlockObjectResponse
 ): response is DatabaseObjectResponse {
-  return "title" in response
+  return response.object === "database" && "title" in response
 }
 
 /**
@@ -118,10 +136,12 @@ export function isFullDatabase(
  */
 export function isFullPageOrDatabase(
   response:
-    | DatabaseObjectResponse
-    | PartialDatabaseObjectResponse
     | PageObjectResponse
     | PartialPageObjectResponse
+    | DatabaseObjectResponse
+    | PartialDatabaseObjectResponse
+    | BlockObjectResponse
+    | PartialBlockObjectResponse
 ): response is DatabaseObjectResponse | PageObjectResponse {
   if (response.object === "database") {
     return isFullDatabase(response)
