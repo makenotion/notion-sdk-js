@@ -2,12 +2,15 @@ import {
   BlockObjectResponse,
   CommentObjectResponse,
   DatabaseObjectResponse,
+  EquationRichTextItemResponse,
   PageObjectResponse,
   PartialBlockObjectResponse,
   PartialCommentObjectResponse,
   PartialDatabaseObjectResponse,
   PartialPageObjectResponse,
   PartialUserObjectResponse,
+  RichTextItemResponse,
+  TextRichTextItemResponse,
   UserObjectResponse,
 } from "./api-endpoints"
 
@@ -89,27 +92,45 @@ export async function collectPaginatedAPI<Args extends PaginatedArgs, Item>(
  * @returns `true` if `response` is a full `BlockObjectResponse`.
  */
 export function isFullBlock(
-  response: BlockObjectResponse | PartialBlockObjectResponse
+  response:
+    | PageObjectResponse
+    | PartialPageObjectResponse
+    | DatabaseObjectResponse
+    | PartialDatabaseObjectResponse
+    | BlockObjectResponse
+    | PartialBlockObjectResponse
 ): response is BlockObjectResponse {
-  return "type" in response
+  return response.object === "block" && "type" in response
 }
 
 /**
  * @returns `true` if `response` is a full `PageObjectResponse`.
  */
 export function isFullPage(
-  response: PageObjectResponse | PartialPageObjectResponse
+  response:
+    | PageObjectResponse
+    | PartialPageObjectResponse
+    | DatabaseObjectResponse
+    | PartialDatabaseObjectResponse
+    | BlockObjectResponse
+    | PartialBlockObjectResponse
 ): response is PageObjectResponse {
-  return "url" in response
+  return response.object === "page" && "url" in response
 }
 
 /**
  * @returns `true` if `response` is a full `DatabaseObjectResponse`.
  */
 export function isFullDatabase(
-  response: DatabaseObjectResponse | PartialDatabaseObjectResponse
+  response:
+    | PageObjectResponse
+    | PartialPageObjectResponse
+    | DatabaseObjectResponse
+    | PartialDatabaseObjectResponse
+    | BlockObjectResponse
+    | PartialBlockObjectResponse
 ): response is DatabaseObjectResponse {
-  return "title" in response
+  return response.object === "database" && "title" in response
 }
 
 /**
@@ -118,10 +139,12 @@ export function isFullDatabase(
  */
 export function isFullPageOrDatabase(
   response:
-    | DatabaseObjectResponse
-    | PartialDatabaseObjectResponse
     | PageObjectResponse
     | PartialPageObjectResponse
+    | DatabaseObjectResponse
+    | PartialDatabaseObjectResponse
+    | BlockObjectResponse
+    | PartialBlockObjectResponse
 ): response is DatabaseObjectResponse | PageObjectResponse {
   if (response.object === "database") {
     return isFullDatabase(response)
@@ -146,4 +169,31 @@ export function isFullComment(
   response: CommentObjectResponse | PartialCommentObjectResponse
 ): response is CommentObjectResponse {
   return "created_by" in response
+}
+
+/**
+ * @returns `true` if `richText` is a `TextRichTextItemResponse`.
+ */
+export function isTextRichTextItemResponse(
+  richText: RichTextItemResponse
+): richText is TextRichTextItemResponse {
+  return richText.type === "text"
+}
+
+/**
+ * @returns `true` if `richText` is an `EquationRichTextItemResponse`.
+ */
+export function isEquationRichTextItemResponse(
+  richText: RichTextItemResponse
+): richText is EquationRichTextItemResponse {
+  return richText.type === "equation"
+}
+
+/**
+ * @returns `true` if `richText` is an `MentionRichTextItemResponse`.
+ */
+export function isMentionRichTextItemResponse(
+  richText: RichTextItemResponse
+): richText is EquationRichTextItemResponse {
+  return richText.type === "mention"
 }
