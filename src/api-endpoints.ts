@@ -164,6 +164,7 @@ type TimeZoneRequest =
   | "America/Cayman"
   | "America/Chicago"
   | "America/Chihuahua"
+  | "America/Ciudad_Juarez"
   | "America/Coral_Harbour"
   | "America/Cordoba"
   | "America/Costa_Rica"
@@ -244,6 +245,7 @@ type TimeZoneRequest =
   | "America/North_Dakota/Beulah"
   | "America/North_Dakota/Center"
   | "America/North_Dakota/New_Salem"
+  | "America/Nuuk"
   | "America/Ojinaga"
   | "America/Panama"
   | "America/Pangnirtung"
@@ -517,6 +519,7 @@ type TimeZoneRequest =
   | "Europe/Kaliningrad"
   | "Europe/Kiev"
   | "Europe/Kirov"
+  | "Europe/Kyiv"
   | "Europe/Lisbon"
   | "Europe/Ljubljana"
   | "Europe/London"
@@ -611,6 +614,7 @@ type TimeZoneRequest =
   | "Pacific/Guam"
   | "Pacific/Honolulu"
   | "Pacific/Johnston"
+  | "Pacific/Kanton"
   | "Pacific/Kiritimati"
   | "Pacific/Kosrae"
   | "Pacific/Kwajalein"
@@ -855,6 +859,7 @@ type EmojiRequest =
   | "😂"
   | "🙂"
   | "🙃"
+  | "🫠"
   | "😉"
   | "😊"
   | "😇"
@@ -876,13 +881,17 @@ type EmojiRequest =
   | "🤑"
   | "🤗"
   | "🤭"
+  | "🫢"
+  | "🫣"
   | "🤫"
   | "🤔"
+  | "🫡"
   | "🤐"
   | "🤨"
   | "😐"
   | "😑"
   | "😶"
+  | "🫥"
   | "😶‍🌫️"
   | "😶‍🌫"
   | "😏"
@@ -915,6 +924,7 @@ type EmojiRequest =
   | "🤓"
   | "🧐"
   | "😕"
+  | "🫤"
   | "😟"
   | "🙁"
   | "☹️"
@@ -924,6 +934,7 @@ type EmojiRequest =
   | "😲"
   | "😳"
   | "🥺"
+  | "🥹"
   | "😦"
   | "😧"
   | "😨"
@@ -1043,6 +1054,30 @@ type EmojiRequest =
   | "🖖🏾"
   | "🖖🏿"
   | "🖖"
+  | "🫱🏻"
+  | "🫱🏼"
+  | "🫱🏽"
+  | "🫱🏾"
+  | "🫱🏿"
+  | "🫱"
+  | "🫲🏻"
+  | "🫲🏼"
+  | "🫲🏽"
+  | "🫲🏾"
+  | "🫲🏿"
+  | "🫲"
+  | "🫳🏻"
+  | "🫳🏼"
+  | "🫳🏽"
+  | "🫳🏾"
+  | "🫳🏿"
+  | "🫳"
+  | "🫴🏻"
+  | "🫴🏼"
+  | "🫴🏽"
+  | "🫴🏾"
+  | "🫴🏿"
+  | "🫴"
   | "👌🏻"
   | "👌🏼"
   | "👌🏽"
@@ -1074,6 +1109,12 @@ type EmojiRequest =
   | "🤞🏾"
   | "🤞🏿"
   | "🤞"
+  | "🫰🏻"
+  | "🫰🏼"
+  | "🫰🏽"
+  | "🫰🏾"
+  | "🫰🏿"
+  | "🫰"
   | "🤟🏻"
   | "🤟🏼"
   | "🤟🏽"
@@ -1129,6 +1170,12 @@ type EmojiRequest =
   | "☝🏿"
   | "☝️"
   | "☝"
+  | "🫵🏻"
+  | "🫵🏼"
+  | "🫵🏽"
+  | "🫵🏾"
+  | "🫵🏿"
+  | "🫵"
   | "👍🏻"
   | "👍🏼"
   | "👍🏽"
@@ -1177,6 +1224,12 @@ type EmojiRequest =
   | "🙌🏾"
   | "🙌🏿"
   | "🙌"
+  | "🫶🏻"
+  | "🫶🏼"
+  | "🫶🏽"
+  | "🫶🏾"
+  | "🫶🏿"
+  | "🫶"
   | "👐🏻"
   | "👐🏼"
   | "👐🏽"
@@ -1189,6 +1242,31 @@ type EmojiRequest =
   | "🤲🏾"
   | "🤲🏿"
   | "🤲"
+  | "🤝🏻"
+  | "🤝🏼"
+  | "🤝🏽"
+  | "🤝🏾"
+  | "🤝🏿"
+  | "🫱🏻‍🫲🏼"
+  | "🫱🏻‍🫲🏽"
+  | "🫱🏻‍🫲🏾"
+  | "🫱🏻‍🫲🏿"
+  | "🫱🏼‍🫲🏻"
+  | "🫱🏼‍🫲🏽"
+  | "🫱🏼‍🫲🏾"
+  | "🫱🏼‍🫲🏿"
+  | "🫱🏽‍🫲🏻"
+  | "🫱🏽‍🫲🏼"
+  | "🫱🏽‍🫲🏾"
+  | "🫱🏽‍🫲🏿"
+  | "🫱🏾‍🫲🏻"
+  | "🫱🏾‍🫲🏼"
+  | "🫱🏾‍🫲🏽"
+  | "🫱🏾‍🫲🏿"
+  | "🫱🏿‍🫲🏻"
+  | "🫱🏿‍🫲🏼"
+  | "🫱🏿‍🫲🏽"
+  | "🫱🏿‍🫲🏾"
   | "🤝"
   | "🙏🏻"
   | "🙏🏼"
@@ -1263,6 +1341,7 @@ type EmojiRequest =
   | "👁"
   | "👅"
   | "👄"
+  | "🫦"
   | "👶🏻"
   | "👶🏼"
   | "👶🏽"
@@ -2017,6 +2096,12 @@ type EmojiRequest =
   | "👷🏿‍♀️"
   | "👷‍♀️"
   | "👷‍♀"
+  | "🫅🏻"
+  | "🫅🏼"
+  | "🫅🏽"
+  | "🫅🏾"
+  | "🫅🏿"
+  | "🫅"
   | "🤴🏻"
   | "🤴🏼"
   | "🤴🏽"
@@ -2107,6 +2192,18 @@ type EmojiRequest =
   | "🤰🏾"
   | "🤰🏿"
   | "🤰"
+  | "🫃🏻"
+  | "🫃🏼"
+  | "🫃🏽"
+  | "🫃🏾"
+  | "🫃🏿"
+  | "🫃"
+  | "🫄🏻"
+  | "🫄🏼"
+  | "🫄🏽"
+  | "🫄🏾"
+  | "🫄🏿"
+  | "🫄"
   | "🤱🏻"
   | "🤱🏼"
   | "🤱🏽"
@@ -2305,6 +2402,7 @@ type EmojiRequest =
   | "🧟‍♂"
   | "🧟‍♀️"
   | "🧟‍♀"
+  | "🧌"
   | "💆🏻"
   | "💆🏼"
   | "💆🏽"
@@ -2999,6 +3097,7 @@ type EmojiRequest =
   | "🦈"
   | "🐙"
   | "🐚"
+  | "🪸"
   | "🐌"
   | "🦋"
   | "🐛"
@@ -3020,6 +3119,7 @@ type EmojiRequest =
   | "💐"
   | "🌸"
   | "💮"
+  | "🪷"
   | "🏵️"
   | "🏵"
   | "🌹"
@@ -3042,6 +3142,8 @@ type EmojiRequest =
   | "🍁"
   | "🍂"
   | "🍃"
+  | "🪹"
+  | "🪺"
   | "🍇"
   | "🍈"
   | "🍉"
@@ -3076,6 +3178,7 @@ type EmojiRequest =
   | "🧅"
   | "🍄"
   | "🥜"
+  | "🫘"
   | "🌰"
   | "🍞"
   | "🥐"
@@ -3161,6 +3264,7 @@ type EmojiRequest =
   | "🍻"
   | "🥂"
   | "🥃"
+  | "🫗"
   | "🥤"
   | "🧋"
   | "🧃"
@@ -3172,6 +3276,7 @@ type EmojiRequest =
   | "🍴"
   | "🥄"
   | "🔪"
+  | "🫙"
   | "🏺"
   | "🌍"
   | "🌎"
@@ -3250,6 +3355,7 @@ type EmojiRequest =
   | "♨️"
   | "♨"
   | "🎠"
+  | "🛝"
   | "🎡"
   | "🎢"
   | "💈"
@@ -3303,12 +3409,14 @@ type EmojiRequest =
   | "🛢️"
   | "🛢"
   | "⛽"
+  | "🛞"
   | "🚨"
   | "🚥"
   | "🚦"
   | "🛑"
   | "🚧"
   | "⚓"
+  | "🛟"
   | "⛵"
   | "🛶"
   | "🚤"
@@ -3502,6 +3610,7 @@ type EmojiRequest =
   | "🔮"
   | "🪄"
   | "🧿"
+  | "🪬"
   | "🎮"
   | "🕹️"
   | "🕹"
@@ -3510,6 +3619,7 @@ type EmojiRequest =
   | "🧩"
   | "🧸"
   | "🪅"
+  | "🪩"
   | "🪆"
   | "♠️"
   | "♠"
@@ -3618,6 +3728,7 @@ type EmojiRequest =
   | "📟"
   | "📠"
   | "🔋"
+  | "🪫"
   | "🔌"
   | "💻"
   | "🖥️"
@@ -3796,7 +3907,9 @@ type EmojiRequest =
   | "🩸"
   | "💊"
   | "🩹"
+  | "🩼"
   | "🩺"
+  | "🩻"
   | "🚪"
   | "🛗"
   | "🪞"
@@ -3819,6 +3932,7 @@ type EmojiRequest =
   | "🧻"
   | "🪣"
   | "🧼"
+  | "🫧"
   | "🪥"
   | "🧽"
   | "🧯"
@@ -3831,6 +3945,7 @@ type EmojiRequest =
   | "⚱"
   | "🗿"
   | "🪧"
+  | "🪪"
   | "🏧"
   | "🚮"
   | "🚰"
@@ -3970,6 +4085,7 @@ type EmojiRequest =
   | "➕"
   | "➖"
   | "➗"
+  | "🟰"
   | "♾️"
   | "♾"
   | "‼️"
@@ -5582,11 +5698,13 @@ export type FileBlockObjectResponse = {
         type: "external"
         external: { url: TextRequest }
         caption: Array<RichTextItemResponse>
+        name: string
       }
     | {
         type: "file"
         file: { url: string; expiry_time: string }
         caption: Array<RichTextItemResponse>
+        name: string
       }
   parent:
     | { type: "database_id"; database_id: string }
@@ -6163,6 +6281,7 @@ export type BlockObjectRequestWithoutChildren =
         external: { url: TextRequest }
         type?: "external"
         caption?: Array<RichTextItemRequest>
+        name?: StringRequest
       }
       type?: "file"
       object?: "block"
@@ -6340,6 +6459,7 @@ export type BlockObjectRequest =
         external: { url: TextRequest }
         type?: "external"
         caption?: Array<RichTextItemRequest>
+        name?: StringRequest
       }
       type?: "file"
       object?: "block"
@@ -6381,6 +6501,20 @@ export type BlockObjectRequest =
   | {
       table_row: { cells: Array<Array<RichTextItemRequest>> }
       type?: "table_row"
+      object?: "block"
+    }
+  | {
+      table: {
+        table_width: number
+        children: Array<{
+          table_row: { cells: Array<Array<RichTextItemRequest>> }
+          type?: "table_row"
+          object?: "block"
+        }>
+        has_column_header?: boolean
+        has_row_header?: boolean
+      }
+      type?: "table"
       object?: "block"
     }
   | {
@@ -6433,6 +6567,7 @@ export type BlockObjectRequest =
                     external: { url: TextRequest }
                     type?: "external"
                     caption?: Array<RichTextItemRequest>
+                    name?: StringRequest
                   }
                   type?: "file"
                   object?: "block"
@@ -6551,6 +6686,20 @@ export type BlockObjectRequest =
                   object?: "block"
                 }
               | {
+                  table: {
+                    table_width: number
+                    children: Array<{
+                      table_row: { cells: Array<Array<RichTextItemRequest>> }
+                      type?: "table_row"
+                      object?: "block"
+                    }>
+                    has_column_header?: boolean
+                    has_row_header?: boolean
+                  }
+                  type?: "table"
+                  object?: "block"
+                }
+              | {
                   to_do: {
                     rich_text: Array<RichTextItemRequest>
                     color?: ApiColor
@@ -6654,6 +6803,7 @@ export type BlockObjectRequest =
                 external: { url: TextRequest }
                 type?: "external"
                 caption?: Array<RichTextItemRequest>
+                name?: StringRequest
               }
               type?: "file"
               object?: "block"
@@ -6765,6 +6915,20 @@ export type BlockObjectRequest =
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "quote"
+              object?: "block"
+            }
+          | {
+              table: {
+                table_width: number
+                children: Array<{
+                  table_row: { cells: Array<Array<RichTextItemRequest>> }
+                  type?: "table_row"
+                  object?: "block"
+                }>
+                has_column_header?: boolean
+                has_row_header?: boolean
+              }
+              type?: "table"
               object?: "block"
             }
           | {
@@ -6820,16 +6984,6 @@ export type BlockObjectRequest =
       object?: "block"
     }
   | {
-      table: {
-        table_width: number
-        children: Array<BlockObjectRequestWithoutChildren>
-        has_column_header?: boolean
-        has_row_header?: boolean
-      }
-      type?: "table"
-      object?: "block"
-    }
-  | {
       heading_1: {
         rich_text: Array<RichTextItemRequest>
         color?: ApiColor
@@ -6877,6 +7031,7 @@ export type BlockObjectRequest =
                 external: { url: TextRequest }
                 type?: "external"
                 caption?: Array<RichTextItemRequest>
+                name?: StringRequest
               }
               type?: "file"
               object?: "block"
@@ -6988,6 +7143,20 @@ export type BlockObjectRequest =
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "quote"
+              object?: "block"
+            }
+          | {
+              table: {
+                table_width: number
+                children: Array<{
+                  table_row: { cells: Array<Array<RichTextItemRequest>> }
+                  type?: "table_row"
+                  object?: "block"
+                }>
+                has_column_header?: boolean
+                has_row_header?: boolean
+              }
+              type?: "table"
               object?: "block"
             }
           | {
@@ -7090,6 +7259,7 @@ export type BlockObjectRequest =
                 external: { url: TextRequest }
                 type?: "external"
                 caption?: Array<RichTextItemRequest>
+                name?: StringRequest
               }
               type?: "file"
               object?: "block"
@@ -7201,6 +7371,20 @@ export type BlockObjectRequest =
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "quote"
+              object?: "block"
+            }
+          | {
+              table: {
+                table_width: number
+                children: Array<{
+                  table_row: { cells: Array<Array<RichTextItemRequest>> }
+                  type?: "table_row"
+                  object?: "block"
+                }>
+                has_column_header?: boolean
+                has_row_header?: boolean
+              }
+              type?: "table"
               object?: "block"
             }
           | {
@@ -7303,6 +7487,7 @@ export type BlockObjectRequest =
                 external: { url: TextRequest }
                 type?: "external"
                 caption?: Array<RichTextItemRequest>
+                name?: StringRequest
               }
               type?: "file"
               object?: "block"
@@ -7414,6 +7599,20 @@ export type BlockObjectRequest =
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "quote"
+              object?: "block"
+            }
+          | {
+              table: {
+                table_width: number
+                children: Array<{
+                  table_row: { cells: Array<Array<RichTextItemRequest>> }
+                  type?: "table_row"
+                  object?: "block"
+                }>
+                has_column_header?: boolean
+                has_row_header?: boolean
+              }
+              type?: "table"
               object?: "block"
             }
           | {
@@ -7515,6 +7714,7 @@ export type BlockObjectRequest =
                 external: { url: TextRequest }
                 type?: "external"
                 caption?: Array<RichTextItemRequest>
+                name?: StringRequest
               }
               type?: "file"
               object?: "block"
@@ -7626,6 +7826,20 @@ export type BlockObjectRequest =
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "quote"
+              object?: "block"
+            }
+          | {
+              table: {
+                table_width: number
+                children: Array<{
+                  table_row: { cells: Array<Array<RichTextItemRequest>> }
+                  type?: "table_row"
+                  object?: "block"
+                }>
+                has_column_header?: boolean
+                has_row_header?: boolean
+              }
+              type?: "table"
               object?: "block"
             }
           | {
@@ -7727,6 +7941,7 @@ export type BlockObjectRequest =
                 external: { url: TextRequest }
                 type?: "external"
                 caption?: Array<RichTextItemRequest>
+                name?: StringRequest
               }
               type?: "file"
               object?: "block"
@@ -7838,6 +8053,20 @@ export type BlockObjectRequest =
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "quote"
+              object?: "block"
+            }
+          | {
+              table: {
+                table_width: number
+                children: Array<{
+                  table_row: { cells: Array<Array<RichTextItemRequest>> }
+                  type?: "table_row"
+                  object?: "block"
+                }>
+                has_column_header?: boolean
+                has_row_header?: boolean
+              }
+              type?: "table"
               object?: "block"
             }
           | {
@@ -7939,6 +8168,7 @@ export type BlockObjectRequest =
                 external: { url: TextRequest }
                 type?: "external"
                 caption?: Array<RichTextItemRequest>
+                name?: StringRequest
               }
               type?: "file"
               object?: "block"
@@ -8050,6 +8280,20 @@ export type BlockObjectRequest =
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "quote"
+              object?: "block"
+            }
+          | {
+              table: {
+                table_width: number
+                children: Array<{
+                  table_row: { cells: Array<Array<RichTextItemRequest>> }
+                  type?: "table_row"
+                  object?: "block"
+                }>
+                has_column_header?: boolean
+                has_row_header?: boolean
+              }
+              type?: "table"
               object?: "block"
             }
           | {
@@ -8151,6 +8395,7 @@ export type BlockObjectRequest =
                 external: { url: TextRequest }
                 type?: "external"
                 caption?: Array<RichTextItemRequest>
+                name?: StringRequest
               }
               type?: "file"
               object?: "block"
@@ -8262,6 +8507,20 @@ export type BlockObjectRequest =
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "quote"
+              object?: "block"
+            }
+          | {
+              table: {
+                table_width: number
+                children: Array<{
+                  table_row: { cells: Array<Array<RichTextItemRequest>> }
+                  type?: "table_row"
+                  object?: "block"
+                }>
+                has_column_header?: boolean
+                has_row_header?: boolean
+              }
+              type?: "table"
               object?: "block"
             }
           | {
@@ -8363,6 +8622,7 @@ export type BlockObjectRequest =
                 external: { url: TextRequest }
                 type?: "external"
                 caption?: Array<RichTextItemRequest>
+                name?: StringRequest
               }
               type?: "file"
               object?: "block"
@@ -8474,6 +8734,20 @@ export type BlockObjectRequest =
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "quote"
+              object?: "block"
+            }
+          | {
+              table: {
+                table_width: number
+                children: Array<{
+                  table_row: { cells: Array<Array<RichTextItemRequest>> }
+                  type?: "table_row"
+                  object?: "block"
+                }>
+                has_column_header?: boolean
+                has_row_header?: boolean
+              }
+              type?: "table"
               object?: "block"
             }
           | {
@@ -8576,6 +8850,7 @@ export type BlockObjectRequest =
                 external: { url: TextRequest }
                 type?: "external"
                 caption?: Array<RichTextItemRequest>
+                name?: StringRequest
               }
               type?: "file"
               object?: "block"
@@ -8687,6 +8962,20 @@ export type BlockObjectRequest =
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "quote"
+              object?: "block"
+            }
+          | {
+              table: {
+                table_width: number
+                children: Array<{
+                  table_row: { cells: Array<Array<RichTextItemRequest>> }
+                  type?: "table_row"
+                  object?: "block"
+                }>
+                has_column_header?: boolean
+                has_row_header?: boolean
+              }
+              type?: "table"
               object?: "block"
             }
           | {
@@ -8787,6 +9076,7 @@ export type BlockObjectRequest =
                 external: { url: TextRequest }
                 type?: "external"
                 caption?: Array<RichTextItemRequest>
+                name?: StringRequest
               }
               type?: "file"
               object?: "block"
@@ -8898,6 +9188,20 @@ export type BlockObjectRequest =
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "quote"
+              object?: "block"
+            }
+          | {
+              table: {
+                table_width: number
+                children: Array<{
+                  table_row: { cells: Array<Array<RichTextItemRequest>> }
+                  type?: "table_row"
+                  object?: "block"
+                }>
+                has_column_header?: boolean
+                has_row_header?: boolean
+              }
+              type?: "table"
               object?: "block"
             }
           | {
@@ -8999,6 +9303,7 @@ export type BlockObjectRequest =
                 external: { url: TextRequest }
                 type?: "external"
                 caption?: Array<RichTextItemRequest>
+                name?: StringRequest
               }
               type?: "file"
               object?: "block"
@@ -9110,6 +9415,20 @@ export type BlockObjectRequest =
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "quote"
+              object?: "block"
+            }
+          | {
+              table: {
+                table_width: number
+                children: Array<{
+                  table_row: { cells: Array<Array<RichTextItemRequest>> }
+                  type?: "table_row"
+                  object?: "block"
+                }>
+                has_column_header?: boolean
+                has_row_header?: boolean
+              }
+              type?: "table"
               object?: "block"
             }
           | {
@@ -9213,6 +9532,7 @@ export type BlockObjectRequest =
                 external: { url: TextRequest }
                 type?: "external"
                 caption?: Array<RichTextItemRequest>
+                name?: StringRequest
               }
               type?: "file"
               object?: "block"
@@ -9324,6 +9644,20 @@ export type BlockObjectRequest =
                 children?: Array<BlockObjectRequestWithoutChildren>
               }
               type?: "quote"
+              object?: "block"
+            }
+          | {
+              table: {
+                table_width: number
+                children: Array<{
+                  table_row: { cells: Array<Array<RichTextItemRequest>> }
+                  type?: "table_row"
+                  object?: "block"
+                }>
+                has_column_header?: boolean
+                has_row_header?: boolean
+              }
+              type?: "table"
               object?: "block"
             }
           | {
@@ -10072,6 +10406,7 @@ type UpdateBlockBodyParameters =
       file: {
         caption?: Array<RichTextItemRequest>
         external?: { url: TextRequest }
+        name?: StringRequest
       }
       type?: "file"
       archived?: boolean
