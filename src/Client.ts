@@ -220,6 +220,7 @@ export default class Client {
 
       const responseJson: ResponseBody = JSON.parse(responseText)
       this.log(LogLevel.INFO, `request success`, { method, path })
+      this.log(LogLevel.DEBUG, `succeed response body`, { body: responseText })
       return responseJson
     } catch (error: unknown) {
       if (!isNotionClientError(error)) {
