@@ -6,11 +6,11 @@ on:
   push:
     branches-ignore: ["main"]
   schedule:
-    - cron: '20 17 * * *'
+    - cron: "20 17 * * *"
 
 jobs:
   semgrep:
-    name: semgrep/ci 
+    name: semgrep/ci
     runs-on: ubuntu-latest
     container:
       image: returntocorp/semgrep
