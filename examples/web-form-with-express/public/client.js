@@ -26,14 +26,14 @@ const appendApiResponse = function (apiResponse, el) {
 
   // Add success message to UI
   const newParagraphSuccessMsg = document.createElement("p")
-  newParagraphSuccessMsg.innerHTML = "Result: " + apiResponse.message
+  newParagraphSuccessMsg.textContent = "Result: " + apiResponse.message
   el.appendChild(newParagraphSuccessMsg)
   // See browser console for more information
   if (apiResponse.message === "error") return
 
   // Add ID of Notion item (db, page, comment) to UI
   const newParagraphId = document.createElement("p")
-  newParagraphId.innerHTML = "ID: " + apiResponse.data.id
+  newParagraphId.textContent = "ID: " + apiResponse.data.id
   el.appendChild(newParagraphId)
 
   // Add URL of Notion item (db, page) to UI
@@ -51,12 +51,12 @@ const appendBlocksResponse = function (apiResponse, el) {
 
   // Add success message to UI
   const newParagraphSuccessMsg = document.createElement("p")
-  newParagraphSuccessMsg.innerHTML = "Result: " + apiResponse.message
+  newParagraphSuccessMsg.textContent = "Result: " + apiResponse.message
   el.appendChild(newParagraphSuccessMsg)
 
   // Add block ID to UI
   const newParagraphId = document.createElement("p")
-  newParagraphId.innerHTML = "ID: " + apiResponse.data.results[0].id
+  newParagraphId.textContent = "ID: " + apiResponse.data.results[0].id
   el.appendChild(newParagraphId)
 }
 
