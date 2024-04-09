@@ -60,6 +60,8 @@ type SelectColor =
   | "pink"
   | "red"
 
+type PartialSelectResponse = { id: string; name: string; color: SelectColor }
+
 type TimeZoneRequest =
   | "Africa/Abidjan"
   | "Africa/Accra"
@@ -4521,21 +4523,13 @@ export type PageObjectResponse = {
     string,
     | { type: "number"; number: number | null; id: string }
     | { type: "url"; url: string | null; id: string }
-    | {
-        type: "select"
-        select: { id: string; name: string; color: SelectColor } | null
-        id: string
-      }
+    | { type: "select"; select: PartialSelectResponse | null; id: string }
     | {
         type: "multi_select"
-        multi_select: Array<{ id: string; name: string; color: SelectColor }>
+        multi_select: Array<PartialSelectResponse>
         id: string
       }
-    | {
-        type: "status"
-        status: { id: string; name: string; color: SelectColor } | null
-        id: string
-      }
+    | { type: "status"; status: PartialSelectResponse | null; id: string }
     | { type: "date"; date: DateResponse | null; id: string }
     | { type: "email"; email: string | null; id: string }
     | { type: "phone_number"; phone_number: string | null; id: string }
@@ -4606,30 +4600,12 @@ export type PageObjectResponse = {
               array: Array<
                 | { type: "number"; number: number | null }
                 | { type: "url"; url: string | null }
-                | {
-                    type: "select"
-                    select: {
-                      id: string
-                      name: string
-                      color: SelectColor
-                    } | null
-                  }
+                | { type: "select"; select: PartialSelectResponse | null }
                 | {
                     type: "multi_select"
-                    multi_select: Array<{
-                      id: string
-                      name: string
-                      color: SelectColor
-                    }>
+                    multi_select: Array<PartialSelectResponse>
                   }
-                | {
-                    type: "status"
-                    status: {
-                      id: string
-                      name: string
-                      color: SelectColor
-                    } | null
-                  }
+                | { type: "status"; status: PartialSelectResponse | null }
                 | { type: "date"; date: DateResponse | null }
                 | { type: "email"; email: string | null }
                 | { type: "phone_number"; phone_number: string | null }
@@ -5925,21 +5901,21 @@ export type UrlPropertyItemObjectResponse = {
 
 export type SelectPropertyItemObjectResponse = {
   type: "select"
-  select: { id: string; name: string; color: SelectColor } | null
+  select: PartialSelectResponse | null
   object: "property_item"
   id: string
 }
 
 export type MultiSelectPropertyItemObjectResponse = {
   type: "multi_select"
-  multi_select: Array<{ id: string; name: string; color: SelectColor }>
+  multi_select: Array<PartialSelectResponse>
   object: "property_item"
   id: string
 }
 
 export type StatusPropertyItemObjectResponse = {
   type: "status"
-  status: { id: string; name: string; color: SelectColor } | null
+  status: PartialSelectResponse | null
   object: "property_item"
   id: string
 }
