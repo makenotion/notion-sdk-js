@@ -29,6 +29,8 @@ cd notion-sdk-js/examples/parse-text-from-any-block-type
 npm install
 ```
 
+> Note: Don't forget to install dependencies at the root of the directory (notion-sdk-js) if you haven't do it already
+
 ### 2. Set your environment variables in a `.env` file
 
 A `.env.example` file has been included and can be renamed `.env`. Update the environment variables below:

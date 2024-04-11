@@ -19,5 +19,8 @@
   },
   "dependencies": {
     "@notionhq/client": "file:../.."
+  },
+  "devDependencies": {
+    "dotenv": "^16.4.5"
   }
 }
