@@ -83,12 +83,10 @@ import {
   type OauthRevokeParameters,
   oauthRevoke,
 } from "./api-endpoints"
-import nodeFetch from "node-fetch"
 import {
   version as PACKAGE_VERSION,
   name as PACKAGE_NAME,
 } from "../package.json"
-import type { SupportedFetch } from "./fetch-types"
 
 export interface ClientOptions {
   auth?: string
@@ -97,7 +95,6 @@ export interface ClientOptions {
   logLevel?: LogLevel
   logger?: Logger
   notionVersion?: string
-  fetch?: SupportedFetch
   /** Silently ignored in the browser */
   agent?: Agent
 }
@@ -127,8 +124,6 @@ export default class Client {
   #prefixUrl: string
   #timeoutMs: number
   #notionVersion: string
-  #fetch: SupportedFetch
-  #agent: Agent | undefined
   #userAgent: string
 
   static readonly defaultNotionVersion = "2022-06-28"
@@ -140,8 +135,6 @@ export default class Client {
     this.#prefixUrl = `${options?.baseUrl ?? "https://api.notion.com"}/v1/`
     this.#timeoutMs = options?.timeoutMs ?? 60_000
     this.#notionVersion = options?.notionVersion ?? Client.defaultNotionVersion
-    this.#fetch = options?.fetch ?? nodeFetch
-    this.#agent = options?.agent
     this.#userAgent = `notionhq-client/${PACKAGE_VERSION}`
   }
 
@@ -210,11 +203,10 @@ export default class Client {
     }
     try {
       const response = await RequestTimeoutError.rejectAfterTimeout(
-        this.#fetch(url.toString(), {
+        fetch(url.toString(), {
           method: method.toUpperCase(),
           headers,
           body: bodyAsJsonString,
-          agent: this.#agent,
         }),
         this.#timeoutMs
       )
