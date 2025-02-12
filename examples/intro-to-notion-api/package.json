@@ -18,8 +18,8 @@
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"dependencies": {
-		"@notionhq/client": "file:../..",
-		"dotenv": "^16.4.7"
+		"@notionhq/client": "workspace:*",
+		"dotenv": "16.4.7"
 	},
 	"devDependencies": {
 		"@repo/eslint-config": "workspace:*",

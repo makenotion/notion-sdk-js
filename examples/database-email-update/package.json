@@ -10,10 +10,10 @@
 		"ts-run": "node --loader ts-node/esm index.ts"
 	},
 	"dependencies": {
-		"@notionhq/client": "file:../..",
-		"@sendgrid/mail": "^7.7.0",
-		"dotenv": "^16.4.7",
-		"ts-node": "^10.9.2"
+		"@notionhq/client": "workspace:*",
+		"@sendgrid/mail": "7.7.0",
+		"dotenv": "16.4.7",
+		"ts-node": "10.9.2"
 	},
 	"devDependencies": {
 		"@repo/eslint-config": "workspace:*",

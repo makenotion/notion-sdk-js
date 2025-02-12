@@ -21,9 +21,9 @@
 		"start": "node server.js"
 	},
 	"dependencies": {
-		"@notionhq/client": "^2.2.15",
-		"dotenv": "^16.4.7",
-		"express": "^4.21.2"
+		"@notionhq/client": "workspace:*",
+		"dotenv": "16.4.7",
+		"express": "4.21.2"
 	},
 	"devDependencies": {
 		"@repo/eslint-config": "workspace:*",

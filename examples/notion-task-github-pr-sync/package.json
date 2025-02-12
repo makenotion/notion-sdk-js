@@ -10,10 +10,10 @@
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"dependencies": {
-		"@notionhq/client": "file:../..",
-		"dotenv": "^16.4.7",
-		"lodash": "^4.17.21",
-		"octokit": "^2.1.0"
+		"@notionhq/client": "workspace:*",
+		"dotenv": "16.4.7",
+		"lodash": "4.17.21",
+		"octokit": "2.1.0"
 	},
 	"devDependencies": {
 		"@repo/eslint-config": "workspace:*",
