@@ -1,3 +1,5 @@
+import { describe, it } from 'vitest'
+
 import { Client } from '../src'
 
 describe('Notion SDK Client', () => {

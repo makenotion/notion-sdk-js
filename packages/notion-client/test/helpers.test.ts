@@ -1,19 +1,27 @@
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+
 import { iteratePaginatedAPI } from '../src/helpers'
 
 describe('Notion API helpers', () => {
 	describe(iteratePaginatedAPI, () => {
-		const mockPaginatedEndpoint = jest.fn<
-			Promise<{
-				object: 'list'
-				results: number[]
-				next_cursor: string | null
-				has_more: boolean
-			}>,
-			[{ start_cursor?: string }]
-		>()
+		const paginatedEndpoint: ({ start_cursor }: { start_cursor?: string }) => Promise<{
+			object: 'list'
+			results: number[]
+			next_cursor: string | null
+			has_more: boolean
+		}> = async () => ({
+			object: 'list',
+			results: [],
+			next_cursor: null,
+			has_more: false,
+		})
+
+		const mockPaginatedEndpoint = vi
+			.fn<typeof paginatedEndpoint>()
+			.mockImplementation(paginatedEndpoint)
 
 		beforeEach(() => {
-			mockPaginatedEndpoint.mockClear()
+			vi.restoreAllMocks()
 		})
 
 		it('Paginates over two pages', async () => {
