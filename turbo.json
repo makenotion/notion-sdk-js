@@ -1,0 +1,66 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "globalEnv": ["CI", "GITHUB_ACTIONS", "FORCE_COLOR"],
+  "remoteCache": {
+    "enabled": true,
+    "signature": true
+  },
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**"],
+      "outputLogs": "new-only"
+    },
+    "test": {
+      "dependsOn": ["^build"],
+      "outputLogs": "new-only"
+    },
+    "check": {
+      "dependsOn": [
+        "^build",
+        "^check:types",
+        "^check:lint",
+        "check:types",
+        "check:lint"
+      ],
+      "outputLogs": "new-only"
+    },
+    "check:ci": {
+      "dependsOn": [
+        "//#check:format",
+        "//#check:deps",
+        "check:types",
+        "check:lint",
+        "//#test:ci",
+        "test:ci"
+      ],
+      "outputLogs": "new-only"
+    },
+    "//#check:deps": {
+      "outputLogs": "new-only"
+    },
+    "//#check:format": {
+      "outputLogs": "new-only"
+    },
+    "check:types": {
+      "dependsOn": ["^build", "^check:types"],
+      "outputLogs": "new-only"
+    },
+    "check:lint": {
+      "dependsOn": ["^build", "^check:lint"],
+      "outputLogs": "new-only",
+      "passThroughEnv": ["FIX_ESLINT"]
+    },
+    "//#test:ci": {
+      "dependsOn": ["build"],
+      "outputLogs": "new-only"
+    },
+    "test:ci": {
+      "dependsOn": ["^build"],
+      "outputLogs": "new-only"
+    },
+    "//#build": {
+      "outputLogs": "new-only"
+    }
+  }
+}
