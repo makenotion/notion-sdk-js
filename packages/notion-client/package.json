@@ -35,13 +35,10 @@
 		"dist"
 	],
 	"scripts": {
-		"prebuild": "npm run clean",
 		"build": "bun ./scripts/build.ts",
 		"check:lint": "run-eslint",
 		"check:types": "run-tsc",
-		"clean": "rm -rf ./build",
-		"prepublishOnly": "npm run checkLoggedIn && npm run lint && npm run test",
-		"test": "jest ./test"
+		"test": "run-vitest"
 	},
 	"dependencies": {
 		"@types/node-fetch": "2.6.12",
