@@ -39,7 +39,7 @@ export const checkCmd = new Command("check")
     const checks = {
       deps: ["syncpack", "lint"],
       lint: ["turbo", "check:lint"],
-      format: ["runx", "prettier", "check"],
+      format: "prettier . --check --cache --ignore-unknown".split(" "),
       types: ["turbo", "check:types"],
       spelling: ["cspell", "**/*"],
       links: "git ls-files | grep md$ | xargs -n 1 markdown-link-check".split(

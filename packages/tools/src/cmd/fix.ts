@@ -31,7 +31,7 @@ export const fixCmd = new Command('fix')
 		const fixes = {
 			deps: ['run-fix-deps'],
 			lint: ['FIX_ESLINT=1', 'turbo', 'check:lint'],
-			format: ['runx', 'prettier', 'format'],
+			format: 'prettier . --write --cache --ignore-unknown'.split(' '),
 		} as const satisfies { [key: string]: string[] }
 
 		type TableRow = [string, string, string, string]
