@@ -36,10 +36,5 @@
 	// This is useful for offensive words and common spelling errors.
 	// For example "hte" should be "the"
 	"flagWords": ["hte"],
-	"ignorePaths": [
-		"package.json",
-		"pnpm-lock.yaml",
-		"**/node_modules/**",
-		"**/dist/**"
-	]
+	"ignorePaths": ["package.json", "pnpm-lock.yaml", "**/node_modules/**", "**/dist/**"]
 }
