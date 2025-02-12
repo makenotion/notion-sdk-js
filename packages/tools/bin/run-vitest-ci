@@ -1,0 +1,4 @@
+#!/bin/bash
+set -euo pipefail
+
+vitest run --silent --testTimeout=15000

@@ -1,0 +1,11 @@
+#!/bin/bash
+set -euo pipefail
+
+repo_root=$(git rev-parse --show-toplevel)
+cd "$repo_root"
+
+syncpack update
+
+# Run fix if there are any changes
+git status --porcelain | grep 'package.json' &&
+  pnpm run fix || true

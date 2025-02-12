@@ -6,6 +6,7 @@
     "node": ">=20"
   },
   "sideEffects": false,
+  "private": true,
   "license": "MIT",
   "files": [
     "build/package.json",
@@ -26,6 +27,9 @@
     "markdown-link-check": "^3.8.7",
     "prettier": "^2.8.8",
     "ts-jest": "^28.0.5",
+    "@repo/eslint-config": "workspace:*",
+    "@repo/tools": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
     "typescript": "^4.8.4",
     "zx": "^8.3.2"
   },

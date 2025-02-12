@@ -1,0 +1,4 @@
+#!/bin/bash
+set -euo pipefail
+
+VITEST=1 bun test --bail=5 *

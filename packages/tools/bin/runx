@@ -1,0 +1,18 @@
+#!/bin/bash
+set -euo pipefail
+
+runx_path="$(realpath "$(dirname $0)/../src/bin/runx.ts")"
+
+if [[ ! -f "$runx_path" ]]; then
+  echo "Could not find runx.ts - this should not happen!"
+  exit 1
+fi
+
+if command -v bun >/dev/null 2>&1; then
+  bun "$runx_path" "$@"
+elif command -v tsx >/dev/null 2>&1; then
+  tsx "$runx_path" "$@"
+else
+  echo "Could not find bun or tsx - unable to run runx"
+  exit 1
+fi

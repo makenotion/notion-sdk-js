@@ -1,0 +1,27 @@
+{
+  "name": "@repo/eslint-config",
+  "version": "0.1.14",
+  "private": true,
+  "license": "MIT",
+  "sideEffects": false,
+  "files": [
+    "default.cjs"
+  ],
+  "devDependencies": {
+    "@repo/tools": "workspace:*",
+    "@typescript-eslint/eslint-plugin": "7.18.0",
+    "@typescript-eslint/parser": "7.18.0",
+    "eslint": "8.57.0",
+    "eslint-config-prettier": "9.1.0",
+    "eslint-config-turbo": "2.3.4",
+    "eslint-import-resolver-typescript": "3.7.0",
+    "eslint-plugin-import": "2.31.0",
+    "eslint-plugin-jsx-a11y": "6.10.2",
+    "eslint-plugin-only-warn": "1.1.0",
+    "eslint-plugin-react": "7.37.4",
+    "eslint-plugin-react-hooks": "4.6.2",
+    "eslint-plugin-unused-imports": "3.2.0",
+    "typescript": "5.5.4",
+    "vitest": "2.1.8"
+  }
+}

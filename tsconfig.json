@@ -1,20 +1,3 @@
 {
-  "compilerOptions": {
-		"target": "es2022",
-		"lib": ["es2022"],
-		"module": "es2022",
-		"moduleResolution": "Bundler",
-		"resolveJsonModule": true,
-		"allowJs": true,
-		"checkJs": false,
-		"noEmit": true,
-		"isolatedModules": true,
-		"allowSyntheticDefaultImports": true,
-		"forceConsistentCasingInFileNames": true,
-		"strict": true,
-		"skipLibCheck": true,
-		"noUncheckedIndexedAccess": true
-  },
-
-  "include": []
+	"extends": "@repo/typescript-config/base.json"
 }
