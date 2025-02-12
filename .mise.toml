@@ -1,0 +1,4 @@
+[tools]
+node = '22'
+pnpm = '10'
+bun = '1.2.2'
