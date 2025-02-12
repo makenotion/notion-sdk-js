@@ -36,6 +36,7 @@
 		"markdown-link-check": "^3.13.6",
 		"prettier": "3.4.2",
 		"prettier-plugin-packagejson": "2.5.8",
+		"syncpack": "^13.0.2",
 		"ts-jest": "^28.0.8",
 		"turbo": "^2.4.1",
 		"typescript": "^4.9.5",
