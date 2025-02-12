@@ -5,7 +5,7 @@ import { z } from 'zod'
 import { getRepoRoot } from '../path'
 
 export const updatePnpmCmd = new Command('update-pnpm').action(async () => {
-	const repoRoot = await getRepoRoot()
+	const repoRoot = getRepoRoot()
 	cd(repoRoot)
 	echo(chalk.white(`Checking for pnpm updates...`))
 	const res = await fetch('https://registry.npmjs.org/pnpm')

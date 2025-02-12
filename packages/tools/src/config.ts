@@ -3,7 +3,7 @@ import { z } from 'zod'
 import { getRepoRoot } from './path'
 
 export async function getConfig(): Promise<Config> {
-	const repoRoot = await getRepoRoot()
+	const repoRoot = getRepoRoot()
 	const version = await getReleaseVersion()
 	return Config.parse({ repoRoot, version } satisfies Config)
 }
