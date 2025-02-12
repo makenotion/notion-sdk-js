@@ -4,7 +4,7 @@
   "description": "Send an email with SendGrid when an update is made in Notion.",
   "main": "index.js",
   "engines": {
-    "node": "12.x"
+    "node": ">=20"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

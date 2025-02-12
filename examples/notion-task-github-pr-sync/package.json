@@ -4,7 +4,7 @@
   "description": "Sync Notion tasks with Github PRs",
   "main": "index.js",
   "engines": {
-    "node": "12.x"
+    "node": ">=20"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
