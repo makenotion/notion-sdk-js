@@ -1,4 +1,4 @@
 [tools]
 node = '22'
-pnpm = '10'
+pnpm = '10.3.0'
 bun = '1.2.2'
