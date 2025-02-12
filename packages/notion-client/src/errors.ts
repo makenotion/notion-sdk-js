@@ -99,7 +99,7 @@ export class RequestTimeoutError extends NotionClientErrorBase<ClientErrorCode.R
 				reject(new RequestTimeoutError())
 			}, timeoutMS)
 
-			promise
+			void promise
 				.then(resolve)
 				.catch(reject)
 				.then(() => clearTimeout(timeoutId))
