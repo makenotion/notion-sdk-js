@@ -4,7 +4,7 @@ import { z } from 'zod'
 
 import { getRepoRoot } from './path'
 
-export async function updatePnpm() {
+export async function updatePnpm(): Promise<void> {
 	const repoRoot = getRepoRoot()
 	cd(repoRoot)
 	echo(chalk.white(`Checking for pnpm updates...`))

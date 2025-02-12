@@ -544,7 +544,7 @@ export default class Client {
 	 * @param level The level for this message
 	 * @param args Arguments to send to the console
 	 */
-	private log(level: LogLevel, message: string, extraInfo: Record<string, unknown>) {
+	private log(level: LogLevel, message: string, extraInfo: Record<string, unknown>): void {
 		if (logLevelSeverity(level) >= logLevelSeverity(this.#logLevel)) {
 			this.#logger(level, message, extraInfo)
 		}

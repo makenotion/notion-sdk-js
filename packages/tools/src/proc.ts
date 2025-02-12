@@ -1,4 +1,4 @@
-export function getOutcome(exitCode: number | null) {
+export function getOutcome(exitCode: number | null): string {
 	if (exitCode === 0) {
 		return chalk.green('Success!')
 	} else {
