@@ -1,6 +1,7 @@
-import { SupportedResponse } from './fetch-types'
-import { Assert } from './type-utils'
 import { isObject } from './utils'
+
+import type { SupportedResponse } from './fetch-types'
+import type { Assert } from './type-utils'
 
 /**
  * Error codes returned in responses from the API.

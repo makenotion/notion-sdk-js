@@ -4524,7 +4524,7 @@ export type PageObjectResponse = {
 		| { type: 'select'; select: PartialSelectResponse | null; id: string }
 		| {
 				type: 'multi_select'
-				multi_select: Array<PartialSelectResponse>
+				multi_select: PartialSelectResponse[]
 				id: string
 		  }
 		| { type: 'status'; status: PartialSelectResponse | null; id: string }
@@ -4576,8 +4576,8 @@ export type PageObjectResponse = {
 					| null
 				id: string
 		  }
-		| { type: 'title'; title: Array<RichTextItemResponse>; id: string }
-		| { type: 'rich_text'; rich_text: Array<RichTextItemResponse>; id: string }
+		| { type: 'title'; title: RichTextItemResponse[]; id: string }
+		| { type: 'rich_text'; rich_text: RichTextItemResponse[]; id: string }
 		| {
 				type: 'people'
 				people: Array<PartialUserObjectResponse | UserObjectResponse>
@@ -4601,7 +4601,7 @@ export type PageObjectResponse = {
 								| { type: 'select'; select: PartialSelectResponse | null }
 								| {
 										type: 'multi_select'
-										multi_select: Array<PartialSelectResponse>
+										multi_select: PartialSelectResponse[]
 								  }
 								| { type: 'status'; status: PartialSelectResponse | null }
 								| { type: 'date'; date: DateResponse | null }
@@ -4647,8 +4647,8 @@ export type PageObjectResponse = {
 											| VerificationPropertyResponse
 											| null
 								  }
-								| { type: 'title'; title: Array<RichTextItemResponse> }
-								| { type: 'rich_text'; rich_text: Array<RichTextItemResponse> }
+								| { type: 'title'; title: RichTextItemResponse[] }
+								| { type: 'rich_text'; rich_text: RichTextItemResponse[] }
 								| {
 										type: 'people'
 										people: Array<PartialUserObjectResponse | UserObjectResponse>
@@ -4756,7 +4756,7 @@ type SelectPropertyResponse = {
 
 type SelectDatabasePropertyConfigResponse = {
 	type: 'select'
-	select: { options: Array<SelectPropertyResponse> }
+	select: { options: SelectPropertyResponse[] }
 	id: string
 	name: string
 	description: PropertyDescriptionRequest | null
@@ -4764,7 +4764,7 @@ type SelectDatabasePropertyConfigResponse = {
 
 type MultiSelectDatabasePropertyConfigResponse = {
 	type: 'multi_select'
-	multi_select: { options: Array<SelectPropertyResponse> }
+	multi_select: { options: SelectPropertyResponse[] }
 	id: string
 	name: string
 	description: PropertyDescriptionRequest | null
@@ -4780,12 +4780,12 @@ type StatusPropertyResponse = {
 type StatusDatabasePropertyConfigResponse = {
 	type: 'status'
 	status: {
-		options: Array<StatusPropertyResponse>
+		options: StatusPropertyResponse[]
 		groups: Array<{
 			id: StringRequest
 			name: StringRequest
 			color: SelectColor
-			option_ids: Array<string>
+			option_ids: string[]
 		}>
 	}
 	id: string
@@ -4976,8 +4976,8 @@ export type PartialDatabaseObjectResponse = {
 }
 
 export type DatabaseObjectResponse = {
-	title: Array<RichTextItemResponse>
-	description: Array<RichTextItemResponse>
+	title: RichTextItemResponse[]
+	description: RichTextItemResponse[]
 	icon:
 		| { type: 'emoji'; emoji: EmojiRequest }
 		| null
@@ -5034,7 +5034,7 @@ type ApiColor =
 
 export type ParagraphBlockObjectResponse = {
 	type: 'paragraph'
-	paragraph: { rich_text: Array<RichTextItemResponse>; color: ApiColor }
+	paragraph: { rich_text: RichTextItemResponse[]; color: ApiColor }
 	parent:
 		| { type: 'database_id'; database_id: string }
 		| { type: 'page_id'; page_id: string }
@@ -5054,7 +5054,7 @@ export type ParagraphBlockObjectResponse = {
 export type Heading1BlockObjectResponse = {
 	type: 'heading_1'
 	heading_1: {
-		rich_text: Array<RichTextItemResponse>
+		rich_text: RichTextItemResponse[]
 		color: ApiColor
 		is_toggleable: boolean
 	}
@@ -5077,7 +5077,7 @@ export type Heading1BlockObjectResponse = {
 export type Heading2BlockObjectResponse = {
 	type: 'heading_2'
 	heading_2: {
-		rich_text: Array<RichTextItemResponse>
+		rich_text: RichTextItemResponse[]
 		color: ApiColor
 		is_toggleable: boolean
 	}
@@ -5100,7 +5100,7 @@ export type Heading2BlockObjectResponse = {
 export type Heading3BlockObjectResponse = {
 	type: 'heading_3'
 	heading_3: {
-		rich_text: Array<RichTextItemResponse>
+		rich_text: RichTextItemResponse[]
 		color: ApiColor
 		is_toggleable: boolean
 	}
@@ -5123,7 +5123,7 @@ export type Heading3BlockObjectResponse = {
 export type BulletedListItemBlockObjectResponse = {
 	type: 'bulleted_list_item'
 	bulleted_list_item: {
-		rich_text: Array<RichTextItemResponse>
+		rich_text: RichTextItemResponse[]
 		color: ApiColor
 	}
 	parent:
@@ -5145,7 +5145,7 @@ export type BulletedListItemBlockObjectResponse = {
 export type NumberedListItemBlockObjectResponse = {
 	type: 'numbered_list_item'
 	numbered_list_item: {
-		rich_text: Array<RichTextItemResponse>
+		rich_text: RichTextItemResponse[]
 		color: ApiColor
 	}
 	parent:
@@ -5166,7 +5166,7 @@ export type NumberedListItemBlockObjectResponse = {
 
 export type QuoteBlockObjectResponse = {
 	type: 'quote'
-	quote: { rich_text: Array<RichTextItemResponse>; color: ApiColor }
+	quote: { rich_text: RichTextItemResponse[]; color: ApiColor }
 	parent:
 		| { type: 'database_id'; database_id: string }
 		| { type: 'page_id'; page_id: string }
@@ -5186,7 +5186,7 @@ export type QuoteBlockObjectResponse = {
 export type ToDoBlockObjectResponse = {
 	type: 'to_do'
 	to_do: {
-		rich_text: Array<RichTextItemResponse>
+		rich_text: RichTextItemResponse[]
 		color: ApiColor
 		checked: boolean
 	}
@@ -5208,7 +5208,7 @@ export type ToDoBlockObjectResponse = {
 
 export type ToggleBlockObjectResponse = {
 	type: 'toggle'
-	toggle: { rich_text: Array<RichTextItemResponse>; color: ApiColor }
+	toggle: { rich_text: RichTextItemResponse[]; color: ApiColor }
 	parent:
 		| { type: 'database_id'; database_id: string }
 		| { type: 'page_id'; page_id: string }
@@ -5227,7 +5227,7 @@ export type ToggleBlockObjectResponse = {
 
 export type TemplateBlockObjectResponse = {
 	type: 'template'
-	template: { rich_text: Array<RichTextItemResponse> }
+	template: { rich_text: RichTextItemResponse[] }
 	parent:
 		| { type: 'database_id'; database_id: string }
 		| { type: 'page_id'; page_id: string }
@@ -5413,8 +5413,8 @@ type LanguageRequest =
 export type CodeBlockObjectResponse = {
 	type: 'code'
 	code: {
-		rich_text: Array<RichTextItemResponse>
-		caption: Array<RichTextItemResponse>
+		rich_text: RichTextItemResponse[]
+		caption: RichTextItemResponse[]
 		language: LanguageRequest
 	}
 	parent:
@@ -5436,7 +5436,7 @@ export type CodeBlockObjectResponse = {
 export type CalloutBlockObjectResponse = {
 	type: 'callout'
 	callout: {
-		rich_text: Array<RichTextItemResponse>
+		rich_text: RichTextItemResponse[]
 		color: ApiColor
 		icon:
 			| { type: 'emoji'; emoji: EmojiRequest }
@@ -5604,7 +5604,7 @@ export type TableBlockObjectResponse = {
 
 export type TableRowBlockObjectResponse = {
 	type: 'table_row'
-	table_row: { cells: Array<Array<RichTextItemResponse>> }
+	table_row: { cells: RichTextItemResponse[][] }
 	parent:
 		| { type: 'database_id'; database_id: string }
 		| { type: 'page_id'; page_id: string }
@@ -5623,7 +5623,7 @@ export type TableRowBlockObjectResponse = {
 
 export type EmbedBlockObjectResponse = {
 	type: 'embed'
-	embed: { url: string; caption: Array<RichTextItemResponse> }
+	embed: { url: string; caption: RichTextItemResponse[] }
 	parent:
 		| { type: 'database_id'; database_id: string }
 		| { type: 'page_id'; page_id: string }
@@ -5642,7 +5642,7 @@ export type EmbedBlockObjectResponse = {
 
 export type BookmarkBlockObjectResponse = {
 	type: 'bookmark'
-	bookmark: { url: string; caption: Array<RichTextItemResponse> }
+	bookmark: { url: string; caption: RichTextItemResponse[] }
 	parent:
 		| { type: 'database_id'; database_id: string }
 		| { type: 'page_id'; page_id: string }
@@ -5665,12 +5665,12 @@ export type ImageBlockObjectResponse = {
 		| {
 				type: 'external'
 				external: { url: TextRequest }
-				caption: Array<RichTextItemResponse>
+				caption: RichTextItemResponse[]
 		  }
 		| {
 				type: 'file'
 				file: { url: string; expiry_time: string }
-				caption: Array<RichTextItemResponse>
+				caption: RichTextItemResponse[]
 		  }
 	parent:
 		| { type: 'database_id'; database_id: string }
@@ -5694,12 +5694,12 @@ export type VideoBlockObjectResponse = {
 		| {
 				type: 'external'
 				external: { url: TextRequest }
-				caption: Array<RichTextItemResponse>
+				caption: RichTextItemResponse[]
 		  }
 		| {
 				type: 'file'
 				file: { url: string; expiry_time: string }
-				caption: Array<RichTextItemResponse>
+				caption: RichTextItemResponse[]
 		  }
 	parent:
 		| { type: 'database_id'; database_id: string }
@@ -5723,12 +5723,12 @@ export type PdfBlockObjectResponse = {
 		| {
 				type: 'external'
 				external: { url: TextRequest }
-				caption: Array<RichTextItemResponse>
+				caption: RichTextItemResponse[]
 		  }
 		| {
 				type: 'file'
 				file: { url: string; expiry_time: string }
-				caption: Array<RichTextItemResponse>
+				caption: RichTextItemResponse[]
 		  }
 	parent:
 		| { type: 'database_id'; database_id: string }
@@ -5752,13 +5752,13 @@ export type FileBlockObjectResponse = {
 		| {
 				type: 'external'
 				external: { url: TextRequest }
-				caption: Array<RichTextItemResponse>
+				caption: RichTextItemResponse[]
 				name: string
 		  }
 		| {
 				type: 'file'
 				file: { url: string; expiry_time: string }
-				caption: Array<RichTextItemResponse>
+				caption: RichTextItemResponse[]
 				name: string
 		  }
 	parent:
@@ -5783,12 +5783,12 @@ export type AudioBlockObjectResponse = {
 		| {
 				type: 'external'
 				external: { url: TextRequest }
-				caption: Array<RichTextItemResponse>
+				caption: RichTextItemResponse[]
 		  }
 		| {
 				type: 'file'
 				file: { url: string; expiry_time: string }
-				caption: Array<RichTextItemResponse>
+				caption: RichTextItemResponse[]
 		  }
 	parent:
 		| { type: 'database_id'; database_id: string }
@@ -5902,7 +5902,7 @@ export type SelectPropertyItemObjectResponse = {
 
 export type MultiSelectPropertyItemObjectResponse = {
 	type: 'multi_select'
-	multi_select: Array<PartialSelectResponse>
+	multi_select: PartialSelectResponse[]
 	object: 'property_item'
 	id: string
 }
@@ -6045,7 +6045,7 @@ export type RollupPropertyItemObjectResponse = {
 	rollup:
 		| { type: 'number'; number: number | null; function: RollupFunction }
 		| { type: 'date'; date: DateResponse | null; function: RollupFunction }
-		| { type: 'array'; array: Array<EmptyObject>; function: RollupFunction }
+		| { type: 'array'; array: EmptyObject[]; function: RollupFunction }
 		| {
 				type: 'unsupported'
 				unsupported: EmptyObject
@@ -6086,7 +6086,7 @@ export type CommentObjectResponse = {
 	id: string
 	parent: { type: 'page_id'; page_id: IdRequest } | { type: 'block_id'; block_id: IdRequest }
 	discussion_id: string
-	rich_text: Array<RichTextItemResponse>
+	rich_text: RichTextItemResponse[]
 	created_by: PartialUserObjectResponse
 	created_time: string
 	last_edited_time: string
@@ -6127,7 +6127,7 @@ export type PropertyItemPropertyItemListResponse = {
 					  }
 					| {
 							type: 'array'
-							array: Array<EmptyObject>
+							array: EmptyObject[]
 							function: RollupFunction
 					  }
 					| {
@@ -6146,7 +6146,7 @@ export type PropertyItemPropertyItemListResponse = {
 	object: 'list'
 	next_cursor: string | null
 	has_more: boolean
-	results: Array<PropertyItemObjectResponse>
+	results: PropertyItemObjectResponse[]
 }
 
 export type PropertyItemListResponse = PropertyItemPropertyItemListResponse
@@ -6301,12 +6301,12 @@ type RichTextItemRequest =
 
 export type BlockObjectRequestWithoutChildren =
 	| {
-			embed: { url: string; caption?: Array<RichTextItemRequest> }
+			embed: { url: string; caption?: RichTextItemRequest[] }
 			type?: 'embed'
 			object?: 'block'
 	  }
 	| {
-			bookmark: { url: string; caption?: Array<RichTextItemRequest> }
+			bookmark: { url: string; caption?: RichTextItemRequest[] }
 			type?: 'bookmark'
 			object?: 'block'
 	  }
@@ -6314,7 +6314,7 @@ export type BlockObjectRequestWithoutChildren =
 			image: {
 				external: { url: TextRequest }
 				type?: 'external'
-				caption?: Array<RichTextItemRequest>
+				caption?: RichTextItemRequest[]
 			}
 			type?: 'image'
 			object?: 'block'
@@ -6323,7 +6323,7 @@ export type BlockObjectRequestWithoutChildren =
 			video: {
 				external: { url: TextRequest }
 				type?: 'external'
-				caption?: Array<RichTextItemRequest>
+				caption?: RichTextItemRequest[]
 			}
 			type?: 'video'
 			object?: 'block'
@@ -6332,7 +6332,7 @@ export type BlockObjectRequestWithoutChildren =
 			pdf: {
 				external: { url: TextRequest }
 				type?: 'external'
-				caption?: Array<RichTextItemRequest>
+				caption?: RichTextItemRequest[]
 			}
 			type?: 'pdf'
 			object?: 'block'
@@ -6341,7 +6341,7 @@ export type BlockObjectRequestWithoutChildren =
 			file: {
 				external: { url: TextRequest }
 				type?: 'external'
-				caption?: Array<RichTextItemRequest>
+				caption?: RichTextItemRequest[]
 				name?: StringRequest
 			}
 			type?: 'file'
@@ -6351,16 +6351,16 @@ export type BlockObjectRequestWithoutChildren =
 			audio: {
 				external: { url: TextRequest }
 				type?: 'external'
-				caption?: Array<RichTextItemRequest>
+				caption?: RichTextItemRequest[]
 			}
 			type?: 'audio'
 			object?: 'block'
 	  }
 	| {
 			code: {
-				rich_text: Array<RichTextItemRequest>
+				rich_text: RichTextItemRequest[]
 				language: LanguageRequest
-				caption?: Array<RichTextItemRequest>
+				caption?: RichTextItemRequest[]
 			}
 			type?: 'code'
 			object?: 'block'
@@ -6382,13 +6382,13 @@ export type BlockObjectRequestWithoutChildren =
 			object?: 'block'
 	  }
 	| {
-			table_row: { cells: Array<Array<RichTextItemRequest>> }
+			table_row: { cells: RichTextItemRequest[][] }
 			type?: 'table_row'
 			object?: 'block'
 	  }
 	| {
 			heading_1: {
-				rich_text: Array<RichTextItemRequest>
+				rich_text: RichTextItemRequest[]
 				color?: ApiColor
 				is_toggleable?: boolean
 			}
@@ -6397,7 +6397,7 @@ export type BlockObjectRequestWithoutChildren =
 	  }
 	| {
 			heading_2: {
-				rich_text: Array<RichTextItemRequest>
+				rich_text: RichTextItemRequest[]
 				color?: ApiColor
 				is_toggleable?: boolean
 			}
@@ -6406,7 +6406,7 @@ export type BlockObjectRequestWithoutChildren =
 	  }
 	| {
 			heading_3: {
-				rich_text: Array<RichTextItemRequest>
+				rich_text: RichTextItemRequest[]
 				color?: ApiColor
 				is_toggleable?: boolean
 			}
@@ -6414,13 +6414,13 @@ export type BlockObjectRequestWithoutChildren =
 			object?: 'block'
 	  }
 	| {
-			paragraph: { rich_text: Array<RichTextItemRequest>; color?: ApiColor }
+			paragraph: { rich_text: RichTextItemRequest[]; color?: ApiColor }
 			type?: 'paragraph'
 			object?: 'block'
 	  }
 	| {
 			bulleted_list_item: {
-				rich_text: Array<RichTextItemRequest>
+				rich_text: RichTextItemRequest[]
 				color?: ApiColor
 			}
 			type?: 'bulleted_list_item'
@@ -6428,20 +6428,20 @@ export type BlockObjectRequestWithoutChildren =
 	  }
 	| {
 			numbered_list_item: {
-				rich_text: Array<RichTextItemRequest>
+				rich_text: RichTextItemRequest[]
 				color?: ApiColor
 			}
 			type?: 'numbered_list_item'
 			object?: 'block'
 	  }
 	| {
-			quote: { rich_text: Array<RichTextItemRequest>; color?: ApiColor }
+			quote: { rich_text: RichTextItemRequest[]; color?: ApiColor }
 			type?: 'quote'
 			object?: 'block'
 	  }
 	| {
 			to_do: {
-				rich_text: Array<RichTextItemRequest>
+				rich_text: RichTextItemRequest[]
 				checked?: boolean
 				color?: ApiColor
 			}
@@ -6449,18 +6449,18 @@ export type BlockObjectRequestWithoutChildren =
 			object?: 'block'
 	  }
 	| {
-			toggle: { rich_text: Array<RichTextItemRequest>; color?: ApiColor }
+			toggle: { rich_text: RichTextItemRequest[]; color?: ApiColor }
 			type?: 'toggle'
 			object?: 'block'
 	  }
 	| {
-			template: { rich_text: Array<RichTextItemRequest> }
+			template: { rich_text: RichTextItemRequest[] }
 			type?: 'template'
 			object?: 'block'
 	  }
 	| {
 			callout: {
-				rich_text: Array<RichTextItemRequest>
+				rich_text: RichTextItemRequest[]
 				icon?:
 					| { emoji: EmojiRequest; type?: 'emoji' }
 					| { external: { url: TextRequest }; type?: 'external' }
@@ -6479,12 +6479,12 @@ export type BlockObjectRequestWithoutChildren =
 
 export type BlockObjectRequest =
 	| {
-			embed: { url: string; caption?: Array<RichTextItemRequest> }
+			embed: { url: string; caption?: RichTextItemRequest[] }
 			type?: 'embed'
 			object?: 'block'
 	  }
 	| {
-			bookmark: { url: string; caption?: Array<RichTextItemRequest> }
+			bookmark: { url: string; caption?: RichTextItemRequest[] }
 			type?: 'bookmark'
 			object?: 'block'
 	  }
@@ -6492,7 +6492,7 @@ export type BlockObjectRequest =
 			image: {
 				external: { url: TextRequest }
 				type?: 'external'
-				caption?: Array<RichTextItemRequest>
+				caption?: RichTextItemRequest[]
 			}
 			type?: 'image'
 			object?: 'block'
@@ -6501,7 +6501,7 @@ export type BlockObjectRequest =
 			video: {
 				external: { url: TextRequest }
 				type?: 'external'
-				caption?: Array<RichTextItemRequest>
+				caption?: RichTextItemRequest[]
 			}
 			type?: 'video'
 			object?: 'block'
@@ -6510,7 +6510,7 @@ export type BlockObjectRequest =
 			pdf: {
 				external: { url: TextRequest }
 				type?: 'external'
-				caption?: Array<RichTextItemRequest>
+				caption?: RichTextItemRequest[]
 			}
 			type?: 'pdf'
 			object?: 'block'
@@ -6519,7 +6519,7 @@ export type BlockObjectRequest =
 			file: {
 				external: { url: TextRequest }
 				type?: 'external'
-				caption?: Array<RichTextItemRequest>
+				caption?: RichTextItemRequest[]
 				name?: StringRequest
 			}
 			type?: 'file'
@@ -6529,16 +6529,16 @@ export type BlockObjectRequest =
 			audio: {
 				external: { url: TextRequest }
 				type?: 'external'
-				caption?: Array<RichTextItemRequest>
+				caption?: RichTextItemRequest[]
 			}
 			type?: 'audio'
 			object?: 'block'
 	  }
 	| {
 			code: {
-				rich_text: Array<RichTextItemRequest>
+				rich_text: RichTextItemRequest[]
 				language: LanguageRequest
-				caption?: Array<RichTextItemRequest>
+				caption?: RichTextItemRequest[]
 			}
 			type?: 'code'
 			object?: 'block'
@@ -6560,7 +6560,7 @@ export type BlockObjectRequest =
 			object?: 'block'
 	  }
 	| {
-			table_row: { cells: Array<Array<RichTextItemRequest>> }
+			table_row: { cells: RichTextItemRequest[][] }
 			type?: 'table_row'
 			object?: 'block'
 	  }
@@ -6568,7 +6568,7 @@ export type BlockObjectRequest =
 			table: {
 				table_width: number
 				children: Array<{
-					table_row: { cells: Array<Array<RichTextItemRequest>> }
+					table_row: { cells: RichTextItemRequest[][] }
 					type?: 'table_row'
 					object?: 'block'
 				}>
@@ -6584,14 +6584,14 @@ export type BlockObjectRequest =
 					column: {
 						children: Array<
 							| {
-									embed: { url: string; caption?: Array<RichTextItemRequest> }
+									embed: { url: string; caption?: RichTextItemRequest[] }
 									type?: 'embed'
 									object?: 'block'
 							  }
 							| {
 									bookmark: {
 										url: string
-										caption?: Array<RichTextItemRequest>
+										caption?: RichTextItemRequest[]
 									}
 									type?: 'bookmark'
 									object?: 'block'
@@ -6600,7 +6600,7 @@ export type BlockObjectRequest =
 									image: {
 										external: { url: TextRequest }
 										type?: 'external'
-										caption?: Array<RichTextItemRequest>
+										caption?: RichTextItemRequest[]
 									}
 									type?: 'image'
 									object?: 'block'
@@ -6609,7 +6609,7 @@ export type BlockObjectRequest =
 									video: {
 										external: { url: TextRequest }
 										type?: 'external'
-										caption?: Array<RichTextItemRequest>
+										caption?: RichTextItemRequest[]
 									}
 									type?: 'video'
 									object?: 'block'
@@ -6618,7 +6618,7 @@ export type BlockObjectRequest =
 									pdf: {
 										external: { url: TextRequest }
 										type?: 'external'
-										caption?: Array<RichTextItemRequest>
+										caption?: RichTextItemRequest[]
 									}
 									type?: 'pdf'
 									object?: 'block'
@@ -6627,7 +6627,7 @@ export type BlockObjectRequest =
 									file: {
 										external: { url: TextRequest }
 										type?: 'external'
-										caption?: Array<RichTextItemRequest>
+										caption?: RichTextItemRequest[]
 										name?: StringRequest
 									}
 									type?: 'file'
@@ -6637,16 +6637,16 @@ export type BlockObjectRequest =
 									audio: {
 										external: { url: TextRequest }
 										type?: 'external'
-										caption?: Array<RichTextItemRequest>
+										caption?: RichTextItemRequest[]
 									}
 									type?: 'audio'
 									object?: 'block'
 							  }
 							| {
 									code: {
-										rich_text: Array<RichTextItemRequest>
+										rich_text: RichTextItemRequest[]
 										language: LanguageRequest
-										caption?: Array<RichTextItemRequest>
+										caption?: RichTextItemRequest[]
 									}
 									type?: 'code'
 									object?: 'block'
@@ -6676,72 +6676,72 @@ export type BlockObjectRequest =
 									object?: 'block'
 							  }
 							| {
-									table_row: { cells: Array<Array<RichTextItemRequest>> }
+									table_row: { cells: RichTextItemRequest[][] }
 									type?: 'table_row'
 									object?: 'block'
 							  }
 							| {
 									heading_1: {
-										rich_text: Array<RichTextItemRequest>
+										rich_text: RichTextItemRequest[]
 										color?: ApiColor
 										is_toggleable?: boolean
-										children?: Array<BlockObjectRequestWithoutChildren>
+										children?: BlockObjectRequestWithoutChildren[]
 									}
 									type?: 'heading_1'
 									object?: 'block'
 							  }
 							| {
 									heading_2: {
-										rich_text: Array<RichTextItemRequest>
+										rich_text: RichTextItemRequest[]
 										color?: ApiColor
 										is_toggleable?: boolean
-										children?: Array<BlockObjectRequestWithoutChildren>
+										children?: BlockObjectRequestWithoutChildren[]
 									}
 									type?: 'heading_2'
 									object?: 'block'
 							  }
 							| {
 									heading_3: {
-										rich_text: Array<RichTextItemRequest>
+										rich_text: RichTextItemRequest[]
 										color?: ApiColor
 										is_toggleable?: boolean
-										children?: Array<BlockObjectRequestWithoutChildren>
+										children?: BlockObjectRequestWithoutChildren[]
 									}
 									type?: 'heading_3'
 									object?: 'block'
 							  }
 							| {
 									paragraph: {
-										rich_text: Array<RichTextItemRequest>
+										rich_text: RichTextItemRequest[]
 										color?: ApiColor
-										children?: Array<BlockObjectRequestWithoutChildren>
+										children?: BlockObjectRequestWithoutChildren[]
 									}
 									type?: 'paragraph'
 									object?: 'block'
 							  }
 							| {
 									bulleted_list_item: {
-										rich_text: Array<RichTextItemRequest>
+										rich_text: RichTextItemRequest[]
 										color?: ApiColor
-										children?: Array<BlockObjectRequestWithoutChildren>
+										children?: BlockObjectRequestWithoutChildren[]
 									}
 									type?: 'bulleted_list_item'
 									object?: 'block'
 							  }
 							| {
 									numbered_list_item: {
-										rich_text: Array<RichTextItemRequest>
+										rich_text: RichTextItemRequest[]
 										color?: ApiColor
-										children?: Array<BlockObjectRequestWithoutChildren>
+										children?: BlockObjectRequestWithoutChildren[]
 									}
 									type?: 'numbered_list_item'
 									object?: 'block'
 							  }
 							| {
 									quote: {
-										rich_text: Array<RichTextItemRequest>
+										rich_text: RichTextItemRequest[]
 										color?: ApiColor
-										children?: Array<BlockObjectRequestWithoutChildren>
+										children?: BlockObjectRequestWithoutChildren[]
 									}
 									type?: 'quote'
 									object?: 'block'
@@ -6750,7 +6750,7 @@ export type BlockObjectRequest =
 									table: {
 										table_width: number
 										children: Array<{
-											table_row: { cells: Array<Array<RichTextItemRequest>> }
+											table_row: { cells: RichTextItemRequest[][] }
 											type?: 'table_row'
 											object?: 'block'
 										}>
@@ -6762,9 +6762,9 @@ export type BlockObjectRequest =
 							  }
 							| {
 									to_do: {
-										rich_text: Array<RichTextItemRequest>
+										rich_text: RichTextItemRequest[]
 										color?: ApiColor
-										children?: Array<BlockObjectRequestWithoutChildren>
+										children?: BlockObjectRequestWithoutChildren[]
 										checked?: boolean
 									}
 									type?: 'to_do'
@@ -6772,26 +6772,26 @@ export type BlockObjectRequest =
 							  }
 							| {
 									toggle: {
-										rich_text: Array<RichTextItemRequest>
+										rich_text: RichTextItemRequest[]
 										color?: ApiColor
-										children?: Array<BlockObjectRequestWithoutChildren>
+										children?: BlockObjectRequestWithoutChildren[]
 									}
 									type?: 'toggle'
 									object?: 'block'
 							  }
 							| {
 									template: {
-										rich_text: Array<RichTextItemRequest>
-										children?: Array<BlockObjectRequestWithoutChildren>
+										rich_text: RichTextItemRequest[]
+										children?: BlockObjectRequestWithoutChildren[]
 									}
 									type?: 'template'
 									object?: 'block'
 							  }
 							| {
 									callout: {
-										rich_text: Array<RichTextItemRequest>
+										rich_text: RichTextItemRequest[]
 										color?: ApiColor
-										children?: Array<BlockObjectRequestWithoutChildren>
+										children?: BlockObjectRequestWithoutChildren[]
 										icon?:
 											| { emoji: EmojiRequest; type?: 'emoji' }
 											| { external: { url: TextRequest }; type?: 'external' }
@@ -6805,7 +6805,7 @@ export type BlockObjectRequest =
 											block_id: IdRequest
 											type?: 'block_id'
 										} | null
-										children?: Array<BlockObjectRequestWithoutChildren>
+										children?: BlockObjectRequestWithoutChildren[]
 									}
 									type?: 'synced_block'
 									object?: 'block'
@@ -6823,12 +6823,12 @@ export type BlockObjectRequest =
 			column: {
 				children: Array<
 					| {
-							embed: { url: string; caption?: Array<RichTextItemRequest> }
+							embed: { url: string; caption?: RichTextItemRequest[] }
 							type?: 'embed'
 							object?: 'block'
 					  }
 					| {
-							bookmark: { url: string; caption?: Array<RichTextItemRequest> }
+							bookmark: { url: string; caption?: RichTextItemRequest[] }
 							type?: 'bookmark'
 							object?: 'block'
 					  }
@@ -6836,7 +6836,7 @@ export type BlockObjectRequest =
 							image: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'image'
 							object?: 'block'
@@ -6845,7 +6845,7 @@ export type BlockObjectRequest =
 							video: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'video'
 							object?: 'block'
@@ -6854,7 +6854,7 @@ export type BlockObjectRequest =
 							pdf: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'pdf'
 							object?: 'block'
@@ -6863,7 +6863,7 @@ export type BlockObjectRequest =
 							file: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 								name?: StringRequest
 							}
 							type?: 'file'
@@ -6873,16 +6873,16 @@ export type BlockObjectRequest =
 							audio: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'audio'
 							object?: 'block'
 					  }
 					| {
 							code: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								language: LanguageRequest
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'code'
 							object?: 'block'
@@ -6908,72 +6908,72 @@ export type BlockObjectRequest =
 							object?: 'block'
 					  }
 					| {
-							table_row: { cells: Array<Array<RichTextItemRequest>> }
+							table_row: { cells: RichTextItemRequest[][] }
 							type?: 'table_row'
 							object?: 'block'
 					  }
 					| {
 							heading_1: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
 								is_toggleable?: boolean
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'heading_1'
 							object?: 'block'
 					  }
 					| {
 							heading_2: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
 								is_toggleable?: boolean
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'heading_2'
 							object?: 'block'
 					  }
 					| {
 							heading_3: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
 								is_toggleable?: boolean
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'heading_3'
 							object?: 'block'
 					  }
 					| {
 							paragraph: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'paragraph'
 							object?: 'block'
 					  }
 					| {
 							bulleted_list_item: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'bulleted_list_item'
 							object?: 'block'
 					  }
 					| {
 							numbered_list_item: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'numbered_list_item'
 							object?: 'block'
 					  }
 					| {
 							quote: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'quote'
 							object?: 'block'
@@ -6982,7 +6982,7 @@ export type BlockObjectRequest =
 							table: {
 								table_width: number
 								children: Array<{
-									table_row: { cells: Array<Array<RichTextItemRequest>> }
+									table_row: { cells: RichTextItemRequest[][] }
 									type?: 'table_row'
 									object?: 'block'
 								}>
@@ -6994,9 +6994,9 @@ export type BlockObjectRequest =
 					  }
 					| {
 							to_do: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 								checked?: boolean
 							}
 							type?: 'to_do'
@@ -7004,26 +7004,26 @@ export type BlockObjectRequest =
 					  }
 					| {
 							toggle: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'toggle'
 							object?: 'block'
 					  }
 					| {
 							template: {
-								rich_text: Array<RichTextItemRequest>
-								children?: Array<BlockObjectRequestWithoutChildren>
+								rich_text: RichTextItemRequest[]
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'template'
 							object?: 'block'
 					  }
 					| {
 							callout: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 								icon?:
 									| { emoji: EmojiRequest; type?: 'emoji' }
 									| { external: { url: TextRequest }; type?: 'external' }
@@ -7034,7 +7034,7 @@ export type BlockObjectRequest =
 					| {
 							synced_block: {
 								synced_from: { block_id: IdRequest; type?: 'block_id' } | null
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'synced_block'
 							object?: 'block'
@@ -7046,17 +7046,17 @@ export type BlockObjectRequest =
 	  }
 	| {
 			heading_1: {
-				rich_text: Array<RichTextItemRequest>
+				rich_text: RichTextItemRequest[]
 				color?: ApiColor
 				is_toggleable?: boolean
 				children?: Array<
 					| {
-							embed: { url: string; caption?: Array<RichTextItemRequest> }
+							embed: { url: string; caption?: RichTextItemRequest[] }
 							type?: 'embed'
 							object?: 'block'
 					  }
 					| {
-							bookmark: { url: string; caption?: Array<RichTextItemRequest> }
+							bookmark: { url: string; caption?: RichTextItemRequest[] }
 							type?: 'bookmark'
 							object?: 'block'
 					  }
@@ -7064,7 +7064,7 @@ export type BlockObjectRequest =
 							image: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'image'
 							object?: 'block'
@@ -7073,7 +7073,7 @@ export type BlockObjectRequest =
 							video: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'video'
 							object?: 'block'
@@ -7082,7 +7082,7 @@ export type BlockObjectRequest =
 							pdf: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'pdf'
 							object?: 'block'
@@ -7091,7 +7091,7 @@ export type BlockObjectRequest =
 							file: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 								name?: StringRequest
 							}
 							type?: 'file'
@@ -7101,16 +7101,16 @@ export type BlockObjectRequest =
 							audio: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'audio'
 							object?: 'block'
 					  }
 					| {
 							code: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								language: LanguageRequest
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'code'
 							object?: 'block'
@@ -7136,72 +7136,72 @@ export type BlockObjectRequest =
 							object?: 'block'
 					  }
 					| {
-							table_row: { cells: Array<Array<RichTextItemRequest>> }
+							table_row: { cells: RichTextItemRequest[][] }
 							type?: 'table_row'
 							object?: 'block'
 					  }
 					| {
 							heading_1: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
 								is_toggleable?: boolean
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'heading_1'
 							object?: 'block'
 					  }
 					| {
 							heading_2: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
 								is_toggleable?: boolean
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'heading_2'
 							object?: 'block'
 					  }
 					| {
 							heading_3: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
 								is_toggleable?: boolean
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'heading_3'
 							object?: 'block'
 					  }
 					| {
 							paragraph: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'paragraph'
 							object?: 'block'
 					  }
 					| {
 							bulleted_list_item: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'bulleted_list_item'
 							object?: 'block'
 					  }
 					| {
 							numbered_list_item: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'numbered_list_item'
 							object?: 'block'
 					  }
 					| {
 							quote: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'quote'
 							object?: 'block'
@@ -7210,7 +7210,7 @@ export type BlockObjectRequest =
 							table: {
 								table_width: number
 								children: Array<{
-									table_row: { cells: Array<Array<RichTextItemRequest>> }
+									table_row: { cells: RichTextItemRequest[][] }
 									type?: 'table_row'
 									object?: 'block'
 								}>
@@ -7222,9 +7222,9 @@ export type BlockObjectRequest =
 					  }
 					| {
 							to_do: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 								checked?: boolean
 							}
 							type?: 'to_do'
@@ -7232,26 +7232,26 @@ export type BlockObjectRequest =
 					  }
 					| {
 							toggle: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'toggle'
 							object?: 'block'
 					  }
 					| {
 							template: {
-								rich_text: Array<RichTextItemRequest>
-								children?: Array<BlockObjectRequestWithoutChildren>
+								rich_text: RichTextItemRequest[]
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'template'
 							object?: 'block'
 					  }
 					| {
 							callout: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 								icon?:
 									| { emoji: EmojiRequest; type?: 'emoji' }
 									| { external: { url: TextRequest }; type?: 'external' }
@@ -7262,7 +7262,7 @@ export type BlockObjectRequest =
 					| {
 							synced_block: {
 								synced_from: { block_id: IdRequest; type?: 'block_id' } | null
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'synced_block'
 							object?: 'block'
@@ -7274,17 +7274,17 @@ export type BlockObjectRequest =
 	  }
 	| {
 			heading_2: {
-				rich_text: Array<RichTextItemRequest>
+				rich_text: RichTextItemRequest[]
 				color?: ApiColor
 				is_toggleable?: boolean
 				children?: Array<
 					| {
-							embed: { url: string; caption?: Array<RichTextItemRequest> }
+							embed: { url: string; caption?: RichTextItemRequest[] }
 							type?: 'embed'
 							object?: 'block'
 					  }
 					| {
-							bookmark: { url: string; caption?: Array<RichTextItemRequest> }
+							bookmark: { url: string; caption?: RichTextItemRequest[] }
 							type?: 'bookmark'
 							object?: 'block'
 					  }
@@ -7292,7 +7292,7 @@ export type BlockObjectRequest =
 							image: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'image'
 							object?: 'block'
@@ -7301,7 +7301,7 @@ export type BlockObjectRequest =
 							video: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'video'
 							object?: 'block'
@@ -7310,7 +7310,7 @@ export type BlockObjectRequest =
 							pdf: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'pdf'
 							object?: 'block'
@@ -7319,7 +7319,7 @@ export type BlockObjectRequest =
 							file: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 								name?: StringRequest
 							}
 							type?: 'file'
@@ -7329,16 +7329,16 @@ export type BlockObjectRequest =
 							audio: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'audio'
 							object?: 'block'
 					  }
 					| {
 							code: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								language: LanguageRequest
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'code'
 							object?: 'block'
@@ -7364,72 +7364,72 @@ export type BlockObjectRequest =
 							object?: 'block'
 					  }
 					| {
-							table_row: { cells: Array<Array<RichTextItemRequest>> }
+							table_row: { cells: RichTextItemRequest[][] }
 							type?: 'table_row'
 							object?: 'block'
 					  }
 					| {
 							heading_1: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
 								is_toggleable?: boolean
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'heading_1'
 							object?: 'block'
 					  }
 					| {
 							heading_2: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
 								is_toggleable?: boolean
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'heading_2'
 							object?: 'block'
 					  }
 					| {
 							heading_3: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
 								is_toggleable?: boolean
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'heading_3'
 							object?: 'block'
 					  }
 					| {
 							paragraph: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'paragraph'
 							object?: 'block'
 					  }
 					| {
 							bulleted_list_item: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'bulleted_list_item'
 							object?: 'block'
 					  }
 					| {
 							numbered_list_item: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'numbered_list_item'
 							object?: 'block'
 					  }
 					| {
 							quote: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'quote'
 							object?: 'block'
@@ -7438,7 +7438,7 @@ export type BlockObjectRequest =
 							table: {
 								table_width: number
 								children: Array<{
-									table_row: { cells: Array<Array<RichTextItemRequest>> }
+									table_row: { cells: RichTextItemRequest[][] }
 									type?: 'table_row'
 									object?: 'block'
 								}>
@@ -7450,9 +7450,9 @@ export type BlockObjectRequest =
 					  }
 					| {
 							to_do: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 								checked?: boolean
 							}
 							type?: 'to_do'
@@ -7460,26 +7460,26 @@ export type BlockObjectRequest =
 					  }
 					| {
 							toggle: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'toggle'
 							object?: 'block'
 					  }
 					| {
 							template: {
-								rich_text: Array<RichTextItemRequest>
-								children?: Array<BlockObjectRequestWithoutChildren>
+								rich_text: RichTextItemRequest[]
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'template'
 							object?: 'block'
 					  }
 					| {
 							callout: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 								icon?:
 									| { emoji: EmojiRequest; type?: 'emoji' }
 									| { external: { url: TextRequest }; type?: 'external' }
@@ -7490,7 +7490,7 @@ export type BlockObjectRequest =
 					| {
 							synced_block: {
 								synced_from: { block_id: IdRequest; type?: 'block_id' } | null
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'synced_block'
 							object?: 'block'
@@ -7502,17 +7502,17 @@ export type BlockObjectRequest =
 	  }
 	| {
 			heading_3: {
-				rich_text: Array<RichTextItemRequest>
+				rich_text: RichTextItemRequest[]
 				color?: ApiColor
 				is_toggleable?: boolean
 				children?: Array<
 					| {
-							embed: { url: string; caption?: Array<RichTextItemRequest> }
+							embed: { url: string; caption?: RichTextItemRequest[] }
 							type?: 'embed'
 							object?: 'block'
 					  }
 					| {
-							bookmark: { url: string; caption?: Array<RichTextItemRequest> }
+							bookmark: { url: string; caption?: RichTextItemRequest[] }
 							type?: 'bookmark'
 							object?: 'block'
 					  }
@@ -7520,7 +7520,7 @@ export type BlockObjectRequest =
 							image: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'image'
 							object?: 'block'
@@ -7529,7 +7529,7 @@ export type BlockObjectRequest =
 							video: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'video'
 							object?: 'block'
@@ -7538,7 +7538,7 @@ export type BlockObjectRequest =
 							pdf: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'pdf'
 							object?: 'block'
@@ -7547,7 +7547,7 @@ export type BlockObjectRequest =
 							file: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 								name?: StringRequest
 							}
 							type?: 'file'
@@ -7557,16 +7557,16 @@ export type BlockObjectRequest =
 							audio: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'audio'
 							object?: 'block'
 					  }
 					| {
 							code: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								language: LanguageRequest
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'code'
 							object?: 'block'
@@ -7592,72 +7592,72 @@ export type BlockObjectRequest =
 							object?: 'block'
 					  }
 					| {
-							table_row: { cells: Array<Array<RichTextItemRequest>> }
+							table_row: { cells: RichTextItemRequest[][] }
 							type?: 'table_row'
 							object?: 'block'
 					  }
 					| {
 							heading_1: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
 								is_toggleable?: boolean
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'heading_1'
 							object?: 'block'
 					  }
 					| {
 							heading_2: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
 								is_toggleable?: boolean
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'heading_2'
 							object?: 'block'
 					  }
 					| {
 							heading_3: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
 								is_toggleable?: boolean
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'heading_3'
 							object?: 'block'
 					  }
 					| {
 							paragraph: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'paragraph'
 							object?: 'block'
 					  }
 					| {
 							bulleted_list_item: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'bulleted_list_item'
 							object?: 'block'
 					  }
 					| {
 							numbered_list_item: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'numbered_list_item'
 							object?: 'block'
 					  }
 					| {
 							quote: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'quote'
 							object?: 'block'
@@ -7666,7 +7666,7 @@ export type BlockObjectRequest =
 							table: {
 								table_width: number
 								children: Array<{
-									table_row: { cells: Array<Array<RichTextItemRequest>> }
+									table_row: { cells: RichTextItemRequest[][] }
 									type?: 'table_row'
 									object?: 'block'
 								}>
@@ -7678,9 +7678,9 @@ export type BlockObjectRequest =
 					  }
 					| {
 							to_do: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 								checked?: boolean
 							}
 							type?: 'to_do'
@@ -7688,26 +7688,26 @@ export type BlockObjectRequest =
 					  }
 					| {
 							toggle: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'toggle'
 							object?: 'block'
 					  }
 					| {
 							template: {
-								rich_text: Array<RichTextItemRequest>
-								children?: Array<BlockObjectRequestWithoutChildren>
+								rich_text: RichTextItemRequest[]
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'template'
 							object?: 'block'
 					  }
 					| {
 							callout: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 								icon?:
 									| { emoji: EmojiRequest; type?: 'emoji' }
 									| { external: { url: TextRequest }; type?: 'external' }
@@ -7718,7 +7718,7 @@ export type BlockObjectRequest =
 					| {
 							synced_block: {
 								synced_from: { block_id: IdRequest; type?: 'block_id' } | null
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'synced_block'
 							object?: 'block'
@@ -7730,16 +7730,16 @@ export type BlockObjectRequest =
 	  }
 	| {
 			paragraph: {
-				rich_text: Array<RichTextItemRequest>
+				rich_text: RichTextItemRequest[]
 				color?: ApiColor
 				children?: Array<
 					| {
-							embed: { url: string; caption?: Array<RichTextItemRequest> }
+							embed: { url: string; caption?: RichTextItemRequest[] }
 							type?: 'embed'
 							object?: 'block'
 					  }
 					| {
-							bookmark: { url: string; caption?: Array<RichTextItemRequest> }
+							bookmark: { url: string; caption?: RichTextItemRequest[] }
 							type?: 'bookmark'
 							object?: 'block'
 					  }
@@ -7747,7 +7747,7 @@ export type BlockObjectRequest =
 							image: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'image'
 							object?: 'block'
@@ -7756,7 +7756,7 @@ export type BlockObjectRequest =
 							video: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'video'
 							object?: 'block'
@@ -7765,7 +7765,7 @@ export type BlockObjectRequest =
 							pdf: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'pdf'
 							object?: 'block'
@@ -7774,7 +7774,7 @@ export type BlockObjectRequest =
 							file: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 								name?: StringRequest
 							}
 							type?: 'file'
@@ -7784,16 +7784,16 @@ export type BlockObjectRequest =
 							audio: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'audio'
 							object?: 'block'
 					  }
 					| {
 							code: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								language: LanguageRequest
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'code'
 							object?: 'block'
@@ -7819,72 +7819,72 @@ export type BlockObjectRequest =
 							object?: 'block'
 					  }
 					| {
-							table_row: { cells: Array<Array<RichTextItemRequest>> }
+							table_row: { cells: RichTextItemRequest[][] }
 							type?: 'table_row'
 							object?: 'block'
 					  }
 					| {
 							heading_1: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
 								is_toggleable?: boolean
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'heading_1'
 							object?: 'block'
 					  }
 					| {
 							heading_2: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
 								is_toggleable?: boolean
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'heading_2'
 							object?: 'block'
 					  }
 					| {
 							heading_3: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
 								is_toggleable?: boolean
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'heading_3'
 							object?: 'block'
 					  }
 					| {
 							paragraph: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'paragraph'
 							object?: 'block'
 					  }
 					| {
 							bulleted_list_item: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'bulleted_list_item'
 							object?: 'block'
 					  }
 					| {
 							numbered_list_item: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'numbered_list_item'
 							object?: 'block'
 					  }
 					| {
 							quote: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'quote'
 							object?: 'block'
@@ -7893,7 +7893,7 @@ export type BlockObjectRequest =
 							table: {
 								table_width: number
 								children: Array<{
-									table_row: { cells: Array<Array<RichTextItemRequest>> }
+									table_row: { cells: RichTextItemRequest[][] }
 									type?: 'table_row'
 									object?: 'block'
 								}>
@@ -7905,9 +7905,9 @@ export type BlockObjectRequest =
 					  }
 					| {
 							to_do: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 								checked?: boolean
 							}
 							type?: 'to_do'
@@ -7915,26 +7915,26 @@ export type BlockObjectRequest =
 					  }
 					| {
 							toggle: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'toggle'
 							object?: 'block'
 					  }
 					| {
 							template: {
-								rich_text: Array<RichTextItemRequest>
-								children?: Array<BlockObjectRequestWithoutChildren>
+								rich_text: RichTextItemRequest[]
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'template'
 							object?: 'block'
 					  }
 					| {
 							callout: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 								icon?:
 									| { emoji: EmojiRequest; type?: 'emoji' }
 									| { external: { url: TextRequest }; type?: 'external' }
@@ -7945,7 +7945,7 @@ export type BlockObjectRequest =
 					| {
 							synced_block: {
 								synced_from: { block_id: IdRequest; type?: 'block_id' } | null
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'synced_block'
 							object?: 'block'
@@ -7957,16 +7957,16 @@ export type BlockObjectRequest =
 	  }
 	| {
 			bulleted_list_item: {
-				rich_text: Array<RichTextItemRequest>
+				rich_text: RichTextItemRequest[]
 				color?: ApiColor
 				children?: Array<
 					| {
-							embed: { url: string; caption?: Array<RichTextItemRequest> }
+							embed: { url: string; caption?: RichTextItemRequest[] }
 							type?: 'embed'
 							object?: 'block'
 					  }
 					| {
-							bookmark: { url: string; caption?: Array<RichTextItemRequest> }
+							bookmark: { url: string; caption?: RichTextItemRequest[] }
 							type?: 'bookmark'
 							object?: 'block'
 					  }
@@ -7974,7 +7974,7 @@ export type BlockObjectRequest =
 							image: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'image'
 							object?: 'block'
@@ -7983,7 +7983,7 @@ export type BlockObjectRequest =
 							video: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'video'
 							object?: 'block'
@@ -7992,7 +7992,7 @@ export type BlockObjectRequest =
 							pdf: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'pdf'
 							object?: 'block'
@@ -8001,7 +8001,7 @@ export type BlockObjectRequest =
 							file: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 								name?: StringRequest
 							}
 							type?: 'file'
@@ -8011,16 +8011,16 @@ export type BlockObjectRequest =
 							audio: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'audio'
 							object?: 'block'
 					  }
 					| {
 							code: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								language: LanguageRequest
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'code'
 							object?: 'block'
@@ -8046,72 +8046,72 @@ export type BlockObjectRequest =
 							object?: 'block'
 					  }
 					| {
-							table_row: { cells: Array<Array<RichTextItemRequest>> }
+							table_row: { cells: RichTextItemRequest[][] }
 							type?: 'table_row'
 							object?: 'block'
 					  }
 					| {
 							heading_1: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
 								is_toggleable?: boolean
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'heading_1'
 							object?: 'block'
 					  }
 					| {
 							heading_2: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
 								is_toggleable?: boolean
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'heading_2'
 							object?: 'block'
 					  }
 					| {
 							heading_3: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
 								is_toggleable?: boolean
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'heading_3'
 							object?: 'block'
 					  }
 					| {
 							paragraph: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'paragraph'
 							object?: 'block'
 					  }
 					| {
 							bulleted_list_item: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'bulleted_list_item'
 							object?: 'block'
 					  }
 					| {
 							numbered_list_item: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'numbered_list_item'
 							object?: 'block'
 					  }
 					| {
 							quote: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'quote'
 							object?: 'block'
@@ -8120,7 +8120,7 @@ export type BlockObjectRequest =
 							table: {
 								table_width: number
 								children: Array<{
-									table_row: { cells: Array<Array<RichTextItemRequest>> }
+									table_row: { cells: RichTextItemRequest[][] }
 									type?: 'table_row'
 									object?: 'block'
 								}>
@@ -8132,9 +8132,9 @@ export type BlockObjectRequest =
 					  }
 					| {
 							to_do: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 								checked?: boolean
 							}
 							type?: 'to_do'
@@ -8142,26 +8142,26 @@ export type BlockObjectRequest =
 					  }
 					| {
 							toggle: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'toggle'
 							object?: 'block'
 					  }
 					| {
 							template: {
-								rich_text: Array<RichTextItemRequest>
-								children?: Array<BlockObjectRequestWithoutChildren>
+								rich_text: RichTextItemRequest[]
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'template'
 							object?: 'block'
 					  }
 					| {
 							callout: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 								icon?:
 									| { emoji: EmojiRequest; type?: 'emoji' }
 									| { external: { url: TextRequest }; type?: 'external' }
@@ -8172,7 +8172,7 @@ export type BlockObjectRequest =
 					| {
 							synced_block: {
 								synced_from: { block_id: IdRequest; type?: 'block_id' } | null
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'synced_block'
 							object?: 'block'
@@ -8184,16 +8184,16 @@ export type BlockObjectRequest =
 	  }
 	| {
 			numbered_list_item: {
-				rich_text: Array<RichTextItemRequest>
+				rich_text: RichTextItemRequest[]
 				color?: ApiColor
 				children?: Array<
 					| {
-							embed: { url: string; caption?: Array<RichTextItemRequest> }
+							embed: { url: string; caption?: RichTextItemRequest[] }
 							type?: 'embed'
 							object?: 'block'
 					  }
 					| {
-							bookmark: { url: string; caption?: Array<RichTextItemRequest> }
+							bookmark: { url: string; caption?: RichTextItemRequest[] }
 							type?: 'bookmark'
 							object?: 'block'
 					  }
@@ -8201,7 +8201,7 @@ export type BlockObjectRequest =
 							image: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'image'
 							object?: 'block'
@@ -8210,7 +8210,7 @@ export type BlockObjectRequest =
 							video: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'video'
 							object?: 'block'
@@ -8219,7 +8219,7 @@ export type BlockObjectRequest =
 							pdf: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'pdf'
 							object?: 'block'
@@ -8228,7 +8228,7 @@ export type BlockObjectRequest =
 							file: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 								name?: StringRequest
 							}
 							type?: 'file'
@@ -8238,16 +8238,16 @@ export type BlockObjectRequest =
 							audio: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'audio'
 							object?: 'block'
 					  }
 					| {
 							code: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								language: LanguageRequest
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'code'
 							object?: 'block'
@@ -8273,72 +8273,72 @@ export type BlockObjectRequest =
 							object?: 'block'
 					  }
 					| {
-							table_row: { cells: Array<Array<RichTextItemRequest>> }
+							table_row: { cells: RichTextItemRequest[][] }
 							type?: 'table_row'
 							object?: 'block'
 					  }
 					| {
 							heading_1: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
 								is_toggleable?: boolean
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'heading_1'
 							object?: 'block'
 					  }
 					| {
 							heading_2: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
 								is_toggleable?: boolean
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'heading_2'
 							object?: 'block'
 					  }
 					| {
 							heading_3: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
 								is_toggleable?: boolean
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'heading_3'
 							object?: 'block'
 					  }
 					| {
 							paragraph: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'paragraph'
 							object?: 'block'
 					  }
 					| {
 							bulleted_list_item: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'bulleted_list_item'
 							object?: 'block'
 					  }
 					| {
 							numbered_list_item: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'numbered_list_item'
 							object?: 'block'
 					  }
 					| {
 							quote: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'quote'
 							object?: 'block'
@@ -8347,7 +8347,7 @@ export type BlockObjectRequest =
 							table: {
 								table_width: number
 								children: Array<{
-									table_row: { cells: Array<Array<RichTextItemRequest>> }
+									table_row: { cells: RichTextItemRequest[][] }
 									type?: 'table_row'
 									object?: 'block'
 								}>
@@ -8359,9 +8359,9 @@ export type BlockObjectRequest =
 					  }
 					| {
 							to_do: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 								checked?: boolean
 							}
 							type?: 'to_do'
@@ -8369,26 +8369,26 @@ export type BlockObjectRequest =
 					  }
 					| {
 							toggle: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'toggle'
 							object?: 'block'
 					  }
 					| {
 							template: {
-								rich_text: Array<RichTextItemRequest>
-								children?: Array<BlockObjectRequestWithoutChildren>
+								rich_text: RichTextItemRequest[]
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'template'
 							object?: 'block'
 					  }
 					| {
 							callout: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 								icon?:
 									| { emoji: EmojiRequest; type?: 'emoji' }
 									| { external: { url: TextRequest }; type?: 'external' }
@@ -8399,7 +8399,7 @@ export type BlockObjectRequest =
 					| {
 							synced_block: {
 								synced_from: { block_id: IdRequest; type?: 'block_id' } | null
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'synced_block'
 							object?: 'block'
@@ -8411,16 +8411,16 @@ export type BlockObjectRequest =
 	  }
 	| {
 			quote: {
-				rich_text: Array<RichTextItemRequest>
+				rich_text: RichTextItemRequest[]
 				color?: ApiColor
 				children?: Array<
 					| {
-							embed: { url: string; caption?: Array<RichTextItemRequest> }
+							embed: { url: string; caption?: RichTextItemRequest[] }
 							type?: 'embed'
 							object?: 'block'
 					  }
 					| {
-							bookmark: { url: string; caption?: Array<RichTextItemRequest> }
+							bookmark: { url: string; caption?: RichTextItemRequest[] }
 							type?: 'bookmark'
 							object?: 'block'
 					  }
@@ -8428,7 +8428,7 @@ export type BlockObjectRequest =
 							image: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'image'
 							object?: 'block'
@@ -8437,7 +8437,7 @@ export type BlockObjectRequest =
 							video: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'video'
 							object?: 'block'
@@ -8446,7 +8446,7 @@ export type BlockObjectRequest =
 							pdf: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'pdf'
 							object?: 'block'
@@ -8455,7 +8455,7 @@ export type BlockObjectRequest =
 							file: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 								name?: StringRequest
 							}
 							type?: 'file'
@@ -8465,16 +8465,16 @@ export type BlockObjectRequest =
 							audio: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'audio'
 							object?: 'block'
 					  }
 					| {
 							code: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								language: LanguageRequest
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'code'
 							object?: 'block'
@@ -8500,72 +8500,72 @@ export type BlockObjectRequest =
 							object?: 'block'
 					  }
 					| {
-							table_row: { cells: Array<Array<RichTextItemRequest>> }
+							table_row: { cells: RichTextItemRequest[][] }
 							type?: 'table_row'
 							object?: 'block'
 					  }
 					| {
 							heading_1: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
 								is_toggleable?: boolean
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'heading_1'
 							object?: 'block'
 					  }
 					| {
 							heading_2: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
 								is_toggleable?: boolean
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'heading_2'
 							object?: 'block'
 					  }
 					| {
 							heading_3: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
 								is_toggleable?: boolean
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'heading_3'
 							object?: 'block'
 					  }
 					| {
 							paragraph: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'paragraph'
 							object?: 'block'
 					  }
 					| {
 							bulleted_list_item: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'bulleted_list_item'
 							object?: 'block'
 					  }
 					| {
 							numbered_list_item: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'numbered_list_item'
 							object?: 'block'
 					  }
 					| {
 							quote: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'quote'
 							object?: 'block'
@@ -8574,7 +8574,7 @@ export type BlockObjectRequest =
 							table: {
 								table_width: number
 								children: Array<{
-									table_row: { cells: Array<Array<RichTextItemRequest>> }
+									table_row: { cells: RichTextItemRequest[][] }
 									type?: 'table_row'
 									object?: 'block'
 								}>
@@ -8586,9 +8586,9 @@ export type BlockObjectRequest =
 					  }
 					| {
 							to_do: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 								checked?: boolean
 							}
 							type?: 'to_do'
@@ -8596,26 +8596,26 @@ export type BlockObjectRequest =
 					  }
 					| {
 							toggle: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'toggle'
 							object?: 'block'
 					  }
 					| {
 							template: {
-								rich_text: Array<RichTextItemRequest>
-								children?: Array<BlockObjectRequestWithoutChildren>
+								rich_text: RichTextItemRequest[]
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'template'
 							object?: 'block'
 					  }
 					| {
 							callout: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 								icon?:
 									| { emoji: EmojiRequest; type?: 'emoji' }
 									| { external: { url: TextRequest }; type?: 'external' }
@@ -8626,7 +8626,7 @@ export type BlockObjectRequest =
 					| {
 							synced_block: {
 								synced_from: { block_id: IdRequest; type?: 'block_id' } | null
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'synced_block'
 							object?: 'block'
@@ -8638,16 +8638,16 @@ export type BlockObjectRequest =
 	  }
 	| {
 			to_do: {
-				rich_text: Array<RichTextItemRequest>
+				rich_text: RichTextItemRequest[]
 				color?: ApiColor
 				children?: Array<
 					| {
-							embed: { url: string; caption?: Array<RichTextItemRequest> }
+							embed: { url: string; caption?: RichTextItemRequest[] }
 							type?: 'embed'
 							object?: 'block'
 					  }
 					| {
-							bookmark: { url: string; caption?: Array<RichTextItemRequest> }
+							bookmark: { url: string; caption?: RichTextItemRequest[] }
 							type?: 'bookmark'
 							object?: 'block'
 					  }
@@ -8655,7 +8655,7 @@ export type BlockObjectRequest =
 							image: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'image'
 							object?: 'block'
@@ -8664,7 +8664,7 @@ export type BlockObjectRequest =
 							video: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'video'
 							object?: 'block'
@@ -8673,7 +8673,7 @@ export type BlockObjectRequest =
 							pdf: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'pdf'
 							object?: 'block'
@@ -8682,7 +8682,7 @@ export type BlockObjectRequest =
 							file: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 								name?: StringRequest
 							}
 							type?: 'file'
@@ -8692,16 +8692,16 @@ export type BlockObjectRequest =
 							audio: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'audio'
 							object?: 'block'
 					  }
 					| {
 							code: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								language: LanguageRequest
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'code'
 							object?: 'block'
@@ -8727,72 +8727,72 @@ export type BlockObjectRequest =
 							object?: 'block'
 					  }
 					| {
-							table_row: { cells: Array<Array<RichTextItemRequest>> }
+							table_row: { cells: RichTextItemRequest[][] }
 							type?: 'table_row'
 							object?: 'block'
 					  }
 					| {
 							heading_1: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
 								is_toggleable?: boolean
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'heading_1'
 							object?: 'block'
 					  }
 					| {
 							heading_2: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
 								is_toggleable?: boolean
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'heading_2'
 							object?: 'block'
 					  }
 					| {
 							heading_3: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
 								is_toggleable?: boolean
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'heading_3'
 							object?: 'block'
 					  }
 					| {
 							paragraph: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'paragraph'
 							object?: 'block'
 					  }
 					| {
 							bulleted_list_item: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'bulleted_list_item'
 							object?: 'block'
 					  }
 					| {
 							numbered_list_item: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'numbered_list_item'
 							object?: 'block'
 					  }
 					| {
 							quote: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'quote'
 							object?: 'block'
@@ -8801,7 +8801,7 @@ export type BlockObjectRequest =
 							table: {
 								table_width: number
 								children: Array<{
-									table_row: { cells: Array<Array<RichTextItemRequest>> }
+									table_row: { cells: RichTextItemRequest[][] }
 									type?: 'table_row'
 									object?: 'block'
 								}>
@@ -8813,9 +8813,9 @@ export type BlockObjectRequest =
 					  }
 					| {
 							to_do: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 								checked?: boolean
 							}
 							type?: 'to_do'
@@ -8823,26 +8823,26 @@ export type BlockObjectRequest =
 					  }
 					| {
 							toggle: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'toggle'
 							object?: 'block'
 					  }
 					| {
 							template: {
-								rich_text: Array<RichTextItemRequest>
-								children?: Array<BlockObjectRequestWithoutChildren>
+								rich_text: RichTextItemRequest[]
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'template'
 							object?: 'block'
 					  }
 					| {
 							callout: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 								icon?:
 									| { emoji: EmojiRequest; type?: 'emoji' }
 									| { external: { url: TextRequest }; type?: 'external' }
@@ -8853,7 +8853,7 @@ export type BlockObjectRequest =
 					| {
 							synced_block: {
 								synced_from: { block_id: IdRequest; type?: 'block_id' } | null
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'synced_block'
 							object?: 'block'
@@ -8866,16 +8866,16 @@ export type BlockObjectRequest =
 	  }
 	| {
 			toggle: {
-				rich_text: Array<RichTextItemRequest>
+				rich_text: RichTextItemRequest[]
 				color?: ApiColor
 				children?: Array<
 					| {
-							embed: { url: string; caption?: Array<RichTextItemRequest> }
+							embed: { url: string; caption?: RichTextItemRequest[] }
 							type?: 'embed'
 							object?: 'block'
 					  }
 					| {
-							bookmark: { url: string; caption?: Array<RichTextItemRequest> }
+							bookmark: { url: string; caption?: RichTextItemRequest[] }
 							type?: 'bookmark'
 							object?: 'block'
 					  }
@@ -8883,7 +8883,7 @@ export type BlockObjectRequest =
 							image: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'image'
 							object?: 'block'
@@ -8892,7 +8892,7 @@ export type BlockObjectRequest =
 							video: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'video'
 							object?: 'block'
@@ -8901,7 +8901,7 @@ export type BlockObjectRequest =
 							pdf: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'pdf'
 							object?: 'block'
@@ -8910,7 +8910,7 @@ export type BlockObjectRequest =
 							file: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 								name?: StringRequest
 							}
 							type?: 'file'
@@ -8920,16 +8920,16 @@ export type BlockObjectRequest =
 							audio: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'audio'
 							object?: 'block'
 					  }
 					| {
 							code: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								language: LanguageRequest
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'code'
 							object?: 'block'
@@ -8955,72 +8955,72 @@ export type BlockObjectRequest =
 							object?: 'block'
 					  }
 					| {
-							table_row: { cells: Array<Array<RichTextItemRequest>> }
+							table_row: { cells: RichTextItemRequest[][] }
 							type?: 'table_row'
 							object?: 'block'
 					  }
 					| {
 							heading_1: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
 								is_toggleable?: boolean
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'heading_1'
 							object?: 'block'
 					  }
 					| {
 							heading_2: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
 								is_toggleable?: boolean
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'heading_2'
 							object?: 'block'
 					  }
 					| {
 							heading_3: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
 								is_toggleable?: boolean
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'heading_3'
 							object?: 'block'
 					  }
 					| {
 							paragraph: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'paragraph'
 							object?: 'block'
 					  }
 					| {
 							bulleted_list_item: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'bulleted_list_item'
 							object?: 'block'
 					  }
 					| {
 							numbered_list_item: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'numbered_list_item'
 							object?: 'block'
 					  }
 					| {
 							quote: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'quote'
 							object?: 'block'
@@ -9029,7 +9029,7 @@ export type BlockObjectRequest =
 							table: {
 								table_width: number
 								children: Array<{
-									table_row: { cells: Array<Array<RichTextItemRequest>> }
+									table_row: { cells: RichTextItemRequest[][] }
 									type?: 'table_row'
 									object?: 'block'
 								}>
@@ -9041,9 +9041,9 @@ export type BlockObjectRequest =
 					  }
 					| {
 							to_do: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 								checked?: boolean
 							}
 							type?: 'to_do'
@@ -9051,26 +9051,26 @@ export type BlockObjectRequest =
 					  }
 					| {
 							toggle: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'toggle'
 							object?: 'block'
 					  }
 					| {
 							template: {
-								rich_text: Array<RichTextItemRequest>
-								children?: Array<BlockObjectRequestWithoutChildren>
+								rich_text: RichTextItemRequest[]
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'template'
 							object?: 'block'
 					  }
 					| {
 							callout: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 								icon?:
 									| { emoji: EmojiRequest; type?: 'emoji' }
 									| { external: { url: TextRequest }; type?: 'external' }
@@ -9081,7 +9081,7 @@ export type BlockObjectRequest =
 					| {
 							synced_block: {
 								synced_from: { block_id: IdRequest; type?: 'block_id' } | null
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'synced_block'
 							object?: 'block'
@@ -9093,15 +9093,15 @@ export type BlockObjectRequest =
 	  }
 	| {
 			template: {
-				rich_text: Array<RichTextItemRequest>
+				rich_text: RichTextItemRequest[]
 				children?: Array<
 					| {
-							embed: { url: string; caption?: Array<RichTextItemRequest> }
+							embed: { url: string; caption?: RichTextItemRequest[] }
 							type?: 'embed'
 							object?: 'block'
 					  }
 					| {
-							bookmark: { url: string; caption?: Array<RichTextItemRequest> }
+							bookmark: { url: string; caption?: RichTextItemRequest[] }
 							type?: 'bookmark'
 							object?: 'block'
 					  }
@@ -9109,7 +9109,7 @@ export type BlockObjectRequest =
 							image: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'image'
 							object?: 'block'
@@ -9118,7 +9118,7 @@ export type BlockObjectRequest =
 							video: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'video'
 							object?: 'block'
@@ -9127,7 +9127,7 @@ export type BlockObjectRequest =
 							pdf: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'pdf'
 							object?: 'block'
@@ -9136,7 +9136,7 @@ export type BlockObjectRequest =
 							file: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 								name?: StringRequest
 							}
 							type?: 'file'
@@ -9146,16 +9146,16 @@ export type BlockObjectRequest =
 							audio: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'audio'
 							object?: 'block'
 					  }
 					| {
 							code: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								language: LanguageRequest
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'code'
 							object?: 'block'
@@ -9181,72 +9181,72 @@ export type BlockObjectRequest =
 							object?: 'block'
 					  }
 					| {
-							table_row: { cells: Array<Array<RichTextItemRequest>> }
+							table_row: { cells: RichTextItemRequest[][] }
 							type?: 'table_row'
 							object?: 'block'
 					  }
 					| {
 							heading_1: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
 								is_toggleable?: boolean
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'heading_1'
 							object?: 'block'
 					  }
 					| {
 							heading_2: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
 								is_toggleable?: boolean
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'heading_2'
 							object?: 'block'
 					  }
 					| {
 							heading_3: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
 								is_toggleable?: boolean
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'heading_3'
 							object?: 'block'
 					  }
 					| {
 							paragraph: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'paragraph'
 							object?: 'block'
 					  }
 					| {
 							bulleted_list_item: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'bulleted_list_item'
 							object?: 'block'
 					  }
 					| {
 							numbered_list_item: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'numbered_list_item'
 							object?: 'block'
 					  }
 					| {
 							quote: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'quote'
 							object?: 'block'
@@ -9255,7 +9255,7 @@ export type BlockObjectRequest =
 							table: {
 								table_width: number
 								children: Array<{
-									table_row: { cells: Array<Array<RichTextItemRequest>> }
+									table_row: { cells: RichTextItemRequest[][] }
 									type?: 'table_row'
 									object?: 'block'
 								}>
@@ -9267,9 +9267,9 @@ export type BlockObjectRequest =
 					  }
 					| {
 							to_do: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 								checked?: boolean
 							}
 							type?: 'to_do'
@@ -9277,26 +9277,26 @@ export type BlockObjectRequest =
 					  }
 					| {
 							toggle: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'toggle'
 							object?: 'block'
 					  }
 					| {
 							template: {
-								rich_text: Array<RichTextItemRequest>
-								children?: Array<BlockObjectRequestWithoutChildren>
+								rich_text: RichTextItemRequest[]
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'template'
 							object?: 'block'
 					  }
 					| {
 							callout: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 								icon?:
 									| { emoji: EmojiRequest; type?: 'emoji' }
 									| { external: { url: TextRequest }; type?: 'external' }
@@ -9307,7 +9307,7 @@ export type BlockObjectRequest =
 					| {
 							synced_block: {
 								synced_from: { block_id: IdRequest; type?: 'block_id' } | null
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'synced_block'
 							object?: 'block'
@@ -9319,16 +9319,16 @@ export type BlockObjectRequest =
 	  }
 	| {
 			callout: {
-				rich_text: Array<RichTextItemRequest>
+				rich_text: RichTextItemRequest[]
 				color?: ApiColor
 				children?: Array<
 					| {
-							embed: { url: string; caption?: Array<RichTextItemRequest> }
+							embed: { url: string; caption?: RichTextItemRequest[] }
 							type?: 'embed'
 							object?: 'block'
 					  }
 					| {
-							bookmark: { url: string; caption?: Array<RichTextItemRequest> }
+							bookmark: { url: string; caption?: RichTextItemRequest[] }
 							type?: 'bookmark'
 							object?: 'block'
 					  }
@@ -9336,7 +9336,7 @@ export type BlockObjectRequest =
 							image: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'image'
 							object?: 'block'
@@ -9345,7 +9345,7 @@ export type BlockObjectRequest =
 							video: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'video'
 							object?: 'block'
@@ -9354,7 +9354,7 @@ export type BlockObjectRequest =
 							pdf: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'pdf'
 							object?: 'block'
@@ -9363,7 +9363,7 @@ export type BlockObjectRequest =
 							file: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 								name?: StringRequest
 							}
 							type?: 'file'
@@ -9373,16 +9373,16 @@ export type BlockObjectRequest =
 							audio: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'audio'
 							object?: 'block'
 					  }
 					| {
 							code: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								language: LanguageRequest
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'code'
 							object?: 'block'
@@ -9408,72 +9408,72 @@ export type BlockObjectRequest =
 							object?: 'block'
 					  }
 					| {
-							table_row: { cells: Array<Array<RichTextItemRequest>> }
+							table_row: { cells: RichTextItemRequest[][] }
 							type?: 'table_row'
 							object?: 'block'
 					  }
 					| {
 							heading_1: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
 								is_toggleable?: boolean
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'heading_1'
 							object?: 'block'
 					  }
 					| {
 							heading_2: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
 								is_toggleable?: boolean
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'heading_2'
 							object?: 'block'
 					  }
 					| {
 							heading_3: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
 								is_toggleable?: boolean
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'heading_3'
 							object?: 'block'
 					  }
 					| {
 							paragraph: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'paragraph'
 							object?: 'block'
 					  }
 					| {
 							bulleted_list_item: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'bulleted_list_item'
 							object?: 'block'
 					  }
 					| {
 							numbered_list_item: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'numbered_list_item'
 							object?: 'block'
 					  }
 					| {
 							quote: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'quote'
 							object?: 'block'
@@ -9482,7 +9482,7 @@ export type BlockObjectRequest =
 							table: {
 								table_width: number
 								children: Array<{
-									table_row: { cells: Array<Array<RichTextItemRequest>> }
+									table_row: { cells: RichTextItemRequest[][] }
 									type?: 'table_row'
 									object?: 'block'
 								}>
@@ -9494,9 +9494,9 @@ export type BlockObjectRequest =
 					  }
 					| {
 							to_do: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 								checked?: boolean
 							}
 							type?: 'to_do'
@@ -9504,26 +9504,26 @@ export type BlockObjectRequest =
 					  }
 					| {
 							toggle: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'toggle'
 							object?: 'block'
 					  }
 					| {
 							template: {
-								rich_text: Array<RichTextItemRequest>
-								children?: Array<BlockObjectRequestWithoutChildren>
+								rich_text: RichTextItemRequest[]
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'template'
 							object?: 'block'
 					  }
 					| {
 							callout: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 								icon?:
 									| { emoji: EmojiRequest; type?: 'emoji' }
 									| { external: { url: TextRequest }; type?: 'external' }
@@ -9534,7 +9534,7 @@ export type BlockObjectRequest =
 					| {
 							synced_block: {
 								synced_from: { block_id: IdRequest; type?: 'block_id' } | null
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'synced_block'
 							object?: 'block'
@@ -9552,12 +9552,12 @@ export type BlockObjectRequest =
 				synced_from: { block_id: IdRequest; type?: 'block_id' } | null
 				children?: Array<
 					| {
-							embed: { url: string; caption?: Array<RichTextItemRequest> }
+							embed: { url: string; caption?: RichTextItemRequest[] }
 							type?: 'embed'
 							object?: 'block'
 					  }
 					| {
-							bookmark: { url: string; caption?: Array<RichTextItemRequest> }
+							bookmark: { url: string; caption?: RichTextItemRequest[] }
 							type?: 'bookmark'
 							object?: 'block'
 					  }
@@ -9565,7 +9565,7 @@ export type BlockObjectRequest =
 							image: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'image'
 							object?: 'block'
@@ -9574,7 +9574,7 @@ export type BlockObjectRequest =
 							video: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'video'
 							object?: 'block'
@@ -9583,7 +9583,7 @@ export type BlockObjectRequest =
 							pdf: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'pdf'
 							object?: 'block'
@@ -9592,7 +9592,7 @@ export type BlockObjectRequest =
 							file: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 								name?: StringRequest
 							}
 							type?: 'file'
@@ -9602,16 +9602,16 @@ export type BlockObjectRequest =
 							audio: {
 								external: { url: TextRequest }
 								type?: 'external'
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'audio'
 							object?: 'block'
 					  }
 					| {
 							code: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								language: LanguageRequest
-								caption?: Array<RichTextItemRequest>
+								caption?: RichTextItemRequest[]
 							}
 							type?: 'code'
 							object?: 'block'
@@ -9637,72 +9637,72 @@ export type BlockObjectRequest =
 							object?: 'block'
 					  }
 					| {
-							table_row: { cells: Array<Array<RichTextItemRequest>> }
+							table_row: { cells: RichTextItemRequest[][] }
 							type?: 'table_row'
 							object?: 'block'
 					  }
 					| {
 							heading_1: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
 								is_toggleable?: boolean
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'heading_1'
 							object?: 'block'
 					  }
 					| {
 							heading_2: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
 								is_toggleable?: boolean
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'heading_2'
 							object?: 'block'
 					  }
 					| {
 							heading_3: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
 								is_toggleable?: boolean
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'heading_3'
 							object?: 'block'
 					  }
 					| {
 							paragraph: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'paragraph'
 							object?: 'block'
 					  }
 					| {
 							bulleted_list_item: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'bulleted_list_item'
 							object?: 'block'
 					  }
 					| {
 							numbered_list_item: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'numbered_list_item'
 							object?: 'block'
 					  }
 					| {
 							quote: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'quote'
 							object?: 'block'
@@ -9711,7 +9711,7 @@ export type BlockObjectRequest =
 							table: {
 								table_width: number
 								children: Array<{
-									table_row: { cells: Array<Array<RichTextItemRequest>> }
+									table_row: { cells: RichTextItemRequest[][] }
 									type?: 'table_row'
 									object?: 'block'
 								}>
@@ -9723,9 +9723,9 @@ export type BlockObjectRequest =
 					  }
 					| {
 							to_do: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 								checked?: boolean
 							}
 							type?: 'to_do'
@@ -9733,26 +9733,26 @@ export type BlockObjectRequest =
 					  }
 					| {
 							toggle: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'toggle'
 							object?: 'block'
 					  }
 					| {
 							template: {
-								rich_text: Array<RichTextItemRequest>
-								children?: Array<BlockObjectRequestWithoutChildren>
+								rich_text: RichTextItemRequest[]
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'template'
 							object?: 'block'
 					  }
 					| {
 							callout: {
-								rich_text: Array<RichTextItemRequest>
+								rich_text: RichTextItemRequest[]
 								color?: ApiColor
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 								icon?:
 									| { emoji: EmojiRequest; type?: 'emoji' }
 									| { external: { url: TextRequest }; type?: 'external' }
@@ -9763,7 +9763,7 @@ export type BlockObjectRequest =
 					| {
 							synced_block: {
 								synced_from: { block_id: IdRequest; type?: 'block_id' } | null
-								children?: Array<BlockObjectRequestWithoutChildren>
+								children?: BlockObjectRequestWithoutChildren[]
 							}
 							type?: 'synced_block'
 							object?: 'block'
@@ -9956,7 +9956,7 @@ export type ListUsersResponse = {
 	object: 'list'
 	next_cursor: string | null
 	has_more: boolean
-	results: Array<UserObjectResponse>
+	results: UserObjectResponse[]
 }
 
 export const listUsers = {
@@ -9974,8 +9974,8 @@ type CreatePageBodyParameters = {
 	properties:
 		| Record<
 				string,
-				| { title: Array<RichTextItemRequest>; type?: 'title' }
-				| { rich_text: Array<RichTextItemRequest>; type?: 'rich_text' }
+				| { title: RichTextItemRequest[]; type?: 'title' }
+				| { rich_text: RichTextItemRequest[]; type?: 'rich_text' }
 				| { number: number | null; type?: 'number' }
 				| { url: TextRequest | null; type?: 'url' }
 				| {
@@ -10095,8 +10095,8 @@ type CreatePageBodyParameters = {
 		  >
 		| Record<
 				string,
-				| Array<RichTextItemRequest>
-				| Array<RichTextItemRequest>
+				| RichTextItemRequest[]
+				| RichTextItemRequest[]
 				| number
 				| null
 				| TextRequest
@@ -10208,8 +10208,8 @@ type CreatePageBodyParameters = {
 		| { external: { url: TextRequest }; type?: 'external' }
 		| null
 	cover?: { external: { url: TextRequest }; type?: 'external' } | null
-	content?: Array<BlockObjectRequest>
-	children?: Array<BlockObjectRequest>
+	content?: BlockObjectRequest[]
+	children?: BlockObjectRequest[]
 }
 
 export type CreatePageParameters = CreatePageBodyParameters
@@ -10229,7 +10229,7 @@ type GetPagePathParameters = {
 }
 
 type GetPageQueryParameters = {
-	filter_properties?: Array<string>
+	filter_properties?: string[]
 }
 
 export type GetPageParameters = GetPagePathParameters & GetPageQueryParameters
@@ -10252,8 +10252,8 @@ type UpdatePageBodyParameters = {
 	properties?:
 		| Record<
 				string,
-				| { title: Array<RichTextItemRequest>; type?: 'title' }
-				| { rich_text: Array<RichTextItemRequest>; type?: 'rich_text' }
+				| { title: RichTextItemRequest[]; type?: 'title' }
+				| { rich_text: RichTextItemRequest[]; type?: 'rich_text' }
 				| { number: number | null; type?: 'number' }
 				| { url: TextRequest | null; type?: 'url' }
 				| {
@@ -10373,8 +10373,8 @@ type UpdatePageBodyParameters = {
 		  >
 		| Record<
 				string,
-				| Array<RichTextItemRequest>
-				| Array<RichTextItemRequest>
+				| RichTextItemRequest[]
+				| RichTextItemRequest[]
 				| number
 				| null
 				| TextRequest
@@ -10548,20 +10548,20 @@ type UpdateBlockPathParameters = {
 
 type UpdateBlockBodyParameters =
 	| {
-			embed: { url?: string; caption?: Array<RichTextItemRequest> }
+			embed: { url?: string; caption?: RichTextItemRequest[] }
 			type?: 'embed'
 			archived?: boolean
 			in_trash?: boolean
 	  }
 	| {
-			bookmark: { url?: string; caption?: Array<RichTextItemRequest> }
+			bookmark: { url?: string; caption?: RichTextItemRequest[] }
 			type?: 'bookmark'
 			archived?: boolean
 			in_trash?: boolean
 	  }
 	| {
 			image: {
-				caption?: Array<RichTextItemRequest>
+				caption?: RichTextItemRequest[]
 				external?: { url: TextRequest }
 			}
 			type?: 'image'
@@ -10570,7 +10570,7 @@ type UpdateBlockBodyParameters =
 	  }
 	| {
 			video: {
-				caption?: Array<RichTextItemRequest>
+				caption?: RichTextItemRequest[]
 				external?: { url: TextRequest }
 			}
 			type?: 'video'
@@ -10579,7 +10579,7 @@ type UpdateBlockBodyParameters =
 	  }
 	| {
 			pdf: {
-				caption?: Array<RichTextItemRequest>
+				caption?: RichTextItemRequest[]
 				external?: { url: TextRequest }
 			}
 			type?: 'pdf'
@@ -10588,7 +10588,7 @@ type UpdateBlockBodyParameters =
 	  }
 	| {
 			file: {
-				caption?: Array<RichTextItemRequest>
+				caption?: RichTextItemRequest[]
 				external?: { url: TextRequest }
 				name?: StringRequest
 			}
@@ -10598,7 +10598,7 @@ type UpdateBlockBodyParameters =
 	  }
 	| {
 			audio: {
-				caption?: Array<RichTextItemRequest>
+				caption?: RichTextItemRequest[]
 				external?: { url: TextRequest }
 			}
 			type?: 'audio'
@@ -10607,9 +10607,9 @@ type UpdateBlockBodyParameters =
 	  }
 	| {
 			code: {
-				rich_text?: Array<RichTextItemRequest>
+				rich_text?: RichTextItemRequest[]
 				language?: LanguageRequest
-				caption?: Array<RichTextItemRequest>
+				caption?: RichTextItemRequest[]
 			}
 			type?: 'code'
 			archived?: boolean
@@ -10649,14 +10649,14 @@ type UpdateBlockBodyParameters =
 			in_trash?: boolean
 	  }
 	| {
-			table_row: { cells: Array<Array<RichTextItemRequest>> }
+			table_row: { cells: RichTextItemRequest[][] }
 			type?: 'table_row'
 			archived?: boolean
 			in_trash?: boolean
 	  }
 	| {
 			heading_1: {
-				rich_text: Array<RichTextItemRequest>
+				rich_text: RichTextItemRequest[]
 				color?: ApiColor
 				is_toggleable?: boolean
 			}
@@ -10666,7 +10666,7 @@ type UpdateBlockBodyParameters =
 	  }
 	| {
 			heading_2: {
-				rich_text: Array<RichTextItemRequest>
+				rich_text: RichTextItemRequest[]
 				color?: ApiColor
 				is_toggleable?: boolean
 			}
@@ -10676,7 +10676,7 @@ type UpdateBlockBodyParameters =
 	  }
 	| {
 			heading_3: {
-				rich_text: Array<RichTextItemRequest>
+				rich_text: RichTextItemRequest[]
 				color?: ApiColor
 				is_toggleable?: boolean
 			}
@@ -10685,14 +10685,14 @@ type UpdateBlockBodyParameters =
 			in_trash?: boolean
 	  }
 	| {
-			paragraph: { rich_text: Array<RichTextItemRequest>; color?: ApiColor }
+			paragraph: { rich_text: RichTextItemRequest[]; color?: ApiColor }
 			type?: 'paragraph'
 			archived?: boolean
 			in_trash?: boolean
 	  }
 	| {
 			bulleted_list_item: {
-				rich_text: Array<RichTextItemRequest>
+				rich_text: RichTextItemRequest[]
 				color?: ApiColor
 			}
 			type?: 'bulleted_list_item'
@@ -10701,7 +10701,7 @@ type UpdateBlockBodyParameters =
 	  }
 	| {
 			numbered_list_item: {
-				rich_text: Array<RichTextItemRequest>
+				rich_text: RichTextItemRequest[]
 				color?: ApiColor
 			}
 			type?: 'numbered_list_item'
@@ -10709,14 +10709,14 @@ type UpdateBlockBodyParameters =
 			in_trash?: boolean
 	  }
 	| {
-			quote: { rich_text: Array<RichTextItemRequest>; color?: ApiColor }
+			quote: { rich_text: RichTextItemRequest[]; color?: ApiColor }
 			type?: 'quote'
 			archived?: boolean
 			in_trash?: boolean
 	  }
 	| {
 			to_do: {
-				rich_text?: Array<RichTextItemRequest>
+				rich_text?: RichTextItemRequest[]
 				checked?: boolean
 				color?: ApiColor
 			}
@@ -10725,20 +10725,20 @@ type UpdateBlockBodyParameters =
 			in_trash?: boolean
 	  }
 	| {
-			toggle: { rich_text: Array<RichTextItemRequest>; color?: ApiColor }
+			toggle: { rich_text: RichTextItemRequest[]; color?: ApiColor }
 			type?: 'toggle'
 			archived?: boolean
 			in_trash?: boolean
 	  }
 	| {
-			template: { rich_text: Array<RichTextItemRequest> }
+			template: { rich_text: RichTextItemRequest[] }
 			type?: 'template'
 			archived?: boolean
 			in_trash?: boolean
 	  }
 	| {
 			callout: {
-				rich_text?: Array<RichTextItemRequest>
+				rich_text?: RichTextItemRequest[]
 				icon?:
 					| { emoji: EmojiRequest; type?: 'emoji' }
 					| { external: { url: TextRequest }; type?: 'external' }
@@ -10857,7 +10857,7 @@ type AppendBlockChildrenPathParameters = {
 }
 
 type AppendBlockChildrenBodyParameters = {
-	children: Array<BlockObjectRequest>
+	children: BlockObjectRequest[]
 	after?: IdRequest
 }
 
@@ -10902,8 +10902,8 @@ type UpdateDatabasePathParameters = {
 }
 
 type UpdateDatabaseBodyParameters = {
-	title?: Array<RichTextItemRequest>
-	description?: Array<RichTextItemRequest>
+	title?: RichTextItemRequest[]
+	description?: RichTextItemRequest[]
 	icon?:
 		| { emoji: EmojiRequest; type?: 'emoji' }
 		| null
@@ -11154,7 +11154,7 @@ type QueryDatabasePathParameters = {
 }
 
 type QueryDatabaseQueryParameters = {
-	filter_properties?: Array<string>
+	filter_properties?: string[]
 }
 
 type QueryDatabaseBodyParameters = {
@@ -11171,8 +11171,8 @@ type QueryDatabaseBodyParameters = {
 					| PropertyFilter
 					| TimestampCreatedTimeFilter
 					| TimestampLastEditedTimeFilter
-					| { or: Array<PropertyFilter> }
-					| { and: Array<PropertyFilter> }
+					| { or: PropertyFilter[] }
+					| { and: PropertyFilter[] }
 				>
 		  }
 		| {
@@ -11180,8 +11180,8 @@ type QueryDatabaseBodyParameters = {
 					| PropertyFilter
 					| TimestampCreatedTimeFilter
 					| TimestampLastEditedTimeFilter
-					| { or: Array<PropertyFilter> }
-					| { and: Array<PropertyFilter> }
+					| { or: PropertyFilter[] }
+					| { and: PropertyFilter[] }
 				>
 		  }
 		| PropertyFilter
@@ -11406,8 +11406,8 @@ type CreateDatabaseBodyParameters = {
 		| { external: { url: TextRequest }; type?: 'external' }
 		| null
 	cover?: { external: { url: TextRequest }; type?: 'external' } | null
-	title?: Array<RichTextItemRequest>
-	description?: Array<RichTextItemRequest>
+	title?: RichTextItemRequest[]
+	description?: RichTextItemRequest[]
 	is_inline?: boolean
 }
 
@@ -11461,9 +11461,9 @@ export const search = {
 type CreateCommentBodyParameters =
 	| {
 			parent: { page_id: IdRequest; type?: 'page_id' }
-			rich_text: Array<RichTextItemRequest>
+			rich_text: RichTextItemRequest[]
 	  }
-	| { discussion_id: IdRequest; rich_text: Array<RichTextItemRequest> }
+	| { discussion_id: IdRequest; rich_text: RichTextItemRequest[] }
 
 export type CreateCommentParameters = CreateCommentBodyParameters
 
@@ -11491,7 +11491,7 @@ export type ListCommentsResponse = {
 	object: 'list'
 	next_cursor: string | null
 	has_more: boolean
-	results: Array<CommentObjectResponse>
+	results: CommentObjectResponse[]
 }
 
 export const listComments = {
