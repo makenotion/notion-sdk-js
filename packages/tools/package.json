@@ -8,7 +8,7 @@
 		"bin": "bin"
 	},
 	"scripts": {
-		"check:lint": "run-eslint-workers",
+		"check:lint": "run-eslint",
 		"check:types": "run-tsc"
 	},
 	"dependencies": {
