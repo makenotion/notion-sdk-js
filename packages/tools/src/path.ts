@@ -1,10 +1,13 @@
 import memoizeOne from "memoize-one"
 import { z } from "zod"
+import * as find from "empathic/find"
 
-export const getRepoRoot = memoizeOne(async () =>
-  z
+export const getRepoRoot = memoizeOne(() => {
+  const pnpmLock = z
     .string()
     .trim()
     .startsWith("/")
-    .parse(await $({ stdio: "pipe" })`git rev-parse --show-toplevel`.text())
-)
+    .endsWith("/pnpm-lock.yaml")
+    .parse(find.up("pnpm-lock.yaml"))
+  return path.dirname(pnpmLock)
+})
