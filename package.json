@@ -18,27 +18,27 @@
 		"test:ci": "run-vitest-ci"
 	},
 	"dependencies": {
-		"@types/node-fetch": "^2.5.10",
-		"node-fetch": "^2.6.1"
+		"@types/node-fetch": "^2.6.12",
+		"node-fetch": "^2.7.0"
 	},
 	"devDependencies": {
 		"@ianvs/prettier-plugin-sort-imports": "4.4.1",
 		"@repo/eslint-config": "workspace:*",
 		"@repo/tools": "workspace:*",
 		"@repo/typescript-config": "workspace:*",
-		"@types/jest": "^28.1.4",
-		"@typescript-eslint/eslint-plugin": "^5.39.0",
-		"@typescript-eslint/parser": "^5.39.0",
-		"cspell": "^5.4.1",
+		"@types/jest": "^28.1.8",
+		"@typescript-eslint/eslint-plugin": "^5.62.0",
+		"@typescript-eslint/parser": "^5.62.0",
+		"cspell": "^5.21.2",
 		"esbuild": "^0.25.0",
-		"eslint": "^7.24.0",
-		"jest": "^28.1.2",
-		"markdown-link-check": "^3.8.7",
+		"eslint": "^7.32.0",
+		"jest": "^28.1.3",
+		"markdown-link-check": "^3.13.6",
 		"prettier": "3.4.2",
 		"prettier-plugin-packagejson": "2.5.8",
-		"ts-jest": "^28.0.5",
+		"ts-jest": "^28.0.8",
 		"turbo": "^2.4.1",
-		"typescript": "^4.8.4",
+		"typescript": "^4.9.5",
 		"zx": "^8.3.2"
 	},
 	"packageManager": "pnpm@10.3.0",
