@@ -1,2 +1,3 @@
-build
+.changeset
+pnpm-lock.yaml
 .github/**/*.md
