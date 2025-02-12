@@ -9,7 +9,7 @@
 		"ts-run": "node --loader ts-node/esm index.ts"
 	},
 	"dependencies": {
-		"@notionhq/client": "workspace:*",
+		"@jahands/notion-client": "workspace:*",
 		"@types/faker": "5.5.9",
 		"@types/lodash": "4.17.15",
 		"dotenv": "16.4.7",

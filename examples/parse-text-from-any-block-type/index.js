@@ -1,4 +1,4 @@
-import { Client, iteratePaginatedAPI } from '@notionhq/client'
+import { Client, iteratePaginatedAPI } from '@jahands/notion-client'
 import { config } from 'dotenv'
 
 config()

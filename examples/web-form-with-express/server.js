@@ -2,7 +2,7 @@ require('dotenv').config()
 const express = require('express')
 const app = express()
 
-const { Client } = require('@notionhq/client')
+const { Client } = require('@jahands/notion-client')
 const notion = new Client({ auth: process.env.NOTION_KEY })
 
 // http://expressjs.com/en/starter/static-files.html

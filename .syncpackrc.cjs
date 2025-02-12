@@ -8,7 +8,7 @@ const config = {
 		{
 			label: 'local packages',
 			packages: ['**'],
-			dependencies: ['@repo/*', '@notionhq/client'],
+			dependencies: ['@repo/*', '@jahands/notion-client'],
 			dependencyTypes: ['!local'], // Exclude the local package itself
 			pinVersion: 'workspace:*',
 		},

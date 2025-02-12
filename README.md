@@ -7,12 +7,12 @@
 </div>
 
 ![Build status](https://github.com/makenotion/notion-sdk-js/actions/workflows/ci.yml/badge.svg)
-[![npm version](https://badge.fury.io/js/%40notionhq%2Fclient.svg)](https://www.npmjs.com/package/@notionhq/client)
+[![npm version](https://badge.fury.io/js/%40notionhq%2Fclient.svg)](https://www.npmjs.com/package/@jahands/notion-client)
 
 ## Installation
 
 ```
-npm install @notionhq/client
+npm install @jahands/notion-client
 ```
 
 ## Usage
@@ -22,7 +22,7 @@ npm install @notionhq/client
 Import and initialize a client using an **integration token** or an OAuth **access token**.
 
 ```js
-const { Client } = require('@notionhq/client')
+const { Client } = require('@jahands/notion-client')
 
 // Initializing a client
 const notion = new Client({
@@ -85,7 +85,7 @@ If the API returns an unsuccessful response, the returned `Promise` rejects with
 The error contains properties from the response, and the most helpful is `code`. You can compare `code` to the values in the `APIErrorCode` object to avoid misspelling error codes.
 
 ```js
-const { Client, APIErrorCode } = require('@notionhq/client')
+const { Client, APIErrorCode } = require('@jahands/notion-client')
 
 try {
 	const notion = new Client({ auth: process.env.NOTION_TOKEN })
@@ -117,7 +117,7 @@ The client emits useful information to a logger. By default, it only emits warni
 If you're debugging an application, and would like the client to log response bodies, set the `logLevel` option to `LogLevel.DEBUG`.
 
 ```js
-const { Client, LogLevel } = require('@notionhq/client')
+const { Client, LogLevel } = require('@jahands/notion-client')
 
 const notion = new Client({
 	auth: process.env.NOTION_TOKEN,

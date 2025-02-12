@@ -7,7 +7,7 @@
 
 ================================================================================ */
 
-import { Client } from '@notionhq/client'
+import { Client } from '@jahands/notion-client'
 import SendGrid from '@sendgrid/mail'
 import { config } from 'dotenv'
 

@@ -18,7 +18,7 @@
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"dependencies": {
-		"@notionhq/client": "workspace:*",
+		"@jahands/notion-client": "workspace:*",
 		"dotenv": "16.4.7"
 	},
 	"devDependencies": {

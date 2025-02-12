@@ -72,7 +72,7 @@ importers:
 
   examples/database-email-update:
     dependencies:
-      '@notionhq/client':
+      '@jahands/notion-client':
         specifier: workspace:*
         version: link:../../packages/notion-client
       '@sendgrid/mail':
@@ -97,7 +97,7 @@ importers:
 
   examples/generate-random-data:
     dependencies:
-      '@notionhq/client':
+      '@jahands/notion-client':
         specifier: workspace:*
         version: link:../../packages/notion-client
       '@types/faker':
@@ -131,7 +131,7 @@ importers:
 
   examples/intro-to-notion-api:
     dependencies:
-      '@notionhq/client':
+      '@jahands/notion-client':
         specifier: workspace:*
         version: link:../../packages/notion-client
       dotenv:
@@ -150,7 +150,7 @@ importers:
 
   examples/notion-github-sync:
     dependencies:
-      '@notionhq/client':
+      '@jahands/notion-client':
         specifier: workspace:*
         version: link:../../packages/notion-client
       dotenv:
@@ -175,7 +175,7 @@ importers:
 
   examples/notion-task-github-pr-sync:
     dependencies:
-      '@notionhq/client':
+      '@jahands/notion-client':
         specifier: workspace:*
         version: link:../../packages/notion-client
       dotenv:
@@ -200,7 +200,7 @@ importers:
 
   examples/parse-text-from-any-block-type:
     dependencies:
-      '@notionhq/client':
+      '@jahands/notion-client':
         specifier: workspace:*
         version: link:../../packages/notion-client
     devDependencies:
@@ -216,7 +216,7 @@ importers:
 
   examples/web-form-with-express:
     dependencies:
-      '@notionhq/client':
+      '@jahands/notion-client':
         specifier: workspace:*
         version: link:../../packages/notion-client
       dotenv:

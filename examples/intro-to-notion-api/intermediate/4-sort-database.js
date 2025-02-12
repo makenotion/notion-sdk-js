@@ -1,4 +1,4 @@
-import { Client } from '@notionhq/client'
+import { Client } from '@jahands/notion-client'
 import { config } from 'dotenv'
 
 import { propertiesForNewPages } from './sampleData.js'

@@ -7,7 +7,7 @@
 
 ================================================================================ */
 
-const { Client } = require('@notionhq/client')
+const { Client } = require('@jahands/notion-client')
 const dotenv = require('dotenv')
 const { Octokit } = require('octokit')
 const _ = require('lodash')

@@ -1,11 +1,11 @@
 // Find the official Notion API client @ https://  github.com/makenotion/notion-sdk-js/
-// npm install @notionhq/client
-import { Client } from '@notionhq/client'
+// npm install @jahands/notion-client
+import { Client } from '@jahands/notion-client'
 import {
 	CreatePageParameters,
 	GetDatabaseResponse,
 	GetPagePropertyResponse,
-} from '@notionhq/client/build/src/api-endpoints'
+} from '@jahands/notion-client/build/src/api-endpoints'
 import { config } from 'dotenv'
 import * as faker from 'faker'
 import * as _ from 'lodash'
