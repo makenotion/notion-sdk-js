@@ -1,16 +1,16 @@
-import { Command, program } from '@commander-js/extra-typings'
+import { cliError } from '@jahands/cli-tools'
 import * as toml from 'smol-toml'
 import { z } from 'zod'
 
-import { getRepoRoot } from '../path'
+import { getRepoRoot } from './path'
 
-export const updatePnpmCmd = new Command('update-pnpm').action(async () => {
+export async function updatePnpm() {
 	const repoRoot = getRepoRoot()
 	cd(repoRoot)
 	echo(chalk.white(`Checking for pnpm updates...`))
 	const res = await fetch('https://registry.npmjs.org/pnpm')
 	if (!res.ok) {
-		throw program.error(`Failed to fetch pnpm registry: ${res.status}`)
+		throw cliError(`Failed to fetch pnpm registry: ${res.status}`)
 	}
 	const body = await res.json()
 	const pnpm = NpmRegistryPnpmResponse.parse(body)
@@ -41,13 +41,13 @@ export const updatePnpmCmd = new Command('update-pnpm').action(async () => {
 	}
 
 	if (versionUpdated) {
-		echo(chalk.blue(`Running pnpm fix...`))
-		await $`pnpm fix`
+		echo(chalk.blue(`Running just fix...`))
+		await $`pnpm runx fix`
 		echo(chalk.greenBright(`Successfully updated pnpm to ${latest}`))
 	} else {
 		echo(chalk.green(`No pnpm updates needed, already on ${latest}`))
 	}
-})
+}
 
 const Semver = z.string().regex(/^\d+\.\d+\.\d+$/)
 const NpmRegistryPnpmResponse = z.object({
@@ -71,5 +71,5 @@ const MiseToml = z.object({
 			pnpm: Semver.describe('pnpm version, e.g. 9.5.0'),
 		})
 		.catchall(z.string()),
-	plugins: z.record(z.string(), z.string()).optional(),
+	alias: z.record(z.string(), z.string()),
 })

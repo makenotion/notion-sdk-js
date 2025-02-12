@@ -5,7 +5,7 @@ import { catchProcessError } from '@jahands/cli-tools'
 
 import { checkCmd } from '../cmd/check'
 import { fixCmd } from '../cmd/fix'
-import { updatePnpmCmd } from '../cmd/update-pnpm'
+import { updateCmd } from '../cmd/update'
 
 program
 	.name('runx')
@@ -13,7 +13,7 @@ program
 
 	.addCommand(checkCmd)
 	.addCommand(fixCmd)
-	.addCommand(updatePnpmCmd)
+	.addCommand(updateCmd)
 
 	// Don't hang for unresolved promises
 	.hook('postAction', () => process.exit(0))
