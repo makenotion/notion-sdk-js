@@ -1,7 +1,7 @@
 node_modules
 
 package-lock.json
-/build
+dist
 
 /examples/**/node_modules
 /examples/**/package-lock.json
