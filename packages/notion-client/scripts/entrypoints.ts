@@ -1,4 +1,4 @@
 export const entryPoints = [
-  // entrypoints
-  "./src/index.ts",
+	// entrypoints
+	'./src/index.ts',
 ] as const satisfies string[]

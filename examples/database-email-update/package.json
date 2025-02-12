@@ -1,26 +1,26 @@
 {
-  "name": "database-update-send-email",
-  "version": "1.0.0",
-  "description": "Send an email with SendGrid when an update is made in Notion.",
-  "main": "index.js",
-  "engines": {
-    "node": ">=20"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "ts-run": "node --loader ts-node/esm index.ts"
-  },
-  "dependencies": {
-    "@notionhq/client": "file:../../",
-    "@sendgrid/mail": "^7.7.0",
-    "dotenv": "^16.0.1",
-    "ts-node": "^10.8.2"
-  },
-  "author": "Aman Gupta",
-  "license": "MIT",
-  "devDependencies": {
-    "@repo/eslint-config": "workspace:*",
-    "@repo/tools": "workspace:*",
-    "@repo/typescript-config": "workspace:*"
-  }
+	"name": "database-update-send-email",
+	"version": "1.0.0",
+	"description": "Send an email with SendGrid when an update is made in Notion.",
+	"license": "MIT",
+	"author": "Aman Gupta",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"ts-run": "node --loader ts-node/esm index.ts"
+	},
+	"dependencies": {
+		"@notionhq/client": "file:../../",
+		"@sendgrid/mail": "^7.7.0",
+		"dotenv": "^16.0.1",
+		"ts-node": "^10.8.2"
+	},
+	"devDependencies": {
+		"@repo/eslint-config": "workspace:*",
+		"@repo/tools": "workspace:*",
+		"@repo/typescript-config": "workspace:*"
+	},
+	"engines": {
+		"node": ">=20"
+	}
 }

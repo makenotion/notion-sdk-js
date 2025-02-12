@@ -1,11 +1,11 @@
 {
-  "$schema": "https://json.schemastore.org/tsconfig",
-  "extends": "./base.json",
-  "compilerOptions": {
-    "module": "es2022",
-    "target": "es2022",
-    "sourceMap": true,
-    "moduleResolution": "Bundler",
-    "resolveJsonModule": true
-  }
+	"$schema": "https://json.schemastore.org/tsconfig",
+	"extends": "./base.json",
+	"compilerOptions": {
+		"module": "es2022",
+		"target": "es2022",
+		"sourceMap": true,
+		"moduleResolution": "Bundler",
+		"resolveJsonModule": true
+	}
 }

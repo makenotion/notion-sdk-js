@@ -1,29 +1,29 @@
 {
-  "name": "intro-to-notion-api",
-  "version": "1.0.0",
-  "description": "Introductory examples of using Notion's public API via the Notion SDK for JavaScript.",
-  "main": "index.js",
-  "type": "module",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": ""
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/makenotion/notion-sdk-js.git"
-  },
-  "author": "Jess Mitchell",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/makenotion/notion-sdk-js/issues"
-  },
-  "dependencies": {
-    "@notionhq/client": "file:../..",
-    "dotenv": "^16.3.1"
-  },
-  "devDependencies": {
-    "@repo/eslint-config": "workspace:*",
-    "@repo/tools": "workspace:*",
-    "@repo/typescript-config": "workspace:*"
-  }
+	"name": "intro-to-notion-api",
+	"version": "1.0.0",
+	"description": "Introductory examples of using Notion's public API via the Notion SDK for JavaScript.",
+	"bugs": {
+		"url": "https://github.com/makenotion/notion-sdk-js/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/makenotion/notion-sdk-js.git"
+	},
+	"license": "MIT",
+	"author": "Jess Mitchell",
+	"type": "module",
+	"main": "index.js",
+	"scripts": {
+		"start": "",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"dependencies": {
+		"@notionhq/client": "file:../..",
+		"dotenv": "^16.3.1"
+	},
+	"devDependencies": {
+		"@repo/eslint-config": "workspace:*",
+		"@repo/tools": "workspace:*",
+		"@repo/typescript-config": "workspace:*"
+	}
 }

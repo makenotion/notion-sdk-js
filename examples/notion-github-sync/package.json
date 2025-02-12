@@ -1,26 +1,26 @@
 {
-  "name": "github-issue-sync",
-  "version": "1.0.0",
-  "description": "Sync GitHub issues with Notion.",
-  "main": "index.js",
-  "engines": {
-    "node": ">=20"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": ""
-  },
-  "author": "Aman Gupta",
-  "license": "MIT",
-  "dependencies": {
-    "@notionhq/client": "file:../../",
-    "dotenv": "^16.0.1",
-    "lodash": "^4.17.21",
-    "octokit": "^2.0.3"
-  },
-  "devDependencies": {
-    "@repo/eslint-config": "workspace:*",
-    "@repo/tools": "workspace:*",
-    "@repo/typescript-config": "workspace:*"
-  }
+	"name": "github-issue-sync",
+	"version": "1.0.0",
+	"description": "Sync GitHub issues with Notion.",
+	"license": "MIT",
+	"author": "Aman Gupta",
+	"main": "index.js",
+	"scripts": {
+		"start": "",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"dependencies": {
+		"@notionhq/client": "file:../../",
+		"dotenv": "^16.0.1",
+		"lodash": "^4.17.21",
+		"octokit": "^2.0.3"
+	},
+	"devDependencies": {
+		"@repo/eslint-config": "workspace:*",
+		"@repo/tools": "workspace:*",
+		"@repo/typescript-config": "workspace:*"
+	},
+	"engines": {
+		"node": ">=20"
+	}
 }

@@ -1,5 +1,5 @@
-import { Client } from "@notionhq/client"
-import { config } from "dotenv"
+import { Client } from '@notionhq/client'
+import { config } from 'dotenv'
 
 config()
 
@@ -19,41 +19,41 @@ const notion = new Client({ auth: apiKey })
  */
 
 async function main() {
-  // Create a new database
-  const newDatabase = await notion.databases.create({
-    parent: {
-      type: "page_id",
-      page_id: pageId,
-    },
-    title: [
-      {
-        type: "text",
-        text: {
-          content: "New database name",
-        },
-      },
-    ],
-    properties: {
-      // These properties represent columns in the database (i.e. its schema)
-      "Grocery item": {
-        type: "title",
-        title: {},
-      },
-      Price: {
-        type: "number",
-        number: {
-          format: "dollar",
-        },
-      },
-      "Last ordered": {
-        type: "date",
-        date: {},
-      },
-    },
-  })
+	// Create a new database
+	const newDatabase = await notion.databases.create({
+		parent: {
+			type: 'page_id',
+			page_id: pageId,
+		},
+		title: [
+			{
+				type: 'text',
+				text: {
+					content: 'New database name',
+				},
+			},
+		],
+		properties: {
+			// These properties represent columns in the database (i.e. its schema)
+			'Grocery item': {
+				type: 'title',
+				title: {},
+			},
+			Price: {
+				type: 'number',
+				number: {
+					format: 'dollar',
+				},
+			},
+			'Last ordered': {
+				type: 'date',
+				date: {},
+			},
+		},
+	})
 
-  // Print the new database response
-  console.log(newDatabase)
+	// Print the new database response
+	console.log(newDatabase)
 }
 
 main()

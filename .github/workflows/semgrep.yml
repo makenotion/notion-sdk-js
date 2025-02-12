@@ -4,9 +4,9 @@ on:
   pull_request: {}
   workflow_dispatch: {}
   push:
-    branches-ignore: ["main"]
+    branches-ignore: ['main']
   schedule:
-    - cron: "20 17 * * *"
+    - cron: '20 17 * * *'
 
 jobs:
   semgrep:

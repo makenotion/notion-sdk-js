@@ -14,5 +14,5 @@
 		"forceConsistentCasingInFileNames": true
 	},
 	"include": ["**/*.ts"],
-	"exclude": ["node_modules", "tsconfig.json"],
+	"exclude": ["node_modules", "tsconfig.json"]
 }

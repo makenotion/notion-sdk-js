@@ -1,26 +1,26 @@
 {
-  "name": "notion-task-github-pr-sync",
-  "version": "1.0.0",
-  "description": "Sync Notion tasks with Github PRs",
-  "main": "index.js",
-  "engines": {
-    "node": ">=20"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": ""
-  },
-  "author": "Sid Verma",
-  "license": "MIT",
-  "dependencies": {
-    "@notionhq/client": "file:../../",
-    "dotenv": "^16.0.1",
-    "lodash": "^4.17.21",
-    "octokit": "^2.0.3"
-  },
-  "devDependencies": {
-    "@repo/eslint-config": "workspace:*",
-    "@repo/tools": "workspace:*",
-    "@repo/typescript-config": "workspace:*"
-  }
+	"name": "notion-task-github-pr-sync",
+	"version": "1.0.0",
+	"description": "Sync Notion tasks with Github PRs",
+	"license": "MIT",
+	"author": "Sid Verma",
+	"main": "index.js",
+	"scripts": {
+		"start": "",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"dependencies": {
+		"@notionhq/client": "file:../../",
+		"dotenv": "^16.0.1",
+		"lodash": "^4.17.21",
+		"octokit": "^2.0.3"
+	},
+	"devDependencies": {
+		"@repo/eslint-config": "workspace:*",
+		"@repo/tools": "workspace:*",
+		"@repo/typescript-config": "workspace:*"
+	},
+	"engines": {
+		"node": ">=20"
+	}
 }

@@ -1,70 +1,70 @@
 {
-  "name": "@notionhq/client",
-  "version": "2.2.15",
-  "description": "A simple and easy to use client for the Notion API",
-  "engines": {
-    "node": ">=20"
-  },
-  "homepage": "https://developers.notion.com/docs/getting-started",
-  "bugs": {
-    "url": "https://github.com/makenotion/notion-sdk-js/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/makenotion/notion-sdk-js/"
-  },
-  "keywords": [
-    "notion",
-    "notionapi",
-    "rest",
-    "notion-api"
-  ],
-  "type": "module",
-  "exports": {
-    "import": {
-      "types": "./dist/index.d.mts",
-      "default": "./dist/index.mjs"
-    },
-    "node": {
-      "types": "./dist/index.d.mts",
-      "default": "./dist/index.mjs"
-    }
-  },
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.mts",
-  "files": [
-    "dist"
-  ],
-  "scripts": {
-    "prepublishOnly": "npm run checkLoggedIn && npm run lint && npm run test",
-    "build": "bun ./scripts/build.ts",
-    "test": "jest ./test",
-    "prebuild": "npm run clean",
-    "clean": "rm -rf ./build",
-    "check:lint": "run-eslint",
-    "check:types": "run-tsc"
-  },
-  "author": "",
-  "license": "MIT",
-  "dependencies": {
-    "@types/node-fetch": "^2.5.10",
-    "node-fetch": "^2.6.1"
-  },
-  "devDependencies": {
-    "@types/jest": "^28.1.4",
-    "@typescript-eslint/eslint-plugin": "^5.39.0",
-    "@typescript-eslint/parser": "^5.39.0",
-    "cspell": "^5.4.1",
-    "esbuild": "^0.25.0",
-    "eslint": "^7.24.0",
-    "jest": "^28.1.2",
-    "markdown-link-check": "^3.8.7",
-    "prettier": "^2.8.8",
-    "ts-jest": "^28.0.5",
-    "typescript": "^4.8.4",
-    "@repo/eslint-config": "workspace:*",
-    "@repo/tools": "workspace:*",
-    "@repo/typescript-config": "workspace:*",
-    "zx": "^8.3.2"
-  }
+	"name": "@notionhq/client",
+	"version": "2.2.15",
+	"description": "A simple and easy to use client for the Notion API",
+	"keywords": [
+		"notion",
+		"notionapi",
+		"rest",
+		"notion-api"
+	],
+	"homepage": "https://developers.notion.com/docs/getting-started",
+	"bugs": {
+		"url": "https://github.com/makenotion/notion-sdk-js/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/makenotion/notion-sdk-js/"
+	},
+	"license": "MIT",
+	"author": "",
+	"type": "module",
+	"exports": {
+		"import": {
+			"types": "./dist/index.d.mts",
+			"default": "./dist/index.mjs"
+		},
+		"node": {
+			"types": "./dist/index.d.mts",
+			"default": "./dist/index.mjs"
+		}
+	},
+	"module": "./dist/index.mjs",
+	"types": "./dist/index.d.mts",
+	"files": [
+		"dist"
+	],
+	"scripts": {
+		"prebuild": "npm run clean",
+		"build": "bun ./scripts/build.ts",
+		"check:lint": "run-eslint",
+		"check:types": "run-tsc",
+		"clean": "rm -rf ./build",
+		"prepublishOnly": "npm run checkLoggedIn && npm run lint && npm run test",
+		"test": "jest ./test"
+	},
+	"dependencies": {
+		"@types/node-fetch": "^2.5.10",
+		"node-fetch": "^2.6.1"
+	},
+	"devDependencies": {
+		"@repo/eslint-config": "workspace:*",
+		"@repo/tools": "workspace:*",
+		"@repo/typescript-config": "workspace:*",
+		"@types/jest": "^28.1.4",
+		"@typescript-eslint/eslint-plugin": "^5.39.0",
+		"@typescript-eslint/parser": "^5.39.0",
+		"cspell": "^5.4.1",
+		"esbuild": "^0.25.0",
+		"eslint": "^7.24.0",
+		"jest": "^28.1.2",
+		"markdown-link-check": "^3.8.7",
+		"prettier": "^2.8.8",
+		"ts-jest": "^28.0.5",
+		"typescript": "^4.8.4",
+		"zx": "^8.3.2"
+	},
+	"engines": {
+		"node": ">=20"
+	}
 }
