@@ -1,0 +1,27 @@
+name: Test
+
+on:
+  push:
+    branches: ['*']
+
+env:
+  EARTHLY_TOKEN: ${{ secrets.EARTHLY_TOKEN }}
+  EARTHLY_ORG: jahands
+  EARTHLY_SATELLITE: hetz
+  FORCE_COLOR: 1
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: earthly/actions-setup@v1.0.13
+        with:
+          version: v0.8.15
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 10
+      - name: Test (Earthly)
+        run: earthly --ci +test --GITHUB_ACTIONS=1
