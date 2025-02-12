@@ -17,5 +17,10 @@
     "ts-node": "^10.8.2"
   },
   "author": "Aman Gupta",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "@repo/tools": "workspace:*",
+    "@repo/typescript-config": "workspace:*"
+  }
 }

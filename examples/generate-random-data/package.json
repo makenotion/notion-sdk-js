@@ -16,5 +16,10 @@
     "faker": "^5.5.3",
     "lodash": "^4.17.21",
     "ts-node": "^10.8.2"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "@repo/tools": "workspace:*",
+    "@repo/typescript-config": "workspace:*"
   }
 }

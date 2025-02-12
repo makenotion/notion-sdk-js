@@ -20,5 +20,10 @@
   "dependencies": {
     "@notionhq/client": "file:../..",
     "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "@repo/tools": "workspace:*",
+    "@repo/typescript-config": "workspace:*"
   }
 }

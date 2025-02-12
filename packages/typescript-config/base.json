@@ -17,7 +17,9 @@
     "strict": true,
     "noEmit": true,
     "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "allowJs": true,
+    "checkJs": false
   },
   "exclude": ["node_modules"]
 }

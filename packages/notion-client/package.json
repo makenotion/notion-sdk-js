@@ -54,6 +54,9 @@
     "prettier": "^2.8.8",
     "ts-jest": "^28.0.5",
     "typescript": "^4.8.4",
+    "@repo/eslint-config": "workspace:*",
+    "@repo/tools": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
     "zx": "^8.3.2"
   }
 }
