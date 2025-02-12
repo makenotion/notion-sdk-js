@@ -40,6 +40,7 @@
 		"ts-jest": "28.0.8",
 		"turbo": "2.4.1",
 		"typescript": "5.5.4",
+		"vitest": "2.1.8",
 		"zx": "8.3.2"
 	},
 	"packageManager": "pnpm@10.3.0",
