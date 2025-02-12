@@ -1,11 +1,33 @@
-node_modules
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# Wrangler
+.wrangler
+.dev.vars
 
-package-lock.json
+# Dependencies
+node_modules
+.eslintcache
+
+# Local env files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.secret
+*.env
+
+# Testing
+coverage
+
+# Turbo
+.turbo
+
+# Build Outputs
 dist
 
-/examples/**/node_modules
-/examples/**/package-lock.json
-/examples/**/.env
+# Debug
+npm-debug.log*
 
-.vscode
-
+# Misc
+.DS_Store
+*.pem
