@@ -1,7 +1,7 @@
 // cSpell Settings
 {
-	// Version of the setting file.  Always 0.1
-	"version": "0.1",
+	// Version of the setting file.  Always 0.2
+	"version": "0.2",
 	// language - current active spelling language
 	"language": "en",
 	// words - list of words to be always considered correct
@@ -13,7 +13,24 @@
 		"blackmad",
 		"octokit",
 		"printf",
-		"is_toggleable"
+		"is_toggleable",
+		"pipefail",
+		"toplevel",
+		"vitest",
+		"runx",
+		"entrypoints",
+		"pnpm",
+		"pnpx",
+		"codemod",
+		"jahands",
+		"smol",
+		"syncpack",
+		"esbuild",
+		"outdir",
+		"realpath",
+		"nothrow",
+		"dotfiles",
+		"eqeqeq"
 	],
 	// flagWords - list of words to be always considered incorrect
 	// This is useful for offensive words and common spelling errors.
@@ -21,9 +38,8 @@
 	"flagWords": ["hte"],
 	"ignorePaths": [
 		"package.json",
-		"package-lock.json",
-		"node_modules/**",
-		"examples/**/node_modules/**",
-		"build/**"
+		"pnpm-lock.yaml",
+		"**/node_modules/**",
+		"**/dist/**"
 	]
 }

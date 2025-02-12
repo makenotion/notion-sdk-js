@@ -41,7 +41,7 @@ export const checkCmd = new Command('check')
 			lint: ['turbo', 'check:lint'],
 			format: 'prettier . --check --cache --ignore-unknown'.split(' '),
 			types: ['turbo', 'check:types'],
-			spelling: ['cspell', '**/*'],
+			spelling: ['cspell', 'lint', '**/*'],
 			links: 'git ls-files | grep md$ | xargs -n 1 markdown-link-check'.split(' '),
 		} as const satisfies { [key: string]: string[] }
 
