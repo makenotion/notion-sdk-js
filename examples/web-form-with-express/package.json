@@ -30,6 +30,6 @@
 		"@repo/tools": "workspace:*"
 	},
 	"engines": {
-		"node": "14.x"
+		"node": ">=20"
 	}
 }
