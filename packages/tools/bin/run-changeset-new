@@ -2,7 +2,7 @@
 set -euo pipefail
 
 repo_root=$(git rev-parse --show-toplevel)
-cd $repo_root
+cd "$repo_root"
 
 # Stage changes so that changeset can see them
 git add .
@@ -15,7 +15,7 @@ git status --porcelain | grep '.changeset/.*\.md' >/dev/null && true ||
 
 new_changeset=$(ls -t .changeset/*.md | head -n 1)
 echo "📝 New changeset: $new_changeset"
-git add $new_changeset
+git add "$new_changeset"
 
 commit_msg=$(runx parse-changeset $new_changeset --strip-packages)
 if [[ -z "$commit_msg" ]]; then
@@ -26,4 +26,4 @@ fi
 echo "📝 Commit message:"
 echo "$commit_msg"
 
-git commit -m $commit_msg
+git commit -m "$commit_msg"

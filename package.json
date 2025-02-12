@@ -12,6 +12,12 @@
     "build/package.json",
     "build/src/**"
   ],
+  "scripts": {
+    "changeset:new": "run-changeset-new",
+    "check:deps": "runx check --deps",
+    "check:format": "runx check --format",
+    "test:ci": "run-vitest-ci"
+  },
   "dependencies": {
     "@types/node-fetch": "^2.5.10",
     "node-fetch": "^2.6.1"

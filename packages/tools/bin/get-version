@@ -1,4 +1,0 @@
-#!/bin/bash
-set -euo pipefail
-
-echo $(date +'%Y.%m.%d')-$(git log -1 --pretty=format:%h)
