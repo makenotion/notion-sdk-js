@@ -15,6 +15,11 @@ install:
 fix *flags:
   bun runx fix {{flags}}
 
+# Check for issues with deps/lint/types/format
+[no-cd]
+check *flags:
+  bun runx check {{flags}}
+
 # Run tests
 [no-cd]
 test *flags:
