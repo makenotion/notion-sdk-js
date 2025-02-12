@@ -1,0 +1,32 @@
+name: Release
+
+on:
+  push:
+    branches: ['main']
+
+jobs:
+  create-release-pr:
+    # Release PRs are for changelogs only - we auto publish on main every time regardless.
+    name: Create Release PR
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    concurrency: ${{ github.workflow }}-create-release-pr
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - uses: pnpm/action-setup@v4
+      - name: Setup Node.js 22.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+          cache: 'pnpm'
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile --child-concurrency=10
+      - name: Create Release Pull Request
+        uses: changesets/action@v1
+        with:
+          publish: pnpm release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
