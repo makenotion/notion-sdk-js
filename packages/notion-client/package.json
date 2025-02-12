@@ -23,14 +23,12 @@
   "types": "./build/src/index.d.ts",
   "scripts": {
     "prepublishOnly": "npm run checkLoggedIn && npm run lint && npm run test",
-    "build": "tsc",
-    "prettier": "prettier --write .",
-    "lint": "prettier --check . && eslint . --ext .ts && cspell '**/*' ",
+    "build": "bun ./scripts/build.ts",
     "test": "jest ./test",
-    "check-links": "git ls-files | grep md$ | xargs -n 1 markdown-link-check",
     "prebuild": "npm run clean",
     "clean": "rm -rf ./build",
-    "checkLoggedIn": "./scripts/verifyLoggedIn.sh"
+    "check:lint": "run-eslint",
+    "check:types": "run-tsc"
   },
   "author": "",
   "license": "MIT",
