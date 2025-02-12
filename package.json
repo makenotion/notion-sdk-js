@@ -1,39 +1,11 @@
 {
-  "name": "@notionhq/client",
-  "version": "2.2.15",
+  "name": "@repo/notion-sdk-js",
+  "version": "0.1.0",
   "description": "A simple and easy to use client for the Notion API",
   "engines": {
     "node": ">=20"
   },
-  "homepage": "https://developers.notion.com/docs/getting-started",
-  "bugs": {
-    "url": "https://github.com/makenotion/notion-sdk-js/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/makenotion/notion-sdk-js/"
-  },
-  "keywords": [
-    "notion",
-    "notionapi",
-    "rest",
-    "notion-api"
-  ],
-  "main": "./build/src",
-  "types": "./build/src/index.d.ts",
-  "scripts": {
-    "prepare": "npm run build",
-    "prepublishOnly": "npm run checkLoggedIn && npm run lint && npm run test",
-    "build": "tsc",
-    "prettier": "prettier --write .",
-    "lint": "prettier --check . && eslint . --ext .ts && cspell '**/*' ",
-    "test": "jest ./test",
-    "check-links": "git ls-files | grep md$ | xargs -n 1 markdown-link-check",
-    "prebuild": "npm run clean",
-    "clean": "rm -rf ./build",
-    "checkLoggedIn": "./scripts/verifyLoggedIn.sh"
-  },
-  "author": "",
+  "sideEffects": false,
   "license": "MIT",
   "files": [
     "build/package.json",
