@@ -1,0 +1,29 @@
+name: Run Edit Last 24h Script
+
+on:
+  schedule:
+    - cron: '0 8 * * *'  # UTC 08:00 = UTC-8 00:00 (太平洋时间午夜)
+  workflow_dispatch:      # 允许手动触发
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+    environment: lanjunqi-secret    # 添加环境访问权限
+    
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v3
+      
+      - name: 设置 Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          
+      - name: 安装依赖并运行脚本
+        env:
+          API_KEY: ${{ secrets.NOTION_EDIT_LAST_24H_API_KEY }}
+          DATABASE_URL: ${{ secrets.NOTION_EDIT_LAST_24H_NEW_PAGE_PARENT_ID }}
+        run: |
+          cd cool_scripts/edit_last_24h
+          npm install
+          npm run
