@@ -10097,7 +10097,7 @@ export const getUser = {
 } as const
 
 type ListUsersQueryParameters = {
-  start_cursor?: string
+  start_cursor?: string | null
   page_size?: number
 }
 
@@ -10672,7 +10672,7 @@ type GetPagePropertyPathParameters = {
 }
 
 type GetPagePropertyQueryParameters = {
-  start_cursor?: string
+  start_cursor?: string | null
   page_size?: number
 }
 
@@ -11003,7 +11003,7 @@ type ListBlockChildrenPathParameters = {
 }
 
 type ListBlockChildrenQueryParameters = {
-  start_cursor?: string
+  start_cursor?: string | null
   page_size?: number
 }
 
@@ -11375,7 +11375,7 @@ type QueryDatabaseBodyParameters = {
     | PropertyFilter
     | TimestampCreatedTimeFilter
     | TimestampLastEditedTimeFilter
-  start_cursor?: string
+  start_cursor?: string | null
   page_size?: number
   archived?: boolean
   in_trash?: boolean
@@ -11416,7 +11416,7 @@ export const queryDatabase = {
 } as const
 
 type ListDatabasesQueryParameters = {
-  start_cursor?: string
+  start_cursor?: string | null
   page_size?: number
 }
 
@@ -11640,7 +11640,7 @@ type SearchBodyParameters = {
     direction: "ascending" | "descending"
   }
   query?: string
-  start_cursor?: string
+  start_cursor?: string | null
   page_size?: number
   filter?: { property: "object"; value: "page" | "database" }
 }
@@ -11692,7 +11692,7 @@ export const createComment = {
 
 type ListCommentsQueryParameters = {
   block_id: IdRequest
-  start_cursor?: string
+  start_cursor?: string | null
   page_size?: number
 }
 
