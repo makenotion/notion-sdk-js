@@ -11665,13 +11665,7 @@ export const search = {
   method: "post",
   pathParams: [],
   queryParams: [],
-  bodyParams: [
-    "sort",
-    "query",
-    "start_cursor",
-    "page_size",
-    "filter",
-  ],
+  bodyParams: ["sort", "query", "start_cursor", "page_size", "filter"],
   path: (): string => `search`,
 } as const
 
