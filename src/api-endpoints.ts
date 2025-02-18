@@ -1,5 +1,5 @@
 // cspell:disable-file
-// Note: This is a generated file.
+// Note: This is a generated file. DO NOT EDIT!
 
 type IdRequest = string | string
 
@@ -756,6 +756,7 @@ type AnnotationResponse = {
     | "purple"
     | "pink"
     | "red"
+    | "default_background"
     | "gray_background"
     | "brown_background"
     | "orange_background"
@@ -777,6 +778,8 @@ export type TextRichTextItemResponse = {
 
 type LinkPreviewMentionResponse = { url: TextRequest }
 
+type LinkMentionResponse = { href: string }
+
 type TemplateMentionDateTemplateMentionResponse = {
   type: "template_mention_date"
   template_mention_date: "today" | "now"
@@ -791,15 +794,19 @@ type TemplateMentionResponse =
   | TemplateMentionDateTemplateMentionResponse
   | TemplateMentionUserTemplateMentionResponse
 
+type CustomEmojiResponse = { id: IdRequest; name: string; url: string }
+
 export type MentionRichTextItemResponse = {
   type: "mention"
   mention:
     | { type: "user"; user: PartialUserObjectResponse | UserObjectResponse }
     | { type: "date"; date: DateResponse }
     | { type: "link_preview"; link_preview: LinkPreviewMentionResponse }
+    | { type: "link_mention"; link_mention: LinkMentionResponse }
     | { type: "template_mention"; template_mention: TemplateMentionResponse }
     | { type: "page"; page: { id: IdRequest } }
     | { type: "database"; database: { id: IdRequest } }
+    | { type: "custom_emoji"; custom_emoji: CustomEmojiResponse }
   annotations: AnnotationResponse
   plain_text: string
   href: string | null
@@ -4673,6 +4680,8 @@ export type PageObjectResponse = {
     | null
     | { type: "file"; file: { url: string; expiry_time: string } }
     | null
+    | { type: "custom_emoji"; custom_emoji: CustomEmojiResponse }
+    | null
   cover:
     | { type: "external"; external: { url: TextRequest } }
     | null
@@ -4991,6 +5000,8 @@ export type DatabaseObjectResponse = {
     | null
     | { type: "file"; file: { url: string; expiry_time: string } }
     | null
+    | { type: "custom_emoji"; custom_emoji: CustomEmojiResponse }
+    | null
   cover:
     | { type: "external"; external: { url: TextRequest } }
     | null
@@ -5028,6 +5039,7 @@ type ApiColor =
   | "purple"
   | "pink"
   | "red"
+  | "default_background"
   | "gray_background"
   | "brown_background"
   | "orange_background"
@@ -5332,6 +5344,7 @@ type LanguageRequest =
   | "abap"
   | "agda"
   | "arduino"
+  | "ascii art"
   | "assembly"
   | "bash"
   | "basic"
@@ -5360,6 +5373,7 @@ type LanguageRequest =
   | "graphql"
   | "groovy"
   | "haskell"
+  | "hcl"
   | "html"
   | "idris"
   | "java"
@@ -5402,6 +5416,7 @@ type LanguageRequest =
   | "scheme"
   | "scss"
   | "shell"
+  | "smalltalk"
   | "solidity"
   | "sql"
   | "swift"
@@ -5450,6 +5465,8 @@ export type CalloutBlockObjectResponse = {
       | { type: "external"; external: { url: TextRequest } }
       | null
       | { type: "file"; file: { url: string; expiry_time: string } }
+      | null
+      | { type: "custom_emoji"; custom_emoji: CustomEmojiResponse }
       | null
   }
   parent:
@@ -6194,6 +6211,7 @@ type RichTextItemRequest =
           | "purple"
           | "pink"
           | "red"
+          | "default_background"
           | "gray_background"
           | "brown_background"
           | "orange_background"
@@ -6250,6 +6268,7 @@ type RichTextItemRequest =
         | { page: { id: IdRequest } }
         | { database: { id: IdRequest } }
         | { template_mention: TemplateMentionRequest }
+        | { custom_emoji: { id: IdRequest; name?: string; url?: string } }
       type?: "mention"
       annotations?: {
         bold?: boolean
@@ -6268,6 +6287,7 @@ type RichTextItemRequest =
           | "purple"
           | "pink"
           | "red"
+          | "default_background"
           | "gray_background"
           | "brown_background"
           | "orange_background"
@@ -6299,6 +6319,7 @@ type RichTextItemRequest =
           | "purple"
           | "pink"
           | "red"
+          | "default_background"
           | "gray_background"
           | "brown_background"
           | "orange_background"
@@ -6476,6 +6497,10 @@ export type BlockObjectRequestWithoutChildren =
         icon?:
           | { emoji: EmojiRequest; type?: "emoji" }
           | { external: { url: TextRequest }; type?: "external" }
+          | {
+              custom_emoji: { id: IdRequest; name?: string; url?: string }
+              type?: "custom_emoji"
+            }
         color?: ApiColor
       }
       type?: "callout"
@@ -6807,6 +6832,14 @@ export type BlockObjectRequest =
                     icon?:
                       | { emoji: EmojiRequest; type?: "emoji" }
                       | { external: { url: TextRequest }; type?: "external" }
+                      | {
+                          custom_emoji: {
+                            id: IdRequest
+                            name?: string
+                            url?: string
+                          }
+                          type?: "custom_emoji"
+                        }
                   }
                   type?: "callout"
                   object?: "block"
@@ -7039,6 +7072,14 @@ export type BlockObjectRequest =
                 icon?:
                   | { emoji: EmojiRequest; type?: "emoji" }
                   | { external: { url: TextRequest }; type?: "external" }
+                  | {
+                      custom_emoji: {
+                        id: IdRequest
+                        name?: string
+                        url?: string
+                      }
+                      type?: "custom_emoji"
+                    }
               }
               type?: "callout"
               object?: "block"
@@ -7267,6 +7308,14 @@ export type BlockObjectRequest =
                 icon?:
                   | { emoji: EmojiRequest; type?: "emoji" }
                   | { external: { url: TextRequest }; type?: "external" }
+                  | {
+                      custom_emoji: {
+                        id: IdRequest
+                        name?: string
+                        url?: string
+                      }
+                      type?: "custom_emoji"
+                    }
               }
               type?: "callout"
               object?: "block"
@@ -7495,6 +7544,14 @@ export type BlockObjectRequest =
                 icon?:
                   | { emoji: EmojiRequest; type?: "emoji" }
                   | { external: { url: TextRequest }; type?: "external" }
+                  | {
+                      custom_emoji: {
+                        id: IdRequest
+                        name?: string
+                        url?: string
+                      }
+                      type?: "custom_emoji"
+                    }
               }
               type?: "callout"
               object?: "block"
@@ -7723,6 +7780,14 @@ export type BlockObjectRequest =
                 icon?:
                   | { emoji: EmojiRequest; type?: "emoji" }
                   | { external: { url: TextRequest }; type?: "external" }
+                  | {
+                      custom_emoji: {
+                        id: IdRequest
+                        name?: string
+                        url?: string
+                      }
+                      type?: "custom_emoji"
+                    }
               }
               type?: "callout"
               object?: "block"
@@ -7950,6 +8015,14 @@ export type BlockObjectRequest =
                 icon?:
                   | { emoji: EmojiRequest; type?: "emoji" }
                   | { external: { url: TextRequest }; type?: "external" }
+                  | {
+                      custom_emoji: {
+                        id: IdRequest
+                        name?: string
+                        url?: string
+                      }
+                      type?: "custom_emoji"
+                    }
               }
               type?: "callout"
               object?: "block"
@@ -8177,6 +8250,14 @@ export type BlockObjectRequest =
                 icon?:
                   | { emoji: EmojiRequest; type?: "emoji" }
                   | { external: { url: TextRequest }; type?: "external" }
+                  | {
+                      custom_emoji: {
+                        id: IdRequest
+                        name?: string
+                        url?: string
+                      }
+                      type?: "custom_emoji"
+                    }
               }
               type?: "callout"
               object?: "block"
@@ -8404,6 +8485,14 @@ export type BlockObjectRequest =
                 icon?:
                   | { emoji: EmojiRequest; type?: "emoji" }
                   | { external: { url: TextRequest }; type?: "external" }
+                  | {
+                      custom_emoji: {
+                        id: IdRequest
+                        name?: string
+                        url?: string
+                      }
+                      type?: "custom_emoji"
+                    }
               }
               type?: "callout"
               object?: "block"
@@ -8631,6 +8720,14 @@ export type BlockObjectRequest =
                 icon?:
                   | { emoji: EmojiRequest; type?: "emoji" }
                   | { external: { url: TextRequest }; type?: "external" }
+                  | {
+                      custom_emoji: {
+                        id: IdRequest
+                        name?: string
+                        url?: string
+                      }
+                      type?: "custom_emoji"
+                    }
               }
               type?: "callout"
               object?: "block"
@@ -8858,6 +8955,14 @@ export type BlockObjectRequest =
                 icon?:
                   | { emoji: EmojiRequest; type?: "emoji" }
                   | { external: { url: TextRequest }; type?: "external" }
+                  | {
+                      custom_emoji: {
+                        id: IdRequest
+                        name?: string
+                        url?: string
+                      }
+                      type?: "custom_emoji"
+                    }
               }
               type?: "callout"
               object?: "block"
@@ -9086,6 +9191,14 @@ export type BlockObjectRequest =
                 icon?:
                   | { emoji: EmojiRequest; type?: "emoji" }
                   | { external: { url: TextRequest }; type?: "external" }
+                  | {
+                      custom_emoji: {
+                        id: IdRequest
+                        name?: string
+                        url?: string
+                      }
+                      type?: "custom_emoji"
+                    }
               }
               type?: "callout"
               object?: "block"
@@ -9312,6 +9425,14 @@ export type BlockObjectRequest =
                 icon?:
                   | { emoji: EmojiRequest; type?: "emoji" }
                   | { external: { url: TextRequest }; type?: "external" }
+                  | {
+                      custom_emoji: {
+                        id: IdRequest
+                        name?: string
+                        url?: string
+                      }
+                      type?: "custom_emoji"
+                    }
               }
               type?: "callout"
               object?: "block"
@@ -9539,6 +9660,14 @@ export type BlockObjectRequest =
                 icon?:
                   | { emoji: EmojiRequest; type?: "emoji" }
                   | { external: { url: TextRequest }; type?: "external" }
+                  | {
+                      custom_emoji: {
+                        id: IdRequest
+                        name?: string
+                        url?: string
+                      }
+                      type?: "custom_emoji"
+                    }
               }
               type?: "callout"
               object?: "block"
@@ -9555,6 +9684,10 @@ export type BlockObjectRequest =
         icon?:
           | { emoji: EmojiRequest; type?: "emoji" }
           | { external: { url: TextRequest }; type?: "external" }
+          | {
+              custom_emoji: { id: IdRequest; name?: string; url?: string }
+              type?: "custom_emoji"
+            }
       }
       type?: "callout"
       object?: "block"
@@ -9768,6 +9901,14 @@ export type BlockObjectRequest =
                 icon?:
                   | { emoji: EmojiRequest; type?: "emoji" }
                   | { external: { url: TextRequest }; type?: "external" }
+                  | {
+                      custom_emoji: {
+                        id: IdRequest
+                        name?: string
+                        url?: string
+                      }
+                      type?: "custom_emoji"
+                    }
               }
               type?: "callout"
               object?: "block"
@@ -10219,6 +10360,11 @@ type CreatePageBodyParameters = {
     | null
     | { external: { url: TextRequest }; type?: "external" }
     | null
+    | {
+        custom_emoji: { id: IdRequest; name?: string; url?: string }
+        type?: "custom_emoji"
+      }
+    | null
   cover?: { external: { url: TextRequest }; type?: "external" } | null
   content?: Array<BlockObjectRequest>
   children?: Array<BlockObjectRequest>
@@ -10497,6 +10643,11 @@ type UpdatePageBodyParameters = {
     | null
     | { external: { url: TextRequest }; type?: "external" }
     | null
+    | {
+        custom_emoji: { id: IdRequest; name?: string; url?: string }
+        type?: "custom_emoji"
+      }
+    | null
   cover?: { external: { url: TextRequest }; type?: "external" } | null
   archived?: boolean
   in_trash?: boolean
@@ -10757,6 +10908,10 @@ type UpdateBlockBodyParameters =
         icon?:
           | { emoji: EmojiRequest; type?: "emoji" }
           | { external: { url: TextRequest }; type?: "external" }
+          | {
+              custom_emoji: { id: IdRequest; name?: string; url?: string }
+              type?: "custom_emoji"
+            }
         color?: ApiColor
       }
       type?: "callout"
@@ -10932,6 +11087,11 @@ type UpdateDatabaseBodyParameters = {
     | { emoji: EmojiRequest; type?: "emoji" }
     | null
     | { external: { url: TextRequest }; type?: "external" }
+    | null
+    | {
+        custom_emoji: { id: IdRequest; name?: string; url?: string }
+        type?: "custom_emoji"
+      }
     | null
   cover?: { external: { url: TextRequest }; type?: "external" } | null
   properties?: Record<
@@ -11440,6 +11600,11 @@ type CreateDatabaseBodyParameters = {
     | { emoji: EmojiRequest; type?: "emoji" }
     | null
     | { external: { url: TextRequest }; type?: "external" }
+    | null
+    | {
+        custom_emoji: { id: IdRequest; name?: string; url?: string }
+        type?: "custom_emoji"
+      }
     | null
   cover?: { external: { url: TextRequest }; type?: "external" } | null
   title?: Array<RichTextItemRequest>
