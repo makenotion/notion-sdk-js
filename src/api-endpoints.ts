@@ -4697,6 +4697,7 @@ export type PageObjectResponse = {
   in_trash: boolean
   url: string
   public_url: string | null
+  request_id:string
 }
 
 export type PartialPageObjectResponse = { object: "page"; id: string }
@@ -4988,6 +4989,7 @@ export type PartialDatabaseObjectResponse = {
   object: "database"
   id: string
   properties: Record<string, DatabasePropertyConfigResponse>
+  request_id:string
 }
 
 export type DatabaseObjectResponse = {
@@ -5024,6 +5026,7 @@ export type DatabaseObjectResponse = {
   in_trash: boolean
   url: string
   public_url: string | null
+  request_id:string
 }
 
 export type PartialBlockObjectResponse = { object: "block"; id: string }
@@ -11391,6 +11394,7 @@ export type QueryDatabaseResponse = {
   object: "list"
   next_cursor: string | null
   has_more: boolean
+  request_id:string
   results: Array<
     | PageObjectResponse
     | PartialPageObjectResponse
@@ -11747,6 +11751,7 @@ export type OauthTokenResponse = {
       }
     | { type: "workspace"; workspace: true }
   duplicated_template_id: string | null
+  request_id:string
 }
 
 export const oauthToken = {
