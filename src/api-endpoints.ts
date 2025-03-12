@@ -778,7 +778,19 @@ export type TextRichTextItemResponse = {
 
 type LinkPreviewMentionResponse = { url: TextRequest }
 
-type LinkMentionResponse = { href: string }
+type LinkMentionResponse = {
+  href: string
+  title?: string
+  description?: string
+  link_author?: string
+  link_provider?: string
+  thumbnail_url?: string
+  icon_url?: string
+  iframe_url?: string
+  height?: number
+  padding?: number
+  padding_top?: number
+}
 
 type TemplateMentionDateTemplateMentionResponse = {
   type: "template_mention_date"
