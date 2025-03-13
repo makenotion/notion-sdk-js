@@ -11768,3 +11768,35 @@ export const oauthToken = {
   bodyParams: ["grant_type", "code", "redirect_uri", "external_account"],
   path: (): string => `oauth/token`,
 } as const
+
+type OauthRevokeBodyParameters = { token: string }
+
+export type OauthRevokeParameters = OauthRevokeBodyParameters
+
+export type OauthRevokeResponse = Record<string, never>
+
+export const oauthRevoke = {
+  method: "post",
+  pathParams: [],
+  queryParams: [],
+  bodyParams: ["token"],
+  path: (): string => `oauth/revoke`,
+} as const
+
+type OauthIntrospectBodyParameters = { token: string }
+
+export type OauthIntrospectParameters = OauthIntrospectBodyParameters
+
+export type OauthIntrospectResponse = {
+  active: boolean
+  scope?: string
+  iat?: number
+}
+
+export const oauthIntrospect = {
+  method: "post",
+  pathParams: [],
+  queryParams: [],
+  bodyParams: ["token"],
+  path: (): string => `oauth/introspect`,
+} as const
