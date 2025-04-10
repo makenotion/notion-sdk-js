@@ -7,6 +7,7 @@ describe("Notion SDK Client", () => {
 
   it("calls revoke API with basic auth", async () => {
     const mockFetch = jest.fn()
+    jest.spyOn(global, "fetch").mockImplementation(mockFetch)
     mockFetch.mockResolvedValue({
       ok: true,
       text: () => "{}",
@@ -14,7 +15,7 @@ describe("Notion SDK Client", () => {
       status: 200,
     })
 
-    const notion = new Client({ fetch: mockFetch })
+    const notion = new Client()
 
     await notion.oauth.revoke({
       client_id: "client_id",
