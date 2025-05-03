@@ -1,6 +1,6 @@
-import type { Agent } from "http"
+import type { Agent } from "node:http"
 import {
-  Logger,
+  type Logger,
   LogLevel,
   logLevelSeverity,
   makeConsoleLogger,
@@ -13,76 +13,81 @@ import {
 } from "./errors"
 import { pick } from "./utils"
 import {
-  GetBlockParameters,
-  GetBlockResponse,
+  type GetBlockParameters,
+  type GetBlockResponse,
   getBlock,
-  UpdateBlockParameters,
-  UpdateBlockResponse,
+  type UpdateBlockParameters,
+  type UpdateBlockResponse,
   updateBlock,
-  DeleteBlockParameters,
-  DeleteBlockResponse,
+  type DeleteBlockParameters,
+  type DeleteBlockResponse,
   deleteBlock,
-  AppendBlockChildrenParameters,
-  AppendBlockChildrenResponse,
+  type AppendBlockChildrenParameters,
+  type AppendBlockChildrenResponse,
   appendBlockChildren,
-  ListBlockChildrenParameters,
-  ListBlockChildrenResponse,
+  type ListBlockChildrenParameters,
+  type ListBlockChildrenResponse,
   listBlockChildren,
-  ListDatabasesParameters,
-  ListDatabasesResponse,
+  type ListDatabasesParameters,
+  type ListDatabasesResponse,
   listDatabases,
-  GetDatabaseParameters,
-  GetDatabaseResponse,
+  type GetDatabaseParameters,
+  type GetDatabaseResponse,
   getDatabase,
-  QueryDatabaseParameters,
-  QueryDatabaseResponse,
+  type QueryDatabaseParameters,
+  type QueryDatabaseResponse,
   queryDatabase,
-  CreateDatabaseParameters,
-  CreateDatabaseResponse,
+  type CreateDatabaseParameters,
+  type CreateDatabaseResponse,
   createDatabase,
-  UpdateDatabaseParameters,
-  UpdateDatabaseResponse,
+  type UpdateDatabaseParameters,
+  type UpdateDatabaseResponse,
   updateDatabase,
-  CreatePageParameters,
-  CreatePageResponse,
+  type CreatePageParameters,
+  type CreatePageResponse,
   createPage,
-  GetPageParameters,
-  GetPageResponse,
+  type GetPageParameters,
+  type GetPageResponse,
   getPage,
-  UpdatePageParameters,
-  UpdatePageResponse,
+  type UpdatePageParameters,
+  type UpdatePageResponse,
   updatePage,
-  GetUserParameters,
-  GetUserResponse,
+  type GetUserParameters,
+  type GetUserResponse,
   getUser,
-  ListUsersParameters,
-  ListUsersResponse,
+  type ListUsersParameters,
+  type ListUsersResponse,
   listUsers,
-  SearchParameters,
-  SearchResponse,
+  type SearchParameters,
+  type SearchResponse,
   search,
-  GetSelfParameters,
-  GetSelfResponse,
+  type GetSelfParameters,
+  type GetSelfResponse,
   getSelf,
-  GetPagePropertyParameters,
-  GetPagePropertyResponse,
+  type GetPagePropertyParameters,
+  type GetPagePropertyResponse,
   getPageProperty,
-  CreateCommentParameters,
-  CreateCommentResponse,
+  type CreateCommentParameters,
+  type CreateCommentResponse,
   createComment,
-  ListCommentsParameters,
-  ListCommentsResponse,
+  type ListCommentsParameters,
+  type ListCommentsResponse,
   listComments,
-  OauthTokenResponse,
-  OauthTokenParameters,
+  type OauthTokenResponse,
+  type OauthTokenParameters,
   oauthToken,
+  type OauthIntrospectResponse,
+  type OauthIntrospectParameters,
+  oauthIntrospect,
+  type OauthRevokeResponse,
+  type OauthRevokeParameters,
+  oauthRevoke,
 } from "./api-endpoints"
-import nodeFetch from "node-fetch"
 import {
   version as PACKAGE_VERSION,
   name as PACKAGE_NAME,
 } from "../package.json"
-import { SupportedFetch } from "./fetch-types"
+import type { SupportedFetch } from "./fetch-types"
 
 export interface ClientOptions {
   auth?: string
@@ -131,10 +136,10 @@ export default class Client {
     this.#auth = options?.auth
     this.#logLevel = options?.logLevel ?? LogLevel.WARN
     this.#logger = options?.logger ?? makeConsoleLogger(PACKAGE_NAME)
-    this.#prefixUrl = (options?.baseUrl ?? "https://api.notion.com") + "/v1/"
+    this.#prefixUrl = `${options?.baseUrl ?? "https://api.notion.com"}/v1/`
     this.#timeoutMs = options?.timeoutMs ?? 60_000
     this.#notionVersion = options?.notionVersion ?? Client.defaultNotionVersion
-    this.#fetch = options?.fetch ?? nodeFetch
+    this.#fetch = options?.fetch ?? fetch
     this.#agent = options?.agent
     this.#userAgent = `notionhq-client/${PACKAGE_VERSION}`
   }
@@ -219,7 +224,7 @@ export default class Client {
       }
 
       const responseJson: ResponseBody = JSON.parse(responseText)
-      this.log(LogLevel.INFO, `request success`, { method, path })
+      this.log(LogLevel.INFO, "request success", { method, path })
       return responseJson
     } catch (error: unknown) {
       if (!isNotionClientError(error)) {
@@ -227,14 +232,14 @@ export default class Client {
       }
 
       // Log the error if it's one of our known error types
-      this.log(LogLevel.WARN, `request fail`, {
+      this.log(LogLevel.WARN, "request fail", {
         code: error.code,
         message: error.message,
       })
 
       if (isHTTPResponseError(error)) {
         // The response body may contain sensitive information so it is logged separately at the DEBUG level
-        this.log(LogLevel.DEBUG, `failed response body`, {
+        this.log(LogLevel.DEBUG, "failed response body", {
           body: error.body,
         })
       }
@@ -568,6 +573,46 @@ export default class Client {
         method: oauthToken.method,
         query: pick(args, oauthToken.queryParams),
         body: pick(args, oauthToken.bodyParams),
+        auth: {
+          client_id: args.client_id,
+          client_secret: args.client_secret,
+        },
+      })
+    },
+    /**
+     * Introspect token
+     */
+    introspect: (
+      args: OauthIntrospectParameters & {
+        client_id: string
+        client_secret: string
+      }
+    ): Promise<OauthIntrospectResponse> => {
+      return this.request<OauthIntrospectResponse>({
+        path: oauthIntrospect.path(),
+        method: oauthIntrospect.method,
+        query: pick(args, oauthIntrospect.queryParams),
+        body: pick(args, oauthIntrospect.bodyParams),
+        auth: {
+          client_id: args.client_id,
+          client_secret: args.client_secret,
+        },
+      })
+    },
+    /**
+     * Revoke token
+     */
+    revoke: (
+      args: OauthRevokeParameters & {
+        client_id: string
+        client_secret: string
+      }
+    ): Promise<OauthRevokeResponse> => {
+      return this.request<OauthRevokeResponse>({
+        path: oauthRevoke.path(),
+        method: oauthRevoke.method,
+        query: pick(args, oauthRevoke.queryParams),
+        body: pick(args, oauthRevoke.bodyParams),
         auth: {
           client_id: args.client_id,
           client_secret: args.client_secret,

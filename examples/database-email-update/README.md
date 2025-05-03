@@ -15,7 +15,7 @@ This sample was built using [this database template](https://public-api-examples
 git clone https://github.com/makenotion/notion-sdk-js.git
 
 # Switch into this project
-cd notion-sdk-js/examples/database-update-send-email
+cd notion-sdk-js/examples/database-email-update
 
 # Install the dependencies
 npm install
