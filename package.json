@@ -40,6 +40,7 @@
     "build/src/**"
   ],
   "devDependencies": {
+    "@types/babel__traverse": "^7.20.7",
     "@types/jest": "^28.1.4",
     "@types/node-fetch": "^2.5.10",
     "@typescript-eslint/eslint-plugin": "^5.39.0",

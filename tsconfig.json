@@ -35,7 +35,10 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedIndexedAccess": true,
     "noPropertyAccessFromIndexSignature": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    
+    // Skip type checking of declaration files in node_modules
+    "skipLibCheck": true
   },
 
   "include": ["src/**/*", "test/**/*"]
