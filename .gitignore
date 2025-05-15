@@ -2,6 +2,7 @@ node_modules
 
 package-lock.json
 /build
+.env
 
 /examples/**/node_modules
 /examples/**/package-lock.json
