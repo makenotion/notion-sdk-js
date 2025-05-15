@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Share Your Notion Database with Your Integration</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #2e75b5;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        h2 {
+            color: #2e75b5;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            margin-top: 30px;
+        }
+        .step {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .step-number {
+            background-color: #2e75b5;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        .note {
+            background-color: #fff8e1;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        code {
+            background-color: #f1f1f1;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+        .image-placeholder {
+            background-color: #eee;
+            border: 1px solid #ddd;
+            padding: 50px;
+            text-align: center;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        .btn {
+            background-color: #2e75b5;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+        .btn:hover {
+            background-color: #235a8e;
+        }
+    </style>
+</head>
+<body>
+    <h1>Share Your Notion Database with Your Integration</h1>
+    
+    <div class="note">
+        <strong>Important:</strong> For your Notion integration to access a database, you must explicitly share the database with it. 
+        This is a security measure to ensure integrations only access the data you want them to.
+    </div>
+    
+    <h2>Why doesn't my integration see my database?</h2>
+    <p>
+        Even though you created the integration, Notion's security model requires you to explicitly share each database with it.
+        Your integration named <strong>RS_NTN</strong> is currently not connected to any databases, which is why you're seeing the error:
+    </p>
+    <code>Could not find database with ID: 15c3faca-41ea-4a69-aabc-44f3b599eb73</code>
+    
+    <h2>Step-by-Step Instructions</h2>
+    
+    <div class="step">
+        <h3><span class="step-number">1</span> Open your database in Notion</h3>
+        <p>Navigate to the database you want to share with your integration.</p>
+        <div class="image-placeholder">
+            [Image: Notion database view]
+        </div>
+    </div>
+    
+    <div class="step">
+        <h3><span class="step-number">2</span> Click the "Share" button</h3>
+        <p>Look for the "Share" button in the top-right corner of your Notion page and click it.</p>
+        <div class="image-placeholder">
+            [Image: Share button highlighted in the Notion interface]
+        </div>
+    </div>
+    
+    <div class="step">
+        <h3><span class="step-number">3</span> Invite your integration</h3>
+        <p>In the sharing modal:</p>
+        <ol>
+            <li>Type <strong>RS_NTN</strong> in the search field</li>
+            <li>Select your integration when it appears</li>
+            <li>Click "Invite"</li>
+        </ol>
+        <div class="image-placeholder">
+            [Image: Sharing modal with integration being invited]
+        </div>
+    </div>
+    
+    <div class="step">
+        <h3><span class="step-number">4</span> Run the test again</h3>
+        <p>After sharing your database with the integration, run your test script again:</p>
+        <code>node server.js</code>
+        <p>This time, your integration should be able to access and query the database!</p>
+    </div>
+    
+    <div class="note">
+        <strong>Note:</strong> If your database has a parent page, make sure to share the <em>database itself</em>, not just the parent page.
+    </div>
+    
+    <h2>Still having trouble?</h2>
+    <p>
+        Check that:
+    </p>
+    <ul>
+        <li>The database ID in your <code>.env</code> file matches the actual database ID</li>
+        <li>Your integration token is correct</li>
+        <li>Your integration has the necessary capabilities enabled in the Notion dashboard</li>
+    </ul>
+    
+    <p>For more detailed information, see the <a href="https://developers.notion.com/docs/create-a-notion-integration#step-2-share-a-database-with-your-integration" target="_blank">official Notion documentation</a>.</p>
+    
+    <button class="btn" onclick="window.location.href='https://www.notion.so'">Open Notion</button>
+</body>
+</html>

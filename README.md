@@ -1,27 +1,63 @@
 <div align="center">
-	<h1>Notion SDK for JavaScript</h1>
+	<h1>🚀 Notion SDK for JavaScript</h1>
 	<p>
-		<b>A simple and easy to use client for the <a href="https://developers.notion.com">Notion API</a></b>
+		<b>A simple and powerful client for the <a href="https://developers.notion.com">Notion API</a></b>
 	</p>
+	<p>Build apps, integrations, and workflows with the Notion platform</p>
 	<br>
 </div>
 
+<div align="center">
+	
 ![Build status](https://github.com/makenotion/notion-sdk-js/actions/workflows/ci.yml/badge.svg)
 [![npm version](https://badge.fury.io/js/%40notionhq%2Fclient.svg)](https://www.npmjs.com/package/@notionhq/client)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue.svg)](https://www.typescriptlang.org/)
 
-## Installation
+</div>
 
-```
+## 📋 Table of Contents
+
+- [Installation](#-installation)
+- [Getting Started](#-getting-started)
+- [Usage Examples](#-usage-examples)
+- [Error Handling](#-error-handling)
+- [Logging](#-logging)
+- [Client Options](#-client-options)
+- [TypeScript Support](#-typescript-support)
+- [Pagination Utilities](#-pagination-utilities)
+- [Requirements](#-requirements)
+- [Getting Help](#-getting-help)
+
+## 📦 Installation
+
+```bash
 npm install @notionhq/client
 ```
 
-## Usage
+## 🚀 Getting Started
 
-> Use Notion's [Getting Started Guide](https://developers.notion.com/docs/getting-started) to get set up to use Notion's API.
+> 💡 First time with the Notion API? Start with Notion's [Getting Started Guide](https://developers.notion.com/docs/getting-started).
 
-Import and initialize a client using an **integration token** or an OAuth **access token**.
+### Setup Flow
 
-```js
+```mermaid
+graph LR
+    A[Install SDK] --> B[Create Integration]
+    B --> C[Get Token]
+    C --> D[Initialize Client]
+    D --> E[Make API Requests]
+    
+    style A fill:#f9f9f9,stroke:#0091ff,stroke-width:2px
+    style B fill:#f9f9f9,stroke:#0091ff,stroke-width:2px
+    style C fill:#f9f9f9,stroke:#0091ff,stroke-width:2px
+    style D fill:#f9f9f9,stroke:#0091ff,stroke-width:2px
+    style E fill:#f9f9f9,stroke:#0091ff,stroke-width:2px
+```
+
+Import and initialize a client using an **integration token** or an OAuth **access token**:
+
+```javascript
 const { Client } = require("@notionhq/client")
 
 // Initializing a client
@@ -30,23 +66,37 @@ const notion = new Client({
 })
 ```
 
-Make a request to any Notion API endpoint.
+## 🔍 Usage Examples
 
-> See the complete list of endpoints in the [API reference](https://developers.notion.com/reference).
+> 📚 See the complete list of endpoints in the [API reference](https://developers.notion.com/reference).
 
-```js
-;(async () => {
-  const listUsersResponse = await notion.users.list({})
-})()
+### Making API Requests
+
+```mermaid
+sequenceDiagram
+    participant App as Your Application
+    participant SDK as Notion SDK
+    participant API as Notion API
+    
+    App->>SDK: Call SDK Method
+    SDK->>API: Format & Send Request
+    API->>SDK: JSON Response
+    SDK->>App: Parsed Response Object
+    
+    Note over App,API: All API communication is handled by the SDK
 ```
 
-Each method returns a `Promise` which resolves the response.
+Make a request to any Notion API endpoint:
 
-```js
+```javascript
+// List all users
+const listUsersResponse = await notion.users.list({})
 console.log(listUsersResponse)
 ```
 
-```
+Example response:
+
+```javascript
 {
   results: [
     {
@@ -59,14 +109,16 @@ console.log(listUsersResponse)
       name: 'Avocado Lovelace',
       avatar_url: 'https://secure.notion-static.com/e6a352a8-8381-44d0-a1dc-9ed80e62b53d.jpg',
     },
-    ...
+    // ...more users
   ]
 }
 ```
 
-Endpoint parameters are grouped into a single object. You don't need to remember which parameters go in the path, query, or body.
+### Querying Databases
 
-```js
+Endpoint parameters are grouped into a single object—no need to remember which parameters go in the path, query, or body:
+
+```javascript
 const myPage = await notion.databases.query({
   database_id: "897e5a76-ae52-4b48-9fdf-e71f5945d1af",
   filter: {
@@ -78,11 +130,31 @@ const myPage = await notion.databases.query({
 })
 ```
 
-### Handling errors
+## ⚠️ Error Handling
 
-If the API returns an unsuccessful response, the returned `Promise` rejects with a `APIResponseError`.
+```mermaid
+flowchart TD
+    A[API Request] --> B{Success?}
+    B -->|Yes| C[Process Response]
+    B -->|No| D[Promise Rejection]
+    D --> E{Error Type?}
+    E -->|APIErrorCode| F[Handle API Error]
+    E -->|ClientErrorCode| G[Handle Client Error]
+    E -->|Other| H[Generic Error]
+    
+    style A fill:#f9f9f9,stroke:#0091ff,stroke-width:2px
+    style B fill:#f9f9f9,stroke:#ff6b6b,stroke-width:2px
+    style C fill:#f9f9f9,stroke:#0091ff,stroke-width:2px
+    style D fill:#f9f9f9,stroke:#ff6b6b,stroke-width:2px
+    style E fill:#f9f9f9,stroke:#ff6b6b,stroke-width:2px
+    style F fill:#f9f9f9,stroke:#ff6b6b,stroke-width:2px
+    style G fill:#f9f9f9,stroke:#ff6b6b,stroke-width:2px
+    style H fill:#f9f9f9,stroke:#ff6b6b,stroke-width:2px
+```
 
-The error contains properties from the response, and the most helpful is `code`. You can compare `code` to the values in the `APIErrorCode` object to avoid misspelling error codes.
+If the API returns an unsuccessful response, the returned `Promise` rejects with an `APIResponseError`.
+
+The error contains properties from the response, and the most helpful is `code`. You can compare `code` to the values in the `APIErrorCode` object to avoid misspelling error codes:
 
 ```js
 const { Client, APIErrorCode } = require("@notionhq/client")
@@ -110,11 +182,11 @@ try {
 }
 ```
 
-### Logging
+## 📝 Logging
 
 The client emits useful information to a logger. By default, it only emits warnings and errors.
 
-If you're debugging an application, and would like the client to log response bodies, set the `logLevel` option to `LogLevel.DEBUG`.
+If you're debugging an application and would like the client to log response bodies, set the `logLevel` option to `LogLevel.DEBUG`:
 
 ```js
 const { Client, LogLevel } = require("@notionhq/client")
@@ -127,9 +199,9 @@ const notion = new Client({
 
 You may also set a custom `logger` to emit logs to a destination other than `stdout`. A custom logger is a function which is called with 3 parameters: `logLevel`, `message`, and `extraInfo`. The custom logger should not return a value.
 
-### Client options
+## ⚙️ Client Options
 
-The `Client` supports the following options on initialization. These options are all keys in the single constructor parameter.
+The `Client` supports the following options on initialization. These options are all keys in the single constructor parameter:
 
 | Option      | Default value              | Type         | Description                                                                                                                                                  |
 | ----------- | -------------------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -140,16 +212,36 @@ The `Client` supports the following options on initialization. These options are
 | `logger`    | Log to console             | `Logger`     | A custom logging function. This function is only called when the client emits a log that is equal or greater severity than `logLevel`.                       |
 | `agent`     | Default node agent         | `http.Agent` | Used to control creation of TCP sockets. A common use is to proxy requests with [`https-proxy-agent`](https://github.com/TooTallNate/node-https-proxy-agent) |
 
-### TypeScript
+## 🔷 TypeScript Support
 
-This package contains type definitions for all request parameters and responses,
-as well as some useful sub-objects from those entities.
+This package contains type definitions for all request parameters and responses, as well as some useful sub-objects from those entities.
 
-Because errors in TypeScript start with type `any` or `unknown`, you should use
-the `isNotionClientError` type guard to handle them in a type-safe way. Each
-`NotionClientError` type is uniquely identified by its `error.code`. Codes in
-the `APIErrorCode` enum are returned from the server. Codes in the
-`ClientErrorCode` enum are produced on the client.
+```mermaid
+graph TD
+    A[TypeScript Integration] --> B[Type Definitions]
+    A --> C[Type Guards]
+    A --> D[Error Handling]
+    
+    B --> B1[Request Parameters]
+    B --> B2[Response Objects]
+    B --> B3[Sub-Objects]
+    
+    C --> C1[isFullPage]
+    C --> C2[isFullBlock]
+    C --> C3[isFullDatabase]
+    C --> C4[Other Guards]
+    
+    D --> D1[isNotionClientError]
+    D --> D2[APIErrorCode]
+    D --> D3[ClientErrorCode]
+    
+    style A fill:#f9f9f9,stroke:#0091ff,stroke-width:2px
+    style B fill:#f9f9f9,stroke:#0091ff,stroke-width:2px
+    style C fill:#f9f9f9,stroke:#0091ff,stroke-width:2px
+    style D fill:#f9f9f9,stroke:#0091ff,stroke-width:2px
+```
+
+Because errors in TypeScript start with type `any` or `unknown`, you should use the `isNotionClientError` type guard to handle them in a type-safe way. Each `NotionClientError` type is uniquely identified by its `error.code`. Codes in the `APIErrorCode` enum are returned from the server. Codes in the `ClientErrorCode` enum are produced on the client.
 
 ```ts
 try {
@@ -210,10 +302,30 @@ for (const page of fullOrPartialPages.results) {
 }
 ```
 
-### Utility functions
+## 🔄 Pagination Utilities
 
-This package also exports a few utility functions that are helpful for dealing with
-any of our paginated APIs.
+This package exports utility functions that are helpful for dealing with any of the paginated APIs.
+
+```mermaid
+sequenceDiagram
+    participant App as Application
+    participant SDK as Notion SDK
+    participant API as Notion API
+    
+    App->>SDK: Call iteratePaginatedAPI()
+    SDK->>API: Request first page
+    API->>SDK: Return first page + next_cursor
+    SDK->>App: Yield first page results
+    
+    loop Until no next_cursor
+        App->>SDK: Request next results
+        SDK->>API: Request with next_cursor
+        API->>SDK: Return next page + next_cursor
+        SDK->>App: Yield next page results
+    end
+    
+    Note over App,API: Automatically handles pagination
+```
 
 #### `iteratePaginatedAPI(listFn, firstPageArgs)`
 
@@ -269,7 +381,7 @@ const blocks = await collectPaginatedAPI(notion.blocks.children.list, {
 // Do something with blocks.
 ```
 
-## Requirements
+## 🛠️ Requirements
 
 This package supports the following minimum versions:
 
@@ -278,8 +390,14 @@ This package supports the following minimum versions:
 
 Earlier versions may still work, but we encourage people building new applications to upgrade to the current stable.
 
-## Getting help
+## 💬 Getting Help
 
 If you want to submit a feature request for Notion's API, or are experiencing any issues with the API platform, please email us at `developers@makenotion.com`.
 
 To report issues with the SDK, it is possible to [submit an issue](https://github.com/makenotion/notion-sdk-js/issues) to this repo. However, we don't monitor these issues very closely. We recommend you reach out to us at `developers@makenotion.com` instead.
+
+---
+
+<div align="center">
+    <p>Built with ❤️ by the Notion Developer Relations team</p>
+</div>
