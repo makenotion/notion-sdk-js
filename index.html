@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  ...
+  <!-- Import the webpage's stylesheet -->
+  <link rel="stylesheet" href="/style.css" />
+
+  <!-- Import the webpage's client-side javascript file -->
+  <script src="/client.js" defer></script>
+</head>
+
+<body>
+  ...
+  <table>
+    ...
+    <tr>
+      <td>
+        <h3>1. Create a new database</h3>
+        <!-- Form to create a database -->
+        <form id="databaseForm">
+          <label for="dbName">Database name</label>
+          <input type="text" id="dbName" />
+          <input type="submit" />
+        </form>
+      </td>
+      <!-- Empty table cell to append the API response to -->
+      <td id="dbResponse"></td>
+    </tr>
+    ...
+  </table>
+  </main>
+  ...
+</body>
+
+</html>

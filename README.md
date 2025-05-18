@@ -28,6 +28,7 @@
 - [Pagination Utilities](#-pagination-utilities)
 - [Requirements](#-requirements)
 - [Getting Help](#-getting-help)
+- [Files in Repository](#-files-in-repository)
 
 ## 📦 Installation
 
@@ -389,6 +390,33 @@ This package supports the following minimum versions:
 - Type definitions (optional): `typescript >= 4.5`
 
 Earlier versions may still work, but we encourage people building new applications to upgrade to the current stable.
+
+## 📄 Files in Repository
+
+| File Name | Description |
+|-----------|-------------|
+| .cspell.json | CSpell configuration file for spell checking |
+| .eslintignore | Specifies files ignored by ESLint |
+| .eslintrc.js | ESLint configuration file |
+| .gitignore | Specifies files ignored by Git |
+| .nvmrc | Node Version Manager configuration |
+| .prettierignore | Specifies files ignored by Prettier |
+| .prettierrc | Prettier code formatter configuration |
+| .roomodes | Room modes configuration |
+| add-files-to-notion.js | Script to add files to Notion |
+| aigi.md | AI guidance information |
+| client.js | Client-side JavaScript file |
+| delete-notion-entries.js | Script to delete Notion entries |
+| enhance-notion-structure.js | Script to enhance Notion structure |
+| index.html | Main HTML file |
+| jest.config.js | Jest testing framework configuration |
+| LICENSE | License information for the project |
+| notion-test-readme.md | Readme file for Notion testing |
+| package.json | NPM package configuration |
+| README.md | Main project documentation |
+| server.js | Server-side JavaScript file |
+| share-database-guide.html | Guide for sharing Notion databases |
+| tsconfig.json | TypeScript configuration file |
 
 ## 💬 Getting Help
 
