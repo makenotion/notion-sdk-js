@@ -82,12 +82,28 @@ import {
   type OauthRevokeResponse,
   type OauthRevokeParameters,
   oauthRevoke,
+  type CreateFileUploadParameters,
+  type CreateFileUploadResponse,
+  createFileUpload,
+  type GetFileUploadResponse,
+  type GetFileUploadParameters,
+  getFileUpload,
+  type SendFileUploadParameters,
+  type SendFileUploadResponse,
+  sendFileUpload,
+  type CompleteFileUploadParameters,
+  type CompleteFileUploadResponse,
+  completeFileUpload,
+  type ListFileUploadsParameters,
+  type ListFileUploadsResponse,
+  listFileUploads,
 } from "./api-endpoints"
 import {
   version as PACKAGE_VERSION,
   name as PACKAGE_NAME,
 } from "../package.json"
 import type { SupportedFetch } from "./fetch-types"
+import FormData = require("form-data")
 
 export interface ClientOptions {
   auth?: string
@@ -101,11 +117,17 @@ export interface ClientOptions {
   agent?: Agent
 }
 
+type FileParam = {
+  filename?: string
+  data: string | Blob
+}
+
 export interface RequestParameters {
   path: string
   method: Method
   query?: QueryParams
   body?: Record<string, unknown>
+  formDataParams?: Record<string, string | FileParam>
   /**
    * To authenticate using public API token, `auth` should be passed as a
    * string. If you are trying to complete OAuth, then `auth` should be an object
@@ -146,20 +168,12 @@ export default class Client {
 
   /**
    * Sends a request.
-   *
-   * @param path
-   * @param method
-   * @param query
-   * @param body
-   * @returns
    */
-  public async request<ResponseBody>({
-    path,
-    method,
-    query,
-    body,
-    auth,
-  }: RequestParameters): Promise<ResponseBody> {
+  public async request<ResponseBody>(
+    args: RequestParameters
+  ): Promise<ResponseBody> {
+    const { path, method, query, body, formDataParams, auth } = args
+
     this.log(LogLevel.INFO, "request start", { method, path })
 
     // If the body is empty, don't send the body in the HTTP request
@@ -173,9 +187,9 @@ export default class Client {
       for (const [key, value] of Object.entries(query)) {
         if (value !== undefined) {
           if (Array.isArray(value)) {
-            value.forEach(val =>
+            for (const val of value) {
               url.searchParams.append(key, decodeURIComponent(val))
-            )
+            }
           } else {
             url.searchParams.append(key, String(value))
           }
@@ -207,12 +221,25 @@ export default class Client {
     if (bodyAsJsonString !== undefined) {
       headers["content-type"] = "application/json"
     }
+
+    let formData: FormData | undefined
+    if (formDataParams) {
+      formData = new FormData()
+      for (const [key, value] of Object.entries(formDataParams)) {
+        if (typeof value === "string") {
+          formData.append(key, value)
+        } else if (typeof value === "object") {
+          formData.append(key, value.data, value.filename ?? "file")
+        }
+      }
+    }
+
     try {
       const response = await RequestTimeoutError.rejectAfterTimeout(
         this.#fetch(url.toString(), {
           method: method.toUpperCase(),
           headers,
-          body: bodyAsJsonString,
+          body: bodyAsJsonString ?? formData,
           agent: this.#agent,
         }),
         this.#timeoutMs
@@ -538,6 +565,80 @@ export default class Client {
         method: listComments.method,
         query: pick(args, listComments.queryParams),
         body: pick(args, listComments.bodyParams),
+        auth: args?.auth,
+      })
+    },
+  }
+
+  public readonly fileUploads = {
+    /**
+     * Create a file upload
+     */
+    create: (
+      args: WithAuth<CreateFileUploadParameters>
+    ): Promise<CreateFileUploadResponse> => {
+      return this.request<CreateFileUploadResponse>({
+        path: createFileUpload.path(),
+        method: createFileUpload.method,
+        query: pick(args, createFileUpload.queryParams),
+        body: pick(args, createFileUpload.bodyParams),
+        auth: args?.auth,
+      })
+    },
+
+    /**
+     * Retrieve a file upload
+     */
+    retrieve: (
+      args: WithAuth<GetFileUploadParameters>
+    ): Promise<GetFileUploadResponse> => {
+      return this.request<GetFileUploadResponse>({
+        path: getFileUpload.path(args),
+        method: getFileUpload.method,
+        query: pick(args, getFileUpload.queryParams),
+        auth: args?.auth,
+      })
+    },
+
+    /**
+     * List file uploads
+     */
+    list: (
+      args: WithAuth<ListFileUploadsParameters>
+    ): Promise<ListFileUploadsResponse> => {
+      return this.request<ListFileUploadsResponse>({
+        path: listFileUploads.path(),
+        method: listFileUploads.method,
+        query: pick(args, listFileUploads.queryParams),
+        auth: args?.auth,
+      })
+    },
+
+    /**
+     * Send a file upload
+     */
+    send: (
+      args: WithAuth<SendFileUploadParameters>
+    ): Promise<SendFileUploadResponse> => {
+      return this.request<SendFileUploadResponse>({
+        path: sendFileUpload.path(args),
+        method: sendFileUpload.method,
+        query: pick(args, sendFileUpload.queryParams),
+        formDataParams: pick(args, sendFileUpload.formDataParams),
+        auth: args?.auth,
+      })
+    },
+
+    /**
+     * Complete a file upload
+     */
+    complete: (
+      args: WithAuth<CompleteFileUploadParameters>
+    ): Promise<CompleteFileUploadResponse> => {
+      return this.request<CompleteFileUploadResponse>({
+        path: completeFileUpload.path(args),
+        method: completeFileUpload.method,
+        query: pick(args, completeFileUpload.queryParams),
         auth: args?.auth,
       })
     },
