@@ -20,5 +20,8 @@
   "dependencies": {
     "@notionhq/client": "file:../..",
     "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "prettier": "3.5.3"
   }
 }
