@@ -616,6 +616,17 @@ export default class Client {
 
     /**
      * Send a file upload
+     *
+     * Requires a `file_upload_id`, obtained from the `id` of the Create File
+     * Upload API response.
+     *
+     * The `file` parameter contains the raw file contents or Blob/File object
+     * under `file.data`, and an optional `file.filename` string.
+     *
+     * Supply a stringified `part_number` parameter when using file uploads
+     * in multi-part mode.
+     *
+     * This endpoint sends HTTP multipart/form-data instead of JSON parameters.
      */
     send: (
       args: WithAuth<SendFileUploadParameters>
