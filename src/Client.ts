@@ -103,6 +103,7 @@ import {
   name as PACKAGE_NAME,
 } from "../package.json"
 import type { SupportedFetch } from "./fetch-types"
+import type { Readable } from "stream"
 
 export interface ClientOptions {
   auth?: string
@@ -246,7 +247,7 @@ export default class Client {
         this.#fetch(url.toString(), {
           method: method.toUpperCase(),
           headers,
-          body: bodyAsJsonString ?? (formData as any),
+          body: bodyAsJsonString ?? (formData as unknown as Readable),
           agent: this.#agent,
         }),
         this.#timeoutMs

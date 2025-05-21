@@ -6,7 +6,7 @@ import type {
   RequestInit as NodeFetchRequestInit,
   Response as NodeFetchResponse,
 } from "node-fetch"
-import { Readable } from "stream"
+import type { Readable } from "stream"
 
 // The `Supported` types should be kept up to date in order to exactly match what we use in the client. This ensures maximal compatibility with other `fetch` implementations.
 export type SupportedRequestInfo = string
