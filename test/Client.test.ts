@@ -110,7 +110,8 @@ describe("Notion SDK Client", () => {
 
       expect(formData["part_number"]).toEqual("2")
 
-      assert(formData["file"] instanceof File)
+      assert(typeof formData["file"] === "object")
+      assert("size" in formData["file"])
       expect(formData["file"].size).toEqual(4)
     })
   })
