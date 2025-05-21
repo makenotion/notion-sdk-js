@@ -26,6 +26,7 @@ In case you are looking for example code for a specific task, the files are divi
 - `/intermediate/2-add-page-to-database.js`: Create a new database and add new pages to it.
 - `/intermediate/3-query-database.js`: Create a new database, add pages to it, and filter the database entries (pages).
 - `/intermediate/4-sort-database.js`: Create a new database, add pages to it, and filter/sort the database entries (pages).
+- `/intermediate/5-upload-file.js`: Upload a file to Notion and attach it to a page as an image block.
 
 ## Running locally
 
@@ -83,7 +84,7 @@ To run each individual example, use the `node` command with the file's path.
 For example:
 
 ```zsh
-node /basic/1-add-block.js
+node basic/1-add-block.js
 ```
 
 ---

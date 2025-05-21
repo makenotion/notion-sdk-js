@@ -1,3 +1,4 @@
+import assert = require("assert")
 import { Client } from "../src"
 
 describe("Notion SDK Client", () => {
@@ -104,20 +105,14 @@ describe("Notion SDK Client", () => {
       expect(firstCallParams?.headers).not.toContain("content-type")
       expect(firstCallParams?.headers).not.toContain("Content-Type")
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const body = { ...(firstCallParams?.body as any) }
-      const streams = body["_streams"]
+      const body = firstCallParams?.body as FormData
+      const formData = Object.fromEntries(body.entries())
 
-      expect(streams).toEqual(
-        expect.arrayContaining([
-          expect.stringContaining(
-            'Content-Disposition: form-data; name="file"; filename="test.txt"'
-          ),
-          expect.stringContaining(
-            'Content-Disposition: form-data; name="part_number"'
-          ),
-        ])
-      )
+      expect(formData["part_number"]).toEqual("2")
+
+      assert(typeof formData["file"] === "object")
+      assert("size" in formData["file"])
+      expect(formData["file"].size).toEqual(4)
     })
   })
 })

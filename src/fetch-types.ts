@@ -6,7 +6,7 @@ import type {
   RequestInit as NodeFetchRequestInit,
   Response as NodeFetchResponse,
 } from "node-fetch"
-import type FormData = require("form-data")
+import type { Readable } from "stream"
 
 // The `Supported` types should be kept up to date in order to exactly match what we use in the client. This ensures maximal compatibility with other `fetch` implementations.
 export type SupportedRequestInfo = string
@@ -18,7 +18,7 @@ type _assertSupportedInfoIsSubtypeOfNodeFetch = Assert<
 
 export type SupportedRequestInit = {
   agent?: Agent
-  body?: string | FormData
+  body?: string | Readable
   headers?: Record<string, string>
   method?: string
 }

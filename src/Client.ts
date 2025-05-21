@@ -103,7 +103,7 @@ import {
   name as PACKAGE_NAME,
 } from "../package.json"
 import type { SupportedFetch } from "./fetch-types"
-import FormData = require("form-data")
+import type { Readable } from "stream"
 
 export interface ClientOptions {
   auth?: string
@@ -224,12 +224,20 @@ export default class Client {
 
     let formData: FormData | undefined
     if (formDataParams) {
+      delete headers["content-type"]
+
       formData = new FormData()
       for (const [key, value] of Object.entries(formDataParams)) {
         if (typeof value === "string") {
           formData.append(key, value)
         } else if (typeof value === "object") {
-          formData.append(key, value.data, value.filename ?? "file")
+          formData.append(
+            key,
+            typeof value.data === "object"
+              ? value.data
+              : new Blob([value.data]),
+            value.filename
+          )
         }
       }
     }
@@ -239,7 +247,7 @@ export default class Client {
         this.#fetch(url.toString(), {
           method: method.toUpperCase(),
           headers,
-          body: bodyAsJsonString ?? formData,
+          body: bodyAsJsonString ?? (formData as unknown as Readable),
           agent: this.#agent,
         }),
         this.#timeoutMs
