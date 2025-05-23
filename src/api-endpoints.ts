@@ -16,28 +16,29 @@ type EmptyObject = Record<string, never>
 
 export type PartialUserObjectResponse = { id: IdRequest; object: "user" }
 
+type BotInfoResponse = {
+  owner:
+    | {
+        type: "user"
+        user:
+          | {
+              type: "person"
+              person: { email: string }
+              name: string | null
+              avatar_url: string | null
+              id: IdRequest
+              object: "user"
+            }
+          | PartialUserObjectResponse
+      }
+    | { type: "workspace"; workspace: true }
+  workspace_name: string | null
+  workspace_limits: { max_file_upload_size_in_bytes: number }
+}
+
 export type BotUserObjectResponse = {
   type: "bot"
-  bot:
-    | EmptyObject
-    | {
-        owner:
-          | {
-              type: "user"
-              user:
-                | {
-                    type: "person"
-                    person: { email: string }
-                    name: string | null
-                    avatar_url: string | null
-                    id: IdRequest
-                    object: "user"
-                  }
-                | PartialUserObjectResponse
-            }
-          | { type: "workspace"; workspace: true }
-        workspace_name: string | null
-      }
+  bot: EmptyObject | BotInfoResponse
   name: string | null
   avatar_url: string | null
   id: IdRequest
@@ -710,26 +711,7 @@ type VerificationPropertyResponse = {
       }
     | null
     | {
-        bot:
-          | EmptyObject
-          | {
-              owner:
-                | {
-                    type: "user"
-                    user:
-                      | {
-                          type: "person"
-                          person: { email: string }
-                          name: string | null
-                          avatar_url: string | null
-                          id: IdRequest
-                          object: "user"
-                        }
-                      | PartialUserObjectResponse
-                  }
-                | { type: "workspace"; workspace: true }
-              workspace_name: string | null
-            }
+        bot: EmptyObject | BotInfoResponse
         id: IdRequest
         type?: "bot"
         name?: string | null
@@ -4799,9 +4781,9 @@ type FormulaDatabasePropertyConfigResponse = {
 
 type SelectPropertyResponse = {
   id: StringRequest
-  name: StringRequest
+  name: TextRequest
   color: SelectColor
-  description: StringRequest | null
+  description: TextRequest | null
 }
 
 type SelectDatabasePropertyConfigResponse = {
@@ -4822,9 +4804,9 @@ type MultiSelectDatabasePropertyConfigResponse = {
 
 type StatusPropertyResponse = {
   id: StringRequest
-  name: StringRequest
+  name: TextRequest
   color: SelectColor
-  description: StringRequest | null
+  description: TextRequest | null
 }
 
 type StatusDatabasePropertyConfigResponse = {
@@ -4833,7 +4815,7 @@ type StatusDatabasePropertyConfigResponse = {
     options: Array<StatusPropertyResponse>
     groups: Array<{
       id: StringRequest
-      name: StringRequest
+      name: TextRequest
       color: SelectColor
       option_ids: Array<string>
     }>
@@ -4853,7 +4835,7 @@ type DualPropertyDatabasePropertyRelationConfigResponse = {
   type: "dual_property"
   dual_property: {
     synced_property_id: StringRequest
-    synced_property_name: StringRequest
+    synced_property_name: TextRequest
   }
   database_id: IdRequest
 }
@@ -6277,26 +6259,7 @@ type RichTextItemRequest =
                   object?: "user"
                 }
               | {
-                  bot:
-                    | EmptyObject
-                    | {
-                        owner:
-                          | {
-                              type: "user"
-                              user:
-                                | {
-                                    type: "person"
-                                    person: { email: string }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                                | PartialUserObjectResponse
-                            }
-                          | { type: "workspace"; workspace: true }
-                        workspace_name: string | null
-                      }
+                  bot: EmptyObject | BotInfoResponse
                   id: IdRequest
                   type?: "bot"
                   name?: string | null
@@ -7188,16 +7151,16 @@ type CreatePageBodyParameters = {
             select:
               | {
                   id: StringRequest
-                  name?: StringRequest
+                  name?: TextRequest
                   color?: SelectColor
-                  description?: StringRequest | null
+                  description?: TextRequest | null
                 }
               | null
               | {
-                  name: StringRequest
+                  name: TextRequest
                   id?: StringRequest
                   color?: SelectColor
-                  description?: StringRequest | null
+                  description?: TextRequest | null
                 }
               | null
             type?: "select"
@@ -7206,15 +7169,15 @@ type CreatePageBodyParameters = {
             multi_select: Array<
               | {
                   id: StringRequest
-                  name?: StringRequest
+                  name?: TextRequest
                   color?: SelectColor
-                  description?: StringRequest | null
+                  description?: TextRequest | null
                 }
               | {
-                  name: StringRequest
+                  name: TextRequest
                   id?: StringRequest
                   color?: SelectColor
-                  description?: StringRequest | null
+                  description?: TextRequest | null
                 }
             >
             type?: "multi_select"
@@ -7231,26 +7194,7 @@ type CreatePageBodyParameters = {
                   object?: "user"
                 }
               | {
-                  bot:
-                    | EmptyObject
-                    | {
-                        owner:
-                          | {
-                              type: "user"
-                              user:
-                                | {
-                                    type: "person"
-                                    person: { email: string }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                                | PartialUserObjectResponse
-                            }
-                          | { type: "workspace"; workspace: true }
-                        workspace_name: string | null
-                      }
+                  bot: EmptyObject | BotInfoResponse
                   id: IdRequest
                   type?: "bot"
                   name?: string | null
@@ -7276,16 +7220,16 @@ type CreatePageBodyParameters = {
             status:
               | {
                   id: StringRequest
-                  name?: StringRequest
+                  name?: TextRequest
                   color?: SelectColor
-                  description?: StringRequest | null
+                  description?: TextRequest | null
                 }
               | null
               | {
-                  name: StringRequest
+                  name: TextRequest
                   id?: StringRequest
                   color?: SelectColor
-                  description?: StringRequest | null
+                  description?: TextRequest | null
                 }
               | null
             type?: "status"
@@ -7301,30 +7245,30 @@ type CreatePageBodyParameters = {
         | null
         | {
             id: StringRequest
-            name?: StringRequest
+            name?: TextRequest
             color?: SelectColor
-            description?: StringRequest | null
+            description?: TextRequest | null
           }
         | null
         | {
-            name: StringRequest
+            name: TextRequest
             id?: StringRequest
             color?: SelectColor
-            description?: StringRequest | null
+            description?: TextRequest | null
           }
         | null
         | Array<
             | {
                 id: StringRequest
-                name?: StringRequest
+                name?: TextRequest
                 color?: SelectColor
-                description?: StringRequest | null
+                description?: TextRequest | null
               }
             | {
-                name: StringRequest
+                name: TextRequest
                 id?: StringRequest
                 color?: SelectColor
-                description?: StringRequest | null
+                description?: TextRequest | null
               }
           >
         | Array<
@@ -7338,26 +7282,7 @@ type CreatePageBodyParameters = {
                 object?: "user"
               }
             | {
-                bot:
-                  | EmptyObject
-                  | {
-                      owner:
-                        | {
-                            type: "user"
-                            user:
-                              | {
-                                  type: "person"
-                                  person: { email: string }
-                                  name: string | null
-                                  avatar_url: string | null
-                                  id: IdRequest
-                                  object: "user"
-                                }
-                              | PartialUserObjectResponse
-                          }
-                        | { type: "workspace"; workspace: true }
-                      workspace_name: string | null
-                    }
+                bot: EmptyObject | BotInfoResponse
                 id: IdRequest
                 type?: "bot"
                 name?: string | null
@@ -7379,16 +7304,16 @@ type CreatePageBodyParameters = {
           >
         | {
             id: StringRequest
-            name?: StringRequest
+            name?: TextRequest
             color?: SelectColor
-            description?: StringRequest | null
+            description?: TextRequest | null
           }
         | null
         | {
-            name: StringRequest
+            name: TextRequest
             id?: StringRequest
             color?: SelectColor
-            description?: StringRequest | null
+            description?: TextRequest | null
           }
         | null
       >
@@ -7448,16 +7373,16 @@ type UpdatePageBodyParameters = {
             select:
               | {
                   id: StringRequest
-                  name?: StringRequest
+                  name?: TextRequest
                   color?: SelectColor
-                  description?: StringRequest | null
+                  description?: TextRequest | null
                 }
               | null
               | {
-                  name: StringRequest
+                  name: TextRequest
                   id?: StringRequest
                   color?: SelectColor
-                  description?: StringRequest | null
+                  description?: TextRequest | null
                 }
               | null
             type?: "select"
@@ -7466,15 +7391,15 @@ type UpdatePageBodyParameters = {
             multi_select: Array<
               | {
                   id: StringRequest
-                  name?: StringRequest
+                  name?: TextRequest
                   color?: SelectColor
-                  description?: StringRequest | null
+                  description?: TextRequest | null
                 }
               | {
-                  name: StringRequest
+                  name: TextRequest
                   id?: StringRequest
                   color?: SelectColor
-                  description?: StringRequest | null
+                  description?: TextRequest | null
                 }
             >
             type?: "multi_select"
@@ -7491,26 +7416,7 @@ type UpdatePageBodyParameters = {
                   object?: "user"
                 }
               | {
-                  bot:
-                    | EmptyObject
-                    | {
-                        owner:
-                          | {
-                              type: "user"
-                              user:
-                                | {
-                                    type: "person"
-                                    person: { email: string }
-                                    name: string | null
-                                    avatar_url: string | null
-                                    id: IdRequest
-                                    object: "user"
-                                  }
-                                | PartialUserObjectResponse
-                            }
-                          | { type: "workspace"; workspace: true }
-                        workspace_name: string | null
-                      }
+                  bot: EmptyObject | BotInfoResponse
                   id: IdRequest
                   type?: "bot"
                   name?: string | null
@@ -7536,16 +7442,16 @@ type UpdatePageBodyParameters = {
             status:
               | {
                   id: StringRequest
-                  name?: StringRequest
+                  name?: TextRequest
                   color?: SelectColor
-                  description?: StringRequest | null
+                  description?: TextRequest | null
                 }
               | null
               | {
-                  name: StringRequest
+                  name: TextRequest
                   id?: StringRequest
                   color?: SelectColor
-                  description?: StringRequest | null
+                  description?: TextRequest | null
                 }
               | null
             type?: "status"
@@ -7561,30 +7467,30 @@ type UpdatePageBodyParameters = {
         | null
         | {
             id: StringRequest
-            name?: StringRequest
+            name?: TextRequest
             color?: SelectColor
-            description?: StringRequest | null
+            description?: TextRequest | null
           }
         | null
         | {
-            name: StringRequest
+            name: TextRequest
             id?: StringRequest
             color?: SelectColor
-            description?: StringRequest | null
+            description?: TextRequest | null
           }
         | null
         | Array<
             | {
                 id: StringRequest
-                name?: StringRequest
+                name?: TextRequest
                 color?: SelectColor
-                description?: StringRequest | null
+                description?: TextRequest | null
               }
             | {
-                name: StringRequest
+                name: TextRequest
                 id?: StringRequest
                 color?: SelectColor
-                description?: StringRequest | null
+                description?: TextRequest | null
               }
           >
         | Array<
@@ -7598,26 +7504,7 @@ type UpdatePageBodyParameters = {
                 object?: "user"
               }
             | {
-                bot:
-                  | EmptyObject
-                  | {
-                      owner:
-                        | {
-                            type: "user"
-                            user:
-                              | {
-                                  type: "person"
-                                  person: { email: string }
-                                  name: string | null
-                                  avatar_url: string | null
-                                  id: IdRequest
-                                  object: "user"
-                                }
-                              | PartialUserObjectResponse
-                          }
-                        | { type: "workspace"; workspace: true }
-                      workspace_name: string | null
-                    }
+                bot: EmptyObject | BotInfoResponse
                 id: IdRequest
                 type?: "bot"
                 name?: string | null
@@ -7639,16 +7526,16 @@ type UpdatePageBodyParameters = {
           >
         | {
             id: StringRequest
-            name?: StringRequest
+            name?: TextRequest
             color?: SelectColor
-            description?: StringRequest | null
+            description?: TextRequest | null
           }
         | null
         | {
-            name: StringRequest
+            name: TextRequest
             id?: StringRequest
             color?: SelectColor
-            description?: StringRequest | null
+            description?: TextRequest | null
           }
         | null
       >
@@ -8104,15 +7991,15 @@ type UpdateDatabaseBodyParameters = {
           options?: Array<
             | {
                 id: StringRequest
-                name?: StringRequest
+                name?: TextRequest
                 color?: SelectColor
-                description?: StringRequest | null
+                description?: TextRequest | null
               }
             | {
-                name: StringRequest
+                name: TextRequest
                 id?: StringRequest
                 color?: SelectColor
-                description?: StringRequest | null
+                description?: TextRequest | null
               }
           >
         }
@@ -8126,15 +8013,15 @@ type UpdateDatabaseBodyParameters = {
           options?: Array<
             | {
                 id: StringRequest
-                name?: StringRequest
+                name?: TextRequest
                 color?: SelectColor
-                description?: StringRequest | null
+                description?: TextRequest | null
               }
             | {
-                name: StringRequest
+                name: TextRequest
                 id?: StringRequest
                 color?: SelectColor
-                description?: StringRequest | null
+                description?: TextRequest | null
               }
           >
         }
@@ -8450,9 +8337,9 @@ type CreateDatabaseBodyParameters = {
     | {
         select: {
           options?: Array<{
-            name: StringRequest
+            name: TextRequest
             color?: SelectColor
-            description?: StringRequest | null
+            description?: TextRequest | null
           }>
         }
         type?: "select"
@@ -8461,9 +8348,9 @@ type CreateDatabaseBodyParameters = {
     | {
         multi_select: {
           options?: Array<{
-            name: StringRequest
+            name: TextRequest
             color?: SelectColor
-            description?: StringRequest | null
+            description?: TextRequest | null
           }>
         }
         type?: "multi_select"
