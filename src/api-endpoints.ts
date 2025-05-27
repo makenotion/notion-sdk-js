@@ -33,7 +33,11 @@ type BotInfoResponse = {
       }
     | { type: "workspace"; workspace: true }
   workspace_name: string | null
-  workspace_limits: { max_file_upload_size_in_bytes: number }
+  // Limits and restrictions that apply to the bot's workspace
+  workspace_limits: {
+    // The maximum allowable size of a file upload, in bytes
+    max_file_upload_size_in_bytes: number
+  }
 }
 
 export type BotUserObjectResponse = {
@@ -5558,7 +5562,11 @@ export type ColumnListBlockObjectResponse = {
   in_trash: boolean
 }
 
-type ColumnResponse = { width_ratio?: number }
+type ColumnResponse = {
+  // Ratio between 0 and 1 of the width of this column relative to all columns in the list.
+  // If not provided, uses an equal width.
+  width_ratio?: number
+}
 
 export type ColumnBlockObjectResponse = {
   type: "column"
@@ -6125,6 +6133,8 @@ export type FileUploadObjectResponse = {
   content_length: number | null
   upload_url?: string
   complete_url?: string
+  // The outcome of an external file uploaded to a Notion workspace. Provides error details
+  // if the import failed.
   file_import_result?:
     | { type: "success"; success: EmptyObject; imported_time: string }
     | {
@@ -6726,6 +6736,8 @@ type BlockObjectWithSingleLevelOfChildrenRequest =
 
 type ColumnWithChildrenRequest = {
   children: Array<BlockObjectWithSingleLevelOfChildrenRequest>
+  // Ratio between 0 and 1 of the width of this column relative to all columns in the list.
+  // If not provided, uses an equal width.
   width_ratio?: number
 }
 
@@ -7085,6 +7097,9 @@ export type GetSelfParameters = Record<string, never>
 
 export type GetSelfResponse = UserObjectResponse
 
+/**
+ * Retrieve your token's bot user
+ */
 export const getSelf = {
   method: "get",
   pathParams: [],
@@ -7102,6 +7117,9 @@ export type GetUserParameters = GetUserPathParameters
 
 export type GetUserResponse = UserObjectResponse
 
+/**
+ * Retrieve a user
+ */
 export const getUser = {
   method: "get",
   pathParams: ["user_id"],
@@ -7127,6 +7145,9 @@ export type ListUsersResponse = {
   results: Array<UserObjectResponse>
 }
 
+/**
+ * List all users
+ */
 export const listUsers = {
   method: "get",
   pathParams: [],
@@ -7327,6 +7348,9 @@ export type CreatePageParameters = CreatePageBodyParameters
 
 export type CreatePageResponse = PageObjectResponse | PartialPageObjectResponse
 
+/**
+ * Create a page
+ */
 export const createPage = {
   method: "post",
   pathParams: [],
@@ -7348,6 +7372,9 @@ export type GetPageParameters = GetPagePathParameters & GetPageQueryParameters
 
 export type GetPageResponse = PageObjectResponse | PartialPageObjectResponse
 
+/**
+ * Retrieve a page
+ */
 export const getPage = {
   method: "get",
   pathParams: ["page_id"],
@@ -7550,6 +7577,9 @@ export type UpdatePageParameters = UpdatePagePathParameters &
 
 export type UpdatePageResponse = PageObjectResponse | PartialPageObjectResponse
 
+/**
+ * Update page properties
+ */
 export const updatePage = {
   method: "patch",
   pathParams: ["page_id"],
@@ -7576,6 +7606,9 @@ export type GetPagePropertyResponse =
   | PropertyItemObjectResponse
   | PropertyItemListResponse
 
+/**
+ * Retrieve a page property item
+ */
 export const getPageProperty = {
   method: "get",
   pathParams: ["page_id", "property_id"],
@@ -7594,6 +7627,9 @@ export type GetBlockParameters = GetBlockPathParameters
 
 export type GetBlockResponse = PartialBlockObjectResponse | BlockObjectResponse
 
+/**
+ * Retrieve a block
+ */
 export const getBlock = {
   method: "get",
   pathParams: ["block_id"],
@@ -7806,7 +7842,11 @@ type UpdateBlockBodyParameters =
       in_trash?: boolean
     }
   | {
-      column: { width_ratio?: number }
+      column: {
+        // Ratio between 0 and 1 of the width of this column relative to all columns in the list.
+        // If not provided, uses an equal width.
+        width_ratio?: number
+      }
       type?: "column"
       archived?: boolean
       in_trash?: boolean
@@ -7820,6 +7860,9 @@ export type UpdateBlockResponse =
   | PartialBlockObjectResponse
   | BlockObjectResponse
 
+/**
+ * Update a block
+ */
 export const updateBlock = {
   method: "patch",
   pathParams: ["block_id"],
@@ -7871,6 +7914,9 @@ export type DeleteBlockResponse =
   | PartialBlockObjectResponse
   | BlockObjectResponse
 
+/**
+ * Delete a block
+ */
 export const deleteBlock = {
   method: "delete",
   pathParams: ["block_id"],
@@ -7901,6 +7947,9 @@ export type ListBlockChildrenResponse = {
   results: Array<PartialBlockObjectResponse | BlockObjectResponse>
 }
 
+/**
+ * Retrieve block children
+ */
 export const listBlockChildren = {
   method: "get",
   pathParams: ["block_id"],
@@ -7932,6 +7981,9 @@ export type AppendBlockChildrenResponse = {
   results: Array<PartialBlockObjectResponse | BlockObjectResponse>
 }
 
+/**
+ * Append block children
+ */
 export const appendBlockChildren = {
   method: "patch",
   pathParams: ["block_id"],
@@ -7952,6 +8004,9 @@ export type GetDatabaseResponse =
   | PartialDatabaseObjectResponse
   | DatabaseObjectResponse
 
+/**
+ * Retrieve a database
+ */
 export const getDatabase = {
   method: "get",
   pathParams: ["database_id"],
@@ -8195,6 +8250,9 @@ export type UpdateDatabaseResponse =
   | PartialDatabaseObjectResponse
   | DatabaseObjectResponse
 
+/**
+ * Update a database
+ */
 export const updateDatabase = {
   method: "patch",
   pathParams: ["database_id"],
@@ -8276,6 +8334,9 @@ export type QueryDatabaseResponse = {
   >
 }
 
+/**
+ * Query a database
+ */
 export const queryDatabase = {
   method: "post",
   pathParams: ["database_id"],
@@ -8309,6 +8370,9 @@ export type ListDatabasesResponse = {
   results: Array<PartialDatabaseObjectResponse | DatabaseObjectResponse>
 }
 
+/**
+ * List databases
+ */
 export const listDatabases = {
   method: "get",
   pathParams: [],
@@ -8488,6 +8552,9 @@ export type CreateDatabaseResponse =
   | PartialDatabaseObjectResponse
   | DatabaseObjectResponse
 
+/**
+ * Create a database
+ */
 export const createDatabase = {
   method: "post",
   pathParams: [],
@@ -8532,6 +8599,9 @@ export type SearchResponse = {
   >
 }
 
+/**
+ * Search by title
+ */
 export const search = {
   method: "post",
   pathParams: [],
@@ -8558,6 +8628,9 @@ export type CreateCommentResponse =
   | CommentObjectResponse
   | PartialCommentObjectResponse
 
+/**
+ * Create comment
+ */
 export const createComment = {
   method: "post",
   pathParams: [],
@@ -8568,8 +8641,12 @@ export const createComment = {
 } as const
 
 type ListCommentsQueryParameters = {
+  // Identifier for a Notion block or page.
   block_id: IdRequest
+  // If supplied, this endpoint will return a page of results starting after the cursor
+  // provided. If not supplied, this endpoint will return the first page of results.
   start_cursor?: string
+  // The number of items from the full list desired in the response. Maximum: 100
   page_size?: number
 }
 
@@ -8584,6 +8661,9 @@ export type ListCommentsResponse = {
   results: Array<CommentObjectResponse>
 }
 
+/**
+ * List comments
+ */
 export const listComments = {
   method: "get",
   pathParams: [],
@@ -8594,10 +8674,23 @@ export const listComments = {
 } as const
 
 type CreateFileUploadBodyParameters = {
+  // How the file is being sent. Use `multi_part` for files larger than 20MB. Use
+  // `external_url` for files that are temporarily hosted publicly elsewhere. Default is
+  // `single_part`.
   mode?: "single_part" | "multi_part" | "external_url"
+  // Name of the file to be created. Required when `mode` is `multi_part`. Otherwise
+  // optional, and used to override the filename. Must include an extension, or have one
+  // inferred from the `content_type` parameter.
   filename?: string
+  // MIME type of the file to be created. Recommended when sending the file in multiple
+  // parts. Must match the content type of the file that's sent, and the extension of the
+  // `filename` parameter if any.
   content_type?: string
+  // When `mode` is `multi_part`, the number of parts you are uploading. This must match
+  // the number of parts as well as the final `part_number` you send.
   number_of_parts?: number
+  // When `mode` is `external_url`, provide the HTTPS URL of a publicly accessible file to
+  // import into your workspace.
   external_url?: string
 }
 
@@ -8605,6 +8698,9 @@ export type CreateFileUploadParameters = CreateFileUploadBodyParameters
 
 export type CreateFileUploadResponse = FileUploadObjectResponse
 
+/**
+ * Create a file upload
+ */
 export const createFileUpload = {
   method: "post",
   pathParams: [],
@@ -8621,8 +8717,12 @@ export const createFileUpload = {
 } as const
 
 type ListFileUploadsQueryParameters = {
+  // If supplied, the endpoint will return file uploads with the specified status.
   status?: "pending" | "uploaded" | "expired" | "failed"
+  // If supplied, this endpoint will return a page of results starting after the cursor
+  // provided. If not supplied, this endpoint will return the first page of results.
   start_cursor?: string
+  // The number of items from the full list desired in the response. Maximum: 100
   page_size?: number
 }
 
@@ -8637,6 +8737,9 @@ export type ListFileUploadsResponse = {
   results: Array<FileUploadObjectResponse>
 }
 
+/**
+ * List file uploads
+ */
 export const listFileUploads = {
   method: "get",
   pathParams: [],
@@ -8647,6 +8750,7 @@ export const listFileUploads = {
 } as const
 
 type SendFileUploadPathParameters = {
+  // Identifier for a Notion file upload object.
   file_upload_id: IdRequest
 }
 
@@ -8660,6 +8764,9 @@ export type SendFileUploadParameters = SendFileUploadPathParameters &
 
 export type SendFileUploadResponse = FileUploadObjectResponse
 
+/**
+ * Upload a file
+ */
 export const sendFileUpload = {
   method: "post",
   pathParams: ["file_upload_id"],
@@ -8671,6 +8778,7 @@ export const sendFileUpload = {
 } as const
 
 type CompleteFileUploadPathParameters = {
+  // Identifier for a Notion file upload object.
   file_upload_id: IdRequest
 }
 
@@ -8678,6 +8786,9 @@ export type CompleteFileUploadParameters = CompleteFileUploadPathParameters
 
 export type CompleteFileUploadResponse = FileUploadObjectResponse
 
+/**
+ * Complete a multi-part file upload
+ */
 export const completeFileUpload = {
   method: "post",
   pathParams: ["file_upload_id"],
@@ -8689,6 +8800,7 @@ export const completeFileUpload = {
 } as const
 
 type GetFileUploadPathParameters = {
+  // Identifier for a Notion file upload object.
   file_upload_id: IdRequest
 }
 
@@ -8696,6 +8808,9 @@ export type GetFileUploadParameters = GetFileUploadPathParameters
 
 export type GetFileUploadResponse = FileUploadObjectResponse
 
+/**
+ * Retrieve a file upload
+ */
 export const getFileUpload = {
   method: "get",
   pathParams: ["file_upload_id"],
@@ -8741,6 +8856,9 @@ export type OauthTokenResponse = {
   request_id?: string
 }
 
+/**
+ * Exchange an authorization code for an access token
+ */
 export const oauthToken = {
   method: "post",
   pathParams: [],
@@ -8756,6 +8874,9 @@ export type OauthRevokeParameters = OauthRevokeBodyParameters
 
 export type OauthRevokeResponse = { request_id?: string }
 
+/**
+ * Revoke a token
+ */
 export const oauthRevoke = {
   method: "post",
   pathParams: [],
@@ -8776,6 +8897,9 @@ export type OauthIntrospectResponse = {
   request_id?: string
 }
 
+/**
+ * Introspect a token
+ */
 export const oauthIntrospect = {
   method: "post",
   pathParams: [],
