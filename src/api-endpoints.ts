@@ -1,7 +1,7 @@
 // cspell:disable-file
 // Note: This is a generated file. DO NOT EDIT!
 
-type IdRequest = string | string
+type IdRequest = string
 
 export type PersonUserObjectResponse = {
   type: "person"
@@ -6155,7 +6155,7 @@ export type FileUploadObjectResponse = {
   number_of_parts?: { total: number; sent: number }
 }
 
-export type PropertyItemPropertyItemListResponse = {
+type PropertyItemPropertyItemListResponse = {
   type: "property_item"
   property_item:
     | { type: "title"; title: EmptyObject; next_url: string | null; id: string }
@@ -7259,7 +7259,6 @@ type CreatePageBodyParameters = {
     | Record<
         string,
         | Array<RichTextItemRequest>
-        | Array<RichTextItemRequest>
         | number
         | null
         | TextRequest
@@ -7313,8 +7312,6 @@ type CreatePageBodyParameters = {
           >
         | StringRequest
         | null
-        | StringRequest
-        | null
         | DateRequest
         | null
         | boolean
@@ -7323,20 +7320,6 @@ type CreatePageBodyParameters = {
             | InternalOrExternalFileWithNameRequest
             | FileUploadWithOptionalNameRequest
           >
-        | {
-            id: StringRequest
-            name?: TextRequest
-            color?: SelectColor
-            description?: TextRequest | null
-          }
-        | null
-        | {
-            name: TextRequest
-            id?: StringRequest
-            color?: SelectColor
-            description?: TextRequest | null
-          }
-        | null
       >
   icon?: PageIconRequest | null
   cover?: PageCoverRequest | null
@@ -7487,7 +7470,6 @@ type UpdatePageBodyParameters = {
     | Record<
         string,
         | Array<RichTextItemRequest>
-        | Array<RichTextItemRequest>
         | number
         | null
         | TextRequest
@@ -7541,8 +7523,6 @@ type UpdatePageBodyParameters = {
           >
         | StringRequest
         | null
-        | StringRequest
-        | null
         | DateRequest
         | null
         | boolean
@@ -7551,20 +7531,6 @@ type UpdatePageBodyParameters = {
             | InternalOrExternalFileWithNameRequest
             | FileUploadWithOptionalNameRequest
           >
-        | {
-            id: StringRequest
-            name?: TextRequest
-            color?: SelectColor
-            description?: TextRequest | null
-          }
-        | null
-        | {
-            name: TextRequest
-            id?: StringRequest
-            color?: SelectColor
-            description?: TextRequest | null
-          }
-        | null
       >
   icon?: PageIconRequest | null
   cover?: PageCoverRequest | null
