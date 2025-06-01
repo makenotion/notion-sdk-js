@@ -139,21 +139,24 @@ commentForm.onsubmit = async function (event) {
 
   const newCommentData = await newCommentResponse.json()
   appendApiResponse(newCommentData, commentResponseEl)
-}
-// (Removed duplicate variable and function declarations to fix redeclaration error)
-
-  if (apiResponse.message === "error") return
-
-  // Add ID of database to UI
-  const newParagraphId = document.createElement("p")
-  newParagraphId.innerHTML = "ID: " + apiResponse.data.id
-  el.appendChild(newParagraphId)
-
-    if (apiResponse.data.url) {
-    const newAnchorTag = document.createElement("a")
-    newAnchorTag.setAttribute("href", apiResponse.data.url)
-    newAnchorTag.innerText = apiResponse.data.url
-    el.appendChild(newAnchorTag)
+}  
+  commentForm.onsubmit = async function (event) {
+    event.preventDefault()
+  
+    const pageID = event.target.pageIDComment.value
+    const comment = event.target.comment.value
+    const body = JSON.stringify({ pageID, comment })
+  
+    const newCommentResponse = await fetch("/comments", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body,
+    })
+  
+    const newCommentData = await newCommentResponse.json()
+    appendApiResponse(newCommentData, commentResponseEl)
   }
-
-  // Add URL of database to UI
+  
+  // ...existing code...
