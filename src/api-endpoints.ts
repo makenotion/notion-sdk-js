@@ -1,7 +1,7 @@
 // cspell:disable-file
 // Note: This is a generated file. DO NOT EDIT!
 
-type IdRequest = string | string
+type IdRequest = string
 
 export type PersonUserObjectResponse = {
   type: "person"
@@ -6155,7 +6155,7 @@ export type FileUploadObjectResponse = {
   number_of_parts?: { total: number; sent: number }
 }
 
-export type PropertyItemPropertyItemListResponse = {
+type PropertyItemPropertyItemListResponse = {
   type: "property_item"
   property_item:
     | { type: "title"; title: EmptyObject; next_url: string | null; id: string }
@@ -7161,183 +7161,100 @@ type CreatePageBodyParameters = {
   parent:
     | { page_id: IdRequest; type?: "page_id" }
     | { database_id: IdRequest; type?: "database_id" }
-  properties:
-    | Record<
-        string,
-        | { title: Array<RichTextItemRequest>; type?: "title" }
-        | { rich_text: Array<RichTextItemRequest>; type?: "rich_text" }
-        | { number: number | null; type?: "number" }
-        | { url: TextRequest | null; type?: "url" }
-        | {
-            select:
-              | {
-                  id: StringRequest
-                  name?: TextRequest
-                  color?: SelectColor
-                  description?: TextRequest | null
-                }
-              | null
-              | {
-                  name: TextRequest
-                  id?: StringRequest
-                  color?: SelectColor
-                  description?: TextRequest | null
-                }
-              | null
-            type?: "select"
-          }
-        | {
-            multi_select: Array<
-              | {
-                  id: StringRequest
-                  name?: TextRequest
-                  color?: SelectColor
-                  description?: TextRequest | null
-                }
-              | {
-                  name: TextRequest
-                  id?: StringRequest
-                  color?: SelectColor
-                  description?: TextRequest | null
-                }
-            >
-            type?: "multi_select"
-          }
-        | {
-            people: Array<
-              | { id: IdRequest }
-              | {
-                  person: { email?: string }
-                  id: IdRequest
-                  type?: "person"
-                  name?: string | null
-                  avatar_url?: string | null
-                  object?: "user"
-                }
-              | {
-                  bot: EmptyObject | BotInfoResponse
-                  id: IdRequest
-                  type?: "bot"
-                  name?: string | null
-                  avatar_url?: string | null
-                  object?: "user"
-                }
-            >
-            type?: "people"
-          }
-        | { email: StringRequest | null; type?: "email" }
-        | { phone_number: StringRequest | null; type?: "phone_number" }
-        | { date: DateRequest | null; type?: "date" }
-        | { checkbox: boolean; type?: "checkbox" }
-        | { relation: Array<{ id: IdRequest }>; type?: "relation" }
-        | {
-            files: Array<
-              | InternalOrExternalFileWithNameRequest
-              | FileUploadWithOptionalNameRequest
-            >
-            type?: "files"
-          }
-        | {
-            status:
-              | {
-                  id: StringRequest
-                  name?: TextRequest
-                  color?: SelectColor
-                  description?: TextRequest | null
-                }
-              | null
-              | {
-                  name: TextRequest
-                  id?: StringRequest
-                  color?: SelectColor
-                  description?: TextRequest | null
-                }
-              | null
-            type?: "status"
-          }
-      >
-    | Record<
-        string,
-        | Array<RichTextItemRequest>
-        | Array<RichTextItemRequest>
-        | number
-        | null
-        | TextRequest
-        | null
-        | {
-            id: StringRequest
-            name?: TextRequest
-            color?: SelectColor
-            description?: TextRequest | null
-          }
-        | null
-        | {
-            name: TextRequest
-            id?: StringRequest
-            color?: SelectColor
-            description?: TextRequest | null
-          }
-        | null
-        | Array<
-            | {
-                id: StringRequest
-                name?: TextRequest
-                color?: SelectColor
-                description?: TextRequest | null
-              }
-            | {
-                name: TextRequest
-                id?: StringRequest
-                color?: SelectColor
-                description?: TextRequest | null
-              }
-          >
-        | Array<
-            | { id: IdRequest }
-            | {
-                person: { email?: string }
-                id: IdRequest
-                type?: "person"
-                name?: string | null
-                avatar_url?: string | null
-                object?: "user"
-              }
-            | {
-                bot: EmptyObject | BotInfoResponse
-                id: IdRequest
-                type?: "bot"
-                name?: string | null
-                avatar_url?: string | null
-                object?: "user"
-              }
-          >
-        | StringRequest
-        | null
-        | StringRequest
-        | null
-        | DateRequest
-        | null
-        | boolean
-        | Array<{ id: IdRequest }>
-        | Array<
-            | InternalOrExternalFileWithNameRequest
-            | FileUploadWithOptionalNameRequest
-          >
-        | {
-            id: StringRequest
-            name?: TextRequest
-            color?: SelectColor
-            description?: TextRequest | null
-          }
-        | null
-        | {
-            name: TextRequest
-            id?: StringRequest
-            color?: SelectColor
-            description?: TextRequest | null
-          }
-        | null
-      >
+  properties: Record<
+    string,
+    | { title: Array<RichTextItemRequest>; type?: "title" }
+    | { rich_text: Array<RichTextItemRequest>; type?: "rich_text" }
+    | { number: number | null; type?: "number" }
+    | { url: TextRequest | null; type?: "url" }
+    | {
+        select:
+          | {
+              id: StringRequest
+              name?: TextRequest
+              color?: SelectColor
+              description?: TextRequest | null
+            }
+          | null
+          | {
+              name: TextRequest
+              id?: StringRequest
+              color?: SelectColor
+              description?: TextRequest | null
+            }
+          | null
+        type?: "select"
+      }
+    | {
+        multi_select: Array<
+          | {
+              id: StringRequest
+              name?: TextRequest
+              color?: SelectColor
+              description?: TextRequest | null
+            }
+          | {
+              name: TextRequest
+              id?: StringRequest
+              color?: SelectColor
+              description?: TextRequest | null
+            }
+        >
+        type?: "multi_select"
+      }
+    | {
+        people: Array<
+          | { id: IdRequest }
+          | {
+              person: { email?: string }
+              id: IdRequest
+              type?: "person"
+              name?: string | null
+              avatar_url?: string | null
+              object?: "user"
+            }
+          | {
+              bot: EmptyObject | BotInfoResponse
+              id: IdRequest
+              type?: "bot"
+              name?: string | null
+              avatar_url?: string | null
+              object?: "user"
+            }
+        >
+        type?: "people"
+      }
+    | { email: StringRequest | null; type?: "email" }
+    | { phone_number: StringRequest | null; type?: "phone_number" }
+    | { date: DateRequest | null; type?: "date" }
+    | { checkbox: boolean; type?: "checkbox" }
+    | { relation: Array<{ id: IdRequest }>; type?: "relation" }
+    | {
+        files: Array<
+          | InternalOrExternalFileWithNameRequest
+          | FileUploadWithOptionalNameRequest
+        >
+        type?: "files"
+      }
+    | {
+        status:
+          | {
+              id: StringRequest
+              name?: TextRequest
+              color?: SelectColor
+              description?: TextRequest | null
+            }
+          | null
+          | {
+              name: TextRequest
+              id?: StringRequest
+              color?: SelectColor
+              description?: TextRequest | null
+            }
+          | null
+        type?: "status"
+      }
+  >
   icon?: PageIconRequest | null
   cover?: PageCoverRequest | null
   content?: Array<BlockObjectRequest>
@@ -7389,183 +7306,100 @@ type UpdatePagePathParameters = {
 }
 
 type UpdatePageBodyParameters = {
-  properties?:
-    | Record<
-        string,
-        | { title: Array<RichTextItemRequest>; type?: "title" }
-        | { rich_text: Array<RichTextItemRequest>; type?: "rich_text" }
-        | { number: number | null; type?: "number" }
-        | { url: TextRequest | null; type?: "url" }
-        | {
-            select:
-              | {
-                  id: StringRequest
-                  name?: TextRequest
-                  color?: SelectColor
-                  description?: TextRequest | null
-                }
-              | null
-              | {
-                  name: TextRequest
-                  id?: StringRequest
-                  color?: SelectColor
-                  description?: TextRequest | null
-                }
-              | null
-            type?: "select"
-          }
-        | {
-            multi_select: Array<
-              | {
-                  id: StringRequest
-                  name?: TextRequest
-                  color?: SelectColor
-                  description?: TextRequest | null
-                }
-              | {
-                  name: TextRequest
-                  id?: StringRequest
-                  color?: SelectColor
-                  description?: TextRequest | null
-                }
-            >
-            type?: "multi_select"
-          }
-        | {
-            people: Array<
-              | { id: IdRequest }
-              | {
-                  person: { email?: string }
-                  id: IdRequest
-                  type?: "person"
-                  name?: string | null
-                  avatar_url?: string | null
-                  object?: "user"
-                }
-              | {
-                  bot: EmptyObject | BotInfoResponse
-                  id: IdRequest
-                  type?: "bot"
-                  name?: string | null
-                  avatar_url?: string | null
-                  object?: "user"
-                }
-            >
-            type?: "people"
-          }
-        | { email: StringRequest | null; type?: "email" }
-        | { phone_number: StringRequest | null; type?: "phone_number" }
-        | { date: DateRequest | null; type?: "date" }
-        | { checkbox: boolean; type?: "checkbox" }
-        | { relation: Array<{ id: IdRequest }>; type?: "relation" }
-        | {
-            files: Array<
-              | InternalOrExternalFileWithNameRequest
-              | FileUploadWithOptionalNameRequest
-            >
-            type?: "files"
-          }
-        | {
-            status:
-              | {
-                  id: StringRequest
-                  name?: TextRequest
-                  color?: SelectColor
-                  description?: TextRequest | null
-                }
-              | null
-              | {
-                  name: TextRequest
-                  id?: StringRequest
-                  color?: SelectColor
-                  description?: TextRequest | null
-                }
-              | null
-            type?: "status"
-          }
-      >
-    | Record<
-        string,
-        | Array<RichTextItemRequest>
-        | Array<RichTextItemRequest>
-        | number
-        | null
-        | TextRequest
-        | null
-        | {
-            id: StringRequest
-            name?: TextRequest
-            color?: SelectColor
-            description?: TextRequest | null
-          }
-        | null
-        | {
-            name: TextRequest
-            id?: StringRequest
-            color?: SelectColor
-            description?: TextRequest | null
-          }
-        | null
-        | Array<
-            | {
-                id: StringRequest
-                name?: TextRequest
-                color?: SelectColor
-                description?: TextRequest | null
-              }
-            | {
-                name: TextRequest
-                id?: StringRequest
-                color?: SelectColor
-                description?: TextRequest | null
-              }
-          >
-        | Array<
-            | { id: IdRequest }
-            | {
-                person: { email?: string }
-                id: IdRequest
-                type?: "person"
-                name?: string | null
-                avatar_url?: string | null
-                object?: "user"
-              }
-            | {
-                bot: EmptyObject | BotInfoResponse
-                id: IdRequest
-                type?: "bot"
-                name?: string | null
-                avatar_url?: string | null
-                object?: "user"
-              }
-          >
-        | StringRequest
-        | null
-        | StringRequest
-        | null
-        | DateRequest
-        | null
-        | boolean
-        | Array<{ id: IdRequest }>
-        | Array<
-            | InternalOrExternalFileWithNameRequest
-            | FileUploadWithOptionalNameRequest
-          >
-        | {
-            id: StringRequest
-            name?: TextRequest
-            color?: SelectColor
-            description?: TextRequest | null
-          }
-        | null
-        | {
-            name: TextRequest
-            id?: StringRequest
-            color?: SelectColor
-            description?: TextRequest | null
-          }
-        | null
-      >
+  properties?: Record<
+    string,
+    | { title: Array<RichTextItemRequest>; type?: "title" }
+    | { rich_text: Array<RichTextItemRequest>; type?: "rich_text" }
+    | { number: number | null; type?: "number" }
+    | { url: TextRequest | null; type?: "url" }
+    | {
+        select:
+          | {
+              id: StringRequest
+              name?: TextRequest
+              color?: SelectColor
+              description?: TextRequest | null
+            }
+          | null
+          | {
+              name: TextRequest
+              id?: StringRequest
+              color?: SelectColor
+              description?: TextRequest | null
+            }
+          | null
+        type?: "select"
+      }
+    | {
+        multi_select: Array<
+          | {
+              id: StringRequest
+              name?: TextRequest
+              color?: SelectColor
+              description?: TextRequest | null
+            }
+          | {
+              name: TextRequest
+              id?: StringRequest
+              color?: SelectColor
+              description?: TextRequest | null
+            }
+        >
+        type?: "multi_select"
+      }
+    | {
+        people: Array<
+          | { id: IdRequest }
+          | {
+              person: { email?: string }
+              id: IdRequest
+              type?: "person"
+              name?: string | null
+              avatar_url?: string | null
+              object?: "user"
+            }
+          | {
+              bot: EmptyObject | BotInfoResponse
+              id: IdRequest
+              type?: "bot"
+              name?: string | null
+              avatar_url?: string | null
+              object?: "user"
+            }
+        >
+        type?: "people"
+      }
+    | { email: StringRequest | null; type?: "email" }
+    | { phone_number: StringRequest | null; type?: "phone_number" }
+    | { date: DateRequest | null; type?: "date" }
+    | { checkbox: boolean; type?: "checkbox" }
+    | { relation: Array<{ id: IdRequest }>; type?: "relation" }
+    | {
+        files: Array<
+          | InternalOrExternalFileWithNameRequest
+          | FileUploadWithOptionalNameRequest
+        >
+        type?: "files"
+      }
+    | {
+        status:
+          | {
+              id: StringRequest
+              name?: TextRequest
+              color?: SelectColor
+              description?: TextRequest | null
+            }
+          | null
+          | {
+              name: TextRequest
+              id?: StringRequest
+              color?: SelectColor
+              description?: TextRequest | null
+            }
+          | null
+        type?: "status"
+      }
+  >
   icon?: PageIconRequest | null
   cover?: PageCoverRequest | null
   archived?: boolean
