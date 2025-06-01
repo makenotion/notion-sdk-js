@@ -83,7 +83,7 @@ dbForm.onsubmit = async function (event) {
   appendApiResponse(newDBData, dbResponseEl)
 }
 
-pageForm.onsubmit = async function (event) {
+pageForm.onsubmit = async (event) => {
   event.preventDefault()
 
   const dbID = event.target.newPageDB.value
