@@ -8498,14 +8498,29 @@ export const search = {
 
 type CreateCommentBodyParameters =
   | {
-      parent: { page_id: IdRequest; type?: "page_id" }
+      // An array of rich text objects that represent the content of the comment.
       rich_text: Array<RichTextItemRequest>
+      // The parent of the comment. This can be a page or a block.
+      parent:
+        | {
+            // The ID of the parent page (with or without dashes), for example,
+            // 195de9221179449fab8075a27c979105
+            page_id: IdRequest
+            type?: "page_id"
+          }
+        | {
+            // The ID of the parent block (with or without dashes), for example,
+            // 195de9221179449fab8075a27c979105
+            block_id: IdRequest
+            type?: "block_id"
+          }
     }
   | {
-      parent: { block_id: IdRequest; type?: "block_id" }
+      // An array of rich text objects that represent the content of the comment.
       rich_text: Array<RichTextItemRequest>
+      // The ID of the discussion to comment on.
+      discussion_id: IdRequest
     }
-  | { discussion_id: IdRequest; rich_text: Array<RichTextItemRequest> }
 
 export type CreateCommentParameters = CreateCommentBodyParameters
 
@@ -8514,13 +8529,13 @@ export type CreateCommentResponse =
   | PartialCommentObjectResponse
 
 /**
- * Create comment
+ * Create a comment
  */
 export const createComment = {
   method: "post",
   pathParams: [],
   queryParams: [],
-  bodyParams: ["parent", "rich_text", "discussion_id"],
+  bodyParams: ["rich_text", "parent", "discussion_id"],
 
   path: (): string => `comments`,
 } as const
