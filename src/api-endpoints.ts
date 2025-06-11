@@ -704,7 +704,6 @@ type VerificationPropertyResponse = {
   date: DateResponse | null
   verified_by:
     | { id: IdRequest }
-    | null
     | {
         person: { email?: string }
         id: IdRequest
@@ -713,7 +712,6 @@ type VerificationPropertyResponse = {
         avatar_url?: string | null
         object?: "user"
       }
-    | null
     | {
         bot: EmptyObject | BotInfoResponse
         id: IdRequest
@@ -4613,7 +4611,6 @@ export type PageObjectResponse = {
         type: "verification"
         verification:
           | VerificationPropertyUnverifiedResponse
-          | null
           | VerificationPropertyResponse
           | null
         id: string
@@ -4687,7 +4684,6 @@ export type PageObjectResponse = {
                     type: "verification"
                     verification:
                       | VerificationPropertyUnverifiedResponse
-                      | null
                       | VerificationPropertyResponse
                       | null
                   }
@@ -6028,7 +6024,6 @@ export type VerificationPropertyItemObjectResponse = {
   type: "verification"
   verification:
     | VerificationPropertyUnverifiedResponse
-    | null
     | VerificationPropertyResponse
     | null
   object: "property_item"
@@ -6213,136 +6208,212 @@ type PropertyItemPropertyItemListResponse = {
 export type PropertyItemListResponse = PropertyItemPropertyItemListResponse
 
 type DateRequest = {
+  // The start date of the date object.
   start: string
+  // The end date of the date object, if any.
   end?: string | null
+  // The time zone of the date object, if any.
   time_zone?: TimeZoneRequest | null
 }
 
 type TemplateMentionRequest =
-  | { template_mention_date: "today" | "now"; type?: "template_mention_date" }
-  | { template_mention_user: "me"; type?: "template_mention_user" }
+  | {
+      // The date of the template mention.
+      template_mention_date: "today" | "now"
+      type?: "template_mention_date"
+    }
+  | {
+      // The user of the template mention.
+      template_mention_user: "me"
+      type?: "template_mention_user"
+    }
 
 type RichTextItemRequest =
   | {
-      text: { content: string; link?: { url: TextRequest } | null }
-      type?: "text"
-      annotations?: {
-        bold?: boolean
-        italic?: boolean
-        strikethrough?: boolean
-        underline?: boolean
-        code?: boolean
-        color?:
-          | "default"
-          | "gray"
-          | "brown"
-          | "orange"
-          | "yellow"
-          | "green"
-          | "blue"
-          | "purple"
-          | "pink"
-          | "red"
-          | "default_background"
-          | "gray_background"
-          | "brown_background"
-          | "orange_background"
-          | "yellow_background"
-          | "green_background"
-          | "blue_background"
-          | "purple_background"
-          | "pink_background"
-          | "red_background"
+      // If a rich text object's type value is `text`, then the corresponding text field
+      // contains an object including the text content and any inline link.
+      text: {
+        // The actual text content of the text.
+        content: string
+        // An object with information about any inline link in this text, if included.
+        link?: {
+          // The URL of the link.
+          url: string
+        } | null
       }
+      // All rich text objects contain an annotations object that sets the styling for the rich
+      // text.
+      annotations?: {
+        // Whether the text is formatted as bold.
+        bold?: boolean
+        // Whether the text is formatted as italic.
+        italic?: boolean
+        // Whether the text is formatted with a strikethrough.
+        strikethrough?: boolean
+        // Whether the text is formatted with an underline.
+        underline?: boolean
+        // Whether the text is formatted as code.
+        code?: boolean
+        // The color of the text.
+        color?: ApiColor
+      }
+      type?: "text"
     }
   | {
+      // Mention objects represent an inline mention of a database, date, link preview mention,
+      // page, template mention, or user. A mention is created in the Notion UI when a user
+      // types `@` followed by the name of the reference.
       mention:
         | {
+            // Details of the user mention.
             user:
-              | { id: IdRequest }
               | {
-                  person: { email?: string }
+                  // The ID of the user.
                   id: IdRequest
+                  // The user object type name.
+                  object?: "user"
+                }
+              | {
+                  // The ID of the user.
+                  id: IdRequest
+                  // Details about the person, when the `type` of the user is `person`.
+                  person: {
+                    // The email of the person.
+                    email?: string
+                  }
+                  // The name of the user.
+                  name?: string | null
+                  // The user object type name.
+                  object?: "user"
+                  // The avatar URL of the user.
+                  avatar_url?: string | null
                   type?: "person"
-                  name?: string | null
-                  avatar_url?: string | null
-                  object?: "user"
                 }
               | {
-                  bot: EmptyObject | BotInfoResponse
+                  // The ID of the user.
                   id: IdRequest
-                  type?: "bot"
+                  // Details about the bot, when the `type` of the user is `bot`.
+                  bot: {
+                    // Details about the owner of the bot.
+                    owner?:
+                      | {
+                          // Details about the owner of the bot, when the `type` of the owner is `user`. This means
+                          // the bot is for a public integration.
+                          user:
+                            | {
+                                // The email of the person.
+                                email: string
+                              }
+                            | {
+                                // The ID of the user.
+                                id: IdRequest
+                                // The user object type name.
+                                object?: "user"
+                              }
+                        }
+                      | {
+                          // Details about the owner of the bot, when the `type` of the owner is `workspace`. This
+                          // means the bot is for an internal integration.
+                          workspace: true
+                        }
+                    // The name of the bot's workspace.
+                    workspace_name?: string | null
+                    // Limits and restrictions that apply to the bot's workspace
+                    workspace_limits?: {
+                      // The maximum allowable size of a file upload, in bytes
+                      max_file_upload_size_in_bytes: number
+                    }
+                  }
+                  // The name of the user.
                   name?: string | null
-                  avatar_url?: string | null
+                  // The user object type name.
                   object?: "user"
+                  // The avatar URL of the user.
+                  avatar_url?: string | null
+                  type?: "bot"
                 }
+            type?: "user"
           }
-        | { date: DateRequest }
-        | { page: { id: IdRequest } }
-        | { database: { id: IdRequest } }
-        | { template_mention: TemplateMentionRequest }
-        | { custom_emoji: { id: IdRequest; name?: string; url?: string } }
-      type?: "mention"
+        | {
+            // Details of the date mention.
+            date: DateRequest
+            type?: "date"
+          }
+        | {
+            // Details of the page mention.
+            page: {
+              // The ID of the page in the mention.
+              id: IdRequest
+            }
+            type?: "page"
+          }
+        | {
+            // Details of the database mention.
+            database: {
+              // The ID of the database in the mention.
+              id: IdRequest
+            }
+            type?: "database"
+          }
+        | {
+            // Details of the template mention.
+            template_mention: TemplateMentionRequest
+            type?: "template_mention"
+          }
+        | {
+            // Details of the custom emoji mention.
+            custom_emoji: {
+              // The ID of the custom emoji.
+              id: IdRequest
+              // The name of the custom emoji.
+              name?: string
+              // The URL of the custom emoji.
+              url?: string
+            }
+            type?: "custom_emoji"
+          }
+      // All rich text objects contain an annotations object that sets the styling for the rich
+      // text.
       annotations?: {
+        // Whether the text is formatted as bold.
         bold?: boolean
+        // Whether the text is formatted as italic.
         italic?: boolean
+        // Whether the text is formatted with a strikethrough.
         strikethrough?: boolean
+        // Whether the text is formatted with an underline.
         underline?: boolean
+        // Whether the text is formatted as code.
         code?: boolean
-        color?:
-          | "default"
-          | "gray"
-          | "brown"
-          | "orange"
-          | "yellow"
-          | "green"
-          | "blue"
-          | "purple"
-          | "pink"
-          | "red"
-          | "default_background"
-          | "gray_background"
-          | "brown_background"
-          | "orange_background"
-          | "yellow_background"
-          | "green_background"
-          | "blue_background"
-          | "purple_background"
-          | "pink_background"
-          | "red_background"
+        // The color of the text.
+        color?: ApiColor
       }
+      type?: "mention"
     }
   | {
-      equation: { expression: TextRequest }
-      type?: "equation"
-      annotations?: {
-        bold?: boolean
-        italic?: boolean
-        strikethrough?: boolean
-        underline?: boolean
-        code?: boolean
-        color?:
-          | "default"
-          | "gray"
-          | "brown"
-          | "orange"
-          | "yellow"
-          | "green"
-          | "blue"
-          | "purple"
-          | "pink"
-          | "red"
-          | "default_background"
-          | "gray_background"
-          | "brown_background"
-          | "orange_background"
-          | "yellow_background"
-          | "green_background"
-          | "blue_background"
-          | "purple_background"
-          | "pink_background"
-          | "red_background"
+      // Notion supports inline LaTeX equations as rich text objects with a type value of
+      // `equation`.
+      equation: {
+        // A KaTeX compatible string.
+        expression: string
       }
+      // All rich text objects contain an annotations object that sets the styling for the rich
+      // text.
+      annotations?: {
+        // Whether the text is formatted as bold.
+        bold?: boolean
+        // Whether the text is formatted as italic.
+        italic?: boolean
+        // Whether the text is formatted with a strikethrough.
+        strikethrough?: boolean
+        // Whether the text is formatted with an underline.
+        underline?: boolean
+        // Whether the text is formatted as code.
+        code?: boolean
+        // The color of the text.
+        color?: ApiColor
+      }
+      type?: "equation"
     }
 
 type InternalFileRequest = { url: string; expiry_time?: string }
@@ -7867,14 +7938,12 @@ type UpdateDatabaseBodyParameters = {
         name?: string
         description?: PropertyDescriptionRequest | null
       }
-    | null
     | {
         formula: { expression?: string }
         type?: "formula"
         name?: string
         description?: PropertyDescriptionRequest | null
       }
-    | null
     | {
         select: {
           options?: Array<
@@ -7896,7 +7965,6 @@ type UpdateDatabaseBodyParameters = {
         name?: string
         description?: PropertyDescriptionRequest | null
       }
-    | null
     | {
         multi_select: {
           options?: Array<
@@ -7918,7 +7986,6 @@ type UpdateDatabaseBodyParameters = {
         name?: string
         description?: PropertyDescriptionRequest | null
       }
-    | null
     | {
         relation:
           | {
@@ -7935,7 +8002,6 @@ type UpdateDatabaseBodyParameters = {
         name?: string
         description?: PropertyDescriptionRequest | null
       }
-    | null
     | {
         rollup:
           | {
@@ -7970,105 +8036,90 @@ type UpdateDatabaseBodyParameters = {
         name?: string
         description?: PropertyDescriptionRequest | null
       }
-    | null
     | {
         unique_id: { prefix?: string | null }
         type?: "unique_id"
         name?: string
         description?: PropertyDescriptionRequest | null
       }
-    | null
     | {
         title: EmptyObject
         type?: "title"
         name?: string
         description?: PropertyDescriptionRequest | null
       }
-    | null
     | {
         rich_text: EmptyObject
         type?: "rich_text"
         name?: string
         description?: PropertyDescriptionRequest | null
       }
-    | null
     | {
         url: EmptyObject
         type?: "url"
         name?: string
         description?: PropertyDescriptionRequest | null
       }
-    | null
     | {
         people: EmptyObject
         type?: "people"
         name?: string
         description?: PropertyDescriptionRequest | null
       }
-    | null
     | {
         files: EmptyObject
         type?: "files"
         name?: string
         description?: PropertyDescriptionRequest | null
       }
-    | null
     | {
         email: EmptyObject
         type?: "email"
         name?: string
         description?: PropertyDescriptionRequest | null
       }
-    | null
     | {
         phone_number: EmptyObject
         type?: "phone_number"
         name?: string
         description?: PropertyDescriptionRequest | null
       }
-    | null
     | {
         date: EmptyObject
         type?: "date"
         name?: string
         description?: PropertyDescriptionRequest | null
       }
-    | null
     | {
         checkbox: EmptyObject
         type?: "checkbox"
         name?: string
         description?: PropertyDescriptionRequest | null
       }
-    | null
     | {
         created_by: EmptyObject
         type?: "created_by"
         name?: string
         description?: PropertyDescriptionRequest | null
       }
-    | null
     | {
         created_time: EmptyObject
         type?: "created_time"
         name?: string
         description?: PropertyDescriptionRequest | null
       }
-    | null
     | {
         last_edited_by: EmptyObject
         type?: "last_edited_by"
         name?: string
         description?: PropertyDescriptionRequest | null
       }
-    | null
     | {
         last_edited_time: EmptyObject
         type?: "last_edited_time"
         name?: string
         description?: PropertyDescriptionRequest | null
       }
-    | null
     | { name: string }
     | null
   >
