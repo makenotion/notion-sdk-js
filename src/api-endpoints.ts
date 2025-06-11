@@ -6110,6 +6110,10 @@ export type CommentObjectResponse = {
   created_by: PartialUserObjectResponse
   created_time: string
   last_edited_time: string
+  attachments?: Array<{
+    category: "audio" | "image" | "pdf" | "productivity" | "video"
+    file: { url: string; expiry_time: string }
+  }>
 }
 
 export type PartialCommentObjectResponse = { object: "comment"; id: string }
@@ -8498,14 +8502,41 @@ export const search = {
 
 type CreateCommentBodyParameters =
   | {
-      parent: { page_id: IdRequest; type?: "page_id" }
+      // An array of rich text objects that represent the content of the comment.
       rich_text: Array<RichTextItemRequest>
+      // The parent of the comment. This can be a page or a block.
+      parent:
+        | {
+            // The ID of the parent page (with or without dashes), for example,
+            // 195de9221179449fab8075a27c979105
+            page_id: IdRequest
+            type?: "page_id"
+          }
+        | {
+            // The ID of the parent block (with or without dashes), for example,
+            // 195de9221179449fab8075a27c979105
+            block_id: IdRequest
+            type?: "block_id"
+          }
+      // An array of files to attach to the comment. Maximum of 3 allowed.
+      attachments?: Array<{
+        // ID of a FileUpload object that has the status `uploaded`.
+        file_upload_id: string
+        type?: "file_upload"
+      }>
     }
   | {
-      parent: { block_id: IdRequest; type?: "block_id" }
+      // An array of rich text objects that represent the content of the comment.
       rich_text: Array<RichTextItemRequest>
+      // The ID of the discussion to comment on.
+      discussion_id: IdRequest
+      // An array of files to attach to the comment. Maximum of 3 allowed.
+      attachments?: Array<{
+        // ID of a FileUpload object that has the status `uploaded`.
+        file_upload_id: string
+        type?: "file_upload"
+      }>
     }
-  | { discussion_id: IdRequest; rich_text: Array<RichTextItemRequest> }
 
 export type CreateCommentParameters = CreateCommentBodyParameters
 
@@ -8514,13 +8545,13 @@ export type CreateCommentResponse =
   | PartialCommentObjectResponse
 
 /**
- * Create comment
+ * Create a comment
  */
 export const createComment = {
   method: "post",
   pathParams: [],
   queryParams: [],
-  bodyParams: ["parent", "rich_text", "discussion_id"],
+  bodyParams: ["rich_text", "parent", "attachments", "discussion_id"],
 
   path: (): string => `comments`,
 } as const
