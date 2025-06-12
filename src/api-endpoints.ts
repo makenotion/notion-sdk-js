@@ -6211,6 +6211,85 @@ type PropertyItemPropertyItemListResponse = {
 
 export type PropertyItemListResponse = PropertyItemPropertyItemListResponse
 
+type AnnotationRequest = {
+  // Whether the text is formatted as bold.
+  bold?: boolean
+  // Whether the text is formatted as italic.
+  italic?: boolean
+  // Whether the text is formatted with a strikethrough.
+  strikethrough?: boolean
+  // Whether the text is formatted with an underline.
+  underline?: boolean
+  // Whether the text is formatted as code.
+  code?: boolean
+  // The color of the text.
+  color?: ApiColor
+}
+
+type PartialUserObjectRequest = {
+  // The ID of the user.
+  id: IdRequest
+  // The user object type name.
+  object?: "user"
+}
+
+type PersonInfoRequest = {
+  // The email of the person.
+  email?: string
+}
+
+type PersonOnlyRequest = {
+  // The email of the person.
+  email: string
+}
+
+type BotOwnerRequest =
+  | {
+      // Details about the owner of the bot, when the `type` of the owner is `user`. This means
+      // the bot is for a public integration.
+      user: PersonOnlyRequest | PartialUserObjectRequest
+    }
+  | {
+      // Details about the owner of the bot, when the `type` of the owner is `workspace`. This
+      // means the bot is for an internal integration.
+      workspace: true
+    }
+
+type WorkspaceLimitsRequest = {
+  // The maximum allowable size of a file upload, in bytes
+  max_file_upload_size_in_bytes: number
+}
+
+type BotInfoRequest = {
+  // Details about the owner of the bot.
+  owner?: BotOwnerRequest
+  // The name of the bot's workspace.
+  workspace_name?: string | null
+  // Limits and restrictions that apply to the bot's workspace
+  workspace_limits?: WorkspaceLimitsRequest
+}
+
+type UserObjectRequest =
+  | ({
+      // The ID of the user.
+      id: IdRequest
+      // The name of the user.
+      name?: string | null
+      // The user object type name.
+      object?: "user"
+      // The avatar URL of the user.
+      avatar_url?: string | null
+    } & {
+      type?: "person"
+      // Details about the person, when the `type` of the user is `person`.
+      person: PersonInfoRequest
+    })
+  | {
+      type?: "bot"
+      // Details about the bot, when the `type` of the user is `bot`.
+      bot: BotInfoRequest
+    }
+
 type DateRequest = {
   // The start date of the date object.
   start: string
@@ -6222,18 +6301,23 @@ type DateRequest = {
 
 type TemplateMentionRequest =
   | {
+      type?: "template_mention_date"
       // The date of the template mention.
       template_mention_date: "today" | "now"
-      type?: "template_mention_date"
     }
   | {
+      type?: "template_mention_user"
       // The user of the template mention.
       template_mention_user: "me"
-      type?: "template_mention_user"
     }
 
 type RichTextItemRequest =
-  | {
+  | ({
+      // All rich text objects contain an annotations object that sets the styling for the rich
+      // text.
+      annotations?: AnnotationRequest
+    } & {
+      type?: "text"
       // If a rich text object's type value is `text`, then the corresponding text field
       // contains an object including the text content and any inline link.
       text: {
@@ -6245,126 +6329,46 @@ type RichTextItemRequest =
           url: string
         } | null
       }
-      // All rich text objects contain an annotations object that sets the styling for the rich
-      // text.
-      annotations?: {
-        // Whether the text is formatted as bold.
-        bold?: boolean
-        // Whether the text is formatted as italic.
-        italic?: boolean
-        // Whether the text is formatted with a strikethrough.
-        strikethrough?: boolean
-        // Whether the text is formatted with an underline.
-        underline?: boolean
-        // Whether the text is formatted as code.
-        code?: boolean
-        // The color of the text.
-        color?: ApiColor
-      }
-      type?: "text"
-    }
+    })
   | {
+      type?: "mention"
       // Mention objects represent an inline mention of a database, date, link preview mention,
       // page, template mention, or user. A mention is created in the Notion UI when a user
       // types `@` followed by the name of the reference.
       mention:
         | {
-            // Details of the user mention.
-            user:
-              | {
-                  // The ID of the user.
-                  id: IdRequest
-                  // The user object type name.
-                  object?: "user"
-                }
-              | {
-                  // The ID of the user.
-                  id: IdRequest
-                  // Details about the person, when the `type` of the user is `person`.
-                  person: {
-                    // The email of the person.
-                    email?: string
-                  }
-                  // The name of the user.
-                  name?: string | null
-                  // The user object type name.
-                  object?: "user"
-                  // The avatar URL of the user.
-                  avatar_url?: string | null
-                  type?: "person"
-                }
-              | {
-                  // The ID of the user.
-                  id: IdRequest
-                  // Details about the bot, when the `type` of the user is `bot`.
-                  bot: {
-                    // Details about the owner of the bot.
-                    owner?:
-                      | {
-                          // Details about the owner of the bot, when the `type` of the owner is `user`. This means
-                          // the bot is for a public integration.
-                          user:
-                            | {
-                                // The email of the person.
-                                email: string
-                              }
-                            | {
-                                // The ID of the user.
-                                id: IdRequest
-                                // The user object type name.
-                                object?: "user"
-                              }
-                        }
-                      | {
-                          // Details about the owner of the bot, when the `type` of the owner is `workspace`. This
-                          // means the bot is for an internal integration.
-                          workspace: true
-                        }
-                    // The name of the bot's workspace.
-                    workspace_name?: string | null
-                    // Limits and restrictions that apply to the bot's workspace
-                    workspace_limits?: {
-                      // The maximum allowable size of a file upload, in bytes
-                      max_file_upload_size_in_bytes: number
-                    }
-                  }
-                  // The name of the user.
-                  name?: string | null
-                  // The user object type name.
-                  object?: "user"
-                  // The avatar URL of the user.
-                  avatar_url?: string | null
-                  type?: "bot"
-                }
             type?: "user"
+            // Details of the user mention.
+            user: PartialUserObjectRequest | UserObjectRequest
           }
         | {
+            type?: "date"
             // Details of the date mention.
             date: DateRequest
-            type?: "date"
           }
         | {
+            type?: "page"
             // Details of the page mention.
             page: {
               // The ID of the page in the mention.
               id: IdRequest
             }
-            type?: "page"
           }
         | {
+            type?: "database"
             // Details of the database mention.
             database: {
               // The ID of the database in the mention.
               id: IdRequest
             }
-            type?: "database"
           }
         | {
+            type?: "template_mention"
             // Details of the template mention.
             template_mention: TemplateMentionRequest
-            type?: "template_mention"
           }
         | {
+            type?: "custom_emoji"
             // Details of the custom emoji mention.
             custom_emoji: {
               // The ID of the custom emoji.
@@ -6374,50 +6378,16 @@ type RichTextItemRequest =
               // The URL of the custom emoji.
               url?: string
             }
-            type?: "custom_emoji"
           }
-      // All rich text objects contain an annotations object that sets the styling for the rich
-      // text.
-      annotations?: {
-        // Whether the text is formatted as bold.
-        bold?: boolean
-        // Whether the text is formatted as italic.
-        italic?: boolean
-        // Whether the text is formatted with a strikethrough.
-        strikethrough?: boolean
-        // Whether the text is formatted with an underline.
-        underline?: boolean
-        // Whether the text is formatted as code.
-        code?: boolean
-        // The color of the text.
-        color?: ApiColor
-      }
-      type?: "mention"
     }
   | {
+      type?: "equation"
       // Notion supports inline LaTeX equations as rich text objects with a type value of
       // `equation`.
       equation: {
         // A KaTeX compatible string.
         expression: string
       }
-      // All rich text objects contain an annotations object that sets the styling for the rich
-      // text.
-      annotations?: {
-        // Whether the text is formatted as bold.
-        bold?: boolean
-        // Whether the text is formatted as italic.
-        italic?: boolean
-        // Whether the text is formatted with a strikethrough.
-        strikethrough?: boolean
-        // Whether the text is formatted with an underline.
-        underline?: boolean
-        // Whether the text is formatted as code.
-        code?: boolean
-        // The color of the text.
-        color?: ApiColor
-      }
-      type?: "equation"
     }
 
 type InternalFileRequest = { url: string; expiry_time?: string }
@@ -7233,10 +7203,11 @@ export const listUsers = {
 } as const
 
 type CreatePageBodyParameters = {
-  parent:
+  parent?:
     | { page_id: IdRequest; type?: "page_id" }
     | { database_id: IdRequest; type?: "database_id" }
-  properties: Record<
+    | { workspace: true; type?: "workspace" }
+  properties?: Record<
     string,
     | { title: Array<RichTextItemRequest>; type?: "title" }
     | { rich_text: Array<RichTextItemRequest>; type?: "rich_text" }
@@ -7250,7 +7221,6 @@ type CreatePageBodyParameters = {
               color?: SelectColor
               description?: TextRequest | null
             }
-          | null
           | {
               name: TextRequest
               id?: StringRequest
@@ -7319,7 +7289,6 @@ type CreatePageBodyParameters = {
               color?: SelectColor
               description?: TextRequest | null
             }
-          | null
           | {
               name: TextRequest
               id?: StringRequest
@@ -7395,7 +7364,6 @@ type UpdatePageBodyParameters = {
               color?: SelectColor
               description?: TextRequest | null
             }
-          | null
           | {
               name: TextRequest
               id?: StringRequest
@@ -7464,7 +7432,6 @@ type UpdatePageBodyParameters = {
               color?: SelectColor
               description?: TextRequest | null
             }
-          | null
           | {
               name: TextRequest
               id?: StringRequest
@@ -8501,9 +8468,16 @@ export const search = {
 } as const
 
 type CreateCommentBodyParameters =
-  | {
+  | ({
       // An array of rich text objects that represent the content of the comment.
       rich_text: Array<RichTextItemRequest>
+      // An array of files to attach to the comment. Maximum of 3 allowed.
+      attachments?: Array<{
+        // ID of a FileUpload object that has the status `uploaded`.
+        file_upload_id: string
+        type?: "file_upload"
+      }>
+    } & {
       // The parent of the comment. This can be a page or a block.
       parent:
         | {
@@ -8518,24 +8492,10 @@ type CreateCommentBodyParameters =
             block_id: IdRequest
             type?: "block_id"
           }
-      // An array of files to attach to the comment. Maximum of 3 allowed.
-      attachments?: Array<{
-        // ID of a FileUpload object that has the status `uploaded`.
-        file_upload_id: string
-        type?: "file_upload"
-      }>
-    }
+    })
   | {
-      // An array of rich text objects that represent the content of the comment.
-      rich_text: Array<RichTextItemRequest>
       // The ID of the discussion to comment on.
       discussion_id: IdRequest
-      // An array of files to attach to the comment. Maximum of 3 allowed.
-      attachments?: Array<{
-        // ID of a FileUpload object that has the status `uploaded`.
-        file_upload_id: string
-        type?: "file_upload"
-      }>
     }
 
 export type CreateCommentParameters = CreateCommentBodyParameters
@@ -8551,7 +8511,7 @@ export const createComment = {
   method: "post",
   pathParams: [],
   queryParams: [],
-  bodyParams: ["rich_text", "parent", "attachments", "discussion_id"],
+  bodyParams: ["rich_text", "attachments", "parent", "discussion_id"],
 
   path: (): string => `comments`,
 } as const
