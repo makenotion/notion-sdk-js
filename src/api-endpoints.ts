@@ -668,9 +668,9 @@ type DateResponse = {
   // The start date of the date object.
   start: string
   // The end date of the date object, if any.
-  end?: string | null
-  // The time zone of the date object, if any.
-  time_zone?: string | null
+  end: string | null
+  // The time zone of the date object.
+  time_zone: TimeZoneRequest | null
 }
 
 type StringRequest = string
@@ -6303,13 +6303,13 @@ type UserObjectResponseCommon = {
 }
 
 type RichTextItemResponseCommon = {
+  // The plain text content of the rich text object, without any styling.
+  plain_text: string
+  // A URL that the rich text object links to or mentions.
+  href: string | null
   // All rich text objects contain an annotations object that sets the styling for the rich
   // text.
-  annotations?: AnnotationResponse
-  // The plain text content of the rich text object, without any styling.
-  plain_text?: string | null
-  // A URL that the rich text object links to or mentions.
-  href?: string | null
+  annotations: AnnotationResponse
 }
 
 type AnnotationRequest = {
