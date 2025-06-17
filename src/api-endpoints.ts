@@ -45,7 +45,7 @@ type BotUserObjectResponse = {
   // Indicates this user is a bot.
   type: "bot"
   // Details about the bot, when the `type` of the user is `bot`.
-  bot: BotInfoResponse
+  bot: EmptyObject | BotInfoResponse
 }
 
 export type UserObjectResponse = UserObjectResponseCommon &
@@ -6295,11 +6295,11 @@ type UserObjectResponseCommon = {
   // The ID of the user.
   id: string
   // The user object type name.
-  object?: "user"
+  object: "user"
   // The name of the user.
-  name?: string | null
+  name: string | null
   // The avatar URL of the user.
-  avatar_url?: string | null
+  avatar_url: string | null
 }
 
 type RichTextItemResponseCommon = {
