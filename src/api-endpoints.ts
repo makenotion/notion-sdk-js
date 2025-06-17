@@ -48,18 +48,16 @@ type BotUserObjectResponse = {
   bot: BotInfoResponse
 }
 
-export type UserObjectResponse =
-  | ({
-      // The ID of the user.
-      id: string
-      // The user object type name.
-      object?: "user"
-      // The name of the user.
-      name?: string | null
-      // The avatar URL of the user.
-      avatar_url?: string | null
-    } & PersonUserObjectResponse)
-  | BotUserObjectResponse
+export type UserObjectResponse = {
+  // The ID of the user.
+  id: string
+  // The user object type name.
+  object?: "user"
+  // The name of the user.
+  name?: string | null
+  // The avatar URL of the user.
+  avatar_url?: string | null
+} & (PersonUserObjectResponse | BotUserObjectResponse)
 
 type SelectColor =
   | "default"
@@ -877,18 +875,19 @@ type EquationRichTextItemResponse = {
   }
 }
 
-export type RichTextItemResponse =
-  | ({
-      // All rich text objects contain an annotations object that sets the styling for the rich
-      // text.
-      annotations?: AnnotationResponse
-      // The plain text content of the rich text object, without any styling.
-      plain_text?: string | null
-      // A URL that the rich text object links to or mentions.
-      href?: string | null
-    } & TextRichTextItemResponse)
+export type RichTextItemResponse = {
+  // All rich text objects contain an annotations object that sets the styling for the rich
+  // text.
+  annotations?: AnnotationResponse
+  // The plain text content of the rich text object, without any styling.
+  plain_text?: string | null
+  // A URL that the rich text object links to or mentions.
+  href?: string | null
+} & (
+  | TextRichTextItemResponse
   | MentionRichTextItemResponse
   | EquationRichTextItemResponse
+)
 
 type RollupFunction =
   | "count"
@@ -6215,16 +6214,16 @@ export type FileUploadObjectResponse = {
   content_length: number | null
   upload_url?: string
   complete_url?: string
-  file_import_result?:
-    | ({
-        // The time the file was imported into Notion. ISO 8601 format.
-        imported_time: string
-      } & {
+  file_import_result?: {
+    // The time the file was imported into Notion. ISO 8601 format.
+    imported_time: string
+  } & (
+    | {
         // Indicates a successful import.
         type: "success"
         // Empty object for success type.
         success: EmptyObject
-      })
+      }
     | {
         // Indicates an error occurred during import.
         type: "error"
@@ -6246,6 +6245,7 @@ export type FileUploadObjectResponse = {
           status_code: number | null
         }
       }
+  )
   number_of_parts?: { total: number; sent: number }
 }
 
@@ -6334,14 +6334,15 @@ type TemplateMentionRequest =
   | TemplateMentionDateTemplateMentionRequest
   | TemplateMentionUserTemplateMentionRequest
 
-type RichTextItemRequest =
-  | ({
-      // All rich text objects contain an annotations object that sets the styling for the rich
-      // text.
-      annotations?: AnnotationRequest
-    } & TextRichTextItemRequest)
+type RichTextItemRequest = {
+  // All rich text objects contain an annotations object that sets the styling for the rich
+  // text.
+  annotations?: AnnotationRequest
+} & (
+  | TextRichTextItemRequest
   | MentionRichTextItemRequest
   | EquationRichTextItemRequest
+)
 
 type InternalFileRequest = { url: string; expiry_time?: string }
 
@@ -7147,18 +7148,16 @@ type BotUserObjectRequest = {
   bot: BotInfoRequest
 }
 
-type UserObjectRequest =
-  | ({
-      // The ID of the user.
-      id: IdRequest
-      // The name of the user.
-      name?: string | null
-      // The user object type name.
-      object?: "user"
-      // The avatar URL of the user.
-      avatar_url?: string | null
-    } & PersonUserObjectRequest)
-  | BotUserObjectRequest
+type UserObjectRequest = {
+  // The ID of the user.
+  id: IdRequest
+  // The name of the user.
+  name?: string | null
+  // The user object type name.
+  object?: "user"
+  // The avatar URL of the user.
+  avatar_url?: string | null
+} & (PersonUserObjectRequest | BotUserObjectRequest)
 
 type TemplateMentionDateTemplateMentionRequest = {
   type?: "template_mention_date"
@@ -8576,17 +8575,17 @@ export const search = {
   path: (): string => `search`,
 } as const
 
-type CreateCommentBodyParameters =
-  | ({
-      // An array of rich text objects that represent the content of the comment.
-      rich_text: Array<RichTextItemRequest>
-      // An array of files to attach to the comment. Maximum of 3 allowed.
-      attachments?: Array<{
-        // ID of a FileUpload object that has the status `uploaded`.
-        file_upload_id: string
-        type?: "file_upload"
-      }>
-    } & {
+type CreateCommentBodyParameters = {
+  // An array of rich text objects that represent the content of the comment.
+  rich_text: Array<RichTextItemRequest>
+  // An array of files to attach to the comment. Maximum of 3 allowed.
+  attachments?: Array<{
+    // ID of a FileUpload object that has the status `uploaded`.
+    file_upload_id: string
+    type?: "file_upload"
+  }>
+} & (
+  | {
       // The parent of the comment. This can be a page or a block.
       parent:
         | {
@@ -8601,11 +8600,12 @@ type CreateCommentBodyParameters =
             block_id: IdRequest
             type?: "block_id"
           }
-    })
+    }
   | {
       // The ID of the discussion to comment on.
       discussion_id: IdRequest
     }
+)
 
 export type CreateCommentParameters = CreateCommentBodyParameters
 
