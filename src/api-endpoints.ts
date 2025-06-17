@@ -3,7 +3,7 @@
 
 type IdRequest = string
 
-type PersonUserObjectResponse = {
+export type PersonUserObjectResponse = {
   // Indicates this user is a person.
   type: "person"
   // Details about the person, when the `type` of the user is `person`.
@@ -41,7 +41,7 @@ type BotInfoResponse = {
   }
 }
 
-type BotUserObjectResponse = {
+export type BotUserObjectResponse = {
   // Indicates this user is a bot.
   type: "bot"
   // Details about the bot, when the `type` of the user is `bot`.
@@ -733,7 +733,7 @@ type AnnotationResponse = {
   color: ApiColor
 }
 
-type TextRichTextItemResponse = {
+export type TextRichTextItemResponse = {
   type: "text"
   // If a rich text object's type value is `text`, then the corresponding text field
   // contains an object including the text content and any inline link.
@@ -803,7 +803,7 @@ type CustomEmojiResponse = {
   url: string
 }
 
-type MentionRichTextItemResponse = {
+export type MentionRichTextItemResponse = {
   type: "mention"
   // Mention objects represent an inline mention of a database, date, link preview mention,
   // page, template mention, or user. A mention is created in the Notion UI when a user
@@ -857,7 +857,7 @@ type MentionRichTextItemResponse = {
       }
 }
 
-type EquationRichTextItemResponse = {
+export type EquationRichTextItemResponse = {
   type: "equation"
   // Notion supports inline LaTeX equations as rich text objects with a type value of
   // `equation`.
@@ -6291,7 +6291,7 @@ type PropertyItemPropertyItemListResponse = {
 
 export type PropertyItemListResponse = PropertyItemPropertyItemListResponse
 
-type UserObjectResponseCommon = {
+export type UserObjectResponseCommon = {
   // The ID of the user.
   id: string
   // The user object type name.
@@ -6302,7 +6302,7 @@ type UserObjectResponseCommon = {
   avatar_url: string | null
 }
 
-type RichTextItemResponseCommon = {
+export type RichTextItemResponseCommon = {
   // The plain text content of the rich text object, without any styling.
   plain_text: string
   // A URL that the rich text object links to or mentions.
