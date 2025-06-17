@@ -5,7 +5,7 @@ type IdRequest = string
 
 type PersonUserObjectResponse = {
   // Indicates this user is a person.
-  type?: "person"
+  type: "person"
   // Details about the person, when the `type` of the user is `person`.
   person: {
     // The email of the person.
@@ -43,21 +43,13 @@ type BotInfoResponse = {
 
 type BotUserObjectResponse = {
   // Indicates this user is a bot.
-  type?: "bot"
+  type: "bot"
   // Details about the bot, when the `type` of the user is `bot`.
   bot: BotInfoResponse
 }
 
-export type UserObjectResponse = {
-  // The ID of the user.
-  id: string
-  // The user object type name.
-  object?: "user"
-  // The name of the user.
-  name?: string | null
-  // The avatar URL of the user.
-  avatar_url?: string | null
-} & (PersonUserObjectResponse | BotUserObjectResponse)
+export type UserObjectResponse = UserObjectResponseCommon &
+  (PersonUserObjectResponse | BotUserObjectResponse)
 
 type SelectColor =
   | "default"
@@ -733,16 +725,16 @@ type VerificationPropertyResponse = {
 }
 
 type AnnotationResponse = {
-  bold?: boolean
-  italic?: boolean
-  strikethrough?: boolean
-  underline?: boolean
-  code?: boolean
-  color?: ApiColor
+  bold: boolean
+  italic: boolean
+  strikethrough: boolean
+  underline: boolean
+  code: boolean
+  color: ApiColor
 }
 
 type TextRichTextItemResponse = {
-  type?: "text"
+  type: "text"
   // If a rich text object's type value is `text`, then the corresponding text field
   // contains an object including the text content and any inline link.
   text: {
@@ -787,13 +779,13 @@ type LinkMentionResponse = {
 }
 
 type TemplateMentionDateTemplateMentionResponse = {
-  type?: "template_mention_date"
+  type: "template_mention_date"
   // The date of the template mention.
   template_mention_date: "today" | "now"
 }
 
 type TemplateMentionUserTemplateMentionResponse = {
-  type?: "template_mention_user"
+  type: "template_mention_user"
   // The user of the template mention.
   template_mention_user: "me"
 }
@@ -802,10 +794,17 @@ type TemplateMentionResponse =
   | TemplateMentionDateTemplateMentionResponse
   | TemplateMentionUserTemplateMentionResponse
 
-type CustomEmojiResponse = { id: IdRequest; name: string; url: string }
+type CustomEmojiResponse = {
+  // The ID of the custom emoji.
+  id: string
+  // The name of the custom emoji.
+  name: string
+  // The URL of the custom emoji.
+  url: string
+}
 
 type MentionRichTextItemResponse = {
-  type?: "mention"
+  type: "mention"
   // Mention objects represent an inline mention of a database, date, link preview mention,
   // page, template mention, or user. A mention is created in the Notion UI when a user
   // types `@` followed by the name of the reference.
@@ -854,19 +853,12 @@ type MentionRichTextItemResponse = {
     | {
         type: "custom_emoji"
         // Details of the custom emoji mention.
-        custom_emoji: {
-          // The ID of the custom emoji.
-          id: string
-          // The name of the custom emoji.
-          name?: string
-          // The URL of the custom emoji.
-          url?: string
-        }
+        custom_emoji: CustomEmojiResponse
       }
 }
 
 type EquationRichTextItemResponse = {
-  type?: "equation"
+  type: "equation"
   // Notion supports inline LaTeX equations as rich text objects with a type value of
   // `equation`.
   equation: {
@@ -875,19 +867,12 @@ type EquationRichTextItemResponse = {
   }
 }
 
-export type RichTextItemResponse = {
-  // All rich text objects contain an annotations object that sets the styling for the rich
-  // text.
-  annotations?: AnnotationResponse
-  // The plain text content of the rich text object, without any styling.
-  plain_text?: string | null
-  // A URL that the rich text object links to or mentions.
-  href?: string | null
-} & (
-  | TextRichTextItemResponse
-  | MentionRichTextItemResponse
-  | EquationRichTextItemResponse
-)
+export type RichTextItemResponse = RichTextItemResponseCommon &
+  (
+    | TextRichTextItemResponse
+    | MentionRichTextItemResponse
+    | EquationRichTextItemResponse
+  )
 
 type RollupFunction =
   | "count"
@@ -6306,6 +6291,27 @@ type PropertyItemPropertyItemListResponse = {
 
 export type PropertyItemListResponse = PropertyItemPropertyItemListResponse
 
+type UserObjectResponseCommon = {
+  // The ID of the user.
+  id: string
+  // The user object type name.
+  object?: "user"
+  // The name of the user.
+  name?: string | null
+  // The avatar URL of the user.
+  avatar_url?: string | null
+}
+
+type RichTextItemResponseCommon = {
+  // All rich text objects contain an annotations object that sets the styling for the rich
+  // text.
+  annotations?: AnnotationResponse
+  // The plain text content of the rich text object, without any styling.
+  plain_text?: string | null
+  // A URL that the rich text object links to or mentions.
+  href?: string | null
+}
+
 type AnnotationRequest = {
   // Whether the text is formatted as bold.
   bold?: boolean
@@ -6334,15 +6340,12 @@ type TemplateMentionRequest =
   | TemplateMentionDateTemplateMentionRequest
   | TemplateMentionUserTemplateMentionRequest
 
-type RichTextItemRequest = {
-  // All rich text objects contain an annotations object that sets the styling for the rich
-  // text.
-  annotations?: AnnotationRequest
-} & (
-  | TextRichTextItemRequest
-  | MentionRichTextItemRequest
-  | EquationRichTextItemRequest
-)
+type RichTextItemRequest = RichTextItemRequestCommon &
+  (
+    | TextRichTextItemRequest
+    | MentionRichTextItemRequest
+    | EquationRichTextItemRequest
+  )
 
 type InternalFileRequest = { url: string; expiry_time?: string }
 
@@ -7148,7 +7151,7 @@ type BotUserObjectRequest = {
   bot: BotInfoRequest
 }
 
-type UserObjectRequest = {
+type UserObjectRequestCommon = {
   // The ID of the user.
   id: IdRequest
   // The name of the user.
@@ -7157,7 +7160,10 @@ type UserObjectRequest = {
   object?: "user"
   // The avatar URL of the user.
   avatar_url?: string | null
-} & (PersonUserObjectRequest | BotUserObjectRequest)
+}
+
+type UserObjectRequest = UserObjectRequestCommon &
+  (PersonUserObjectRequest | BotUserObjectRequest)
 
 type TemplateMentionDateTemplateMentionRequest = {
   type?: "template_mention_date"
@@ -7245,6 +7251,12 @@ type EquationRichTextItemRequest = {
     // A KaTeX compatible string.
     expression: string
   }
+}
+
+type RichTextItemRequestCommon = {
+  // All rich text objects contain an annotations object that sets the styling for the rich
+  // text.
+  annotations?: AnnotationRequest
 }
 export type GetSelfParameters = Record<string, never>
 
