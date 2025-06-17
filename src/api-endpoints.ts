@@ -6171,6 +6171,11 @@ export type CommentObjectResponse = {
   created_by: PartialUserObjectResponse
   // The rich text content of the comment.
   rich_text: Array<RichTextItemResponse>
+  // The display name of the comment.
+  display_name: {
+    type: "custom" | "user" | "integration"
+    resolved_name: string | null
+  }
   // Any file attachments associated with the comment.
   attachments?: Array<{
     category: "audio" | "image" | "pdf" | "productivity" | "video"
@@ -8596,6 +8601,17 @@ type CreateCommentBodyParameters = {
     file_upload_id: string
     type?: "file_upload"
   }>
+  // Display name for the comment.
+  display_name?:
+    | { type: "integration" }
+    | { type: "user" }
+    | {
+        type: "custom"
+        custom: {
+          // The custom display name to use
+          name: string
+        }
+      }
 } & (
   | {
       // The parent of the comment. This can be a page or a block.
@@ -8632,7 +8648,13 @@ export const createComment = {
   method: "post",
   pathParams: [],
   queryParams: [],
-  bodyParams: ["rich_text", "attachments", "parent", "discussion_id"],
+  bodyParams: [
+    "rich_text",
+    "attachments",
+    "display_name",
+    "parent",
+    "discussion_id",
+  ],
 
   path: (): string => `comments`,
 } as const
