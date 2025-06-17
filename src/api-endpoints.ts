@@ -4,12 +4,13 @@
 type IdRequest = string
 
 export type PersonUserObjectResponse = {
+  // Indicates this user is a person.
   type: "person"
-  person: { email?: string }
-  name: string | null
-  avatar_url: string | null
-  id: IdRequest
-  object: "user"
+  // Details about the person, when the `type` of the user is `person`.
+  person: {
+    // The email of the person.
+    email?: string
+  }
 }
 
 type EmptyObject = Record<string, never>
@@ -41,17 +42,14 @@ type BotInfoResponse = {
 }
 
 export type BotUserObjectResponse = {
+  // Indicates this user is a bot.
   type: "bot"
+  // Details about the bot, when the `type` of the user is `bot`.
   bot: EmptyObject | BotInfoResponse
-  name: string | null
-  avatar_url: string | null
-  id: IdRequest
-  object: "user"
 }
 
-export type UserObjectResponse =
-  | PersonUserObjectResponse
-  | BotUserObjectResponse
+export type UserObjectResponse = UserObjectResponseCommon &
+  (PersonUserObjectResponse | BotUserObjectResponse)
 
 type SelectColor =
   | "default"
@@ -667,8 +665,11 @@ type TimeZoneRequest =
   | "Zulu"
 
 type DateResponse = {
+  // The start date of the date object.
   start: string
+  // The end date of the date object, if any.
   end: string | null
+  // The time zone of the date object.
   time_zone: TimeZoneRequest | null
 }
 
@@ -729,60 +730,63 @@ type AnnotationResponse = {
   strikethrough: boolean
   underline: boolean
   code: boolean
-  color:
-    | "default"
-    | "gray"
-    | "brown"
-    | "orange"
-    | "yellow"
-    | "green"
-    | "blue"
-    | "purple"
-    | "pink"
-    | "red"
-    | "default_background"
-    | "gray_background"
-    | "brown_background"
-    | "orange_background"
-    | "yellow_background"
-    | "green_background"
-    | "blue_background"
-    | "purple_background"
-    | "pink_background"
-    | "red_background"
+  color: ApiColor
 }
 
 export type TextRichTextItemResponse = {
   type: "text"
-  text: { content: string; link: { url: TextRequest } | null }
-  annotations: AnnotationResponse
-  plain_text: string
-  href: string | null
+  // If a rich text object's type value is `text`, then the corresponding text field
+  // contains an object including the text content and any inline link.
+  text: {
+    // The actual text content of the text.
+    content: string
+    // An object with information about any inline link in this text, if included.
+    link: {
+      // The URL of the link.
+      url: string
+    } | null
+  }
 }
 
-type LinkPreviewMentionResponse = { url: TextRequest }
+type LinkPreviewMentionResponse = {
+  // The URL of the link preview mention.
+  url: string
+}
 
 type LinkMentionResponse = {
+  // The href of the link mention.
   href: string
+  // The title of the link.
   title?: string
+  // The description of the link.
   description?: string
+  // The author of the link.
   link_author?: string
+  // The provider of the link.
   link_provider?: string
+  // The thumbnail URL of the link.
   thumbnail_url?: string
+  // The icon URL of the link.
   icon_url?: string
+  // The iframe URL of the link.
   iframe_url?: string
+  // The height of the link preview iframe.
   height?: number
+  // The padding of the link preview iframe.
   padding?: number
+  // The top padding of the link preview iframe.
   padding_top?: number
 }
 
 type TemplateMentionDateTemplateMentionResponse = {
   type: "template_mention_date"
+  // The date of the template mention.
   template_mention_date: "today" | "now"
 }
 
 type TemplateMentionUserTemplateMentionResponse = {
   type: "template_mention_user"
+  // The user of the template mention.
   template_mention_user: "me"
 }
 
@@ -790,36 +794,85 @@ type TemplateMentionResponse =
   | TemplateMentionDateTemplateMentionResponse
   | TemplateMentionUserTemplateMentionResponse
 
-type CustomEmojiResponse = { id: IdRequest; name: string; url: string }
+type CustomEmojiResponse = {
+  // The ID of the custom emoji.
+  id: string
+  // The name of the custom emoji.
+  name: string
+  // The URL of the custom emoji.
+  url: string
+}
 
 export type MentionRichTextItemResponse = {
   type: "mention"
+  // Mention objects represent an inline mention of a database, date, link preview mention,
+  // page, template mention, or user. A mention is created in the Notion UI when a user
+  // types `@` followed by the name of the reference.
   mention:
-    | { type: "user"; user: PartialUserObjectResponse | UserObjectResponse }
-    | { type: "date"; date: DateResponse }
-    | { type: "link_preview"; link_preview: LinkPreviewMentionResponse }
-    | { type: "link_mention"; link_mention: LinkMentionResponse }
-    | { type: "template_mention"; template_mention: TemplateMentionResponse }
-    | { type: "page"; page: { id: IdRequest } }
-    | { type: "database"; database: { id: IdRequest } }
-    | { type: "custom_emoji"; custom_emoji: CustomEmojiResponse }
-  annotations: AnnotationResponse
-  plain_text: string
-  href: string | null
+    | {
+        type: "user"
+        // Details of the user mention.
+        user: PartialUserObjectResponse | UserObjectResponse
+      }
+    | {
+        type: "date"
+        // Details of the date mention.
+        date: DateResponse
+      }
+    | {
+        type: "link_preview"
+        // Details of the link preview mention.
+        link_preview: LinkPreviewMentionResponse
+      }
+    | {
+        type: "link_mention"
+        // Details of the link mention.
+        link_mention: LinkMentionResponse
+      }
+    | {
+        type: "page"
+        // Details of the page mention.
+        page: {
+          // The ID of the page in the mention.
+          id: string
+        }
+      }
+    | {
+        type: "database"
+        // Details of the database mention.
+        database: {
+          // The ID of the database in the mention.
+          id: string
+        }
+      }
+    | {
+        type: "template_mention"
+        // Details of the template mention.
+        template_mention: TemplateMentionResponse
+      }
+    | {
+        type: "custom_emoji"
+        // Details of the custom emoji mention.
+        custom_emoji: CustomEmojiResponse
+      }
 }
 
 export type EquationRichTextItemResponse = {
   type: "equation"
-  equation: { expression: TextRequest }
-  annotations: AnnotationResponse
-  plain_text: string
-  href: string | null
+  // Notion supports inline LaTeX equations as rich text objects with a type value of
+  // `equation`.
+  equation: {
+    // A KaTeX compatible string.
+    expression: string
+  }
 }
 
-export type RichTextItemResponse =
-  | TextRichTextItemResponse
-  | MentionRichTextItemResponse
-  | EquationRichTextItemResponse
+export type RichTextItemResponse = RichTextItemResponseCommon &
+  (
+    | TextRichTextItemResponse
+    | MentionRichTextItemResponse
+    | EquationRichTextItemResponse
+  )
 
 type RollupFunction =
   | "count"
@@ -6100,23 +6153,42 @@ export type PropertyItemObjectResponse =
   | RollupPropertyItemObjectResponse
 
 export type CommentObjectResponse = {
+  // The comment object type name.
   object: "comment"
+  // The ID of the comment.
   id: string
+  // The parent of the comment.
   parent:
-    | { type: "page_id"; page_id: IdRequest }
-    | { type: "block_id"; block_id: IdRequest }
+    | { type: "page_id"; page_id: string }
+    | { type: "block_id"; block_id: string }
+  // The ID of the discussion thread this comment belongs to.
   discussion_id: string
-  rich_text: Array<RichTextItemResponse>
-  created_by: PartialUserObjectResponse
+  // The time when the comment was created.
   created_time: string
+  // The time when the comment was last edited.
   last_edited_time: string
+  // The user who created the comment.
+  created_by: PartialUserObjectResponse
+  // The rich text content of the comment.
+  rich_text: Array<RichTextItemResponse>
+  // The display name of the comment.
+  display_name: {
+    type: "custom" | "user" | "integration"
+    resolved_name: string | null
+  }
+  // Any file attachments associated with the comment.
   attachments?: Array<{
     category: "audio" | "image" | "pdf" | "productivity" | "video"
     file: { url: string; expiry_time: string }
   }>
 }
 
-export type PartialCommentObjectResponse = { object: "comment"; id: string }
+export type PartialCommentObjectResponse = {
+  // The comment object type name.
+  object: "comment"
+  // The ID of the comment.
+  id: string
+}
 
 export type FileUploadObjectResponse = {
   object: "file_upload"
@@ -6132,25 +6204,38 @@ export type FileUploadObjectResponse = {
   content_length: number | null
   upload_url?: string
   complete_url?: string
-  // The outcome of an external file uploaded to a Notion workspace. Provides error details
-  // if the import failed.
-  file_import_result?:
-    | { type: "success"; success: EmptyObject; imported_time: string }
+  file_import_result?: {
+    // The time the file was imported into Notion. ISO 8601 format.
+    imported_time: string
+  } & (
     | {
+        // Indicates a successful import.
+        type: "success"
+        // Empty object for success type.
+        success: EmptyObject
+      }
+    | {
+        // Indicates an error occurred during import.
         type: "error"
+        // Details about the error that occurred during file import.
         error: {
+          // The type of error that occurred during file import.
           type:
             | "validation_error"
             | "internal_system_error"
             | "download_error"
             | "upload_error"
+          // A short string code representing the error.
           code: string
+          // A human-readable message describing the error.
           message: string
+          // The parameter related to the error, if applicable. Null if not applicable.
           parameter: string | null
+          // The HTTP status code associated with the error, if available. Null if not applicable.
           status_code: number | null
         }
-        imported_time: string
       }
+  )
   number_of_parts?: { total: number; sent: number }
 }
 
@@ -6211,6 +6296,27 @@ type PropertyItemPropertyItemListResponse = {
 
 export type PropertyItemListResponse = PropertyItemPropertyItemListResponse
 
+export type UserObjectResponseCommon = {
+  // The ID of the user.
+  id: string
+  // The user object type name.
+  object: "user"
+  // The name of the user.
+  name: string | null
+  // The avatar URL of the user.
+  avatar_url: string | null
+}
+
+export type RichTextItemResponseCommon = {
+  // The plain text content of the rich text object, without any styling.
+  plain_text: string
+  // A URL that the rich text object links to or mentions.
+  href: string | null
+  // All rich text objects contain an annotations object that sets the styling for the rich
+  // text.
+  annotations: AnnotationResponse
+}
+
 type AnnotationRequest = {
   // Whether the text is formatted as bold.
   bold?: boolean
@@ -6226,70 +6332,6 @@ type AnnotationRequest = {
   color?: ApiColor
 }
 
-type PartialUserObjectRequest = {
-  // The ID of the user.
-  id: IdRequest
-  // The user object type name.
-  object?: "user"
-}
-
-type PersonInfoRequest = {
-  // The email of the person.
-  email?: string
-}
-
-type PersonOnlyRequest = {
-  // The email of the person.
-  email: string
-}
-
-type BotOwnerRequest =
-  | {
-      // Details about the owner of the bot, when the `type` of the owner is `user`. This means
-      // the bot is for a public integration.
-      user: PersonOnlyRequest | PartialUserObjectRequest
-    }
-  | {
-      // Details about the owner of the bot, when the `type` of the owner is `workspace`. This
-      // means the bot is for an internal integration.
-      workspace: true
-    }
-
-type WorkspaceLimitsRequest = {
-  // The maximum allowable size of a file upload, in bytes
-  max_file_upload_size_in_bytes: number
-}
-
-type BotInfoRequest = {
-  // Details about the owner of the bot.
-  owner?: BotOwnerRequest
-  // The name of the bot's workspace.
-  workspace_name?: string | null
-  // Limits and restrictions that apply to the bot's workspace
-  workspace_limits?: WorkspaceLimitsRequest
-}
-
-type UserObjectRequest =
-  | ({
-      // The ID of the user.
-      id: IdRequest
-      // The name of the user.
-      name?: string | null
-      // The user object type name.
-      object?: "user"
-      // The avatar URL of the user.
-      avatar_url?: string | null
-    } & {
-      type?: "person"
-      // Details about the person, when the `type` of the user is `person`.
-      person: PersonInfoRequest
-    })
-  | {
-      type?: "bot"
-      // Details about the bot, when the `type` of the user is `bot`.
-      bot: BotInfoRequest
-    }
-
 type DateRequest = {
   // The start date of the date object.
   start: string
@@ -6300,95 +6342,15 @@ type DateRequest = {
 }
 
 type TemplateMentionRequest =
-  | {
-      type?: "template_mention_date"
-      // The date of the template mention.
-      template_mention_date: "today" | "now"
-    }
-  | {
-      type?: "template_mention_user"
-      // The user of the template mention.
-      template_mention_user: "me"
-    }
+  | TemplateMentionDateTemplateMentionRequest
+  | TemplateMentionUserTemplateMentionRequest
 
-type RichTextItemRequest =
-  | ({
-      // All rich text objects contain an annotations object that sets the styling for the rich
-      // text.
-      annotations?: AnnotationRequest
-    } & {
-      type?: "text"
-      // If a rich text object's type value is `text`, then the corresponding text field
-      // contains an object including the text content and any inline link.
-      text: {
-        // The actual text content of the text.
-        content: string
-        // An object with information about any inline link in this text, if included.
-        link?: {
-          // The URL of the link.
-          url: string
-        } | null
-      }
-    })
-  | {
-      type?: "mention"
-      // Mention objects represent an inline mention of a database, date, link preview mention,
-      // page, template mention, or user. A mention is created in the Notion UI when a user
-      // types `@` followed by the name of the reference.
-      mention:
-        | {
-            type?: "user"
-            // Details of the user mention.
-            user: PartialUserObjectRequest | UserObjectRequest
-          }
-        | {
-            type?: "date"
-            // Details of the date mention.
-            date: DateRequest
-          }
-        | {
-            type?: "page"
-            // Details of the page mention.
-            page: {
-              // The ID of the page in the mention.
-              id: IdRequest
-            }
-          }
-        | {
-            type?: "database"
-            // Details of the database mention.
-            database: {
-              // The ID of the database in the mention.
-              id: IdRequest
-            }
-          }
-        | {
-            type?: "template_mention"
-            // Details of the template mention.
-            template_mention: TemplateMentionRequest
-          }
-        | {
-            type?: "custom_emoji"
-            // Details of the custom emoji mention.
-            custom_emoji: {
-              // The ID of the custom emoji.
-              id: IdRequest
-              // The name of the custom emoji.
-              name?: string
-              // The URL of the custom emoji.
-              url?: string
-            }
-          }
-    }
-  | {
-      type?: "equation"
-      // Notion supports inline LaTeX equations as rich text objects with a type value of
-      // `equation`.
-      equation: {
-        // A KaTeX compatible string.
-        expression: string
-      }
-    }
+type RichTextItemRequest = RichTextItemRequestCommon &
+  (
+    | TextRichTextItemRequest
+    | MentionRichTextItemRequest
+    | EquationRichTextItemRequest
+  )
 
 type InternalFileRequest = { url: string; expiry_time?: string }
 
@@ -7137,6 +7099,169 @@ type TimestampLastEditedTimeFilter = {
   last_edited_time: DatePropertyFilter
   timestamp: "last_edited_time"
   type?: "last_edited_time"
+}
+
+type PartialUserObjectRequest = {
+  // The ID of the user.
+  id: IdRequest
+  // The user object type name.
+  object?: "user"
+}
+
+type PersonInfoRequest = {
+  // The email of the person.
+  email?: string
+}
+
+type PersonOnlyRequest = {
+  // The email of the person.
+  email: string
+}
+
+type BotOwnerRequest =
+  | {
+      // Details about the owner of the bot, when the `type` of the owner is `user`. This means
+      // the bot is for a public integration.
+      user: PersonOnlyRequest | PartialUserObjectRequest
+    }
+  | {
+      // Details about the owner of the bot, when the `type` of the owner is `workspace`. This
+      // means the bot is for an internal integration.
+      workspace: true
+    }
+
+type WorkspaceLimitsRequest = {
+  // The maximum allowable size of a file upload, in bytes
+  max_file_upload_size_in_bytes: number
+}
+
+type BotInfoRequest = {
+  // Details about the owner of the bot.
+  owner?: BotOwnerRequest
+  // The name of the bot's workspace.
+  workspace_name?: string | null
+  // Limits and restrictions that apply to the bot's workspace
+  workspace_limits?: WorkspaceLimitsRequest
+}
+
+type PersonUserObjectRequest = {
+  type?: "person"
+  // Details about the person, when the `type` of the user is `person`.
+  person: PersonInfoRequest
+}
+
+type BotUserObjectRequest = {
+  type?: "bot"
+  // Details about the bot, when the `type` of the user is `bot`.
+  bot: BotInfoRequest
+}
+
+type UserObjectRequestCommon = {
+  // The ID of the user.
+  id: IdRequest
+  // The name of the user.
+  name?: string | null
+  // The user object type name.
+  object?: "user"
+  // The avatar URL of the user.
+  avatar_url?: string | null
+}
+
+type UserObjectRequest = UserObjectRequestCommon &
+  (PersonUserObjectRequest | BotUserObjectRequest)
+
+type TemplateMentionDateTemplateMentionRequest = {
+  type?: "template_mention_date"
+  // The date of the template mention.
+  template_mention_date: "today" | "now"
+}
+
+type TemplateMentionUserTemplateMentionRequest = {
+  type?: "template_mention_user"
+  // The user of the template mention.
+  template_mention_user: "me"
+}
+
+type TextRichTextItemRequest = {
+  type?: "text"
+  // If a rich text object's type value is `text`, then the corresponding text field
+  // contains an object including the text content and any inline link.
+  text: {
+    // The actual text content of the text.
+    content: string
+    // An object with information about any inline link in this text, if included.
+    link?: {
+      // The URL of the link.
+      url: string
+    } | null
+  }
+}
+
+type MentionRichTextItemRequest = {
+  type?: "mention"
+  // Mention objects represent an inline mention of a database, date, link preview mention,
+  // page, template mention, or user. A mention is created in the Notion UI when a user
+  // types `@` followed by the name of the reference.
+  mention:
+    | {
+        type?: "user"
+        // Details of the user mention.
+        user: PartialUserObjectRequest | UserObjectRequest
+      }
+    | {
+        type?: "date"
+        // Details of the date mention.
+        date: DateRequest
+      }
+    | {
+        type?: "page"
+        // Details of the page mention.
+        page: {
+          // The ID of the page in the mention.
+          id: IdRequest
+        }
+      }
+    | {
+        type?: "database"
+        // Details of the database mention.
+        database: {
+          // The ID of the database in the mention.
+          id: IdRequest
+        }
+      }
+    | {
+        type?: "template_mention"
+        // Details of the template mention.
+        template_mention: TemplateMentionRequest
+      }
+    | {
+        type?: "custom_emoji"
+        // Details of the custom emoji mention.
+        custom_emoji: {
+          // The ID of the custom emoji.
+          id: IdRequest
+          // The name of the custom emoji.
+          name?: string
+          // The URL of the custom emoji.
+          url?: string
+        }
+      }
+}
+
+type EquationRichTextItemRequest = {
+  type?: "equation"
+  // Notion supports inline LaTeX equations as rich text objects with a type value of
+  // `equation`.
+  equation: {
+    // A KaTeX compatible string.
+    expression: string
+  }
+}
+
+type RichTextItemRequestCommon = {
+  // All rich text objects contain an annotations object that sets the styling for the rich
+  // text.
+  annotations?: AnnotationRequest
 }
 export type GetSelfParameters = Record<string, never>
 
@@ -8467,17 +8592,28 @@ export const search = {
   path: (): string => `search`,
 } as const
 
-type CreateCommentBodyParameters =
-  | ({
-      // An array of rich text objects that represent the content of the comment.
-      rich_text: Array<RichTextItemRequest>
-      // An array of files to attach to the comment. Maximum of 3 allowed.
-      attachments?: Array<{
-        // ID of a FileUpload object that has the status `uploaded`.
-        file_upload_id: string
-        type?: "file_upload"
-      }>
-    } & {
+type CreateCommentBodyParameters = {
+  // An array of rich text objects that represent the content of the comment.
+  rich_text: Array<RichTextItemRequest>
+  // An array of files to attach to the comment. Maximum of 3 allowed.
+  attachments?: Array<{
+    // ID of a FileUpload object that has the status `uploaded`.
+    file_upload_id: string
+    type?: "file_upload"
+  }>
+  // Display name for the comment.
+  display_name?:
+    | { type: "integration" }
+    | { type: "user" }
+    | {
+        type: "custom"
+        custom: {
+          // The custom display name to use
+          name: string
+        }
+      }
+} & (
+  | {
       // The parent of the comment. This can be a page or a block.
       parent:
         | {
@@ -8492,17 +8628,18 @@ type CreateCommentBodyParameters =
             block_id: IdRequest
             type?: "block_id"
           }
-    })
+    }
   | {
       // The ID of the discussion to comment on.
       discussion_id: IdRequest
     }
+)
 
 export type CreateCommentParameters = CreateCommentBodyParameters
 
 export type CreateCommentResponse =
-  | CommentObjectResponse
   | PartialCommentObjectResponse
+  | CommentObjectResponse
 
 /**
  * Create a comment
@@ -8511,7 +8648,13 @@ export const createComment = {
   method: "post",
   pathParams: [],
   queryParams: [],
-  bodyParams: ["rich_text", "attachments", "parent", "discussion_id"],
+  bodyParams: [
+    "rich_text",
+    "attachments",
+    "display_name",
+    "parent",
+    "discussion_id",
+  ],
 
   path: (): string => `comments`,
 } as const

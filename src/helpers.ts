@@ -3,6 +3,7 @@ import {
   CommentObjectResponse,
   DatabaseObjectResponse,
   EquationRichTextItemResponse,
+  MentionRichTextItemResponse,
   PageObjectResponse,
   PartialBlockObjectResponse,
   PartialCommentObjectResponse,
@@ -10,6 +11,7 @@ import {
   PartialPageObjectResponse,
   PartialUserObjectResponse,
   RichTextItemResponse,
+  RichTextItemResponseCommon,
   TextRichTextItemResponse,
   UserObjectResponse,
 } from "./api-endpoints"
@@ -176,7 +178,7 @@ export function isFullComment(
  */
 export function isTextRichTextItemResponse(
   richText: RichTextItemResponse
-): richText is TextRichTextItemResponse {
+): richText is RichTextItemResponseCommon & TextRichTextItemResponse {
   return richText.type === "text"
 }
 
@@ -185,7 +187,7 @@ export function isTextRichTextItemResponse(
  */
 export function isEquationRichTextItemResponse(
   richText: RichTextItemResponse
-): richText is EquationRichTextItemResponse {
+): richText is RichTextItemResponseCommon & EquationRichTextItemResponse {
   return richText.type === "equation"
 }
 
@@ -194,6 +196,6 @@ export function isEquationRichTextItemResponse(
  */
 export function isMentionRichTextItemResponse(
   richText: RichTextItemResponse
-): richText is EquationRichTextItemResponse {
+): richText is RichTextItemResponseCommon & MentionRichTextItemResponse {
   return richText.type === "mention"
 }
