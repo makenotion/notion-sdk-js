@@ -6190,55 +6190,6 @@ export type PartialCommentObjectResponse = {
   id: string
 }
 
-export type FileUploadObjectResponse = {
-  object: "file_upload"
-  id: string
-  created_time: string
-  created_by: { id: string; type: "person" | "bot" | "agent" }
-  last_edited_time: string
-  archived: boolean
-  expiry_time: string | null
-  status: "pending" | "uploaded" | "expired" | "failed"
-  filename: string | null
-  content_type: string | null
-  content_length: number | null
-  upload_url?: string
-  complete_url?: string
-  file_import_result?: {
-    // The time the file was imported into Notion. ISO 8601 format.
-    imported_time: string
-  } & (
-    | {
-        // Indicates a successful import.
-        type: "success"
-        // Empty object for success type.
-        success: EmptyObject
-      }
-    | {
-        // Indicates an error occurred during import.
-        type: "error"
-        // Details about the error that occurred during file import.
-        error: {
-          // The type of error that occurred during file import.
-          type:
-            | "validation_error"
-            | "internal_system_error"
-            | "download_error"
-            | "upload_error"
-          // A short string code representing the error.
-          code: string
-          // A human-readable message describing the error.
-          message: string
-          // The parameter related to the error, if applicable. Null if not applicable.
-          parameter: string | null
-          // The HTTP status code associated with the error, if available. Null if not applicable.
-          status_code: number | null
-        }
-      }
-  )
-  number_of_parts?: { total: number; sent: number }
-}
-
 type PropertyItemPropertyItemListResponse = {
   type: "property_item"
   property_item:
@@ -6315,6 +6266,55 @@ export type RichTextItemResponseCommon = {
   // All rich text objects contain an annotations object that sets the styling for the rich
   // text.
   annotations: AnnotationResponse
+}
+
+export type FileUploadObjectResponse = {
+  object: "file_upload"
+  id: string
+  created_time: string
+  created_by: { id: string; type: "person" | "bot" | "agent" }
+  last_edited_time: string
+  archived: boolean
+  expiry_time: string | null
+  status: "pending" | "uploaded" | "expired" | "failed"
+  filename: string | null
+  content_type: string | null
+  content_length: number | null
+  upload_url?: string
+  complete_url?: string
+  file_import_result?: {
+    // The time the file was imported into Notion. ISO 8601 format.
+    imported_time: string
+  } & (
+    | {
+        // Indicates a successful import.
+        type: "success"
+        // Empty object for success type.
+        success: EmptyObject
+      }
+    | {
+        // Indicates an error occurred during import.
+        type: "error"
+        // Details about the error that occurred during file import.
+        error: {
+          // The type of error that occurred during file import.
+          type:
+            | "validation_error"
+            | "internal_system_error"
+            | "download_error"
+            | "upload_error"
+          // A short string code representing the error.
+          code: string
+          // A human-readable message describing the error.
+          message: string
+          // The parameter related to the error, if applicable. Null if not applicable.
+          parameter: string | null
+          // The HTTP status code associated with the error, if available. Null if not applicable.
+          status_code: number | null
+        }
+      }
+  )
+  number_of_parts?: { total: number; sent: number }
 }
 
 type AnnotationRequest = {
@@ -8672,12 +8672,12 @@ type ListCommentsQueryParameters = {
 export type ListCommentsParameters = ListCommentsQueryParameters
 
 export type ListCommentsResponse = {
-  type: "comment"
-  comment: EmptyObject
   object: "list"
   next_cursor: string | null
   has_more: boolean
   results: Array<CommentObjectResponse>
+  type: "comment"
+  comment: EmptyObject
 }
 
 /**
@@ -8748,12 +8748,12 @@ type ListFileUploadsQueryParameters = {
 export type ListFileUploadsParameters = ListFileUploadsQueryParameters
 
 export type ListFileUploadsResponse = {
-  type: "file_upload"
-  file_upload: EmptyObject
   object: "list"
   next_cursor: string | null
   has_more: boolean
   results: Array<FileUploadObjectResponse>
+  type: "file_upload"
+  file_upload: EmptyObject
 }
 
 /**
