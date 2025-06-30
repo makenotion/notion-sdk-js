@@ -5399,6 +5399,7 @@ export type EquationBlockObjectResponse = {
 }
 
 type LanguageRequest =
+  | "abc"
   | "abap"
   | "agda"
   | "arduino"
@@ -6152,93 +6153,6 @@ export type PropertyItemObjectResponse =
   | RelationPropertyItemObjectResponse
   | RollupPropertyItemObjectResponse
 
-export type CommentObjectResponse = {
-  // The comment object type name.
-  object: "comment"
-  // The ID of the comment.
-  id: string
-  // The parent of the comment.
-  parent:
-    | { type: "page_id"; page_id: string }
-    | { type: "block_id"; block_id: string }
-  // The ID of the discussion thread this comment belongs to.
-  discussion_id: string
-  // The time when the comment was created.
-  created_time: string
-  // The time when the comment was last edited.
-  last_edited_time: string
-  // The user who created the comment.
-  created_by: PartialUserObjectResponse
-  // The rich text content of the comment.
-  rich_text: Array<RichTextItemResponse>
-  // The display name of the comment.
-  display_name: {
-    type: "custom" | "user" | "integration"
-    resolved_name: string | null
-  }
-  // Any file attachments associated with the comment.
-  attachments?: Array<{
-    category: "audio" | "image" | "pdf" | "productivity" | "video"
-    file: { url: string; expiry_time: string }
-  }>
-}
-
-export type PartialCommentObjectResponse = {
-  // The comment object type name.
-  object: "comment"
-  // The ID of the comment.
-  id: string
-}
-
-export type FileUploadObjectResponse = {
-  object: "file_upload"
-  id: string
-  created_time: string
-  created_by: { id: string; type: "person" | "bot" | "agent" }
-  last_edited_time: string
-  archived: boolean
-  expiry_time: string | null
-  status: "pending" | "uploaded" | "expired" | "failed"
-  filename: string | null
-  content_type: string | null
-  content_length: number | null
-  upload_url?: string
-  complete_url?: string
-  file_import_result?: {
-    // The time the file was imported into Notion. ISO 8601 format.
-    imported_time: string
-  } & (
-    | {
-        // Indicates a successful import.
-        type: "success"
-        // Empty object for success type.
-        success: EmptyObject
-      }
-    | {
-        // Indicates an error occurred during import.
-        type: "error"
-        // Details about the error that occurred during file import.
-        error: {
-          // The type of error that occurred during file import.
-          type:
-            | "validation_error"
-            | "internal_system_error"
-            | "download_error"
-            | "upload_error"
-          // A short string code representing the error.
-          code: string
-          // A human-readable message describing the error.
-          message: string
-          // The parameter related to the error, if applicable. Null if not applicable.
-          parameter: string | null
-          // The HTTP status code associated with the error, if available. Null if not applicable.
-          status_code: number | null
-        }
-      }
-  )
-  number_of_parts?: { total: number; sent: number }
-}
-
 type PropertyItemPropertyItemListResponse = {
   type: "property_item"
   property_item:
@@ -6296,6 +6210,13 @@ type PropertyItemPropertyItemListResponse = {
 
 export type PropertyItemListResponse = PropertyItemPropertyItemListResponse
 
+export type PartialCommentObjectResponse = {
+  // The comment object type name.
+  object: "comment"
+  // The ID of the comment.
+  id: string
+}
+
 export type UserObjectResponseCommon = {
   // The ID of the user.
   id: string
@@ -6315,6 +6236,86 @@ export type RichTextItemResponseCommon = {
   // All rich text objects contain an annotations object that sets the styling for the rich
   // text.
   annotations: AnnotationResponse
+}
+
+export type CommentObjectResponse = {
+  // The comment object type name.
+  object: "comment"
+  // The ID of the comment.
+  id: string
+  // The parent of the comment.
+  parent:
+    | { type: "page_id"; page_id: string }
+    | { type: "block_id"; block_id: string }
+  // The ID of the discussion thread this comment belongs to.
+  discussion_id: string
+  // The time when the comment was created.
+  created_time: string
+  // The time when the comment was last edited.
+  last_edited_time: string
+  // The user who created the comment.
+  created_by: PartialUserObjectResponse
+  // The rich text content of the comment.
+  rich_text: Array<RichTextItemResponse>
+  // The display name of the comment.
+  display_name: {
+    type: "custom" | "user" | "integration"
+    resolved_name: string | null
+  }
+  // Any file attachments associated with the comment.
+  attachments?: Array<{
+    category: "audio" | "image" | "pdf" | "productivity" | "video"
+    file: { url: string; expiry_time: string }
+  }>
+}
+
+export type FileUploadObjectResponse = {
+  object: "file_upload"
+  id: string
+  created_time: string
+  created_by: { id: string; type: "person" | "bot" | "agent" }
+  last_edited_time: string
+  archived: boolean
+  expiry_time: string | null
+  status: "pending" | "uploaded" | "expired" | "failed"
+  filename: string | null
+  content_type: string | null
+  content_length: number | null
+  upload_url?: string
+  complete_url?: string
+  file_import_result?: {
+    // The time the file was imported into Notion. ISO 8601 format.
+    imported_time: string
+  } & (
+    | {
+        // Indicates a successful import.
+        type: "success"
+        // Empty object for success type.
+        success: EmptyObject
+      }
+    | {
+        // Indicates an error occurred during import.
+        type: "error"
+        // Details about the error that occurred during file import.
+        error: {
+          // The type of error that occurred during file import.
+          type:
+            | "validation_error"
+            | "internal_system_error"
+            | "download_error"
+            | "upload_error"
+          // A short string code representing the error.
+          code: string
+          // A human-readable message describing the error.
+          message: string
+          // The parameter related to the error, if applicable. Null if not applicable.
+          parameter: string | null
+          // The HTTP status code associated with the error, if available. Null if not applicable.
+          status_code: number | null
+        }
+      }
+  )
+  number_of_parts?: { total: number; sent: number }
 }
 
 type AnnotationRequest = {
@@ -6337,7 +6338,8 @@ type DateRequest = {
   start: string
   // The end date of the date object, if any.
   end?: string | null
-  // The time zone of the date object, if any.
+  // The time zone of the date object, if any. E.g. America/Los_Angeles, Europe/London,
+  // etc.
   time_zone?: TimeZoneRequest | null
 }
 
@@ -8672,12 +8674,12 @@ type ListCommentsQueryParameters = {
 export type ListCommentsParameters = ListCommentsQueryParameters
 
 export type ListCommentsResponse = {
-  type: "comment"
-  comment: EmptyObject
   object: "list"
   next_cursor: string | null
   has_more: boolean
   results: Array<CommentObjectResponse>
+  type: "comment"
+  comment: EmptyObject
 }
 
 /**
@@ -8748,12 +8750,12 @@ type ListFileUploadsQueryParameters = {
 export type ListFileUploadsParameters = ListFileUploadsQueryParameters
 
 export type ListFileUploadsResponse = {
-  type: "file_upload"
-  file_upload: EmptyObject
   object: "list"
   next_cursor: string | null
   has_more: boolean
   results: Array<FileUploadObjectResponse>
+  type: "file_upload"
+  file_upload: EmptyObject
 }
 
 /**
