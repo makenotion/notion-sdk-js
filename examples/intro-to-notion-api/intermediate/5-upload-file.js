@@ -51,6 +51,19 @@ async function appendBlockChildren(blockId, fileUploadId) {
           },
         },
       },
+      {
+        type: "paragraph",
+        paragraph: {
+          rich_text: [
+            {
+              type: "text",
+              text: {
+                content: "This is a test",
+              },
+            },
+          ],
+        },
+      },
     ],
   })
 }
@@ -68,11 +81,47 @@ async function main() {
     fileUpload.status
   )
 
-  const result = await appendBlockChildren(pageId, fileUpload.id)
+  // Append an image block with the file upload from above, and a text block,
+  // to the configured page.
+  const newBlocks = await appendBlockChildren(pageId, fileUpload.id)
+  const newBlockIds = newBlocks.results.map(block => block.id)
   console.log(
     "Appended block children; new list of block children is:",
-    result.results.map(block => block.id)
+    newBlockIds
   )
+
+  // Create a comment on the text block with the same image by providing
+  // the same file upload ID. Also use a custom display name.
+  const comment = await notion.comments.create({
+    parent: {
+      type: "block_id",
+      block_id: newBlockIds[1],
+    },
+    rich_text: [
+      {
+        type: "text",
+        text: { content: "I'm commenting on this block with an image:" },
+      },
+    ],
+    attachments: [
+      {
+        type: "file_upload",
+        file_upload_id: fileUpload.id,
+      },
+    ],
+    display_name: {
+      type: "custom",
+      custom: {
+        name: "Notion test auto commenter",
+      },
+    },
+  })
+
+  console.log("Comment ID:", comment.id)
+  console.log("Discussion ID:", comment.discussion_id)
+  console.log("Comment parent:", comment.parent)
+  console.log("Comment created by:", comment.created_by)
+  console.log("Comment display name:", comment.display_name)
 
   console.log("Done! Image added to page:", pageId)
 }
