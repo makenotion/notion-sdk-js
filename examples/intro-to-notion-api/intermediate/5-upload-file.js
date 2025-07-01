@@ -123,7 +123,7 @@ async function main() {
   console.log("Comment created by:", comment.created_by)
   console.log("Comment display name:", comment.display_name)
 
-  console.log("Done! Image added to page:", pageId)
+  console.log("Done! Image & comment added to page:", pageId)
 }
 
 await main()
