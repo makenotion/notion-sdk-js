@@ -127,6 +127,7 @@ export interface RequestParameters {
   query?: QueryParams
   body?: Record<string, unknown>
   formDataParams?: Record<string, string | FileParam>
+  headers?: Record<string, string>
   /**
    * To authenticate using public API token, `auth` should be passed as a
    * string. If you are trying to complete OAuth, then `auth` should be an object
@@ -212,6 +213,10 @@ export default class Client {
     }
 
     const headers: Record<string, string> = {
+      // Request-level custom additional headers can be provided, but
+      // don't allow them to override all other headers, e.g. the
+      // standard user agent.
+      ...args.headers,
       ...authorizationHeader,
       "Notion-Version": this.#notionVersion,
       "user-agent": this.#userAgent,
