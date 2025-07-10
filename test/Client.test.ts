@@ -114,5 +114,27 @@ describe("Notion SDK Client", () => {
       assert("size" in formData["file"])
       expect(formData["file"].size).toEqual(4)
     })
+
+    it("accepts custom request-level headers", async () => {
+      await notion.request({
+        path: "comments",
+        method: "get",
+        headers: {
+          "X-Custom-Header": "custom-value",
+        },
+      })
+
+      expect(mockFetch).toHaveBeenCalledWith(
+        "https://api.notion.com/v1/comments",
+        expect.objectContaining({
+          method: "GET",
+          headers: expect.objectContaining({
+            "Notion-Version": expect.any(String),
+            "user-agent": expect.stringContaining("notionhq-client"),
+            "X-Custom-Header": "custom-value",
+          }),
+        })
+      )
+    })
   })
 })
