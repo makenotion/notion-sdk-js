@@ -73,6 +73,9 @@ import {
   type ListCommentsParameters,
   type ListCommentsResponse,
   listComments,
+  type GetCommentParameters,
+  type GetCommentResponse,
+  getComment,
   type OauthTokenResponse,
   type OauthTokenParameters,
   oauthToken,
@@ -577,6 +580,21 @@ export default class Client {
         method: listComments.method,
         query: pick(args, listComments.queryParams),
         body: pick(args, listComments.bodyParams),
+        auth: args?.auth,
+      })
+    },
+
+    /**
+     * Retrieve a comment
+     */
+    retrieve: (
+      args: WithAuth<GetCommentParameters>
+    ): Promise<GetCommentResponse> => {
+      return this.request<GetCommentResponse>({
+        path: getComment.path(args),
+        method: getComment.method,
+        query: pick(args, getComment.queryParams),
+        body: pick(args, getComment.bodyParams),
         auth: args?.auth,
       })
     },
