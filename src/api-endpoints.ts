@@ -51,6 +51,12 @@ export type BotUserObjectResponse = {
 export type UserObjectResponse = UserObjectResponseCommon &
   (PersonUserObjectResponse | BotUserObjectResponse)
 
+export type GroupObjectResponse = {
+  name: string | null
+  id: IdRequest
+  object: "group"
+}
+
 type SelectColor =
   | "default"
   | "gray"
@@ -672,6 +678,8 @@ type DateResponse = {
   // The time zone of the date object.
   time_zone: TimeZoneRequest | null
 }
+
+type InternalFileResponse = { url: string; expiry_time: string }
 
 type StringRequest = string
 
@@ -4576,10 +4584,7 @@ type ExternalPageIconResponse = {
   external: { url: TextRequest }
 }
 
-type FilePageIconResponse = {
-  type: "file"
-  file: { url: string; expiry_time: string }
-}
+type FilePageIconResponse = { type: "file"; file: InternalFileResponse }
 
 type CustomEmojiPageIconResponse = {
   type: "custom_emoji"
@@ -4597,10 +4602,7 @@ type ExternalPageCoverResponse = {
   external: { url: TextRequest }
 }
 
-type FilePageCoverResponse = {
-  type: "file"
-  file: { url: string; expiry_time: string }
-}
+type FilePageCoverResponse = { type: "file"; file: InternalFileResponse }
 
 type PageCoverResponse = ExternalPageCoverResponse | FilePageCoverResponse
 
@@ -4628,11 +4630,7 @@ export type PageObjectResponse = {
     | {
         type: "files"
         files: Array<
-          | {
-              file: { url: string; expiry_time: string }
-              name: StringRequest
-              type?: "file"
-            }
+          | { file: InternalFileResponse; name: StringRequest; type?: "file" }
           | {
               external: { url: TextRequest }
               name: StringRequest
@@ -4672,7 +4670,9 @@ export type PageObjectResponse = {
     | { type: "rich_text"; rich_text: Array<RichTextItemResponse>; id: string }
     | {
         type: "people"
-        people: Array<PartialUserObjectResponse | UserObjectResponse>
+        people: Array<
+          PartialUserObjectResponse | UserObjectResponse | GroupObjectResponse
+        >
         id: string
       }
     | { type: "relation"; relation: Array<{ id: string }>; id: string }
@@ -4704,7 +4704,7 @@ export type PageObjectResponse = {
                     type: "files"
                     files: Array<
                       | {
-                          file: { url: string; expiry_time: string }
+                          file: InternalFileResponse
                           name: StringRequest
                           type?: "file"
                         }
@@ -4745,7 +4745,9 @@ export type PageObjectResponse = {
                 | {
                     type: "people"
                     people: Array<
-                      PartialUserObjectResponse | UserObjectResponse
+                      | PartialUserObjectResponse
+                      | UserObjectResponse
+                      | GroupObjectResponse
                     >
                   }
                 | { type: "relation"; relation: Array<{ id: string }> }
@@ -5108,9 +5110,14 @@ type ApiColor =
   | "pink_background"
   | "red_background"
 
+type ContentWithRichTextAndColorResponse = {
+  rich_text: Array<RichTextItemResponse>
+  color: ApiColor
+}
+
 export type ParagraphBlockObjectResponse = {
   type: "paragraph"
-  paragraph: { rich_text: Array<RichTextItemResponse>; color: ApiColor }
+  paragraph: ContentWithRichTextAndColorResponse
   parent:
     | { type: "database_id"; database_id: string }
     | { type: "page_id"; page_id: string }
@@ -5127,13 +5134,15 @@ export type ParagraphBlockObjectResponse = {
   in_trash: boolean
 }
 
+type HeaderContentWithRichTextAndColorResponse = {
+  rich_text: Array<RichTextItemResponse>
+  color: ApiColor
+  is_toggleable: boolean
+}
+
 export type Heading1BlockObjectResponse = {
   type: "heading_1"
-  heading_1: {
-    rich_text: Array<RichTextItemResponse>
-    color: ApiColor
-    is_toggleable: boolean
-  }
+  heading_1: HeaderContentWithRichTextAndColorResponse
   parent:
     | { type: "database_id"; database_id: string }
     | { type: "page_id"; page_id: string }
@@ -5152,11 +5161,7 @@ export type Heading1BlockObjectResponse = {
 
 export type Heading2BlockObjectResponse = {
   type: "heading_2"
-  heading_2: {
-    rich_text: Array<RichTextItemResponse>
-    color: ApiColor
-    is_toggleable: boolean
-  }
+  heading_2: HeaderContentWithRichTextAndColorResponse
   parent:
     | { type: "database_id"; database_id: string }
     | { type: "page_id"; page_id: string }
@@ -5175,11 +5180,7 @@ export type Heading2BlockObjectResponse = {
 
 export type Heading3BlockObjectResponse = {
   type: "heading_3"
-  heading_3: {
-    rich_text: Array<RichTextItemResponse>
-    color: ApiColor
-    is_toggleable: boolean
-  }
+  heading_3: HeaderContentWithRichTextAndColorResponse
   parent:
     | { type: "database_id"; database_id: string }
     | { type: "page_id"; page_id: string }
@@ -5198,10 +5199,7 @@ export type Heading3BlockObjectResponse = {
 
 export type BulletedListItemBlockObjectResponse = {
   type: "bulleted_list_item"
-  bulleted_list_item: {
-    rich_text: Array<RichTextItemResponse>
-    color: ApiColor
-  }
+  bulleted_list_item: ContentWithRichTextAndColorResponse
   parent:
     | { type: "database_id"; database_id: string }
     | { type: "page_id"; page_id: string }
@@ -5220,10 +5218,7 @@ export type BulletedListItemBlockObjectResponse = {
 
 export type NumberedListItemBlockObjectResponse = {
   type: "numbered_list_item"
-  numbered_list_item: {
-    rich_text: Array<RichTextItemResponse>
-    color: ApiColor
-  }
+  numbered_list_item: ContentWithRichTextAndColorResponse
   parent:
     | { type: "database_id"; database_id: string }
     | { type: "page_id"; page_id: string }
@@ -5242,7 +5237,7 @@ export type NumberedListItemBlockObjectResponse = {
 
 export type QuoteBlockObjectResponse = {
   type: "quote"
-  quote: { rich_text: Array<RichTextItemResponse>; color: ApiColor }
+  quote: ContentWithRichTextAndColorResponse
   parent:
     | { type: "database_id"; database_id: string }
     | { type: "page_id"; page_id: string }
@@ -5284,7 +5279,7 @@ export type ToDoBlockObjectResponse = {
 
 export type ToggleBlockObjectResponse = {
   type: "toggle"
-  toggle: { rich_text: Array<RichTextItemResponse>; color: ApiColor }
+  toggle: ContentWithRichTextAndColorResponse
   parent:
     | { type: "database_id"; database_id: string }
     | { type: "page_id"; page_id: string }
@@ -5341,9 +5336,11 @@ export type SyncedBlockBlockObjectResponse = {
   in_trash: boolean
 }
 
+type TitleObjectResponse = { title: string }
+
 export type ChildPageBlockObjectResponse = {
   type: "child_page"
-  child_page: { title: string }
+  child_page: TitleObjectResponse
   parent:
     | { type: "database_id"; database_id: string }
     | { type: "page_id"; page_id: string }
@@ -5362,7 +5359,7 @@ export type ChildPageBlockObjectResponse = {
 
 export type ChildDatabaseBlockObjectResponse = {
   type: "child_database"
-  child_database: { title: string }
+  child_database: TitleObjectResponse
   parent:
     | { type: "database_id"; database_id: string }
     | { type: "page_id"; page_id: string }
@@ -5379,9 +5376,11 @@ export type ChildDatabaseBlockObjectResponse = {
   in_trash: boolean
 }
 
+type ExpressionObjectResponse = { expression: string }
+
 export type EquationBlockObjectResponse = {
   type: "equation"
-  equation: { expression: string }
+  equation: ExpressionObjectResponse
   parent:
     | { type: "database_id"; database_id: string }
     | { type: "page_id"; page_id: string }
@@ -5399,8 +5398,8 @@ export type EquationBlockObjectResponse = {
 }
 
 type LanguageRequest =
-  | "abc"
   | "abap"
+  | "abc"
   | "agda"
   | "arduino"
   | "ascii art"
@@ -5659,13 +5658,15 @@ export type LinkToPageBlockObjectResponse = {
   in_trash: boolean
 }
 
+type ContentWithTableResponse = {
+  has_column_header: boolean
+  has_row_header: boolean
+  table_width: number
+}
+
 export type TableBlockObjectResponse = {
   type: "table"
-  table: {
-    has_column_header: boolean
-    has_row_header: boolean
-    table_width: number
-  }
+  table: ContentWithTableResponse
   parent:
     | { type: "database_id"; database_id: string }
     | { type: "page_id"; page_id: string }
@@ -5682,9 +5683,11 @@ export type TableBlockObjectResponse = {
   in_trash: boolean
 }
 
+type ContentWithTableRowResponse = { cells: Array<Array<RichTextItemResponse>> }
+
 export type TableRowBlockObjectResponse = {
   type: "table_row"
-  table_row: { cells: Array<Array<RichTextItemResponse>> }
+  table_row: ContentWithTableRowResponse
   parent:
     | { type: "database_id"; database_id: string }
     | { type: "page_id"; page_id: string }
@@ -5752,7 +5755,7 @@ type ExternalMediaContentWithFileAndCaptionResponse = {
 
 type FileMediaContentWithFileAndCaptionResponse = {
   type: "file"
-  file: { url: string; expiry_time: string }
+  file: InternalFileResponse
   caption: Array<RichTextItemResponse>
 }
 
@@ -5826,7 +5829,7 @@ type ExternalMediaContentWithFileNameAndCaptionResponse = {
 
 type FileMediaContentWithFileNameAndCaptionResponse = {
   type: "file"
-  file: { url: string; expiry_time: string }
+  file: InternalFileResponse
   caption: Array<RichTextItemResponse>
   name: string
 }
@@ -6014,11 +6017,7 @@ export type CheckboxPropertyItemObjectResponse = {
 export type FilesPropertyItemObjectResponse = {
   type: "files"
   files: Array<
-    | {
-        file: { url: string; expiry_time: string }
-        name: StringRequest
-        type?: "file"
-      }
+    | { file: InternalFileResponse; name: StringRequest; type?: "file" }
     | { external: { url: TextRequest }; name: StringRequest; type?: "external" }
   >
   object: "property_item"
@@ -6354,6 +6353,12 @@ type RichTextItemRequest = RichTextItemRequestCommon &
     | EquationRichTextItemRequest
   )
 
+type GroupObjectRequest = {
+  id: IdRequest
+  name?: string | null
+  object?: "group"
+}
+
 type InternalFileRequest = { url: string; expiry_time?: string }
 
 type ExternalFileRequest = { url: TextRequest }
@@ -6414,8 +6419,12 @@ type MediaContentWithFileNameAndCaptionRequest =
       name?: StringRequest
     }
 
+type ContentWithExpressionRequest = { expression: string }
+
+type ContentWithTableRowRequest = { cells: Array<Array<RichTextItemRequest>> }
+
 type TableRowRequest = {
-  table_row: { cells: Array<Array<RichTextItemRequest>> }
+  table_row: ContentWithTableRowRequest
   type?: "table_row"
   object?: "block"
 }
@@ -6426,6 +6435,19 @@ type TableRequestWithTableRowChildren = {
   has_column_header?: boolean
   has_row_header?: boolean
 }
+
+type HeaderContentWithRichTextAndColorRequest = {
+  rich_text: Array<RichTextItemRequest>
+  color?: ApiColor
+  is_toggleable?: boolean
+}
+
+type ContentWithRichTextAndColorRequest = {
+  rich_text: Array<RichTextItemRequest>
+  color?: ApiColor
+}
+
+type ContentWithRichTextRequest = { rich_text: Array<RichTextItemRequest> }
 
 export type BlockObjectRequestWithoutChildren =
   | {
@@ -6472,7 +6494,11 @@ export type BlockObjectRequestWithoutChildren =
       type?: "code"
       object?: "block"
     }
-  | { equation: { expression: string }; type?: "equation"; object?: "block" }
+  | {
+      equation: ContentWithExpressionRequest
+      type?: "equation"
+      object?: "block"
+    }
   | { divider: EmptyObject; type?: "divider"; object?: "block" }
   | { breadcrumb: EmptyObject; type?: "breadcrumb"; object?: "block" }
   | {
@@ -6489,60 +6515,42 @@ export type BlockObjectRequestWithoutChildren =
       object?: "block"
     }
   | {
-      table_row: { cells: Array<Array<RichTextItemRequest>> }
+      table_row: ContentWithTableRowRequest
       type?: "table_row"
       object?: "block"
     }
   | {
-      heading_1: {
-        rich_text: Array<RichTextItemRequest>
-        color?: ApiColor
-        is_toggleable?: boolean
-      }
+      heading_1: HeaderContentWithRichTextAndColorRequest
       type?: "heading_1"
       object?: "block"
     }
   | {
-      heading_2: {
-        rich_text: Array<RichTextItemRequest>
-        color?: ApiColor
-        is_toggleable?: boolean
-      }
+      heading_2: HeaderContentWithRichTextAndColorRequest
       type?: "heading_2"
       object?: "block"
     }
   | {
-      heading_3: {
-        rich_text: Array<RichTextItemRequest>
-        color?: ApiColor
-        is_toggleable?: boolean
-      }
+      heading_3: HeaderContentWithRichTextAndColorRequest
       type?: "heading_3"
       object?: "block"
     }
   | {
-      paragraph: { rich_text: Array<RichTextItemRequest>; color?: ApiColor }
+      paragraph: ContentWithRichTextAndColorRequest
       type?: "paragraph"
       object?: "block"
     }
   | {
-      bulleted_list_item: {
-        rich_text: Array<RichTextItemRequest>
-        color?: ApiColor
-      }
+      bulleted_list_item: ContentWithRichTextAndColorRequest
       type?: "bulleted_list_item"
       object?: "block"
     }
   | {
-      numbered_list_item: {
-        rich_text: Array<RichTextItemRequest>
-        color?: ApiColor
-      }
+      numbered_list_item: ContentWithRichTextAndColorRequest
       type?: "numbered_list_item"
       object?: "block"
     }
   | {
-      quote: { rich_text: Array<RichTextItemRequest>; color?: ApiColor }
+      quote: ContentWithRichTextAndColorRequest
       type?: "quote"
       object?: "block"
     }
@@ -6556,12 +6564,12 @@ export type BlockObjectRequestWithoutChildren =
       object?: "block"
     }
   | {
-      toggle: { rich_text: Array<RichTextItemRequest>; color?: ApiColor }
+      toggle: ContentWithRichTextAndColorRequest
       type?: "toggle"
       object?: "block"
     }
   | {
-      template: { rich_text: Array<RichTextItemRequest> }
+      template: ContentWithRichTextRequest
       type?: "template"
       object?: "block"
     }
@@ -6640,7 +6648,11 @@ type BlockObjectWithSingleLevelOfChildrenRequest =
       type?: "code"
       object?: "block"
     }
-  | { equation: { expression: string }; type?: "equation"; object?: "block" }
+  | {
+      equation: ContentWithExpressionRequest
+      type?: "equation"
+      object?: "block"
+    }
   | { divider: EmptyObject; type?: "divider"; object?: "block" }
   | { breadcrumb: EmptyObject; type?: "breadcrumb"; object?: "block" }
   | {
@@ -6657,7 +6669,7 @@ type BlockObjectWithSingleLevelOfChildrenRequest =
       object?: "block"
     }
   | {
-      table_row: { cells: Array<Array<RichTextItemRequest>> }
+      table_row: ContentWithTableRowRequest
       type?: "table_row"
       object?: "block"
     }
@@ -6803,7 +6815,11 @@ export type BlockObjectRequest =
       type?: "code"
       object?: "block"
     }
-  | { equation: { expression: string }; type?: "equation"; object?: "block" }
+  | {
+      equation: ContentWithExpressionRequest
+      type?: "equation"
+      object?: "block"
+    }
   | { divider: EmptyObject; type?: "divider"; object?: "block" }
   | { breadcrumb: EmptyObject; type?: "breadcrumb"; object?: "block" }
   | {
@@ -6820,7 +6836,7 @@ export type BlockObjectRequest =
       object?: "block"
     }
   | {
-      table_row: { cells: Array<Array<RichTextItemRequest>> }
+      table_row: ContentWithTableRowRequest
       type?: "table_row"
       object?: "block"
     }
@@ -7393,6 +7409,7 @@ type CreatePageBodyParameters = {
               avatar_url?: string | null
               object?: "user"
             }
+          | GroupObjectRequest
         >
         type?: "people"
       }
@@ -7536,6 +7553,7 @@ type UpdatePageBodyParameters = {
               avatar_url?: string | null
               object?: "user"
             }
+          | GroupObjectRequest
         >
         type?: "people"
       }
@@ -7700,7 +7718,7 @@ type UpdateBlockBodyParameters =
       in_trash?: boolean
     }
   | {
-      equation: { expression: string }
+      equation: ContentWithExpressionRequest
       type?: "equation"
       archived?: boolean
       in_trash?: boolean
@@ -7733,67 +7751,49 @@ type UpdateBlockBodyParameters =
       in_trash?: boolean
     }
   | {
-      table_row: { cells: Array<Array<RichTextItemRequest>> }
+      table_row: ContentWithTableRowRequest
       type?: "table_row"
       archived?: boolean
       in_trash?: boolean
     }
   | {
-      heading_1: {
-        rich_text: Array<RichTextItemRequest>
-        color?: ApiColor
-        is_toggleable?: boolean
-      }
+      heading_1: HeaderContentWithRichTextAndColorRequest
       type?: "heading_1"
       archived?: boolean
       in_trash?: boolean
     }
   | {
-      heading_2: {
-        rich_text: Array<RichTextItemRequest>
-        color?: ApiColor
-        is_toggleable?: boolean
-      }
+      heading_2: HeaderContentWithRichTextAndColorRequest
       type?: "heading_2"
       archived?: boolean
       in_trash?: boolean
     }
   | {
-      heading_3: {
-        rich_text: Array<RichTextItemRequest>
-        color?: ApiColor
-        is_toggleable?: boolean
-      }
+      heading_3: HeaderContentWithRichTextAndColorRequest
       type?: "heading_3"
       archived?: boolean
       in_trash?: boolean
     }
   | {
-      paragraph: { rich_text: Array<RichTextItemRequest>; color?: ApiColor }
+      paragraph: ContentWithRichTextAndColorRequest
       type?: "paragraph"
       archived?: boolean
       in_trash?: boolean
     }
   | {
-      bulleted_list_item: {
-        rich_text: Array<RichTextItemRequest>
-        color?: ApiColor
-      }
+      bulleted_list_item: ContentWithRichTextAndColorRequest
       type?: "bulleted_list_item"
       archived?: boolean
       in_trash?: boolean
     }
   | {
-      numbered_list_item: {
-        rich_text: Array<RichTextItemRequest>
-        color?: ApiColor
-      }
+      numbered_list_item: ContentWithRichTextAndColorRequest
       type?: "numbered_list_item"
       archived?: boolean
       in_trash?: boolean
     }
   | {
-      quote: { rich_text: Array<RichTextItemRequest>; color?: ApiColor }
+      quote: ContentWithRichTextAndColorRequest
       type?: "quote"
       archived?: boolean
       in_trash?: boolean
@@ -7809,13 +7809,13 @@ type UpdateBlockBodyParameters =
       in_trash?: boolean
     }
   | {
-      toggle: { rich_text: Array<RichTextItemRequest>; color?: ApiColor }
+      toggle: ContentWithRichTextAndColorRequest
       type?: "toggle"
       archived?: boolean
       in_trash?: boolean
     }
   | {
-      template: { rich_text: Array<RichTextItemRequest> }
+      template: ContentWithRichTextRequest
       type?: "template"
       archived?: boolean
       in_trash?: boolean
@@ -8694,6 +8694,29 @@ export const listComments = {
   path: (): string => `comments`,
 } as const
 
+type GetCommentPathParameters = {
+  // The ID of the comment to retrieve.
+  comment_id: IdRequest
+}
+
+export type GetCommentParameters = GetCommentPathParameters
+
+export type GetCommentResponse =
+  | PartialCommentObjectResponse
+  | CommentObjectResponse
+
+/**
+ * Retrieve a comment
+ */
+export const getComment = {
+  method: "get",
+  pathParams: ["comment_id"],
+  queryParams: [],
+  bodyParams: [],
+
+  path: (p: GetCommentPathParameters): string => `comments/${p.comment_id}`,
+} as const
+
 type CreateFileUploadBodyParameters = {
   // How the file is being sent. Use `multi_part` for files larger than 20MB. Use
   // `external_url` for files that are temporarily hosted publicly elsewhere. Default is
@@ -8842,18 +8865,21 @@ export const getFileUpload = {
     `file_uploads/${p.file_upload_id}`,
 } as const
 
-type OauthTokenBodyParameters = {
-  grant_type: string
-  code: string
-  redirect_uri?: string
-  external_account?: { key: string; name: string }
-}
+type OauthTokenBodyParameters =
+  | {
+      grant_type: "authorization_code"
+      code: string
+      redirect_uri?: string
+      external_account?: { key: string; name: string }
+    }
+  | { grant_type: "refresh_token"; refresh_token: string }
 
 export type OauthTokenParameters = OauthTokenBodyParameters
 
 export type OauthTokenResponse = {
   access_token: string
   token_type: "bearer"
+  refresh_token: string | null
   bot_id: string
   workspace_icon: string | null
   workspace_name: string | null
@@ -8878,13 +8904,19 @@ export type OauthTokenResponse = {
 }
 
 /**
- * Exchange an authorization code for an access token
+ * Exchange an authorization code for an access and refresh token
  */
 export const oauthToken = {
   method: "post",
   pathParams: [],
   queryParams: [],
-  bodyParams: ["grant_type", "code", "redirect_uri", "external_account"],
+  bodyParams: [
+    "grant_type",
+    "code",
+    "redirect_uri",
+    "external_account",
+    "refresh_token",
+  ],
 
   path: (): string => `oauth/token`,
 } as const
