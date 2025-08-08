@@ -5435,6 +5435,7 @@ type LanguageRequest =
   | "html"
   | "idris"
   | "java"
+  | "java/c/c++/c#"
   | "javascript"
   | "json"
   | "julia"
@@ -5487,7 +5488,6 @@ type LanguageRequest =
   | "webassembly"
   | "xml"
   | "yaml"
-  | "java/c/c++/c#"
 
 export type CodeBlockObjectResponse = {
   type: "code"
