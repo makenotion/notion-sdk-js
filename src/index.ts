@@ -1,3 +1,12 @@
+/**
+ * index.ts
+ *
+ * This file is the entry point for the Notion SDK.
+ * It exports the Client class and all the API endpoints.
+ *
+ * @packageDocumentation
+ */
+
 export type {
   AppendBlockChildrenParameters,
   AppendBlockChildrenResponse,
