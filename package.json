@@ -46,7 +46,7 @@
     "cspell": "5.4.1",
     "eslint": "7.24.0",
     "jest": "28.1.2",
-    "markdown-link-check": "3.8.7",
+    "markdown-link-check": "3.13.7",
     "prettier": "2.8.8",
     "ts-jest": "28.0.5",
     "typescript": "5.9.2"
