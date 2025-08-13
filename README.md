@@ -274,7 +274,7 @@ const blocks = await collectPaginatedAPI(notion.blocks.children.list, {
 This package supports the following minimum versions:
 
 - Runtime: `node >= 18`
-- Type definitions (optional): `typescript >= 4.5`
+- Type definitions (optional): `typescript >= 5.9`
 
 Earlier versions may still work, but we encourage people building new applications to upgrade to the current stable.
 
