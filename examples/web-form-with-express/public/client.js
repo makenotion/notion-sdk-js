@@ -83,7 +83,7 @@ dbForm.onsubmit = async function (event) {
   appendApiResponse(newDBData, dbResponseEl)
 }
 
-pageForm.onsubmit = async function (event) {
+pageForm.onsubmit = async (event) => {
   event.preventDefault()
 
   const dbID = event.target.newPageDB.value
@@ -139,4 +139,24 @@ commentForm.onsubmit = async function (event) {
 
   const newCommentData = await newCommentResponse.json()
   appendApiResponse(newCommentData, commentResponseEl)
-}
+}  
+  commentForm.onsubmit = async function (event) {
+    event.preventDefault()
+  
+    const pageID = event.target.pageIDComment.value
+    const comment = event.target.comment.value
+    const body = JSON.stringify({ pageID, comment })
+  
+    const newCommentResponse = await fetch("/comments", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body,
+    })
+  
+    const newCommentData = await newCommentResponse.json()
+    appendApiResponse(newCommentData, commentResponseEl)
+  }
+  
+  // ...existing code...
