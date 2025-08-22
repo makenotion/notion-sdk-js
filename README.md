@@ -67,8 +67,8 @@ console.log(listUsersResponse)
 Endpoint parameters are grouped into a single object. You don't need to remember which parameters go in the path, query, or body.
 
 ```js
-const myPage = await notion.databases.query({
-  database_id: "897e5a76-ae52-4b48-9fdf-e71f5945d1af",
+const myPage = await notion.dataSources.query({
+  data_source_id: "897e5a76-ae52-4b48-9fdf-e71f5945d1af",
   filter: {
     property: "Landmark",
     rich_text: {
@@ -89,8 +89,8 @@ const { Client, APIErrorCode } = require("@notionhq/client")
 
 try {
   const notion = new Client({ auth: process.env.NOTION_TOKEN })
-  const myPage = await notion.databases.query({
-    database_id: databaseId,
+  const myPage = await notion.dataSources.query({
+    data_source_id: dataSourceId,
     filter: {
       property: "Landmark",
       rich_text: {
@@ -101,7 +101,7 @@ try {
 } catch (error) {
   if (error.code === APIErrorCode.ObjectNotFound) {
     //
-    // For example: handle by asking the user to select a different database
+    // For example: handle by asking the user to select a different data source
     //
   } else {
     // Other error handling code
@@ -153,7 +153,7 @@ the `APIErrorCode` enum are returned from the server. Codes in the
 
 ```ts
 try {
-  const response = await notion.databases.query({
+  const response = await notion.dataSources.query({
     /* ... */
   })
 } catch (error: unknown) {
@@ -183,29 +183,29 @@ try {
 There are several [type guards](https://www.typescriptlang.org/docs/handbook/advanced-types.html#type-guards-and-differentiating-types)
 provided to distinguish between full and partial API responses.
 
-| Type guard function    | Purpose                                                                                |
-| ---------------------- | -------------------------------------------------------------------------------------- |
-| `isFullPage`           | Determine whether an object is a full `PageObjectResponse`                             |
-| `isFullBlock`          | Determine whether an object is a full `BlockObjectResponse`                            |
-| `isFullDatabase`       | Determine whether an object is a full `DatabaseObjectResponse`                         |
-| `isFullPageOrDatabase` | Determine whether an object is a full `PageObjectResponse` or `DatabaseObjectResponse` |
-| `isFullUser`           | Determine whether an object is a full `UserObjectResponse`                             |
-| `isFullComment`        | Determine whether an object is a full `CommentObjectResponse`                          |
+| Type guard function      | Purpose                                                                                  |
+| ------------------------ | ---------------------------------------------------------------------------------------- |
+| `isFullPage`             | Determine whether an object is a full `PageObjectResponse`                               |
+| `isFullBlock`            | Determine whether an object is a full `BlockObjectResponse`                              |
+| `isFullDataSource`       | Determine whether an object is a full `DataSourceObjectResponse`                         |
+| `isFullPageOrDataSource` | Determine whether an object is a full `PageObjectResponse` or `DataSourceObjectResponse` |
+| `isFullUser`             | Determine whether an object is a full `UserObjectResponse`                               |
+| `isFullComment`          | Determine whether an object is a full `CommentObjectResponse`                            |
 
 Here is an example of using a type guard:
 
 ```typescript
-const fullOrPartialPages = await notion.databases.query({
-  database_id: "897e5a76-ae52-4b48-9fdf-e71f5945d1af",
+const fullOrPartialPages = await notion.dataSources.query({
+  data_source_id: "897e5a76-ae52-4b48-9fdf-e71f5945d1af",
 })
 for (const page of fullOrPartialPages.results) {
-  if (!isFullPageOrDatabase(page)) {
+  if (!isFullPageOrDataSource(page)) {
     continue
   }
   // The page variable has been narrowed from
-  //      PageObjectResponse | PartialPageObjectResponse | DatabaseObjectResponse | PartialDatabaseObjectResponse
+  //      PageObjectResponse | PartialPageObjectResponse | DataSourceObjectResponse | PartialDataSourceObjectResponse
   // to
-  //      PageObjectResponse | DatabaseObjectResponse.
+  //      PageObjectResponse | DataSourceObjectResponse.
   console.log("Created at:", page.created_time)
 }
 ```

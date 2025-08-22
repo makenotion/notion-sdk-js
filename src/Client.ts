@@ -97,6 +97,15 @@ import {
   type ListFileUploadsParameters,
   type ListFileUploadsResponse,
   listFileUploads,
+  GetDatabaseParameters,
+  GetDatabaseResponse,
+  getDatabase,
+  CreateDatabaseResponse,
+  CreateDatabaseParameters,
+  createDatabase,
+  UpdateDatabaseParameters,
+  UpdateDatabaseResponse,
+  updateDatabase,
 } from "./api-endpoints"
 import {
   version as PACKAGE_VERSION,
@@ -366,6 +375,53 @@ export default class Client {
           auth: args?.auth,
         })
       },
+    },
+  }
+
+  public readonly databases = {
+    /**
+     * Retrieve a database
+     */
+    retrieve: (
+      args: WithAuth<GetDatabaseParameters>
+    ): Promise<GetDatabaseResponse> => {
+      return this.request<GetDatabaseResponse>({
+        path: getDatabase.path(args),
+        method: getDatabase.method,
+        query: pick(args, getDatabase.queryParams),
+        body: pick(args, getDatabase.bodyParams),
+        auth: args?.auth,
+      })
+    },
+
+    /**
+     * Create a database
+     */
+    create: (
+      args: WithAuth<CreateDatabaseParameters>
+    ): Promise<CreateDatabaseResponse> => {
+      return this.request<CreateDatabaseResponse>({
+        path: createDatabase.path(),
+        method: createDatabase.method,
+        query: pick(args, createDatabase.queryParams),
+        body: pick(args, createDatabase.bodyParams),
+        auth: args?.auth,
+      })
+    },
+
+    /**
+     * Update a database
+     */
+    update: (
+      args: WithAuth<UpdateDatabaseParameters>
+    ): Promise<UpdateDatabaseResponse> => {
+      return this.request<UpdateDatabaseResponse>({
+        path: updateDatabase.path(args),
+        method: updateDatabase.method,
+        query: pick(args, updateDatabase.queryParams),
+        body: pick(args, updateDatabase.bodyParams),
+        auth: args?.auth,
+      })
     },
   }
 
