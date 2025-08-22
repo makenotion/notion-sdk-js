@@ -57,6 +57,38 @@ export type GroupObjectResponse = {
   object: "group"
 }
 
+type DatabaseIdParentForBlockBasedObjectResponse = {
+  type: "database_id"
+  database_id: string
+}
+
+type DataSourceIdParentForBlockBasedObjectResponse = {
+  type: "data_source_id"
+  data_source_id: string
+}
+
+type PageIdParentForBlockBasedObjectResponse = {
+  type: "page_id"
+  page_id: string
+}
+
+type BlockIdParentForBlockBasedObjectResponse = {
+  type: "block_id"
+  block_id: string
+}
+
+type WorkspaceParentForBlockBasedObjectResponse = {
+  type: "workspace"
+  workspace: true
+}
+
+type ParentForBlockBasedObjectResponse =
+  | DatabaseIdParentForBlockBasedObjectResponse
+  | DataSourceIdParentForBlockBasedObjectResponse
+  | PageIdParentForBlockBasedObjectResponse
+  | BlockIdParentForBlockBasedObjectResponse
+  | WorkspaceParentForBlockBasedObjectResponse
+
 type SelectColor =
   | "default"
   | "gray"
@@ -679,7 +711,12 @@ type DateResponse = {
   time_zone: TimeZoneRequest | null
 }
 
-type InternalFileResponse = { url: string; expiry_time: string }
+type InternalFileResponse = {
+  // The URL of the file.
+  url: string
+  // The time when the URL will expire.
+  expiry_time: string
+}
 
 type StringRequest = string
 
@@ -4577,41 +4614,64 @@ type EmojiRequest =
   | "🏴󠁧󠁢󠁳󠁣󠁴󠁿"
   | "🏴󠁧󠁢󠁷󠁬󠁳󠁿"
 
-type EmojiPageIconResponse = { type: "emoji"; emoji: EmojiRequest }
-
-type ExternalPageIconResponse = {
-  type: "external"
-  external: { url: TextRequest }
+type EmojiPageIconResponse = {
+  // Type of icon. In this case, an emoji.
+  type: "emoji"
+  // The emoji character used as the icon.
+  emoji: EmojiRequest
 }
 
-type FilePageIconResponse = { type: "file"; file: InternalFileResponse }
+type ExternalPageIconResponse = {
+  // Type of icon. In this case, an external URL.
+  type: "external"
+  // The external URL for the icon.
+  external: {
+    // The URL of the external file or resource.
+    url: string
+  }
+}
+
+type FilePageIconResponse = {
+  // Type of icon. In this case, a file.
+  type: "file"
+  // The file URL for the icon.
+  file: InternalFileResponse
+}
 
 type CustomEmojiPageIconResponse = {
+  // Type of icon. In this case, a custom emoji.
   type: "custom_emoji"
+  // The custom emoji details for the icon.
   custom_emoji: CustomEmojiResponse
 }
 
 type PageIconResponse =
   | EmojiPageIconResponse
-  | ExternalPageIconResponse
   | FilePageIconResponse
+  | ExternalPageIconResponse
   | CustomEmojiPageIconResponse
 
 type ExternalPageCoverResponse = {
+  // Type of cover. In this case, an external URL.
   type: "external"
-  external: { url: TextRequest }
+  // The external URL for the cover.
+  external: {
+    // The URL of the external file or resource.
+    url: string
+  }
 }
 
-type FilePageCoverResponse = { type: "file"; file: InternalFileResponse }
+type FilePageCoverResponse = {
+  // Type of cover. In this case, a file.
+  type: "file"
+  // The file URL for the cover.
+  file: InternalFileResponse
+}
 
-type PageCoverResponse = ExternalPageCoverResponse | FilePageCoverResponse
+type PageCoverResponse = FilePageCoverResponse | ExternalPageCoverResponse
 
 export type PageObjectResponse = {
-  parent:
-    | { type: "database_id"; database_id: string }
-    | { type: "page_id"; page_id: string }
-    | { type: "block_id"; block_id: string }
-    | { type: "workspace"; workspace: true }
+  parent: ParentForBlockBasedObjectResponse
   properties: Record<
     string,
     | { type: "number"; number: number | null; id: string }
@@ -4819,270 +4879,258 @@ type NumberFormat =
 type PropertyDescriptionRequest = string
 
 type NumberDatabasePropertyConfigResponse = {
-  type: "number"
-  number: { format: NumberFormat }
-  id: string
-  name: string
-  description: PropertyDescriptionRequest | null
+  type?: "number"
+  number: {
+    // The number format for the property.
+    format?: NumberFormat
+  }
 }
 
 type FormulaDatabasePropertyConfigResponse = {
-  type: "formula"
-  formula: { expression: string }
-  id: string
-  name: string
-  description: PropertyDescriptionRequest | null
+  type?: "formula"
+  formula: { expression?: string }
 }
 
 type SelectPropertyResponse = {
-  id: StringRequest
-  name: TextRequest
-  color: SelectColor
-  description: TextRequest | null
+  name: string
+  color?: SelectColor
+  description?: string | null
 }
 
 type SelectDatabasePropertyConfigResponse = {
-  type: "select"
-  select: { options: Array<SelectPropertyResponse> }
-  id: string
-  name: string
-  description: PropertyDescriptionRequest | null
+  type?: "select"
+  select: { options?: Array<SelectPropertyResponse> }
 }
 
 type MultiSelectDatabasePropertyConfigResponse = {
-  type: "multi_select"
-  multi_select: { options: Array<SelectPropertyResponse> }
-  id: string
-  name: string
-  description: PropertyDescriptionRequest | null
+  type?: "multi_select"
+  multi_select: { options?: Array<SelectPropertyResponse> }
 }
 
 type StatusPropertyResponse = {
-  id: StringRequest
-  name: TextRequest
+  // The ID of the status option.
+  id: string
+  // The name of the status option.
+  name: string
+  // The color of the status option.
   color: SelectColor
-  description: TextRequest | null
+  // The description of the status option.
+  description?: string | null
 }
 
 type StatusDatabasePropertyConfigResponse = {
-  type: "status"
+  type?: "status"
   status: {
+    // The options for the status property.
     options: Array<StatusPropertyResponse>
+    // The groups for the status property.
     groups: Array<{
-      id: StringRequest
-      name: TextRequest
+      // The ID of the status group.
+      id: string
+      // The name of the status group.
+      name: string
+      // The color of the status group.
       color: SelectColor
+      // The IDs of the status options in this group.
       option_ids: Array<string>
     }>
   }
-  id: string
-  name: string
-  description: PropertyDescriptionRequest | null
 }
 
 type SinglePropertyDatabasePropertyRelationConfigResponse = {
-  type: "single_property"
+  type?: "single_property"
   single_property: EmptyObject
-  database_id: IdRequest
 }
 
 type DualPropertyDatabasePropertyRelationConfigResponse = {
-  type: "dual_property"
-  dual_property: {
-    synced_property_id: StringRequest
-    synced_property_name: TextRequest
-  }
-  database_id: IdRequest
+  type?: "dual_property"
+  dual_property: { synced_property_id?: string; synced_property_name?: string }
 }
 
 type DatabasePropertyRelationConfigResponse =
-  | SinglePropertyDatabasePropertyRelationConfigResponse
-  | DualPropertyDatabasePropertyRelationConfigResponse
+  DatabasePropertyRelationConfigResponseCommon &
+    (
+      | SinglePropertyDatabasePropertyRelationConfigResponse
+      | DualPropertyDatabasePropertyRelationConfigResponse
+    )
 
 type RelationDatabasePropertyConfigResponse = {
-  type: "relation"
+  type?: "relation"
   relation: DatabasePropertyRelationConfigResponse
-  id: string
-  name: string
-  description: PropertyDescriptionRequest | null
 }
 
 type RollupDatabasePropertyConfigResponse = {
-  type: "rollup"
+  type?: "rollup"
   rollup: {
-    rollup_property_name: string
-    relation_property_name: string
-    rollup_property_id: string
-    relation_property_id: string
+    // The function to use for the rollup, e.g. count, count_values, percent_not_empty, max.
     function: RollupFunction
-  }
-  id: string
-  name: string
-  description: PropertyDescriptionRequest | null
+  } & (
+    | { relation_property_name: string; rollup_property_name: string }
+    | { relation_property_id: string; rollup_property_name: string }
+    | { relation_property_name: string; rollup_property_id: string }
+    | { relation_property_id: string; rollup_property_id: string }
+  )
 }
 
 type UniqueIdDatabasePropertyConfigResponse = {
-  type: "unique_id"
-  unique_id: { prefix: string | null }
-  id: string
-  name: string
-  description: PropertyDescriptionRequest | null
+  type?: "unique_id"
+  unique_id: {
+    // The prefix for the unique ID.
+    prefix?: string | null
+  }
 }
 
 type TitleDatabasePropertyConfigResponse = {
-  type: "title"
+  type?: "title"
   title: EmptyObject
-  id: string
-  name: string
-  description: PropertyDescriptionRequest | null
 }
 
 type RichTextDatabasePropertyConfigResponse = {
-  type: "rich_text"
+  type?: "rich_text"
   rich_text: EmptyObject
-  id: string
-  name: string
-  description: PropertyDescriptionRequest | null
 }
 
-type UrlDatabasePropertyConfigResponse = {
-  type: "url"
-  url: EmptyObject
-  id: string
-  name: string
-  description: PropertyDescriptionRequest | null
-}
+type UrlDatabasePropertyConfigResponse = { type?: "url"; url: EmptyObject }
 
 type PeopleDatabasePropertyConfigResponse = {
-  type: "people"
+  type?: "people"
   people: EmptyObject
-  id: string
-  name: string
-  description: PropertyDescriptionRequest | null
 }
 
 type FilesDatabasePropertyConfigResponse = {
-  type: "files"
+  type?: "files"
   files: EmptyObject
-  id: string
-  name: string
-  description: PropertyDescriptionRequest | null
 }
 
 type EmailDatabasePropertyConfigResponse = {
-  type: "email"
+  type?: "email"
   email: EmptyObject
-  id: string
-  name: string
-  description: PropertyDescriptionRequest | null
 }
 
 type PhoneNumberDatabasePropertyConfigResponse = {
-  type: "phone_number"
+  type?: "phone_number"
   phone_number: EmptyObject
-  id: string
-  name: string
-  description: PropertyDescriptionRequest | null
 }
 
-type DateDatabasePropertyConfigResponse = {
-  type: "date"
-  date: EmptyObject
-  id: string
-  name: string
-  description: PropertyDescriptionRequest | null
-}
+type DateDatabasePropertyConfigResponse = { type?: "date"; date: EmptyObject }
 
 type CheckboxDatabasePropertyConfigResponse = {
-  type: "checkbox"
+  type?: "checkbox"
   checkbox: EmptyObject
-  id: string
-  name: string
-  description: PropertyDescriptionRequest | null
 }
 
 type CreatedByDatabasePropertyConfigResponse = {
-  type: "created_by"
+  type?: "created_by"
   created_by: EmptyObject
-  id: string
-  name: string
-  description: PropertyDescriptionRequest | null
 }
 
 type CreatedTimeDatabasePropertyConfigResponse = {
-  type: "created_time"
+  type?: "created_time"
   created_time: EmptyObject
-  id: string
-  name: string
-  description: PropertyDescriptionRequest | null
 }
 
 type LastEditedByDatabasePropertyConfigResponse = {
-  type: "last_edited_by"
+  type?: "last_edited_by"
   last_edited_by: EmptyObject
-  id: string
-  name: string
-  description: PropertyDescriptionRequest | null
 }
 
 type LastEditedTimeDatabasePropertyConfigResponse = {
-  type: "last_edited_time"
+  type?: "last_edited_time"
   last_edited_time: EmptyObject
-  id: string
-  name: string
-  description: PropertyDescriptionRequest | null
 }
 
-type DatabasePropertyConfigResponse =
-  | NumberDatabasePropertyConfigResponse
-  | FormulaDatabasePropertyConfigResponse
-  | SelectDatabasePropertyConfigResponse
-  | MultiSelectDatabasePropertyConfigResponse
-  | StatusDatabasePropertyConfigResponse
-  | RelationDatabasePropertyConfigResponse
-  | RollupDatabasePropertyConfigResponse
-  | UniqueIdDatabasePropertyConfigResponse
-  | TitleDatabasePropertyConfigResponse
-  | RichTextDatabasePropertyConfigResponse
-  | UrlDatabasePropertyConfigResponse
-  | PeopleDatabasePropertyConfigResponse
-  | FilesDatabasePropertyConfigResponse
-  | EmailDatabasePropertyConfigResponse
-  | PhoneNumberDatabasePropertyConfigResponse
-  | DateDatabasePropertyConfigResponse
-  | CheckboxDatabasePropertyConfigResponse
-  | CreatedByDatabasePropertyConfigResponse
-  | CreatedTimeDatabasePropertyConfigResponse
-  | LastEditedByDatabasePropertyConfigResponse
-  | LastEditedTimeDatabasePropertyConfigResponse
+type DatabasePropertyConfigResponse = DatabasePropertyConfigResponseCommon &
+  (
+    | NumberDatabasePropertyConfigResponse
+    | FormulaDatabasePropertyConfigResponse
+    | SelectDatabasePropertyConfigResponse
+    | MultiSelectDatabasePropertyConfigResponse
+    | StatusDatabasePropertyConfigResponse
+    | RelationDatabasePropertyConfigResponse
+    | RollupDatabasePropertyConfigResponse
+    | UniqueIdDatabasePropertyConfigResponse
+    | TitleDatabasePropertyConfigResponse
+    | RichTextDatabasePropertyConfigResponse
+    | UrlDatabasePropertyConfigResponse
+    | PeopleDatabasePropertyConfigResponse
+    | FilesDatabasePropertyConfigResponse
+    | EmailDatabasePropertyConfigResponse
+    | PhoneNumberDatabasePropertyConfigResponse
+    | DateDatabasePropertyConfigResponse
+    | CheckboxDatabasePropertyConfigResponse
+    | CreatedByDatabasePropertyConfigResponse
+    | CreatedTimeDatabasePropertyConfigResponse
+    | LastEditedByDatabasePropertyConfigResponse
+    | LastEditedTimeDatabasePropertyConfigResponse
+  )
 
-export type PartialDatabaseObjectResponse = {
+export type PartialDataSourceObjectResponse = {
+  // The data source object type name.
   object: "database"
+  // The ID of the data source.
   id: string
+  // The properties schema of the data source.
   properties: Record<string, DatabasePropertyConfigResponse>
 }
 
-export type DatabaseObjectResponse = {
+export type DataSourceObjectResponse = {
+  // The data source object type name.
+  object: "database"
+  // The ID of the data source.
+  id: string
+  // The title of the data source.
   title: Array<RichTextItemResponse>
+  // The description of the data source.
   description: Array<RichTextItemResponse>
-  icon: PageIconResponse | null
-  cover: PageCoverResponse | null
-  properties: Record<string, DatabasePropertyConfigResponse>
+  // The parent of the data source.
   parent:
-    | { type: "database_id"; database_id: string }
-    | { type: "page_id"; page_id: string }
-    | { type: "block_id"; block_id: string }
-    | { type: "workspace"; workspace: true }
-  created_by: PartialUserObjectResponse
-  last_edited_by: PartialUserObjectResponse
+    | {
+        // The parent type.
+        type: "page_id"
+        // The ID of the parent page.
+        page_id: string
+      }
+    | {
+        // The parent type.
+        type: "workspace"
+        // Always true for workspace parent.
+        workspace: true
+      }
+    | {
+        // The parent type.
+        type: "database_id"
+        // The ID of the parent database.
+        database_id: string
+      }
+    | {
+        // The parent type.
+        type: "block_id"
+        // The ID of the parent block.
+        block_id: string
+      }
+  // Whether the data source is inline.
   is_inline: boolean
-  object: "database"
-  id: string
-  created_time: string
-  last_edited_time: string
+  // Whether the data source is archived.
   archived: boolean
+  // Whether the data source is in the trash.
   in_trash: boolean
+  // The time when the data source was created.
+  created_time: string
+  // The time when the data source was last edited.
+  last_edited_time: string
+  // The user who created the data source.
+  created_by: PartialUserObjectResponse
+  // The user who last edited the data source.
+  last_edited_by: PartialUserObjectResponse
+  // The properties schema of the data source.
+  properties: Record<string, DatabasePropertyConfigResponse>
+  // The icon of the data source.
+  icon: PageIconResponse | null
+  // The cover of the data source.
+  cover: PageCoverResponse | null
+  // The URL of the data source.
   url: string
+  // The public URL of the data source if it is publicly accessible.
   public_url: string | null
 }
 
@@ -5118,11 +5166,7 @@ type ContentWithRichTextAndColorResponse = {
 export type ParagraphBlockObjectResponse = {
   type: "paragraph"
   paragraph: ContentWithRichTextAndColorResponse
-  parent:
-    | { type: "database_id"; database_id: string }
-    | { type: "page_id"; page_id: string }
-    | { type: "block_id"; block_id: string }
-    | { type: "workspace"; workspace: true }
+  parent: ParentForBlockBasedObjectResponse
   object: "block"
   id: string
   created_time: string
@@ -5143,11 +5187,7 @@ type HeaderContentWithRichTextAndColorResponse = {
 export type Heading1BlockObjectResponse = {
   type: "heading_1"
   heading_1: HeaderContentWithRichTextAndColorResponse
-  parent:
-    | { type: "database_id"; database_id: string }
-    | { type: "page_id"; page_id: string }
-    | { type: "block_id"; block_id: string }
-    | { type: "workspace"; workspace: true }
+  parent: ParentForBlockBasedObjectResponse
   object: "block"
   id: string
   created_time: string
@@ -5162,11 +5202,7 @@ export type Heading1BlockObjectResponse = {
 export type Heading2BlockObjectResponse = {
   type: "heading_2"
   heading_2: HeaderContentWithRichTextAndColorResponse
-  parent:
-    | { type: "database_id"; database_id: string }
-    | { type: "page_id"; page_id: string }
-    | { type: "block_id"; block_id: string }
-    | { type: "workspace"; workspace: true }
+  parent: ParentForBlockBasedObjectResponse
   object: "block"
   id: string
   created_time: string
@@ -5181,11 +5217,7 @@ export type Heading2BlockObjectResponse = {
 export type Heading3BlockObjectResponse = {
   type: "heading_3"
   heading_3: HeaderContentWithRichTextAndColorResponse
-  parent:
-    | { type: "database_id"; database_id: string }
-    | { type: "page_id"; page_id: string }
-    | { type: "block_id"; block_id: string }
-    | { type: "workspace"; workspace: true }
+  parent: ParentForBlockBasedObjectResponse
   object: "block"
   id: string
   created_time: string
@@ -5200,11 +5232,7 @@ export type Heading3BlockObjectResponse = {
 export type BulletedListItemBlockObjectResponse = {
   type: "bulleted_list_item"
   bulleted_list_item: ContentWithRichTextAndColorResponse
-  parent:
-    | { type: "database_id"; database_id: string }
-    | { type: "page_id"; page_id: string }
-    | { type: "block_id"; block_id: string }
-    | { type: "workspace"; workspace: true }
+  parent: ParentForBlockBasedObjectResponse
   object: "block"
   id: string
   created_time: string
@@ -5219,11 +5247,7 @@ export type BulletedListItemBlockObjectResponse = {
 export type NumberedListItemBlockObjectResponse = {
   type: "numbered_list_item"
   numbered_list_item: ContentWithRichTextAndColorResponse
-  parent:
-    | { type: "database_id"; database_id: string }
-    | { type: "page_id"; page_id: string }
-    | { type: "block_id"; block_id: string }
-    | { type: "workspace"; workspace: true }
+  parent: ParentForBlockBasedObjectResponse
   object: "block"
   id: string
   created_time: string
@@ -5238,11 +5262,7 @@ export type NumberedListItemBlockObjectResponse = {
 export type QuoteBlockObjectResponse = {
   type: "quote"
   quote: ContentWithRichTextAndColorResponse
-  parent:
-    | { type: "database_id"; database_id: string }
-    | { type: "page_id"; page_id: string }
-    | { type: "block_id"; block_id: string }
-    | { type: "workspace"; workspace: true }
+  parent: ParentForBlockBasedObjectResponse
   object: "block"
   id: string
   created_time: string
@@ -5261,11 +5281,7 @@ export type ToDoBlockObjectResponse = {
     color: ApiColor
     checked: boolean
   }
-  parent:
-    | { type: "database_id"; database_id: string }
-    | { type: "page_id"; page_id: string }
-    | { type: "block_id"; block_id: string }
-    | { type: "workspace"; workspace: true }
+  parent: ParentForBlockBasedObjectResponse
   object: "block"
   id: string
   created_time: string
@@ -5280,11 +5296,7 @@ export type ToDoBlockObjectResponse = {
 export type ToggleBlockObjectResponse = {
   type: "toggle"
   toggle: ContentWithRichTextAndColorResponse
-  parent:
-    | { type: "database_id"; database_id: string }
-    | { type: "page_id"; page_id: string }
-    | { type: "block_id"; block_id: string }
-    | { type: "workspace"; workspace: true }
+  parent: ParentForBlockBasedObjectResponse
   object: "block"
   id: string
   created_time: string
@@ -5299,11 +5311,7 @@ export type ToggleBlockObjectResponse = {
 export type TemplateBlockObjectResponse = {
   type: "template"
   template: { rich_text: Array<RichTextItemResponse> }
-  parent:
-    | { type: "database_id"; database_id: string }
-    | { type: "page_id"; page_id: string }
-    | { type: "block_id"; block_id: string }
-    | { type: "workspace"; workspace: true }
+  parent: ParentForBlockBasedObjectResponse
   object: "block"
   id: string
   created_time: string
@@ -5320,11 +5328,7 @@ export type SyncedBlockBlockObjectResponse = {
   synced_block: {
     synced_from: { type: "block_id"; block_id: IdRequest } | null
   }
-  parent:
-    | { type: "database_id"; database_id: string }
-    | { type: "page_id"; page_id: string }
-    | { type: "block_id"; block_id: string }
-    | { type: "workspace"; workspace: true }
+  parent: ParentForBlockBasedObjectResponse
   object: "block"
   id: string
   created_time: string
@@ -5341,11 +5345,7 @@ type TitleObjectResponse = { title: string }
 export type ChildPageBlockObjectResponse = {
   type: "child_page"
   child_page: TitleObjectResponse
-  parent:
-    | { type: "database_id"; database_id: string }
-    | { type: "page_id"; page_id: string }
-    | { type: "block_id"; block_id: string }
-    | { type: "workspace"; workspace: true }
+  parent: ParentForBlockBasedObjectResponse
   object: "block"
   id: string
   created_time: string
@@ -5360,11 +5360,7 @@ export type ChildPageBlockObjectResponse = {
 export type ChildDatabaseBlockObjectResponse = {
   type: "child_database"
   child_database: TitleObjectResponse
-  parent:
-    | { type: "database_id"; database_id: string }
-    | { type: "page_id"; page_id: string }
-    | { type: "block_id"; block_id: string }
-    | { type: "workspace"; workspace: true }
+  parent: ParentForBlockBasedObjectResponse
   object: "block"
   id: string
   created_time: string
@@ -5381,11 +5377,7 @@ type ExpressionObjectResponse = { expression: string }
 export type EquationBlockObjectResponse = {
   type: "equation"
   equation: ExpressionObjectResponse
-  parent:
-    | { type: "database_id"; database_id: string }
-    | { type: "page_id"; page_id: string }
-    | { type: "block_id"; block_id: string }
-    | { type: "workspace"; workspace: true }
+  parent: ParentForBlockBasedObjectResponse
   object: "block"
   id: string
   created_time: string
@@ -5496,11 +5488,7 @@ export type CodeBlockObjectResponse = {
     caption: Array<RichTextItemResponse>
     language: LanguageRequest
   }
-  parent:
-    | { type: "database_id"; database_id: string }
-    | { type: "page_id"; page_id: string }
-    | { type: "block_id"; block_id: string }
-    | { type: "workspace"; workspace: true }
+  parent: ParentForBlockBasedObjectResponse
   object: "block"
   id: string
   created_time: string
@@ -5519,11 +5507,7 @@ export type CalloutBlockObjectResponse = {
     color: ApiColor
     icon: PageIconResponse | null
   }
-  parent:
-    | { type: "database_id"; database_id: string }
-    | { type: "page_id"; page_id: string }
-    | { type: "block_id"; block_id: string }
-    | { type: "workspace"; workspace: true }
+  parent: ParentForBlockBasedObjectResponse
   object: "block"
   id: string
   created_time: string
@@ -5538,11 +5522,7 @@ export type CalloutBlockObjectResponse = {
 export type DividerBlockObjectResponse = {
   type: "divider"
   divider: EmptyObject
-  parent:
-    | { type: "database_id"; database_id: string }
-    | { type: "page_id"; page_id: string }
-    | { type: "block_id"; block_id: string }
-    | { type: "workspace"; workspace: true }
+  parent: ParentForBlockBasedObjectResponse
   object: "block"
   id: string
   created_time: string
@@ -5557,11 +5537,7 @@ export type DividerBlockObjectResponse = {
 export type BreadcrumbBlockObjectResponse = {
   type: "breadcrumb"
   breadcrumb: EmptyObject
-  parent:
-    | { type: "database_id"; database_id: string }
-    | { type: "page_id"; page_id: string }
-    | { type: "block_id"; block_id: string }
-    | { type: "workspace"; workspace: true }
+  parent: ParentForBlockBasedObjectResponse
   object: "block"
   id: string
   created_time: string
@@ -5576,11 +5552,7 @@ export type BreadcrumbBlockObjectResponse = {
 export type TableOfContentsBlockObjectResponse = {
   type: "table_of_contents"
   table_of_contents: { color: ApiColor }
-  parent:
-    | { type: "database_id"; database_id: string }
-    | { type: "page_id"; page_id: string }
-    | { type: "block_id"; block_id: string }
-    | { type: "workspace"; workspace: true }
+  parent: ParentForBlockBasedObjectResponse
   object: "block"
   id: string
   created_time: string
@@ -5595,11 +5567,7 @@ export type TableOfContentsBlockObjectResponse = {
 export type ColumnListBlockObjectResponse = {
   type: "column_list"
   column_list: EmptyObject
-  parent:
-    | { type: "database_id"; database_id: string }
-    | { type: "page_id"; page_id: string }
-    | { type: "block_id"; block_id: string }
-    | { type: "workspace"; workspace: true }
+  parent: ParentForBlockBasedObjectResponse
   object: "block"
   id: string
   created_time: string
@@ -5620,11 +5588,7 @@ type ColumnResponse = {
 export type ColumnBlockObjectResponse = {
   type: "column"
   column: ColumnResponse
-  parent:
-    | { type: "database_id"; database_id: string }
-    | { type: "page_id"; page_id: string }
-    | { type: "block_id"; block_id: string }
-    | { type: "workspace"; workspace: true }
+  parent: ParentForBlockBasedObjectResponse
   object: "block"
   id: string
   created_time: string
@@ -5642,11 +5606,7 @@ export type LinkToPageBlockObjectResponse = {
     | { type: "page_id"; page_id: IdRequest }
     | { type: "database_id"; database_id: IdRequest }
     | { type: "comment_id"; comment_id: IdRequest }
-  parent:
-    | { type: "database_id"; database_id: string }
-    | { type: "page_id"; page_id: string }
-    | { type: "block_id"; block_id: string }
-    | { type: "workspace"; workspace: true }
+  parent: ParentForBlockBasedObjectResponse
   object: "block"
   id: string
   created_time: string
@@ -5667,11 +5627,7 @@ type ContentWithTableResponse = {
 export type TableBlockObjectResponse = {
   type: "table"
   table: ContentWithTableResponse
-  parent:
-    | { type: "database_id"; database_id: string }
-    | { type: "page_id"; page_id: string }
-    | { type: "block_id"; block_id: string }
-    | { type: "workspace"; workspace: true }
+  parent: ParentForBlockBasedObjectResponse
   object: "block"
   id: string
   created_time: string
@@ -5688,11 +5644,7 @@ type ContentWithTableRowResponse = { cells: Array<Array<RichTextItemResponse>> }
 export type TableRowBlockObjectResponse = {
   type: "table_row"
   table_row: ContentWithTableRowResponse
-  parent:
-    | { type: "database_id"; database_id: string }
-    | { type: "page_id"; page_id: string }
-    | { type: "block_id"; block_id: string }
-    | { type: "workspace"; workspace: true }
+  parent: ParentForBlockBasedObjectResponse
   object: "block"
   id: string
   created_time: string
@@ -5712,11 +5664,7 @@ type MediaContentWithUrlAndCaptionResponse = {
 export type EmbedBlockObjectResponse = {
   type: "embed"
   embed: MediaContentWithUrlAndCaptionResponse
-  parent:
-    | { type: "database_id"; database_id: string }
-    | { type: "page_id"; page_id: string }
-    | { type: "block_id"; block_id: string }
-    | { type: "workspace"; workspace: true }
+  parent: ParentForBlockBasedObjectResponse
   object: "block"
   id: string
   created_time: string
@@ -5731,11 +5679,7 @@ export type EmbedBlockObjectResponse = {
 export type BookmarkBlockObjectResponse = {
   type: "bookmark"
   bookmark: MediaContentWithUrlAndCaptionResponse
-  parent:
-    | { type: "database_id"; database_id: string }
-    | { type: "page_id"; page_id: string }
-    | { type: "block_id"; block_id: string }
-    | { type: "workspace"; workspace: true }
+  parent: ParentForBlockBasedObjectResponse
   object: "block"
   id: string
   created_time: string
@@ -5766,11 +5710,7 @@ type MediaContentWithFileAndCaptionResponse =
 export type ImageBlockObjectResponse = {
   type: "image"
   image: MediaContentWithFileAndCaptionResponse
-  parent:
-    | { type: "database_id"; database_id: string }
-    | { type: "page_id"; page_id: string }
-    | { type: "block_id"; block_id: string }
-    | { type: "workspace"; workspace: true }
+  parent: ParentForBlockBasedObjectResponse
   object: "block"
   id: string
   created_time: string
@@ -5785,11 +5725,7 @@ export type ImageBlockObjectResponse = {
 export type VideoBlockObjectResponse = {
   type: "video"
   video: MediaContentWithFileAndCaptionResponse
-  parent:
-    | { type: "database_id"; database_id: string }
-    | { type: "page_id"; page_id: string }
-    | { type: "block_id"; block_id: string }
-    | { type: "workspace"; workspace: true }
+  parent: ParentForBlockBasedObjectResponse
   object: "block"
   id: string
   created_time: string
@@ -5804,11 +5740,7 @@ export type VideoBlockObjectResponse = {
 export type PdfBlockObjectResponse = {
   type: "pdf"
   pdf: MediaContentWithFileAndCaptionResponse
-  parent:
-    | { type: "database_id"; database_id: string }
-    | { type: "page_id"; page_id: string }
-    | { type: "block_id"; block_id: string }
-    | { type: "workspace"; workspace: true }
+  parent: ParentForBlockBasedObjectResponse
   object: "block"
   id: string
   created_time: string
@@ -5841,11 +5773,7 @@ type MediaContentWithFileNameAndCaptionResponse =
 export type FileBlockObjectResponse = {
   type: "file"
   file: MediaContentWithFileNameAndCaptionResponse
-  parent:
-    | { type: "database_id"; database_id: string }
-    | { type: "page_id"; page_id: string }
-    | { type: "block_id"; block_id: string }
-    | { type: "workspace"; workspace: true }
+  parent: ParentForBlockBasedObjectResponse
   object: "block"
   id: string
   created_time: string
@@ -5860,11 +5788,7 @@ export type FileBlockObjectResponse = {
 export type AudioBlockObjectResponse = {
   type: "audio"
   audio: MediaContentWithFileAndCaptionResponse
-  parent:
-    | { type: "database_id"; database_id: string }
-    | { type: "page_id"; page_id: string }
-    | { type: "block_id"; block_id: string }
-    | { type: "workspace"; workspace: true }
+  parent: ParentForBlockBasedObjectResponse
   object: "block"
   id: string
   created_time: string
@@ -5881,11 +5805,7 @@ type MediaContentWithUrlResponse = { url: TextRequest }
 export type LinkPreviewBlockObjectResponse = {
   type: "link_preview"
   link_preview: MediaContentWithUrlResponse
-  parent:
-    | { type: "database_id"; database_id: string }
-    | { type: "page_id"; page_id: string }
-    | { type: "block_id"; block_id: string }
-    | { type: "workspace"; workspace: true }
+  parent: ParentForBlockBasedObjectResponse
   object: "block"
   id: string
   created_time: string
@@ -5900,11 +5820,7 @@ export type LinkPreviewBlockObjectResponse = {
 export type UnsupportedBlockObjectResponse = {
   type: "unsupported"
   unsupported: EmptyObject
-  parent:
-    | { type: "database_id"; database_id: string }
-    | { type: "page_id"; page_id: string }
-    | { type: "block_id"; block_id: string }
-    | { type: "workspace"; workspace: true }
+  parent: ParentForBlockBasedObjectResponse
   object: "block"
   id: string
   created_time: string
@@ -6209,11 +6125,15 @@ type PropertyItemPropertyItemListResponse = {
 
 export type PropertyItemListResponse = PropertyItemPropertyItemListResponse
 
-export type PartialCommentObjectResponse = {
-  // The comment object type name.
-  object: "comment"
-  // The ID of the comment.
+type DatabasePropertyRelationConfigResponseCommon = { database_id: string }
+
+type DatabasePropertyConfigResponseCommon = {
+  // The ID of the property.
   id: string
+  // The name of the property.
+  name: string
+  // The description of the property.
+  description?: PropertyDescriptionRequest | null
 }
 
 export type UserObjectResponseCommon = {
@@ -6235,6 +6155,13 @@ export type RichTextItemResponseCommon = {
   // All rich text objects contain an annotations object that sets the styling for the rich
   // text.
   annotations: AnnotationResponse
+}
+
+export type PartialCommentObjectResponse = {
+  // The comment object type name.
+  object: "comment"
+  // The ID of the comment.
+  id: string
 }
 
 export type CommentObjectResponse = {
@@ -6264,7 +6191,7 @@ export type CommentObjectResponse = {
   // Any file attachments associated with the comment.
   attachments?: Array<{
     category: "audio" | "image" | "pdf" | "productivity" | "video"
-    file: { url: string; expiry_time: string }
+    file: InternalFileResponse
   }>
 }
 
@@ -7349,6 +7276,7 @@ type CreatePageBodyParameters = {
   parent?:
     | { page_id: IdRequest; type?: "page_id" }
     | { database_id: IdRequest; type?: "database_id" }
+    | { data_source_id: IdRequest; type?: "data_source_id" }
     | { workspace: true; type?: "workspace" }
   properties?: Record<
     string,
@@ -7997,33 +7925,35 @@ export const appendBlockChildren = {
     `blocks/${p.block_id}/children`,
 } as const
 
-type GetDatabasePathParameters = {
+type GetDataSourcePathParameters = {
+  // ID of a Notion data source.
   database_id: IdRequest
 }
 
-export type GetDatabaseParameters = GetDatabasePathParameters
+export type GetDataSourceParameters = GetDataSourcePathParameters
 
-export type GetDatabaseResponse =
-  | PartialDatabaseObjectResponse
-  | DatabaseObjectResponse
+export type GetDataSourceResponse =
+  | PartialDataSourceObjectResponse
+  | DataSourceObjectResponse
 
 /**
- * Retrieve a database
+ * Retrieve a data source
  */
-export const getDatabase = {
+export const getDataSource = {
   method: "get",
   pathParams: ["database_id"],
   queryParams: [],
   bodyParams: [],
 
-  path: (p: GetDatabasePathParameters): string => `databases/${p.database_id}`,
+  path: (p: GetDataSourcePathParameters): string =>
+    `data_sources/${p.database_id}`,
 } as const
 
-type UpdateDatabasePathParameters = {
+type UpdateDataSourcePathParameters = {
   database_id: IdRequest
 }
 
-type UpdateDatabaseBodyParameters = {
+type UpdateDataSourceBodyParameters = {
   title?: Array<RichTextItemRequest>
   description?: Array<RichTextItemRequest>
   icon?: PageIconRequest | null
@@ -8226,17 +8156,17 @@ type UpdateDatabaseBodyParameters = {
   in_trash?: boolean
 }
 
-export type UpdateDatabaseParameters = UpdateDatabasePathParameters &
-  UpdateDatabaseBodyParameters
+export type UpdateDataSourceParameters = UpdateDataSourcePathParameters &
+  UpdateDataSourceBodyParameters
 
-export type UpdateDatabaseResponse =
-  | PartialDatabaseObjectResponse
-  | DatabaseObjectResponse
+export type UpdateDataSourceResponse =
+  | PartialDataSourceObjectResponse
+  | DataSourceObjectResponse
 
 /**
- * Update a database
+ * Update a data source
  */
-export const updateDatabase = {
+export const updateDataSource = {
   method: "patch",
   pathParams: ["database_id"],
   queryParams: [],
@@ -8251,19 +8181,19 @@ export const updateDatabase = {
     "in_trash",
   ],
 
-  path: (p: UpdateDatabasePathParameters): string =>
-    `databases/${p.database_id}`,
+  path: (p: UpdateDataSourcePathParameters): string =>
+    `data_sources/${p.database_id}`,
 } as const
 
-type QueryDatabasePathParameters = {
+type QueryDataSourcePathParameters = {
   database_id: IdRequest
 }
 
-type QueryDatabaseQueryParameters = {
+type QueryDataSourceQueryParameters = {
   filter_properties?: Array<string>
 }
 
-type QueryDatabaseBodyParameters = {
+type QueryDataSourceBodyParameters = {
   sorts?: Array<
     | { property: string; direction: "ascending" | "descending" }
     | {
@@ -8299,11 +8229,11 @@ type QueryDatabaseBodyParameters = {
   in_trash?: boolean
 }
 
-export type QueryDatabaseParameters = QueryDatabasePathParameters &
-  QueryDatabaseQueryParameters &
-  QueryDatabaseBodyParameters
+export type QueryDataSourceParameters = QueryDataSourcePathParameters &
+  QueryDataSourceQueryParameters &
+  QueryDataSourceBodyParameters
 
-export type QueryDatabaseResponse = {
+export type QueryDataSourceResponse = {
   type: "page_or_database"
   page_or_database: EmptyObject
   object: "list"
@@ -8312,15 +8242,15 @@ export type QueryDatabaseResponse = {
   results: Array<
     | PageObjectResponse
     | PartialPageObjectResponse
-    | PartialDatabaseObjectResponse
-    | DatabaseObjectResponse
+    | PartialDataSourceObjectResponse
+    | DataSourceObjectResponse
   >
 }
 
 /**
- * Query a database
+ * Query a data source
  */
-export const queryDatabase = {
+export const queryDataSource = {
   method: "post",
   pathParams: ["database_id"],
   queryParams: ["filter_properties"],
@@ -8333,39 +8263,11 @@ export const queryDatabase = {
     "in_trash",
   ],
 
-  path: (p: QueryDatabasePathParameters): string =>
-    `databases/${p.database_id}/query`,
+  path: (p: QueryDataSourcePathParameters): string =>
+    `data_sources/${p.database_id}/query`,
 } as const
 
-type ListDatabasesQueryParameters = {
-  start_cursor?: string
-  page_size?: number
-}
-
-export type ListDatabasesParameters = ListDatabasesQueryParameters
-
-export type ListDatabasesResponse = {
-  type: "database"
-  database: EmptyObject
-  object: "list"
-  next_cursor: string | null
-  has_more: boolean
-  results: Array<PartialDatabaseObjectResponse | DatabaseObjectResponse>
-}
-
-/**
- * List databases
- */
-export const listDatabases = {
-  method: "get",
-  pathParams: [],
-  queryParams: ["start_cursor", "page_size"],
-  bodyParams: [],
-
-  path: (): string => `databases`,
-} as const
-
-type CreateDatabaseBodyParameters = {
+type CreateDataSourceBodyParameters = {
   parent:
     | { page_id: IdRequest; type?: "page_id" }
     | { database_id: IdRequest; type?: "database_id" }
@@ -8529,16 +8431,16 @@ type CreateDatabaseBodyParameters = {
   is_inline?: boolean
 }
 
-export type CreateDatabaseParameters = CreateDatabaseBodyParameters
+export type CreateDataSourceParameters = CreateDataSourceBodyParameters
 
-export type CreateDatabaseResponse =
-  | PartialDatabaseObjectResponse
-  | DatabaseObjectResponse
+export type CreateDataSourceResponse =
+  | PartialDataSourceObjectResponse
+  | DataSourceObjectResponse
 
 /**
- * Create a database
+ * Create a data source
  */
-export const createDatabase = {
+export const createDataSource = {
   method: "post",
   pathParams: [],
   queryParams: [],
@@ -8552,7 +8454,7 @@ export const createDatabase = {
     "is_inline",
   ],
 
-  path: (): string => `databases`,
+  path: (): string => `data_sources`,
 } as const
 
 type SearchBodyParameters = {
@@ -8577,8 +8479,8 @@ export type SearchResponse = {
   results: Array<
     | PageObjectResponse
     | PartialPageObjectResponse
-    | PartialDatabaseObjectResponse
-    | DatabaseObjectResponse
+    | PartialDataSourceObjectResponse
+    | DataSourceObjectResponse
   >
 }
 
