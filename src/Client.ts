@@ -28,21 +28,18 @@ import {
   type ListBlockChildrenParameters,
   type ListBlockChildrenResponse,
   listBlockChildren,
-  type ListDatabasesParameters,
-  type ListDatabasesResponse,
-  listDatabases,
-  type GetDatabaseParameters,
-  type GetDatabaseResponse,
-  getDatabase,
-  type QueryDatabaseParameters,
-  type QueryDatabaseResponse,
-  queryDatabase,
-  type CreateDatabaseParameters,
-  type CreateDatabaseResponse,
-  createDatabase,
-  type UpdateDatabaseParameters,
-  type UpdateDatabaseResponse,
-  updateDatabase,
+  type QueryDataSourceParameters,
+  type QueryDataSourceResponse,
+  queryDataSource,
+  type CreateDataSourceParameters,
+  type CreateDataSourceResponse,
+  createDataSource,
+  type UpdateDataSourceParameters,
+  type UpdateDataSourceResponse,
+  updateDataSource,
+  type GetDataSourceParameters,
+  type GetDataSourceResponse,
+  getDataSource,
   type CreatePageParameters,
   type CreatePageResponse,
   createPage,
@@ -372,80 +369,63 @@ export default class Client {
     },
   }
 
-  public readonly databases = {
+  public readonly dataSources = {
     /**
-     * List databases
-     *
-     * @deprecated Please use `search`
-     */
-    list: (
-      args: WithAuth<ListDatabasesParameters>
-    ): Promise<ListDatabasesResponse> => {
-      return this.request<ListDatabasesResponse>({
-        path: listDatabases.path(),
-        method: listDatabases.method,
-        query: pick(args, listDatabases.queryParams),
-        body: pick(args, listDatabases.bodyParams),
-        auth: args?.auth,
-      })
-    },
-
-    /**
-     * Retrieve a database
+     * Retrieve a data source
      */
     retrieve: (
-      args: WithAuth<GetDatabaseParameters>
-    ): Promise<GetDatabaseResponse> => {
-      return this.request<GetDatabaseResponse>({
-        path: getDatabase.path(args),
-        method: getDatabase.method,
-        query: pick(args, getDatabase.queryParams),
-        body: pick(args, getDatabase.bodyParams),
+      args: WithAuth<GetDataSourceParameters>
+    ): Promise<GetDataSourceResponse> => {
+      return this.request<GetDataSourceResponse>({
+        path: getDataSource.path(args),
+        method: getDataSource.method,
+        query: pick(args, getDataSource.queryParams),
+        body: pick(args, getDataSource.bodyParams),
         auth: args?.auth,
       })
     },
 
     /**
-     * Query a database
+     * Query a data source
      */
     query: (
-      args: WithAuth<QueryDatabaseParameters>
-    ): Promise<QueryDatabaseResponse> => {
-      return this.request<QueryDatabaseResponse>({
-        path: queryDatabase.path(args),
-        method: queryDatabase.method,
-        query: pick(args, queryDatabase.queryParams),
-        body: pick(args, queryDatabase.bodyParams),
+      args: WithAuth<QueryDataSourceParameters>
+    ): Promise<QueryDataSourceResponse> => {
+      return this.request<QueryDataSourceResponse>({
+        path: queryDataSource.path(args),
+        method: queryDataSource.method,
+        query: pick(args, queryDataSource.queryParams),
+        body: pick(args, queryDataSource.bodyParams),
         auth: args?.auth,
       })
     },
 
     /**
-     * Create a database
+     * Create a data source
      */
     create: (
-      args: WithAuth<CreateDatabaseParameters>
-    ): Promise<CreateDatabaseResponse> => {
-      return this.request<CreateDatabaseResponse>({
-        path: createDatabase.path(),
-        method: createDatabase.method,
-        query: pick(args, createDatabase.queryParams),
-        body: pick(args, createDatabase.bodyParams),
+      args: WithAuth<CreateDataSourceParameters>
+    ): Promise<CreateDataSourceResponse> => {
+      return this.request<CreateDataSourceResponse>({
+        path: createDataSource.path(),
+        method: createDataSource.method,
+        query: pick(args, createDataSource.queryParams),
+        body: pick(args, createDataSource.bodyParams),
         auth: args?.auth,
       })
     },
 
     /**
-     * Update a database
+     * Update a data source
      */
     update: (
-      args: WithAuth<UpdateDatabaseParameters>
-    ): Promise<UpdateDatabaseResponse> => {
-      return this.request<UpdateDatabaseResponse>({
-        path: updateDatabase.path(args),
-        method: updateDatabase.method,
-        query: pick(args, updateDatabase.queryParams),
-        body: pick(args, updateDatabase.bodyParams),
+      args: WithAuth<UpdateDataSourceParameters>
+    ): Promise<UpdateDataSourceResponse> => {
+      return this.request<UpdateDataSourceResponse>({
+        path: updateDataSource.path(args),
+        method: updateDataSource.method,
+        query: pick(args, updateDataSource.queryParams),
+        body: pick(args, updateDataSource.bodyParams),
         auth: args?.auth,
       })
     },

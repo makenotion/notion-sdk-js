@@ -1,13 +1,13 @@
 import {
   BlockObjectResponse,
   CommentObjectResponse,
-  DatabaseObjectResponse,
+  DataSourceObjectResponse,
   EquationRichTextItemResponse,
   MentionRichTextItemResponse,
   PageObjectResponse,
   PartialBlockObjectResponse,
   PartialCommentObjectResponse,
-  PartialDatabaseObjectResponse,
+  PartialDataSourceObjectResponse,
   PartialPageObjectResponse,
   PartialUserObjectResponse,
   RichTextItemResponse,
@@ -97,8 +97,8 @@ export function isFullBlock(
   response:
     | PageObjectResponse
     | PartialPageObjectResponse
-    | DatabaseObjectResponse
-    | PartialDatabaseObjectResponse
+    | DataSourceObjectResponse
+    | PartialDataSourceObjectResponse
     | BlockObjectResponse
     | PartialBlockObjectResponse
 ): response is BlockObjectResponse {
@@ -112,8 +112,8 @@ export function isFullPage(
   response:
     | PageObjectResponse
     | PartialPageObjectResponse
-    | DatabaseObjectResponse
-    | PartialDatabaseObjectResponse
+    | DataSourceObjectResponse
+    | PartialDataSourceObjectResponse
     | BlockObjectResponse
     | PartialBlockObjectResponse
 ): response is PageObjectResponse {
@@ -121,17 +121,17 @@ export function isFullPage(
 }
 
 /**
- * @returns `true` if `response` is a full `DatabaseObjectResponse`.
+ * @returns `true` if `response` is a full `DataSourceObjectResponse`.
  */
-export function isFullDatabase(
+export function isFullDataSource(
   response:
     | PageObjectResponse
     | PartialPageObjectResponse
-    | DatabaseObjectResponse
-    | PartialDatabaseObjectResponse
+    | DataSourceObjectResponse
+    | PartialDataSourceObjectResponse
     | BlockObjectResponse
     | PartialBlockObjectResponse
-): response is DatabaseObjectResponse {
+): response is DataSourceObjectResponse {
   return response.object === "database" && "title" in response
 }
 
@@ -143,13 +143,13 @@ export function isFullPageOrDatabase(
   response:
     | PageObjectResponse
     | PartialPageObjectResponse
-    | DatabaseObjectResponse
-    | PartialDatabaseObjectResponse
+    | DataSourceObjectResponse
+    | PartialDataSourceObjectResponse
     | BlockObjectResponse
     | PartialBlockObjectResponse
-): response is DatabaseObjectResponse | PageObjectResponse {
+): response is DataSourceObjectResponse | PageObjectResponse {
   if (response.object === "database") {
-    return isFullDatabase(response)
+    return isFullDataSource(response)
   } else {
     return isFullPage(response)
   }
