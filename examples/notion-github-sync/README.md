@@ -42,5 +42,5 @@ Your Notion integration will need access to the Notion database you have created
 ### 3. Run code
 
 ```zsh
-npx ts-node index.ts
+npm start
 ```

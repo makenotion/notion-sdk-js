@@ -55,7 +55,7 @@ async function main() {
   })
 
   // Print the new database response
-  console.log(newDatabase)
+  console.log(JSON.stringify(newDatabase, null, 2))
 }
 
 main()

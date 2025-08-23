@@ -6,7 +6,16 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node --loader ts-node/esm"
+    "start": "node --loader ts-node/esm",
+    "exec": "node --loader ts-node/esm",
+    "basic:1": "node --loader ts-node/esm basic/1-add-block.ts",
+    "basic:2": "node --loader ts-node/esm basic/2-add-linked-block.ts",
+    "basic:3": "node --loader ts-node/esm basic/3-add-styled-block.ts",
+    "intermediate:1": "node --loader ts-node/esm intermediate/1-create-a-database.ts",
+    "intermediate:2": "node --loader ts-node/esm intermediate/2-add-page-to-database.ts",
+    "intermediate:3": "node --loader ts-node/esm intermediate/3-query-database.ts",
+    "intermediate:4": "node --loader ts-node/esm intermediate/4-sort-database.ts",
+    "intermediate:5": "node --loader ts-node/esm intermediate/5-upload-file.ts"
   },
   "repository": {
     "type": "git",

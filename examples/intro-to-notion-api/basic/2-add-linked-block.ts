@@ -8,7 +8,7 @@ const apiKey = process.env.NOTION_API_KEY
 
 const notion = new Client({ auth: apiKey })
 
-/* 
+/*
 ---------------------------------------------------------------------------
 */
 
@@ -56,7 +56,7 @@ async function main() {
   })
 
   // Print the new block(s) response
-  console.log(linkedTextResponse)
+  console.log(JSON.stringify(linkedTextResponse, null, 2))
 }
 
 main()

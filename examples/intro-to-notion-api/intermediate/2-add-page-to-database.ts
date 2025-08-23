@@ -27,7 +27,7 @@ async function addNotionPageToDataSource(dataSourceId, pageProperties) {
     },
     properties: pageProperties,
   })
-  console.log(newPage)
+  console.log(JSON.stringify(newPage, null, 2))
 }
 
 async function main() {

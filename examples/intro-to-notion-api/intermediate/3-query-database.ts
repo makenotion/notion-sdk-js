@@ -48,7 +48,7 @@ async function queryDataSource(dataSourceId) {
 
   // Print filtered results
   console.log('Pages with the "Last ordered" date after 2022-12-31:')
-  console.log(lastOrderedIn2023)
+  console.log(JSON.stringify(lastOrderedIn2023, null, 2))
 }
 
 async function main() {

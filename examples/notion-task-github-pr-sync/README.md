@@ -87,5 +87,5 @@ STATUS_PROPERTY_NAME = <your-status-property-name>
 ### 8. Run code
 
 ```zsh
-npx ts-node index.ts
+npm start
 ```

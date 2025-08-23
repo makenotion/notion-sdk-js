@@ -79,9 +79,28 @@ Once selected, your integration will have permission to read content from the pa
 
 ### 3. Run individual examples
 
-To run each individual example, use the `node --loader ts-node/esm` command with the file's path.
+You have several options to run the examples:
 
-For example:
+**Option 1: Use npm scripts (easiest)**
+
+```zsh
+npm run basic:1    # Runs basic/1-add-block.ts
+npm run basic:2    # Runs basic/2-add-linked-block.ts
+npm run basic:3    # Runs basic/3-add-styled-block.ts
+
+npm run intermediate:1    # Runs intermediate/1-create-a-database.ts
+npm run intermediate:2    # Runs intermediate/2-add-page-to-database.ts
+# ... and so on
+```
+
+**Option 2: Use npm exec with file path**
+
+```zsh
+npm run exec basic/1-add-block.ts
+npm run exec intermediate/1-create-a-database.ts
+```
+
+**Option 3: Use the full command**
 
 ```zsh
 node --loader ts-node/esm basic/1-add-block.ts

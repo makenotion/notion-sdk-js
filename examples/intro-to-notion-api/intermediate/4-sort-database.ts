@@ -58,7 +58,7 @@ async function queryAndSortDataSource(dataSourceId) {
   console.log(
     'Pages with the "Last ordered" date after 2022-12-31 in descending order:'
   )
-  console.log(lastOrderedIn2023Alphabetical)
+  console.log(JSON.stringify(lastOrderedIn2023Alphabetical, null, 2))
 }
 
 async function main() {
