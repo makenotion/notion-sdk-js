@@ -1,9 +1,11 @@
 // Find the official Notion API client @ https://  github.com/makenotion/notion-sdk-js/
 // npm install @notionhq/client
-import { Client } from "@notionhq/client"
+import { Client, isFullDataSource } from "@notionhq/client"
 import {
   CreatePageParameters,
+  DataSourceObjectResponse,
   GetDatabaseResponse,
+  GetDataSourceResponse,
   GetPagePropertyResponse,
 } from "@notionhq/client/build/src/api-endpoints"
 
@@ -22,9 +24,9 @@ startTime.setSeconds(0, 0)
 // Given the properties of a database, generate an object full of
 // random data that can be used to generate new rows in our Notion database.
 function makeFakePropertiesData(
-  properties: GetDatabaseResponse["properties"]
-): Record<string, CreatePageParameters["properties"]> {
-  const propertyValues: Record<string, CreatePageParameters["properties"]> = {}
+  properties: DataSourceObjectResponse["properties"]
+): CreatePageParameters["properties"] {
+  const propertyValues: CreatePageParameters["properties"] = {}
   Object.entries(properties).forEach(([name, property]) => {
     if (property.type === "date") {
       propertyValues[name] = {
@@ -46,38 +48,32 @@ function makeFakePropertiesData(
       if (selectOption) {
         propertyValues[name] = {
           type: "select",
-          id: property.id,
           select: selectOption,
         }
       }
     } else if (property.type === "email") {
       propertyValues[name] = {
         type: "email",
-        id: property.id,
         email: faker.internet.email(),
       }
     } else if (property.type === "checkbox") {
       propertyValues[name] = {
         type: "checkbox",
-        id: property.id,
         checkbox: faker.datatype.boolean(),
       }
     } else if (property.type === "url") {
       propertyValues[name] = {
         type: "url",
-        id: property.id,
         url: faker.internet.url(),
       }
     } else if (property.type === "number") {
       propertyValues[name] = {
         type: "number",
-        id: property.id,
         number: faker.datatype.number(),
       }
     } else if (property.type === "title") {
       propertyValues[name] = {
         type: "title",
-        id: property.id,
         title: [
           {
             type: "text",
@@ -88,7 +84,6 @@ function makeFakePropertiesData(
     } else if (property.type === "rich_text") {
       propertyValues[name] = {
         type: "rich_text",
-        id: property.id,
         rich_text: [
           {
             type: "text",
@@ -99,7 +94,6 @@ function makeFakePropertiesData(
     } else if (property.type === "phone_number") {
       propertyValues[name] = {
         type: "phone_number",
-        id: property.id,
         phone_number: faker.phone.phoneNumber(),
       }
     } else {
@@ -118,7 +112,7 @@ function userToString(userBase: { id: string; name?: string | null }) {
 }
 
 function findRandomSelectColumnNameAndValue(
-  properties: GetDatabaseResponse["properties"]
+  properties: GetDataSourceResponse["properties"]
 ): {
   name: string
   value: string | undefined
@@ -227,6 +221,14 @@ function extractPropertyItemValueToString(
       return "???"
     case "status":
       return property.status?.name ?? ""
+    case "button":
+      return property.button?.name ?? ""
+    case "unique_id":
+      return `${property.unique_id.prefix ?? ""}${
+        property.unique_id.number ?? ""
+      }`
+    case "verification":
+      return property.verification?.state ?? ""
   }
   return assertUnreachable(property)
 }
@@ -244,8 +246,8 @@ function extractValueToString(property: GetPagePropertyResponse): string {
 }
 
 async function exerciseWriting(
-  databaseId: string,
-  properties: GetDatabaseResponse["properties"]
+  dataSourceId: string,
+  properties: DataSourceObjectResponse["properties"]
 ) {
   console.log("\n\n********* Exercising Writing *********\n\n")
 
@@ -257,10 +259,10 @@ async function exerciseWriting(
 
     const parameters: CreatePageParameters = {
       parent: {
-        database_id: databaseId,
+        data_source_id: dataSourceId,
       },
       properties: propertiesData,
-    } as CreatePageParameters
+    }
 
     await notion.pages.create(parameters)
   }
@@ -269,13 +271,13 @@ async function exerciseWriting(
 }
 
 async function exerciseReading(
-  databaseId: string,
-  _properties: GetDatabaseResponse["properties"]
+  dataSourceId: string,
+  _properties: GetDataSourceResponse["properties"]
 ) {
   console.log("\n\n********* Exercising Reading *********\n\n")
   // and read back what we just did
-  const queryResponse = await notion.databases.query({
-    database_id: databaseId,
+  const queryResponse = await notion.dataSources.query({
+    database_id: dataSourceId,
   })
   let numOldRows = 0
   for (const page of queryResponse.results) {
@@ -308,8 +310,8 @@ async function exerciseReading(
 }
 
 async function exerciseFilters(
-  databaseId: string,
-  properties: GetDatabaseResponse["properties"]
+  dataSourceId: string,
+  properties: GetDataSourceResponse["properties"]
 ) {
   console.log("\n\n********* Exercising Filters *********\n\n")
 
@@ -329,8 +331,8 @@ async function exerciseFilters(
     select: { equals: selectColumnValue },
   }
 
-  const matchingSelectResults = await notion.databases.query({
-    database_id: databaseId,
+  const matchingSelectResults = await notion.dataSources.query({
+    database_id: dataSourceId,
     filter: queryFilterSelectFilterTypeBased,
   })
 
@@ -361,8 +363,8 @@ async function exerciseFilters(
   }
 
   // Check we can search by id
-  const matchingTextResults = await notion.databases.query({
-    database_id: databaseId,
+  const matchingTextResults = await notion.dataSources.query({
+    database_id: dataSourceId,
     filter: textFilter,
   })
 
@@ -373,30 +375,25 @@ async function exerciseFilters(
 
 async function main() {
   // Find the first database this bot has access to
-  const databases = await notion.search({
+  const searchResults = await notion.search({
     filter: {
       property: "object",
       value: "database",
     },
   })
 
-  if (databases.results.length === 0) {
+  if (searchResults.results.length === 0) {
     throw new Error("This bot doesn't have access to any databases!")
   }
 
-  const database = databases.results[0]
-  if (!database) {
+  const dataSource = searchResults.results[0]
+  if (!dataSource || !isFullDataSource(dataSource)) {
     throw new Error("This bot doesn't have access to any databases!")
   }
 
-  // Get the database properties out of our database
-  const { properties } = await notion.databases.retrieve({
-    database_id: database.id,
-  })
-
-  await exerciseWriting(database.id, properties)
-  await exerciseReading(database.id, properties)
-  await exerciseFilters(database.id, properties)
+  await exerciseWriting(dataSource.id, dataSource.properties)
+  await exerciseReading(dataSource.id, dataSource.properties)
+  await exerciseFilters(dataSource.id, dataSource.properties)
 }
 
 main()

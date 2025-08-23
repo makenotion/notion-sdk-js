@@ -59,5 +59,5 @@ Once selected, your integration will have permission to read content from the pa
 ### 4. Run code
 
 ```zsh
-node index.js
+npm start
 ```

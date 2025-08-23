@@ -1,24 +1,15 @@
 {
   "compilerOptions": {
-    "incremental": true,
-    "sourceMap": false,
-
-    "target": "ESNext",
+    "target": "ES2019",
     "module": "commonjs",
-
     "moduleResolution": "Node",
-
     "allowSyntheticDefaultImports": true,
-
-    "useDefineForClassFields": false,
-
     "strict": false,
-
-    "isolatedModules": true,
     "esModuleInterop": true,
-    "noUncheckedIndexedAccess": true,
     "allowJs": true,
-    "checkJs": false
+    "checkJs": false,
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true
   },
   "include": ["**/*.ts", "**/*.js"]
 }

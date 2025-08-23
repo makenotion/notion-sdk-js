@@ -1,7 +1,7 @@
 /* ================================================================================
 
 	notion-github-sync.
-  
+
   Glitch example: https://glitch.com/edit/#!/notion-github-sync
   Find the official Notion API client @ https://github.com/makenotion/notion-sdk-js/
 
@@ -29,19 +29,19 @@ const gitHubIssuesIdToNotionPageId = {}
  * Initialize local data store.
  * Then sync with GitHub.
  */
-setInitialGitHubToNotionIdMap().then(syncNotionDatabaseWithGitHub)
+setInitialGitHubToNotionIdMap().then(syncNotionDataSourceWithGitHub)
 
 /**
  * Get and set the initial data store with issues currently in the database.
  */
 async function setInitialGitHubToNotionIdMap() {
-  const currentIssues = await getIssuesFromNotionDatabase()
+  const currentIssues = await getIssuesFromNotionDataSource()
   for (const { pageId, issueNumber } of currentIssues) {
     gitHubIssuesIdToNotionPageId[issueNumber] = pageId
   }
 }
 
-async function syncNotionDatabaseWithGitHub() {
+async function syncNotionDataSourceWithGitHub() {
   // Get all issues currently in the provided GitHub repository.
   console.log("\nFetching issues from GitHub repository...")
   const issues = await getGitHubIssuesForRepository()
@@ -67,12 +67,12 @@ async function syncNotionDatabaseWithGitHub() {
  *
  * @returns {Promise<Array<{ pageId: string, issueNumber: number }>>}
  */
-async function getIssuesFromNotionDatabase() {
+async function getIssuesFromNotionDataSource() {
   const pages = []
   let cursor = undefined
   while (true) {
-    const { results, next_cursor } = await notion.databases.query({
-      database_id: databaseId,
+    const { results, next_cursor } = await notion.dataSources.query({
+      data_source_id: dataSourceId,
       start_cursor: cursor,
     })
     pages.push(...results)

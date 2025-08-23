@@ -1,8 +1,10 @@
-require("dotenv").config()
-const express = require("express")
-const app = express()
+import { config } from "dotenv"
+import express from "express"
+import { Client } from "@notionhq/client"
 
-const { Client } = require("@notionhq/client")
+config()
+
+const app = express()
 const notion = new Client({ auth: process.env.NOTION_KEY })
 
 // http://expressjs.com/en/starter/static-files.html
@@ -10,7 +12,7 @@ app.use(express.static("public"))
 app.use(express.json()) // for parsing application/json
 
 // http://expressjs.com/en/starter/basic-routing.html
-app.get("/", function (request, response) {
+app.get("/", function (_request, response) {
   response.sendFile(__dirname + "/views/index.html")
 })
 
@@ -33,9 +35,11 @@ app.post("/databases", async function (request, response) {
           },
         },
       ],
-      properties: {
-        Name: {
-          title: {},
+      initial_data_source: {
+        properties: {
+          Name: {
+            title: {},
+          },
         },
       },
     })
@@ -139,6 +143,11 @@ app.post("/comments", async function (request, response) {
 })
 
 // listen for requests :)
-const listener = app.listen(process.env.PORT, function () {
-  console.log("Your app is listening on port " + listener.address().port)
+const listener = app.listen(process.env.PORT, () => {
+  const address = listener.address()
+  if (typeof address === "object") {
+    console.log(`Your app is listening on port ${address.port}`)
+  } else {
+    console.log(`Your app is listening on socket ${address}`)
+  }
 })

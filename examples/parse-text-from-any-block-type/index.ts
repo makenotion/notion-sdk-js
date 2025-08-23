@@ -8,7 +8,7 @@ const apiKey = process.env.NOTION_API_KEY
 
 const notion = new Client({ auth: apiKey })
 
-/* 
+/*
 ---------------------------------------------------------------------------
 */
 

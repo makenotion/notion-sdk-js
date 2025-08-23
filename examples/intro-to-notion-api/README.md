@@ -19,14 +19,14 @@ The files in each directory will build on each other to increase in complexity. 
 
 In case you are looking for example code for a specific task, the files are divided as follows:
 
-- `/basic/1-add-block.js`: Create a new block and append it to an existing Notion page.
-- `/basic/2-add-linked-block.js`: Create and append new blocks, and add a link to the text of a new block.
-- `/basic/3-add-styled-block.js`: Create and append new blocks, and apply text styles to them.
-- `/intermediate/1-create-a-database.js`: Create a new database with defined properties.
-- `/intermediate/2-add-page-to-database.js`: Create a new database and add new pages to it.
-- `/intermediate/3-query-database.js`: Create a new database, add pages to it, and filter the database entries (pages).
-- `/intermediate/4-sort-database.js`: Create a new database, add pages to it, and filter/sort the database entries (pages).
-- `/intermediate/5-upload-file.js`: Upload a file to Notion and attach it to a page as an image block.
+- `basic/1-add-block.ts`: Create a new block and append it to an existing Notion page.
+- `basic/2-add-linked-block.ts`: Create and append new blocks, and add a link to the text of a new block.
+- `basic/3-add-styled-block.ts`: Create and append new blocks, and apply text styles to them.
+- `intermediate/1-create-a-database.ts`: Create a new database with defined properties.
+- `intermediate/2-add-page-to-database.ts`: Create a new database and add new pages to it.
+- `intermediate/3-query-database.ts`: Create a new database, add pages to it, and filter the database entries (pages).
+- `intermediate/4-sort-database.ts`: Create a new database, add pages to it, and filter/sort the database entries (pages).
+- `intermediate/5-upload-file.ts`: Upload a file to Notion and attach it to a page as an image block.
 
 ## Running locally
 
@@ -79,12 +79,31 @@ Once selected, your integration will have permission to read content from the pa
 
 ### 3. Run individual examples
 
-To run each individual example, use the `node` command with the file's path.
+You have several options to run the examples:
 
-For example:
+**Option 1: Use npm scripts (easiest)**
 
 ```zsh
-node basic/1-add-block.js
+npm run basic:1    # Runs basic/1-add-block.ts
+npm run basic:2    # Runs basic/2-add-linked-block.ts
+npm run basic:3    # Runs basic/3-add-styled-block.ts
+
+npm run intermediate:1    # Runs intermediate/1-create-a-database.ts
+npm run intermediate:2    # Runs intermediate/2-add-page-to-database.ts
+# ... and so on
+```
+
+**Option 2: Use npm exec with file path**
+
+```zsh
+npm run exec basic/1-add-block.ts
+npm run exec intermediate/1-create-a-database.ts
+```
+
+**Option 3: Use the full command**
+
+```zsh
+node --loader ts-node/esm basic/1-add-block.ts
 ```
 
 ---
