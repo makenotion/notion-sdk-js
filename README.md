@@ -1,22 +1,19 @@
-<div align="center">
-	<h1>Notion SDK for JavaScript</h1>
-	<p>
-		<b>A simple and easy to use client for the <a href="https://developers.notion.com">Notion API</a></b>
-	</p>
-	<br>
-</div>
+# Notion SDK for JavaScript
+
+**A simple and easy to use client for the [Notion API](https://developers.notion.com).**
 
 ![Build status](https://github.com/makenotion/notion-sdk-js/actions/workflows/ci.yml/badge.svg)
 [![npm version](https://badge.fury.io/js/%40notionhq%2Fclient.svg)](https://www.npmjs.com/package/@notionhq/client)
 
 ## Installation
 
-```
+```bash
 npm install @notionhq/client
 ```
 
 ## Usage
 
+> [!NOTE]
 > Use Notion's [Getting Started Guide](https://developers.notion.com/docs/getting-started) to get set up to use Notion's API.
 
 Import and initialize a client using an **integration token** or an OAuth **access token**.
@@ -32,34 +29,36 @@ const notion = new Client({
 
 Make a request to any Notion API endpoint.
 
-> See the complete list of endpoints in the [API reference](https://developers.notion.com/reference).
-
 ```js
 ;(async () => {
   const listUsersResponse = await notion.users.list({})
 })()
 ```
 
-Each method returns a `Promise` which resolves the response.
+> [!NOTE]
+> See the complete list of endpoints in the [API reference](https://developers.notion.com/reference).
+
+Each method returns a `Promise` that resolves the response.
 
 ```js
 console.log(listUsersResponse)
 ```
 
-```
+```ts
 {
   results: [
     {
-      object: 'user',
-      id: 'd40e767c-d7af-4b18-a86d-55c61f1e39a4',
-      type: 'person',
+      object: "user",
+      id: "d40e767c-d7af-4b18-a86d-55c61f1e39a4",
+      type: "person",
       person: {
-        email: 'avo@example.org',
+        email: "avo@example.org",
       },
-      name: 'Avocado Lovelace',
-      avatar_url: 'https://secure.notion-static.com/e6a352a8-8381-44d0-a1dc-9ed80e62b53d.jpg',
+      name: "Avocado Lovelace",
+      avatar_url:
+        "https://secure.notion-static.com/e6a352a8-8381-44d0-a1dc-9ed80e62b53d.jpg",
     },
-    ...
+    // ...
   ]
 }
 ```
@@ -267,6 +266,44 @@ const blocks = await collectPaginatedAPI(notion.blocks.children.list, {
   block_id: parentBlockId,
 })
 // Do something with blocks.
+```
+
+### Custom requests
+
+To make requests directly to a Notion API endpoint instead of using the pre-built families of methods, call the `request()` method. For example:
+
+```ts
+// POST /v1/comments
+const response = await notion.request({
+  path: "comments",
+  method: "post",
+  body: {
+    parent: { page_id: "5c6a28216bb14a7eb6e1c50111515c3d" },
+    rich_text: [{ text: { content: "Hello, world!" } }],
+  },
+  // No `query` params in this example, only `body`.
+})
+
+console.log(JSON.stringify(response, null, 2))
+```
+
+The `notion.request<ResponseBody>({...})` method is generic; `ResponseBody` represents the expected type of response object Notion returns for the endpoint you're calling (we don't validate this at runtime; you can pass anything!)
+
+> [!TIP]
+> Usually, making custom requests with `notion.request()` isn't necessary, but can be helpful in some cases, e.g. when upgrading your [Notion API version](https://developers.notion.com/reference/versioning) incrementally before upgrading your SDK version. For example, if there's a new or renamed endpoint in the new API version that isn't yet available to call via a dedicated method on `Client`.
+>
+> In the above example, the simpler approach is to use `await notion.comments.create()`.
+
+Another customization you can make is to pass your own `fetch` function to the `Client` constructor. This might be helpful for some execution environments where the default, built-in `fetch` isn't suitable.
+
+## Examples
+
+This repository includes several example projects in the `examples/` directory. To install dependencies for all examples at once, run from the root directory:
+
+```bash
+npm run examples:install
+# or
+npm run install:examples
 ```
 
 ## Requirements
