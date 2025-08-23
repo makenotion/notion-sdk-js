@@ -1,19 +1,22 @@
 /* ================================================================================
 
 	database-update-send-email.
-  
+
   Glitch example: https://glitch.com/edit/#!/notion-database-email-update
   Find the official Notion API client @ https://github.com/makenotion/notion-sdk-js/
 
 ================================================================================ */
 
-import { Client } from "@notionhq/client"
+import { Client, isFullDatabase, isFullPage } from "@notionhq/client"
 import { config } from "dotenv"
 import SendGrid from "@sendgrid/mail"
-import { PropertyItemObjectResponse } from "../../build/src/api-endpoints"
+import {
+  PropertyItemObjectResponse,
+  QueryDataSourceResponse,
+} from "../../build/src/api-endpoints"
 
 config()
-SendGrid.setApiKey(process.env.SENDGRID_KEY)
+SendGrid.setApiKey(String(process.env.SENDGRID_KEY))
 const notion = new Client({ auth: process.env.NOTION_KEY })
 
 const databaseId = process.env.NOTION_DATABASE_ID
@@ -58,19 +61,31 @@ async function findAndSendEmailsForUpdatedTasks() {
   }
 }
 
+type TaskResult = {
+  pageId: string
+  status: string
+  title: string
+}
+
 /**
  * Gets tasks from the database.
  */
-async function getTasksFromNotionDatabase(): Promise<
-  Array<{ pageId: string; status: string; title: string }>
-> {
-  const pages = []
-  let cursor = undefined
+async function getTasksFromNotionDatabase(): Promise<Array<TaskResult>> {
+  const pages: Array<QueryDataSourceResponse["results"][number]> = []
+  let cursor: string | undefined
 
   const shouldContinue = true
   while (shouldContinue) {
-    const { results, next_cursor } = await notion.databases.query({
-      database_id: databaseId,
+    const database = await notion.databases.retrieve({
+      database_id: String(databaseId),
+    })
+    if (!isFullDatabase(database)) {
+      console.error(`No read permissions on database: ${databaseId}`)
+      break
+    }
+
+    const { results, next_cursor } = await notion.dataSources.query({
+      database_id: database.data_sources[0].id,
       start_cursor: cursor,
     })
     pages.push(...results)
@@ -81,9 +96,14 @@ async function getTasksFromNotionDatabase(): Promise<
   }
   console.log(`${pages.length} pages successfully fetched.`)
 
-  const tasks = []
+  const tasks: Array<TaskResult> = []
   for (const page of pages) {
     const pageId = page.id
+
+    if (!isFullPage(page)) {
+      console.error(`Page ${pageId} is not a full page.`)
+      continue
+    }
 
     const statusPropertyId = page.properties["Status"].id
     const statusPropertyItem = await getPropertyValue({
@@ -114,13 +134,13 @@ function getStatusPropertyValue(
 ): string {
   if (Array.isArray(property)) {
     if (property?.[0]?.type === "select") {
-      return property[0].select.name
+      return property[0].select?.name ?? "No Status"
     } else {
       return "No Status"
     }
   } else {
     if (property.type === "select") {
-      return property.select.name
+      return property.select?.name ?? "No Status"
     } else {
       return "No Status"
     }
@@ -178,7 +198,7 @@ async function sendUpdateEmailWithSendgrid({
     // Send an email about this change.
     await SendGrid.send({
       to: process.env.EMAIL_TO_FIELD,
-      from: process.env.EMAIL_FROM_FIELD,
+      from: String(process.env.EMAIL_FROM_FIELD),
       subject: "Notion Task Status Updated",
       text: message,
     })

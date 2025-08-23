@@ -2,13 +2,13 @@
   "name": "github-issue-sync",
   "version": "1.0.0",
   "description": "Sync GitHub issues with Notion.",
-  "main": "index.js",
+  "main": "index.ts",
   "engines": {
     "node": "12.x"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": ""
+    "start": "ts-node index.ts"
   },
   "author": "Aman Gupta",
   "license": "MIT",
@@ -17,5 +17,11 @@
     "dotenv": "^16.0.1",
     "lodash": "^4.17.21",
     "octokit": "^2.0.3"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.170",
+    "@types/node": "^18.0.0",
+    "ts-node": "^10.8.2",
+    "typescript": "^4.7.4"
   }
 }

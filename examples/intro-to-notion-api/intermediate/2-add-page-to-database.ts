@@ -1,4 +1,4 @@
-import { Client } from "@notionhq/client"
+import { Client, isFullDatabase } from "@notionhq/client"
 import { config } from "dotenv"
 import { propertiesForNewPages } from "./sampleData.js"
 
@@ -9,7 +9,7 @@ const apiKey = process.env.NOTION_API_KEY
 
 const notion = new Client({ auth: apiKey })
 
-/* 
+/*
 ---------------------------------------------------------------------------
 */
 
@@ -20,10 +20,10 @@ const notion = new Client({ auth: apiKey })
  * - Working with databases guide: https://developers.notion.com/docs/working-with-databases
  */
 
-async function addNotionPageToDatabase(databaseId, pageProperties) {
+async function addNotionPageToDataSource(dataSourceId, pageProperties) {
   const newPage = await notion.pages.create({
     parent: {
-      database_id: databaseId,
+      data_source_id: dataSourceId,
     },
     properties: pageProperties,
   })
@@ -45,36 +45,43 @@ async function main() {
         },
       },
     ],
-    properties: {
-      // These properties represent columns in the database (i.e. its schema)
-      "Grocery item": {
-        type: "title",
-        title: {},
-      },
-      Price: {
-        type: "number",
-        number: {
-          format: "dollar",
+    initial_data_source: {
+      properties: {
+        // These properties represent columns in the data source (i.e. its schema)
+        "Grocery item": {
+          type: "title",
+          title: {},
         },
-      },
-      "Last ordered": {
-        type: "date",
-        date: {},
+        Price: {
+          type: "number",
+          number: {
+            format: "dollar",
+          },
+        },
+        "Last ordered": {
+          type: "date",
+          date: {},
+        },
       },
     },
   })
 
+  if (!isFullDatabase(newDatabase)) {
+    console.error(`No read permissions on database: ${newDatabase.id}`)
+    return
+  }
+
   // Print the new database's URL. Visit the URL in your browser to see the pages that get created in the next step.
   console.log(newDatabase.url)
 
-  const databaseId = newDatabase.id
+  const dataSourceId = newDatabase.data_sources[0].id
   // If there is no ID (if there's an error), return.
-  if (!databaseId) return
+  if (!dataSourceId) return
 
   console.log("Adding new pages...")
   for (let i = 0; i < propertiesForNewPages.length; i++) {
     // Add a few new pages to the database that was just created
-    await addNotionPageToDatabase(databaseId, propertiesForNewPages[i])
+    await addNotionPageToDataSource(dataSourceId, propertiesForNewPages[i])
   }
 }
 

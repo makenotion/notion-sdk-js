@@ -88,7 +88,7 @@ Once selected, your integration will have permission to read/write content on th
 Run the following command:
 
 ```zsh
-node server.js
+npm start
 ```
 
 Check the terminal response to see which port to use when viewing the app locally in your browser of choice (`localhost:<port>`).
