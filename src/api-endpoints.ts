@@ -5065,22 +5065,63 @@ export type PartialDataSourceObjectResponse = {
 }
 
 export type DataSourceObjectResponse = {
-  title: Array<RichTextItemResponse>
-  description: Array<RichTextItemResponse>
-  icon: PageIconResponse | null
-  cover: PageCoverResponse | null
-  properties: Record<string, DatabasePropertyConfigResponse>
-  parent: ParentForBlockBasedObjectResponse
-  created_by: PartialUserObjectResponse
-  last_edited_by: PartialUserObjectResponse
-  is_inline: boolean
+  // The data source object type name.
   object: "database"
+  // The ID of the data source.
   id: string
-  created_time: string
-  last_edited_time: string
+  // The title of the data source.
+  title: Array<RichTextItemResponse>
+  // The description of the data source.
+  description: Array<RichTextItemResponse>
+  // The parent of the data source.
+  parent:
+    | {
+        // The parent type.
+        type: "page_id"
+        // The ID of the parent page.
+        page_id: string
+      }
+    | {
+        // The parent type.
+        type: "workspace"
+        // Always true for workspace parent.
+        workspace: true
+      }
+    | {
+        // The parent type.
+        type: "database_id"
+        // The ID of the parent database.
+        database_id: string
+      }
+    | {
+        // The parent type.
+        type: "block_id"
+        // The ID of the parent block.
+        block_id: string
+      }
+  // Whether the data source is inline.
+  is_inline: boolean
+  // Whether the data source is archived.
   archived: boolean
+  // Whether the data source is in the trash.
   in_trash: boolean
+  // The time when the data source was created.
+  created_time: string
+  // The time when the data source was last edited.
+  last_edited_time: string
+  // The user who created the data source.
+  created_by: PartialUserObjectResponse
+  // The user who last edited the data source.
+  last_edited_by: PartialUserObjectResponse
+  // The properties schema of the data source.
+  properties: Record<string, DatabasePropertyConfigResponse>
+  // The icon of the data source.
+  icon: PageIconResponse | null
+  // The cover of the data source.
+  cover: PageCoverResponse | null
+  // The URL of the data source.
   url: string
+  // The public URL of the data source if it is publicly accessible.
   public_url: string | null
 }
 
@@ -6107,64 +6148,6 @@ export type RichTextItemResponseCommon = {
   annotations: AnnotationResponse
 }
 
-export type DatabaseObjectResponse = {
-  // The database object type name.
-  object: "database"
-  // The ID of the database.
-  id: string
-  // The title of the database.
-  title: Array<RichTextItemResponse>
-  // The parent of the database.
-  parent:
-    | {
-        // The parent type.
-        type: "page_id"
-        // The ID of the parent page.
-        page_id: string
-      }
-    | {
-        // The parent type.
-        type: "workspace"
-        // Always true for workspace parent.
-        workspace: true
-      }
-    | {
-        // The parent type.
-        type: "database_id"
-        // The ID of the parent database.
-        database_id: string
-      }
-    | {
-        // The parent type.
-        type: "block_id"
-        // The ID of the parent block.
-        block_id: string
-      }
-  // Whether the database is inline.
-  is_inline: boolean
-  // Whether the database is in the trash.
-  in_trash: boolean
-  // The time when the database was created.
-  created_time: string
-  // The time when the database was last edited.
-  last_edited_time: string
-  // The data sources of the database.
-  data_sources: Array<{
-    // The ID of the data source.
-    id: string
-    // The name of the data source.
-    name: string
-  }>
-  // The icon of the database.
-  icon: PageIconResponse | null
-  // The cover of the database.
-  cover: PageCoverResponse | null
-  // The URL of the database.
-  url: string
-  // The public URL of the database if it is publicly accessible.
-  public_url: string | null
-}
-
 export type PartialCommentObjectResponse = {
   // The comment object type name.
   object: "comment"
@@ -6257,6 +6240,66 @@ export type PartialDatabaseObjectResponse = {
   object: "database"
   // The ID of the database.
   id: string
+}
+
+type DataSourceReferenceResponse = {
+  // The ID of the data source.
+  id: string
+  // The name of the data source.
+  name: string
+}
+
+export type DatabaseObjectResponse = {
+  // The database object type name.
+  object: "database"
+  // The ID of the database.
+  id: string
+  // The title of the database.
+  title: Array<RichTextItemResponse>
+  // The parent of the database.
+  parent:
+    | {
+        // The parent type.
+        type: "page_id"
+        // The ID of the parent page.
+        page_id: string
+      }
+    | {
+        // The parent type.
+        type: "workspace"
+        // Always true for workspace parent.
+        workspace: true
+      }
+    | {
+        // The parent type.
+        type: "database_id"
+        // The ID of the parent database.
+        database_id: string
+      }
+    | {
+        // The parent type.
+        type: "block_id"
+        // The ID of the parent block.
+        block_id: string
+      }
+  // Whether the database is inline.
+  is_inline: boolean
+  // Whether the database is in the trash.
+  in_trash: boolean
+  // The time when the database was created.
+  created_time: string
+  // The time when the database was last edited.
+  last_edited_time: string
+  // The data sources of the database.
+  data_sources: Array<DataSourceReferenceResponse>
+  // The icon of the database.
+  icon: PageIconResponse | null
+  // The cover of the database.
+  cover: PageCoverResponse | null
+  // The URL of the database.
+  url: string
+  // The public URL of the database if it is publicly accessible.
+  public_url: string | null
 }
 
 type AnnotationRequest = {
@@ -8130,7 +8173,7 @@ export type GetDataSourceParameters = GetDataSourcePathParameters
 
 export type GetDataSourceResponse =
   | PartialDataSourceObjectResponse
-  | DatabaseObjectResponse
+  | DataSourceObjectResponse
 
 /**
  * Retrieve a data source
