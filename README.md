@@ -1,5 +1,7 @@
 # Notion SDK for JavaScript
 
+<img alt="Notion Logo" src="https://www.notion.so/images/notion-logo-block-main.svg" width="70" />
+
 **A simple and easy to use client for the [Notion API](https://developers.notion.com).**
 
 ![Build status](https://github.com/makenotion/notion-sdk-js/actions/workflows/ci.yml/badge.svg)
