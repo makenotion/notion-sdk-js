@@ -126,7 +126,7 @@ export function isFullPage(
 export function isFullDataSource(
   response: ObjectResponse
 ): response is DataSourceObjectResponse {
-  return response.object === "database"
+  return response.object === "data_source"
 }
 
 /**
@@ -135,7 +135,7 @@ export function isFullDataSource(
 export function isFullDatabase(
   response: ObjectResponse
 ): response is DatabaseObjectResponse {
-  return response.object === "database" && "data_sources" in response
+  return response.object === "database"
 }
 
 /**

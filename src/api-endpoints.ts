@@ -5057,7 +5057,7 @@ type DatabasePropertyConfigResponse = DatabasePropertyConfigResponseCommon &
 
 export type PartialDataSourceObjectResponse = {
   // The data source object type name.
-  object: "database"
+  object: "data_source"
   // The ID of the data source.
   id: string
   // The properties schema of the data source.
@@ -5066,7 +5066,7 @@ export type PartialDataSourceObjectResponse = {
 
 export type DataSourceObjectResponse = {
   // The data source object type name.
-  object: "database"
+  object: "data_source"
   // The ID of the data source.
   id: string
   // The title of the data source.
