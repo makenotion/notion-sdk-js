@@ -8473,8 +8473,8 @@ export type QueryDataSourceParameters = QueryDataSourcePathParameters &
   QueryDataSourceBodyParameters
 
 export type QueryDataSourceResponse = {
-  type: "page_or_database"
-  page_or_database: EmptyObject
+  type: "page_or_data_source"
+  page_or_data_source: EmptyObject
   object: "list"
   next_cursor: string | null
   has_more: boolean
@@ -8882,8 +8882,8 @@ type SearchBodyParameters = {
 export type SearchParameters = SearchBodyParameters
 
 export type SearchResponse = {
-  type: "page_or_database"
-  page_or_database: EmptyObject
+  type: "page_or_data_source"
+  page_or_data_source: EmptyObject
   object: "list"
   next_cursor: string | null
   has_more: boolean

@@ -4,7 +4,6 @@ import { Client, isFullDataSource } from "@notionhq/client"
 import {
   CreatePageParameters,
   DataSourceObjectResponse,
-  GetDatabaseResponse,
   GetDataSourceResponse,
   GetPagePropertyResponse,
 } from "@notionhq/client/build/src/api-endpoints"

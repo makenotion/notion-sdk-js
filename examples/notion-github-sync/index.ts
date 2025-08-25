@@ -7,10 +7,11 @@
 
 ================================================================================ */
 
-const { Client } = require("@notionhq/client")
-const dotenv = require("dotenv")
-const { Octokit } = require("octokit")
-const _ = require("lodash")
+import { Client, isFullDatabase } from "@notionhq/client"
+import dotenv from "dotenv"
+import { Octokit } from "octokit"
+import _ from "lodash"
+import type { PaginatingEndpoints } from "@octokit/plugin-paginate-rest"
 
 dotenv.config()
 const octokit = new Octokit({ auth: process.env.GITHUB_KEY })
@@ -70,9 +71,19 @@ async function syncNotionDataSourceWithGitHub() {
 async function getIssuesFromNotionDataSource() {
   const pages = []
   let cursor = undefined
-  while (true) {
+
+  const database = await notion.databases.retrieve({
+    database_id: String(databaseId),
+  })
+  if (!isFullDatabase(database)) {
+    console.error(`No read permissions on database: ${databaseId}`)
+    return []
+  }
+
+  const shouldContinue = true
+  while (shouldContinue) {
     const { results, next_cursor } = await notion.dataSources.query({
-      data_source_id: dataSourceId,
+      database_id: database.data_sources[0].id,
       start_cursor: cursor,
     })
     pages.push(...results)
@@ -90,6 +101,10 @@ async function getIssuesFromNotionDataSource() {
       page_id: page.id,
       property_id: issueNumberPropertyId,
     })
+    if (!("number" in propertyResult)) {
+      console.error(`Issue number property not found for page: ${page.id}`)
+      continue
+    }
     issues.push({
       pageId: page.id,
       issueNumber: propertyResult.number,
@@ -109,21 +124,27 @@ async function getIssuesFromNotionDataSource() {
  */
 async function getGitHubIssuesForRepository() {
   const issues = []
-  const iterator = octokit.paginate.iterator(octokit.rest.issues.listForRepo, {
-    owner: process.env.GITHUB_REPO_OWNER,
-    repo: process.env.GITHUB_REPO_NAME,
-    state: "all",
-    per_page: 100,
-  })
+  const iterator = octokit.paginate.iterator(
+    octokit.rest.issues.listForRepo as unknown as keyof PaginatingEndpoints,
+    {
+      owner: process.env.GITHUB_REPO_OWNER,
+      repo: process.env.GITHUB_REPO_NAME,
+      state: "all",
+      per_page: 100,
+    }
+  )
   for await (const { data } of iterator) {
     for (const issue of data) {
-      if (!issue.pull_request) {
+      const castIssue: Record<string, unknown> =
+        typeof issue === "object" ? issue : {}
+
+      if (!castIssue.pull_request) {
         issues.push({
-          number: issue.number,
-          title: issue.title,
-          state: issue.state,
-          comment_count: issue.comments,
-          url: issue.html_url,
+          number: castIssue.number,
+          title: castIssue.title,
+          state: castIssue.state,
+          comment_count: castIssue.comments,
+          url: castIssue.html_url,
         })
       }
     }
@@ -190,9 +211,9 @@ async function updatePages(pagesToUpdate) {
   const pagesToUpdateChunks = _.chunk(pagesToUpdate, OPERATION_BATCH_SIZE)
   for (const pagesToUpdateBatch of pagesToUpdateChunks) {
     await Promise.all(
-      pagesToUpdateBatch.map(({ pageId, ...issue }) =>
+      pagesToUpdateBatch.map(issue =>
         notion.pages.update({
-          page_id: pageId,
+          page_id: Object(issue).pageId,
           properties: getPropertiesFromIssue(issue),
         })
       )
@@ -214,7 +235,7 @@ function getPropertiesFromIssue(issue) {
   const { title, number, state, comment_count, url } = issue
   return {
     Name: {
-      title: [{ type: "text", text: { content: title } }],
+      title: [{ type: "text" as const, text: { content: title } }],
     },
     "Issue Number": {
       number,
