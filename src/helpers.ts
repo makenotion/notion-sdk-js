@@ -148,7 +148,7 @@ export function isFullDatabase(
 export function isFullPageOrDataSource(
   response: ObjectResponse
 ): response is DataSourceObjectResponse | PageObjectResponse {
-  if (response.object === "database") {
+  if (response.object === "data_source") {
     return isFullDataSource(response)
   } else {
     return isFullPage(response)
