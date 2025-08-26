@@ -141,6 +141,9 @@ export function isFullDatabase(
 /**
  * @returns `true` if `response` is a full `DataSourceObjectResponse` or a full
  * `PageObjectResponse`.
+ *
+ * Can be used on the results of the list response from `queryDataSource` or
+ * `search` APIs.
  */
 export function isFullPageOrDataSource(
   response: ObjectResponse

@@ -6360,18 +6360,9 @@ type FileUploadWithOptionalNameRequest = {
   name?: StringRequest
 }
 
-type PageIconRequest =
-  | { emoji: EmojiRequest; type?: "emoji" }
-  | { external: ExternalFileRequest; type?: "external" }
-  | {
-      custom_emoji: { id: IdRequest; name?: string; url?: string }
-      type?: "custom_emoji"
-    }
-  | { file_upload: FileUploadIdRequest; type?: "file_upload" }
+type PageIconRequest = FileUploadPageIconRequest | EmojiPageIconRequest
 
-type PageCoverRequest =
-  | { external: ExternalFileRequest; type?: "external" }
-  | { file_upload: FileUploadIdRequest; type?: "file_upload" }
+type PageCoverRequest = FileUploadPageCoverRequest | ExternalPageCoverRequest
 
 type MediaContentWithUrlAndCaptionRequest = {
   url: string
@@ -7104,169 +7095,6 @@ type TimestampLastEditedTimeFilter = {
   type?: "last_edited_time"
 }
 
-type PartialUserObjectRequest = {
-  // The ID of the user.
-  id: IdRequest
-  // The user object type name.
-  object?: "user"
-}
-
-type PersonInfoRequest = {
-  // The email of the person.
-  email?: string
-}
-
-type PersonOnlyRequest = {
-  // The email of the person.
-  email: string
-}
-
-type BotOwnerRequest =
-  | {
-      // Details about the owner of the bot, when the `type` of the owner is `user`. This means
-      // the bot is for a public integration.
-      user: PersonOnlyRequest | PartialUserObjectRequest
-    }
-  | {
-      // Details about the owner of the bot, when the `type` of the owner is `workspace`. This
-      // means the bot is for an internal integration.
-      workspace: true
-    }
-
-type WorkspaceLimitsRequest = {
-  // The maximum allowable size of a file upload, in bytes
-  max_file_upload_size_in_bytes: number
-}
-
-type BotInfoRequest = {
-  // Details about the owner of the bot.
-  owner?: BotOwnerRequest
-  // The name of the bot's workspace.
-  workspace_name?: string | null
-  // Limits and restrictions that apply to the bot's workspace
-  workspace_limits?: WorkspaceLimitsRequest
-}
-
-type PersonUserObjectRequest = {
-  type?: "person"
-  // Details about the person, when the `type` of the user is `person`.
-  person: PersonInfoRequest
-}
-
-type BotUserObjectRequest = {
-  type?: "bot"
-  // Details about the bot, when the `type` of the user is `bot`.
-  bot: BotInfoRequest
-}
-
-type UserObjectRequestCommon = {
-  // The ID of the user.
-  id: IdRequest
-  // The name of the user.
-  name?: string | null
-  // The user object type name.
-  object?: "user"
-  // The avatar URL of the user.
-  avatar_url?: string | null
-}
-
-type UserObjectRequest = UserObjectRequestCommon &
-  (PersonUserObjectRequest | BotUserObjectRequest)
-
-type TemplateMentionDateTemplateMentionRequest = {
-  type?: "template_mention_date"
-  // The date of the template mention.
-  template_mention_date: "today" | "now"
-}
-
-type TemplateMentionUserTemplateMentionRequest = {
-  type?: "template_mention_user"
-  // The user of the template mention.
-  template_mention_user: "me"
-}
-
-type TextRichTextItemRequest = {
-  type?: "text"
-  // If a rich text object's type value is `text`, then the corresponding text field
-  // contains an object including the text content and any inline link.
-  text: {
-    // The actual text content of the text.
-    content: string
-    // An object with information about any inline link in this text, if included.
-    link?: {
-      // The URL of the link.
-      url: string
-    } | null
-  }
-}
-
-type MentionRichTextItemRequest = {
-  type?: "mention"
-  // Mention objects represent an inline mention of a database, date, link preview mention,
-  // page, template mention, or user. A mention is created in the Notion UI when a user
-  // types `@` followed by the name of the reference.
-  mention:
-    | {
-        type?: "user"
-        // Details of the user mention.
-        user: PartialUserObjectRequest | UserObjectRequest
-      }
-    | {
-        type?: "date"
-        // Details of the date mention.
-        date: DateRequest
-      }
-    | {
-        type?: "page"
-        // Details of the page mention.
-        page: {
-          // The ID of the page in the mention.
-          id: IdRequest
-        }
-      }
-    | {
-        type?: "database"
-        // Details of the database mention.
-        database: {
-          // The ID of the database in the mention.
-          id: IdRequest
-        }
-      }
-    | {
-        type?: "template_mention"
-        // Details of the template mention.
-        template_mention: TemplateMentionRequest
-      }
-    | {
-        type?: "custom_emoji"
-        // Details of the custom emoji mention.
-        custom_emoji: {
-          // The ID of the custom emoji.
-          id: IdRequest
-          // The name of the custom emoji.
-          name?: string
-          // The URL of the custom emoji.
-          url?: string
-        }
-      }
-}
-
-type EquationRichTextItemRequest = {
-  type?: "equation"
-  // Notion supports inline LaTeX equations as rich text objects with a type value of
-  // `equation`.
-  equation: {
-    // A KaTeX compatible string.
-    expression: string
-  }
-}
-
-type RichTextItemRequestCommon = {
-  // All rich text objects contain an annotations object that sets the styling for the rich
-  // text.
-  annotations?: AnnotationRequest
-}
-
 type NumberPropertyConfigurationRequest = {
   type?: "number"
   number: { format?: NumberFormat }
@@ -7442,6 +7270,201 @@ type PropertyConfigurationRequest = PropertyConfigurationRequestCommon &
     | LastVisitedTimePropertyConfigurationRequest
     | PlacePropertyConfigurationRequest
   )
+
+type PartialUserObjectRequest = {
+  // The ID of the user.
+  id: IdRequest
+  // The user object type name.
+  object?: "user"
+}
+
+type PersonInfoRequest = {
+  // The email of the person.
+  email?: string
+}
+
+type PersonOnlyRequest = {
+  // The email of the person.
+  email: string
+}
+
+type BotOwnerRequest =
+  | {
+      // Details about the owner of the bot, when the `type` of the owner is `user`. This means
+      // the bot is for a public integration.
+      user: PersonOnlyRequest | PartialUserObjectRequest
+    }
+  | {
+      // Details about the owner of the bot, when the `type` of the owner is `workspace`. This
+      // means the bot is for an internal integration.
+      workspace: true
+    }
+
+type WorkspaceLimitsRequest = {
+  // The maximum allowable size of a file upload, in bytes
+  max_file_upload_size_in_bytes: number
+}
+
+type BotInfoRequest = {
+  // Details about the owner of the bot.
+  owner?: BotOwnerRequest
+  // The name of the bot's workspace.
+  workspace_name?: string | null
+  // Limits and restrictions that apply to the bot's workspace
+  workspace_limits?: WorkspaceLimitsRequest
+}
+
+type PersonUserObjectRequest = {
+  type?: "person"
+  // Details about the person, when the `type` of the user is `person`.
+  person: PersonInfoRequest
+}
+
+type BotUserObjectRequest = {
+  type?: "bot"
+  // Details about the bot, when the `type` of the user is `bot`.
+  bot: BotInfoRequest
+}
+
+type UserObjectRequestCommon = {
+  // The ID of the user.
+  id: IdRequest
+  // The name of the user.
+  name?: string | null
+  // The user object type name.
+  object?: "user"
+  // The avatar URL of the user.
+  avatar_url?: string | null
+}
+
+type UserObjectRequest = UserObjectRequestCommon &
+  (PersonUserObjectRequest | BotUserObjectRequest)
+
+type TemplateMentionDateTemplateMentionRequest = {
+  type?: "template_mention_date"
+  // The date of the template mention.
+  template_mention_date: "today" | "now"
+}
+
+type TemplateMentionUserTemplateMentionRequest = {
+  type?: "template_mention_user"
+  // The user of the template mention.
+  template_mention_user: "me"
+}
+
+type TextRichTextItemRequest = {
+  type?: "text"
+  // If a rich text object's type value is `text`, then the corresponding text field
+  // contains an object including the text content and any inline link.
+  text: {
+    // The actual text content of the text.
+    content: string
+    // An object with information about any inline link in this text, if included.
+    link?: {
+      // The URL of the link.
+      url: string
+    } | null
+  }
+}
+
+type MentionRichTextItemRequest = {
+  type?: "mention"
+  // Mention objects represent an inline mention of a database, date, link preview mention,
+  // page, template mention, or user. A mention is created in the Notion UI when a user
+  // types `@` followed by the name of the reference.
+  mention:
+    | {
+        type?: "user"
+        // Details of the user mention.
+        user: PartialUserObjectRequest | UserObjectRequest
+      }
+    | {
+        type?: "date"
+        // Details of the date mention.
+        date: DateRequest
+      }
+    | {
+        type?: "page"
+        // Details of the page mention.
+        page: {
+          // The ID of the page in the mention.
+          id: IdRequest
+        }
+      }
+    | {
+        type?: "database"
+        // Details of the database mention.
+        database: {
+          // The ID of the database in the mention.
+          id: IdRequest
+        }
+      }
+    | {
+        type?: "template_mention"
+        // Details of the template mention.
+        template_mention: TemplateMentionRequest
+      }
+    | {
+        type?: "custom_emoji"
+        // Details of the custom emoji mention.
+        custom_emoji: {
+          // The ID of the custom emoji.
+          id: IdRequest
+          // The name of the custom emoji.
+          name?: string
+          // The URL of the custom emoji.
+          url?: string
+        }
+      }
+}
+
+type EquationRichTextItemRequest = {
+  type?: "equation"
+  // Notion supports inline LaTeX equations as rich text objects with a type value of
+  // `equation`.
+  equation: {
+    // A KaTeX compatible string.
+    expression: string
+  }
+}
+
+type RichTextItemRequestCommon = {
+  // All rich text objects contain an annotations object that sets the styling for the rich
+  // text.
+  annotations?: AnnotationRequest
+}
+
+type FileUploadPageIconRequest = {
+  type?: "file_upload"
+  file_upload: {
+    // ID of a FileUpload object that has the status `uploaded`.
+    id: string
+  }
+}
+
+type EmojiPageIconRequest = {
+  type?: "emoji"
+  // An emoji character.
+  emoji: EmojiRequest
+}
+
+type FileUploadPageCoverRequest = {
+  type?: "file_upload"
+  // The file upload for the cover.
+  file_upload: {
+    // ID of a FileUpload object that has the status `uploaded`.
+    id: string
+  }
+}
+
+type ExternalPageCoverRequest = {
+  type?: "external"
+  // External URL for the cover.
+  external: {
+    // The URL of the external file.
+    url: string
+  }
+}
 
 type InitialDataSourceRequest = {
   // Property schema for the initial data source, if you'd like to create one.
@@ -8507,167 +8530,33 @@ export const queryDataSource = {
 } as const
 
 type CreateDataSourceBodyParameters = {
+  // An object containing information about where the new database is inserted. Can be a
+  // page (page_id) or another database (database_id).
   parent:
-    | { page_id: IdRequest; type?: "page_id" }
-    | { database_id: IdRequest; type?: "database_id" }
-  properties: Record<
-    string,
     | {
-        number: { format?: NumberFormat }
-        type?: "number"
-        description?: PropertyDescriptionRequest | null
+        // The ID of the parent page (with or without dashes), for example,
+        // 195de9221179449fab8075a27c979105
+        page_id: IdRequest
+        type?: "page_id"
       }
     | {
-        formula: { expression?: string }
-        type?: "formula"
-        description?: PropertyDescriptionRequest | null
+        // The ID of the parent database (with or without dashes), for example,
+        // 195de9221179449fab8075a27c979105
+        database_id: IdRequest
+        type?: "database_id"
       }
-    | {
-        select: {
-          options?: Array<{
-            name: TextRequest
-            color?: SelectColor
-            description?: TextRequest | null
-          }>
-        }
-        type?: "select"
-        description?: PropertyDescriptionRequest | null
-      }
-    | {
-        multi_select: {
-          options?: Array<{
-            name: TextRequest
-            color?: SelectColor
-            description?: TextRequest | null
-          }>
-        }
-        type?: "multi_select"
-        description?: PropertyDescriptionRequest | null
-      }
-    | {
-        relation:
-          | {
-              single_property: EmptyObject
-              database_id: IdRequest
-              type?: "single_property"
-            }
-          | {
-              dual_property: Record<string, never>
-              database_id: IdRequest
-              type?: "dual_property"
-            }
-        type?: "relation"
-        description?: PropertyDescriptionRequest | null
-      }
-    | {
-        rollup:
-          | {
-              rollup_property_name: string
-              relation_property_name: string
-              function: RollupFunction
-              rollup_property_id?: string
-              relation_property_id?: string
-            }
-          | {
-              rollup_property_name: string
-              relation_property_id: string
-              function: RollupFunction
-              relation_property_name?: string
-              rollup_property_id?: string
-            }
-          | {
-              relation_property_name: string
-              rollup_property_id: string
-              function: RollupFunction
-              rollup_property_name?: string
-              relation_property_id?: string
-            }
-          | {
-              rollup_property_id: string
-              relation_property_id: string
-              function: RollupFunction
-              rollup_property_name?: string
-              relation_property_name?: string
-            }
-        type?: "rollup"
-        description?: PropertyDescriptionRequest | null
-      }
-    | {
-        unique_id: { prefix?: string | null }
-        type?: "unique_id"
-        description?: PropertyDescriptionRequest | null
-      }
-    | {
-        title: EmptyObject
-        type?: "title"
-        description?: PropertyDescriptionRequest | null
-      }
-    | {
-        rich_text: EmptyObject
-        type?: "rich_text"
-        description?: PropertyDescriptionRequest | null
-      }
-    | {
-        url: EmptyObject
-        type?: "url"
-        description?: PropertyDescriptionRequest | null
-      }
-    | {
-        people: EmptyObject
-        type?: "people"
-        description?: PropertyDescriptionRequest | null
-      }
-    | {
-        files: EmptyObject
-        type?: "files"
-        description?: PropertyDescriptionRequest | null
-      }
-    | {
-        email: EmptyObject
-        type?: "email"
-        description?: PropertyDescriptionRequest | null
-      }
-    | {
-        phone_number: EmptyObject
-        type?: "phone_number"
-        description?: PropertyDescriptionRequest | null
-      }
-    | {
-        date: EmptyObject
-        type?: "date"
-        description?: PropertyDescriptionRequest | null
-      }
-    | {
-        checkbox: EmptyObject
-        type?: "checkbox"
-        description?: PropertyDescriptionRequest | null
-      }
-    | {
-        created_by: EmptyObject
-        type?: "created_by"
-        description?: PropertyDescriptionRequest | null
-      }
-    | {
-        created_time: EmptyObject
-        type?: "created_time"
-        description?: PropertyDescriptionRequest | null
-      }
-    | {
-        last_edited_by: EmptyObject
-        type?: "last_edited_by"
-        description?: PropertyDescriptionRequest | null
-      }
-    | {
-        last_edited_time: EmptyObject
-        type?: "last_edited_time"
-        description?: PropertyDescriptionRequest | null
-      }
-  >
-  icon?: PageIconRequest | null
-  cover?: PageCoverRequest | null
+  // Property schema of data source.
+  properties: Record<string, PropertyConfigurationRequest>
+  // Title of data source as it appears in Notion.
   title?: Array<RichTextItemRequest>
+  // Description of data source.
   description?: Array<RichTextItemRequest>
+  // Whether the data source should be inline in the page (true) or a full page (false).
   is_inline?: boolean
+  // Page icon.
+  icon?: PageIconRequest | null
+  // Page cover image.
+  cover?: PageCoverRequest | null
 }
 
 export type CreateDataSourceParameters = CreateDataSourceBodyParameters
@@ -8686,11 +8575,11 @@ export const createDataSource = {
   bodyParams: [
     "parent",
     "properties",
-    "icon",
-    "cover",
     "title",
     "description",
     "is_inline",
+    "icon",
+    "cover",
   ],
 
   path: (): string => `data_sources`,
@@ -8742,34 +8631,10 @@ type UpdateDatabaseBodyParameters = {
   is_inline?: boolean
   // The updated icon for the database, if any. If not provided, the icon will not be
   // updated.
-  icon?: {
-    // The type of icon.
-    type: "file_upload" | "emoji"
-  } & (
-    | {
-        type: "file_upload"
-        file_upload: {
-          // ID of a FileUpload object that has the status `uploaded`.
-          id: string
-        }
-      }
-    | {
-        type: "emoji"
-        // An emoji character.
-        emoji: EmojiRequest
-      }
-  )
+  icon?: PageIconRequest
   // The updated cover image for the database, if any. If not provided, the cover will not
   // be updated.
-  cover?: {
-    // Type of the cover. Only file_upload is supported.
-    type: "file_upload"
-    // The file upload for the cover.
-    file_upload: {
-      // ID of a FileUpload object that has the status `uploaded`.
-      id: string
-    }
-  }
+  cover?: PageCoverRequest
   // Whether the database should be moved to or from the trash. If not provided, the trash
   // status will not be updated.
   in_trash?: boolean
@@ -8813,33 +8678,9 @@ type CreateDatabaseBodyParameters = {
   // Initial data source configuration for the database.
   initial_data_source?: InitialDataSourceRequest
   // The icon for the database.
-  icon?: {
-    // The type of icon.
-    type: "file_upload" | "emoji"
-  } & (
-    | {
-        type: "file_upload"
-        file_upload: {
-          // ID of a FileUpload object that has the status `uploaded`.
-          id: string
-        }
-      }
-    | {
-        type: "emoji"
-        // An emoji character.
-        emoji: EmojiRequest
-      }
-  )
+  icon?: PageIconRequest
   // The cover image for the database.
-  cover?: {
-    // Type of the cover. Only file_upload is supported.
-    type: "file_upload"
-    // The file upload for the cover.
-    file_upload: {
-      // ID of a FileUpload object that has the status `uploaded`.
-      id: string
-    }
-  }
+  cover?: PageCoverRequest
 }
 
 export type CreateDatabaseParameters = CreateDatabaseBodyParameters
