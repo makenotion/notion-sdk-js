@@ -276,7 +276,7 @@ async function exerciseReading(
   console.log("\n\n********* Exercising Reading *********\n\n")
   // and read back what we just did
   const queryResponse = await notion.dataSources.query({
-    database_id: dataSourceId,
+    data_source_id: dataSourceId,
   })
   let numOldRows = 0
   for (const page of queryResponse.results) {
@@ -331,7 +331,7 @@ async function exerciseFilters(
   }
 
   const matchingSelectResults = await notion.dataSources.query({
-    database_id: dataSourceId,
+    data_source_id: dataSourceId,
     filter: queryFilterSelectFilterTypeBased,
   })
 
@@ -363,7 +363,7 @@ async function exerciseFilters(
 
   // Check we can search by id
   const matchingTextResults = await notion.dataSources.query({
-    database_id: dataSourceId,
+    data_source_id: dataSourceId,
     filter: textFilter,
   })
 

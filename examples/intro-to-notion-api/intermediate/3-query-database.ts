@@ -37,7 +37,7 @@ async function queryDataSource(dataSourceId) {
   // property that is more recent than 2022-12-31. Use multiple filters with the AND/OR
   // options: https://developers.notion.com/reference/post-database-query-filter.
   const lastOrderedIn2023 = await notion.dataSources.query({
-    database_id: dataSourceId,
+    data_source_id: dataSourceId,
     filter: {
       property: "Last ordered",
       date: {

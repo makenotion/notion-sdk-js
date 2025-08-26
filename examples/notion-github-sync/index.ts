@@ -83,7 +83,7 @@ async function getIssuesFromNotionDataSource() {
   const shouldContinue = true
   while (shouldContinue) {
     const { results, next_cursor } = await notion.dataSources.query({
-      database_id: database.data_sources[0].id,
+      data_source_id: database.data_sources[0].id,
       start_cursor: cursor,
     })
     pages.push(...results)

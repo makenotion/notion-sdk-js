@@ -8189,7 +8189,7 @@ export const appendBlockChildren = {
 
 type GetDataSourcePathParameters = {
   // ID of a Notion data source.
-  database_id: IdRequest
+  data_source_id: IdRequest
 }
 
 export type GetDataSourceParameters = GetDataSourcePathParameters
@@ -8203,16 +8203,16 @@ export type GetDataSourceResponse =
  */
 export const getDataSource = {
   method: "get",
-  pathParams: ["database_id"],
+  pathParams: ["data_source_id"],
   queryParams: [],
   bodyParams: [],
 
   path: (p: GetDataSourcePathParameters): string =>
-    `data_sources/${p.database_id}`,
+    `data_sources/${p.data_source_id}`,
 } as const
 
 type UpdateDataSourcePathParameters = {
-  database_id: IdRequest
+  data_source_id: IdRequest
 }
 
 type UpdateDataSourceBodyParameters = {
@@ -8430,7 +8430,7 @@ export type UpdateDataSourceResponse =
  */
 export const updateDataSource = {
   method: "patch",
-  pathParams: ["database_id"],
+  pathParams: ["data_source_id"],
   queryParams: [],
   bodyParams: [
     "title",
@@ -8444,11 +8444,11 @@ export const updateDataSource = {
   ],
 
   path: (p: UpdateDataSourcePathParameters): string =>
-    `data_sources/${p.database_id}`,
+    `data_sources/${p.data_source_id}`,
 } as const
 
 type QueryDataSourcePathParameters = {
-  database_id: IdRequest
+  data_source_id: IdRequest
 }
 
 type QueryDataSourceQueryParameters = {
@@ -8514,7 +8514,7 @@ export type QueryDataSourceResponse = {
  */
 export const queryDataSource = {
   method: "post",
-  pathParams: ["database_id"],
+  pathParams: ["data_source_id"],
   queryParams: ["filter_properties"],
   bodyParams: [
     "sorts",
@@ -8526,7 +8526,7 @@ export const queryDataSource = {
   ],
 
   path: (p: QueryDataSourcePathParameters): string =>
-    `data_sources/${p.database_id}/query`,
+    `data_sources/${p.data_source_id}/query`,
 } as const
 
 type CreateDataSourceBodyParameters = {
