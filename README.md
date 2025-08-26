@@ -308,7 +308,7 @@ npm run examples:install
 npm run install:examples
 ```
 
-## Requirements
+## Requirements and compatibility
 
 This package supports the following minimum versions:
 
@@ -316,6 +316,15 @@ This package supports the following minimum versions:
 - Type definitions (optional): `typescript >= 5.9`
 
 Earlier versions may still work, but we encourage people building new applications to upgrade to the current stable.
+
+In some cases, due to backwards-incompatible changes across [Notion API versions](https://developers.notion.com/reference/versioning), more recent versions of this SDK don't work well with older API versions:
+
+| Version of JS/TS SDK | Minimum recommended API version |
+| -------------------- | ------------------------------- |
+| v4.0.0 and above     | 2022-06-28                      |
+| v5.0.0 and above     | 2025-09-03                      |
+
+In these cases, we recommend upgrading your Notion API version header using the `Client()` constructor across all of your requests before upgrading to a newer version of the SDK.
 
 ## Getting help
 
