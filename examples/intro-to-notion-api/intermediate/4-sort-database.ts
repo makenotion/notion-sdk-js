@@ -39,7 +39,7 @@ async function queryAndSortDataSource(dataSourceId) {
   // can be filtered or sorted. Pass multiple sort objects to the "sorts" array to
   // apply more than one sorting rule.
   const lastOrderedIn2023Alphabetical = await notion.dataSources.query({
-    database_id: dataSourceId,
+    data_source_id: dataSourceId,
     filter: {
       property: "Last ordered",
       date: {
