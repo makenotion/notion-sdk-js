@@ -8,7 +8,7 @@ const apiKey = process.env.NOTION_API_KEY
 
 const notion = new Client({ auth: apiKey })
 
-/* 
+/*
 ---------------------------------------------------------------------------
 */
 
@@ -33,27 +33,29 @@ async function main() {
         },
       },
     ],
-    properties: {
-      // These properties represent columns in the database (i.e. its schema)
-      "Grocery item": {
-        type: "title",
-        title: {},
-      },
-      Price: {
-        type: "number",
-        number: {
-          format: "dollar",
+    initial_data_source: {
+      properties: {
+        // These properties represent columns in the data source (i.e. its schema)
+        "Grocery item": {
+          type: "title",
+          title: {},
         },
-      },
-      "Last ordered": {
-        type: "date",
-        date: {},
+        Price: {
+          type: "number",
+          number: {
+            format: "dollar",
+          },
+        },
+        "Last ordered": {
+          type: "date",
+          date: {},
+        },
       },
     },
   })
 
   // Print the new database response
-  console.log(newDatabase)
+  console.log(JSON.stringify(newDatabase, null, 2))
 }
 
 main()

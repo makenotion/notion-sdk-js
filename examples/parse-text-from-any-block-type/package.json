@@ -2,11 +2,10 @@
   "name": "parse-text-from-any-block-type",
   "version": "1.0.0",
   "description": "Retrieve blocks from a Notion page and parse text from any block type.",
-  "main": "index.js",
-  "type": "module",
+  "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": ""
+    "start": "node --loader ts-node/esm index.ts"
   },
   "repository": {
     "type": "git",
@@ -18,6 +17,12 @@
     "url": "https://github.com/makenotion/notion-sdk-js/issues"
   },
   "dependencies": {
-    "@notionhq/client": "file:../.."
+    "@notionhq/client": "file:../..",
+    "dotenv": "^17.2.1"
+  },
+  "devDependencies": {
+    "@types/node": "^18.0.0",
+    "ts-node": "^10.8.2",
+    "typescript": "^4.7.4"
   }
 }

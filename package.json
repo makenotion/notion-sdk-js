@@ -1,6 +1,6 @@
 {
   "name": "@notionhq/client",
-  "version": "4.0.2",
+  "version": "5.0.0-rc.0",
   "description": "A simple and easy to use client for the Notion API",
   "engines": {
     "node": ">=18"
@@ -31,7 +31,9 @@
     "check-links": "git ls-files | grep md$ | xargs -n 1 markdown-link-check",
     "prebuild": "npm run clean",
     "clean": "rm -rf ./build",
-    "checkLoggedIn": "./scripts/verifyLoggedIn.sh"
+    "checkLoggedIn": "./scripts/verifyLoggedIn.sh",
+    "install:examples": "for dir in examples/*/; do echo \"Installing dependencies in $dir...\"; (cd \"$dir\" && npm install); done",
+    "examples:install": "npm run install:examples"
   },
   "author": "",
   "license": "MIT",

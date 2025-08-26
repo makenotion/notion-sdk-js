@@ -1,22 +1,21 @@
-<div align="center">
-	<h1>Notion SDK for JavaScript</h1>
-	<p>
-		<b>A simple and easy to use client for the <a href="https://developers.notion.com">Notion API</a></b>
-	</p>
-	<br>
-</div>
+# Notion SDK for JavaScript
+
+<img alt="Notion Logo" src="https://www.notion.so/images/notion-logo-block-main.svg" width="70" />
+
+**A simple and easy to use client for the [Notion API](https://developers.notion.com).**
 
 ![Build status](https://github.com/makenotion/notion-sdk-js/actions/workflows/ci.yml/badge.svg)
 [![npm version](https://badge.fury.io/js/%40notionhq%2Fclient.svg)](https://www.npmjs.com/package/@notionhq/client)
 
 ## Installation
 
-```
+```bash
 npm install @notionhq/client
 ```
 
 ## Usage
 
+> [!NOTE]
 > Use Notion's [Getting Started Guide](https://developers.notion.com/docs/getting-started) to get set up to use Notion's API.
 
 Import and initialize a client using an **integration token** or an OAuth **access token**.
@@ -32,34 +31,36 @@ const notion = new Client({
 
 Make a request to any Notion API endpoint.
 
-> See the complete list of endpoints in the [API reference](https://developers.notion.com/reference).
-
 ```js
 ;(async () => {
   const listUsersResponse = await notion.users.list({})
 })()
 ```
 
-Each method returns a `Promise` which resolves the response.
+> [!NOTE]
+> See the complete list of endpoints in the [API reference](https://developers.notion.com/reference).
+
+Each method returns a `Promise` that resolves the response.
 
 ```js
 console.log(listUsersResponse)
 ```
 
-```
+```ts
 {
   results: [
     {
-      object: 'user',
-      id: 'd40e767c-d7af-4b18-a86d-55c61f1e39a4',
-      type: 'person',
+      object: "user",
+      id: "d40e767c-d7af-4b18-a86d-55c61f1e39a4",
+      type: "person",
       person: {
-        email: 'avo@example.org',
+        email: "avo@example.org",
       },
-      name: 'Avocado Lovelace',
-      avatar_url: 'https://secure.notion-static.com/e6a352a8-8381-44d0-a1dc-9ed80e62b53d.jpg',
+      name: "Avocado Lovelace",
+      avatar_url:
+        "https://secure.notion-static.com/e6a352a8-8381-44d0-a1dc-9ed80e62b53d.jpg",
     },
-    ...
+    // ...
   ]
 }
 ```
@@ -67,8 +68,8 @@ console.log(listUsersResponse)
 Endpoint parameters are grouped into a single object. You don't need to remember which parameters go in the path, query, or body.
 
 ```js
-const myPage = await notion.databases.query({
-  database_id: "897e5a76-ae52-4b48-9fdf-e71f5945d1af",
+const myPage = await notion.dataSources.query({
+  data_source_id: "897e5a76-ae52-4b48-9fdf-e71f5945d1af",
   filter: {
     property: "Landmark",
     rich_text: {
@@ -89,8 +90,8 @@ const { Client, APIErrorCode } = require("@notionhq/client")
 
 try {
   const notion = new Client({ auth: process.env.NOTION_TOKEN })
-  const myPage = await notion.databases.query({
-    database_id: databaseId,
+  const myPage = await notion.dataSources.query({
+    data_source_id: dataSourceId,
     filter: {
       property: "Landmark",
       rich_text: {
@@ -101,7 +102,7 @@ try {
 } catch (error) {
   if (error.code === APIErrorCode.ObjectNotFound) {
     //
-    // For example: handle by asking the user to select a different database
+    // For example: handle by asking the user to select a different data source
     //
   } else {
     // Other error handling code
@@ -153,7 +154,7 @@ the `APIErrorCode` enum are returned from the server. Codes in the
 
 ```ts
 try {
-  const response = await notion.databases.query({
+  const response = await notion.dataSources.query({
     /* ... */
   })
 } catch (error: unknown) {
@@ -183,29 +184,29 @@ try {
 There are several [type guards](https://www.typescriptlang.org/docs/handbook/advanced-types.html#type-guards-and-differentiating-types)
 provided to distinguish between full and partial API responses.
 
-| Type guard function    | Purpose                                                                                |
-| ---------------------- | -------------------------------------------------------------------------------------- |
-| `isFullPage`           | Determine whether an object is a full `PageObjectResponse`                             |
-| `isFullBlock`          | Determine whether an object is a full `BlockObjectResponse`                            |
-| `isFullDatabase`       | Determine whether an object is a full `DatabaseObjectResponse`                         |
-| `isFullPageOrDatabase` | Determine whether an object is a full `PageObjectResponse` or `DatabaseObjectResponse` |
-| `isFullUser`           | Determine whether an object is a full `UserObjectResponse`                             |
-| `isFullComment`        | Determine whether an object is a full `CommentObjectResponse`                          |
+| Type guard function      | Purpose                                                                                  |
+| ------------------------ | ---------------------------------------------------------------------------------------- |
+| `isFullPage`             | Determine whether an object is a full `PageObjectResponse`                               |
+| `isFullBlock`            | Determine whether an object is a full `BlockObjectResponse`                              |
+| `isFullDataSource`       | Determine whether an object is a full `DataSourceObjectResponse`                         |
+| `isFullPageOrDataSource` | Determine whether an object is a full `PageObjectResponse` or `DataSourceObjectResponse` |
+| `isFullUser`             | Determine whether an object is a full `UserObjectResponse`                               |
+| `isFullComment`          | Determine whether an object is a full `CommentObjectResponse`                            |
 
 Here is an example of using a type guard:
 
 ```typescript
-const fullOrPartialPages = await notion.databases.query({
-  database_id: "897e5a76-ae52-4b48-9fdf-e71f5945d1af",
+const fullOrPartialPages = await notion.dataSources.query({
+  data_source_id: "897e5a76-ae52-4b48-9fdf-e71f5945d1af",
 })
 for (const page of fullOrPartialPages.results) {
-  if (!isFullPageOrDatabase(page)) {
+  if (!isFullPageOrDataSource(page)) {
     continue
   }
   // The page variable has been narrowed from
-  //      PageObjectResponse | PartialPageObjectResponse | DatabaseObjectResponse | PartialDatabaseObjectResponse
+  //      PageObjectResponse | PartialPageObjectResponse | DataSourceObjectResponse | PartialDataSourceObjectResponse
   // to
-  //      PageObjectResponse | DatabaseObjectResponse.
+  //      PageObjectResponse | DataSourceObjectResponse.
   console.log("Created at:", page.created_time)
 }
 ```
@@ -269,7 +270,45 @@ const blocks = await collectPaginatedAPI(notion.blocks.children.list, {
 // Do something with blocks.
 ```
 
-## Requirements
+### Custom requests
+
+To make requests directly to a Notion API endpoint instead of using the pre-built families of methods, call the `request()` method. For example:
+
+```ts
+// POST /v1/comments
+const response = await notion.request({
+  path: "comments",
+  method: "post",
+  body: {
+    parent: { page_id: "5c6a28216bb14a7eb6e1c50111515c3d" },
+    rich_text: [{ text: { content: "Hello, world!" } }],
+  },
+  // No `query` params in this example, only `body`.
+})
+
+console.log(JSON.stringify(response, null, 2))
+```
+
+The `notion.request<ResponseBody>({...})` method is generic; `ResponseBody` represents the expected type of response object Notion returns for the endpoint you're calling (we don't validate this at runtime; you can pass anything!)
+
+> [!TIP]
+> Usually, making custom requests with `notion.request()` isn't necessary, but can be helpful in some cases, e.g. when upgrading your [Notion API version](https://developers.notion.com/reference/versioning) incrementally before upgrading your SDK version. For example, if there's a new or renamed endpoint in the new API version that isn't yet available to call via a dedicated method on `Client`.
+>
+> In the above example, the simpler approach is to use `await notion.comments.create()`.
+
+Another customization you can make is to pass your own `fetch` function to the `Client` constructor. This might be helpful for some execution environments where the default, built-in `fetch` isn't suitable.
+
+## Examples
+
+This repository includes several example projects in the `examples/` directory. To install dependencies for all examples at once, run from the root directory:
+
+```bash
+npm run examples:install
+# or
+npm run install:examples
+```
+
+## Requirements and compatibility
 
 This package supports the following minimum versions:
 
@@ -277,6 +316,15 @@ This package supports the following minimum versions:
 - Type definitions (optional): `typescript >= 5.9`
 
 Earlier versions may still work, but we encourage people building new applications to upgrade to the current stable.
+
+In some cases, due to backwards-incompatible changes across [Notion API versions](https://developers.notion.com/reference/versioning), more recent versions of this SDK don't work well with older API versions:
+
+| Version of JS/TS SDK | Minimum recommended API version |
+| -------------------- | ------------------------------- |
+| v4.0.0 and above     | 2022-06-28                      |
+| v5.0.0 and above     | 2025-09-03                      |
+
+In these cases, we recommend upgrading your Notion API version header using the `Client()` constructor across all of your requests before upgrading to a newer version of the SDK.
 
 ## Getting help
 

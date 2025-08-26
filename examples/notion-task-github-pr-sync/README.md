@@ -87,5 +87,5 @@ STATUS_PROPERTY_NAME = <your-status-property-name>
 ### 8. Run code
 
 ```zsh
-node index.js
+npm start
 ```

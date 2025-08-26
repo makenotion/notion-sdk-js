@@ -7,10 +7,11 @@
 
 ================================================================================ */
 
-const { Client } = require("@notionhq/client")
-const dotenv = require("dotenv")
-const { Octokit } = require("octokit")
-const _ = require("lodash")
+import { Client } from "@notionhq/client"
+import dotenv from "dotenv"
+import { Octokit } from "octokit"
+import _ from "lodash"
+import type { PaginatingEndpoints } from "@octokit/plugin-paginate-rest"
 
 dotenv.config()
 const octokit = new Octokit({ auth: process.env.GITHUB_KEY })
@@ -36,11 +37,11 @@ updateNotionDBwithGithubPRs()
 async function updateNotionDBwithGithubPRs() {
   // Get all issues currently in the provided GitHub repository.
   console.log("\nFetching PRs from GitHub repository...")
-  var prs = await getGitHubPRsForRepository()
+  const prs = await getGitHubPRsForRepository()
   console.log(`Fetched ${prs.length} closed PR(s) from GitHub repository.`)
 
-  var prsToUpdate = []
-  for (var pr of prs) {
+  const prsToUpdate = []
+  for (const pr of prs) {
     if (!(await hasIntegrationCommentedOnPage(pr.page_id))) {
       prsToUpdate.push(pr)
     }
@@ -55,7 +56,7 @@ async function updateNotionDBwithGithubPRs() {
  */
 async function hasIntegrationCommentedOnPage(page_id) {
   const comments = await notion.comments.list({ block_id: page_id })
-  const bot = await notion.users.me()
+  const bot = await notion.users.me({})
   if (comments.results) {
     for (const comment of comments.results) {
       if (comment.created_by.id === bot.id) {
@@ -77,27 +78,35 @@ async function hasIntegrationCommentedOnPage(page_id) {
  */
 async function getGitHubPRsForRepository() {
   const pullRequests = []
-  const iterator = octokit.paginate.iterator(octokit.rest.pulls.list, {
-    owner: process.env.GITHUB_REPO_OWNER,
-    repo: process.env.GITHUB_REPO_NAME,
-    state: "all",
-    per_page: 100,
-  })
+  const iterator = octokit.paginate.iterator(
+    octokit.rest.pulls.list as unknown as keyof PaginatingEndpoints,
+    {
+      owner: process.env.GITHUB_REPO_OWNER,
+      repo: process.env.GITHUB_REPO_NAME,
+      state: "all",
+      per_page: 100,
+    }
+  )
+  let notionPRLinkMatch: RegExpMatchArray | undefined
   for await (const { data } of iterator) {
     for (const pr of data) {
-      if (pr.body) {
+      if (typeof pr === "object" && "body" in pr && pr.body) {
         notionPRLinkMatch = pr.body.match(
           /https:\/\/www\.notion\.so\/([A-Za-z0-9]+(-[A-Za-z0-9]+)+)$/
         )
-        if (notionPRLinkMatch && pr.state == "closed") {
+        if (notionPRLinkMatch && "state" in pr && pr.state == "closed") {
           const page_id = notionPRLinkMatch[0]
             .split("-")
             .pop()
             .replaceAll("-", "")
 
-          var status = ""
-          var content = ""
-          if (pr.merged_at != null) {
+          let status = ""
+          let content = ""
+          if (
+            typeof pr === "object" &&
+            "merged_at" in pr &&
+            pr.merged_at != null
+          ) {
             status = "Closed - Merged"
             content = " has been merged!"
           } else {
@@ -133,14 +142,14 @@ async function updatePages(pagesToUpdate) {
     //Update page status property
     if (UPDATE_STATUS_IN_NOTION_DB) {
       await Promise.all(
-        pagesToUpdateBatch.map(({ ...pr }) =>
+        pagesToUpdateBatch.map(pr =>
           //Update Notion Page status
           notion.pages.update({
-            page_id: pr.page_id,
+            page_id: Object(pr).page_id,
             properties: {
               [STATUS_PROPERTY_NAME]: {
                 status: {
-                  name: pr.pr_status,
+                  name: Object(pr).pr_status,
                 },
               },
             },
@@ -150,10 +159,10 @@ async function updatePages(pagesToUpdate) {
     }
     //Write Comment
     await Promise.all(
-      pagesToUpdateBatch.map(({ pageId, ...pr }) =>
+      pagesToUpdateBatch.map(pr =>
         notion.comments.create({
           parent: {
-            page_id: pr.page_id,
+            page_id: Object(pr).page_id,
           },
           rich_text: [
             {
@@ -161,7 +170,7 @@ async function updatePages(pagesToUpdate) {
               text: {
                 content: "Your PR",
                 link: {
-                  url: pr.pr_link,
+                  url: Object(pr).pr_link,
                 },
               },
               annotations: {
@@ -171,7 +180,7 @@ async function updatePages(pagesToUpdate) {
             {
               type: "text",
               text: {
-                content: pr.comment_content,
+                content: Object(pr).comment_content,
               },
             },
           ],

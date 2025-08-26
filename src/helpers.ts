@@ -2,12 +2,14 @@ import {
   BlockObjectResponse,
   CommentObjectResponse,
   DatabaseObjectResponse,
+  DataSourceObjectResponse,
   EquationRichTextItemResponse,
   MentionRichTextItemResponse,
   PageObjectResponse,
   PartialBlockObjectResponse,
   PartialCommentObjectResponse,
   PartialDatabaseObjectResponse,
+  PartialDataSourceObjectResponse,
   PartialPageObjectResponse,
   PartialUserObjectResponse,
   RichTextItemResponse,
@@ -90,17 +92,21 @@ export async function collectPaginatedAPI<Args extends PaginatedArgs, Item>(
   return results
 }
 
+type ObjectResponse =
+  | PageObjectResponse
+  | PartialPageObjectResponse
+  | DataSourceObjectResponse
+  | PartialDataSourceObjectResponse
+  | DatabaseObjectResponse
+  | PartialDatabaseObjectResponse
+  | BlockObjectResponse
+  | PartialBlockObjectResponse
+
 /**
  * @returns `true` if `response` is a full `BlockObjectResponse`.
  */
 export function isFullBlock(
-  response:
-    | PageObjectResponse
-    | PartialPageObjectResponse
-    | DatabaseObjectResponse
-    | PartialDatabaseObjectResponse
-    | BlockObjectResponse
-    | PartialBlockObjectResponse
+  response: ObjectResponse
 ): response is BlockObjectResponse {
   return response.object === "block" && "type" in response
 }
@@ -109,47 +115,41 @@ export function isFullBlock(
  * @returns `true` if `response` is a full `PageObjectResponse`.
  */
 export function isFullPage(
-  response:
-    | PageObjectResponse
-    | PartialPageObjectResponse
-    | DatabaseObjectResponse
-    | PartialDatabaseObjectResponse
-    | BlockObjectResponse
-    | PartialBlockObjectResponse
+  response: ObjectResponse
 ): response is PageObjectResponse {
   return response.object === "page" && "url" in response
+}
+
+/**
+ * @returns `true` if `response` is a full `DataSourceObjectResponse`.
+ */
+export function isFullDataSource(
+  response: ObjectResponse
+): response is DataSourceObjectResponse {
+  return response.object === "data_source"
 }
 
 /**
  * @returns `true` if `response` is a full `DatabaseObjectResponse`.
  */
 export function isFullDatabase(
-  response:
-    | PageObjectResponse
-    | PartialPageObjectResponse
-    | DatabaseObjectResponse
-    | PartialDatabaseObjectResponse
-    | BlockObjectResponse
-    | PartialBlockObjectResponse
+  response: ObjectResponse
 ): response is DatabaseObjectResponse {
-  return response.object === "database" && "title" in response
+  return response.object === "database"
 }
 
 /**
- * @returns `true` if `response` is a full `DatabaseObjectResponse` or a full
+ * @returns `true` if `response` is a full `DataSourceObjectResponse` or a full
  * `PageObjectResponse`.
+ *
+ * Can be used on the results of the list response from `queryDataSource` or
+ * `search` APIs.
  */
-export function isFullPageOrDatabase(
-  response:
-    | PageObjectResponse
-    | PartialPageObjectResponse
-    | DatabaseObjectResponse
-    | PartialDatabaseObjectResponse
-    | BlockObjectResponse
-    | PartialBlockObjectResponse
-): response is DatabaseObjectResponse | PageObjectResponse {
-  if (response.object === "database") {
-    return isFullDatabase(response)
+export function isFullPageOrDataSource(
+  response: ObjectResponse
+): response is DataSourceObjectResponse | PageObjectResponse {
+  if (response.object === "data_source") {
+    return isFullDataSource(response)
   } else {
     return isFullPage(response)
   }
