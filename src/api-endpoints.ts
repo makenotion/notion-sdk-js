@@ -5099,6 +5099,12 @@ export type DataSourceObjectResponse = {
         // The ID of the parent block.
         block_id: string
       }
+    | {
+        // The parent type.
+        type: "data_source_id"
+        // The ID of the parent data source.
+        data_source_id: string
+      }
   // Whether the data source is inline.
   is_inline: boolean
   // Whether the data source is archived.
@@ -8717,7 +8723,7 @@ type SearchBodyParameters = {
   query?: string
   start_cursor?: string
   page_size?: number
-  filter?: { property: "object"; value: "page" | "database" }
+  filter?: { property: "object"; value: "page" | "data_source" }
 }
 
 export type SearchParameters = SearchBodyParameters
