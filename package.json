@@ -33,7 +33,8 @@
     "clean": "rm -rf ./build",
     "checkLoggedIn": "./scripts/verifyLoggedIn.sh",
     "install:examples": "for dir in examples/*/; do echo \"Installing dependencies in $dir...\"; (cd \"$dir\" && npm install); done",
-    "examples:install": "npm run install:examples"
+    "examples:install": "npm run install:examples",
+    "examples:typecheck": "for dir in examples/*/; do echo \"Typechecking $dir...\"; (cd \"$dir\" && npx tsc --noEmit) || exit 1; done"
   },
   "author": "",
   "license": "MIT",

@@ -377,7 +377,7 @@ async function main() {
   const searchResults = await notion.search({
     filter: {
       property: "object",
-      value: "database",
+      value: "data_source",
     },
   })
 
