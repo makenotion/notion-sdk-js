@@ -1,5 +1,5 @@
 import assert = require("assert")
-import { Client } from "../src"
+import { APIResponseError, Client } from "../src"
 
 describe("Notion SDK Client", () => {
   it("Constructs without throwing", () => {
@@ -135,6 +135,50 @@ describe("Notion SDK Client", () => {
           }),
         })
       )
+    })
+
+    it("parses additional_data from API validation error response", async () => {
+      mockFetch.mockResolvedValue({
+        ok: false,
+        text: () =>
+          Promise.resolve(
+            JSON.stringify({
+              code: "validation_error",
+              message:
+                "Databases with multiple data sources are not supported in this API version.",
+              object: "error",
+              status: 400,
+              additional_data: {
+                error_type: "multiple_data_sources_for_database",
+                database_id: "123",
+                child_data_source_ids: ["456", "789"],
+                minimum_api_version: "2025-09-03",
+              },
+            })
+          ),
+        headers: new Headers(),
+        status: 400,
+      } as Response)
+
+      try {
+        await notion.databases.retrieve({
+          database_id: "123",
+        })
+        assert.fail("Expected error to be thrown")
+      } catch (error) {
+        assert(error instanceof APIResponseError)
+        expect(error.code).toEqual("validation_error")
+        expect(error.status).toEqual(400)
+        expect(error.message).toEqual(
+          "Databases with multiple data sources are not supported in this API version."
+        )
+        expect(error.additional_data).toEqual({
+          error_type: "multiple_data_sources_for_database",
+          database_id: "123",
+          child_data_source_ids: ["456", "789"],
+          minimum_api_version: "2025-09-03",
+        })
+      }
     })
   })
 })

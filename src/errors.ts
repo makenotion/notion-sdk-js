@@ -119,6 +119,8 @@ export class RequestTimeoutError extends NotionClientErrorBase<ClientErrorCode.R
 
 type HTTPResponseErrorCode = ClientErrorCode.ResponseError | APIErrorCode
 
+type AdditionalData = Record<string, string | string[]>
+
 class HTTPResponseError<
   Code extends HTTPResponseErrorCode
 > extends NotionClientErrorBase<Code> {
@@ -127,6 +129,7 @@ class HTTPResponseError<
   readonly status: number
   readonly headers: SupportedResponse["headers"]
   readonly body: string
+  readonly additional_data: AdditionalData | undefined
 
   constructor(args: {
     code: Code
@@ -134,13 +137,15 @@ class HTTPResponseError<
     message: string
     headers: SupportedResponse["headers"]
     rawBodyText: string
+    additional_data: AdditionalData | undefined
   }) {
     super(args.message)
-    const { code, status, headers, rawBodyText } = args
+    const { code, status, headers, rawBodyText, additional_data } = args
     this.code = code
     this.status = status
     this.headers = headers
     this.body = rawBodyText
+    this.additional_data = additional_data
   }
 }
 
@@ -193,6 +198,7 @@ export class UnknownHTTPResponseError extends HTTPResponseError<ClientErrorCode.
       message:
         args.message ??
         `Request to Notion API failed with status: ${args.status}`,
+      additional_data: undefined,
     })
   }
 
@@ -243,6 +249,7 @@ export function buildRequestError(
       headers: response.headers,
       status: response.status,
       rawBodyText: bodyText,
+      additional_data: apiErrorResponseBody.additional_data,
     })
   }
   return new UnknownHTTPResponseError({
@@ -253,9 +260,13 @@ export function buildRequestError(
   })
 }
 
-function parseAPIErrorResponseBody(
-  body: string
-): { code: APIErrorCode; message: string } | undefined {
+function parseAPIErrorResponseBody(body: string):
+  | {
+      code: APIErrorCode
+      message: string
+      additional_data: AdditionalData | undefined
+    }
+  | undefined {
   if (typeof body !== "string") {
     return
   }
@@ -279,6 +290,7 @@ function parseAPIErrorResponseBody(
     ...parsed,
     code: parsed["code"],
     message: parsed["message"],
+    additional_data: parsed["additional_data"] as AdditionalData | undefined,
   }
 }
 
