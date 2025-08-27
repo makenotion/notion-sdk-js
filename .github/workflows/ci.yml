@@ -27,3 +27,17 @@ jobs:
       - run: npm run build
       - run: npm run lint
       - run: npm test
+
+  typecheck-examples:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 20.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: 20.x
+      - run: npm install
+      - run: npm run build
+      - run: npm run examples:install
+      - run: npm run examples:typecheck

@@ -1,6 +1,6 @@
-import { Client } from "@notionhq/client"
+import { Client, isFullComment } from "@notionhq/client"
 import { config } from "dotenv"
-import { openAsBlob } from "fs"
+import { readFile } from "fs/promises"
 import { basename, join } from "path"
 
 config()
@@ -31,7 +31,7 @@ async function sendFileUpload(fileUploadId, filePath) {
     file_upload_id: fileUploadId,
     file: {
       filename: basename(filePath),
-      data: new Blob([await openAsBlob(filePath)], {
+      data: new Blob([await readFile(filePath)], {
         type: "image/png",
       }),
     },
@@ -118,10 +118,15 @@ async function main() {
   })
 
   console.log("Comment ID:", comment.id)
-  console.log("Discussion ID:", comment.discussion_id)
-  console.log("Comment parent:", comment.parent)
-  console.log("Comment created by:", comment.created_by)
-  console.log("Comment display name:", comment.display_name)
+
+  if (isFullComment(comment)) {
+    console.log("Discussion ID:", comment.discussion_id)
+    console.log("Comment parent:", comment.parent)
+    console.log("Comment created by:", comment.created_by)
+    console.log("Comment display name:", comment.display_name)
+  } else {
+    console.error("No read access to comment object")
+  }
 
   console.log("Done! Image & comment added to page:", pageId)
 }
