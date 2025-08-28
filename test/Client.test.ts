@@ -34,7 +34,7 @@ describe("Notion SDK Client", () => {
         expect.objectContaining({
           method: "POST",
           headers: expect.objectContaining({
-            "Notion-Version": "2022-06-28",
+            "Notion-Version": "2025-09-03",
             "user-agent": expect.stringContaining("notionhq-client"),
             authorization: `Basic ${Buffer.from(
               "client_id:client_secret"
@@ -56,7 +56,7 @@ describe("Notion SDK Client", () => {
         expect.objectContaining({
           method: "POST",
           headers: expect.objectContaining({
-            "Notion-Version": "2022-06-28",
+            "Notion-Version": "2025-09-03",
             "user-agent": expect.stringContaining("notionhq-client"),
             "content-type": "application/json",
           }),
@@ -92,7 +92,7 @@ describe("Notion SDK Client", () => {
         expect.objectContaining({
           method: "POST",
           headers: expect.objectContaining({
-            "Notion-Version": "2022-06-28",
+            "Notion-Version": "2025-09-03",
             "user-agent": expect.stringContaining("notionhq-client"),
           }),
         })
