@@ -161,7 +161,7 @@ export default class Client {
   #agent: Agent | undefined
   #userAgent: string
 
-  static readonly defaultNotionVersion = "2022-06-28"
+  static readonly defaultNotionVersion = "2025-09-03"
 
   public constructor(options?: ClientOptions) {
     this.#auth = options?.auth
