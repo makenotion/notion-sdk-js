@@ -7050,6 +7050,10 @@ type RollupPropertyFilter =
   | { date: DatePropertyFilter }
   | { number: NumberPropertyFilter }
 
+type VerificationPropertyStatusFilter = {
+  status: "verified" | "expired" | "none"
+}
+
 type PropertyFilter =
   | { title: TextPropertyFilter; property: string; type?: "title" }
   | { rich_text: TextPropertyFilter; property: string; type?: "rich_text" }
@@ -7092,6 +7096,11 @@ type PropertyFilter =
   | { formula: FormulaPropertyFilter; property: string; type?: "formula" }
   | { unique_id: NumberPropertyFilter; property: string; type?: "unique_id" }
   | { rollup: RollupPropertyFilter; property: string; type?: "rollup" }
+  | {
+      verification: VerificationPropertyStatusFilter
+      property: string
+      type?: "verification"
+    }
 
 type TimestampCreatedTimeFilter = {
   created_time: DatePropertyFilter
