@@ -89,6 +89,10 @@ type ParentForBlockBasedObjectResponse =
   | BlockIdParentForBlockBasedObjectResponse
   | WorkspaceParentForBlockBasedObjectResponse
 
+/**
+ * One of: `default`, `gray`, `brown`, `orange`, `yellow`, `green`, `blue`, `purple`,
+ * `pink`, `red`
+ */
 type SelectColor =
   | "default"
   | "gray"
@@ -5064,6 +5068,28 @@ export type PartialDataSourceObjectResponse = {
   properties: Record<string, DatabasePropertyConfigResponse>
 }
 
+type DatabaseParentResponse = {
+  // The parent type.
+  type: "database_id"
+  // The ID of the parent database.
+  database_id: string
+}
+
+type DataSourceParentResponse = {
+  // The parent type.
+  type: "data_source_id"
+  // The ID of the parent data source.
+  data_source_id: string
+}
+
+/**
+ * The parent of the data source. This is typically a database (`database_id`), but for
+ * externally synced data sources, can be another data source (`data_source_id`).
+ */
+type ParentOfDataSourceResponse =
+  | DatabaseParentResponse
+  | DataSourceParentResponse
+
 export type DataSourceObjectResponse = {
   // The data source object type name.
   object: "data_source"
@@ -5074,7 +5100,9 @@ export type DataSourceObjectResponse = {
   // The description of the data source.
   description: Array<RichTextItemResponse>
   // The parent of the data source.
-  parent:
+  parent: ParentOfDataSourceResponse
+  // The parent of the data source's containing database.
+  database_parent:
     | {
         // The parent type.
         type: "page_id"
@@ -5087,24 +5115,14 @@ export type DataSourceObjectResponse = {
         // Always true for workspace parent.
         workspace: true
       }
-    | {
-        // The parent type.
-        type: "database_id"
-        // The ID of the parent database.
-        database_id: string
-      }
+    | DatabaseParentResponse
     | {
         // The parent type.
         type: "block_id"
         // The ID of the parent block.
         block_id: string
       }
-    | {
-        // The parent type.
-        type: "data_source_id"
-        // The ID of the parent data source.
-        data_source_id: string
-      }
+    | DataSourceParentResponse
   // Whether the data source is inline.
   is_inline: boolean
   // Whether the data source is archived.
@@ -5133,6 +5151,12 @@ export type DataSourceObjectResponse = {
 
 export type PartialBlockObjectResponse = { object: "block"; id: string }
 
+/**
+ * One of: `default`, `gray`, `brown`, `orange`, `yellow`, `green`, `blue`, `purple`,
+ * `pink`, `red`, `default_background`, `gray_background`, `brown_background`,
+ * `orange_background`, `yellow_background`, `green_background`, `blue_background`,
+ * `purple_background`, `pink_background`, `red_background`
+ */
 type ApiColor =
   | "default"
   | "gray"
@@ -6122,7 +6146,10 @@ type PropertyItemPropertyItemListResponse = {
 
 export type PropertyItemListResponse = PropertyItemPropertyItemListResponse
 
-type DatabasePropertyRelationConfigResponseCommon = { database_id: string }
+type DatabasePropertyRelationConfigResponseCommon = {
+  database_id: string
+  data_source_id: string
+}
 
 type DatabasePropertyConfigResponseCommon = {
   // The ID of the property.
@@ -6276,12 +6303,7 @@ export type DatabaseObjectResponse = {
         // Always true for workspace parent.
         workspace: true
       }
-    | {
-        // The parent type.
-        type: "database_id"
-        // The ID of the parent database.
-        database_id: string
-      }
+    | DatabaseParentResponse
     | {
         // The parent type.
         type: "block_id"
@@ -7153,7 +7175,7 @@ type StatusPropertyConfigurationRequest = {
 
 type RelationPropertyConfigurationRequest = {
   type?: "relation"
-  relation: { database_id: IdRequest } & (
+  relation: { data_source_id: IdRequest } & (
     | { type?: "single_property"; single_property: EmptyObject }
     | {
         type?: "dual_property"
@@ -8319,12 +8341,12 @@ type UpdateDataSourceBodyParameters = {
         relation:
           | {
               single_property: EmptyObject
-              database_id: IdRequest
+              data_source_id: IdRequest
               type?: "single_property"
             }
           | {
               dual_property: Record<string, never>
-              database_id: IdRequest
+              data_source_id: IdRequest
               type?: "dual_property"
             }
         type?: "relation"
@@ -8867,10 +8889,12 @@ type ListCommentsQueryParameters = {
 export type ListCommentsParameters = ListCommentsQueryParameters
 
 export type ListCommentsResponse = {
+  // Always `list`
   object: "list"
   next_cursor: string | null
   has_more: boolean
   results: Array<CommentObjectResponse>
+  // Always `comment`
   type: "comment"
   comment: EmptyObject
 }
@@ -8966,10 +8990,12 @@ type ListFileUploadsQueryParameters = {
 export type ListFileUploadsParameters = ListFileUploadsQueryParameters
 
 export type ListFileUploadsResponse = {
+  // Always `list`
   object: "list"
   next_cursor: string | null
   has_more: boolean
   results: Array<FileUploadObjectResponse>
+  // Always `file_upload`
   type: "file_upload"
   file_upload: EmptyObject
 }
