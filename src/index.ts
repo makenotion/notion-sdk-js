@@ -175,4 +175,8 @@ export {
   isFullUser,
   isFullComment,
   isFullPageOrDataSource,
+  extractNotionId,
+  extractDatabaseId,
+  extractPageId,
+  extractBlockId,
 } from "./helpers"
