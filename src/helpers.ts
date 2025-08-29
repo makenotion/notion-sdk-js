@@ -199,3 +199,107 @@ export function isMentionRichTextItemResponse(
 ): richText is RichTextItemResponseCommon & MentionRichTextItemResponse {
   return richText.type === "mention"
 }
+
+/**
+ * Extracts a Notion ID from a Notion URL or returns the input if it's already a valid ID.
+ * 
+ * Prioritizes path IDs over query parameters to avoid extracting view IDs instead of database IDs.
+ * 
+ * @param urlOrId A Notion URL or ID string
+ * @returns The extracted UUID in standard format (with hyphens) or null if invalid
+ * 
+ * @example
+ * ```typescript
+ * // Database URL with view ID - extracts database ID, not view ID
+ * extractNotionId('https://notion.so/workspace/DB-abc123def456789012345678901234ab?v=viewid123')
+ * // Returns: 'abc123de-f456-7890-1234-5678901234ab' (database ID)
+ * 
+ * // Already formatted UUID
+ * extractNotionId('12345678-1234-1234-1234-123456789abc')
+ * // Returns: '12345678-1234-1234-1234-123456789abc'
+ * ```
+ */
+export function extractNotionId(urlOrId: string): string | null {
+  if (!urlOrId || typeof urlOrId !== 'string') {
+    return null
+  }
+
+  const trimmed = urlOrId.trim()
+
+  // Check if it's already a properly formatted UUID
+  const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+  if (uuidRegex.test(trimmed)) {
+    return trimmed.toLowerCase()
+  }
+
+  // Check if it's a compact UUID (32 chars, no hyphens)
+  const compactUuidRegex = /^[0-9a-f]{32}$/i
+  if (compactUuidRegex.test(trimmed)) {
+    return formatUuid(trimmed)
+  }
+
+  // Extract from URL - prioritize path over query parameters
+  // This prevents extracting view IDs when database IDs are in the path
+  const pathMatch = trimmed.match(/\/[^/?#]*-([0-9a-f]{32})(?:[/?#]|$)/i)
+  if (pathMatch && pathMatch[1]) {
+    return formatUuid(pathMatch[1])
+  }
+
+  // Fallback to query parameters if no path ID found
+  const queryMatch = trimmed.match(/[?&](?:p|page_id|database_id)=([0-9a-f]{32})/i)
+  if (queryMatch && queryMatch[1]) {
+    return formatUuid(queryMatch[1])
+  }
+
+  // Last resort: any 32-char hex string in the URL
+  const anyMatch = trimmed.match(/([0-9a-f]{32})/i)
+  if (anyMatch && anyMatch[1]) {
+    return formatUuid(anyMatch[1])
+  }
+
+  return null
+}
+
+/**
+ * Formats a 32-character hex string into a standard UUID format.
+ * @param compactId 32-character hex string without hyphens
+ * @returns UUID with hyphens in standard format
+ */
+function formatUuid(compactId: string): string {
+  const clean = compactId.toLowerCase()
+  return `${clean.slice(0, 8)}-${clean.slice(8, 12)}-${clean.slice(12, 16)}-${clean.slice(16, 20)}-${clean.slice(20, 32)}`
+}
+
+/**
+ * Extracts a database ID from a Notion database URL.
+ * Convenience wrapper around `extractNotionId`.
+ */
+export function extractDatabaseId(databaseUrl: string): string | null {
+  return extractNotionId(databaseUrl)
+}
+
+/**
+ * Extracts a page ID from a Notion page URL.
+ * Convenience wrapper around `extractNotionId`.
+ */
+export function extractPageId(pageUrl: string): string | null {
+  return extractNotionId(pageUrl)
+}
+
+/**
+ * Extracts a block ID from a Notion URL with a block fragment.
+ * Looks for #block-<id> or #<id> patterns.
+ */
+export function extractBlockId(urlWithBlock: string): string | null {
+  if (!urlWithBlock || typeof urlWithBlock !== 'string') {
+    return null
+  }
+
+  // Look for block fragment in URL (#block-32chars or just #32chars)
+  const blockMatch = urlWithBlock.match(/#(?:block-)?([0-9a-f]{32})/i)
+  if (blockMatch && blockMatch[1]) {
+    return formatUuid(blockMatch[1])
+  }
+
+  return null
+}
