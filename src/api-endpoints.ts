@@ -15,24 +15,42 @@ export type PersonUserObjectResponse = {
 
 type EmptyObject = Record<string, never>
 
-export type PartialUserObjectResponse = { id: IdRequest; object: "user" }
+export type PartialUserObjectResponse = { id: string; object: "user" }
 
 type BotInfoResponse = {
+  // Details about the owner of the bot.
   owner:
     | {
         type: "user"
+        // Details about the owner of the bot, when the `type` of the owner is `user`. This means
+        // the bot is for a integration.
         user:
           | {
-              type: "person"
-              person: { email: string }
-              name: string | null
-              avatar_url: string | null
-              id: IdRequest
+              // The ID of the user.
+              id: string
+              // The user object type name.
               object: "user"
+              // The name of the user.
+              name: string | null
+              // The avatar URL of the user.
+              avatar_url: string | null
+              // The type of the user.
+              type: "person"
+              // The person info of the user.
+              person: {
+                // The email of the person.
+                email?: string
+              }
             }
           | PartialUserObjectResponse
       }
-    | { type: "workspace"; workspace: true }
+    | {
+        type: "workspace"
+        // Details about the owner of the bot, when the `type` of the owner is `workspace`. This
+        // means the bot is for an internal integration.
+        workspace: true
+      }
+  // The name of the bot's workspace.
   workspace_name: string | null
   // Limits and restrictions that apply to the bot's workspace
   workspace_limits: {
@@ -65,6 +83,7 @@ type DatabaseIdParentForBlockBasedObjectResponse = {
 type DataSourceIdParentForBlockBasedObjectResponse = {
   type: "data_source_id"
   data_source_id: string
+  database_id: string
 }
 
 type PageIdParentForBlockBasedObjectResponse = {
@@ -749,28 +768,17 @@ type VerificationPropertyUnverifiedResponse = {
   verified_by: null
 }
 
+type PartialUserObjectRequest = {
+  // The ID of the user.
+  id: IdRequest
+  // The user object type name.
+  object?: "user"
+}
+
 type VerificationPropertyResponse = {
   state: "verified" | "expired"
   date: DateResponse | null
-  verified_by:
-    | { id: IdRequest }
-    | {
-        person: { email?: string }
-        id: IdRequest
-        type?: "person"
-        name?: string | null
-        avatar_url?: string | null
-        object?: "user"
-      }
-    | {
-        bot: EmptyObject | BotInfoResponse
-        id: IdRequest
-        type?: "bot"
-        name?: string | null
-        avatar_url?: string | null
-        object?: "user"
-      }
-    | null
+  verified_by: PartialUserObjectRequest | null
 }
 
 type AnnotationResponse = {
@@ -6289,6 +6297,8 @@ export type DatabaseObjectResponse = {
   id: string
   // The title of the database.
   title: Array<RichTextItemResponse>
+  // The description of the database.
+  description: Array<RichTextItemResponse>
   // The parent of the database.
   parent:
     | {
@@ -7312,75 +7322,6 @@ type PropertyConfigurationRequest = PropertyConfigurationRequestCommon &
     | PlacePropertyConfigurationRequest
   )
 
-type PartialUserObjectRequest = {
-  // The ID of the user.
-  id: IdRequest
-  // The user object type name.
-  object?: "user"
-}
-
-type PersonInfoRequest = {
-  // The email of the person.
-  email?: string
-}
-
-type PersonOnlyRequest = {
-  // The email of the person.
-  email: string
-}
-
-type BotOwnerRequest =
-  | {
-      // Details about the owner of the bot, when the `type` of the owner is `user`. This means
-      // the bot is for a public integration.
-      user: PersonOnlyRequest | PartialUserObjectRequest
-    }
-  | {
-      // Details about the owner of the bot, when the `type` of the owner is `workspace`. This
-      // means the bot is for an internal integration.
-      workspace: true
-    }
-
-type WorkspaceLimitsRequest = {
-  // The maximum allowable size of a file upload, in bytes
-  max_file_upload_size_in_bytes: number
-}
-
-type BotInfoRequest = {
-  // Details about the owner of the bot.
-  owner?: BotOwnerRequest
-  // The name of the bot's workspace.
-  workspace_name?: string | null
-  // Limits and restrictions that apply to the bot's workspace
-  workspace_limits?: WorkspaceLimitsRequest
-}
-
-type PersonUserObjectRequest = {
-  type?: "person"
-  // Details about the person, when the `type` of the user is `person`.
-  person: PersonInfoRequest
-}
-
-type BotUserObjectRequest = {
-  type?: "bot"
-  // Details about the bot, when the `type` of the user is `bot`.
-  bot: BotInfoRequest
-}
-
-type UserObjectRequestCommon = {
-  // The ID of the user.
-  id: IdRequest
-  // The name of the user.
-  name?: string | null
-  // The user object type name.
-  object?: "user"
-  // The avatar URL of the user.
-  avatar_url?: string | null
-}
-
-type UserObjectRequest = UserObjectRequestCommon &
-  (PersonUserObjectRequest | BotUserObjectRequest)
-
 type TemplateMentionDateTemplateMentionRequest = {
   type?: "template_mention_date"
   // The date of the template mention.
@@ -7417,7 +7358,7 @@ type MentionRichTextItemRequest = {
     | {
         type?: "user"
         // Details of the user mention.
-        user: PartialUserObjectRequest | UserObjectRequest
+        user: PartialUserObjectRequest
       }
     | {
         type?: "date"
@@ -7509,6 +7450,11 @@ type CustomEmojiPageIconRequest = {
   }
 }
 
+type InitialDataSourceRequest = {
+  // Property schema for the initial data source, if you'd like to create one.
+  properties?: Record<string, PropertyConfigurationRequest>
+}
+
 type FileUploadPageCoverRequest = {
   type?: "file_upload"
   // The file upload for the cover.
@@ -7525,11 +7471,6 @@ type ExternalPageCoverRequest = {
     // The URL of the external file.
     url: string
   }
-}
-
-type InitialDataSourceRequest = {
-  // Property schema for the initial data source, if you'd like to create one.
-  properties?: Record<string, PropertyConfigurationRequest>
 }
 export type GetSelfParameters = Record<string, never>
 
@@ -7642,26 +7583,7 @@ type CreatePageBodyParameters = {
         type?: "multi_select"
       }
     | {
-        people: Array<
-          | { id: IdRequest }
-          | {
-              person: { email?: string }
-              id: IdRequest
-              type?: "person"
-              name?: string | null
-              avatar_url?: string | null
-              object?: "user"
-            }
-          | {
-              bot: EmptyObject | BotInfoResponse
-              id: IdRequest
-              type?: "bot"
-              name?: string | null
-              avatar_url?: string | null
-              object?: "user"
-            }
-          | GroupObjectRequest
-        >
+        people: Array<PartialUserObjectRequest | GroupObjectRequest>
         type?: "people"
       }
     | { email: StringRequest | null; type?: "email" }
@@ -7786,26 +7708,7 @@ type UpdatePageBodyParameters = {
         type?: "multi_select"
       }
     | {
-        people: Array<
-          | { id: IdRequest }
-          | {
-              person: { email?: string }
-              id: IdRequest
-              type?: "person"
-              name?: string | null
-              avatar_url?: string | null
-              object?: "user"
-            }
-          | {
-              bot: EmptyObject | BotInfoResponse
-              id: IdRequest
-              type?: "bot"
-              name?: string | null
-              avatar_url?: string | null
-              object?: "user"
-            }
-          | GroupObjectRequest
-        >
+        people: Array<PartialUserObjectRequest | GroupObjectRequest>
         type?: "people"
       }
     | { email: StringRequest | null; type?: "email" }
@@ -8278,9 +8181,7 @@ type UpdateDataSourcePathParameters = {
 
 type UpdateDataSourceBodyParameters = {
   title?: Array<RichTextItemRequest>
-  description?: Array<RichTextItemRequest>
   icon?: PageIconRequest | null
-  cover?: PageCoverRequest | null
   properties?: Record<
     string,
     | {
@@ -8474,7 +8375,6 @@ type UpdateDataSourceBodyParameters = {
     | { name: string }
     | null
   >
-  is_inline?: boolean
   archived?: boolean
   in_trash?: boolean
 }
@@ -8493,16 +8393,7 @@ export const updateDataSource = {
   method: "patch",
   pathParams: ["data_source_id"],
   queryParams: [],
-  bodyParams: [
-    "title",
-    "description",
-    "icon",
-    "cover",
-    "properties",
-    "is_inline",
-    "archived",
-    "in_trash",
-  ],
+  bodyParams: ["title", "icon", "properties", "archived", "in_trash"],
 
   path: (p: UpdateDataSourcePathParameters): string =>
     `data_sources/${p.data_source_id}`,
@@ -8610,14 +8501,8 @@ type CreateDataSourceBodyParameters = {
   properties: Record<string, PropertyConfigurationRequest>
   // Title of data source as it appears in Notion.
   title?: Array<RichTextItemRequest>
-  // Description of data source.
-  description?: Array<RichTextItemRequest>
-  // Whether the data source should be inline in the page (true) or a full page (false).
-  is_inline?: boolean
   // Page icon.
   icon?: PageIconRequest | null
-  // Page cover image.
-  cover?: PageCoverRequest | null
 }
 
 export type CreateDataSourceParameters = CreateDataSourceBodyParameters
@@ -8633,15 +8518,7 @@ export const createDataSource = {
   method: "post",
   pathParams: [],
   queryParams: [],
-  bodyParams: [
-    "parent",
-    "properties",
-    "title",
-    "description",
-    "is_inline",
-    "icon",
-    "cover",
-  ],
+  bodyParams: ["parent", "properties", "title", "icon"],
 
   path: (): string => `data_sources`,
 } as const
@@ -8687,6 +8564,9 @@ type UpdateDatabaseBodyParameters = {
   // The updated title of the database, if any. If not provided, the title will not be
   // updated.
   title?: Array<RichTextItemRequest>
+  // The updated description of the database, if any. If not provided, the description will
+  // not be updated.
+  description?: Array<RichTextItemRequest>
   // Whether the database should be displayed inline in the parent page. If not provided,
   // the inline status will not be updated.
   is_inline?: boolean
@@ -8715,7 +8595,15 @@ export const updateDatabase = {
   method: "patch",
   pathParams: ["database_id"],
   queryParams: [],
-  bodyParams: ["parent", "title", "is_inline", "icon", "cover", "in_trash"],
+  bodyParams: [
+    "parent",
+    "title",
+    "description",
+    "is_inline",
+    "icon",
+    "cover",
+    "in_trash",
+  ],
 
   path: (p: UpdateDatabasePathParameters): string =>
     `databases/${p.database_id}`,
