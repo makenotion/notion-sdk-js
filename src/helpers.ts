@@ -202,32 +202,33 @@ export function isMentionRichTextItemResponse(
 
 /**
  * Extracts a Notion ID from a Notion URL or returns the input if it's already a valid ID.
- * 
+ *
  * Prioritizes path IDs over query parameters to avoid extracting view IDs instead of database IDs.
- * 
+ *
  * @param urlOrId A Notion URL or ID string
  * @returns The extracted UUID in standard format (with hyphens) or null if invalid
- * 
+ *
  * @example
  * ```typescript
  * // Database URL with view ID - extracts database ID, not view ID
  * extractNotionId('https://notion.so/workspace/DB-abc123def456789012345678901234ab?v=viewid123')
  * // Returns: 'abc123de-f456-7890-1234-5678901234ab' (database ID)
- * 
+ *
  * // Already formatted UUID
  * extractNotionId('12345678-1234-1234-1234-123456789abc')
  * // Returns: '12345678-1234-1234-1234-123456789abc'
  * ```
  */
 export function extractNotionId(urlOrId: string): string | null {
-  if (!urlOrId || typeof urlOrId !== 'string') {
+  if (!urlOrId || typeof urlOrId !== "string") {
     return null
   }
 
   const trimmed = urlOrId.trim()
 
   // Check if it's already a properly formatted UUID
-  const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+  const uuidRegex =
+    /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
   if (uuidRegex.test(trimmed)) {
     return trimmed.toLowerCase()
   }
@@ -246,7 +247,9 @@ export function extractNotionId(urlOrId: string): string | null {
   }
 
   // Fallback to query parameters if no path ID found
-  const queryMatch = trimmed.match(/[?&](?:p|page_id|database_id)=([0-9a-f]{32})/i)
+  const queryMatch = trimmed.match(
+    /[?&](?:p|page_id|database_id)=([0-9a-f]{32})/i
+  )
   if (queryMatch && queryMatch[1]) {
     return formatUuid(queryMatch[1])
   }
@@ -267,7 +270,10 @@ export function extractNotionId(urlOrId: string): string | null {
  */
 function formatUuid(compactId: string): string {
   const clean = compactId.toLowerCase()
-  return `${clean.slice(0, 8)}-${clean.slice(8, 12)}-${clean.slice(12, 16)}-${clean.slice(16, 20)}-${clean.slice(20, 32)}`
+  return `${clean.slice(0, 8)}-${clean.slice(8, 12)}-${clean.slice(
+    12,
+    16
+  )}-${clean.slice(16, 20)}-${clean.slice(20, 32)}`
 }
 
 /**
@@ -291,7 +297,7 @@ export function extractPageId(pageUrl: string): string | null {
  * Looks for #block-<id> or #<id> patterns.
  */
 export function extractBlockId(urlWithBlock: string): string | null {
-  if (!urlWithBlock || typeof urlWithBlock !== 'string') {
+  if (!urlWithBlock || typeof urlWithBlock !== "string") {
     return null
   }
 
