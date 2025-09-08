@@ -1,0 +1,28 @@
+{
+  "env": {
+    "browser": true,
+    "es2019": true,
+    "node": true
+  },
+  "extends": "eslint:recommended",
+  "parserOptions": {
+    "ecmaVersion": 2019,
+    "sourceType": "module"
+  },
+  "overrides": [
+    {
+      "files": ["public/**/*.js"],
+      "env": {
+        "browser": true,
+        "node": false
+      }
+    },
+    {
+      "files": ["server.ts"],
+      "env": {
+        "node": true,
+        "browser": false
+      }
+    }
+  ]
+}

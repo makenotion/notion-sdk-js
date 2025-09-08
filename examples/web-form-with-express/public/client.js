@@ -36,6 +36,14 @@ const appendApiResponse = function (apiResponse, el) {
   newParagraphId.textContent = "ID: " + apiResponse.data.id
   el.appendChild(newParagraphId)
 
+  // If this is a database response, also show the data source ID
+  if (apiResponse.data.dataSourceId) {
+    const newParagraphDataSourceId = document.createElement("p")
+    newParagraphDataSourceId.textContent =
+      "Data Source ID: " + apiResponse.data.dataSourceId
+    el.appendChild(newParagraphDataSourceId)
+  }
+
   // Add URL of Notion item (db, page) to UI
   if (apiResponse.data.url) {
     const newAnchorTag = document.createElement("a")
