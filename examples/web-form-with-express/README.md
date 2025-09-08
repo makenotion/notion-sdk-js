@@ -22,7 +22,7 @@ On the frontend, this demo includes:
 
 On the backend, this demo includes:
 
-- `server.js`, which serves `index.html` and defines the endpoints used in the client-side JS code. All Notion public API usage (Notion SDK for JavaScript) is included in this file.
+- `server.ts`, which serves `index.html` and defines the endpoints used in the client-side JS code. All Notion public API usage (Notion SDK for JavaScript) is included in this file.
 
 #### Notion endpoints used
 
@@ -48,7 +48,7 @@ Some "real-world" applications include expanding this demo to be a blog and usin
 git clone https://github.com/makenotion/notion-sdk-js.git
 
 # Switch into this project
-cd notion-sdk-js/examples/web-form-with-express/
+cd notion-sdk-js/examples/web-form-with-express
 
 # Install the dependencies
 npm install

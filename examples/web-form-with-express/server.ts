@@ -1,6 +1,6 @@
 import { config } from "dotenv"
 import express from "express"
-import { Client } from "@notionhq/client"
+import { Client, isFullDatabase } from "@notionhq/client"
 
 config()
 
@@ -43,21 +43,39 @@ app.post("/databases", async function (request, response) {
         },
       },
     })
-    response.json({ message: "success!", data: newDb })
+
+    // Check if we have full database permissions
+    if (!isFullDatabase(newDb)) {
+      response.json({
+        message: "error",
+        error: "No read permissions on database",
+      })
+      return
+    }
+
+    // Return the database info along with the first data source ID
+    const dataSourceId = newDb.data_sources[0].id
+    response.json({
+      message: "success!",
+      data: {
+        ...newDb,
+        dataSourceId, // Add data source ID for easy access by the client
+      },
+    })
   } catch (error) {
     response.json({ message: "error", error })
   }
 })
 
-// Create new page. The database ID is provided in the web form.
+// Create new page. The data source ID is provided in the web form.
 app.post("/pages", async function (request, response) {
   const { dbID, pageName, header } = request.body
 
   try {
     const newPage = await notion.pages.create({
       parent: {
-        type: "database_id",
-        database_id: dbID,
+        type: "data_source_id",
+        data_source_id: dbID, // Note: dbID will now be a data source ID from the client
       },
       properties: {
         Name: {
