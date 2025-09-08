@@ -1,8 +1,8 @@
 {
   "env": {
     "browser": true,
-    "es2019": true,
-    "node": true
+    "node": true,
+    "es6": true
   },
   "extends": "eslint:recommended",
   "parserOptions": {
