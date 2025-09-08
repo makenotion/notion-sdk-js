@@ -15,19 +15,24 @@ export type PersonUserObjectResponse = {
 
 type EmptyObject = Record<string, never>
 
-export type PartialUserObjectResponse = { id: string; object: "user" }
+export type PartialUserObjectResponse = {
+  id: IdResponse
+  // Always `user`
+  object: "user"
+}
 
 type BotInfoResponse = {
   // Details about the owner of the bot.
   owner:
     | {
+        // Always `user`
         type: "user"
         // Details about the owner of the bot, when the `type` of the owner is `user`. This means
         // the bot is for a integration.
         user:
           | {
               // The ID of the user.
-              id: string
+              id: IdResponse
               // The user object type name.
               object: "user"
               // The name of the user.
@@ -45,6 +50,7 @@ type BotInfoResponse = {
           | PartialUserObjectResponse
       }
     | {
+        // Always `workspace`
         type: "workspace"
         // Details about the owner of the bot, when the `type` of the owner is `workspace`. This
         // means the bot is for an internal integration.
@@ -75,9 +81,11 @@ export type GroupObjectResponse = {
   object: "group"
 }
 
-type DatabaseIdParentForBlockBasedObjectResponse = {
+type DatabaseParentResponse = {
+  // The parent type.
   type: "database_id"
-  database_id: string
+  // The ID of the parent database.
+  database_id: IdResponse
 }
 
 type DataSourceIdParentForBlockBasedObjectResponse = {
@@ -87,22 +95,28 @@ type DataSourceIdParentForBlockBasedObjectResponse = {
 }
 
 type PageIdParentForBlockBasedObjectResponse = {
+  // The parent type.
   type: "page_id"
-  page_id: string
+  // The ID of the parent page.
+  page_id: IdResponse
 }
 
 type BlockIdParentForBlockBasedObjectResponse = {
+  // The parent type.
   type: "block_id"
-  block_id: string
+  // The ID of the parent block.
+  block_id: IdResponse
 }
 
 type WorkspaceParentForBlockBasedObjectResponse = {
+  // The parent type.
   type: "workspace"
+  // Always true for workspace parent.
   workspace: true
 }
 
 type ParentForBlockBasedObjectResponse =
-  | DatabaseIdParentForBlockBasedObjectResponse
+  | DatabaseParentResponse
   | DataSourceIdParentForBlockBasedObjectResponse
   | PageIdParentForBlockBasedObjectResponse
   | BlockIdParentForBlockBasedObjectResponse
@@ -791,6 +805,7 @@ type AnnotationResponse = {
 }
 
 export type TextRichTextItemResponse = {
+  // Always `text`
   type: "text"
   // If a rich text object's type value is `text`, then the corresponding text field
   // contains an object including the text content and any inline link.
@@ -836,12 +851,14 @@ type LinkMentionResponse = {
 }
 
 type TemplateMentionDateTemplateMentionResponse = {
+  // Always `template_mention_date`
   type: "template_mention_date"
   // The date of the template mention.
   template_mention_date: "today" | "now"
 }
 
 type TemplateMentionUserTemplateMentionResponse = {
+  // Always `template_mention_user`
   type: "template_mention_user"
   // The user of the template mention.
   template_mention_user: "me"
@@ -853,7 +870,7 @@ type TemplateMentionResponse =
 
 type CustomEmojiResponse = {
   // The ID of the custom emoji.
-  id: string
+  id: IdResponse
   // The name of the custom emoji.
   name: string
   // The URL of the custom emoji.
@@ -861,53 +878,62 @@ type CustomEmojiResponse = {
 }
 
 export type MentionRichTextItemResponse = {
+  // Always `mention`
   type: "mention"
   // Mention objects represent an inline mention of a database, date, link preview mention,
   // page, template mention, or user. A mention is created in the Notion UI when a user
   // types `@` followed by the name of the reference.
   mention:
     | {
+        // Always `user`
         type: "user"
         // Details of the user mention.
         user: PartialUserObjectResponse | UserObjectResponse
       }
     | {
+        // Always `date`
         type: "date"
         // Details of the date mention.
         date: DateResponse
       }
     | {
+        // Always `link_preview`
         type: "link_preview"
         // Details of the link preview mention.
         link_preview: LinkPreviewMentionResponse
       }
     | {
+        // Always `link_mention`
         type: "link_mention"
         // Details of the link mention.
         link_mention: LinkMentionResponse
       }
     | {
+        // Always `page`
         type: "page"
         // Details of the page mention.
         page: {
           // The ID of the page in the mention.
-          id: string
+          id: IdResponse
         }
       }
     | {
+        // Always `database`
         type: "database"
         // Details of the database mention.
         database: {
           // The ID of the database in the mention.
-          id: string
+          id: IdResponse
         }
       }
     | {
+        // Always `template_mention`
         type: "template_mention"
         // Details of the template mention.
         template_mention: TemplateMentionResponse
       }
     | {
+        // Always `custom_emoji`
         type: "custom_emoji"
         // Details of the custom emoji mention.
         custom_emoji: CustomEmojiResponse
@@ -915,6 +941,7 @@ export type MentionRichTextItemResponse = {
 }
 
 export type EquationRichTextItemResponse = {
+  // Always `equation`
   type: "equation"
   // Notion supports inline LaTeX equations as rich text objects with a type value of
   // `equation`.
@@ -4891,6 +4918,7 @@ type NumberFormat =
 type PropertyDescriptionRequest = string
 
 type NumberDatabasePropertyConfigResponse = {
+  // Always `number`
   type: "number"
   number: {
     // The number format for the property.
@@ -4899,6 +4927,7 @@ type NumberDatabasePropertyConfigResponse = {
 }
 
 type FormulaDatabasePropertyConfigResponse = {
+  // Always `formula`
   type: "formula"
   formula: { expression: string }
 }
@@ -4911,11 +4940,13 @@ type SelectPropertyResponse = {
 }
 
 type SelectDatabasePropertyConfigResponse = {
+  // Always `select`
   type: "select"
   select: { options: Array<SelectPropertyResponse> }
 }
 
 type MultiSelectDatabasePropertyConfigResponse = {
+  // Always `multi_select`
   type: "multi_select"
   multi_select: { options: Array<SelectPropertyResponse> }
 }
@@ -4932,6 +4963,7 @@ type StatusPropertyResponse = {
 }
 
 type StatusDatabasePropertyConfigResponse = {
+  // Always `status`
   type: "status"
   status: {
     // The options for the status property.
@@ -4951,11 +4983,13 @@ type StatusDatabasePropertyConfigResponse = {
 }
 
 type SinglePropertyDatabasePropertyRelationConfigResponse = {
+  // Always `single_property`
   type: "single_property"
   single_property: EmptyObject
 }
 
 type DualPropertyDatabasePropertyRelationConfigResponse = {
+  // Always `dual_property`
   type?: "dual_property"
   dual_property: { synced_property_id: string; synced_property_name: string }
 }
@@ -4968,11 +5002,13 @@ type DatabasePropertyRelationConfigResponse =
     )
 
 type RelationDatabasePropertyConfigResponse = {
+  // Always `relation`
   type: "relation"
   relation: DatabasePropertyRelationConfigResponse
 }
 
 type RollupDatabasePropertyConfigResponse = {
+  // Always `rollup`
   type: "rollup"
   rollup: {
     // The function to use for the rollup, e.g. count, count_values, percent_not_empty, max.
@@ -4985,6 +5021,7 @@ type RollupDatabasePropertyConfigResponse = {
 }
 
 type UniqueIdDatabasePropertyConfigResponse = {
+  // Always `unique_id`
   type: "unique_id"
   unique_id: {
     // The prefix for the unique ID.
@@ -4992,52 +5029,80 @@ type UniqueIdDatabasePropertyConfigResponse = {
   }
 }
 
-type TitleDatabasePropertyConfigResponse = { type: "title"; title: EmptyObject }
+type TitleDatabasePropertyConfigResponse = {
+  // Always `title`
+  type: "title"
+  title: EmptyObject
+}
 
 type RichTextDatabasePropertyConfigResponse = {
+  // Always `rich_text`
   type: "rich_text"
   rich_text: EmptyObject
 }
 
-type UrlDatabasePropertyConfigResponse = { type: "url"; url: EmptyObject }
+type UrlDatabasePropertyConfigResponse = {
+  // Always `url`
+  type: "url"
+  url: EmptyObject
+}
 
 type PeopleDatabasePropertyConfigResponse = {
+  // Always `people`
   type: "people"
   people: EmptyObject
 }
 
-type FilesDatabasePropertyConfigResponse = { type: "files"; files: EmptyObject }
+type FilesDatabasePropertyConfigResponse = {
+  // Always `files`
+  type: "files"
+  files: EmptyObject
+}
 
-type EmailDatabasePropertyConfigResponse = { type: "email"; email: EmptyObject }
+type EmailDatabasePropertyConfigResponse = {
+  // Always `email`
+  type: "email"
+  email: EmptyObject
+}
 
 type PhoneNumberDatabasePropertyConfigResponse = {
+  // Always `phone_number`
   type: "phone_number"
   phone_number: EmptyObject
 }
 
-type DateDatabasePropertyConfigResponse = { type: "date"; date: EmptyObject }
+type DateDatabasePropertyConfigResponse = {
+  // Always `date`
+  type: "date"
+  date: EmptyObject
+}
 
 type CheckboxDatabasePropertyConfigResponse = {
+  // Always `checkbox`
   type: "checkbox"
   checkbox: EmptyObject
 }
 
 type CreatedByDatabasePropertyConfigResponse = {
+  // Always `created_by`
   type: "created_by"
   created_by: EmptyObject
 }
 
 type CreatedTimeDatabasePropertyConfigResponse = {
+  // Always `created_time`
   type: "created_time"
   created_time: EmptyObject
 }
 
 type LastEditedByDatabasePropertyConfigResponse = {
+  // Always `last_edited_by`
   type: "last_edited_by"
   last_edited_by: EmptyObject
 }
 
 type LastEditedTimeDatabasePropertyConfigResponse = {
+  // Always `last_edited_time`
   type: "last_edited_time"
   last_edited_time: EmptyObject
 }
@@ -5071,23 +5136,16 @@ export type PartialDataSourceObjectResponse = {
   // The data source object type name.
   object: "data_source"
   // The ID of the data source.
-  id: string
+  id: IdResponse
   // The properties schema of the data source.
   properties: Record<string, DatabasePropertyConfigResponse>
-}
-
-type DatabaseParentResponse = {
-  // The parent type.
-  type: "database_id"
-  // The ID of the parent database.
-  database_id: string
 }
 
 type DataSourceParentResponse = {
   // The parent type.
   type: "data_source_id"
   // The ID of the parent data source.
-  data_source_id: string
+  data_source_id: IdResponse
 }
 
 /**
@@ -5102,7 +5160,7 @@ export type DataSourceObjectResponse = {
   // The data source object type name.
   object: "data_source"
   // The ID of the data source.
-  id: string
+  id: IdResponse
   // The title of the data source.
   title: Array<RichTextItemResponse>
   // The description of the data source.
@@ -5111,25 +5169,10 @@ export type DataSourceObjectResponse = {
   parent: ParentOfDataSourceResponse
   // The parent of the data source's containing database.
   database_parent:
-    | {
-        // The parent type.
-        type: "page_id"
-        // The ID of the parent page.
-        page_id: string
-      }
-    | {
-        // The parent type.
-        type: "workspace"
-        // Always true for workspace parent.
-        workspace: true
-      }
+    | PageIdParentForBlockBasedObjectResponse
+    | WorkspaceParentForBlockBasedObjectResponse
     | DatabaseParentResponse
-    | {
-        // The parent type.
-        type: "block_id"
-        // The ID of the parent block.
-        block_id: string
-      }
+    | BlockIdParentForBlockBasedObjectResponse
     | DataSourceParentResponse
   // Whether the data source is inline.
   is_inline: boolean
@@ -6154,9 +6197,11 @@ type PropertyItemPropertyItemListResponse = {
 
 export type PropertyItemListResponse = PropertyItemPropertyItemListResponse
 
+type IdResponse = string
+
 type DatabasePropertyRelationConfigResponseCommon = {
-  database_id: string
-  data_source_id: string
+  database_id: IdResponse
+  data_source_id: IdResponse
 }
 
 type DatabasePropertyConfigResponseCommon = {
@@ -6170,7 +6215,7 @@ type DatabasePropertyConfigResponseCommon = {
 
 export type UserObjectResponseCommon = {
   // The ID of the user.
-  id: string
+  id: IdResponse
   // The user object type name.
   object: "user"
   // The name of the user.
@@ -6193,20 +6238,34 @@ export type PartialCommentObjectResponse = {
   // The comment object type name.
   object: "comment"
   // The ID of the comment.
-  id: string
+  id: IdResponse
 }
+
+type PageIdCommentParentResponse = {
+  // Always `page_id`
+  type: "page_id"
+  page_id: IdResponse
+}
+
+type BlockIdCommentParentResponse = {
+  // Always `block_id`
+  type: "block_id"
+  block_id: IdResponse
+}
+
+type CommentParentResponse =
+  | PageIdCommentParentResponse
+  | BlockIdCommentParentResponse
 
 export type CommentObjectResponse = {
   // The comment object type name.
   object: "comment"
   // The ID of the comment.
-  id: string
+  id: IdResponse
   // The parent of the comment.
-  parent:
-    | { type: "page_id"; page_id: string }
-    | { type: "block_id"; block_id: string }
+  parent: CommentParentResponse
   // The ID of the discussion thread this comment belongs to.
-  discussion_id: string
+  discussion_id: IdResponse
   // The time when the comment was created.
   created_time: string
   // The time when the comment was last edited.
@@ -6217,24 +6276,32 @@ export type CommentObjectResponse = {
   rich_text: Array<RichTextItemResponse>
   // The display name of the comment.
   display_name: {
+    // One of: `custom`, `user`, `integration`
     type: "custom" | "user" | "integration"
     resolved_name: string | null
   }
   // Any file attachments associated with the comment.
   attachments?: Array<{
+    // One of: `audio`, `image`, `pdf`, `productivity`, `video`
     category: "audio" | "image" | "pdf" | "productivity" | "video"
     file: InternalFileResponse
   }>
 }
 
 export type FileUploadObjectResponse = {
+  // Always `file_upload`
   object: "file_upload"
-  id: string
+  id: IdResponse
   created_time: string
-  created_by: { id: string; type: "person" | "bot" | "agent" }
+  created_by: {
+    id: IdResponse
+    // One of: `person`, `bot`, `agent`
+    type: "person" | "bot" | "agent"
+  }
   last_edited_time: string
   archived: boolean
   expiry_time: string | null
+  // One of: `pending`, `uploaded`, `expired`, `failed`
   status: "pending" | "uploaded" | "expired" | "failed"
   filename: string | null
   content_type: string | null
@@ -6280,12 +6347,12 @@ export type PartialDatabaseObjectResponse = {
   // The database object type name.
   object: "database"
   // The ID of the database.
-  id: string
+  id: IdResponse
 }
 
 type DataSourceReferenceResponse = {
   // The ID of the data source.
-  id: string
+  id: IdResponse
   // The name of the data source.
   name: string
 }
@@ -6294,32 +6361,17 @@ export type DatabaseObjectResponse = {
   // The database object type name.
   object: "database"
   // The ID of the database.
-  id: string
+  id: IdResponse
   // The title of the database.
   title: Array<RichTextItemResponse>
   // The description of the database.
   description: Array<RichTextItemResponse>
   // The parent of the database.
   parent:
-    | {
-        // The parent type.
-        type: "page_id"
-        // The ID of the parent page.
-        page_id: string
-      }
-    | {
-        // The parent type.
-        type: "workspace"
-        // Always true for workspace parent.
-        workspace: true
-      }
+    | PageIdParentForBlockBasedObjectResponse
+    | WorkspaceParentForBlockBasedObjectResponse
     | DatabaseParentResponse
-    | {
-        // The parent type.
-        type: "block_id"
-        // The ID of the parent block.
-        block_id: string
-      }
+    | BlockIdParentForBlockBasedObjectResponse
   // Whether the database is inline.
   is_inline: boolean
   // Whether the database is in the trash.
@@ -7146,17 +7198,34 @@ type TimestampLastEditedTimeFilter = {
   type?: "last_edited_time"
 }
 
+type TimestampFilter =
+  | TimestampCreatedTimeFilter
+  | TimestampLastEditedTimeFilter
+
+type PropertyOrTimestampFilter = PropertyFilter | TimestampFilter
+
+type PropertyOrTimestampFilterArray = Array<PropertyOrTimestampFilter>
+
+type GroupFilterOperatorArray = Array<
+  | PropertyOrTimestampFilter
+  | { or: PropertyOrTimestampFilterArray }
+  | { and: PropertyOrTimestampFilterArray }
+>
+
 type NumberPropertyConfigurationRequest = {
+  // Always `number`
   type?: "number"
   number: { format?: NumberFormat }
 }
 
 type FormulaPropertyConfigurationRequest = {
+  // Always `formula`
   type?: "formula"
   formula: { expression?: string }
 }
 
 type SelectPropertyConfigurationRequest = {
+  // Always `select`
   type?: "select"
   select: {
     options?: Array<{
@@ -7168,6 +7237,7 @@ type SelectPropertyConfigurationRequest = {
 }
 
 type MultiSelectPropertyConfigurationRequest = {
+  // Always `multi_select`
   type?: "multi_select"
   multi_select: {
     options?: Array<{
@@ -7179,15 +7249,22 @@ type MultiSelectPropertyConfigurationRequest = {
 }
 
 type StatusPropertyConfigurationRequest = {
+  // Always `status`
   type?: "status"
   status: EmptyObject
 }
 
 type RelationPropertyConfigurationRequest = {
+  // Always `relation`
   type?: "relation"
   relation: { data_source_id: IdRequest } & (
-    | { type?: "single_property"; single_property: EmptyObject }
     | {
+        // Always `single_property`
+        type?: "single_property"
+        single_property: EmptyObject
+      }
+    | {
+        // Always `dual_property`
         type?: "dual_property"
         dual_property: {
           synced_property_id?: string
@@ -7198,6 +7275,7 @@ type RelationPropertyConfigurationRequest = {
 }
 
 type RollupPropertyConfigurationRequest = {
+  // Always `rollup`
   type?: "rollup"
   rollup: {
     // The function to use for the rollup, e.g. count, count_values, percent_not_empty, max.
@@ -7211,81 +7289,118 @@ type RollupPropertyConfigurationRequest = {
 }
 
 type UniqueIdPropertyConfigurationRequest = {
+  // Always `unique_id`
   type?: "unique_id"
   unique_id: { prefix?: string | null }
 }
 
-type TitlePropertyConfigurationRequest = { type?: "title"; title: EmptyObject }
+type TitlePropertyConfigurationRequest = {
+  // Always `title`
+  type?: "title"
+  title: EmptyObject
+}
 
 type RichTextPropertyConfigurationRequest = {
+  // Always `rich_text`
   type?: "rich_text"
   rich_text: EmptyObject
 }
 
-type UrlPropertyConfigurationRequest = { type?: "url"; url: EmptyObject }
+type UrlPropertyConfigurationRequest = {
+  // Always `url`
+  type?: "url"
+  url: EmptyObject
+}
 
 type PeoplePropertyConfigurationRequest = {
+  // Always `people`
   type?: "people"
   people: EmptyObject
 }
 
-type FilesPropertyConfigurationRequest = { type?: "files"; files: EmptyObject }
+type FilesPropertyConfigurationRequest = {
+  // Always `files`
+  type?: "files"
+  files: EmptyObject
+}
 
-type EmailPropertyConfigurationRequest = { type?: "email"; email: EmptyObject }
+type EmailPropertyConfigurationRequest = {
+  // Always `email`
+  type?: "email"
+  email: EmptyObject
+}
 
 type PhoneNumberPropertyConfigurationRequest = {
+  // Always `phone_number`
   type?: "phone_number"
   phone_number: EmptyObject
 }
 
-type DatePropertyConfigurationRequest = { type?: "date"; date: EmptyObject }
+type DatePropertyConfigurationRequest = {
+  // Always `date`
+  type?: "date"
+  date: EmptyObject
+}
 
 type CheckboxPropertyConfigurationRequest = {
+  // Always `checkbox`
   type?: "checkbox"
   checkbox: EmptyObject
 }
 
 type CreatedByPropertyConfigurationRequest = {
+  // Always `created_by`
   type?: "created_by"
   created_by: EmptyObject
 }
 
 type CreatedTimePropertyConfigurationRequest = {
+  // Always `created_time`
   type?: "created_time"
   created_time: EmptyObject
 }
 
 type LastEditedByPropertyConfigurationRequest = {
+  // Always `last_edited_by`
   type?: "last_edited_by"
   last_edited_by: EmptyObject
 }
 
 type LastEditedTimePropertyConfigurationRequest = {
+  // Always `last_edited_time`
   type?: "last_edited_time"
   last_edited_time: EmptyObject
 }
 
 type ButtonPropertyConfigurationRequest = {
+  // Always `button`
   type?: "button"
   button: EmptyObject
 }
 
 type LocationPropertyConfigurationRequest = {
+  // Always `location`
   type?: "location"
   location: EmptyObject
 }
 
 type VerificationPropertyConfigurationRequest = {
+  // Always `verification`
   type?: "verification"
   verification: EmptyObject
 }
 
 type LastVisitedTimePropertyConfigurationRequest = {
+  // Always `last_visited_time`
   type?: "last_visited_time"
   last_visited_time: EmptyObject
 }
 
-type PlacePropertyConfigurationRequest = { type?: "place"; place: EmptyObject }
+type PlacePropertyConfigurationRequest = {
+  // Always `place`
+  type?: "place"
+  place: EmptyObject
+}
 
 type PropertyConfigurationRequestCommon = {
   // The description of the property.
@@ -7323,18 +7438,21 @@ type PropertyConfigurationRequest = PropertyConfigurationRequestCommon &
   )
 
 type TemplateMentionDateTemplateMentionRequest = {
+  // Always `template_mention_date`
   type?: "template_mention_date"
   // The date of the template mention.
   template_mention_date: "today" | "now"
 }
 
 type TemplateMentionUserTemplateMentionRequest = {
+  // Always `template_mention_user`
   type?: "template_mention_user"
   // The user of the template mention.
   template_mention_user: "me"
 }
 
 type TextRichTextItemRequest = {
+  // Always `text`
   type?: "text"
   // If a rich text object's type value is `text`, then the corresponding text field
   // contains an object including the text content and any inline link.
@@ -7350,22 +7468,26 @@ type TextRichTextItemRequest = {
 }
 
 type MentionRichTextItemRequest = {
+  // Always `mention`
   type?: "mention"
   // Mention objects represent an inline mention of a database, date, link preview mention,
   // page, template mention, or user. A mention is created in the Notion UI when a user
   // types `@` followed by the name of the reference.
   mention:
     | {
+        // Always `user`
         type?: "user"
         // Details of the user mention.
         user: PartialUserObjectRequest
       }
     | {
+        // Always `date`
         type?: "date"
         // Details of the date mention.
         date: DateRequest
       }
     | {
+        // Always `page`
         type?: "page"
         // Details of the page mention.
         page: {
@@ -7374,6 +7496,7 @@ type MentionRichTextItemRequest = {
         }
       }
     | {
+        // Always `database`
         type?: "database"
         // Details of the database mention.
         database: {
@@ -7382,11 +7505,13 @@ type MentionRichTextItemRequest = {
         }
       }
     | {
+        // Always `template_mention`
         type?: "template_mention"
         // Details of the template mention.
         template_mention: TemplateMentionRequest
       }
     | {
+        // Always `custom_emoji`
         type?: "custom_emoji"
         // Details of the custom emoji mention.
         custom_emoji: {
@@ -7401,6 +7526,7 @@ type MentionRichTextItemRequest = {
 }
 
 type EquationRichTextItemRequest = {
+  // Always `equation`
   type?: "equation"
   // Notion supports inline LaTeX equations as rich text objects with a type value of
   // `equation`.
@@ -7417,6 +7543,7 @@ type RichTextItemRequestCommon = {
 }
 
 type FileUploadPageIconRequest = {
+  // Always `file_upload`
   type?: "file_upload"
   file_upload: {
     // ID of a FileUpload object that has the status `uploaded`.
@@ -7425,12 +7552,14 @@ type FileUploadPageIconRequest = {
 }
 
 type EmojiPageIconRequest = {
+  // Always `emoji`
   type?: "emoji"
   // An emoji character.
   emoji: EmojiRequest
 }
 
 type ExternalPageIconRequest = {
+  // Always `external`
   type?: "external"
   external: {
     // The URL of the external file.
@@ -7439,6 +7568,7 @@ type ExternalPageIconRequest = {
 }
 
 type CustomEmojiPageIconRequest = {
+  // Always `custom_emoji`
   type?: "custom_emoji"
   custom_emoji: {
     // The ID of the custom emoji.
@@ -7456,6 +7586,7 @@ type InitialDataSourceRequest = {
 }
 
 type FileUploadPageCoverRequest = {
+  // Always `file_upload`
   type?: "file_upload"
   // The file upload for the cover.
   file_upload: {
@@ -7465,6 +7596,7 @@ type FileUploadPageCoverRequest = {
 }
 
 type ExternalPageCoverRequest = {
+  // Always `external`
   type?: "external"
   // External URL for the cover.
   external: {
@@ -8416,27 +8548,10 @@ type QueryDataSourceBodyParameters = {
       }
   >
   filter?:
-    | {
-        or: Array<
-          | PropertyFilter
-          | TimestampCreatedTimeFilter
-          | TimestampLastEditedTimeFilter
-          | { or: Array<PropertyFilter> }
-          | { and: Array<PropertyFilter> }
-        >
-      }
-    | {
-        and: Array<
-          | PropertyFilter
-          | TimestampCreatedTimeFilter
-          | TimestampLastEditedTimeFilter
-          | { or: Array<PropertyFilter> }
-          | { and: Array<PropertyFilter> }
-        >
-      }
+    | { or: GroupFilterOperatorArray }
+    | { and: GroupFilterOperatorArray }
     | PropertyFilter
-    | TimestampCreatedTimeFilter
-    | TimestampLastEditedTimeFilter
+    | TimestampFilter
   start_cursor?: string
   page_size?: number
   archived?: boolean
@@ -8489,12 +8604,14 @@ type CreateDataSourceBodyParameters = {
         // The ID of the parent page (with or without dashes), for example,
         // 195de9221179449fab8075a27c979105
         page_id: IdRequest
+        // Always `page_id`
         type?: "page_id"
       }
     | {
         // The ID of the parent database (with or without dashes), for example,
         // 195de9221179449fab8075a27c979105
         database_id: IdRequest
+        // Always `database_id`
         type?: "database_id"
       }
   // Property schema of data source.
@@ -8558,8 +8675,17 @@ type UpdateDatabaseBodyParameters = {
     // The type of parent.
     type: "page_id" | "workspace"
   } & (
-    | { type: "page_id"; page_id: IdRequest }
-    | { type: "workspace"; workspace: true }
+    | {
+        // Always `page_id`
+        type: "page_id"
+        page_id: IdRequest
+      }
+    | {
+        // Always `workspace`
+        type: "workspace"
+        // Always `true`
+        workspace: true
+      }
   )
   // The updated title of the database, if any. If not provided, the title will not be
   // updated.
@@ -8615,8 +8741,17 @@ type CreateDatabaseBodyParameters = {
     // The type of parent.
     type: "page_id" | "workspace"
   } & (
-    | { type: "page_id"; page_id: IdRequest }
-    | { type: "workspace"; workspace: true }
+    | {
+        // Always `page_id`
+        type: "page_id"
+        page_id: IdRequest
+      }
+    | {
+        // Always `workspace`
+        type: "workspace"
+        // Always `true`
+        workspace: true
+      }
   )
   // The title of the database.
   title?: Array<RichTextItemRequest>
@@ -8704,13 +8839,21 @@ type CreateCommentBodyParameters = {
   attachments?: Array<{
     // ID of a FileUpload object that has the status `uploaded`.
     file_upload_id: string
+    // Always `file_upload`
     type?: "file_upload"
   }>
   // Display name for the comment.
   display_name?:
-    | { type: "integration" }
-    | { type: "user" }
     | {
+        // Always `integration`
+        type: "integration"
+      }
+    | {
+        // Always `user`
+        type: "user"
+      }
+    | {
+        // Always `custom`
         type: "custom"
         custom: {
           // The custom display name to use
@@ -8725,12 +8868,14 @@ type CreateCommentBodyParameters = {
             // The ID of the parent page (with or without dashes), for example,
             // 195de9221179449fab8075a27c979105
             page_id: IdRequest
+            // Always `page_id`
             type?: "page_id"
           }
         | {
             // The ID of the parent block (with or without dashes), for example,
             // 195de9221179449fab8075a27c979105
             block_id: IdRequest
+            // Always `block_id`
             type?: "block_id"
           }
     }
@@ -8779,7 +8924,7 @@ export type ListCommentsParameters = ListCommentsQueryParameters
 export type ListCommentsResponse = {
   // Always `list`
   object: "list"
-  next_cursor: string | null
+  next_cursor: IdResponse | null
   has_more: boolean
   results: Array<CommentObjectResponse>
   // Always `comment`
@@ -8880,7 +9025,7 @@ export type ListFileUploadsParameters = ListFileUploadsQueryParameters
 export type ListFileUploadsResponse = {
   // Always `list`
   object: "list"
-  next_cursor: string | null
+  next_cursor: IdResponse | null
   has_more: boolean
   results: Array<FileUploadObjectResponse>
   // Always `file_upload`
