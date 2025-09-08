@@ -6592,15 +6592,6 @@ export type BlockObjectRequestWithoutChildren =
       object?: "block"
     }
   | {
-      callout: {
-        rich_text: Array<RichTextItemRequest>
-        icon?: PageIconRequest
-        color?: ApiColor
-      }
-      type?: "callout"
-      object?: "block"
-    }
-  | {
       synced_block: {
         synced_from: { block_id: IdRequest; type?: "block_id" } | null
       }
