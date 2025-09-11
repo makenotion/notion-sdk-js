@@ -4860,6 +4860,8 @@ export type PageObjectResponse = {
   cover: PageCoverResponse | null
   created_by: PartialUserObjectResponse
   last_edited_by: PartialUserObjectResponse
+  // Whether the page is locked from editing in the Notion app UI.
+  is_locked: boolean
   object: "page"
   id: string
   created_time: string
@@ -6376,6 +6378,8 @@ export type DatabaseObjectResponse = {
   is_inline: boolean
   // Whether the database is in the trash.
   in_trash: boolean
+  // Whether the database is locked from editing in the Notion app UI.
+  is_locked: boolean
   // The time when the database was created.
   created_time: string
   // The time when the database was last edited.
@@ -7875,6 +7879,9 @@ type UpdatePageBodyParameters = {
   >
   icon?: PageIconRequest | null
   cover?: PageCoverRequest | null
+  // Whether the page should be locked from editing in the Notion app UI. If not provided,
+  // the locked state will not be updated.
+  is_locked?: boolean
   archived?: boolean
   in_trash?: boolean
 }
@@ -7891,7 +7898,14 @@ export const updatePage = {
   method: "patch",
   pathParams: ["page_id"],
   queryParams: [],
-  bodyParams: ["properties", "icon", "cover", "archived", "in_trash"],
+  bodyParams: [
+    "properties",
+    "icon",
+    "cover",
+    "is_locked",
+    "archived",
+    "in_trash",
+  ],
 
   path: (p: UpdatePagePathParameters): string => `pages/${p.page_id}`,
 } as const
@@ -8308,207 +8322,179 @@ export const getDataSource = {
 } as const
 
 type UpdateDataSourcePathParameters = {
+  // ID of a Notion data source.
   data_source_id: IdRequest
 }
 
 type UpdateDataSourceBodyParameters = {
+  // Title of data source as it appears in Notion.
   title?: Array<RichTextItemRequest>
+  // Page icon.
   icon?: PageIconRequest | null
+  // The property schema of the data source. The keys are property names or IDs, and the
+  // values are property configuration objects. Properties set to null will be removed.
   properties?: Record<
     string,
-    | {
-        number: { format?: NumberFormat }
-        type?: "number"
+    | ({
+        // The name of the property.
         name?: string
+        // The description of the property.
         description?: PropertyDescriptionRequest | null
-      }
-    | {
-        formula: { expression?: string }
-        type?: "formula"
-        name?: string
-        description?: PropertyDescriptionRequest | null
-      }
-    | {
-        select: {
-          options?: Array<
-            | {
-                id: StringRequest
-                name?: TextRequest
-                color?: SelectColor
-                description?: TextRequest | null
-              }
-            | {
-                name: TextRequest
-                id?: StringRequest
-                color?: SelectColor
-                description?: TextRequest | null
-              }
-          >
-        }
-        type?: "select"
-        name?: string
-        description?: PropertyDescriptionRequest | null
-      }
-    | {
-        multi_select: {
-          options?: Array<
-            | {
-                id: StringRequest
-                name?: TextRequest
-                color?: SelectColor
-                description?: TextRequest | null
-              }
-            | {
-                name: TextRequest
-                id?: StringRequest
-                color?: SelectColor
-                description?: TextRequest | null
-              }
-          >
-        }
-        type?: "multi_select"
-        name?: string
-        description?: PropertyDescriptionRequest | null
-      }
-    | {
-        relation:
-          | {
-              single_property: EmptyObject
-              data_source_id: IdRequest
-              type?: "single_property"
+      } & (
+        | {
+            // Always `number`
+            type?: "number"
+            number: { format?: NumberFormat }
+          }
+        | {
+            // Always `formula`
+            type?: "formula"
+            formula: { expression?: string }
+          }
+        | {
+            // Always `select`
+            type?: "select"
+            select: {
+              options?: Array<
+                { color?: SelectColor; description?: string | null } & (
+                  | { name: string; id?: string }
+                  | { id: string; name?: string }
+                )
+              >
             }
-          | {
-              dual_property: Record<string, never>
-              data_source_id: IdRequest
-              type?: "dual_property"
+          }
+        | {
+            // Always `multi_select`
+            type?: "multi_select"
+            multi_select: {
+              options?: Array<
+                { color?: SelectColor; description?: string | null } & (
+                  | { name: string; id?: string }
+                  | { id: string; name?: string }
+                )
+              >
             }
-        type?: "relation"
-        name?: string
-        description?: PropertyDescriptionRequest | null
-      }
-    | {
-        rollup:
-          | {
-              rollup_property_name: string
-              relation_property_name: string
+          }
+        | {
+            // Always `status`
+            type?: "status"
+            status: EmptyObject
+          }
+        | {
+            // Always `relation`
+            type?: "relation"
+            relation: { data_source_id: IdRequest } & (
+              | {
+                  // Always `single_property`
+                  type?: "single_property"
+                  single_property: EmptyObject
+                }
+              | {
+                  // Always `dual_property`
+                  type?: "dual_property"
+                  dual_property: {
+                    synced_property_id?: string
+                    synced_property_name?: string
+                  }
+                }
+            )
+          }
+        | {
+            // Always `rollup`
+            type?: "rollup"
+            rollup: {
+              // The function to use for the rollup, e.g. count, count_values, percent_not_empty, max.
               function: RollupFunction
-              rollup_property_id?: string
-              relation_property_id?: string
-            }
-          | {
-              rollup_property_name: string
-              relation_property_id: string
-              function: RollupFunction
-              relation_property_name?: string
-              rollup_property_id?: string
-            }
-          | {
-              relation_property_name: string
-              rollup_property_id: string
-              function: RollupFunction
-              rollup_property_name?: string
-              relation_property_id?: string
-            }
-          | {
-              rollup_property_id: string
-              relation_property_id: string
-              function: RollupFunction
-              rollup_property_name?: string
-              relation_property_name?: string
-            }
-        type?: "rollup"
-        name?: string
-        description?: PropertyDescriptionRequest | null
-      }
+            } & (
+              | { relation_property_name: string; rollup_property_name: string }
+              | { relation_property_id: string; rollup_property_name: string }
+              | { relation_property_name: string; rollup_property_id: string }
+              | { relation_property_id: string; rollup_property_id: string }
+            )
+          }
+        | {
+            // Always `unique_id`
+            type?: "unique_id"
+            unique_id: { prefix?: string | null }
+          }
+        | {
+            // Always `title`
+            type?: "title"
+            title: EmptyObject
+          }
+        | {
+            // Always `rich_text`
+            type?: "rich_text"
+            rich_text: EmptyObject
+          }
+        | {
+            // Always `url`
+            type?: "url"
+            url: EmptyObject
+          }
+        | {
+            // Always `people`
+            type?: "people"
+            people: EmptyObject
+          }
+        | {
+            // Always `files`
+            type?: "files"
+            files: EmptyObject
+          }
+        | {
+            // Always `email`
+            type?: "email"
+            email: EmptyObject
+          }
+        | {
+            // Always `phone_number`
+            type?: "phone_number"
+            phone_number: EmptyObject
+          }
+        | {
+            // Always `date`
+            type?: "date"
+            date: EmptyObject
+          }
+        | {
+            // Always `checkbox`
+            type?: "checkbox"
+            checkbox: EmptyObject
+          }
+        | {
+            // Always `created_by`
+            type?: "created_by"
+            created_by: EmptyObject
+          }
+        | {
+            // Always `created_time`
+            type?: "created_time"
+            created_time: EmptyObject
+          }
+        | {
+            // Always `last_edited_by`
+            type?: "last_edited_by"
+            last_edited_by: EmptyObject
+          }
+        | {
+            // Always `last_edited_time`
+            type?: "last_edited_time"
+            last_edited_time: EmptyObject
+          }
+      ))
     | {
-        unique_id: { prefix?: string | null }
-        type?: "unique_id"
-        name?: string
-        description?: PropertyDescriptionRequest | null
+        // The new name of the property.
+        name: string
       }
-    | {
-        title: EmptyObject
-        type?: "title"
-        name?: string
-        description?: PropertyDescriptionRequest | null
-      }
-    | {
-        rich_text: EmptyObject
-        type?: "rich_text"
-        name?: string
-        description?: PropertyDescriptionRequest | null
-      }
-    | {
-        url: EmptyObject
-        type?: "url"
-        name?: string
-        description?: PropertyDescriptionRequest | null
-      }
-    | {
-        people: EmptyObject
-        type?: "people"
-        name?: string
-        description?: PropertyDescriptionRequest | null
-      }
-    | {
-        files: EmptyObject
-        type?: "files"
-        name?: string
-        description?: PropertyDescriptionRequest | null
-      }
-    | {
-        email: EmptyObject
-        type?: "email"
-        name?: string
-        description?: PropertyDescriptionRequest | null
-      }
-    | {
-        phone_number: EmptyObject
-        type?: "phone_number"
-        name?: string
-        description?: PropertyDescriptionRequest | null
-      }
-    | {
-        date: EmptyObject
-        type?: "date"
-        name?: string
-        description?: PropertyDescriptionRequest | null
-      }
-    | {
-        checkbox: EmptyObject
-        type?: "checkbox"
-        name?: string
-        description?: PropertyDescriptionRequest | null
-      }
-    | {
-        created_by: EmptyObject
-        type?: "created_by"
-        name?: string
-        description?: PropertyDescriptionRequest | null
-      }
-    | {
-        created_time: EmptyObject
-        type?: "created_time"
-        name?: string
-        description?: PropertyDescriptionRequest | null
-      }
-    | {
-        last_edited_by: EmptyObject
-        type?: "last_edited_by"
-        name?: string
-        description?: PropertyDescriptionRequest | null
-      }
-    | {
-        last_edited_time: EmptyObject
-        type?: "last_edited_time"
-        name?: string
-        description?: PropertyDescriptionRequest | null
-      }
-    | { name: string }
     | null
   >
-  archived?: boolean
+  // Whether the database should be moved to or from the trash. If not provided, the trash
+  // status will not be updated.
   in_trash?: boolean
+  // Whether the database should be moved to or from the trash. If not provided, the trash
+  // status will not be updated. Equivalent to `in_trash`.
+  archived?: boolean
 }
 
 export type UpdateDataSourceParameters = UpdateDataSourcePathParameters &
@@ -8525,7 +8511,7 @@ export const updateDataSource = {
   method: "patch",
   pathParams: ["data_source_id"],
   queryParams: [],
-  bodyParams: ["title", "icon", "properties", "archived", "in_trash"],
+  bodyParams: ["title", "icon", "properties", "in_trash", "archived"],
 
   path: (p: UpdateDataSourcePathParameters): string =>
     `data_sources/${p.data_source_id}`,
@@ -8705,6 +8691,9 @@ type UpdateDatabaseBodyParameters = {
   // Whether the database should be moved to or from the trash. If not provided, the trash
   // status will not be updated.
   in_trash?: boolean
+  // Whether the database should be locked from editing in the Notion app UI. If not
+  // provided, the locked state will not be updated.
+  is_locked?: boolean
 }
 
 export type UpdateDatabaseParameters = UpdateDatabasePathParameters &
@@ -8729,6 +8718,7 @@ export const updateDatabase = {
     "icon",
     "cover",
     "in_trash",
+    "is_locked",
   ],
 
   path: (p: UpdateDatabasePathParameters): string =>
