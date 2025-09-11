@@ -130,6 +130,7 @@ class HTTPResponseError<
   readonly headers: SupportedResponse["headers"]
   readonly body: string
   readonly additional_data: AdditionalData | undefined
+  readonly request_id: string | undefined
 
   constructor(args: {
     code: Code
@@ -138,14 +139,17 @@ class HTTPResponseError<
     headers: SupportedResponse["headers"]
     rawBodyText: string
     additional_data: AdditionalData | undefined
+    request_id: string | undefined
   }) {
     super(args.message)
-    const { code, status, headers, rawBodyText, additional_data } = args
+    const { code, status, headers, rawBodyText, additional_data, request_id } =
+      args
     this.code = code
     this.status = status
     this.headers = headers
     this.body = rawBodyText
     this.additional_data = additional_data
+    this.request_id = request_id
   }
 }
 
@@ -199,6 +203,7 @@ export class UnknownHTTPResponseError extends HTTPResponseError<ClientErrorCode.
         args.message ??
         `Request to Notion API failed with status: ${args.status}`,
       additional_data: undefined,
+      request_id: undefined,
     })
   }
 
@@ -231,6 +236,7 @@ const apiErrorCodes: { [C in APIErrorCode]: true } = {
  */
 export class APIResponseError extends HTTPResponseError<APIErrorCode> {
   readonly name = "APIResponseError"
+  readonly request_id: string | undefined
 
   static isAPIResponseError(error: unknown): error is APIResponseError {
     return isNotionClientErrorWithCode(error, apiErrorCodes)
@@ -250,6 +256,7 @@ export function buildRequestError(
       status: response.status,
       rawBodyText: bodyText,
       additional_data: apiErrorResponseBody.additional_data,
+      request_id: apiErrorResponseBody.request_id,
     })
   }
   return new UnknownHTTPResponseError({
@@ -265,6 +272,7 @@ function parseAPIErrorResponseBody(body: string):
       code: APIErrorCode
       message: string
       additional_data: AdditionalData | undefined
+      request_id: string | undefined
     }
   | undefined {
   if (typeof body !== "string") {
@@ -286,11 +294,17 @@ function parseAPIErrorResponseBody(body: string):
     return
   }
 
+  const additional_data = parsed["additional_data"] as
+    | AdditionalData
+    | undefined
+  const request_id = parsed["request_id"] as string | undefined
+
   return {
     ...parsed,
     code: parsed["code"],
     message: parsed["message"],
-    additional_data: parsed["additional_data"] as AdditionalData | undefined,
+    additional_data,
+    request_id,
   }
 }
 

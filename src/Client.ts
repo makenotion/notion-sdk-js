@@ -178,7 +178,7 @@ export default class Client {
   /**
    * Sends a request.
    */
-  public async request<ResponseBody>(
+  public async request<ResponseBody extends object>(
     args: RequestParameters
   ): Promise<ResponseBody> {
     const { path, method, query, body, formDataParams, auth } = args
@@ -272,7 +272,13 @@ export default class Client {
       }
 
       const responseJson: ResponseBody = JSON.parse(responseText)
-      this.log(LogLevel.INFO, "request success", { method, path })
+      this.log(LogLevel.INFO, "request success", {
+        method,
+        path,
+        ...("request_id" in responseJson && responseJson.request_id
+          ? { requestId: responseJson.request_id }
+          : {}),
+      })
       return responseJson
     } catch (error: unknown) {
       if (!isNotionClientError(error)) {
@@ -283,6 +289,9 @@ export default class Client {
       this.log(LogLevel.WARN, "request fail", {
         code: error.code,
         message: error.message,
+        ...("request_id" in error && error.request_id
+          ? { requestId: error.request_id }
+          : {}),
       })
 
       if (isHTTPResponseError(error)) {
