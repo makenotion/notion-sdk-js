@@ -7216,6 +7216,14 @@ type GroupFilterOperatorArray = Array<
   | { and: PropertyOrTimestampFilterArray }
 >
 
+type ParentOfDataSourceRequest = {
+  // Always `database_id`
+  type?: "database_id"
+  // The ID of the parent database (with or without dashes), for example,
+  // 195de9221179449fab8075a27c979105
+  database_id: IdRequest
+}
+
 type NumberPropertyConfigurationRequest = {
   // Always `number`
   type?: "number"
@@ -8583,23 +8591,8 @@ export const queryDataSource = {
 } as const
 
 type CreateDataSourceBodyParameters = {
-  // An object containing information about where the new database is inserted. Can be a
-  // page (page_id) or another database (database_id).
-  parent:
-    | {
-        // The ID of the parent page (with or without dashes), for example,
-        // 195de9221179449fab8075a27c979105
-        page_id: IdRequest
-        // Always `page_id`
-        type?: "page_id"
-      }
-    | {
-        // The ID of the parent database (with or without dashes), for example,
-        // 195de9221179449fab8075a27c979105
-        database_id: IdRequest
-        // Always `database_id`
-        type?: "database_id"
-      }
+  // An object specifying the parent of the new data source to be created.
+  parent: ParentOfDataSourceRequest
   // Property schema of data source.
   properties: Record<string, PropertyConfigurationRequest>
   // Title of data source as it appears in Notion.
