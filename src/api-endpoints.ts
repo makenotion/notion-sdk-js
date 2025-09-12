@@ -8503,6 +8503,9 @@ type UpdateDataSourceBodyParameters = {
   // Whether the database should be moved to or from the trash. If not provided, the trash
   // status will not be updated. Equivalent to `in_trash`.
   archived?: boolean
+  // The parent of the data source, when moving it to a different database. If not
+  // provided, the parent will not be updated.
+  parent?: ParentOfDataSourceRequest
 }
 
 export type UpdateDataSourceParameters = UpdateDataSourcePathParameters &
@@ -8519,7 +8522,7 @@ export const updateDataSource = {
   method: "patch",
   pathParams: ["data_source_id"],
   queryParams: [],
-  bodyParams: ["title", "icon", "properties", "in_trash", "archived"],
+  bodyParams: ["title", "icon", "properties", "in_trash", "archived", "parent"],
 
   path: (p: UpdateDataSourcePathParameters): string =>
     `data_sources/${p.data_source_id}`,
