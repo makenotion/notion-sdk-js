@@ -2,8 +2,8 @@ name: Publish Package
 
 on:
   push:
-    tags:
-      - "v*"
+    branches:
+      - main
   workflow_dispatch: {}
 
 permissions:
@@ -25,6 +25,16 @@ jobs:
       - name: Update npm
         run: npm install -g npm@latest
       - run: npm ci
-      - run: npm run build --if-present
-      - run: npm test
-      - run: npm publish
+      - run: npm run build
+      - run: npm run lint
+      - run: npm run test
+      - run: npm publish --ignore-scripts
+      - run: |
+          PACKAGE_NAME=$(jq -r '.name' package.json)
+          PACKAGE_VERSION=$(jq -r '.version' package.json)
+          if npm view "$PACKAGE_NAME" versions | grep -q "$PACKAGE_VERSION"; then
+            echo "Package $PACKAGE_NAME@$PACKAGE_VERSION already exists. Skipping publish."
+          else
+            echo "Publishing $PACKAGE_NAME@$PACKAGE_VERSION..."
+            npm publish
+          fi
