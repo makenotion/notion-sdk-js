@@ -28,7 +28,6 @@ jobs:
       - run: npm run build
       - run: npm run lint
       - run: npm run test
-      - run: npm publish --ignore-scripts
       - run: |
           PACKAGE_NAME=$(jq -r '.name' package.json)
           PACKAGE_VERSION=$(jq -r '.version' package.json)
@@ -36,5 +35,5 @@ jobs:
             echo "Package $PACKAGE_NAME@$PACKAGE_VERSION already exists. Skipping publish."
           else
             echo "Publishing $PACKAGE_NAME@$PACKAGE_VERSION..."
-            npm publish
+            npm publish --ignore-scripts
           fi
