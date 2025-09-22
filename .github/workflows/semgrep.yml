@@ -3,8 +3,6 @@ name: Security - Semgrep
 on:
   pull_request: {}
   workflow_dispatch: {}
-  push:
-    branches-ignore: ["main"]
   schedule:
     - cron: "20 17 * * *"
 
@@ -16,7 +14,8 @@ jobs:
       image: returntocorp/semgrep
     timeout-minutes: 480
     steps:
-      - uses: actions/checkout@v3
+      # v5.0.0
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
       - run: semgrep ci
         env:
           SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP }}
