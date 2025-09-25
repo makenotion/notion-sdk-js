@@ -851,13 +851,9 @@ export type DataSourceObjectResponse = {
   description: Array<RichTextItemResponse>
   // The parent of the data source.
   parent: ParentOfDataSourceResponse
-  // The parent of the data source's containing database.
-  database_parent:
-    | PageIdParentForBlockBasedObjectResponse
-    | WorkspaceParentForBlockBasedObjectResponse
-    | DatabaseParentResponse
-    | BlockIdParentForBlockBasedObjectResponse
-    | DataSourceParentResponse
+  // The parent of the data source's containing database. This is typically a page, block,
+  // or workspace, but can be another database in the case of wikis.
+  database_parent: ParentOfDatabaseResponse
   // Whether the data source is inline.
   is_inline: boolean
   // Whether the data source is archived.
@@ -1910,6 +1906,12 @@ export type RichTextItemResponseCommon = {
   annotations: AnnotationResponse
 }
 
+type ParentOfDatabaseResponse =
+  | PageIdParentForBlockBasedObjectResponse
+  | WorkspaceParentForBlockBasedObjectResponse
+  | DatabaseParentResponse
+  | BlockIdParentForBlockBasedObjectResponse
+
 export type PartialCommentObjectResponse = {
   // The comment object type name.
   object: "comment"
@@ -2042,12 +2044,9 @@ export type DatabaseObjectResponse = {
   title: Array<RichTextItemResponse>
   // The description of the database.
   description: Array<RichTextItemResponse>
-  // The parent of the database.
-  parent:
-    | PageIdParentForBlockBasedObjectResponse
-    | WorkspaceParentForBlockBasedObjectResponse
-    | DatabaseParentResponse
-    | BlockIdParentForBlockBasedObjectResponse
+  // The parent of the database. This is typically a page, block, or workspace, but can be
+  // another database in the case of wikis.
+  parent: ParentOfDatabaseResponse
   // Whether the database is inline.
   is_inline: boolean
   // Whether the database is in the trash.
