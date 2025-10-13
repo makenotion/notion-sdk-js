@@ -58,13 +58,15 @@ type BotInfoResponse = {
         // means the bot is for an internal integration.
         workspace: true
       }
-  // The name of the bot's workspace.
-  workspace_name: string | null
+  // The ID of the bot's workspace.
+  workspace_id: string
   // Limits and restrictions that apply to the bot's workspace
   workspace_limits: {
     // The maximum allowable size of a file upload, in bytes
     max_file_upload_size_in_bytes: number
   }
+  // The name of the bot's workspace.
+  workspace_name: string | null
 }
 
 export type BotUserObjectResponse = {
@@ -309,7 +311,7 @@ export type MentionRichTextItemResponse = {
         // Always `user`
         type: "user"
         // Details of the user mention.
-        user: PartialUserObjectResponse | UserObjectResponse
+        user: UserValueResponse
       }
     | {
         // Always `date`
@@ -1896,6 +1898,8 @@ export type UserObjectResponseCommon = {
   avatar_url: string | null
 }
 
+type UserValueResponse = PartialUserObjectResponse | UserObjectResponse
+
 export type RichTextItemResponseCommon = {
   // The plain text content of the rich text object, without any styling.
   plain_text: string
@@ -3446,6 +3450,10 @@ type CreatePageBodyParameters = {
   cover?: PageCoverRequest | null
   content?: Array<BlockObjectRequest>
   children?: Array<BlockObjectRequest>
+  template?:
+    | { type: "none" }
+    | { type: "default" }
+    | { type: "template_id"; template_id: IdRequest }
 }
 
 export type CreatePageParameters = CreatePageBodyParameters
@@ -3459,7 +3467,15 @@ export const createPage = {
   method: "post",
   pathParams: [],
   queryParams: [],
-  bodyParams: ["parent", "properties", "icon", "cover", "content", "children"],
+  bodyParams: [
+    "parent",
+    "properties",
+    "icon",
+    "cover",
+    "content",
+    "children",
+    "template",
+  ],
 
   path: (): string => `pages`,
 } as const
@@ -4235,6 +4251,10 @@ type QueryDataSourceBodyParameters = {
   page_size?: number
   archived?: boolean
   in_trash?: boolean
+  // Optionally filter the results to only include pages or data sources. Regular, non-wiki
+  // databases only support page children. The default behavior is no result type
+  // filtering, in other words, returning both pages and data sources for wikis.
+  result_type?: "page" | "data_source"
 }
 
 export type QueryDataSourceParameters = QueryDataSourcePathParameters &
@@ -4269,6 +4289,7 @@ export const queryDataSource = {
     "page_size",
     "archived",
     "in_trash",
+    "result_type",
   ],
 
   path: (p: QueryDataSourcePathParameters): string =>
@@ -4880,4 +4901,37 @@ export const oauthIntrospect = {
   bodyParams: ["token"],
 
   path: (): string => `oauth/introspect`,
+} as const
+
+type ListDataSourceTemplatesPathParameters = {
+  // ID of a Notion data source.
+  data_source_id: IdRequest
+}
+
+export type ListDataSourceTemplatesParameters =
+  ListDataSourceTemplatesPathParameters
+
+export type ListDataSourceTemplatesResponse = {
+  // Array of templates available in this data source.
+  templates: Array<{
+    // ID of the template page.
+    id: IdResponse
+    // Name of the template.
+    name: string
+    // Whether this template is the default template for the data source.
+    is_default: boolean
+  }>
+}
+
+/**
+ * List templates in a data source
+ */
+export const listDataSourceTemplates = {
+  method: "get",
+  pathParams: ["data_source_id"],
+  queryParams: [],
+  bodyParams: [],
+
+  path: (p: ListDataSourceTemplatesPathParameters): string =>
+    `data_sources/${p.data_source_id}/templates`,
 } as const
