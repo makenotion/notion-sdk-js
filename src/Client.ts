@@ -106,6 +106,9 @@ import {
   UpdateDatabaseParameters,
   UpdateDatabaseResponse,
   updateDatabase,
+  listDataSourceTemplates,
+  ListDataSourceTemplatesResponse,
+  ListDataSourceTemplatesParameters,
 } from "./api-endpoints"
 import {
   version as PACKAGE_VERSION,
@@ -491,6 +494,21 @@ export default class Client {
         method: updateDataSource.method,
         query: pick(args, updateDataSource.queryParams),
         body: pick(args, updateDataSource.bodyParams),
+        auth: args?.auth,
+      })
+    },
+
+    /**
+     * List page templates that are available for a data source
+     */
+    listTemplates: (
+      args: WithAuth<ListDataSourceTemplatesParameters>
+    ): Promise<ListDataSourceTemplatesResponse> => {
+      return this.request<ListDataSourceTemplatesResponse>({
+        path: listDataSourceTemplates.path(args),
+        method: listDataSourceTemplates.method,
+        query: pick(args, listDataSourceTemplates.queryParams),
+        body: pick(args, listDataSourceTemplates.bodyParams),
         auth: args?.auth,
       })
     },
