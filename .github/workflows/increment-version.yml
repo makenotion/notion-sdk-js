@@ -15,6 +15,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
 
 jobs:
   increment-version:
@@ -45,10 +46,22 @@ jobs:
       - name: Update package-lock.json
         run: npm install
 
-      - name: Commit and push changes
+      - name: Create branch and commit changes
         run: |
+          BRANCH_NAME="version-bump-v${NEW_VERSION}"
+          git checkout -b "$BRANCH_NAME"
           git add package.json package-lock.json
           git commit -m "Bump version to v${NEW_VERSION}"
-          git tag -a "v${NEW_VERSION}" -m "v${NEW_VERSION}"
-          git push origin main
-          git push origin "v${NEW_VERSION}"
+          git push origin "$BRANCH_NAME"
+          echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
+
+      - name: Create pull request
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr create \
+            --title "Bump version to v${NEW_VERSION}" \
+            --body "This PR bumps the version to v${NEW_VERSION} using npm version ${{ github.event.inputs.version_type }}." \
+            --base main \
+            --head "${BRANCH_NAME}" \
+            --assignee "${{ github.actor }}"

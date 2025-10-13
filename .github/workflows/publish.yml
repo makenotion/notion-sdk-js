@@ -8,7 +8,7 @@ on:
 
 permissions:
   id-token: write # Required for OIDC
-  contents: read
+  contents: write # Required to create and push tags
 
 jobs:
   publish:
@@ -30,7 +30,8 @@ jobs:
       - run: npm run build
       - run: npm run lint
       - run: npm run test
-      - run: |
+      - name: Publish to npm
+        run: |
           PACKAGE_NAME=$(jq -r '.name' package.json)
           PACKAGE_VERSION=$(jq -r '.version' package.json)
           if npm view "$PACKAGE_NAME" versions | grep -q "$PACKAGE_VERSION"; then
@@ -39,3 +40,12 @@ jobs:
             echo "Publishing $PACKAGE_NAME@$PACKAGE_VERSION..."
             npm publish --ignore-scripts
           fi
+
+      - name: Create and push tag
+        if: github.event_name == 'push' && contains(github.event.head_commit.message, 'Bump version to')
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          VERSION=$(jq -r '.version' package.json)
+          git tag -a "v${VERSION}" -m "v${VERSION}"
+          git push origin "v${VERSION}"
