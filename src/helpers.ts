@@ -98,6 +98,8 @@ type DataSourceTemplate = ListDataSourceTemplatesResponse["templates"][number]
 
 interface ListDataSourceTemplatesArgs extends PaginatedArgs {
   data_source_id: string
+  name?: string
+  page_size?: number
 }
 
 /**
