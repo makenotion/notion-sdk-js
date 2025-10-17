@@ -4917,8 +4917,18 @@ type ListDataSourceTemplatesPathParameters = {
   data_source_id: IdRequest
 }
 
+type ListDataSourceTemplatesQueryParameters = {
+  // Filter templates by name (case-insensitive substring match).
+  name?: string
+  // If supplied, this endpoint will return a page of results starting after the cursor
+  // provided. If not supplied, this endpoint will return the first page of results.
+  start_cursor?: string
+  // The number of items from the full list desired in the response. Maximum: 100
+  page_size?: number
+}
+
 export type ListDataSourceTemplatesParameters =
-  ListDataSourceTemplatesPathParameters
+  ListDataSourceTemplatesPathParameters & ListDataSourceTemplatesQueryParameters
 
 export type ListDataSourceTemplatesResponse = {
   // Array of templates available in this data source.
@@ -4930,6 +4940,10 @@ export type ListDataSourceTemplatesResponse = {
     // Whether this template is the default template for the data source.
     is_default: boolean
   }>
+  // Whether there are more templates available beyond this page.
+  has_more: boolean
+  // Cursor to use for the next page of results. Null if there are no more results.
+  next_cursor: IdResponse | null
 }
 
 /**
@@ -4938,7 +4952,7 @@ export type ListDataSourceTemplatesResponse = {
 export const listDataSourceTemplates = {
   method: "get",
   pathParams: ["data_source_id"],
-  queryParams: [],
+  queryParams: ["name", "start_cursor", "page_size"],
   bodyParams: [],
 
   path: (p: ListDataSourceTemplatesPathParameters): string =>
