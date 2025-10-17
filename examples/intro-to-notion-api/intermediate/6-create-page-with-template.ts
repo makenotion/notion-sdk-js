@@ -281,7 +281,9 @@ async function main() {
   if (templates.length > 0) {
     for (const template of templates) {
       console.log(
-        `- ${template.name} (ID: ${template.id})${template.is_default ? " [DEFAULT]" : ""}`
+        `- ${template.name} (ID: ${template.id})${
+          template.is_default ? " [DEFAULT]" : ""
+        }`
       )
     }
   }
