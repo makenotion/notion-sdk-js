@@ -3588,6 +3588,13 @@ type UpdatePageBodyParameters = {
   // Whether the page should be locked from editing in the Notion app UI. If not provided,
   // the locked state will not be updated.
   is_locked?: boolean
+  template?:
+    | { type: "default" }
+    | { type: "template_id"; template_id: IdRequest }
+  // Whether to erase all existing content from the page. When used with a template, the
+  // template content replaces the existing content. When used without a template, simply
+  // clears the page content.
+  erase_content?: boolean
   archived?: boolean
   in_trash?: boolean
 }
@@ -3609,6 +3616,8 @@ export const updatePage = {
     "icon",
     "cover",
     "is_locked",
+    "template",
+    "erase_content",
     "archived",
     "in_trash",
   ],
