@@ -168,6 +168,8 @@ export {
 export {
   collectPaginatedAPI,
   iteratePaginatedAPI,
+  collectDataSourceTemplates,
+  iterateDataSourceTemplates,
   isFullBlock,
   isFullDataSource,
   isFullDatabase,

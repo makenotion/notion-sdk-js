@@ -4,6 +4,7 @@ import {
   DatabaseObjectResponse,
   DataSourceObjectResponse,
   EquationRichTextItemResponse,
+  ListDataSourceTemplatesResponse,
   MentionRichTextItemResponse,
   PageObjectResponse,
   PartialBlockObjectResponse,
@@ -17,12 +18,13 @@ import {
   TextRichTextItemResponse,
   UserObjectResponse,
 } from "./api-endpoints"
+import type Client from "./Client"
 
 interface PaginatedArgs {
   start_cursor?: string
 }
 
-interface PaginatedList<T> {
+type PaginatedList<T> = {
   object: "list"
   results: T[]
   next_cursor: string | null
@@ -88,6 +90,70 @@ export async function collectPaginatedAPI<Args extends PaginatedArgs, Item>(
   const results: Item[] = []
   for await (const item of iteratePaginatedAPI(listFn, firstPageArgs)) {
     results.push(item)
+  }
+  return results
+}
+
+type DataSourceTemplate = ListDataSourceTemplatesResponse["templates"][number]
+
+interface ListDataSourceTemplatesArgs extends PaginatedArgs {
+  data_source_id: string
+}
+
+/**
+ * Returns an async iterator over data source templates.
+ *
+ * Example (given a notion Client called `notion`):
+ *
+ * ```
+ * for await (const template of iterateDataSourceTemplates(notion, {
+ *   data_source_id: dataSourceId,
+ * })) {
+ *   console.log(template.name, template.is_default)
+ * }
+ * ```
+ *
+ * @param client A Notion client instance.
+ * @param args Arguments including the data_source_id and optional start_cursor.
+ */
+export async function* iterateDataSourceTemplates(
+  client: Client,
+  args: ListDataSourceTemplatesArgs
+): AsyncIterableIterator<DataSourceTemplate> {
+  let nextCursor: string | null | undefined = args.start_cursor
+  do {
+    const response: ListDataSourceTemplatesResponse =
+      await client.dataSources.listTemplates({
+        ...args,
+        start_cursor: nextCursor,
+      })
+    yield* response.templates
+    nextCursor = response.next_cursor
+  } while (nextCursor)
+}
+
+/**
+ * Collect all data source templates into an in-memory array.
+ *
+ * Example (given a notion Client called `notion`):
+ *
+ * ```
+ * const templates = await collectDataSourceTemplates(notion, {
+ *   data_source_id: dataSourceId,
+ * })
+ * // Do something with templates.
+ * ```
+ *
+ * @param client A Notion client instance.
+ * @param args Arguments including the data_source_id and optional start_cursor.
+ */
+export async function collectDataSourceTemplates(
+  client: Client,
+  args: ListDataSourceTemplatesArgs
+): Promise<DataSourceTemplate[]> {
+  const results: DataSourceTemplate[] = []
+  for await (const template of iterateDataSourceTemplates(client, args)) {
+    results.push(template)
   }
   return results
 }
