@@ -27,6 +27,7 @@ In case you are looking for example code for a specific task, the files are divi
 - `intermediate/3-query-database.ts`: Create a new database, add pages to it, and filter the database entries (pages).
 - `intermediate/4-sort-database.ts`: Create a new database, add pages to it, and filter/sort the database entries (pages).
 - `intermediate/5-upload-file.ts`: Upload a file to Notion and attach it to a page as an image block.
+- `intermediate/6-create-page-with-template.ts`: Create a database, list its templates, and create pages using templates.
 
 ## Running locally
 
