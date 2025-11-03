@@ -100,8 +100,7 @@ async function getTasksFromNotionDatabase(): Promise<Array<TaskResult>> {
   for (const page of pages) {
     const pageId = page.id
 
-    // Filter out data source responses and partial pages
-    if (page.object !== "page" || !isFullPage(page)) {
+    if (!isFullPage(page)) {
       console.error(`Page ${pageId} is not a full page.`)
       continue
     }
