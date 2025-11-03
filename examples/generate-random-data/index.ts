@@ -228,6 +228,13 @@ function extractPropertyItemValueToString(
       }`
     case "verification":
       return property.verification?.state ?? ""
+    case "place":
+      if (!property.place) {
+        return ""
+      }
+      return (
+        property.place.name ?? `${property.place.lat}, ${property.place.lon}`
+      )
   }
   return assertUnreachable(property)
 }
