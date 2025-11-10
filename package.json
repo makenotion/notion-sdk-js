@@ -22,7 +22,7 @@
   "main": "./build/src",
   "types": "./build/src/index.d.ts",
   "scripts": {
-    "prepare": "npm run build",
+    "prepare": "husky",
     "prepublishOnly": "npm run checkLoggedIn && npm run lint && npm run test",
     "build": "tsc",
     "prettier": "prettier --write .",
@@ -36,6 +36,10 @@
     "examples:install": "npm run install:examples",
     "examples:typecheck": "for dir in examples/*/; do echo \"Typechecking $dir...\"; (cd \"$dir\" && npx tsc --noEmit) || exit 1; done"
   },
+  "lint-staged": {
+    "*.{ts,js,json,md}": "prettier --write",
+    "*.ts": "eslint --fix"
+  },
   "author": "",
   "license": "MIT",
   "files": [
@@ -48,7 +52,9 @@
     "@typescript-eslint/parser": "5.39.0",
     "cspell": "5.4.1",
     "eslint": "7.24.0",
+    "husky": "^9.1.7",
     "jest": "28.1.2",
+    "lint-staged": "^16.2.6",
     "markdown-link-check": "3.13.7",
     "prettier": "2.8.8",
     "ts-jest": "28.0.5",
