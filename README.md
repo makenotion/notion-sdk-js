@@ -300,13 +300,7 @@ Another customization you can make is to pass your own `fetch` function to the `
 
 ## Examples
 
-This repository includes several example projects in the `examples/` directory. To install dependencies for all examples at once, run from the root directory:
-
-```bash
-npm run examples:install
-# or
-npm run install:examples
-```
+For sample code and example projects, see [notion-cookbook](https://github.com/makenotion/notion-cookbook/tree/main/examples).
 
 ## Requirements and compatibility
 
