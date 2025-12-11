@@ -90,6 +90,8 @@ export type {
   ListUsersParameters,
   ListUsersResponse,
   MentionRichTextItemResponse,
+  MovePageParameters,
+  MovePageResponse,
   MultiSelectPropertyItemObjectResponse,
   NumberedListItemBlockObjectResponse,
   NumberPropertyItemObjectResponse,

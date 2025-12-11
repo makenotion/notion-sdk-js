@@ -49,6 +49,9 @@ import {
   type UpdatePageParameters,
   type UpdatePageResponse,
   updatePage,
+  type MovePageParameters,
+  type MovePageResponse,
+  movePage,
   type GetUserParameters,
   type GetUserResponse,
   getUser,
@@ -554,6 +557,19 @@ export default class Client {
         method: updatePage.method,
         query: pick(args, updatePage.queryParams),
         body: pick(args, updatePage.bodyParams),
+        auth: args?.auth,
+      })
+    },
+
+    /**
+     * Move a page
+     */
+    move: (args: WithAuth<MovePageParameters>): Promise<MovePageResponse> => {
+      return this.request<MovePageResponse>({
+        path: movePage.path(args),
+        method: movePage.method,
+        query: pick(args, movePage.queryParams),
+        body: pick(args, movePage.bodyParams),
         auth: args?.auth,
       })
     },
