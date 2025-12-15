@@ -23,6 +23,8 @@ jobs:
       matrix:
         node-version: [18.x, 19.x, 20.x, 22.x]
 
+    permissions: {}
+
     steps:
       # v6.0.2
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
