@@ -1,6 +1,6 @@
 {
   "name": "@notionhq/client",
-  "version": "5.5.0",
+  "version": "5.6.0",
   "description": "A simple and easy to use client for the Notion API",
   "engines": {
     "node": ">=18"
