@@ -26,13 +26,13 @@ const { Client } = require("@notionhq/client")
 // Initializing a client
 const notion = new Client({
   auth: process.env.NOTION_TOKEN,
-})
+});
 ```
 
 Make a request to any Notion API endpoint.
 
 ```js
-;(async () => {
+(async () => {
   const listUsersResponse = await notion.users.list({})
 })()
 ```
