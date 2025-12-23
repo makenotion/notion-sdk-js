@@ -25,6 +25,7 @@ jobs:
       - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          persist-credentials: false
 
       # v5.0.0
       - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
@@ -39,9 +40,11 @@ jobs:
 
       - name: Bump version
         run: |
-          npm version ${{ github.event.inputs.version_type }} --no-git-tag-version
+          npm version ${GITHUB_EVENT_INPUTS_VERSION_TYPE} --no-git-tag-version
           NEW_VERSION=$(node -p "require('./package.json').version")
           echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
+        env:
+          GITHUB_EVENT_INPUTS_VERSION_TYPE: ${{ github.event.inputs.version_type }}
 
       - name: Update package-lock.json
         run: npm install
@@ -58,10 +61,11 @@ jobs:
       - name: Create pull request
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_EVENT_INPUTS_VERSION_TYPE: ${{ github.event.inputs.version_type }}
         run: |
           gh pr create \
             --title "Bump version to v${NEW_VERSION}" \
-            --body "This PR bumps the version to v${NEW_VERSION} using npm version ${{ github.event.inputs.version_type }}." \
+            --body "This PR bumps the version to v${NEW_VERSION} using npm version ${GITHUB_EVENT_INPUTS_VERSION_TYPE}." \
             --base main \
             --head "${BRANCH_NAME}" \
-            --assignee "${{ github.actor }}"
+            --assignee "${GITHUB_ACTOR}"
