@@ -30,6 +30,7 @@ jobs:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
         with:
           ref: ${{ github.event.inputs.ref || github.ref }}
+          persist-credentials: false
       - name: Use Node.js ${{ matrix.node-version }}
         # v5.0.0
         uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
