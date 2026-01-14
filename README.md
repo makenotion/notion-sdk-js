@@ -320,6 +320,14 @@ In some cases, due to backwards-incompatible changes across [Notion API versions
 
 In these cases, we recommend upgrading your Notion API version header using the `Client()` constructor across all of your requests before upgrading to a newer version of the SDK.
 
+## Contributing
+
+While we value open-source contributions to this SDK, most of the client code is generated programmatically from the Notion API specification. Additions made directly to `src/api-endpoints.ts` or other generated code would be overwritten upon the next release.
+
+If you'd like to contribute a feature or fix to the SDK's core functionality, we suggest opening an issue first to discuss it with us. This helps ensure your effort aligns with how the SDK is maintained.
+
+However, contributions to documentation (including this README), examples, and bug reports are always welcome and greatly appreciated!
+
 ## Getting help
 
 If you want to submit a feature request for Notion's API, or are experiencing any issues with the API platform, please email us at `developers@makenotion.com`.
