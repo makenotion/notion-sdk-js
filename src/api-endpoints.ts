@@ -3669,6 +3669,10 @@ type CreatePageBodyParameters = {
     | { type: "none" }
     | { type: "default" }
     | { type: "template_id"; template_id: IdRequest }
+  position?:
+    | { type: "after_block"; after_block: { id: IdRequest } }
+    | { type: "page_start" }
+    | { type: "page_end" }
 }
 
 export type CreatePageParameters = CreatePageBodyParameters
@@ -3690,6 +3694,7 @@ export const createPage = {
     "content",
     "children",
     "template",
+    "position",
   ],
 
   path: (): string => `pages`,
