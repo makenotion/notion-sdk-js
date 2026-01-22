@@ -919,6 +919,11 @@ type CommentParentResponse =
   | PageIdCommentParentResponse
   | BlockIdCommentParentResponse
 
+type ContentPositionSchema =
+  | { type: "after_block"; after_block: { id: IdRequest } }
+  | { type: "start" }
+  | { type: "end" }
+
 type ContentWithExpressionRequest = { expression: string }
 
 type ContentWithRichTextAndColorRequest = {
@@ -2313,6 +2318,11 @@ export type PageObjectResponse = {
   last_edited_by: PartialUserObjectResponse
 }
 
+type PagePositionSchema =
+  | { type: "after_block"; after_block: { id: IdRequest } }
+  | { type: "page_start" }
+  | { type: "page_end" }
+
 type PagePropertyValueWithIdResponse = IdObjectResponse &
   (SimpleOrArrayPropertyValueResponse | PartialRollupPropertyResponse)
 
@@ -3669,10 +3679,7 @@ type CreatePageBodyParameters = {
     | { type: "none" }
     | { type: "default" }
     | { type: "template_id"; template_id: IdRequest }
-  position?:
-    | { type: "after_block"; after_block: { id: IdRequest } }
-    | { type: "page_start" }
-    | { type: "page_end" }
+  position?: PagePositionSchema
 }
 
 export type CreatePageParameters = CreatePageBodyParameters
@@ -4219,6 +4226,7 @@ type AppendBlockChildrenPathParameters = {
 type AppendBlockChildrenBodyParameters = {
   children: Array<BlockObjectRequest>
   after?: IdRequest
+  position?: ContentPositionSchema
 }
 
 export type AppendBlockChildrenParameters = AppendBlockChildrenPathParameters &
@@ -4240,7 +4248,7 @@ export const appendBlockChildren = {
   method: "patch",
   pathParams: ["block_id"],
   queryParams: [],
-  bodyParams: ["children", "after"],
+  bodyParams: ["children", "after", "position"],
 
   path: (p: AppendBlockChildrenPathParameters): string =>
     `blocks/${p.block_id}/children`,
