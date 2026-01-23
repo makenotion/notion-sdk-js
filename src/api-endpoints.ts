@@ -936,6 +936,14 @@ type ContentWithRichTextAndColorResponse = {
   color: ApiColor
 }
 
+type NumberedListFormat = "numbers" | "letters" | "roman"
+
+type ContentWithRichTextAndColorAndListResponse =
+  ContentWithRichTextAndColorResponse & {
+    list_start_index?: number
+    list_format?: NumberedListFormat
+  }
+
 type ContentWithRichTextRequest = { rich_text: Array<RichTextItemRequest> }
 
 type ContentWithSingleLevelOfChildrenRequest = {
@@ -2243,7 +2251,7 @@ type NumberSimplePropertyValueResponse = {
 
 export type NumberedListItemBlockObjectResponse = {
   type: "numbered_list_item"
-  numbered_list_item: ContentWithRichTextAndColorResponse
+  numbered_list_item: ContentWithRichTextAndColorAndListResponse
   parent: ParentForBlockBasedObjectResponse
   object: "block"
   id: string
