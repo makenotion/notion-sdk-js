@@ -25,6 +25,7 @@ export enum APIErrorCode {
 export enum ClientErrorCode {
   RequestTimeout = "notionhq_client_request_timeout",
   ResponseError = "notionhq_client_response_error",
+  InvalidPathParameter = "notionhq_client_invalid_path_parameter",
 }
 
 /**
@@ -48,6 +49,7 @@ export type NotionClientError =
   | RequestTimeoutError
   | UnknownHTTPResponseError
   | APIResponseError
+  | InvalidPathParameterError
 
 // Assert that NotionClientError's `code` property is a narrow type.
 // This prevents us from accidentally regressing to `string`-typed name field.
@@ -56,7 +58,10 @@ type _assertCodeIsNarrow = Assert<NotionErrorCode, NotionClientError["code"]>
 // Assert that the type of `name` in NotionErrorCode is a narrow type.
 // This prevents us from accidentally regressing to `string`-typed name field.
 type _assertNameIsNarrow = Assert<
-  "RequestTimeoutError" | "UnknownHTTPResponseError" | "APIResponseError",
+  | "RequestTimeoutError"
+  | "UnknownHTTPResponseError"
+  | "APIResponseError"
+  | "InvalidPathParameterError",
   NotionClientError["name"]
 >
 
@@ -114,6 +119,60 @@ export class RequestTimeoutError extends NotionClientErrorBase<ClientErrorCode.R
         .catch(reject)
         .then(() => clearTimeout(timeoutId))
     })
+  }
+}
+
+/**
+ * Error thrown when a path parameter contains invalid characters such as
+ * path traversal sequences (..) that could alter the intended API endpoint.
+ */
+export class InvalidPathParameterError extends NotionClientErrorBase<ClientErrorCode.InvalidPathParameter> {
+  readonly code = ClientErrorCode.InvalidPathParameter
+  readonly name = "InvalidPathParameterError"
+
+  constructor(
+    message = "Path parameter contains invalid characters that could alter the request path"
+  ) {
+    super(message)
+  }
+
+  static isInvalidPathParameterError(
+    error: unknown
+  ): error is InvalidPathParameterError {
+    return isNotionClientErrorWithCode(error, {
+      [ClientErrorCode.InvalidPathParameter]: true,
+    })
+  }
+}
+
+/**
+ * Validates that a request path does not contain path traversal sequences.
+ * Throws InvalidPathParameterError if the path contains ".." segments,
+ * including URL-encoded variants like %2e%2e.
+ */
+export function validateRequestPath(path: string): void {
+  // Check for literal path traversal
+  if (path.includes("..")) {
+    throw new InvalidPathParameterError(
+      `Request path "${path}" contains path traversal sequence ".."`
+    )
+  }
+
+  // Check for URL-encoded path traversal (%2e = '.')
+  // Only decode if path contains potential encoded dots
+  if (/%2e/i.test(path)) {
+    let decoded: string
+    try {
+      decoded = decodeURIComponent(path)
+    } catch {
+      // Invalid percent encoding - not a traversal concern
+      return
+    }
+    if (decoded.includes("..")) {
+      throw new InvalidPathParameterError(
+        `Request path "${path}" contains encoded path traversal sequence`
+      )
+    }
   }
 }
 
