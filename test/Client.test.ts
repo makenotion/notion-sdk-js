@@ -1,5 +1,5 @@
 import assert = require("assert")
-import { APIResponseError, Client } from "../src"
+import { APIResponseError, Client, InvalidPathParameterError } from "../src"
 
 describe("Notion SDK Client", () => {
   it("Constructs without throwing", () => {
@@ -178,6 +178,158 @@ describe("Notion SDK Client", () => {
           child_data_source_ids: ["456", "789"],
           minimum_api_version: "2025-09-03",
         })
+      }
+    })
+  })
+
+  describe("path traversal prevention", () => {
+    let mockFetch: jest.MockedFn<typeof fetch>
+    let notion: Client
+
+    beforeEach(() => {
+      mockFetch = jest.fn()
+      mockFetch.mockResolvedValue({
+        ok: true,
+        text: () => Promise.resolve("{}"),
+        headers: new Headers(),
+        status: 200,
+      } as Response)
+
+      notion = new Client({ fetch: mockFetch })
+    })
+
+    it("rejects block_id containing path traversal", async () => {
+      await expect(
+        notion.blocks.retrieve({
+          block_id: "../databases/9f96555b-cf98-4889-83b0-bd6bbe53911e",
+        })
+      ).rejects.toThrow(InvalidPathParameterError)
+
+      expect(mockFetch).not.toHaveBeenCalled()
+    })
+
+    it("rejects page_id containing path traversal", async () => {
+      await expect(
+        notion.pages.retrieve({
+          page_id: "../blocks/9f96555b-cf98-4889-83b0-bd6bbe53911e",
+        })
+      ).rejects.toThrow(InvalidPathParameterError)
+
+      expect(mockFetch).not.toHaveBeenCalled()
+    })
+
+    it("rejects database_id containing path traversal", async () => {
+      await expect(
+        notion.databases.retrieve({
+          database_id: "../pages/9f96555b-cf98-4889-83b0-bd6bbe53911e",
+        })
+      ).rejects.toThrow(InvalidPathParameterError)
+
+      expect(mockFetch).not.toHaveBeenCalled()
+    })
+
+    it("rejects user_id containing path traversal", async () => {
+      await expect(
+        notion.users.retrieve({
+          user_id: "../blocks/9f96555b-cf98-4889-83b0-bd6bbe53911e",
+        })
+      ).rejects.toThrow(InvalidPathParameterError)
+
+      expect(mockFetch).not.toHaveBeenCalled()
+    })
+
+    it("rejects data_source_id containing path traversal", async () => {
+      await expect(
+        notion.dataSources.retrieve({
+          data_source_id: "../pages/9f96555b-cf98-4889-83b0-bd6bbe53911e",
+        })
+      ).rejects.toThrow(InvalidPathParameterError)
+
+      expect(mockFetch).not.toHaveBeenCalled()
+    })
+
+    it("rejects comment_id containing path traversal", async () => {
+      await expect(
+        notion.comments.retrieve({
+          comment_id: "../blocks/9f96555b-cf98-4889-83b0-bd6bbe53911e",
+        })
+      ).rejects.toThrow(InvalidPathParameterError)
+
+      expect(mockFetch).not.toHaveBeenCalled()
+    })
+
+    it("rejects file_upload_id containing path traversal", async () => {
+      await expect(
+        notion.fileUploads.retrieve({
+          file_upload_id: "../pages/9f96555b-cf98-4889-83b0-bd6bbe53911e",
+        })
+      ).rejects.toThrow(InvalidPathParameterError)
+
+      expect(mockFetch).not.toHaveBeenCalled()
+    })
+
+    it("rejects paths with .. in the middle", async () => {
+      await expect(
+        notion.blocks.retrieve({
+          block_id: "foo/../bar",
+        })
+      ).rejects.toThrow(InvalidPathParameterError)
+
+      expect(mockFetch).not.toHaveBeenCalled()
+    })
+
+    it("rejects URL-encoded path traversal (%2e%2e)", async () => {
+      await expect(
+        notion.blocks.retrieve({
+          block_id: "%2e%2e/databases/xyz",
+        })
+      ).rejects.toThrow(InvalidPathParameterError)
+
+      expect(mockFetch).not.toHaveBeenCalled()
+    })
+
+    it("rejects mixed-case URL-encoded path traversal (%2E%2e)", async () => {
+      await expect(
+        notion.blocks.retrieve({
+          block_id: "%2E%2e/databases/xyz",
+        })
+      ).rejects.toThrow(InvalidPathParameterError)
+
+      expect(mockFetch).not.toHaveBeenCalled()
+    })
+
+    it("rejects fully encoded path traversal (%2e%2e%2f)", async () => {
+      // cspell:ignore fdatabases
+      await expect(
+        notion.blocks.retrieve({
+          block_id: "%2e%2e%2f" + "databases/xyz",
+        })
+      ).rejects.toThrow(InvalidPathParameterError)
+
+      expect(mockFetch).not.toHaveBeenCalled()
+    })
+
+    it("allows valid UUIDs", async () => {
+      await notion.blocks.retrieve({
+        block_id: "9f96555b-cf98-4889-83b0-bd6bbe53911e",
+      })
+
+      expect(mockFetch).toHaveBeenCalledWith(
+        "https://api.notion.com/v1/blocks/9f96555b-cf98-4889-83b0-bd6bbe53911e",
+        expect.anything()
+      )
+    })
+
+    it("error message includes the offending path", async () => {
+      try {
+        await notion.blocks.retrieve({
+          block_id: "../databases/xyz",
+        })
+        assert.fail("Expected error to be thrown")
+      } catch (error) {
+        assert(error instanceof InvalidPathParameterError)
+        expect(error.message).toContain("blocks/../databases/xyz")
+        expect(error.message).toContain("..")
       }
     })
   })

@@ -10,6 +10,7 @@ import {
   isHTTPResponseError,
   isNotionClientError,
   RequestTimeoutError,
+  validateRequestPath,
 } from "./errors"
 import { pick } from "./utils"
 import {
@@ -188,6 +189,8 @@ export default class Client {
     args: RequestParameters
   ): Promise<ResponseBody> {
     const { path, method, query, body, formDataParams, auth } = args
+
+    validateRequestPath(path)
 
     this.log(LogLevel.INFO, "request start", { method, path })
 

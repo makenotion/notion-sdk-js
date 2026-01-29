@@ -164,6 +164,7 @@ export {
   APIResponseError,
   UnknownHTTPResponseError,
   RequestTimeoutError,
+  InvalidPathParameterError,
   // Error helpers
   isNotionClientError,
 } from "./errors"
