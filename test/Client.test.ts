@@ -333,4 +333,581 @@ describe("Notion SDK Client", () => {
       }
     })
   })
+
+  describe("retry behavior", () => {
+    let mockFetch: jest.MockedFn<typeof fetch>
+
+    beforeEach(() => {
+      jest.useFakeTimers()
+      mockFetch = jest.fn()
+    })
+
+    afterEach(() => {
+      jest.useRealTimers()
+    })
+
+    it("retries on rate limit (429) and succeeds", async () => {
+      mockFetch
+        .mockResolvedValueOnce({
+          ok: false,
+          text: () =>
+            Promise.resolve(
+              JSON.stringify({
+                code: "rate_limited",
+                message: "Rate limited",
+              })
+            ),
+          headers: new Headers({ "retry-after": "5" }),
+          status: 429,
+        } as Response)
+        .mockResolvedValueOnce({
+          ok: true,
+          text: () => Promise.resolve("{}"),
+          headers: new Headers(),
+          status: 200,
+        } as Response)
+
+      const notion = new Client({
+        fetch: mockFetch,
+        retry: { maxRetries: 2 },
+      })
+
+      const promise = notion.blocks.retrieve({
+        block_id: "9f96555b-cf98-4889-83b0-bd6bbe53911e",
+      })
+
+      // Advance past the 5 second retry-after delay
+      await jest.advanceTimersByTimeAsync(5000)
+      await promise
+
+      expect(mockFetch).toHaveBeenCalledTimes(2)
+    })
+
+    it("does not retry when retry is disabled", async () => {
+      mockFetch.mockResolvedValue({
+        ok: false,
+        text: () =>
+          Promise.resolve(
+            JSON.stringify({
+              code: "rate_limited",
+              message: "Rate limited",
+            })
+          ),
+        headers: new Headers(),
+        status: 429,
+      } as Response)
+
+      const notion = new Client({
+        fetch: mockFetch,
+        retry: false,
+      })
+
+      await expect(
+        notion.blocks.retrieve({
+          block_id: "9f96555b-cf98-4889-83b0-bd6bbe53911e",
+        })
+      ).rejects.toThrow(APIResponseError)
+
+      expect(mockFetch).toHaveBeenCalledTimes(1)
+    })
+
+    it("retries on internal server error (500)", async () => {
+      mockFetch
+        .mockResolvedValueOnce({
+          ok: false,
+          text: () =>
+            Promise.resolve(
+              JSON.stringify({
+                code: "internal_server_error",
+                message: "Internal error",
+              })
+            ),
+          headers: new Headers(),
+          status: 500,
+        } as Response)
+        .mockResolvedValueOnce({
+          ok: true,
+          text: () => Promise.resolve("{}"),
+          headers: new Headers(),
+          status: 200,
+        } as Response)
+
+      const notion = new Client({
+        fetch: mockFetch,
+        retry: { maxRetries: 2, initialRetryDelayMs: 1000 },
+      })
+
+      const promise = notion.blocks.retrieve({
+        block_id: "9f96555b-cf98-4889-83b0-bd6bbe53911e",
+      })
+
+      // Advance past the initial retry delay (with jitter, could be up to 2x)
+      await jest.advanceTimersByTimeAsync(2000)
+      await promise
+
+      expect(mockFetch).toHaveBeenCalledTimes(2)
+    })
+
+    it("retries on service unavailable (503)", async () => {
+      mockFetch
+        .mockResolvedValueOnce({
+          ok: false,
+          text: () =>
+            Promise.resolve(
+              JSON.stringify({
+                code: "service_unavailable",
+                message: "Service unavailable",
+              })
+            ),
+          headers: new Headers(),
+          status: 503,
+        } as Response)
+        .mockResolvedValueOnce({
+          ok: true,
+          text: () => Promise.resolve("{}"),
+          headers: new Headers(),
+          status: 200,
+        } as Response)
+
+      const notion = new Client({
+        fetch: mockFetch,
+        retry: { maxRetries: 2, initialRetryDelayMs: 1000 },
+      })
+
+      const promise = notion.blocks.retrieve({
+        block_id: "9f96555b-cf98-4889-83b0-bd6bbe53911e",
+      })
+
+      await jest.advanceTimersByTimeAsync(2000)
+      await promise
+
+      expect(mockFetch).toHaveBeenCalledTimes(2)
+    })
+
+    it("does not retry on validation error (400)", async () => {
+      mockFetch.mockResolvedValue({
+        ok: false,
+        text: () =>
+          Promise.resolve(
+            JSON.stringify({
+              code: "validation_error",
+              message: "Validation failed",
+            })
+          ),
+        headers: new Headers(),
+        status: 400,
+      } as Response)
+
+      const notion = new Client({
+        fetch: mockFetch,
+        retry: { maxRetries: 2 },
+      })
+
+      await expect(
+        notion.blocks.retrieve({
+          block_id: "9f96555b-cf98-4889-83b0-bd6bbe53911e",
+        })
+      ).rejects.toThrow(APIResponseError)
+
+      expect(mockFetch).toHaveBeenCalledTimes(1)
+    })
+
+    it("does not retry on unauthorized (401)", async () => {
+      mockFetch.mockResolvedValue({
+        ok: false,
+        text: () =>
+          Promise.resolve(
+            JSON.stringify({
+              code: "unauthorized",
+              message: "Unauthorized",
+            })
+          ),
+        headers: new Headers(),
+        status: 401,
+      } as Response)
+
+      const notion = new Client({
+        fetch: mockFetch,
+        retry: { maxRetries: 2 },
+      })
+
+      await expect(
+        notion.blocks.retrieve({
+          block_id: "9f96555b-cf98-4889-83b0-bd6bbe53911e",
+        })
+      ).rejects.toThrow(APIResponseError)
+
+      expect(mockFetch).toHaveBeenCalledTimes(1)
+    })
+
+    it("respects maxRetries limit", async () => {
+      mockFetch.mockResolvedValue({
+        ok: false,
+        text: () =>
+          Promise.resolve(
+            JSON.stringify({
+              code: "rate_limited",
+              message: "Rate limited",
+            })
+          ),
+        headers: new Headers({ "retry-after": "1" }),
+        status: 429,
+      } as Response)
+
+      const notion = new Client({
+        fetch: mockFetch,
+        retry: { maxRetries: 3 },
+      })
+
+      const promise = notion.blocks
+        .retrieve({
+          block_id: "9f96555b-cf98-4889-83b0-bd6bbe53911e",
+        })
+        .catch(e => e)
+
+      // Advance through all 3 retry delays (1 second each)
+      await jest.advanceTimersByTimeAsync(1000)
+      await jest.advanceTimersByTimeAsync(1000)
+      await jest.advanceTimersByTimeAsync(1000)
+      const error = await promise
+
+      expect(error).toBeInstanceOf(APIResponseError)
+      // 1 initial + 3 retries = 4 total calls
+      expect(mockFetch).toHaveBeenCalledTimes(4)
+    })
+
+    it("uses default retry settings when not specified", async () => {
+      mockFetch
+        .mockResolvedValueOnce({
+          ok: false,
+          text: () =>
+            Promise.resolve(
+              JSON.stringify({
+                code: "rate_limited",
+                message: "Rate limited",
+              })
+            ),
+          headers: new Headers({ "retry-after": "1" }),
+          status: 429,
+        } as Response)
+        .mockResolvedValueOnce({
+          ok: false,
+          text: () =>
+            Promise.resolve(
+              JSON.stringify({
+                code: "rate_limited",
+                message: "Rate limited",
+              })
+            ),
+          headers: new Headers({ "retry-after": "1" }),
+          status: 429,
+        } as Response)
+        .mockResolvedValueOnce({
+          ok: true,
+          text: () => Promise.resolve("{}"),
+          headers: new Headers(),
+          status: 200,
+        } as Response)
+
+      const notion = new Client({
+        fetch: mockFetch,
+      })
+
+      const promise = notion.blocks.retrieve({
+        block_id: "9f96555b-cf98-4889-83b0-bd6bbe53911e",
+      })
+
+      // Advance through the 2 retry delays
+      await jest.advanceTimersByTimeAsync(1000)
+      await jest.advanceTimersByTimeAsync(1000)
+      await promise
+
+      // 1 initial + 2 retries = 3 total calls (default maxRetries is 2)
+      expect(mockFetch).toHaveBeenCalledTimes(3)
+    })
+
+    it("respects retry-after header with delta-seconds format", async () => {
+      mockFetch
+        .mockResolvedValueOnce({
+          ok: false,
+          text: () =>
+            Promise.resolve(
+              JSON.stringify({
+                code: "rate_limited",
+                message: "Rate limited",
+              })
+            ),
+          headers: new Headers({ "retry-after": "10" }),
+          status: 429,
+        } as Response)
+        .mockResolvedValueOnce({
+          ok: true,
+          text: () => Promise.resolve("{}"),
+          headers: new Headers(),
+          status: 200,
+        } as Response)
+
+      const notion = new Client({
+        fetch: mockFetch,
+        retry: { maxRetries: 1 },
+      })
+
+      const promise = notion.blocks.retrieve({
+        block_id: "9f96555b-cf98-4889-83b0-bd6bbe53911e",
+      })
+
+      // Should not have retried yet
+      expect(mockFetch).toHaveBeenCalledTimes(1)
+
+      // Advance past the 10 second retry-after delay
+      await jest.advanceTimersByTimeAsync(10000)
+      await promise
+
+      expect(mockFetch).toHaveBeenCalledTimes(2)
+    })
+
+    it("falls back to exponential back-off when retry-after is invalid", async () => {
+      mockFetch
+        .mockResolvedValueOnce({
+          ok: false,
+          text: () =>
+            Promise.resolve(
+              JSON.stringify({
+                code: "rate_limited",
+                message: "Rate limited",
+              })
+            ),
+          headers: new Headers({ "retry-after": "invalid" }),
+          status: 429,
+        } as Response)
+        .mockResolvedValueOnce({
+          ok: true,
+          text: () => Promise.resolve("{}"),
+          headers: new Headers(),
+          status: 200,
+        } as Response)
+
+      const notion = new Client({
+        fetch: mockFetch,
+        retry: { maxRetries: 1, initialRetryDelayMs: 1000 },
+      })
+
+      const promise = notion.blocks.retrieve({
+        block_id: "9f96555b-cf98-4889-83b0-bd6bbe53911e",
+      })
+
+      // Advance past the exponential back-off delay (with jitter)
+      await jest.advanceTimersByTimeAsync(2000)
+      await promise
+
+      expect(mockFetch).toHaveBeenCalledTimes(2)
+    })
+
+    it("uses exponential back-off when no retry-after header", async () => {
+      mockFetch
+        .mockResolvedValueOnce({
+          ok: false,
+          text: () =>
+            Promise.resolve(
+              JSON.stringify({
+                code: "rate_limited",
+                message: "Rate limited",
+              })
+            ),
+          headers: new Headers(),
+          status: 429,
+        } as Response)
+        .mockResolvedValueOnce({
+          ok: true,
+          text: () => Promise.resolve("{}"),
+          headers: new Headers(),
+          status: 200,
+        } as Response)
+
+      const notion = new Client({
+        fetch: mockFetch,
+        retry: { maxRetries: 1, initialRetryDelayMs: 1000 },
+      })
+
+      const promise = notion.blocks.retrieve({
+        block_id: "9f96555b-cf98-4889-83b0-bd6bbe53911e",
+      })
+
+      // Advance past the exponential back-off delay (with jitter)
+      await jest.advanceTimersByTimeAsync(2000)
+      await promise
+
+      expect(mockFetch).toHaveBeenCalledTimes(2)
+    })
+
+    it("ignores negative retry-after values and uses back-off", async () => {
+      mockFetch
+        .mockResolvedValueOnce({
+          ok: false,
+          text: () =>
+            Promise.resolve(
+              JSON.stringify({
+                code: "rate_limited",
+                message: "Rate limited",
+              })
+            ),
+          headers: new Headers({ "retry-after": "-5" }),
+          status: 429,
+        } as Response)
+        .mockResolvedValueOnce({
+          ok: true,
+          text: () => Promise.resolve("{}"),
+          headers: new Headers(),
+          status: 200,
+        } as Response)
+
+      const notion = new Client({
+        fetch: mockFetch,
+        retry: { maxRetries: 1, initialRetryDelayMs: 1000 },
+      })
+
+      const promise = notion.blocks.retrieve({
+        block_id: "9f96555b-cf98-4889-83b0-bd6bbe53911e",
+      })
+
+      // Advance past the exponential back-off delay
+      await jest.advanceTimersByTimeAsync(2000)
+      await promise
+
+      expect(mockFetch).toHaveBeenCalledTimes(2)
+    })
+
+    it("caps retry delay at maxRetryDelayMs", async () => {
+      mockFetch
+        .mockResolvedValueOnce({
+          ok: false,
+          text: () =>
+            Promise.resolve(
+              JSON.stringify({
+                code: "rate_limited",
+                message: "Rate limited",
+              })
+            ),
+          // Server requests 300 second wait
+          headers: new Headers({ "retry-after": "300" }),
+          status: 429,
+        } as Response)
+        .mockResolvedValueOnce({
+          ok: true,
+          text: () => Promise.resolve("{}"),
+          headers: new Headers(),
+          status: 200,
+        } as Response)
+
+      const notion = new Client({
+        fetch: mockFetch,
+        retry: { maxRetries: 1, maxRetryDelayMs: 5000 },
+      })
+
+      const promise = notion.blocks.retrieve({
+        block_id: "9f96555b-cf98-4889-83b0-bd6bbe53911e",
+      })
+
+      // Should retry after maxRetryDelayMs (5s), not retry-after (300s)
+      await jest.advanceTimersByTimeAsync(5000)
+      await promise
+
+      expect(mockFetch).toHaveBeenCalledTimes(2)
+    })
+  })
+
+  describe("request building", () => {
+    let mockFetch: jest.MockedFn<typeof fetch>
+
+    beforeEach(() => {
+      mockFetch = jest.fn()
+      mockFetch.mockResolvedValue({
+        ok: true,
+        text: () => Promise.resolve("{}"),
+        headers: new Headers(),
+        status: 200,
+      } as Response)
+    })
+
+    it("handles empty query parameters", async () => {
+      const notion = new Client({ fetch: mockFetch })
+
+      await notion.request({
+        path: "blocks/123",
+        method: "get",
+        query: {},
+      })
+
+      const url = mockFetch.mock.calls[0]?.[0] as string
+      expect(url).toBe("https://api.notion.com/v1/blocks/123")
+      expect(url).not.toContain("?")
+    })
+
+    it("handles single query parameters", async () => {
+      const notion = new Client({ fetch: mockFetch })
+
+      await notion.request({
+        path: "blocks/123",
+        method: "get",
+        query: { filter: "page" },
+      })
+
+      const url = mockFetch.mock.calls[0]?.[0] as string
+      expect(url).toBe("https://api.notion.com/v1/blocks/123?filter=page")
+    })
+
+    it("handles array query parameters", async () => {
+      const notion = new Client({ fetch: mockFetch })
+
+      await notion.request({
+        path: "search",
+        method: "post",
+        query: { filter: ["page", "database"] },
+      })
+
+      const url = mockFetch.mock.calls[0]?.[0] as string
+      expect(url).toContain("filter=page")
+      expect(url).toContain("filter=database")
+    })
+
+    it("omits body when empty object provided", async () => {
+      const notion = new Client({ fetch: mockFetch })
+
+      await notion.request({
+        path: "blocks/123",
+        method: "get",
+        body: {},
+      })
+
+      const requestInit = mockFetch.mock.calls[0]?.[1]
+      expect(requestInit?.body).toBeUndefined()
+    })
+
+    it("includes content-type header only when body is provided", async () => {
+      const notion = new Client({ fetch: mockFetch })
+
+      // Request without body
+      await notion.request({
+        path: "blocks/123",
+        method: "get",
+      })
+
+      const headersWithoutBody = mockFetch.mock.calls[0]?.[1]
+        ?.headers as Record<string, string>
+      expect(headersWithoutBody["content-type"]).toBeUndefined()
+
+      // Request with body
+      await notion.request({
+        path: "blocks/123",
+        method: "patch",
+        body: { archived: true },
+      })
+
+      const headersWithBody = mockFetch.mock.calls[1]?.[1]?.headers as Record<
+        string,
+        string
+      >
+      expect(headersWithBody["content-type"]).toBe("application/json")
+    })
+  })
 })
