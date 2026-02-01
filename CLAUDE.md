@@ -70,10 +70,38 @@ Each endpoint namespace contains methods like `retrieve`, `create`, `update`, `d
 All API calls flow through `Client.request()` which:
 
 1. Constructs the full URL from `baseUrl` + `path`
-2. Adds authentication headers (from client-level `auth` or request-level override)
-3. Sets `Notion-Version` header (defaults to "2025-09-03")
-4. Handles request timeout (default 60s)
-5. Processes response or throws typed errors
+2. Validates path against traversal attacks
+3. Adds authentication headers (from client-level `auth` or request-level override)
+4. Sets `Notion-Version` header (defaults to "2025-09-03")
+5. Handles request timeout (default 60s)
+6. Automatically retries on transient errors (rate limits, server errors)
+7. Processes response or throws typed errors
+
+### Retry Behavior
+
+The client automatically retries failed requests for these error codes:
+
+- `rate_limited` (HTTP 429) - respects `retry-after` header if present
+- `internal_server_error` (HTTP 500)
+- `service_unavailable` (HTTP 503)
+
+Configuration via `ClientOptions.retry`:
+
+```typescript
+const client = new Client({
+  auth: "secret_...",
+  retry: {
+    maxRetries: 2, // Default: 2 retry attempts
+    initialRetryDelayMs: 1000, // Default: 1 second base delay
+    maxRetryDelayMs: 60000, // Default: 60 second cap
+  },
+})
+
+// Or disable retries entirely:
+const client = new Client({ auth: "secret_...", retry: false })
+```
+
+When `retry-after` header is present, the client waits for that duration (capped by `maxRetryDelayMs`). Otherwise, it uses exponential back-off with jitter.
 
 ### Type System
 
@@ -96,16 +124,23 @@ All API calls flow through `Client.request()` which:
 
 ### Error Handling
 
-Three error types (all in `src/errors.ts`):
+Four error types (all in `src/errors.ts`):
 
 - `APIResponseError` - HTTP errors from Notion API with error codes from `APIErrorCode`
 - `RequestTimeoutError` - Request exceeded timeout
 - `UnknownHTTPResponseError` - Unexpected HTTP responses
+- `InvalidPathParameterError` - Path contains traversal sequences
 
 Error codes are in two enums:
 
 - `APIErrorCode` - Server-side errors (unauthorized, rate_limited, object_not_found, etc.)
-- `ClientErrorCode` - Client-side errors (request_timeout, response_error)
+- `ClientErrorCode` - Client-side errors (request_timeout, response_error, invalid_path_parameter)
+
+Type guards for error handling:
+
+- `isNotionClientError(error)` - Check if error is any SDK error
+- `isHTTPResponseError(error)` - Check if error is an HTTP response error (has status, headers, body)
+- `APIResponseError.isAPIResponseError(error)` - Check for API-specific errors
 
 ### Pagination
 
@@ -140,6 +175,14 @@ Configurable logging system (`src/logging.ts`):
 - Comment length: max 80 characters per line
 - Use CommonJS (`require`/`module.exports`) not ES6 imports
 
+### Spelling Checks (cspell)
+
+The linter runs cspell for spell checking. Avoid non-dictionary terms in code:
+
+- Use "back-off" instead of "back off" (single word)
+- Use "parsable" instead of "parse able" variants
+- Prefer standard English words in method names and comments
+
 ### Testing Requirements
 
 - Always run `npm run build && npm test` before committing
@@ -154,7 +197,7 @@ npm run prepublishOnly  # Runs: checkLoggedIn && lint && test
 
 ## Key Files
 
-- `src/Client.ts` - Main client implementation with all endpoint namespaces
+- `src/Client.ts` - Main client implementation with all endpoint namespaces and retry logic
 - `src/index.ts` - Public API surface (all exports)
 - `src/api-endpoints.ts` - Generated API types and endpoint descriptors
 - `src/errors.ts` - Error types and error handling utilities
@@ -162,7 +205,7 @@ npm run prepublishOnly  # Runs: checkLoggedIn && lint && test
 - `src/type-utils.ts` - TypeScript type guards and utilities
 - `src/logging.ts` - Logging system
 - `src/utils.ts` - Internal utilities (pick, isObject)
-- `src/fetch-types.ts` - Fetch API type definitions
+- `src/fetch-types.ts` - Fetch API type definitions (uses `unknown` for headers to support various fetch implementations)
 
 ## Making Changes
 
