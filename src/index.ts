@@ -167,7 +167,9 @@ export {
   InvalidPathParameterError,
   // Error helpers
   isNotionClientError,
+  isHTTPResponseError,
 } from "./errors"
+export type { RetryOptions } from "./Client"
 export {
   collectPaginatedAPI,
   iteratePaginatedAPI,

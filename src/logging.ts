@@ -7,9 +7,11 @@ export enum LogLevel {
   ERROR = "error",
 }
 
-export interface Logger {
-  (level: LogLevel, message: string, extraInfo: Record<string, unknown>): void
-}
+export type Logger = (
+  level: LogLevel,
+  message: string,
+  extraInfo: Record<string, unknown>
+) => void
 
 export function makeConsoleLogger(name: string): Logger {
   return (level, message, extraInfo) => {

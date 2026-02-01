@@ -37,7 +37,7 @@ export type NotionErrorCode = APIErrorCode | ClientErrorCode
  * Base error type.
  */
 abstract class NotionClientErrorBase<
-  Code extends NotionErrorCode
+  Code extends NotionErrorCode,
 > extends Error {
   abstract code: Code
 }
@@ -181,7 +181,7 @@ type HTTPResponseErrorCode = ClientErrorCode.ResponseError | APIErrorCode
 type AdditionalData = Record<string, string | string[]>
 
 class HTTPResponseError<
-  Code extends HTTPResponseErrorCode
+  Code extends HTTPResponseErrorCode,
 > extends NotionClientErrorBase<Code> {
   readonly name: string = "HTTPResponseError"
   readonly code: Code

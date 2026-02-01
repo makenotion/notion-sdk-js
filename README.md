@@ -132,14 +132,53 @@ You may also set a custom `logger` to emit logs to a destination other than `std
 
 The `Client` supports the following options on initialization. These options are all keys in the single constructor parameter.
 
-| Option      | Default value              | Type         | Description                                                                                                                                                  |
-| ----------- | -------------------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `auth`      | `undefined`                | `string`     | Bearer token for authentication. If left undefined, the `auth` parameter should be set on each request.                                                      |
-| `logLevel`  | `LogLevel.WARN`            | `LogLevel`   | Verbosity of logs the instance will produce. By default, logs are written to `stdout`.                                                                       |
-| `timeoutMs` | `60_000`                   | `number`     | Number of milliseconds to wait before emitting a `RequestTimeoutError`                                                                                       |
-| `baseUrl`   | `"https://api.notion.com"` | `string`     | The root URL for sending API requests. This can be changed to test with a mock server.                                                                       |
-| `logger`    | Log to console             | `Logger`     | A custom logging function. This function is only called when the client emits a log that is equal or greater severity than `logLevel`.                       |
-| `agent`     | Default node agent         | `http.Agent` | Used to control creation of TCP sockets. A common use is to proxy requests with [`https-proxy-agent`](https://github.com/TooTallNate/node-https-proxy-agent) |
+| Option      | Default value              | Type           | Description                                                                                                                                                  |
+| ----------- | -------------------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `auth`      | `undefined`                | `string`       | Bearer token for authentication. If left undefined, the `auth` parameter should be set on each request.                                                      |
+| `logLevel`  | `LogLevel.WARN`            | `LogLevel`     | Verbosity of logs the instance will produce. By default, logs are written to `stdout`.                                                                       |
+| `timeoutMs` | `60_000`                   | `number`       | Number of milliseconds to wait before emitting a `RequestTimeoutError`                                                                                       |
+| `baseUrl`   | `"https://api.notion.com"` | `string`       | The root URL for sending API requests. This can be changed to test with a mock server.                                                                       |
+| `logger`    | Log to console             | `Logger`       | A custom logging function. This function is only called when the client emits a log that is equal or greater severity than `logLevel`.                       |
+| `agent`     | Default node agent         | `http.Agent`   | Used to control creation of TCP sockets. A common use is to proxy requests with [`https-proxy-agent`](https://github.com/TooTallNate/node-https-proxy-agent) |
+| `retry`     | `{ maxRetries: 3 }`        | `RetryOptions` | Configuration for automatic retries on rate limits (429) and server errors (500, 503). See [Automatic retries](#automatic-retries) below.                    |
+
+### Automatic retries
+
+The client automatically retries requests that fail due to rate limiting or transient server errors. By default, it will retry up to 3 times using exponential back-off with jitter.
+
+**Retryable errors:**
+
+- `rate_limited` (HTTP 429) - Too many requests
+- `internal_server_error` (HTTP 500) - Server error
+- `service_unavailable` (HTTP 503) - Service temporarily unavailable
+
+**Retry behavior:**
+
+- Uses exponential back-off: delays increase with each retry attempt
+- Respects the `Retry-After` header when present (both delta-seconds and HTTP-date formats)
+- Adds random jitter to prevent thundering herd problems
+
+**Configuration:**
+
+```js
+const notion = new Client({
+  auth: process.env.NOTION_TOKEN,
+  retry: {
+    maxRetries: 5, // Maximum retry attempts (default: 3)
+    initialRetryDelayMs: 500, // Initial delay between retries (default: 1000ms)
+    maxRetryDelayMs: 60000, // Maximum delay between retries (default: 60000ms)
+  },
+})
+```
+
+To disable automatic retries:
+
+```js
+const notion = new Client({
+  auth: process.env.NOTION_TOKEN,
+  retry: { maxRetries: 0 },
+})
+```
 
 ### TypeScript
 

@@ -20,7 +20,7 @@ import {
 } from "./api-endpoints"
 import type Client from "./Client"
 
-interface PaginatedArgs {
+type PaginatedArgs = {
   start_cursor?: string
 }
 
@@ -96,7 +96,7 @@ export async function collectPaginatedAPI<Args extends PaginatedArgs, Item>(
 
 type DataSourceTemplate = ListDataSourceTemplatesResponse["templates"][number]
 
-interface ListDataSourceTemplatesArgs extends PaginatedArgs {
+type ListDataSourceTemplatesArgs = PaginatedArgs & {
   data_source_id: string
   name?: string
   page_size?: number
