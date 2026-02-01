@@ -1,6 +1,100 @@
 import assert = require("assert")
 import { APIResponseError, Client, InvalidPathParameterError } from "../src"
 
+// Test constants
+const TEST_BLOCK_ID = "9f96555b-cf98-4889-83b0-bd6bbe53911e"
+
+// Response type definitions for mock builder
+type ResponseType =
+  | "success"
+  | "rate_limited"
+  | "internal_server_error"
+  | "service_unavailable"
+  | "validation_error"
+  | "unauthorized"
+
+type ResponseOptions = {
+  retryAfter?: string
+  body?: Record<string, unknown>
+}
+
+// Maps response types to their HTTP status codes and API error codes
+const RESPONSE_CONFIG: Record<
+  ResponseType,
+  { status: number; code?: string; message: string }
+> = {
+  success: { status: 200, message: "" },
+  rate_limited: { status: 429, code: "rate_limited", message: "Rate limited" },
+  internal_server_error: {
+    status: 500,
+    code: "internal_server_error",
+    message: "Internal error",
+  },
+  service_unavailable: {
+    status: 503,
+    code: "service_unavailable",
+    message: "Service unavailable",
+  },
+  validation_error: {
+    status: 400,
+    code: "validation_error",
+    message: "Validation failed",
+  },
+  unauthorized: { status: 401, code: "unauthorized", message: "Unauthorized" },
+}
+
+/**
+ * Creates a mock Response object for the given response type
+ */
+function mockResponse(
+  type: ResponseType,
+  options: ResponseOptions = {}
+): Response {
+  const config = RESPONSE_CONFIG[type]
+  const headers = new Headers()
+  if (options.retryAfter) {
+    headers.set("retry-after", options.retryAfter)
+  }
+
+  const body =
+    type === "success"
+      ? (options.body ?? {})
+      : { code: config.code, message: config.message, ...options.body }
+
+  return {
+    ok: type === "success",
+    text: () => Promise.resolve(JSON.stringify(body)),
+    headers,
+    status: config.status,
+  } as Response
+}
+
+/**
+ * Sets up mockFetch to return a sequence of responses.
+ * Example: setupMockSequence(mockFetch, ["rate_limited", "success"])
+ */
+function setupMockSequence(
+  mockFetch: jest.MockedFn<typeof fetch>,
+  sequence: Array<
+    ResponseType | { type: ResponseType; options: ResponseOptions }
+  >
+): void {
+  for (const item of sequence) {
+    const type = typeof item === "string" ? item : item.type
+    const options = typeof item === "string" ? {} : item.options
+    mockFetch.mockResolvedValueOnce(mockResponse(type, options))
+  }
+}
+
+/**
+ * Creates a pre-configured mockFetch with success response (common setup)
+ */
+function createMockFetch(): jest.MockedFn<typeof fetch> {
+  const mockFetch: jest.MockedFn<typeof fetch> = jest.fn()
+  mockFetch.mockResolvedValue(mockResponse("success"))
+  return mockFetch
+}
+
 describe("Notion SDK Client", () => {
   it("Constructs without throwing", () => {
     new Client({ auth: "foo" })
@@ -11,14 +105,7 @@ describe("Notion SDK Client", () => {
     let notion: Client
 
     beforeEach(() => {
-      mockFetch = jest.fn()
-      mockFetch.mockResolvedValue({
-        ok: true,
-        text: () => Promise.resolve("{}"),
-        headers: new Headers(),
-        status: 200,
-      } as Response)
-
+      mockFetch = createMockFetch()
       notion = new Client({ fetch: mockFetch })
     })
 
@@ -138,27 +225,22 @@ describe("Notion SDK Client", () => {
     })
 
     it("parses additional_data from API validation error response", async () => {
-      mockFetch.mockResolvedValue({
-        ok: false,
-        text: () =>
-          Promise.resolve(
-            JSON.stringify({
-              code: "validation_error",
-              message:
-                "Databases with multiple data sources are not supported in this API version.",
-              object: "error",
-              status: 400,
-              additional_data: {
-                error_type: "multiple_data_sources_for_database",
-                database_id: "123",
-                child_data_source_ids: ["456", "789"],
-                minimum_api_version: "2025-09-03",
-              },
-            })
-          ),
-        headers: new Headers(),
-        status: 400,
-      } as Response)
+      mockFetch.mockResolvedValue(
+        mockResponse("validation_error", {
+          body: {
+            message:
+              "Databases with multiple data sources are not supported in this API version.",
+            object: "error",
+            status: 400,
+            additional_data: {
+              error_type: "multiple_data_sources_for_database",
+              database_id: "123",
+              child_data_source_ids: ["456", "789"],
+              minimum_api_version: "2025-09-03",
+            },
+          },
+        })
+      )
 
       try {
         await notion.databases.retrieve({
@@ -187,14 +269,7 @@ describe("Notion SDK Client", () => {
     let notion: Client
 
     beforeEach(() => {
-      mockFetch = jest.fn()
-      mockFetch.mockResolvedValue({
-        ok: true,
-        text: () => Promise.resolve("{}"),
-        headers: new Headers(),
-        status: 200,
-      } as Response)
-
+      mockFetch = createMockFetch()
       notion = new Client({ fetch: mockFetch })
     })
 
@@ -310,12 +385,10 @@ describe("Notion SDK Client", () => {
     })
 
     it("allows valid UUIDs", async () => {
-      await notion.blocks.retrieve({
-        block_id: "9f96555b-cf98-4889-83b0-bd6bbe53911e",
-      })
+      await notion.blocks.retrieve({ block_id: TEST_BLOCK_ID })
 
       expect(mockFetch).toHaveBeenCalledWith(
-        "https://api.notion.com/v1/blocks/9f96555b-cf98-4889-83b0-bd6bbe53911e",
+        `https://api.notion.com/v1/blocks/${TEST_BLOCK_ID}`,
         expect.anything()
       )
     })
@@ -347,36 +420,14 @@ describe("Notion SDK Client", () => {
     })
 
     it("retries on rate limit (429) and succeeds", async () => {
-      mockFetch
-        .mockResolvedValueOnce({
-          ok: false,
-          text: () =>
-            Promise.resolve(
-              JSON.stringify({
-                code: "rate_limited",
-                message: "Rate limited",
-              })
-            ),
-          headers: new Headers({ "retry-after": "5" }),
-          status: 429,
-        } as Response)
-        .mockResolvedValueOnce({
-          ok: true,
-          text: () => Promise.resolve("{}"),
-          headers: new Headers(),
-          status: 200,
-        } as Response)
+      setupMockSequence(mockFetch, [
+        { type: "rate_limited", options: { retryAfter: "5" } },
+        "success",
+      ])
 
-      const notion = new Client({
-        fetch: mockFetch,
-        retry: { maxRetries: 2 },
-      })
+      const notion = new Client({ fetch: mockFetch, retry: { maxRetries: 2 } })
+      const promise = notion.blocks.retrieve({ block_id: TEST_BLOCK_ID })
 
-      const promise = notion.blocks.retrieve({
-        block_id: "9f96555b-cf98-4889-83b0-bd6bbe53911e",
-      })
-
-      // Advance past the 5 second retry-after delay
       await jest.advanceTimersByTimeAsync(5000)
       await promise
 
@@ -384,64 +435,26 @@ describe("Notion SDK Client", () => {
     })
 
     it("does not retry when retry is disabled", async () => {
-      mockFetch.mockResolvedValue({
-        ok: false,
-        text: () =>
-          Promise.resolve(
-            JSON.stringify({
-              code: "rate_limited",
-              message: "Rate limited",
-            })
-          ),
-        headers: new Headers(),
-        status: 429,
-      } as Response)
+      mockFetch.mockResolvedValue(mockResponse("rate_limited"))
 
-      const notion = new Client({
-        fetch: mockFetch,
-        retry: false,
-      })
+      const notion = new Client({ fetch: mockFetch, retry: false })
 
       await expect(
-        notion.blocks.retrieve({
-          block_id: "9f96555b-cf98-4889-83b0-bd6bbe53911e",
-        })
+        notion.blocks.retrieve({ block_id: TEST_BLOCK_ID })
       ).rejects.toThrow(APIResponseError)
 
       expect(mockFetch).toHaveBeenCalledTimes(1)
     })
 
     it("retries on internal server error (500)", async () => {
-      mockFetch
-        .mockResolvedValueOnce({
-          ok: false,
-          text: () =>
-            Promise.resolve(
-              JSON.stringify({
-                code: "internal_server_error",
-                message: "Internal error",
-              })
-            ),
-          headers: new Headers(),
-          status: 500,
-        } as Response)
-        .mockResolvedValueOnce({
-          ok: true,
-          text: () => Promise.resolve("{}"),
-          headers: new Headers(),
-          status: 200,
-        } as Response)
+      setupMockSequence(mockFetch, ["internal_server_error", "success"])
 
       const notion = new Client({
         fetch: mockFetch,
         retry: { maxRetries: 2, initialRetryDelayMs: 1000 },
       })
+      const promise = notion.blocks.retrieve({ block_id: TEST_BLOCK_ID })
 
-      const promise = notion.blocks.retrieve({
-        block_id: "9f96555b-cf98-4889-83b0-bd6bbe53911e",
-      })
-
-      // Advance past the initial retry delay (with jitter, could be up to 2x)
       await jest.advanceTimersByTimeAsync(2000)
       await promise
 
@@ -449,34 +462,13 @@ describe("Notion SDK Client", () => {
     })
 
     it("retries on service unavailable (503)", async () => {
-      mockFetch
-        .mockResolvedValueOnce({
-          ok: false,
-          text: () =>
-            Promise.resolve(
-              JSON.stringify({
-                code: "service_unavailable",
-                message: "Service unavailable",
-              })
-            ),
-          headers: new Headers(),
-          status: 503,
-        } as Response)
-        .mockResolvedValueOnce({
-          ok: true,
-          text: () => Promise.resolve("{}"),
-          headers: new Headers(),
-          status: 200,
-        } as Response)
+      setupMockSequence(mockFetch, ["service_unavailable", "success"])
 
       const notion = new Client({
         fetch: mockFetch,
         retry: { maxRetries: 2, initialRetryDelayMs: 1000 },
       })
-
-      const promise = notion.blocks.retrieve({
-        block_id: "9f96555b-cf98-4889-83b0-bd6bbe53911e",
-      })
+      const promise = notion.blocks.retrieve({ block_id: TEST_BLOCK_ID })
 
       await jest.advanceTimersByTimeAsync(2000)
       await promise
@@ -485,181 +477,73 @@ describe("Notion SDK Client", () => {
     })
 
     it("does not retry on validation error (400)", async () => {
-      mockFetch.mockResolvedValue({
-        ok: false,
-        text: () =>
-          Promise.resolve(
-            JSON.stringify({
-              code: "validation_error",
-              message: "Validation failed",
-            })
-          ),
-        headers: new Headers(),
-        status: 400,
-      } as Response)
+      mockFetch.mockResolvedValue(mockResponse("validation_error"))
 
-      const notion = new Client({
-        fetch: mockFetch,
-        retry: { maxRetries: 2 },
-      })
+      const notion = new Client({ fetch: mockFetch, retry: { maxRetries: 2 } })
 
       await expect(
-        notion.blocks.retrieve({
-          block_id: "9f96555b-cf98-4889-83b0-bd6bbe53911e",
-        })
+        notion.blocks.retrieve({ block_id: TEST_BLOCK_ID })
       ).rejects.toThrow(APIResponseError)
 
       expect(mockFetch).toHaveBeenCalledTimes(1)
     })
 
     it("does not retry on unauthorized (401)", async () => {
-      mockFetch.mockResolvedValue({
-        ok: false,
-        text: () =>
-          Promise.resolve(
-            JSON.stringify({
-              code: "unauthorized",
-              message: "Unauthorized",
-            })
-          ),
-        headers: new Headers(),
-        status: 401,
-      } as Response)
+      mockFetch.mockResolvedValue(mockResponse("unauthorized"))
 
-      const notion = new Client({
-        fetch: mockFetch,
-        retry: { maxRetries: 2 },
-      })
+      const notion = new Client({ fetch: mockFetch, retry: { maxRetries: 2 } })
 
       await expect(
-        notion.blocks.retrieve({
-          block_id: "9f96555b-cf98-4889-83b0-bd6bbe53911e",
-        })
+        notion.blocks.retrieve({ block_id: TEST_BLOCK_ID })
       ).rejects.toThrow(APIResponseError)
 
       expect(mockFetch).toHaveBeenCalledTimes(1)
     })
 
     it("respects maxRetries limit", async () => {
-      mockFetch.mockResolvedValue({
-        ok: false,
-        text: () =>
-          Promise.resolve(
-            JSON.stringify({
-              code: "rate_limited",
-              message: "Rate limited",
-            })
-          ),
-        headers: new Headers({ "retry-after": "1" }),
-        status: 429,
-      } as Response)
+      mockFetch.mockResolvedValue(
+        mockResponse("rate_limited", { retryAfter: "1" })
+      )
 
-      const notion = new Client({
-        fetch: mockFetch,
-        retry: { maxRetries: 3 },
-      })
-
+      const notion = new Client({ fetch: mockFetch, retry: { maxRetries: 3 } })
       const promise = notion.blocks
-        .retrieve({
-          block_id: "9f96555b-cf98-4889-83b0-bd6bbe53911e",
-        })
+        .retrieve({ block_id: TEST_BLOCK_ID })
         .catch(e => e)
 
-      // Advance through all 3 retry delays (1 second each)
-      await jest.advanceTimersByTimeAsync(1000)
-      await jest.advanceTimersByTimeAsync(1000)
-      await jest.advanceTimersByTimeAsync(1000)
+      // Advance through all 3 retry delays
+      await jest.advanceTimersByTimeAsync(3000)
       const error = await promise
 
       expect(error).toBeInstanceOf(APIResponseError)
-      // 1 initial + 3 retries = 4 total calls
-      expect(mockFetch).toHaveBeenCalledTimes(4)
+      expect(mockFetch).toHaveBeenCalledTimes(4) // 1 initial + 3 retries
     })
 
     it("uses default retry settings when not specified", async () => {
-      mockFetch
-        .mockResolvedValueOnce({
-          ok: false,
-          text: () =>
-            Promise.resolve(
-              JSON.stringify({
-                code: "rate_limited",
-                message: "Rate limited",
-              })
-            ),
-          headers: new Headers({ "retry-after": "1" }),
-          status: 429,
-        } as Response)
-        .mockResolvedValueOnce({
-          ok: false,
-          text: () =>
-            Promise.resolve(
-              JSON.stringify({
-                code: "rate_limited",
-                message: "Rate limited",
-              })
-            ),
-          headers: new Headers({ "retry-after": "1" }),
-          status: 429,
-        } as Response)
-        .mockResolvedValueOnce({
-          ok: true,
-          text: () => Promise.resolve("{}"),
-          headers: new Headers(),
-          status: 200,
-        } as Response)
+      setupMockSequence(mockFetch, [
+        { type: "rate_limited", options: { retryAfter: "1" } },
+        { type: "rate_limited", options: { retryAfter: "1" } },
+        "success",
+      ])
 
-      const notion = new Client({
-        fetch: mockFetch,
-      })
+      const notion = new Client({ fetch: mockFetch })
+      const promise = notion.blocks.retrieve({ block_id: TEST_BLOCK_ID })
 
-      const promise = notion.blocks.retrieve({
-        block_id: "9f96555b-cf98-4889-83b0-bd6bbe53911e",
-      })
-
-      // Advance through the 2 retry delays
-      await jest.advanceTimersByTimeAsync(1000)
-      await jest.advanceTimersByTimeAsync(1000)
+      await jest.advanceTimersByTimeAsync(2000)
       await promise
 
-      // 1 initial + 2 retries = 3 total calls (default maxRetries is 2)
-      expect(mockFetch).toHaveBeenCalledTimes(3)
+      expect(mockFetch).toHaveBeenCalledTimes(3) // 1 initial + 2 retries (default)
     })
 
     it("respects retry-after header with delta-seconds format", async () => {
-      mockFetch
-        .mockResolvedValueOnce({
-          ok: false,
-          text: () =>
-            Promise.resolve(
-              JSON.stringify({
-                code: "rate_limited",
-                message: "Rate limited",
-              })
-            ),
-          headers: new Headers({ "retry-after": "10" }),
-          status: 429,
-        } as Response)
-        .mockResolvedValueOnce({
-          ok: true,
-          text: () => Promise.resolve("{}"),
-          headers: new Headers(),
-          status: 200,
-        } as Response)
+      setupMockSequence(mockFetch, [
+        { type: "rate_limited", options: { retryAfter: "10" } },
+        "success",
+      ])
 
-      const notion = new Client({
-        fetch: mockFetch,
-        retry: { maxRetries: 1 },
-      })
+      const notion = new Client({ fetch: mockFetch, retry: { maxRetries: 1 } })
+      const promise = notion.blocks.retrieve({ block_id: TEST_BLOCK_ID })
 
-      const promise = notion.blocks.retrieve({
-        block_id: "9f96555b-cf98-4889-83b0-bd6bbe53911e",
-      })
-
-      // Should not have retried yet
       expect(mockFetch).toHaveBeenCalledTimes(1)
-
-      // Advance past the 10 second retry-after delay
       await jest.advanceTimersByTimeAsync(10000)
       await promise
 
@@ -667,36 +551,17 @@ describe("Notion SDK Client", () => {
     })
 
     it("falls back to exponential back-off when retry-after is invalid", async () => {
-      mockFetch
-        .mockResolvedValueOnce({
-          ok: false,
-          text: () =>
-            Promise.resolve(
-              JSON.stringify({
-                code: "rate_limited",
-                message: "Rate limited",
-              })
-            ),
-          headers: new Headers({ "retry-after": "invalid" }),
-          status: 429,
-        } as Response)
-        .mockResolvedValueOnce({
-          ok: true,
-          text: () => Promise.resolve("{}"),
-          headers: new Headers(),
-          status: 200,
-        } as Response)
+      setupMockSequence(mockFetch, [
+        { type: "rate_limited", options: { retryAfter: "invalid" } },
+        "success",
+      ])
 
       const notion = new Client({
         fetch: mockFetch,
         retry: { maxRetries: 1, initialRetryDelayMs: 1000 },
       })
+      const promise = notion.blocks.retrieve({ block_id: TEST_BLOCK_ID })
 
-      const promise = notion.blocks.retrieve({
-        block_id: "9f96555b-cf98-4889-83b0-bd6bbe53911e",
-      })
-
-      // Advance past the exponential back-off delay (with jitter)
       await jest.advanceTimersByTimeAsync(2000)
       await promise
 
@@ -704,36 +569,14 @@ describe("Notion SDK Client", () => {
     })
 
     it("uses exponential back-off when no retry-after header", async () => {
-      mockFetch
-        .mockResolvedValueOnce({
-          ok: false,
-          text: () =>
-            Promise.resolve(
-              JSON.stringify({
-                code: "rate_limited",
-                message: "Rate limited",
-              })
-            ),
-          headers: new Headers(),
-          status: 429,
-        } as Response)
-        .mockResolvedValueOnce({
-          ok: true,
-          text: () => Promise.resolve("{}"),
-          headers: new Headers(),
-          status: 200,
-        } as Response)
+      setupMockSequence(mockFetch, ["rate_limited", "success"])
 
       const notion = new Client({
         fetch: mockFetch,
         retry: { maxRetries: 1, initialRetryDelayMs: 1000 },
       })
+      const promise = notion.blocks.retrieve({ block_id: TEST_BLOCK_ID })
 
-      const promise = notion.blocks.retrieve({
-        block_id: "9f96555b-cf98-4889-83b0-bd6bbe53911e",
-      })
-
-      // Advance past the exponential back-off delay (with jitter)
       await jest.advanceTimersByTimeAsync(2000)
       await promise
 
@@ -741,36 +584,17 @@ describe("Notion SDK Client", () => {
     })
 
     it("ignores negative retry-after values and uses back-off", async () => {
-      mockFetch
-        .mockResolvedValueOnce({
-          ok: false,
-          text: () =>
-            Promise.resolve(
-              JSON.stringify({
-                code: "rate_limited",
-                message: "Rate limited",
-              })
-            ),
-          headers: new Headers({ "retry-after": "-5" }),
-          status: 429,
-        } as Response)
-        .mockResolvedValueOnce({
-          ok: true,
-          text: () => Promise.resolve("{}"),
-          headers: new Headers(),
-          status: 200,
-        } as Response)
+      setupMockSequence(mockFetch, [
+        { type: "rate_limited", options: { retryAfter: "-5" } },
+        "success",
+      ])
 
       const notion = new Client({
         fetch: mockFetch,
         retry: { maxRetries: 1, initialRetryDelayMs: 1000 },
       })
+      const promise = notion.blocks.retrieve({ block_id: TEST_BLOCK_ID })
 
-      const promise = notion.blocks.retrieve({
-        block_id: "9f96555b-cf98-4889-83b0-bd6bbe53911e",
-      })
-
-      // Advance past the exponential back-off delay
       await jest.advanceTimersByTimeAsync(2000)
       await promise
 
@@ -778,35 +602,16 @@ describe("Notion SDK Client", () => {
     })
 
     it("caps retry delay at maxRetryDelayMs", async () => {
-      mockFetch
-        .mockResolvedValueOnce({
-          ok: false,
-          text: () =>
-            Promise.resolve(
-              JSON.stringify({
-                code: "rate_limited",
-                message: "Rate limited",
-              })
-            ),
-          // Server requests 300 second wait
-          headers: new Headers({ "retry-after": "300" }),
-          status: 429,
-        } as Response)
-        .mockResolvedValueOnce({
-          ok: true,
-          text: () => Promise.resolve("{}"),
-          headers: new Headers(),
-          status: 200,
-        } as Response)
+      setupMockSequence(mockFetch, [
+        { type: "rate_limited", options: { retryAfter: "300" } }, // Server requests 5 minutes
+        "success",
+      ])
 
       const notion = new Client({
         fetch: mockFetch,
         retry: { maxRetries: 1, maxRetryDelayMs: 5000 },
       })
-
-      const promise = notion.blocks.retrieve({
-        block_id: "9f96555b-cf98-4889-83b0-bd6bbe53911e",
-      })
+      const promise = notion.blocks.retrieve({ block_id: TEST_BLOCK_ID })
 
       // Should retry after maxRetryDelayMs (5s), not retry-after (300s)
       await jest.advanceTimersByTimeAsync(5000)
@@ -820,13 +625,7 @@ describe("Notion SDK Client", () => {
     let mockFetch: jest.MockedFn<typeof fetch>
 
     beforeEach(() => {
-      mockFetch = jest.fn()
-      mockFetch.mockResolvedValue({
-        ok: true,
-        text: () => Promise.resolve("{}"),
-        headers: new Headers(),
-        status: 200,
-      } as Response)
+      mockFetch = createMockFetch()
     })
 
     it("handles empty query parameters", async () => {
