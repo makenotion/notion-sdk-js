@@ -243,13 +243,13 @@ export default class Client {
     )
     const formData = this.buildFormData(formDataParams, headers)
 
-    return this.executeWithRetry<ResponseBody>(
+    return this.executeWithRetry<ResponseBody>({
       url,
       method,
       path,
       headers,
-      bodyAsJsonString ?? formData
-    )
+      body: bodyAsJsonString ?? formData,
+    })
   }
 
   /**
@@ -356,24 +356,25 @@ export default class Client {
   /**
    * Executes the request with retry logic.
    */
-  private async executeWithRetry<ResponseBody extends object>(
-    url: URL,
-    method: Method,
-    path: string,
-    headers: Record<string, string>,
+  private async executeWithRetry<ResponseBody extends object>(args: {
+    url: URL
+    method: Method
+    path: string
+    headers: Record<string, string>
     body: string | FormData | undefined
-  ): Promise<ResponseBody> {
+  }): Promise<ResponseBody> {
+    const { url, method, path, headers, body } = args
     let attempt = 0
     // eslint-disable-next-line no-constant-condition
     while (true) {
       try {
-        return await this.executeSingleRequest<ResponseBody>(
+        return await this.executeSingleRequest<ResponseBody>({
           url,
           method,
           path,
           headers,
-          body
-        )
+          body,
+        })
       } catch (error: unknown) {
         if (!isNotionClientError(error)) {
           throw error
@@ -381,7 +382,7 @@ export default class Client {
 
         this.logRequestError(error, attempt)
 
-        if (attempt < this.#maxRetries && this.canRetry(error)) {
+        if (attempt < this.#maxRetries && this.canRetry(error, method)) {
           const delayMs = this.calculateRetryDelay(error, attempt)
           this.log(LogLevel.INFO, "retrying request", {
             method,
@@ -402,13 +403,14 @@ export default class Client {
   /**
    * Executes a single HTTP request (no retry).
    */
-  private async executeSingleRequest<ResponseBody extends object>(
-    url: URL,
-    method: Method,
-    path: string,
-    headers: Record<string, string>,
+  private async executeSingleRequest<ResponseBody extends object>(args: {
+    url: URL
+    method: Method
+    path: string
+    headers: Record<string, string>
     body: string | FormData | undefined
-  ): Promise<ResponseBody> {
+  }): Promise<ResponseBody> {
+    const { url, method, path, headers, body } = args
     const response = await RequestTimeoutError.rejectAfterTimeout(
       this.#fetch(url.toString(), {
         method: method.toUpperCase(),
@@ -467,17 +469,31 @@ export default class Client {
   }
 
   /**
-   * Determines if an error can be retried based on its error code.
+   * Determines if an error can be retried based on its error code and method.
+   * Rate limits (429) are always retryable since the server explicitly asks us
+   * to retry. Server errors (500, 503) are only retried for idempotent methods
+   * (GET, DELETE) to avoid duplicate side effects.
    */
-  private canRetry(error: unknown): boolean {
+  private canRetry(error: unknown, method: Method): boolean {
     if (!APIResponseError.isAPIResponseError(error)) {
       return false
     }
-    return (
-      error.code === APIErrorCode.RateLimited ||
-      error.code === APIErrorCode.InternalServerError ||
-      error.code === APIErrorCode.ServiceUnavailable
-    )
+
+    // Rate limits are always retryable - server says "try again later"
+    if (error.code === APIErrorCode.RateLimited) {
+      return true
+    }
+
+    // Server errors only retry for idempotent methods
+    const isIdempotent = method === "get" || method === "delete"
+    if (isIdempotent) {
+      return (
+        error.code === APIErrorCode.InternalServerError ||
+        error.code === APIErrorCode.ServiceUnavailable
+      )
+    }
+
+    return false
   }
 
   /**

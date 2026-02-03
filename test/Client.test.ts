@@ -531,6 +531,128 @@ describe("Notion SDK Client", () => {
 
       expect(mockFetch).toHaveBeenCalledTimes(2)
     })
+
+    describe("idempotent method restrictions", () => {
+      it("does not retry POST on internal server error (500)", async () => {
+        mockFetch.mockResolvedValue(mockResponse("internal_server_error"))
+
+        const notion = new Client({
+          fetch: mockFetch,
+          retry: { maxRetries: 2, initialRetryDelayMs: 1000 },
+        })
+
+        await expect(
+          notion.pages.create({
+            parent: { page_id: TEST_BLOCK_ID },
+            properties: {},
+          })
+        ).rejects.toThrow(APIResponseError)
+
+        expect(mockFetch).toHaveBeenCalledTimes(1)
+      })
+
+      it("does not retry POST on service unavailable (503)", async () => {
+        mockFetch.mockResolvedValue(mockResponse("service_unavailable"))
+
+        const notion = new Client({
+          fetch: mockFetch,
+          retry: { maxRetries: 2, initialRetryDelayMs: 1000 },
+        })
+
+        await expect(
+          notion.pages.create({
+            parent: { page_id: TEST_BLOCK_ID },
+            properties: {},
+          })
+        ).rejects.toThrow(APIResponseError)
+
+        expect(mockFetch).toHaveBeenCalledTimes(1)
+      })
+
+      it("does not retry PATCH on internal server error (500)", async () => {
+        mockFetch.mockResolvedValue(mockResponse("internal_server_error"))
+
+        const notion = new Client({
+          fetch: mockFetch,
+          retry: { maxRetries: 2, initialRetryDelayMs: 1000 },
+        })
+
+        await expect(
+          notion.pages.update({
+            page_id: TEST_BLOCK_ID,
+            properties: {},
+          })
+        ).rejects.toThrow(APIResponseError)
+
+        expect(mockFetch).toHaveBeenCalledTimes(1)
+      })
+
+      it("retries POST on rate limit (429)", async () => {
+        setupMockSequence(mockFetch, [
+          { type: "rate_limited", options: { retryAfter: "1" } },
+          "success",
+        ])
+
+        const notion = new Client({
+          fetch: mockFetch,
+          retry: { maxRetries: 2, initialRetryDelayMs: 1000 },
+        })
+        const promise = notion.pages.create({
+          parent: { page_id: TEST_BLOCK_ID },
+          properties: {},
+        })
+
+        await jest.advanceTimersByTimeAsync(1000)
+        await promise
+
+        expect(mockFetch).toHaveBeenCalledTimes(2)
+      })
+
+      it("retries DELETE on internal server error (500)", async () => {
+        setupMockSequence(mockFetch, ["internal_server_error", "success"])
+
+        const notion = new Client({
+          fetch: mockFetch,
+          retry: { maxRetries: 2, initialRetryDelayMs: 1000 },
+        })
+        const promise = notion.blocks.delete({ block_id: TEST_BLOCK_ID })
+
+        await jest.advanceTimersByTimeAsync(2000)
+        await promise
+
+        expect(mockFetch).toHaveBeenCalledTimes(2)
+      })
+
+      it("retries DELETE on service unavailable (503)", async () => {
+        setupMockSequence(mockFetch, ["service_unavailable", "success"])
+
+        const notion = new Client({
+          fetch: mockFetch,
+          retry: { maxRetries: 2, initialRetryDelayMs: 1000 },
+        })
+        const promise = notion.blocks.delete({ block_id: TEST_BLOCK_ID })
+
+        await jest.advanceTimersByTimeAsync(2000)
+        await promise
+
+        expect(mockFetch).toHaveBeenCalledTimes(2)
+      })
+
+      it("retries GET on internal server error (500)", async () => {
+        setupMockSequence(mockFetch, ["internal_server_error", "success"])
+
+        const notion = new Client({
+          fetch: mockFetch,
+          retry: { maxRetries: 2, initialRetryDelayMs: 1000 },
+        })
+        const promise = notion.blocks.retrieve({ block_id: TEST_BLOCK_ID })
+
+        await jest.advanceTimersByTimeAsync(2000)
+        await promise
+
+        expect(mockFetch).toHaveBeenCalledTimes(2)
+      })
+    })
   })
 
   describe("request building", () => {
