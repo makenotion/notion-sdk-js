@@ -25,6 +25,7 @@
     "package-lock.json",
     "node_modules/**",
     "examples/**/node_modules/**",
-    "build/**"
+    "build/**",
+    "src/api-endpoints.ts"
   ]
 }
