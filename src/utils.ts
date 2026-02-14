@@ -22,3 +22,29 @@ export function pick<O, K extends AllKeys<O>>(
 export function isObject(o: unknown): o is Record<PropertyKey, unknown> {
   return typeof o === "object" && o !== null
 }
+
+export type EndpointDefinition = {
+  pathParams: readonly string[]
+  queryParams: readonly string[]
+  bodyParams: readonly string[]
+  formDataParams?: readonly string[]
+}
+
+/**
+ * Returns parameter names present in `args` that are not recognized by the
+ * endpoint definition. Useful for warning users about typos or parameters
+ * that have been renamed across API versions.
+ */
+export function getUnknownParams(
+  args: Record<string, unknown>,
+  endpoint: EndpointDefinition
+): string[] {
+  const knownKeys = new Set<string>([
+    ...endpoint.pathParams,
+    ...endpoint.queryParams,
+    ...endpoint.bodyParams,
+    ...(endpoint.formDataParams ?? []),
+    "auth",
+  ])
+  return Object.keys(args).filter(k => !knownKeys.has(k))
+}
