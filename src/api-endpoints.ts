@@ -53,6 +53,13 @@ type ApiColor =
   | "pink_background"
   | "red_background"
 
+type ApiTranscriptionStatus =
+  | "transcription_not_started"
+  | "transcription_paused"
+  | "transcription_in_progress"
+  | "summary_in_progress"
+  | "notes_ready"
+
 type ArrayBasedPropertyValueResponse =
   | TitleArrayBasedPropertyValueResponse
   | RichTextArrayBasedPropertyValueResponse
@@ -448,6 +455,7 @@ export type BlockObjectResponse =
   | LinkToPageBlockObjectResponse
   | TableBlockObjectResponse
   | TableRowBlockObjectResponse
+  | TranscriptionBlockObjectResponse
   | EmbedBlockObjectResponse
   | BookmarkBlockObjectResponse
   | ImageBlockObjectResponse
@@ -3355,6 +3363,43 @@ export type ToggleBlockObjectResponse = {
   archived: boolean
   in_trash: boolean
 }
+
+export type TranscriptionBlockObjectResponse = {
+  type: "transcription"
+  transcription: TranscriptionBlockResponse
+  parent: ParentForBlockBasedObjectResponse
+  object: "block"
+  id: string
+  created_time: string
+  created_by: PartialUserObjectResponse
+  last_edited_time: string
+  last_edited_by: PartialUserObjectResponse
+  has_children: boolean
+  archived: boolean
+  in_trash: boolean
+}
+
+type TranscriptionBlockResponse = {
+  title?: Array<RichTextItemResponse>
+  status?: ApiTranscriptionStatus
+  children?: TranscriptionChildrenResponse
+  calendar_event?: TranscriptionCalendarEventResponse
+  recording?: TranscriptionRecordingResponse
+}
+
+type TranscriptionCalendarEventResponse = {
+  start_time: string
+  end_time: string
+  attendees?: Array<IdRequest>
+}
+
+type TranscriptionChildrenResponse = {
+  summary_block_id?: IdRequest
+  notes_block_id?: IdRequest
+  transcript_block_id?: IdRequest
+}
+
+type TranscriptionRecordingResponse = { start_time?: string; end_time?: string }
 
 type UniqueIdDatabasePropertyConfigResponse = {
   // Always `unique_id`
