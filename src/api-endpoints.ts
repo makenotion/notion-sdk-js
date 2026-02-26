@@ -3729,6 +3729,8 @@ type CreatePageBodyParameters = {
   cover?: PageCoverRequest | null
   content?: Array<BlockObjectRequest>
   children?: Array<BlockObjectRequest>
+  // Page content as Notion-flavored Markdown. Mutually exclusive with content/children.
+  markdown?: string
   template?:
     | { type: "none" }
     | { type: "default" }
@@ -3754,6 +3756,7 @@ export const createPage = {
     "cover",
     "content",
     "children",
+    "markdown",
     "template",
     "position",
   ],
@@ -3920,6 +3923,46 @@ export const updatePage = {
   path: (p: UpdatePagePathParameters): string => `pages/${p.page_id}`,
 } as const
 
+type MovePagePathParameters = {
+  // The ID of the page to move.
+  page_id: IdRequest
+}
+
+type MovePageBodyParameters = {
+  // The new parent of the page.
+  parent:
+    | {
+        // The ID of the parent page (with or without dashes), for example,
+        // 195de9221179449fab8075a27c979105
+        page_id: IdRequest
+        // Always `page_id`
+        type?: "page_id"
+      }
+    | {
+        // The ID of the parent data source (collection), with or without dashes. For example,
+        // f336d0bc-b841-465b-8045-024475c079dd
+        data_source_id: IdRequest
+        // Always `data_source_id`
+        type?: "data_source_id"
+      }
+}
+
+export type MovePageParameters = MovePagePathParameters & MovePageBodyParameters
+
+export type MovePageResponse = PartialPageObjectResponse | PageObjectResponse
+
+/**
+ * Move a page
+ */
+export const movePage = {
+  method: "post",
+  pathParams: ["page_id"],
+  queryParams: [],
+  bodyParams: ["parent"],
+
+  path: (p: MovePagePathParameters): string => `pages/${p.page_id}/move`,
+} as const
+
 type GetPagePropertyPathParameters = {
   page_id: IdRequest
   property_id: string
@@ -3948,6 +3991,113 @@ export const getPageProperty = {
 
   path: (p: GetPagePropertyPathParameters): string =>
     `pages/${p.page_id}/properties/${p.property_id}`,
+} as const
+
+type GetPageMarkdownPathParameters = {
+  // The ID of the page (or block) to retrieve as markdown. Non-navigable block IDs from
+  // truncated responses can be passed here to fetch their subtrees.
+  page_id: IdRequest
+}
+
+type GetPageMarkdownQueryParameters = {
+  // Whether to include meeting note transcripts. Defaults to false. When true, full
+  // transcripts are included; when false, a placeholder with the meeting note URL is shown
+  // instead.
+  include_transcript?: boolean
+}
+
+export type GetPageMarkdownParameters = GetPageMarkdownPathParameters &
+  GetPageMarkdownQueryParameters
+
+export type GetPageMarkdownResponse = {
+  // The type of object, always 'page_markdown'.
+  object: "page_markdown"
+  // The ID of the page or block.
+  id: IdResponse
+  // The page content rendered as enhanced Markdown.
+  markdown: string
+  // Whether the content was truncated due to exceeding the record count limit.
+  truncated: boolean
+  // Block IDs that could not be loaded (appeared as <unknown> tags in the markdown). Pass
+  // these IDs back to this endpoint to fetch their content separately.
+  unknown_block_ids: Array<IdResponse>
+}
+
+/**
+ * Retrieve a page as markdown
+ */
+export const getPageMarkdown = {
+  method: "get",
+  pathParams: ["page_id"],
+  queryParams: ["include_transcript"],
+  bodyParams: [],
+
+  path: (p: GetPageMarkdownPathParameters): string =>
+    `pages/${p.page_id}/markdown`,
+} as const
+
+type UpdatePageMarkdownPathParameters = {
+  // The ID of the page to update.
+  page_id: IdRequest
+}
+
+type UpdatePageMarkdownBodyParameters =
+  | {
+      // Always `insert_content`
+      type: "insert_content"
+      // Insert new content into the page.
+      insert_content: {
+        // The enhanced markdown content to insert into the page.
+        content: string
+        // Selection of existing content to insert after, using the ellipsis format ("start
+        // text...end text"). Omit to append at the end of the page.
+        after?: string
+      }
+    }
+  | {
+      // Always `replace_content_range`
+      type: "replace_content_range"
+      // Replace a range of content in the page.
+      replace_content_range: {
+        // The new enhanced markdown content to replace the matched range.
+        content: string
+        // Selection of existing content to replace, using the ellipsis format ("start text...end
+        // text").
+        content_range: string
+        // Set to true to allow the operation to delete child pages or databases. Defaults to
+        // false.
+        allow_deleting_content?: boolean
+      }
+    }
+
+export type UpdatePageMarkdownParameters = UpdatePageMarkdownPathParameters &
+  UpdatePageMarkdownBodyParameters
+
+export type UpdatePageMarkdownResponse = {
+  // The type of object, always 'page_markdown'.
+  object: "page_markdown"
+  // The ID of the page or block.
+  id: IdResponse
+  // The page content rendered as enhanced Markdown.
+  markdown: string
+  // Whether the content was truncated due to exceeding the record count limit.
+  truncated: boolean
+  // Block IDs that could not be loaded (appeared as <unknown> tags in the markdown). Pass
+  // these IDs back to this endpoint to fetch their content separately.
+  unknown_block_ids: Array<IdResponse>
+}
+
+/**
+ * Update a page's content as markdown
+ */
+export const updatePageMarkdown = {
+  method: "patch",
+  pathParams: ["page_id"],
+  queryParams: [],
+  bodyParams: ["type", "insert_content", "replace_content_range"],
+
+  path: (p: UpdatePageMarkdownPathParameters): string =>
+    `pages/${p.page_id}/markdown`,
 } as const
 
 type GetBlockPathParameters = {
@@ -5258,44 +5408,4 @@ export const oauthIntrospect = {
   bodyParams: ["token"],
 
   path: (): string => `oauth/introspect`,
-} as const
-
-type MovePagePathParameters = {
-  // The ID of the page to move.
-  page_id: IdRequest
-}
-
-type MovePageBodyParameters = {
-  // The new parent of the page.
-  parent:
-    | {
-        // The ID of the parent page (with or without dashes), for example,
-        // 195de9221179449fab8075a27c979105
-        page_id: IdRequest
-        // Always `page_id`
-        type?: "page_id"
-      }
-    | {
-        // The ID of the parent data source (collection), with or without dashes. For example,
-        // f336d0bc-b841-465b-8045-024475c079dd
-        data_source_id: IdRequest
-        // Always `data_source_id`
-        type?: "data_source_id"
-      }
-}
-
-export type MovePageParameters = MovePagePathParameters & MovePageBodyParameters
-
-export type MovePageResponse = PartialPageObjectResponse | PageObjectResponse
-
-/**
- * Move a page
- */
-export const movePage = {
-  method: "post",
-  pathParams: ["page_id"],
-  queryParams: [],
-  bodyParams: ["parent"],
-
-  path: (p: MovePagePathParameters): string => `pages/${p.page_id}/move`,
 } as const
