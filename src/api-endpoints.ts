@@ -2302,6 +2302,20 @@ type PageIdParentForBlockBasedObjectResponse = {
   page_id: IdResponse
 }
 
+type PageMarkdownResponse = {
+  // The type of object, always 'page_markdown'.
+  object: "page_markdown"
+  // The ID of the page or block.
+  id: IdResponse
+  // The page content rendered as enhanced Markdown.
+  markdown: string
+  // Whether the content was truncated due to exceeding the record count limit.
+  truncated: boolean
+  // Block IDs that could not be loaded (appeared as <unknown> tags in the markdown). Pass
+  // these IDs back to this endpoint to fetch their content separately.
+  unknown_block_ids: Array<IdResponse>
+}
+
 export type PageObjectResponse = {
   // The page object type name.
   object: "page"
@@ -4009,19 +4023,7 @@ type GetPageMarkdownQueryParameters = {
 export type GetPageMarkdownParameters = GetPageMarkdownPathParameters &
   GetPageMarkdownQueryParameters
 
-export type GetPageMarkdownResponse = {
-  // The type of object, always 'page_markdown'.
-  object: "page_markdown"
-  // The ID of the page or block.
-  id: IdResponse
-  // The page content rendered as enhanced Markdown.
-  markdown: string
-  // Whether the content was truncated due to exceeding the record count limit.
-  truncated: boolean
-  // Block IDs that could not be loaded (appeared as <unknown> tags in the markdown). Pass
-  // these IDs back to this endpoint to fetch their content separately.
-  unknown_block_ids: Array<IdResponse>
-}
+export type GetPageMarkdownResponse = PageMarkdownResponse
 
 /**
  * Retrieve a page as markdown
@@ -4073,19 +4075,7 @@ type UpdatePageMarkdownBodyParameters =
 export type UpdatePageMarkdownParameters = UpdatePageMarkdownPathParameters &
   UpdatePageMarkdownBodyParameters
 
-export type UpdatePageMarkdownResponse = {
-  // The type of object, always 'page_markdown'.
-  object: "page_markdown"
-  // The ID of the page or block.
-  id: IdResponse
-  // The page content rendered as enhanced Markdown.
-  markdown: string
-  // Whether the content was truncated due to exceeding the record count limit.
-  truncated: boolean
-  // Block IDs that could not be loaded (appeared as <unknown> tags in the markdown). Pass
-  // these IDs back to this endpoint to fetch their content separately.
-  unknown_block_ids: Array<IdResponse>
-}
+export type UpdatePageMarkdownResponse = PageMarkdownResponse
 
 /**
  * Update a page's content as markdown
