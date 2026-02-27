@@ -1,6 +1,6 @@
 {
   "name": "@notionhq/client",
-  "version": "5.3.0",
+  "version": "5.10.0",
   "description": "A simple and easy to use client for the Notion API",
   "engines": {
     "node": ">=18"
@@ -22,7 +22,7 @@
   "main": "./build/src",
   "types": "./build/src/index.d.ts",
   "scripts": {
-    "prepare": "npm run build",
+    "prepare": "husky && npm run build",
     "prepublishOnly": "npm run checkLoggedIn && npm run lint && npm run test",
     "build": "tsc",
     "prettier": "prettier --write .",
@@ -31,10 +31,11 @@
     "check-links": "git ls-files | grep md$ | xargs -n 1 markdown-link-check",
     "prebuild": "npm run clean",
     "clean": "rm -rf ./build",
-    "checkLoggedIn": "./scripts/verifyLoggedIn.sh",
-    "install:examples": "for dir in examples/*/; do echo \"Installing dependencies in $dir...\"; (cd \"$dir\" && npm install); done",
-    "examples:install": "npm run install:examples",
-    "examples:typecheck": "for dir in examples/*/; do echo \"Typechecking $dir...\"; (cd \"$dir\" && npx tsc --noEmit) || exit 1; done"
+    "checkLoggedIn": "./scripts/verifyLoggedIn.sh"
+  },
+  "lint-staged": {
+    "*.{ts,js,json,md}": "prettier --write",
+    "*.ts": "eslint --fix"
   },
   "author": "",
   "license": "MIT",
@@ -43,15 +44,17 @@
     "build/src/**"
   ],
   "devDependencies": {
-    "@types/jest": "28.1.4",
-    "@typescript-eslint/eslint-plugin": "5.39.0",
-    "@typescript-eslint/parser": "5.39.0",
-    "cspell": "5.4.1",
-    "eslint": "7.24.0",
-    "jest": "28.1.2",
+    "@types/jest": "29.5.14",
+    "@typescript-eslint/eslint-plugin": "7.18.0",
+    "@typescript-eslint/parser": "7.18.0",
+    "cspell": "8.17.1",
+    "eslint": "8.57.1",
+    "husky": "^9.1.7",
+    "jest": "29.7.0",
+    "lint-staged": "^16.2.6",
     "markdown-link-check": "3.13.7",
-    "prettier": "2.8.8",
-    "ts-jest": "28.0.5",
+    "prettier": "3.3.3",
+    "ts-jest": "29.2.5",
     "typescript": "5.9.2"
   }
 }

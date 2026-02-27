@@ -6,12 +6,16 @@ import {
   makeConsoleLogger,
 } from "./logging"
 import {
+  APIErrorCode,
+  APIResponseError,
   buildRequestError,
   isHTTPResponseError,
   isNotionClientError,
+  type NotionClientError,
   RequestTimeoutError,
+  validateRequestPath,
 } from "./errors"
-import { pick } from "./utils"
+import { pick, getUnknownParams, type EndpointDefinition } from "./utils"
 import {
   type GetBlockParameters,
   type GetBlockResponse,
@@ -49,6 +53,15 @@ import {
   type UpdatePageParameters,
   type UpdatePageResponse,
   updatePage,
+  type MovePageParameters,
+  type MovePageResponse,
+  movePage,
+  type GetPageMarkdownParameters,
+  type GetPageMarkdownResponse,
+  getPageMarkdown,
+  type UpdatePageMarkdownParameters,
+  type UpdatePageMarkdownResponse,
+  updatePageMarkdown,
   type GetUserParameters,
   type GetUserResponse,
   getUser,
@@ -116,7 +129,26 @@ import {
 } from "../package.json"
 import type { SupportedFetch } from "./fetch-types"
 
-export interface ClientOptions {
+export type RetryOptions = {
+  /**
+   * Maximum number of retry attempts. Set to 0 to disable retries.
+   * @default 2
+   */
+  maxRetries?: number
+  /**
+   * Initial delay between retries in milliseconds.
+   * Used as base for exponential back-off when retry-after header is absent.
+   * @default 1000
+   */
+  initialRetryDelayMs?: number
+  /**
+   * Maximum delay between retries in milliseconds.
+   * @default 60000
+   */
+  maxRetryDelayMs?: number
+}
+
+export type ClientOptions = {
   auth?: string
   timeoutMs?: number
   baseUrl?: string
@@ -126,6 +158,11 @@ export interface ClientOptions {
   fetch?: SupportedFetch
   /** Silently ignored in the browser */
   agent?: Agent
+  /**
+   * Configuration for automatic retries on rate limit (429) and server errors.
+   * Set to false to disable retries entirely.
+   */
+  retry?: RetryOptions | false
 }
 
 type FileParam = {
@@ -133,7 +170,7 @@ type FileParam = {
   data: string | Blob
 }
 
-export interface RequestParameters {
+export type RequestParameters = {
   path: string
   method: Method
   query?: QueryParams
@@ -163,6 +200,9 @@ export default class Client {
   #fetch: SupportedFetch
   #agent: Agent | undefined
   #userAgent: string
+  #maxRetries: number
+  #initialRetryDelayMs: number
+  #maxRetryDelayMs: number
 
   static readonly defaultNotionVersion = "2025-09-03"
 
@@ -176,6 +216,16 @@ export default class Client {
     this.#fetch = options?.fetch ?? fetch
     this.#agent = options?.agent
     this.#userAgent = `notionhq-client/${PACKAGE_VERSION}`
+
+    if (options?.retry === false) {
+      this.#maxRetries = 0
+      this.#initialRetryDelayMs = 0
+      this.#maxRetryDelayMs = 0
+    } else {
+      this.#maxRetries = options?.retry?.maxRetries ?? 2
+      this.#initialRetryDelayMs = options?.retry?.initialRetryDelayMs ?? 1000
+      this.#maxRetryDelayMs = options?.retry?.maxRetryDelayMs ?? 60_000
+    }
   }
 
   /**
@@ -186,14 +236,32 @@ export default class Client {
   ): Promise<ResponseBody> {
     const { path, method, query, body, formDataParams, auth } = args
 
+    validateRequestPath(path)
+
     this.log(LogLevel.INFO, "request start", { method, path })
 
-    // If the body is empty, don't send the body in the HTTP request
-    const bodyAsJsonString =
-      !body || Object.entries(body).length === 0
-        ? undefined
-        : JSON.stringify(body)
+    const url = this.buildRequestUrl(path, query)
+    const bodyAsJsonString = this.serializeBody(body)
+    const headers = this.buildRequestHeaders(
+      args.headers,
+      auth,
+      bodyAsJsonString
+    )
+    const formData = this.buildFormData(formDataParams, headers)
 
+    return this.executeWithRetry<ResponseBody>({
+      url,
+      method,
+      path,
+      headers,
+      body: bodyAsJsonString ?? formData,
+    })
+  }
+
+  /**
+   * Builds the full URL with query parameters.
+   */
+  private buildRequestUrl(path: string, query: QueryParams | undefined): URL {
     const url = new URL(`${this.#prefixUrl}${path}`)
     if (query) {
       for (const [key, value] of Object.entries(query)) {
@@ -208,27 +276,33 @@ export default class Client {
         }
       }
     }
+    return url
+  }
 
-    // Allow both client ID / client secret based auth as well as token based auth.
-    let authorizationHeader: Record<string, string>
-    if (typeof auth === "object") {
-      // Client ID and secret based auth is **ONLY** supported when using the
-      // `/oauth/token` endpoint. If this is the case, handle formatting the
-      // authorization header as required by `Basic` auth.
-      const unencodedCredential = `${auth.client_id}:${auth.client_secret}`
-      const encodedCredential =
-        Buffer.from(unencodedCredential).toString("base64")
-      authorizationHeader = { authorization: `Basic ${encodedCredential}` }
-    } else {
-      // Otherwise format authorization header as `Bearer` token auth.
-      authorizationHeader = this.authAsHeaders(auth)
+  /**
+   * Serializes the request body to JSON string if non-empty.
+   */
+  private serializeBody(
+    body: Record<string, unknown> | undefined
+  ): string | undefined {
+    if (!body || Object.entries(body).length === 0) {
+      return undefined
     }
+    return JSON.stringify(body)
+  }
+
+  /**
+   * Builds the request headers including auth and content-type.
+   */
+  private buildRequestHeaders(
+    customHeaders: Record<string, string> | undefined,
+    auth: RequestParameters["auth"],
+    bodyAsJsonString: string | undefined
+  ): Record<string, string> {
+    const authorizationHeader = this.buildAuthHeader(auth)
 
     const headers: Record<string, string> = {
-      // Request-level custom additional headers can be provided, but
-      // don't allow them to override all other headers, e.g. the
-      // standard user agent.
-      ...args.headers,
+      ...customHeaders,
       ...authorizationHeader,
       "Notion-Version": this.#notionVersion,
       "user-agent": this.#userAgent,
@@ -238,74 +312,262 @@ export default class Client {
       headers["content-type"] = "application/json"
     }
 
-    let formData: FormData | undefined
-    if (formDataParams) {
-      delete headers["content-type"]
+    return headers
+  }
 
-      formData = new FormData()
-      for (const [key, value] of Object.entries(formDataParams)) {
-        if (typeof value === "string") {
-          formData.append(key, value)
-        } else if (typeof value === "object") {
-          formData.append(
-            key,
-            typeof value.data === "object"
-              ? value.data
-              : new Blob([value.data]),
-            value.filename
-          )
-        }
-      }
+  /**
+   * Builds the authorization header based on auth type.
+   */
+  private buildAuthHeader(
+    auth: RequestParameters["auth"]
+  ): Record<string, string> {
+    if (typeof auth === "object") {
+      const unencodedCredential = `${auth.client_id}:${auth.client_secret}`
+      const encodedCredential =
+        Buffer.from(unencodedCredential).toString("base64")
+      return { authorization: `Basic ${encodedCredential}` }
+    }
+    return this.authAsHeaders(auth)
+  }
+
+  /**
+   * Builds FormData from form parameters if provided.
+   * Also removes content-type header to let fetch set the boundary.
+   */
+  private buildFormData(
+    formDataParams: Record<string, string | FileParam> | undefined,
+    headers: Record<string, string>
+  ): FormData | undefined {
+    if (!formDataParams) {
+      return undefined
     }
 
-    try {
-      const response = await RequestTimeoutError.rejectAfterTimeout(
-        this.#fetch(url.toString(), {
-          method: method.toUpperCase(),
-          headers,
-          body: bodyAsJsonString ?? formData,
-          agent: this.#agent,
-        }),
-        this.#timeoutMs
-      )
+    delete headers["content-type"]
 
-      const responseText = await response.text()
-      if (!response.ok) {
-        throw buildRequestError(response, responseText)
+    const formData = new FormData()
+    for (const [key, value] of Object.entries(formDataParams)) {
+      if (typeof value === "string") {
+        formData.append(key, value)
+      } else if (typeof value === "object") {
+        formData.append(
+          key,
+          typeof value.data === "object" ? value.data : new Blob([value.data]),
+          value.filename
+        )
       }
+    }
+    return formData
+  }
 
-      const responseJson: ResponseBody = JSON.parse(responseText)
-      this.log(LogLevel.INFO, "request success", {
-        method,
-        path,
-        ...("request_id" in responseJson && responseJson.request_id
-          ? { requestId: responseJson.request_id }
-          : {}),
-      })
-      return responseJson
-    } catch (error: unknown) {
-      if (!isNotionClientError(error)) {
+  /**
+   * Executes the request with retry logic.
+   */
+  private async executeWithRetry<ResponseBody extends object>(args: {
+    url: URL
+    method: Method
+    path: string
+    headers: Record<string, string>
+    body: string | FormData | undefined
+  }): Promise<ResponseBody> {
+    const { url, method, path, headers, body } = args
+    let attempt = 0
+    // eslint-disable-next-line no-constant-condition
+    while (true) {
+      try {
+        return await this.executeSingleRequest<ResponseBody>({
+          url,
+          method,
+          path,
+          headers,
+          body,
+        })
+      } catch (error: unknown) {
+        if (!isNotionClientError(error)) {
+          throw error
+        }
+
+        this.logRequestError(error, attempt)
+
+        if (attempt < this.#maxRetries && this.canRetry(error, method)) {
+          const delayMs = this.calculateRetryDelay(error, attempt)
+          this.log(LogLevel.INFO, "retrying request", {
+            method,
+            path,
+            attempt: attempt + 1,
+            delayMs,
+          })
+          await this.sleep(delayMs)
+          attempt++
+          continue
+        }
+
         throw error
       }
-
-      // Log the error if it's one of our known error types
-      this.log(LogLevel.WARN, "request fail", {
-        code: error.code,
-        message: error.message,
-        ...("request_id" in error && error.request_id
-          ? { requestId: error.request_id }
-          : {}),
-      })
-
-      if (isHTTPResponseError(error)) {
-        // The response body may contain sensitive information so it is logged separately at the DEBUG level
-        this.log(LogLevel.DEBUG, "failed response body", {
-          body: error.body,
-        })
-      }
-
-      throw error
     }
+  }
+
+  /**
+   * Executes a single HTTP request (no retry).
+   */
+  private async executeSingleRequest<ResponseBody extends object>(args: {
+    url: URL
+    method: Method
+    path: string
+    headers: Record<string, string>
+    body: string | FormData | undefined
+  }): Promise<ResponseBody> {
+    const { url, method, path, headers, body } = args
+    const response = await RequestTimeoutError.rejectAfterTimeout(
+      this.#fetch(url.toString(), {
+        method: method.toUpperCase(),
+        headers,
+        body,
+        agent: this.#agent,
+      }),
+      this.#timeoutMs
+    )
+
+    const responseText = await response.text()
+    if (!response.ok) {
+      throw buildRequestError(response, responseText)
+    }
+
+    const responseJson: ResponseBody = JSON.parse(responseText)
+    this.log(LogLevel.INFO, "request success", {
+      method,
+      path,
+      ...this.extractRequestId(responseJson),
+    })
+    return responseJson
+  }
+
+  /**
+   * Logs a request error with appropriate detail level.
+   */
+  private logRequestError(error: NotionClientError, attempt: number): void {
+    this.log(LogLevel.WARN, "request fail", {
+      code: error.code,
+      message: error.message,
+      attempt,
+      ...this.extractRequestId(error),
+    })
+
+    if (isHTTPResponseError(error)) {
+      this.log(LogLevel.DEBUG, "failed response body", {
+        body: error.body,
+      })
+    }
+  }
+
+  /**
+   * Extracts request_id from an object if present.
+   */
+  private extractRequestId(obj: unknown): { requestId?: string } {
+    if (
+      obj &&
+      typeof obj === "object" &&
+      "request_id" in obj &&
+      typeof obj.request_id === "string"
+    ) {
+      return { requestId: obj.request_id }
+    }
+    return {}
+  }
+
+  /**
+   * Determines if an error can be retried based on its error code and method.
+   * Rate limits (429) are always retryable since the server explicitly asks us
+   * to retry. Server errors (500, 503) are only retried for idempotent methods
+   * (GET, DELETE) to avoid duplicate side effects.
+   */
+  private canRetry(error: unknown, method: Method): boolean {
+    if (!APIResponseError.isAPIResponseError(error)) {
+      return false
+    }
+
+    // Rate limits are always retryable - server says "try again later"
+    if (error.code === APIErrorCode.RateLimited) {
+      return true
+    }
+
+    // Server errors only retry for idempotent methods
+    const isIdempotent = method === "get" || method === "delete"
+    if (isIdempotent) {
+      return (
+        error.code === APIErrorCode.InternalServerError ||
+        error.code === APIErrorCode.ServiceUnavailable
+      )
+    }
+
+    return false
+  }
+
+  /**
+   * Calculates the delay before the next retry attempt.
+   * Uses retry-after header if present, otherwise exponential back-off with
+   * jitter.
+   */
+  private calculateRetryDelay(error: unknown, attempt: number): number {
+    // Try to get retry-after from the error headers
+    if (APIResponseError.isAPIResponseError(error)) {
+      const retryAfterMs = this.parseRetryAfterHeader(error.headers)
+      if (retryAfterMs !== undefined) {
+        return Math.min(retryAfterMs, this.#maxRetryDelayMs)
+      }
+    }
+
+    // Exponential back-off with full jitter
+    const baseDelay = this.#initialRetryDelayMs * Math.pow(2, attempt)
+    const jitter = Math.random()
+    return Math.min(baseDelay * jitter + baseDelay / 2, this.#maxRetryDelayMs)
+  }
+
+  /**
+   * Parses the retry-after header value.
+   * Supports both delta-seconds (e.g., "120") and HTTP-date formats.
+   * Returns the delay in milliseconds, or undefined if not present or invalid.
+   */
+  private parseRetryAfterHeader(headers: unknown): number | undefined {
+    if (!headers) {
+      return undefined
+    }
+
+    let retryAfterValue: string | null = null
+
+    // Handle Headers object (standard fetch API)
+    if (typeof headers === "object" && "get" in headers) {
+      const headersObj = headers as { get: (name: string) => string | null }
+      retryAfterValue = headersObj.get("retry-after")
+    }
+    // Handle plain object
+    else if (typeof headers === "object") {
+      const headersRecord = headers as Record<string, string>
+      retryAfterValue =
+        headersRecord["retry-after"] ?? headersRecord["Retry-After"] ?? null
+    }
+
+    if (!retryAfterValue) {
+      return undefined
+    }
+
+    // Try parsing as delta-seconds (integer)
+    const seconds = parseInt(retryAfterValue, 10)
+    if (!isNaN(seconds) && seconds >= 0) {
+      return seconds * 1000
+    }
+
+    // Try parsing as HTTP-date
+    const date = Date.parse(retryAfterValue)
+    if (!isNaN(date)) {
+      const delayMs = date - Date.now()
+      return delayMs > 0 ? delayMs : 0
+    }
+
+    return undefined
+  }
+
+  private sleep(ms: number): Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, ms))
   }
 
   /*
@@ -319,6 +581,7 @@ export default class Client {
     retrieve: (
       args: WithAuth<GetBlockParameters>
     ): Promise<GetBlockResponse> => {
+      this.warnUnknownParams(args, getBlock)
       return this.request<GetBlockResponse>({
         path: getBlock.path(args),
         method: getBlock.method,
@@ -334,6 +597,7 @@ export default class Client {
     update: (
       args: WithAuth<UpdateBlockParameters>
     ): Promise<UpdateBlockResponse> => {
+      this.warnUnknownParams(args, updateBlock)
       return this.request<UpdateBlockResponse>({
         path: updateBlock.path(args),
         method: updateBlock.method,
@@ -349,6 +613,7 @@ export default class Client {
     delete: (
       args: WithAuth<DeleteBlockParameters>
     ): Promise<DeleteBlockResponse> => {
+      this.warnUnknownParams(args, deleteBlock)
       return this.request<DeleteBlockResponse>({
         path: deleteBlock.path(args),
         method: deleteBlock.method,
@@ -364,6 +629,7 @@ export default class Client {
       append: (
         args: WithAuth<AppendBlockChildrenParameters>
       ): Promise<AppendBlockChildrenResponse> => {
+        this.warnUnknownParams(args, appendBlockChildren)
         return this.request<AppendBlockChildrenResponse>({
           path: appendBlockChildren.path(args),
           method: appendBlockChildren.method,
@@ -379,6 +645,7 @@ export default class Client {
       list: (
         args: WithAuth<ListBlockChildrenParameters>
       ): Promise<ListBlockChildrenResponse> => {
+        this.warnUnknownParams(args, listBlockChildren)
         return this.request<ListBlockChildrenResponse>({
           path: listBlockChildren.path(args),
           method: listBlockChildren.method,
@@ -397,6 +664,7 @@ export default class Client {
     retrieve: (
       args: WithAuth<GetDatabaseParameters>
     ): Promise<GetDatabaseResponse> => {
+      this.warnUnknownParams(args, getDatabase)
       return this.request<GetDatabaseResponse>({
         path: getDatabase.path(args),
         method: getDatabase.method,
@@ -412,6 +680,7 @@ export default class Client {
     create: (
       args: WithAuth<CreateDatabaseParameters>
     ): Promise<CreateDatabaseResponse> => {
+      this.warnUnknownParams(args, createDatabase)
       return this.request<CreateDatabaseResponse>({
         path: createDatabase.path(),
         method: createDatabase.method,
@@ -427,6 +696,7 @@ export default class Client {
     update: (
       args: WithAuth<UpdateDatabaseParameters>
     ): Promise<UpdateDatabaseResponse> => {
+      this.warnUnknownParams(args, updateDatabase)
       return this.request<UpdateDatabaseResponse>({
         path: updateDatabase.path(args),
         method: updateDatabase.method,
@@ -444,6 +714,7 @@ export default class Client {
     retrieve: (
       args: WithAuth<GetDataSourceParameters>
     ): Promise<GetDataSourceResponse> => {
+      this.warnUnknownParams(args, getDataSource)
       return this.request<GetDataSourceResponse>({
         path: getDataSource.path(args),
         method: getDataSource.method,
@@ -459,6 +730,7 @@ export default class Client {
     query: (
       args: WithAuth<QueryDataSourceParameters>
     ): Promise<QueryDataSourceResponse> => {
+      this.warnUnknownParams(args, queryDataSource)
       return this.request<QueryDataSourceResponse>({
         path: queryDataSource.path(args),
         method: queryDataSource.method,
@@ -474,6 +746,7 @@ export default class Client {
     create: (
       args: WithAuth<CreateDataSourceParameters>
     ): Promise<CreateDataSourceResponse> => {
+      this.warnUnknownParams(args, createDataSource)
       return this.request<CreateDataSourceResponse>({
         path: createDataSource.path(),
         method: createDataSource.method,
@@ -489,6 +762,7 @@ export default class Client {
     update: (
       args: WithAuth<UpdateDataSourceParameters>
     ): Promise<UpdateDataSourceResponse> => {
+      this.warnUnknownParams(args, updateDataSource)
       return this.request<UpdateDataSourceResponse>({
         path: updateDataSource.path(args),
         method: updateDataSource.method,
@@ -504,6 +778,7 @@ export default class Client {
     listTemplates: (
       args: WithAuth<ListDataSourceTemplatesParameters>
     ): Promise<ListDataSourceTemplatesResponse> => {
+      this.warnUnknownParams(args, listDataSourceTemplates)
       return this.request<ListDataSourceTemplatesResponse>({
         path: listDataSourceTemplates.path(args),
         method: listDataSourceTemplates.method,
@@ -521,6 +796,7 @@ export default class Client {
     create: (
       args: WithAuth<CreatePageParameters>
     ): Promise<CreatePageResponse> => {
+      this.warnUnknownParams(args, createPage)
       return this.request<CreatePageResponse>({
         path: createPage.path(),
         method: createPage.method,
@@ -534,6 +810,7 @@ export default class Client {
      * Retrieve a page
      */
     retrieve: (args: WithAuth<GetPageParameters>): Promise<GetPageResponse> => {
+      this.warnUnknownParams(args, getPage)
       return this.request<GetPageResponse>({
         path: getPage.path(args),
         method: getPage.method,
@@ -549,11 +826,56 @@ export default class Client {
     update: (
       args: WithAuth<UpdatePageParameters>
     ): Promise<UpdatePageResponse> => {
+      this.warnUnknownParams(args, updatePage)
       return this.request<UpdatePageResponse>({
         path: updatePage.path(args),
         method: updatePage.method,
         query: pick(args, updatePage.queryParams),
         body: pick(args, updatePage.bodyParams),
+        auth: args?.auth,
+      })
+    },
+
+    /**
+     * Move a page
+     */
+    move: (args: WithAuth<MovePageParameters>): Promise<MovePageResponse> => {
+      this.warnUnknownParams(args, movePage)
+      return this.request<MovePageResponse>({
+        path: movePage.path(args),
+        method: movePage.method,
+        query: pick(args, movePage.queryParams),
+        body: pick(args, movePage.bodyParams),
+        auth: args?.auth,
+      })
+    },
+
+    /**
+     * Retrieve a page as markdown
+     */
+    retrieveMarkdown: (
+      args: WithAuth<GetPageMarkdownParameters>
+    ): Promise<GetPageMarkdownResponse> => {
+      return this.request<GetPageMarkdownResponse>({
+        path: getPageMarkdown.path(args),
+        method: getPageMarkdown.method,
+        query: pick(args, getPageMarkdown.queryParams),
+        body: pick(args, getPageMarkdown.bodyParams),
+        auth: args?.auth,
+      })
+    },
+
+    /**
+     * Update a page's content as markdown
+     */
+    updateMarkdown: (
+      args: WithAuth<UpdatePageMarkdownParameters>
+    ): Promise<UpdatePageMarkdownResponse> => {
+      return this.request<UpdatePageMarkdownResponse>({
+        path: updatePageMarkdown.path(args),
+        method: updatePageMarkdown.method,
+        query: pick(args, updatePageMarkdown.queryParams),
+        body: pick(args, updatePageMarkdown.bodyParams),
         auth: args?.auth,
       })
     },
@@ -564,6 +886,7 @@ export default class Client {
       retrieve: (
         args: WithAuth<GetPagePropertyParameters>
       ): Promise<GetPagePropertyResponse> => {
+        this.warnUnknownParams(args, getPageProperty)
         return this.request<GetPagePropertyResponse>({
           path: getPageProperty.path(args),
           method: getPageProperty.method,
@@ -580,6 +903,7 @@ export default class Client {
      * Retrieve a user
      */
     retrieve: (args: WithAuth<GetUserParameters>): Promise<GetUserResponse> => {
+      this.warnUnknownParams(args, getUser)
       return this.request<GetUserResponse>({
         path: getUser.path(args),
         method: getUser.method,
@@ -593,6 +917,7 @@ export default class Client {
      * List all users
      */
     list: (args: WithAuth<ListUsersParameters>): Promise<ListUsersResponse> => {
+      this.warnUnknownParams(args, listUsers)
       return this.request<ListUsersResponse>({
         path: listUsers.path(),
         method: listUsers.method,
@@ -606,6 +931,7 @@ export default class Client {
      * Get details about bot
      */
     me: (args: WithAuth<GetSelfParameters>): Promise<GetSelfResponse> => {
+      this.warnUnknownParams(args, getSelf)
       return this.request<GetSelfResponse>({
         path: getSelf.path(),
         method: getSelf.method,
@@ -623,6 +949,7 @@ export default class Client {
     create: (
       args: WithAuth<CreateCommentParameters>
     ): Promise<CreateCommentResponse> => {
+      this.warnUnknownParams(args, createComment)
       return this.request<CreateCommentResponse>({
         path: createComment.path(),
         method: createComment.method,
@@ -638,6 +965,7 @@ export default class Client {
     list: (
       args: WithAuth<ListCommentsParameters>
     ): Promise<ListCommentsResponse> => {
+      this.warnUnknownParams(args, listComments)
       return this.request<ListCommentsResponse>({
         path: listComments.path(),
         method: listComments.method,
@@ -653,6 +981,7 @@ export default class Client {
     retrieve: (
       args: WithAuth<GetCommentParameters>
     ): Promise<GetCommentResponse> => {
+      this.warnUnknownParams(args, getComment)
       return this.request<GetCommentResponse>({
         path: getComment.path(args),
         method: getComment.method,
@@ -670,6 +999,7 @@ export default class Client {
     create: (
       args: WithAuth<CreateFileUploadParameters>
     ): Promise<CreateFileUploadResponse> => {
+      this.warnUnknownParams(args, createFileUpload)
       return this.request<CreateFileUploadResponse>({
         path: createFileUpload.path(),
         method: createFileUpload.method,
@@ -685,6 +1015,7 @@ export default class Client {
     retrieve: (
       args: WithAuth<GetFileUploadParameters>
     ): Promise<GetFileUploadResponse> => {
+      this.warnUnknownParams(args, getFileUpload)
       return this.request<GetFileUploadResponse>({
         path: getFileUpload.path(args),
         method: getFileUpload.method,
@@ -699,6 +1030,7 @@ export default class Client {
     list: (
       args: WithAuth<ListFileUploadsParameters>
     ): Promise<ListFileUploadsResponse> => {
+      this.warnUnknownParams(args, listFileUploads)
       return this.request<ListFileUploadsResponse>({
         path: listFileUploads.path(),
         method: listFileUploads.method,
@@ -724,6 +1056,7 @@ export default class Client {
     send: (
       args: WithAuth<SendFileUploadParameters>
     ): Promise<SendFileUploadResponse> => {
+      this.warnUnknownParams(args, sendFileUpload)
       return this.request<SendFileUploadResponse>({
         path: sendFileUpload.path(args),
         method: sendFileUpload.method,
@@ -739,6 +1072,7 @@ export default class Client {
     complete: (
       args: WithAuth<CompleteFileUploadParameters>
     ): Promise<CompleteFileUploadResponse> => {
+      this.warnUnknownParams(args, completeFileUpload)
       return this.request<CompleteFileUploadResponse>({
         path: completeFileUpload.path(args),
         method: completeFileUpload.method,
@@ -754,6 +1088,7 @@ export default class Client {
   public search = (
     args: WithAuth<SearchParameters>
   ): Promise<SearchResponse> => {
+    this.warnUnknownParams(args, search)
     return this.request<SearchResponse>({
       path: search.path(),
       method: search.method,
@@ -827,6 +1162,32 @@ export default class Client {
   }
 
   /**
+   * Logs a warning when the caller passes parameters that are not recognized
+   * by the endpoint definition. This helps catch typos and renamed parameters
+   * (e.g. `archived` vs `in_trash` for `databases.update`) that would
+   * otherwise be silently dropped by `pick()`.
+   */
+  private warnUnknownParams(
+    args: Record<string, unknown>,
+    endpoint: EndpointDefinition
+  ): void {
+    if (!args || typeof args !== "object") return
+
+    const unknownKeys = getUnknownParams(args, endpoint)
+    if (unknownKeys.length > 0) {
+      this.log(LogLevel.WARN, "unknown parameters were ignored", {
+        unknownParams: unknownKeys,
+        knownParams: [
+          ...endpoint.pathParams,
+          ...endpoint.queryParams,
+          ...endpoint.bodyParams,
+          ...(endpoint.formDataParams ?? []),
+        ],
+      })
+    }
+  }
+
+  /**
    * Emits a log message to the console.
    *
    * @param level The level for this message
@@ -865,6 +1226,8 @@ export default class Client {
  * Type aliases to support the generic request interface.
  */
 type Method = "get" | "post" | "patch" | "delete"
-type QueryParams = Record<string, string | number | string[]> | URLSearchParams
+type QueryParams =
+  | Record<string, string | number | boolean | string[]>
+  | URLSearchParams
 
 type WithAuth<P> = P & { auth?: string }

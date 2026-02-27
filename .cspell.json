@@ -14,7 +14,8 @@
     "octokit",
     "printf",
     "is_toggleable",
-    "typecheck"
+    "typecheck",
+    "retryable"
   ],
   // flagWords - list of words to be always considered incorrect
   // This is useful for offensive words and common spelling errors.
@@ -25,6 +26,7 @@
     "package-lock.json",
     "node_modules/**",
     "examples/**/node_modules/**",
-    "build/**"
+    "build/**",
+    "src/api-endpoints.ts"
   ]
 }

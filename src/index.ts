@@ -90,6 +90,8 @@ export type {
   ListUsersParameters,
   ListUsersResponse,
   MentionRichTextItemResponse,
+  MovePageParameters,
+  MovePageResponse,
   MultiSelectPropertyItemObjectResponse,
   NumberedListItemBlockObjectResponse,
   NumberPropertyItemObjectResponse,
@@ -162,9 +164,12 @@ export {
   APIResponseError,
   UnknownHTTPResponseError,
   RequestTimeoutError,
+  InvalidPathParameterError,
   // Error helpers
   isNotionClientError,
+  isHTTPResponseError,
 } from "./errors"
+export type { RetryOptions } from "./Client"
 export {
   collectPaginatedAPI,
   iteratePaginatedAPI,
