@@ -56,6 +56,12 @@ import {
   type MovePageParameters,
   type MovePageResponse,
   movePage,
+  type GetPageMarkdownParameters,
+  type GetPageMarkdownResponse,
+  getPageMarkdown,
+  type UpdatePageMarkdownParameters,
+  type UpdatePageMarkdownResponse,
+  updatePageMarkdown,
   type GetUserParameters,
   type GetUserResponse,
   getUser,
@@ -843,6 +849,36 @@ export default class Client {
         auth: args?.auth,
       })
     },
+
+    /**
+     * Retrieve a page as markdown
+     */
+    retrieveMarkdown: (
+      args: WithAuth<GetPageMarkdownParameters>
+    ): Promise<GetPageMarkdownResponse> => {
+      return this.request<GetPageMarkdownResponse>({
+        path: getPageMarkdown.path(args),
+        method: getPageMarkdown.method,
+        query: pick(args, getPageMarkdown.queryParams),
+        body: pick(args, getPageMarkdown.bodyParams),
+        auth: args?.auth,
+      })
+    },
+
+    /**
+     * Update a page's content as markdown
+     */
+    updateMarkdown: (
+      args: WithAuth<UpdatePageMarkdownParameters>
+    ): Promise<UpdatePageMarkdownResponse> => {
+      return this.request<UpdatePageMarkdownResponse>({
+        path: updatePageMarkdown.path(args),
+        method: updatePageMarkdown.method,
+        query: pick(args, updatePageMarkdown.queryParams),
+        body: pick(args, updatePageMarkdown.bodyParams),
+        auth: args?.auth,
+      })
+    },
     properties: {
       /**
        * Retrieve page property
@@ -1190,6 +1226,8 @@ export default class Client {
  * Type aliases to support the generic request interface.
  */
 type Method = "get" | "post" | "patch" | "delete"
-type QueryParams = Record<string, string | number | string[]> | URLSearchParams
+type QueryParams =
+  | Record<string, string | number | boolean | string[]>
+  | URLSearchParams
 
 type WithAuth<P> = P & { auth?: string }

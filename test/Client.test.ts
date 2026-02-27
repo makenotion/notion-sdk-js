@@ -176,6 +176,92 @@ describe("Notion SDK Client", () => {
     })
   })
 
+  describe("pages markdown endpoints", () => {
+    let mockFetch: jest.MockedFn<typeof fetch>
+    let notion: Client
+
+    beforeEach(() => {
+      mockFetch = jest.fn()
+      mockFetch.mockResolvedValue({
+        ok: true,
+        text: () => Promise.resolve("{}"),
+        headers: new Headers(),
+        status: 200,
+      } as Response)
+
+      notion = new Client({ fetch: mockFetch })
+    })
+
+    it("calls retrieveMarkdown with correct URL and query params", async () => {
+      const pageId = "abc123"
+      await notion.pages.retrieveMarkdown({
+        page_id: pageId,
+        include_transcript: true,
+      })
+
+      expect(mockFetch).toHaveBeenCalledWith(
+        expect.stringContaining(`/v1/pages/${pageId}/markdown`),
+        expect.objectContaining({ method: "GET" })
+      )
+
+      const url = mockFetch.mock.calls[0]?.[0] as string
+      expect(url).toContain("include_transcript=true")
+    })
+
+    it("calls updateMarkdown with insert_content body", async () => {
+      const pageId = "def456"
+      await notion.pages.updateMarkdown({
+        page_id: pageId,
+        type: "insert_content",
+        insert_content: {
+          content: "## New Section",
+          after: "# Heading...end text",
+        },
+      })
+
+      expect(mockFetch).toHaveBeenCalledWith(
+        expect.stringContaining(`/v1/pages/${pageId}/markdown`),
+        expect.objectContaining({ method: "PATCH" })
+      )
+
+      const body = JSON.parse(
+        String(mockFetch.mock.calls[0]?.[1]?.body) ?? "{}"
+      )
+      expect(body).toMatchObject({
+        type: "insert_content",
+        insert_content: {
+          content: "## New Section",
+          after: "# Heading...end text",
+        },
+      })
+    })
+
+    it("calls updateMarkdown with replace_content_range body", async () => {
+      const pageId = "ghi789"
+      await notion.pages.updateMarkdown({
+        page_id: pageId,
+        type: "replace_content_range",
+        replace_content_range: {
+          content: "Updated content.",
+          content_range: "## Old...end",
+          allow_deleting_content: true,
+        },
+      })
+
+      const body = JSON.parse(
+        String(mockFetch.mock.calls[0]?.[1]?.body) ?? "{}"
+      )
+      expect(body).toMatchObject({
+        type: "replace_content_range",
+        replace_content_range: {
+          content: "Updated content.",
+          content_range: "## Old...end",
+          allow_deleting_content: true,
+        },
+      })
+    })
+  })
+
   describe("path traversal prevention", () => {
     let mockFetch: jest.MockedFn<typeof fetch>
     let notion: Client
