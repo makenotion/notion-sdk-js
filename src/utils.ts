@@ -15,8 +15,11 @@ export function pick<O, K extends AllKeys<O>>(
   base: O,
   keys: readonly K[]
 ): Pick<O, K> {
-  const entries = keys.map(key => [key, base?.[key]])
-  return Object.fromEntries(entries)
+  const result = {} as Pick<O, K>
+  for (const key of keys) {
+    result[key] = (base as any)?.[key]
+  }
+  return result
 }
 
 export function isObject(o: unknown): o is Record<PropertyKey, unknown> {
