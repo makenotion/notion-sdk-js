@@ -15,7 +15,7 @@ import {
   RequestTimeoutError,
   validateRequestPath,
 } from "./errors"
-import { pick } from "./utils"
+import { pick, getUnknownParams, type EndpointDefinition } from "./utils"
 import {
   type GetBlockParameters,
   type GetBlockResponse,
@@ -581,6 +581,7 @@ export default class Client {
     retrieve: (
       args: WithAuth<GetBlockParameters>
     ): Promise<GetBlockResponse> => {
+      this.warnUnknownParams(args, getBlock)
       return this.request<GetBlockResponse>({
         path: getBlock.path(args),
         method: getBlock.method,
@@ -596,6 +597,7 @@ export default class Client {
     update: (
       args: WithAuth<UpdateBlockParameters>
     ): Promise<UpdateBlockResponse> => {
+      this.warnUnknownParams(args, updateBlock)
       return this.request<UpdateBlockResponse>({
         path: updateBlock.path(args),
         method: updateBlock.method,
@@ -611,6 +613,7 @@ export default class Client {
     delete: (
       args: WithAuth<DeleteBlockParameters>
     ): Promise<DeleteBlockResponse> => {
+      this.warnUnknownParams(args, deleteBlock)
       return this.request<DeleteBlockResponse>({
         path: deleteBlock.path(args),
         method: deleteBlock.method,
@@ -626,6 +629,7 @@ export default class Client {
       append: (
         args: WithAuth<AppendBlockChildrenParameters>
       ): Promise<AppendBlockChildrenResponse> => {
+        this.warnUnknownParams(args, appendBlockChildren)
         return this.request<AppendBlockChildrenResponse>({
           path: appendBlockChildren.path(args),
           method: appendBlockChildren.method,
@@ -641,6 +645,7 @@ export default class Client {
       list: (
         args: WithAuth<ListBlockChildrenParameters>
       ): Promise<ListBlockChildrenResponse> => {
+        this.warnUnknownParams(args, listBlockChildren)
         return this.request<ListBlockChildrenResponse>({
           path: listBlockChildren.path(args),
           method: listBlockChildren.method,
@@ -659,6 +664,7 @@ export default class Client {
     retrieve: (
       args: WithAuth<GetDatabaseParameters>
     ): Promise<GetDatabaseResponse> => {
+      this.warnUnknownParams(args, getDatabase)
       return this.request<GetDatabaseResponse>({
         path: getDatabase.path(args),
         method: getDatabase.method,
@@ -674,6 +680,7 @@ export default class Client {
     create: (
       args: WithAuth<CreateDatabaseParameters>
     ): Promise<CreateDatabaseResponse> => {
+      this.warnUnknownParams(args, createDatabase)
       return this.request<CreateDatabaseResponse>({
         path: createDatabase.path(),
         method: createDatabase.method,
@@ -689,6 +696,7 @@ export default class Client {
     update: (
       args: WithAuth<UpdateDatabaseParameters>
     ): Promise<UpdateDatabaseResponse> => {
+      this.warnUnknownParams(args, updateDatabase)
       return this.request<UpdateDatabaseResponse>({
         path: updateDatabase.path(args),
         method: updateDatabase.method,
@@ -706,6 +714,7 @@ export default class Client {
     retrieve: (
       args: WithAuth<GetDataSourceParameters>
     ): Promise<GetDataSourceResponse> => {
+      this.warnUnknownParams(args, getDataSource)
       return this.request<GetDataSourceResponse>({
         path: getDataSource.path(args),
         method: getDataSource.method,
@@ -721,6 +730,7 @@ export default class Client {
     query: (
       args: WithAuth<QueryDataSourceParameters>
     ): Promise<QueryDataSourceResponse> => {
+      this.warnUnknownParams(args, queryDataSource)
       return this.request<QueryDataSourceResponse>({
         path: queryDataSource.path(args),
         method: queryDataSource.method,
@@ -736,6 +746,7 @@ export default class Client {
     create: (
       args: WithAuth<CreateDataSourceParameters>
     ): Promise<CreateDataSourceResponse> => {
+      this.warnUnknownParams(args, createDataSource)
       return this.request<CreateDataSourceResponse>({
         path: createDataSource.path(),
         method: createDataSource.method,
@@ -751,6 +762,7 @@ export default class Client {
     update: (
       args: WithAuth<UpdateDataSourceParameters>
     ): Promise<UpdateDataSourceResponse> => {
+      this.warnUnknownParams(args, updateDataSource)
       return this.request<UpdateDataSourceResponse>({
         path: updateDataSource.path(args),
         method: updateDataSource.method,
@@ -766,6 +778,7 @@ export default class Client {
     listTemplates: (
       args: WithAuth<ListDataSourceTemplatesParameters>
     ): Promise<ListDataSourceTemplatesResponse> => {
+      this.warnUnknownParams(args, listDataSourceTemplates)
       return this.request<ListDataSourceTemplatesResponse>({
         path: listDataSourceTemplates.path(args),
         method: listDataSourceTemplates.method,
@@ -783,6 +796,7 @@ export default class Client {
     create: (
       args: WithAuth<CreatePageParameters>
     ): Promise<CreatePageResponse> => {
+      this.warnUnknownParams(args, createPage)
       return this.request<CreatePageResponse>({
         path: createPage.path(),
         method: createPage.method,
@@ -796,6 +810,7 @@ export default class Client {
      * Retrieve a page
      */
     retrieve: (args: WithAuth<GetPageParameters>): Promise<GetPageResponse> => {
+      this.warnUnknownParams(args, getPage)
       return this.request<GetPageResponse>({
         path: getPage.path(args),
         method: getPage.method,
@@ -811,6 +826,7 @@ export default class Client {
     update: (
       args: WithAuth<UpdatePageParameters>
     ): Promise<UpdatePageResponse> => {
+      this.warnUnknownParams(args, updatePage)
       return this.request<UpdatePageResponse>({
         path: updatePage.path(args),
         method: updatePage.method,
@@ -824,6 +840,7 @@ export default class Client {
      * Move a page
      */
     move: (args: WithAuth<MovePageParameters>): Promise<MovePageResponse> => {
+      this.warnUnknownParams(args, movePage)
       return this.request<MovePageResponse>({
         path: movePage.path(args),
         method: movePage.method,
@@ -869,6 +886,7 @@ export default class Client {
       retrieve: (
         args: WithAuth<GetPagePropertyParameters>
       ): Promise<GetPagePropertyResponse> => {
+        this.warnUnknownParams(args, getPageProperty)
         return this.request<GetPagePropertyResponse>({
           path: getPageProperty.path(args),
           method: getPageProperty.method,
@@ -885,6 +903,7 @@ export default class Client {
      * Retrieve a user
      */
     retrieve: (args: WithAuth<GetUserParameters>): Promise<GetUserResponse> => {
+      this.warnUnknownParams(args, getUser)
       return this.request<GetUserResponse>({
         path: getUser.path(args),
         method: getUser.method,
@@ -898,6 +917,7 @@ export default class Client {
      * List all users
      */
     list: (args: WithAuth<ListUsersParameters>): Promise<ListUsersResponse> => {
+      this.warnUnknownParams(args, listUsers)
       return this.request<ListUsersResponse>({
         path: listUsers.path(),
         method: listUsers.method,
@@ -911,6 +931,7 @@ export default class Client {
      * Get details about bot
      */
     me: (args: WithAuth<GetSelfParameters>): Promise<GetSelfResponse> => {
+      this.warnUnknownParams(args, getSelf)
       return this.request<GetSelfResponse>({
         path: getSelf.path(),
         method: getSelf.method,
@@ -928,6 +949,7 @@ export default class Client {
     create: (
       args: WithAuth<CreateCommentParameters>
     ): Promise<CreateCommentResponse> => {
+      this.warnUnknownParams(args, createComment)
       return this.request<CreateCommentResponse>({
         path: createComment.path(),
         method: createComment.method,
@@ -943,6 +965,7 @@ export default class Client {
     list: (
       args: WithAuth<ListCommentsParameters>
     ): Promise<ListCommentsResponse> => {
+      this.warnUnknownParams(args, listComments)
       return this.request<ListCommentsResponse>({
         path: listComments.path(),
         method: listComments.method,
@@ -958,6 +981,7 @@ export default class Client {
     retrieve: (
       args: WithAuth<GetCommentParameters>
     ): Promise<GetCommentResponse> => {
+      this.warnUnknownParams(args, getComment)
       return this.request<GetCommentResponse>({
         path: getComment.path(args),
         method: getComment.method,
@@ -975,6 +999,7 @@ export default class Client {
     create: (
       args: WithAuth<CreateFileUploadParameters>
     ): Promise<CreateFileUploadResponse> => {
+      this.warnUnknownParams(args, createFileUpload)
       return this.request<CreateFileUploadResponse>({
         path: createFileUpload.path(),
         method: createFileUpload.method,
@@ -990,6 +1015,7 @@ export default class Client {
     retrieve: (
       args: WithAuth<GetFileUploadParameters>
     ): Promise<GetFileUploadResponse> => {
+      this.warnUnknownParams(args, getFileUpload)
       return this.request<GetFileUploadResponse>({
         path: getFileUpload.path(args),
         method: getFileUpload.method,
@@ -1004,6 +1030,7 @@ export default class Client {
     list: (
       args: WithAuth<ListFileUploadsParameters>
     ): Promise<ListFileUploadsResponse> => {
+      this.warnUnknownParams(args, listFileUploads)
       return this.request<ListFileUploadsResponse>({
         path: listFileUploads.path(),
         method: listFileUploads.method,
@@ -1029,6 +1056,7 @@ export default class Client {
     send: (
       args: WithAuth<SendFileUploadParameters>
     ): Promise<SendFileUploadResponse> => {
+      this.warnUnknownParams(args, sendFileUpload)
       return this.request<SendFileUploadResponse>({
         path: sendFileUpload.path(args),
         method: sendFileUpload.method,
@@ -1044,6 +1072,7 @@ export default class Client {
     complete: (
       args: WithAuth<CompleteFileUploadParameters>
     ): Promise<CompleteFileUploadResponse> => {
+      this.warnUnknownParams(args, completeFileUpload)
       return this.request<CompleteFileUploadResponse>({
         path: completeFileUpload.path(args),
         method: completeFileUpload.method,
@@ -1059,6 +1088,7 @@ export default class Client {
   public search = (
     args: WithAuth<SearchParameters>
   ): Promise<SearchResponse> => {
+    this.warnUnknownParams(args, search)
     return this.request<SearchResponse>({
       path: search.path(),
       method: search.method,
@@ -1129,6 +1159,32 @@ export default class Client {
         },
       })
     },
+  }
+
+  /**
+   * Logs a warning when the caller passes parameters that are not recognized
+   * by the endpoint definition. This helps catch typos and renamed parameters
+   * (e.g. `archived` vs `in_trash` for `databases.update`) that would
+   * otherwise be silently dropped by `pick()`.
+   */
+  private warnUnknownParams(
+    args: Record<string, unknown>,
+    endpoint: EndpointDefinition
+  ): void {
+    if (!args || typeof args !== "object") return
+
+    const unknownKeys = getUnknownParams(args, endpoint)
+    if (unknownKeys.length > 0) {
+      this.log(LogLevel.WARN, "unknown parameters were ignored", {
+        unknownParams: unknownKeys,
+        knownParams: [
+          ...endpoint.pathParams,
+          ...endpoint.queryParams,
+          ...endpoint.bodyParams,
+          ...(endpoint.formDataParams ?? []),
+        ],
+      })
+    }
   }
 
   /**
