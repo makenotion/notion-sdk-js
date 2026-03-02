@@ -3450,7 +3450,11 @@ type UniqueIdSimplePropertyValueResponse = {
 
 export type UnsupportedBlockObjectResponse = {
   type: "unsupported"
-  unsupported: EmptyObject
+  unsupported: {
+    // The underlying block type that is not currently supported by the Public API. Example
+    // values include: tab, form, button, drive.
+    block_type: string
+  }
   parent: ParentForBlockBasedObjectResponse
   object: "block"
   id: string
@@ -3917,7 +3921,7 @@ export type UpdatePageParameters = UpdatePagePathParameters &
 export type UpdatePageResponse = PageObjectResponse | PartialPageObjectResponse
 
 /**
- * Update page properties
+ * Update page
  */
 export const updatePage = {
   method: "patch",
