@@ -3256,13 +3256,6 @@ type TemplateMentionUserTemplateMentionResponse = {
   template_mention_user: "me"
 }
 
-/**
- * IANA timezone to use when resolving template variables like @now and @today (e.g.
- * 'America/New_York'). Defaults to the authorizing user's timezone for public
- * integrations, or UTC for internal integrations.
- */
-type TemplateTimezone = string
-
 type TextPropertyFilter =
   | { equals: string }
   | { does_not_equal: string }
@@ -3758,12 +3751,8 @@ type CreatePageBodyParameters = {
   markdown?: string
   template?:
     | { type: "none" }
-    | { type: "default"; timezone?: TemplateTimezone }
-    | {
-        type: "template_id"
-        template_id: IdRequest
-        timezone?: TemplateTimezone
-      }
+    | { type: "default" }
+    | { type: "template_id"; template_id: IdRequest }
   position?: PagePositionSchema
 }
 
@@ -3916,12 +3905,8 @@ type UpdatePageBodyParameters = {
   // the locked state will not be updated.
   is_locked?: boolean
   template?:
-    | { type: "default"; timezone?: TemplateTimezone }
-    | {
-        type: "template_id"
-        template_id: IdRequest
-        timezone?: TemplateTimezone
-      }
+    | { type: "default" }
+    | { type: "template_id"; template_id: IdRequest }
   // Whether to erase all existing content from the page. When used with a template, the
   // template content replaces the existing content. When used without a template, simply
   // clears the page content.
