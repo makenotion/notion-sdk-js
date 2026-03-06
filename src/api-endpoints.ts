@@ -83,8 +83,9 @@ export type AudioBlockObjectResponse = {
   last_edited_time: string
   last_edited_by: PartialUserObjectResponse
   has_children: boolean
-  archived: boolean
   in_trash: boolean
+  /** @deprecated Use `in_trash` instead. Present for backwards compatibility with API versions prior to 2026-03-11. */
+  archived: boolean
 }
 
 type BlockIdCommentParentResponse = {
@@ -455,7 +456,7 @@ export type BlockObjectResponse =
   | LinkToPageBlockObjectResponse
   | TableBlockObjectResponse
   | TableRowBlockObjectResponse
-  | TranscriptionBlockObjectResponse
+  | MeetingNotesBlockObjectResponse
   | EmbedBlockObjectResponse
   | BookmarkBlockObjectResponse
   | ImageBlockObjectResponse
@@ -629,8 +630,9 @@ export type BookmarkBlockObjectResponse = {
   last_edited_time: string
   last_edited_by: PartialUserObjectResponse
   has_children: boolean
-  archived: boolean
   in_trash: boolean
+  /** @deprecated Use `in_trash` instead. Present for backwards compatibility with API versions prior to 2026-03-11. */
+  archived: boolean
 }
 
 type BooleanFormulaPropertyResponse = {
@@ -708,8 +710,9 @@ export type BreadcrumbBlockObjectResponse = {
   last_edited_time: string
   last_edited_by: PartialUserObjectResponse
   has_children: boolean
-  archived: boolean
   in_trash: boolean
+  /** @deprecated Use `in_trash` instead. Present for backwards compatibility with API versions prior to 2026-03-11. */
+  archived: boolean
 }
 
 export type BulletedListItemBlockObjectResponse = {
@@ -723,8 +726,9 @@ export type BulletedListItemBlockObjectResponse = {
   last_edited_time: string
   last_edited_by: PartialUserObjectResponse
   has_children: boolean
-  archived: boolean
   in_trash: boolean
+  /** @deprecated Use `in_trash` instead. Present for backwards compatibility with API versions prior to 2026-03-11. */
+  archived: boolean
 }
 
 type ButtonPropertyConfigurationRequest = {
@@ -761,8 +765,9 @@ export type CalloutBlockObjectResponse = {
   last_edited_time: string
   last_edited_by: PartialUserObjectResponse
   has_children: boolean
-  archived: boolean
   in_trash: boolean
+  /** @deprecated Use `in_trash` instead. Present for backwards compatibility with API versions prior to 2026-03-11. */
+  archived: boolean
 }
 
 type CheckboxDatabasePropertyConfigResponse = {
@@ -803,8 +808,9 @@ export type ChildDatabaseBlockObjectResponse = {
   last_edited_time: string
   last_edited_by: PartialUserObjectResponse
   has_children: boolean
-  archived: boolean
   in_trash: boolean
+  /** @deprecated Use `in_trash` instead. Present for backwards compatibility with API versions prior to 2026-03-11. */
+  archived: boolean
 }
 
 export type ChildPageBlockObjectResponse = {
@@ -818,8 +824,9 @@ export type ChildPageBlockObjectResponse = {
   last_edited_time: string
   last_edited_by: PartialUserObjectResponse
   has_children: boolean
-  archived: boolean
   in_trash: boolean
+  /** @deprecated Use `in_trash` instead. Present for backwards compatibility with API versions prior to 2026-03-11. */
+  archived: boolean
 }
 
 export type CodeBlockObjectResponse = {
@@ -837,8 +844,9 @@ export type CodeBlockObjectResponse = {
   last_edited_time: string
   last_edited_by: PartialUserObjectResponse
   has_children: boolean
-  archived: boolean
   in_trash: boolean
+  /** @deprecated Use `in_trash` instead. Present for backwards compatibility with API versions prior to 2026-03-11. */
+  archived: boolean
 }
 
 export type ColumnBlockObjectResponse = {
@@ -852,8 +860,9 @@ export type ColumnBlockObjectResponse = {
   last_edited_time: string
   last_edited_by: PartialUserObjectResponse
   has_children: boolean
-  archived: boolean
   in_trash: boolean
+  /** @deprecated Use `in_trash` instead. Present for backwards compatibility with API versions prior to 2026-03-11. */
+  archived: boolean
 }
 
 type ColumnBlockWithChildrenRequest = {
@@ -873,8 +882,9 @@ export type ColumnListBlockObjectResponse = {
   last_edited_time: string
   last_edited_by: PartialUserObjectResponse
   has_children: boolean
-  archived: boolean
   in_trash: boolean
+  /** @deprecated Use `in_trash` instead. Present for backwards compatibility with API versions prior to 2026-03-11. */
+  archived: boolean
 }
 
 type ColumnListRequest = { children: Array<ColumnBlockWithChildrenRequest> }
@@ -1064,10 +1074,10 @@ export type DataSourceObjectResponse = {
   database_parent: ParentOfDatabaseResponse
   // Whether the data source is inline.
   is_inline: boolean
-  // Whether the data source is archived.
-  archived: boolean
   // Whether the data source is in the trash.
   in_trash: boolean
+  /** @deprecated Use `in_trash` instead. Present for backwards compatibility with API versions prior to 2026-03-11. */
+  archived: boolean
   // The time when the data source was created.
   created_time: string
   // The time when the data source was last edited.
@@ -1120,6 +1130,8 @@ export type DatabaseObjectResponse = {
   is_inline: boolean
   // Whether the database is in the trash.
   in_trash: boolean
+  /** @deprecated Use `in_trash` instead. Present for backwards compatibility with API versions prior to 2026-03-11. */
+  archived: boolean
   // Whether the database is locked from editing in the Notion app UI.
   is_locked: boolean
   // The time when the database was created.
@@ -1275,8 +1287,9 @@ export type DividerBlockObjectResponse = {
   last_edited_time: string
   last_edited_by: PartialUserObjectResponse
   has_children: boolean
-  archived: boolean
   in_trash: boolean
+  /** @deprecated Use `in_trash` instead. Present for backwards compatibility with API versions prior to 2026-03-11. */
+  archived: boolean
 }
 
 type DualPropertyDatabasePropertyRelationConfigResponse = {
@@ -1321,8 +1334,9 @@ export type EmbedBlockObjectResponse = {
   last_edited_time: string
   last_edited_by: PartialUserObjectResponse
   has_children: boolean
-  archived: boolean
   in_trash: boolean
+  /** @deprecated Use `in_trash` instead. Present for backwards compatibility with API versions prior to 2026-03-11. */
+  archived: boolean
 }
 
 type EmojiPageIconRequest = {
@@ -1354,8 +1368,9 @@ export type EquationBlockObjectResponse = {
   last_edited_time: string
   last_edited_by: PartialUserObjectResponse
   has_children: boolean
-  archived: boolean
   in_trash: boolean
+  /** @deprecated Use `in_trash` instead. Present for backwards compatibility with API versions prior to 2026-03-11. */
+  archived: boolean
 }
 
 type EquationRichTextItemRequest = {
@@ -1459,8 +1474,9 @@ export type FileBlockObjectResponse = {
   last_edited_time: string
   last_edited_by: PartialUserObjectResponse
   has_children: boolean
-  archived: boolean
   in_trash: boolean
+  /** @deprecated Use `in_trash` instead. Present for backwards compatibility with API versions prior to 2026-03-11. */
+  archived: boolean
 }
 
 type FileInternalOrExternalFileWithNameResponse = {
@@ -1510,6 +1526,8 @@ export type FileUploadObjectResponse = {
     type: "person" | "bot" | "agent"
   }
   last_edited_time: string
+  in_trash: boolean
+  /** @deprecated Use `in_trash` instead. Present for backwards compatibility with API versions prior to 2026-03-11. */
   archived: boolean
   expiry_time: string | null
   // One of: `pending`, `uploaded`, `expired`, `failed`
@@ -1698,8 +1716,9 @@ export type Heading1BlockObjectResponse = {
   last_edited_time: string
   last_edited_by: PartialUserObjectResponse
   has_children: boolean
-  archived: boolean
   in_trash: boolean
+  /** @deprecated Use `in_trash` instead. Present for backwards compatibility with API versions prior to 2026-03-11. */
+  archived: boolean
 }
 
 export type Heading2BlockObjectResponse = {
@@ -1713,8 +1732,9 @@ export type Heading2BlockObjectResponse = {
   last_edited_time: string
   last_edited_by: PartialUserObjectResponse
   has_children: boolean
-  archived: boolean
   in_trash: boolean
+  /** @deprecated Use `in_trash` instead. Present for backwards compatibility with API versions prior to 2026-03-11. */
+  archived: boolean
 }
 
 export type Heading3BlockObjectResponse = {
@@ -1728,8 +1748,9 @@ export type Heading3BlockObjectResponse = {
   last_edited_time: string
   last_edited_by: PartialUserObjectResponse
   has_children: boolean
-  archived: boolean
   in_trash: boolean
+  /** @deprecated Use `in_trash` instead. Present for backwards compatibility with API versions prior to 2026-03-11. */
+  archived: boolean
 }
 
 type IdObjectResponse = { id: string }
@@ -1749,8 +1770,9 @@ export type ImageBlockObjectResponse = {
   last_edited_time: string
   last_edited_by: PartialUserObjectResponse
   has_children: boolean
-  archived: boolean
   in_trash: boolean
+  /** @deprecated Use `in_trash` instead. Present for backwards compatibility with API versions prior to 2026-03-11. */
+  archived: boolean
 }
 
 type InitialDataSourceRequest = {
@@ -1967,8 +1989,9 @@ export type LinkPreviewBlockObjectResponse = {
   last_edited_time: string
   last_edited_by: PartialUserObjectResponse
   has_children: boolean
-  archived: boolean
   in_trash: boolean
+  /** @deprecated Use `in_trash` instead. Present for backwards compatibility with API versions prior to 2026-03-11. */
+  archived: boolean
 }
 
 type LinkPreviewMentionResponse = {
@@ -1990,8 +2013,9 @@ export type LinkToPageBlockObjectResponse = {
   last_edited_time: string
   last_edited_by: PartialUserObjectResponse
   has_children: boolean
-  archived: boolean
   in_trash: boolean
+  /** @deprecated Use `in_trash` instead. Present for backwards compatibility with API versions prior to 2026-03-11. */
+  archived: boolean
 }
 
 type LocationPropertyConfigurationRequest = {
@@ -2045,6 +2069,27 @@ type MediaContentWithUrlAndCaptionResponse = {
 }
 
 type MediaContentWithUrlResponse = { url: TextRequest }
+
+/**
+ * @deprecated Use MeetingNotesBlockObjectResponse instead. Renamed in API version 2026-03-11.
+ */
+export type TranscriptionBlockObjectResponse = MeetingNotesBlockObjectResponse
+
+export type MeetingNotesBlockObjectResponse = {
+  type: "meeting_notes"
+  meeting_notes: TranscriptionBlockResponse
+  parent: ParentForBlockBasedObjectResponse
+  object: "block"
+  id: string
+  created_time: string
+  created_by: PartialUserObjectResponse
+  last_edited_time: string
+  last_edited_by: PartialUserObjectResponse
+  has_children: boolean
+  in_trash: boolean
+  /** @deprecated Use `in_trash` instead. Present for backwards compatibility with API versions prior to 2026-03-11. */
+  archived: boolean
+}
 
 type MentionRichTextItemRequest = {
   // Always `mention`
@@ -2269,8 +2314,9 @@ export type NumberedListItemBlockObjectResponse = {
   last_edited_time: string
   last_edited_by: PartialUserObjectResponse
   has_children: boolean
-  archived: boolean
   in_trash: boolean
+  /** @deprecated Use `in_trash` instead. Present for backwards compatibility with API versions prior to 2026-03-11. */
+  archived: boolean
 }
 
 type PageCoverRequest = FileUploadPageCoverRequest | ExternalPageCoverRequest
@@ -2325,10 +2371,10 @@ export type PageObjectResponse = {
   created_time: string
   // Date and time when this page was last edited.
   last_edited_time: string
-  // Whether the page has been archived.
-  archived: boolean
   // Whether the page is in trash.
   in_trash: boolean
+  /** @deprecated Use `in_trash` instead. Present for backwards compatibility with API versions prior to 2026-03-11. */
+  archived: boolean
   // Whether the page is locked from editing in the Notion app UI.
   is_locked: boolean
   // The URL of the Notion page.
@@ -2368,8 +2414,9 @@ export type ParagraphBlockObjectResponse = {
   last_edited_time: string
   last_edited_by: PartialUserObjectResponse
   has_children: boolean
-  archived: boolean
   in_trash: boolean
+  /** @deprecated Use `in_trash` instead. Present for backwards compatibility with API versions prior to 2026-03-11. */
+  archived: boolean
 }
 
 type ParentForBlockBasedObjectResponse =
@@ -2495,8 +2542,9 @@ export type PdfBlockObjectResponse = {
   last_edited_time: string
   last_edited_by: PartialUserObjectResponse
   has_children: boolean
-  archived: boolean
   in_trash: boolean
+  /** @deprecated Use `in_trash` instead. Present for backwards compatibility with API versions prior to 2026-03-11. */
+  archived: boolean
 }
 
 type PeopleArrayBasedPropertyValueResponse = {
@@ -2782,8 +2830,9 @@ export type QuoteBlockObjectResponse = {
   last_edited_time: string
   last_edited_by: PartialUserObjectResponse
   has_children: boolean
-  archived: boolean
   in_trash: boolean
+  /** @deprecated Use `in_trash` instead. Present for backwards compatibility with API versions prior to 2026-03-11. */
+  archived: boolean
 }
 
 type RelationArrayBasedPropertyValueResponse = {
@@ -3143,8 +3192,9 @@ export type SyncedBlockBlockObjectResponse = {
   last_edited_time: string
   last_edited_by: PartialUserObjectResponse
   has_children: boolean
-  archived: boolean
   in_trash: boolean
+  /** @deprecated Use `in_trash` instead. Present for backwards compatibility with API versions prior to 2026-03-11. */
+  archived: boolean
 }
 
 export type TableBlockObjectResponse = {
@@ -3158,8 +3208,9 @@ export type TableBlockObjectResponse = {
   last_edited_time: string
   last_edited_by: PartialUserObjectResponse
   has_children: boolean
-  archived: boolean
   in_trash: boolean
+  /** @deprecated Use `in_trash` instead. Present for backwards compatibility with API versions prior to 2026-03-11. */
+  archived: boolean
 }
 
 export type TableOfContentsBlockObjectResponse = {
@@ -3173,8 +3224,9 @@ export type TableOfContentsBlockObjectResponse = {
   last_edited_time: string
   last_edited_by: PartialUserObjectResponse
   has_children: boolean
-  archived: boolean
   in_trash: boolean
+  /** @deprecated Use `in_trash` instead. Present for backwards compatibility with API versions prior to 2026-03-11. */
+  archived: boolean
 }
 
 type TableRequestWithTableRowChildren = {
@@ -3195,8 +3247,9 @@ export type TableRowBlockObjectResponse = {
   last_edited_time: string
   last_edited_by: PartialUserObjectResponse
   has_children: boolean
-  archived: boolean
   in_trash: boolean
+  /** @deprecated Use `in_trash` instead. Present for backwards compatibility with API versions prior to 2026-03-11. */
+  archived: boolean
 }
 
 type TableRowRequest = {
@@ -3216,8 +3269,9 @@ export type TemplateBlockObjectResponse = {
   last_edited_time: string
   last_edited_by: PartialUserObjectResponse
   has_children: boolean
-  archived: boolean
   in_trash: boolean
+  /** @deprecated Use `in_trash` instead. Present for backwards compatibility with API versions prior to 2026-03-11. */
+  archived: boolean
 }
 
 type TemplateMentionDateTemplateMentionRequest = {
@@ -3366,8 +3420,9 @@ export type ToDoBlockObjectResponse = {
   last_edited_time: string
   last_edited_by: PartialUserObjectResponse
   has_children: boolean
-  archived: boolean
   in_trash: boolean
+  /** @deprecated Use `in_trash` instead. Present for backwards compatibility with API versions prior to 2026-03-11. */
+  archived: boolean
 }
 
 export type ToggleBlockObjectResponse = {
@@ -3381,23 +3436,9 @@ export type ToggleBlockObjectResponse = {
   last_edited_time: string
   last_edited_by: PartialUserObjectResponse
   has_children: boolean
-  archived: boolean
   in_trash: boolean
-}
-
-export type TranscriptionBlockObjectResponse = {
-  type: "transcription"
-  transcription: TranscriptionBlockResponse
-  parent: ParentForBlockBasedObjectResponse
-  object: "block"
-  id: string
-  created_time: string
-  created_by: PartialUserObjectResponse
-  last_edited_time: string
-  last_edited_by: PartialUserObjectResponse
-  has_children: boolean
+  /** @deprecated Use `in_trash` instead. Present for backwards compatibility with API versions prior to 2026-03-11. */
   archived: boolean
-  in_trash: boolean
 }
 
 type TranscriptionBlockResponse = {
@@ -3470,8 +3511,9 @@ export type UnsupportedBlockObjectResponse = {
   last_edited_time: string
   last_edited_by: PartialUserObjectResponse
   has_children: boolean
-  archived: boolean
   in_trash: boolean
+  /** @deprecated Use `in_trash` instead. Present for backwards compatibility with API versions prior to 2026-03-11. */
+  archived: boolean
 }
 
 type UpdateMediaContentWithFileAndCaptionRequest = {
@@ -3585,8 +3627,9 @@ export type VideoBlockObjectResponse = {
   last_edited_time: string
   last_edited_by: PartialUserObjectResponse
   has_children: boolean
-  archived: boolean
   in_trash: boolean
+  /** @deprecated Use `in_trash` instead. Present for backwards compatibility with API versions prior to 2026-03-11. */
+  archived: boolean
 }
 
 type WorkspaceParentForBlockBasedObjectResponse = {
@@ -3926,8 +3969,9 @@ type UpdatePageBodyParameters = {
   // template content replaces the existing content. When used without a template, simply
   // clears the page content.
   erase_content?: boolean
-  archived?: boolean
   in_trash?: boolean
+  /** @deprecated Use `in_trash` instead. */
+  archived?: boolean
 }
 
 export type UpdatePageParameters = UpdatePagePathParameters &
@@ -3943,13 +3987,13 @@ export const updatePage = {
   pathParams: ["page_id"],
   queryParams: [],
   bodyParams: [
+    "archived",
     "properties",
     "icon",
     "cover",
     "is_locked",
     "template",
     "erase_content",
-    "archived",
     "in_trash",
   ],
 
@@ -4137,44 +4181,51 @@ type UpdateBlockBodyParameters =
   | {
       embed: UpdateMediaContentWithUrlAndCaptionRequest
       type?: "embed"
-      archived?: boolean
       in_trash?: boolean
+      /** @deprecated Use `in_trash` instead. */
+      archived?: boolean
     }
   | {
       bookmark: UpdateMediaContentWithUrlAndCaptionRequest
       type?: "bookmark"
-      archived?: boolean
       in_trash?: boolean
+      /** @deprecated Use `in_trash` instead. */
+      archived?: boolean
     }
   | {
       image: UpdateMediaContentWithFileAndCaptionRequest
       type?: "image"
-      archived?: boolean
       in_trash?: boolean
+      /** @deprecated Use `in_trash` instead. */
+      archived?: boolean
     }
   | {
       video: UpdateMediaContentWithFileAndCaptionRequest
       type?: "video"
-      archived?: boolean
       in_trash?: boolean
+      /** @deprecated Use `in_trash` instead. */
+      archived?: boolean
     }
   | {
       pdf: UpdateMediaContentWithFileAndCaptionRequest
       type?: "pdf"
-      archived?: boolean
       in_trash?: boolean
+      /** @deprecated Use `in_trash` instead. */
+      archived?: boolean
     }
   | {
       file: UpdateMediaContentWithFileNameAndCaptionRequest
       type?: "file"
-      archived?: boolean
       in_trash?: boolean
+      /** @deprecated Use `in_trash` instead. */
+      archived?: boolean
     }
   | {
       audio: UpdateMediaContentWithFileAndCaptionRequest
       type?: "audio"
-      archived?: boolean
       in_trash?: boolean
+      /** @deprecated Use `in_trash` instead. */
+      archived?: boolean
     }
   | {
       code: {
@@ -4183,32 +4234,37 @@ type UpdateBlockBodyParameters =
         caption?: Array<RichTextItemRequest>
       }
       type?: "code"
-      archived?: boolean
       in_trash?: boolean
+      /** @deprecated Use `in_trash` instead. */
+      archived?: boolean
     }
   | {
       equation: ContentWithExpressionRequest
       type?: "equation"
-      archived?: boolean
       in_trash?: boolean
+      /** @deprecated Use `in_trash` instead. */
+      archived?: boolean
     }
   | {
       divider: EmptyObject
       type?: "divider"
-      archived?: boolean
       in_trash?: boolean
+      /** @deprecated Use `in_trash` instead. */
+      archived?: boolean
     }
   | {
       breadcrumb: EmptyObject
       type?: "breadcrumb"
-      archived?: boolean
       in_trash?: boolean
+      /** @deprecated Use `in_trash` instead. */
+      archived?: boolean
     }
   | {
       table_of_contents: { color?: ApiColor }
       type?: "table_of_contents"
-      archived?: boolean
       in_trash?: boolean
+      /** @deprecated Use `in_trash` instead. */
+      archived?: boolean
     }
   | {
       link_to_page:
@@ -4216,56 +4272,65 @@ type UpdateBlockBodyParameters =
         | { database_id: IdRequest; type?: "database_id" }
         | { comment_id: IdRequest; type?: "comment_id" }
       type?: "link_to_page"
-      archived?: boolean
       in_trash?: boolean
+      /** @deprecated Use `in_trash` instead. */
+      archived?: boolean
     }
   | {
       table_row: ContentWithTableRowRequest
       type?: "table_row"
-      archived?: boolean
       in_trash?: boolean
+      /** @deprecated Use `in_trash` instead. */
+      archived?: boolean
     }
   | {
       heading_1: HeaderContentWithRichTextAndColorRequest
       type?: "heading_1"
-      archived?: boolean
       in_trash?: boolean
+      /** @deprecated Use `in_trash` instead. */
+      archived?: boolean
     }
   | {
       heading_2: HeaderContentWithRichTextAndColorRequest
       type?: "heading_2"
-      archived?: boolean
       in_trash?: boolean
+      /** @deprecated Use `in_trash` instead. */
+      archived?: boolean
     }
   | {
       heading_3: HeaderContentWithRichTextAndColorRequest
       type?: "heading_3"
-      archived?: boolean
       in_trash?: boolean
+      /** @deprecated Use `in_trash` instead. */
+      archived?: boolean
     }
   | {
       paragraph: ContentWithRichTextAndColorRequest
       type?: "paragraph"
-      archived?: boolean
       in_trash?: boolean
+      /** @deprecated Use `in_trash` instead. */
+      archived?: boolean
     }
   | {
       bulleted_list_item: ContentWithRichTextAndColorRequest
       type?: "bulleted_list_item"
-      archived?: boolean
       in_trash?: boolean
+      /** @deprecated Use `in_trash` instead. */
+      archived?: boolean
     }
   | {
       numbered_list_item: ContentWithRichTextAndColorRequest
       type?: "numbered_list_item"
-      archived?: boolean
       in_trash?: boolean
+      /** @deprecated Use `in_trash` instead. */
+      archived?: boolean
     }
   | {
       quote: ContentWithRichTextAndColorRequest
       type?: "quote"
-      archived?: boolean
       in_trash?: boolean
+      /** @deprecated Use `in_trash` instead. */
+      archived?: boolean
     }
   | {
       to_do: {
@@ -4274,20 +4339,23 @@ type UpdateBlockBodyParameters =
         color?: ApiColor
       }
       type?: "to_do"
-      archived?: boolean
       in_trash?: boolean
+      /** @deprecated Use `in_trash` instead. */
+      archived?: boolean
     }
   | {
       toggle: ContentWithRichTextAndColorRequest
       type?: "toggle"
-      archived?: boolean
       in_trash?: boolean
+      /** @deprecated Use `in_trash` instead. */
+      archived?: boolean
     }
   | {
       template: ContentWithRichTextRequest
       type?: "template"
-      archived?: boolean
       in_trash?: boolean
+      /** @deprecated Use `in_trash` instead. */
+      archived?: boolean
     }
   | {
       callout: {
@@ -4296,22 +4364,25 @@ type UpdateBlockBodyParameters =
         color?: ApiColor
       }
       type?: "callout"
-      archived?: boolean
       in_trash?: boolean
+      /** @deprecated Use `in_trash` instead. */
+      archived?: boolean
     }
   | {
       synced_block: {
         synced_from: { block_id: IdRequest; type?: "block_id" } | null
       }
       type?: "synced_block"
-      archived?: boolean
       in_trash?: boolean
+      /** @deprecated Use `in_trash` instead. */
+      archived?: boolean
     }
   | {
       table: { has_column_header?: boolean; has_row_header?: boolean }
       type?: "table"
-      archived?: boolean
       in_trash?: boolean
+      /** @deprecated Use `in_trash` instead. */
+      archived?: boolean
     }
   | {
       column: {
@@ -4320,10 +4391,15 @@ type UpdateBlockBodyParameters =
         width_ratio?: number
       }
       type?: "column"
-      archived?: boolean
       in_trash?: boolean
+      /** @deprecated Use `in_trash` instead. */
+      archived?: boolean
     }
-  | { archived?: boolean; in_trash?: boolean }
+  | {
+      in_trash?: boolean
+      /** @deprecated Use `in_trash` instead. */
+      archived?: boolean
+    }
 
 export type UpdateBlockParameters = UpdateBlockPathParameters &
   UpdateBlockBodyParameters
@@ -4340,9 +4416,9 @@ export const updateBlock = {
   pathParams: ["block_id"],
   queryParams: [],
   bodyParams: [
+    "archived",
     "embed",
     "type",
-    "archived",
     "in_trash",
     "bookmark",
     "image",
@@ -4438,6 +4514,7 @@ type AppendBlockChildrenPathParameters = {
 
 type AppendBlockChildrenBodyParameters = {
   children: Array<BlockObjectRequest>
+  /** @deprecated Use `position` instead. */
   after?: IdRequest
   position?: ContentPositionSchema
 }
@@ -4461,7 +4538,7 @@ export const appendBlockChildren = {
   method: "patch",
   pathParams: ["block_id"],
   queryParams: [],
-  bodyParams: ["children", "after", "position"],
+  bodyParams: ["after", "children", "position"],
 
   path: (p: AppendBlockChildrenPathParameters): string =>
     `blocks/${p.block_id}/children`,
@@ -4667,8 +4744,7 @@ type UpdateDataSourceBodyParameters = {
   // Whether the database should be moved to or from the trash. If not provided, the trash
   // status will not be updated.
   in_trash?: boolean
-  // Whether the database should be moved to or from the trash. If not provided, the trash
-  // status will not be updated. Equivalent to `in_trash`.
+  /** @deprecated Use `in_trash` instead. */
   archived?: boolean
   // The parent of the data source, when moving it to a different database. If not
   // provided, the parent will not be updated.
@@ -4689,7 +4765,7 @@ export const updateDataSource = {
   method: "patch",
   pathParams: ["data_source_id"],
   queryParams: [],
-  bodyParams: ["title", "icon", "properties", "in_trash", "archived", "parent"],
+  bodyParams: ["archived", "title", "icon", "properties", "in_trash", "parent"],
 
   path: (p: UpdateDataSourcePathParameters): string =>
     `data_sources/${p.data_source_id}`,
@@ -4718,8 +4794,9 @@ type QueryDataSourceBodyParameters = {
     | TimestampFilter
   start_cursor?: string
   page_size?: number
-  archived?: boolean
   in_trash?: boolean
+  /** @deprecated Use `in_trash` instead. */
+  archived?: boolean
   // Optionally filter the results to only include pages or data sources. Regular, non-wiki
   // databases only support page children. The default behavior is no result type
   // filtering, in other words, returning both pages and data sources for wikis.
@@ -4752,11 +4829,11 @@ export const queryDataSource = {
   pathParams: ["data_source_id"],
   queryParams: ["filter_properties"],
   bodyParams: [
+    "archived",
     "sorts",
     "filter",
     "start_cursor",
     "page_size",
-    "archived",
     "in_trash",
     "result_type",
   ],
@@ -4906,6 +4983,8 @@ type UpdateDatabaseBodyParameters = {
   // Whether the database should be moved to or from the trash. If not provided, the trash
   // status will not be updated.
   in_trash?: boolean
+  /** @deprecated Use `in_trash` instead. */
+  archived?: boolean
   // Whether the database should be locked from editing in the Notion app UI. If not
   // provided, the locked state will not be updated.
   is_locked?: boolean
