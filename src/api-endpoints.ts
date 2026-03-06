@@ -53,6 +53,13 @@ type ApiColor =
   | "pink_background"
   | "red_background"
 
+type ApiTranscriptionStatus =
+  | "transcription_not_started"
+  | "transcription_paused"
+  | "transcription_in_progress"
+  | "summary_in_progress"
+  | "notes_ready"
+
 type ArrayBasedPropertyValueResponse =
   | TitleArrayBasedPropertyValueResponse
   | RichTextArrayBasedPropertyValueResponse
@@ -448,6 +455,7 @@ export type BlockObjectResponse =
   | LinkToPageBlockObjectResponse
   | TableBlockObjectResponse
   | TableRowBlockObjectResponse
+  | TranscriptionBlockObjectResponse
   | EmbedBlockObjectResponse
   | BookmarkBlockObjectResponse
   | ImageBlockObjectResponse
@@ -2294,6 +2302,20 @@ type PageIdParentForBlockBasedObjectResponse = {
   page_id: IdResponse
 }
 
+type PageMarkdownResponse = {
+  // The type of object, always 'page_markdown'.
+  object: "page_markdown"
+  // The ID of the page or block.
+  id: IdResponse
+  // The page content rendered as enhanced Markdown.
+  markdown: string
+  // Whether the content was truncated due to exceeding the record count limit.
+  truncated: boolean
+  // Block IDs that could not be loaded (appeared as <unknown> tags in the markdown). Pass
+  // these IDs back to this endpoint to fetch their content separately.
+  unknown_block_ids: Array<IdResponse>
+}
+
 export type PageObjectResponse = {
   // The page object type name.
   object: "page"
@@ -3356,6 +3378,43 @@ export type ToggleBlockObjectResponse = {
   in_trash: boolean
 }
 
+export type TranscriptionBlockObjectResponse = {
+  type: "transcription"
+  transcription: TranscriptionBlockResponse
+  parent: ParentForBlockBasedObjectResponse
+  object: "block"
+  id: string
+  created_time: string
+  created_by: PartialUserObjectResponse
+  last_edited_time: string
+  last_edited_by: PartialUserObjectResponse
+  has_children: boolean
+  archived: boolean
+  in_trash: boolean
+}
+
+type TranscriptionBlockResponse = {
+  title?: Array<RichTextItemResponse>
+  status?: ApiTranscriptionStatus
+  children?: TranscriptionChildrenResponse
+  calendar_event?: TranscriptionCalendarEventResponse
+  recording?: TranscriptionRecordingResponse
+}
+
+type TranscriptionCalendarEventResponse = {
+  start_time: string
+  end_time: string
+  attendees?: Array<IdRequest>
+}
+
+type TranscriptionChildrenResponse = {
+  summary_block_id?: IdRequest
+  notes_block_id?: IdRequest
+  transcript_block_id?: IdRequest
+}
+
+type TranscriptionRecordingResponse = { start_time?: string; end_time?: string }
+
 type UniqueIdDatabasePropertyConfigResponse = {
   // Always `unique_id`
   type: "unique_id"
@@ -3391,7 +3450,11 @@ type UniqueIdSimplePropertyValueResponse = {
 
 export type UnsupportedBlockObjectResponse = {
   type: "unsupported"
-  unsupported: EmptyObject
+  unsupported: {
+    // The underlying block type that is not currently supported by the Public API. Example
+    // values include: tab, form, button, drive.
+    block_type: string
+  }
   parent: ParentForBlockBasedObjectResponse
   object: "block"
   id: string
@@ -3684,6 +3747,8 @@ type CreatePageBodyParameters = {
   cover?: PageCoverRequest | null
   content?: Array<BlockObjectRequest>
   children?: Array<BlockObjectRequest>
+  // Page content as Notion-flavored Markdown. Mutually exclusive with content/children.
+  markdown?: string
   template?:
     | { type: "none" }
     | { type: "default" }
@@ -3709,6 +3774,7 @@ export const createPage = {
     "cover",
     "content",
     "children",
+    "markdown",
     "template",
     "position",
   ],
@@ -3855,7 +3921,7 @@ export type UpdatePageParameters = UpdatePagePathParameters &
 export type UpdatePageResponse = PageObjectResponse | PartialPageObjectResponse
 
 /**
- * Update page properties
+ * Update page
  */
 export const updatePage = {
   method: "patch",
@@ -3903,6 +3969,89 @@ export const getPageProperty = {
 
   path: (p: GetPagePropertyPathParameters): string =>
     `pages/${p.page_id}/properties/${p.property_id}`,
+} as const
+
+type GetPageMarkdownPathParameters = {
+  // The ID of the page (or block) to retrieve as markdown. Non-navigable block IDs from
+  // truncated responses can be passed here to fetch their subtrees.
+  page_id: IdRequest
+}
+
+type GetPageMarkdownQueryParameters = {
+  // Whether to include meeting note transcripts. Defaults to false. When true, full
+  // transcripts are included; when false, a placeholder with the meeting note URL is shown
+  // instead.
+  include_transcript?: boolean
+}
+
+export type GetPageMarkdownParameters = GetPageMarkdownPathParameters &
+  GetPageMarkdownQueryParameters
+
+export type GetPageMarkdownResponse = PageMarkdownResponse
+
+/**
+ * Retrieve a page as markdown
+ */
+export const getPageMarkdown = {
+  method: "get",
+  pathParams: ["page_id"],
+  queryParams: ["include_transcript"],
+  bodyParams: [],
+
+  path: (p: GetPageMarkdownPathParameters): string =>
+    `pages/${p.page_id}/markdown`,
+} as const
+
+type UpdatePageMarkdownPathParameters = {
+  // The ID of the page to update.
+  page_id: IdRequest
+}
+
+type UpdatePageMarkdownBodyParameters =
+  | {
+      // Always `insert_content`
+      type: "insert_content"
+      // Insert new content into the page.
+      insert_content: {
+        // The enhanced markdown content to insert into the page.
+        content: string
+        // Selection of existing content to insert after, using the ellipsis format ("start
+        // text...end text"). Omit to append at the end of the page.
+        after?: string
+      }
+    }
+  | {
+      // Always `replace_content_range`
+      type: "replace_content_range"
+      // Replace a range of content in the page.
+      replace_content_range: {
+        // The new enhanced markdown content to replace the matched range.
+        content: string
+        // Selection of existing content to replace, using the ellipsis format ("start text...end
+        // text").
+        content_range: string
+        // Set to true to allow the operation to delete child pages or databases. Defaults to
+        // false.
+        allow_deleting_content?: boolean
+      }
+    }
+
+export type UpdatePageMarkdownParameters = UpdatePageMarkdownPathParameters &
+  UpdatePageMarkdownBodyParameters
+
+export type UpdatePageMarkdownResponse = PageMarkdownResponse
+
+/**
+ * Update a page's content as markdown
+ */
+export const updatePageMarkdown = {
+  method: "patch",
+  pathParams: ["page_id"],
+  queryParams: [],
+  bodyParams: ["type", "insert_content", "replace_content_range"],
+
+  path: (p: UpdatePageMarkdownPathParameters): string =>
+    `pages/${p.page_id}/markdown`,
 } as const
 
 type GetBlockPathParameters = {
@@ -5116,6 +5265,250 @@ export const getFileUpload = {
 
   path: (p: GetFileUploadPathParameters): string =>
     `file_uploads/${p.file_upload_id}`,
+} as const
+
+type QueryMeetingNotesBodyParameters = {
+  // Optional filter for querying meeting notes. Supports combinator (and/or) and property
+  // filters on title, attendees, created_time, last_edited_time, created_by, and
+  // last_edited_by.
+  filter?: {
+    // Operator for combinator filters.
+    operator: "and" | "or"
+    // Nested filters; each may be a combinator (and/or) or property filter.
+    filters?: Array<
+      | {
+          // Operator for nested combinator filters.
+          operator: "and" | "or"
+          // Nested filters for combinator filters.
+          filters: Array<
+            | {
+                // Property name.
+                property: string
+                filter: {
+                  // Operator.
+                  operator: string
+                  // Value for the operator.
+                  value?:
+                    | {
+                        type: "relative" | "exact"
+                        value:
+                          | string
+                          | {
+                              type: "date" | "datetime"
+                              start_date: string
+                              start_time?: string
+                              time_zone?: string
+                            }
+                      }
+                    | {
+                        type: "relative" | "exact"
+                        value:
+                          | string
+                          | {
+                              type: "daterange"
+                              start_date: string
+                              end_date?: string
+                            }
+                        direction?: "past" | "future"
+                        unit?: "day" | "week" | "month" | "year"
+                        count?: number
+                      }
+                    | {
+                        type: "exact"
+                        // The text value to filter on.
+                        value: string
+                      }
+                    | Array<{
+                        type: "exact"
+                        value: { table: "notion_user"; id: string }
+                      }>
+                }
+              }
+            | {
+                // Operator for nested combinator filters.
+                operator: "and" | "or"
+                filters: Array<{
+                  // Property name.
+                  property: string
+                  filter: {
+                    // Operator.
+                    operator: string
+                    // Value for the operator.
+                    value?:
+                      | {
+                          type: "relative" | "exact"
+                          value:
+                            | string
+                            | {
+                                type: "date" | "datetime"
+                                start_date: string
+                                start_time?: string
+                                time_zone?: string
+                              }
+                        }
+                      | {
+                          type: "relative" | "exact"
+                          value:
+                            | string
+                            | {
+                                type: "daterange"
+                                start_date: string
+                                end_date?: string
+                              }
+                          direction?: "past" | "future"
+                          unit?: "day" | "week" | "month" | "year"
+                          count?: number
+                        }
+                      | {
+                          type: "exact"
+                          // The text value to filter on.
+                          value: string
+                        }
+                      | Array<{
+                          type: "exact"
+                          value: { table: "notion_user"; id: string }
+                        }>
+                  }
+                }>
+              }
+          >
+        }
+      | {
+          // Property name.
+          property: string
+          filter: {
+            // Operator.
+            operator: string
+            // Value for the operator.
+            value?:
+              | {
+                  type: "relative" | "exact"
+                  value:
+                    | string
+                    | {
+                        type: "date" | "datetime"
+                        start_date: string
+                        start_time?: string
+                        time_zone?: string
+                      }
+                }
+              | {
+                  type: "relative" | "exact"
+                  value:
+                    | string
+                    | {
+                        type: "daterange"
+                        start_date: string
+                        end_date?: string
+                      }
+                  direction?: "past" | "future"
+                  unit?: "day" | "week" | "month" | "year"
+                  count?: number
+                }
+              | {
+                  type: "exact"
+                  // The text value to filter on.
+                  value: string
+                }
+              | Array<{
+                  type: "exact"
+                  value: { table: "notion_user"; id: string }
+                }>
+          }
+        }
+    >
+  }
+  // Optional sort order for the results. Each entry specifies a property name and
+  // direction.
+  sort?: Array<{
+    // Property name to sort by.
+    property: string
+    // Sort direction. Must be 'ascending' or 'descending'.
+    direction: "ascending" | "descending"
+  }>
+  // Maximum number of results to return. Defaults to 50.
+  limit?: number
+}
+
+export type QueryMeetingNotesParameters = QueryMeetingNotesBodyParameters
+
+export type QueryMeetingNotesResponse = {
+  // Array of meeting note transcription block objects. Each object includes the block ID,
+  // type, status, title, children block IDs, calendar event, and recording timestamps.
+  results: Array<{
+    // Always "block".
+    object: "block"
+    // The ID of the meeting note block.
+    id: IdResponse
+    // Always "transcription".
+    type: "transcription"
+    // Transcription-specific fields for this meeting note.
+    transcription: {
+      // Title of the meeting note as rich text.
+      title?: Array<RichTextItemResponse>
+      // Current processing status of the meeting note transcription.
+      status?:
+        | "transcription_not_started"
+        | "transcription_paused"
+        | "transcription_in_progress"
+        | "summary_in_progress"
+        | "notes_ready"
+      // Block IDs for each tab (summary, notes, transcript).
+      children?: {
+        // Block ID of the AI summary tab.
+        summary_block_id?: string
+        // Block ID of the meeting notes tab.
+        notes_block_id?: string
+        // Block ID of the transcript tab.
+        transcript_block_id?: string
+      }
+      // Calendar event metadata associated with this meeting note.
+      calendar_event?: {
+        // ISO-8601 start time of the calendar event.
+        start_time: string
+        // ISO-8601 end time of the calendar event.
+        end_time: string
+        // List of attendee user IDs.
+        attendees?: Array<string>
+      }
+      // Start and end times of the actual recording.
+      recording?: {
+        // ISO-8601 timestamp when the recording started.
+        start_time?: string
+        // ISO-8601 timestamp when the recording ended.
+        end_time?: string
+      }
+    }
+    // ISO-8601 timestamp when this meeting note was created.
+    created_time: string
+    // ISO-8601 timestamp when this meeting note was last edited.
+    last_edited_time: string
+    // User who created this meeting note.
+    created_by: PartialUserObjectResponse
+    // User who last edited this meeting note.
+    last_edited_by: PartialUserObjectResponse
+    // Whether this block has child blocks.
+    has_children: boolean
+    // Whether this meeting note is archived.
+    archived: boolean
+    // Whether this meeting note is in the trash.
+    in_trash: boolean
+  }>
+  // Whether additional results exist beyond the returned limit. Cursor-based pagination is
+  // not yet supported; use the `limit` request param to control page size.
+  has_more: boolean
+}
+
+/**
+ * Query meeting notes
+ */
+export const queryMeetingNotes = {
+  method: "post",
+  pathParams: [],
+  queryParams: [],
+  bodyParams: ["filter", "sort", "limit"],
+
+  path: (): string => `blocks/meeting_notes/query`,
 } as const
 
 type OauthTokenBodyParameters =

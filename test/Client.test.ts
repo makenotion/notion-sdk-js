@@ -21,6 +21,12 @@ describe("Notion SDK Client", () => {
       notion = new Client({ fetch: mockFetch })
     })
 
+    function getFirstRequestBody() {
+      const firstCall = mockFetch.mock.calls[0]
+      const firstCallParams = firstCall?.[1]
+      return JSON.parse(String(firstCallParams?.body) ?? "{}")
+    }
+
     it("calls revoke API with basic auth", async () => {
       await notion.oauth.revoke({
         client_id: "client_id",
@@ -62,11 +68,7 @@ describe("Notion SDK Client", () => {
         })
       )
 
-      const calls = mockFetch.mock.calls
-      const firstCall = calls[0]
-      const firstCallParams = firstCall?.[1]
-      const requestBody = JSON.parse(String(firstCallParams?.body) ?? "{}")
-
+      const requestBody = getFirstRequestBody()
       expect(requestBody).toMatchObject({
         filename: "test.txt",
         content_type: "text/plain",
@@ -97,8 +99,7 @@ describe("Notion SDK Client", () => {
         })
       )
 
-      const calls = mockFetch.mock.calls
-      const firstCall = calls[0]
+      const firstCall = mockFetch.mock.calls[0]
       const firstCallParams = firstCall?.[1]
 
       expect(firstCallParams?.headers).not.toContain("content-type")
@@ -112,6 +113,68 @@ describe("Notion SDK Client", () => {
       assert(typeof formData["file"] === "object")
       assert("size" in formData["file"])
       expect(formData["file"].size).toEqual(4)
+    })
+
+    it("calls query meeting notes API without filter", async () => {
+      await notion.blocks.meetingNotes.query({})
+
+      expect(mockFetch).toHaveBeenCalledWith(
+        "https://api.notion.com/v1/blocks/meeting_notes/query",
+        expect.objectContaining({
+          method: "POST",
+          headers: expect.objectContaining({
+            "Notion-Version": "2025-09-03",
+            "user-agent": expect.stringContaining("notionhq-client"),
+            "content-type": "application/json",
+          }),
+        })
+      )
+
+      const requestBody = getFirstRequestBody()
+      expect(requestBody).toEqual({})
+    })
+
+    it("calls query meeting notes API with filter", async () => {
+      await notion.blocks.meetingNotes.query({
+        filter: {
+          operator: "and",
+          filters: [
+            {
+              property: "attendees",
+              filter: {
+                operator: "person_contains",
+                value: [
+                  {
+                    type: "exact",
+                    value: {
+                      table: "notion_user",
+                      id: "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                    },
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      })
+
+      expect(mockFetch).toHaveBeenCalledWith(
+        "https://api.notion.com/v1/blocks/meeting_notes/query",
+        expect.objectContaining({ method: "POST" })
+      )
+
+      const requestBody = getFirstRequestBody()
+      expect(requestBody).toMatchObject({
+        filter: {
+          operator: "and",
+          filters: [
+            {
+              property: "attendees",
+              filter: { operator: "person_contains" },
+            },
+          ],
+        },
+      })
     })
 
     it("accepts custom request-level headers", async () => {

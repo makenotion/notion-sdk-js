@@ -116,7 +116,10 @@ import {
   listDataSourceTemplates,
   ListDataSourceTemplatesResponse,
   ListDataSourceTemplatesParameters,
+  type QueryMeetingNotesResponse,
+  queryMeetingNotes,
 } from "./api-endpoints"
+import type { QueryMeetingNotesParameters } from "./meeting-notes"
 import {
   version as PACKAGE_VERSION,
   name as PACKAGE_NAME,
@@ -640,6 +643,23 @@ export default class Client {
           method: listBlockChildren.method,
           query: pick(args, listBlockChildren.queryParams),
           body: pick(args, listBlockChildren.bodyParams),
+          auth: args?.auth,
+        })
+      },
+    },
+
+    meetingNotes: {
+      /**
+       * Query meeting notes
+       */
+      query: (
+        args: WithAuth<QueryMeetingNotesParameters>
+      ): Promise<QueryMeetingNotesResponse> => {
+        return this.request<QueryMeetingNotesResponse>({
+          path: queryMeetingNotes.path(),
+          method: queryMeetingNotes.method,
+          query: pick(args, queryMeetingNotes.queryParams),
+          body: pick(args, queryMeetingNotes.bodyParams),
           auth: args?.auth,
         })
       },
