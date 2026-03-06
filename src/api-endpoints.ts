@@ -457,6 +457,7 @@ export type BlockObjectResponse =
   | TableBlockObjectResponse
   | TableRowBlockObjectResponse
   | MeetingNotesBlockObjectResponse
+  | TranscriptionBlockObjectResponse
   | EmbedBlockObjectResponse
   | BookmarkBlockObjectResponse
   | ImageBlockObjectResponse
@@ -2073,7 +2074,21 @@ type MediaContentWithUrlResponse = { url: TextRequest }
 /**
  * @deprecated Use MeetingNotesBlockObjectResponse instead. Renamed in API version 2026-03-11.
  */
-export type TranscriptionBlockObjectResponse = MeetingNotesBlockObjectResponse
+export type TranscriptionBlockObjectResponse = {
+  type: "transcription"
+  transcription: TranscriptionBlockResponse
+  parent: ParentForBlockBasedObjectResponse
+  object: "block"
+  id: string
+  created_time: string
+  created_by: PartialUserObjectResponse
+  last_edited_time: string
+  last_edited_by: PartialUserObjectResponse
+  has_children: boolean
+  in_trash: boolean
+  /** @deprecated Use `in_trash` instead. Present for backwards compatibility with API versions prior to 2026-03-11. */
+  archived: boolean
+}
 
 export type MeetingNotesBlockObjectResponse = {
   type: "meeting_notes"
