@@ -359,6 +359,23 @@ In some cases, due to backwards-incompatible changes across [Notion API versions
 | v4.0.0 and above     | 2022-06-28                      |
 | v5.0.0 and above     | 2025-09-03                      |
 
+This SDK supports both `2025-09-03` and `2026-03-11` API versions. The default is `2025-09-03`. To use the newer version, pass it when constructing the client:
+
+```js
+const notion = new Client({
+  auth: process.env.NOTION_TOKEN,
+  notionVersion: "2026-03-11",
+})
+```
+
+Key changes in `2026-03-11`:
+
+- **Block positioning**: The `after` parameter on `appendBlockChildren` is replaced by `position`, which supports `after_block`, `start`, and `end`.
+- **Trash status**: The `archived` field is replaced by `in_trash` on pages, blocks, databases, and data sources.
+- **Block type rename**: The `transcription` block type is renamed to `meeting_notes`.
+
+Both the old and new field names are available in the SDK's TypeScript types for a smooth migration. Fields from the older version are marked `@deprecated`.
+
 In these cases, we recommend upgrading your Notion API version header using the `Client()` constructor across all of your requests before upgrading to a newer version of the SDK.
 
 ## Contributing
