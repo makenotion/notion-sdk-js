@@ -4149,6 +4149,39 @@ type UpdatePageMarkdownBodyParameters =
         allow_deleting_content?: boolean
       }
     }
+  | {
+      // Always `update_content`
+      type: "update_content"
+      // Update specific content using search-and-replace operations.
+      update_content: {
+        // An array of search-and-replace operations, each with old_str (content to find) and
+        // new_str (replacement content).
+        content_updates: Array<{
+          // The existing content string to find and replace. Must exactly match the page content.
+          old_str: string
+          // The new content string to replace old_str with.
+          new_str: string
+          // If true, replaces all occurrences of old_str. If false (default), the operation fails
+          // if there are multiple matches.
+          replace_all_matches?: boolean
+        }>
+        // Set to true to allow the operation to delete child pages or databases. Defaults to
+        // false.
+        allow_deleting_content?: boolean
+      }
+    }
+  | {
+      // Always `replace_content`
+      type: "replace_content"
+      // Replace the entire page content with new markdown.
+      replace_content: {
+        // The new enhanced markdown content to replace the entire page content.
+        new_str: string
+        // Set to true to allow the operation to delete child pages or databases. Defaults to
+        // false.
+        allow_deleting_content?: boolean
+      }
+    }
 
 export type UpdatePageMarkdownParameters = UpdatePageMarkdownPathParameters &
   UpdatePageMarkdownBodyParameters
@@ -4162,7 +4195,13 @@ export const updatePageMarkdown = {
   method: "patch",
   pathParams: ["page_id"],
   queryParams: [],
-  bodyParams: ["type", "insert_content", "replace_content_range"],
+  bodyParams: [
+    "type",
+    "insert_content",
+    "replace_content_range",
+    "update_content",
+    "replace_content",
+  ],
 
   path: (p: UpdatePageMarkdownPathParameters): string =>
     `pages/${p.page_id}/markdown`,
