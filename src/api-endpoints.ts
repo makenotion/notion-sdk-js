@@ -2361,14 +2361,6 @@ type GalleryViewConfigResponse = {
   card_layout?: "list" | "compact"
 }
 
-type GetViewQueryResultsRequest = {
-  // If supplied, this endpoint will return a page of results starting after the cursor
-  // provided.
-  start_cursor?: string
-  // The number of results to return per page. Maximum: 100
-  page_size?: number
-}
-
 /**
  * Group-by configuration based on property type.
  */
@@ -7043,7 +7035,16 @@ type GetViewQueryResultsPathParameters = {
   query_id: string
 }
 
-export type GetViewQueryResultsParameters = GetViewQueryResultsPathParameters
+type GetViewQueryResultsQueryParameters = {
+  // If supplied, this endpoint will return a page of results starting after the cursor
+  // provided.
+  start_cursor?: string
+  // The number of results to return per page. Maximum: 100
+  page_size?: number
+}
+
+export type GetViewQueryResultsParameters = GetViewQueryResultsPathParameters &
+  GetViewQueryResultsQueryParameters
 
 export type GetViewQueryResultsResponse = {
   // Always `list`
@@ -7062,7 +7063,7 @@ export type GetViewQueryResultsResponse = {
 export const getViewQueryResults = {
   method: "get",
   pathParams: ["view_id", "query_id"],
-  queryParams: [],
+  queryParams: ["start_cursor", "page_size"],
   bodyParams: [],
 
   path: (p: GetViewQueryResultsPathParameters): string =>
