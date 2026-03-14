@@ -21,11 +21,10 @@ jobs:
   increment-version:
     runs-on: ubuntu-latest
     steps:
-      # v5.0.0
-      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8
+      # v6.0.2
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          persist-credentials: false
 
       # v5.0.0
       - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
