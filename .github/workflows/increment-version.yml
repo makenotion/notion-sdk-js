@@ -13,16 +13,19 @@ on:
           - major
           - premajor
 
-permissions:
-  contents: write
-  pull-requests: write
+permissions: {}
 
 jobs:
   increment-version:
     runs-on: ubuntu-latest
+
+    permissions:
+      actions: write
+      contents: write
+      pull-requests: write
     steps:
-      # v5.0.0
-      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
+      # v6.0.2
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -39,9 +42,11 @@ jobs:
 
       - name: Bump version
         run: |
-          npm version ${{ github.event.inputs.version_type }} --no-git-tag-version
+          npm version ${GITHUB_EVENT_INPUTS_VERSION_TYPE} --no-git-tag-version
           NEW_VERSION=$(node -p "require('./package.json').version")
           echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
+        env:
+          GITHUB_EVENT_INPUTS_VERSION_TYPE: ${{ github.event.inputs.version_type }}
 
       - name: Update package-lock.json
         run: npm install
@@ -58,10 +63,16 @@ jobs:
       - name: Create pull request
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_EVENT_INPUTS_VERSION_TYPE: ${{ github.event.inputs.version_type }}
         run: |
           gh pr create \
             --title "Bump version to v${NEW_VERSION}" \
-            --body "This PR bumps the version to v${NEW_VERSION} using npm version ${{ github.event.inputs.version_type }}." \
+            --body "This PR bumps the version to v${NEW_VERSION} using npm version ${GITHUB_EVENT_INPUTS_VERSION_TYPE}." \
             --base main \
             --head "${BRANCH_NAME}" \
-            --assignee "${{ github.actor }}"
+            --assignee "${GITHUB_ACTOR}"
+
+      - name: Trigger CI on the new branch
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh workflow run ci.yml -f ref="${BRANCH_NAME}"
