@@ -620,6 +620,47 @@ type BlockObjectWithSingleLevelOfChildrenRequest =
       object?: "block"
     }
 
+type BoardViewConfigRequest = {
+  // The view type. Must be "board".
+  type: "board"
+  // Group-by configuration for board columns.
+  group_by: GroupByConfigRequest
+  // Secondary group-by configuration for sub-grouping within columns. Pass null to remove
+  // sub-grouping.
+  sub_group_by?: GroupByConfigRequest | null
+  // Property visibility and display configuration on cards. Pass null to clear.
+  properties?: Array<ViewPropertyConfigRequest> | null
+  // Cover image configuration for cards. Pass null to clear.
+  cover?: CoverConfigRequest | null
+  // Size of the cover image on cards. Pass null to clear.
+  cover_size?: "small" | "medium" | "large" | null
+  // Aspect ratio mode for cover images. "contain" fits the image, "cover" fills the area.
+  // Pass null to clear.
+  cover_aspect?: "contain" | "cover" | null
+  // Card layout mode. "list" shows full cards, "compact" shows condensed cards. Pass null
+  // to clear.
+  card_layout?: "list" | "compact" | null
+}
+
+type BoardViewConfigResponse = {
+  // The view configuration type.
+  type: "board"
+  // Column (horizontal) grouping - required for board view.
+  group_by: GroupByConfigResponse
+  // Sub-grouping (vertical swimlanes within columns).
+  sub_group_by?: GroupByConfigResponse
+  // Properties to display on each card.
+  properties?: Array<ViewPropertyConfigResponse>
+  // Card cover/preview image configuration.
+  cover?: CoverConfigResponse
+  // Cover image size.
+  cover_size?: "small" | "medium" | "large"
+  // Cover image aspect ratio.
+  cover_aspect?: "contain" | "cover"
+  // Card layout mode (list shows all properties, compact shows inline).
+  card_layout?: "list" | "compact"
+}
+
 export type BookmarkBlockObjectResponse = {
   type: "bookmark"
   bookmark: MediaContentWithUrlAndCaptionResponse
@@ -751,6 +792,35 @@ type ButtonSimplePropertyValueResponse = {
   button: EmptyObject
 }
 
+type CalendarViewConfigRequest = {
+  // The view type. Must be "calendar".
+  type: "calendar"
+  // Property ID of the date property used to position items on the calendar.
+  date_property_id: string
+  // Property visibility and display configuration on calendar cards. Pass null to clear.
+  properties?: Array<ViewPropertyConfigRequest> | null
+  // Default calendar range. "week" shows a week view, "month" shows a month view. Pass
+  // null to clear.
+  view_range?: "week" | "month" | null
+  // Whether to show weekend days. Pass null to clear.
+  show_weekends?: boolean | null
+}
+
+type CalendarViewConfigResponse = {
+  // The view configuration type.
+  type: "calendar"
+  // Date property used to position items on the calendar - required.
+  date_property_id: string
+  // Date property name (convenience field).
+  date_property_name?: string
+  // Properties to display on calendar event cards.
+  properties?: Array<ViewPropertyConfigResponse>
+  // Calendar view range.
+  view_range?: "week" | "month"
+  // Whether to show weekend days.
+  show_weekends?: boolean
+}
+
 export type CalloutBlockObjectResponse = {
   type: "callout"
   callout: {
@@ -771,10 +841,286 @@ export type CalloutBlockObjectResponse = {
   archived: boolean
 }
 
+type ChartAggregationRequest = {
+  // The aggregation operator. "count" counts all rows and does not require a property_id.
+  // All other operators require a property_id.
+  aggregator:
+    | "count"
+    | "count_values"
+    | "sum"
+    | "average"
+    | "median"
+    | "min"
+    | "max"
+    | "range"
+    | "unique"
+    | "empty"
+    | "not_empty"
+    | "percent_empty"
+    | "percent_not_empty"
+    | "checked"
+    | "unchecked"
+    | "percent_checked"
+    | "percent_unchecked"
+    | "earliest_date"
+    | "latest_date"
+    | "date_range"
+  // The property to aggregate on. Required for all operators except "count".
+  property_id?: string
+}
+
+type ChartAggregationResponse = {
+  // The aggregation operator. "count" counts all rows and does not require a property_id.
+  // All other operators require a property_id.
+  aggregator:
+    | "count"
+    | "count_values"
+    | "sum"
+    | "average"
+    | "median"
+    | "min"
+    | "max"
+    | "range"
+    | "unique"
+    | "empty"
+    | "not_empty"
+    | "percent_empty"
+    | "percent_not_empty"
+    | "checked"
+    | "unchecked"
+    | "percent_checked"
+    | "percent_unchecked"
+    | "earliest_date"
+    | "latest_date"
+    | "date_range"
+  // The property to aggregate on. Required for all operators except "count".
+  property_id?: string
+}
+
+type ChartReferenceLineRequest = {
+  // The y-axis value where the reference line is drawn.
+  value: number
+  // Label displayed alongside the reference line.
+  label: string
+  // Color of the reference line.
+  color:
+    | "gray"
+    | "lightgray"
+    | "brown"
+    | "yellow"
+    | "orange"
+    | "green"
+    | "blue"
+    | "purple"
+    | "pink"
+    | "red"
+  // Line style: "solid" for a continuous line, "dash" for a dashed line.
+  dash_style: "solid" | "dash"
+  // Unique identifier for the reference line. Auto-generated if omitted.
+  id?: string
+}
+
+type ChartReferenceLineResponse = {
+  // Unique identifier for the reference line.
+  id: string
+  // The y-axis value where the reference line is drawn.
+  value: number
+  // Label displayed alongside the reference line.
+  label: string
+  // Color of the reference line.
+  color:
+    | "gray"
+    | "lightgray"
+    | "brown"
+    | "yellow"
+    | "orange"
+    | "green"
+    | "blue"
+    | "purple"
+    | "pink"
+    | "red"
+  // Line style: "solid" for a continuous line, "dash" for a dashed line.
+  dash_style: "solid" | "dash"
+}
+
+type ChartViewConfigRequest = {
+  // The view type. Must be "chart".
+  type: "chart"
+  // The chart type.
+  chart_type: "column" | "bar" | "line" | "donut" | "number"
+  // X-axis grouping configuration for grouped data mode. Pass null to clear.
+  x_axis?: GroupByConfigRequest | null
+  // Y-axis aggregation for grouped data mode. Pass null to clear.
+  y_axis?: ChartAggregationRequest | null
+  // Property ID for x-axis values in results mode. Pass null to clear.
+  x_axis_property_id?: string | null
+  // Property ID for y-axis values in results mode. Pass null to clear.
+  y_axis_property_id?: string | null
+  // Aggregation for number charts. Pass null to clear.
+  value?: ChartAggregationRequest | null
+  // Sort order for chart data. Pass null to clear.
+  sort?:
+    | "manual"
+    | "x_ascending"
+    | "x_descending"
+    | "y_ascending"
+    | "y_descending"
+    | null
+  // Color theme. Pass null to clear.
+  color_theme?:
+    | "gray"
+    | "blue"
+    | "yellow"
+    | "green"
+    | "purple"
+    | "teal"
+    | "orange"
+    | "pink"
+    | "red"
+    | "auto"
+    | "colorful"
+    | null
+  // Chart height. Pass null to clear.
+  height?: "small" | "medium" | "large" | "extra_large" | null
+  // Whether to hide groups with no data. Pass null to clear.
+  hide_empty_groups?: boolean | null
+  // Legend position. Pass null to clear.
+  legend_position?: "off" | "bottom" | "side" | null
+  // Whether to show data labels. Pass null to clear.
+  show_data_labels?: boolean | null
+  // Which axis labels to show. Pass null to clear.
+  axis_labels?: "none" | "x_axis" | "y_axis" | "both" | null
+  // Which grid lines to show. Pass null to clear.
+  grid_lines?: "none" | "horizontal" | "vertical" | "both" | null
+  // Cumulative values (line only). Pass null to clear.
+  cumulative?: boolean | null
+  // Smooth line curves (line only). Pass null to clear.
+  smooth_line?: boolean | null
+  // Hide area fill (line only). Pass null to clear.
+  hide_line_fill_area?: boolean | null
+  // Grouped/stacked bar display style. Pass null to clear.
+  group_style?: "normal" | "percent" | "side_by_side" | null
+  // Custom y-axis minimum. Pass null to clear.
+  y_axis_min?: number | null
+  // Custom y-axis maximum. Pass null to clear.
+  y_axis_max?: number | null
+  // Donut slice labels. Pass null to clear.
+  donut_labels?: "none" | "value" | "name" | "name_and_value" | null
+  // Hide title (number only). Pass null to clear.
+  hide_title?: boolean | null
+  // Stack-by grouping for stacked/grouped bar charts. Pass null to clear.
+  stack_by?: GroupByConfigRequest | null
+  // Reference lines on the chart. Pass null to clear.
+  reference_lines?: Array<ChartReferenceLineRequest> | null
+  // Chart caption text. Pass null to clear.
+  caption?: string | null
+}
+
+type ChartViewConfigResponse = {
+  // The view configuration type.
+  type: "chart"
+  // The chart type: column (vertical bars), bar (horizontal bars), line, donut, or number
+  // (single value display).
+  chart_type: "column" | "bar" | "line" | "donut" | "number"
+  // X-axis grouping configuration for column/bar/line/donut charts using grouped data.
+  // Null when using results (raw property values) mode.
+  x_axis?: GroupByConfigResponse | null
+  // Y-axis aggregation for column/bar/line/donut charts using grouped data. Null when
+  // using results mode.
+  y_axis?: ChartAggregationResponse | null
+  // Property ID for the x-axis name values when using results (raw property values) mode.
+  x_axis_property_id?: string
+  // Property ID for the y-axis numeric values when using results (raw property values)
+  // mode.
+  y_axis_property_id?: string
+  // Aggregation configuration for number charts (single value display).
+  value?: ChartAggregationResponse
+  // Sort order for chart data.
+  sort?:
+    | "manual"
+    | "x_ascending"
+    | "x_descending"
+    | "y_ascending"
+    | "y_descending"
+  // Color theme for the chart.
+  color_theme?:
+    | "gray"
+    | "blue"
+    | "yellow"
+    | "green"
+    | "purple"
+    | "teal"
+    | "orange"
+    | "pink"
+    | "red"
+    | "auto"
+    | "colorful"
+  // Chart height.
+  height?: "small" | "medium" | "large" | "extra_large"
+  // Whether to hide groups with no data on the x-axis.
+  hide_empty_groups?: boolean
+  // Legend display position. "off" hides the legend.
+  legend_position?: "off" | "bottom" | "side"
+  // Whether to show data value labels on chart elements.
+  show_data_labels?: boolean
+  // Which axis labels to display.
+  axis_labels?: "none" | "x_axis" | "y_axis" | "both"
+  // Which grid lines to display.
+  grid_lines?: "none" | "horizontal" | "vertical" | "both"
+  // Whether to show cumulative values (line charts only).
+  cumulative?: boolean
+  // Whether to use smooth curves (line charts only).
+  smooth_line?: boolean
+  // Whether to hide the shaded area under the line (line charts only).
+  hide_line_fill_area?: boolean
+  // How grouped/stacked bars are displayed. "normal" stacks values, "percent" normalizes
+  // to 100%, "side_by_side" places bars next to each other.
+  group_style?: "normal" | "percent" | "side_by_side"
+  // Custom minimum value for the y-axis. Null clears the override.
+  y_axis_min?: number | null
+  // Custom maximum value for the y-axis. Null clears the override.
+  y_axis_max?: number | null
+  // What to display on donut chart slices.
+  donut_labels?: "none" | "value" | "name" | "name_and_value"
+  // Whether to hide the title label (number charts only).
+  hide_title?: boolean
+  // Stack-by grouping configuration for stacked/grouped bar charts (column/bar/line only).
+  // Null when not stacked.
+  stack_by?: GroupByConfigResponse | null
+  // Reference lines drawn on the chart. Null when no reference lines are configured.
+  reference_lines?: Array<ChartReferenceLineResponse> | null
+  // Text caption displayed below the chart. Null when no caption is shown.
+  caption?: string | null
+}
+
 type CheckboxDatabasePropertyConfigResponse = {
   // Always `checkbox`
   type: "checkbox"
   checkbox: EmptyObject
+}
+
+type CheckboxGroupByConfigRequest = {
+  // The property type for grouping.
+  type: "checkbox"
+  // Property ID to group by.
+  property_id: string
+  // Sort order for groups.
+  sort: GroupSortRequest
+  // Whether to hide groups that have no items.
+  hide_empty_groups?: boolean
+}
+
+type CheckboxGroupByConfigResponse = {
+  // The property type for grouping.
+  type: "checkbox"
+  // Property ID to group by.
+  property_id: string
+  // Sort order for groups (only manual for checkbox).
+  sort: GroupSortResponse
+  // Property name (convenience field).
+  property_name?: string
+  // Whether to hide groups that have no items.
+  hide_empty_groups?: boolean
 }
 
 type CheckboxPropertyConfigurationRequest = {
@@ -980,6 +1326,51 @@ type ContentWithTableRowRequest = { cells: Array<Array<RichTextItemRequest>> }
 
 type ContentWithTableRowResponse = { cells: Array<Array<RichTextItemResponse>> }
 
+type CoverConfigRequest = {
+  // Source of the cover image.
+  type: "page_cover" | "page_content" | "property"
+  // Property ID when type is "property".
+  property_id?: string
+}
+
+type CoverConfigResponse = {
+  // Source of the cover image.
+  type: "page_cover" | "page_content" | "page_content_first" | "property"
+  // Property ID when type is "property".
+  property_id?: string
+}
+
+type CreateViewQueryRequest = {
+  // The number of results to return per page. Maximum: 100
+  page_size?: number
+}
+
+type CreateViewRequest = {
+  // The ID of the data source this view should be scoped to.
+  data_source_id: string
+  // The name of the view.
+  name: string
+  // The type of view to create.
+  type: ViewTypeRequest
+  // The ID of the database to create a view in. Mutually exclusive with view_id.
+  database_id?: IdRequest
+  // The ID of a dashboard view to add this view to as a widget. Mutually exclusive with
+  // database_id.
+  view_id?: IdRequest
+  // Filter to apply to the view. Uses the same format as the data source query filter.
+  filter?: ViewFilterRequest
+  // Sorts to apply to the view. Uses the same format as the data source query sorts.
+  sorts?: ViewSortsRequest
+  // View presentation configuration. The type field must match the view type.
+  configuration?: ViewConfigRequest
+  // Where to place the new view in the database's view tab bar. Only applicable when
+  // database_id is provided. Defaults to "end" (append).
+  position?: ViewPositionRequest
+  // Where to place the new widget in a dashboard view. Only applicable when view_id is
+  // provided. Defaults to creating a new row at the end.
+  placement?: WidgetPlacementRequest
+}
+
 type CreatedByDatabasePropertyConfigResponse = {
   // Always `created_by`
   type: "created_by"
@@ -1059,6 +1450,35 @@ type CustomEmojiResponse = {
   url: string
 }
 
+type DashboardRowResponse = {
+  // The ID of this row module.
+  id: string
+  // The widget modules within this row.
+  widgets: Array<DashboardWidgetResponse>
+  // Fixed height of the row in pixels.
+  height?: number
+}
+
+type DashboardViewConfigResponse = {
+  // The view configuration type.
+  type: "dashboard"
+  // The rows that make up the dashboard layout. Each row contains one or more widget
+  // modules.
+  rows: Array<DashboardRowResponse>
+}
+
+type DashboardWidgetResponse = {
+  // The ID of this widget module.
+  id: string
+  // The ID of the collection view rendered by this widget.
+  view_id: string
+  // Width of the widget in a 12-column grid (1-12). 12 means full width.
+  width?: number
+  // The 0-based index of the row this widget belongs to. Widgets in the same row share the
+  // same row_index.
+  row_index?: number
+}
+
 export type DataSourceObjectResponse = {
   // The data source object type name.
   object: "data_source"
@@ -1113,6 +1533,57 @@ type DataSourceReferenceResponse = {
   id: IdResponse
   // The name of the data source.
   name: string
+}
+
+type DataSourceViewObjectResponse = {
+  // The object type name.
+  object: "view"
+  // The ID of the view.
+  id: IdResponse
+  // The parent database of the view.
+  parent: DatabaseParentResponse
+  // The name of the view.
+  name: string
+  // The view type.
+  type:
+    | "table"
+    | "board"
+    | "list"
+    | "calendar"
+    | "timeline"
+    | "gallery"
+    | "form"
+    | "chart"
+    | "map"
+    | "dashboard"
+  // The time when the view was created.
+  created_time: string
+  // The time when the view was last edited.
+  last_edited_time: string
+  // Canonical deep link to the view in Notion.
+  url: string
+  // The ID of the data source this view is scoped to, or null for dashboard views.
+  data_source_id?: string | null
+  // The user who created the view, or null if not available.
+  created_by?: PartialUserObjectResponse | null
+  // The user who last edited the view, or null if not available.
+  last_edited_by?: PartialUserObjectResponse | null
+  // The filter applied to this view (same shape as data source query filter).
+  filter?: ViewFilterResponse | null
+  // The sorts applied to this view (same shape as data source query sorts).
+  sorts?: Array<ViewSortResponse> | null
+  // View presentation configuration.
+  configuration?: ViewConfigResponse | null
+  // For dashboard widget views, the ID of the parent dashboard view. Only present when
+  // this view is a widget inside a dashboard.
+  dashboard_view_id?: string
+}
+
+type DataSourceViewReferenceResponse = {
+  // The object type name.
+  object: "view"
+  // The ID of the view.
+  id: IdResponse
 }
 
 export type DatabaseObjectResponse = {
@@ -1218,6 +1689,38 @@ type DateFormulaPropertyValueResponse = {
   date: DateResponse | null
 }
 
+type DateGroupByConfigRequest = {
+  // The property type for grouping.
+  type: "date" | "created_time" | "last_edited_time"
+  // Property ID to group by.
+  property_id: string
+  // Granularity for date grouping.
+  group_by: "relative" | "day" | "week" | "month" | "year"
+  // Sort order for groups.
+  sort: GroupSortRequest
+  // Whether to hide groups that have no items.
+  hide_empty_groups?: boolean
+  // Start day of week for week grouping (0 = Sunday, 1 = Monday).
+  start_day_of_week?: 0 | 1
+}
+
+type DateGroupByConfigResponse = {
+  // The property type for grouping.
+  type: "date" | "created_time" | "last_edited_time"
+  // Property ID to group by.
+  property_id: string
+  // Granularity for date grouping.
+  group_by: "relative" | "day" | "week" | "month" | "year"
+  // Sort order for groups (no manual sort for dates).
+  sort: GroupSortResponse
+  // Property name (convenience field).
+  property_name?: string
+  // Whether to hide groups that have no items.
+  hide_empty_groups?: boolean
+  // Start day of week for week grouping (0 = Sunday, 1 = Monday).
+  start_day_of_week?: 0 | 1
+}
+
 type DatePartialRollupValueResponse = {
   // Always `date`
   type: "date"
@@ -1275,6 +1778,15 @@ type DateSimplePropertyValueResponse = {
   // Always `date`
   type: "date"
   date: DateResponse | null
+}
+
+type DeletedViewQueryResponse = {
+  // The object type.
+  object: "view_query"
+  // The ID of the deleted view query.
+  id: IdResponse
+  // Whether the view query was deleted.
+  deleted: boolean
 }
 
 export type DividerBlockObjectResponse = {
@@ -1623,10 +2135,134 @@ type FilesSimplePropertyValueResponse = {
   files: Array<InternalOrExternalFileWithNameResponse>
 }
 
+type FormViewConfigRequest = {
+  // The view type. Must be "form".
+  type: "form"
+  // Whether the form is closed for submissions. Pass null to clear.
+  is_form_closed?: boolean | null
+  // Whether anonymous (non-logged-in) submissions are allowed. Pass null to clear.
+  anonymous_submissions?: boolean | null
+  // Permission level granted to the submitter on the created page after form submission.
+  // Pass null to clear.
+  submission_permissions?:
+    | "none"
+    | "comment_only"
+    | "reader"
+    | "read_and_write"
+    | "editor"
+    | null
+}
+
+type FormViewConfigResponse = {
+  // The view configuration type.
+  type: "form"
+  // Whether the form is closed for submissions.
+  is_form_closed?: boolean
+  // Whether anonymous (non-logged-in) submissions are allowed.
+  anonymous_submissions?: boolean
+  // Permission level granted to the submitter on the created page after form submission.
+  submission_permissions?:
+    | "none"
+    | "comment_only"
+    | "reader"
+    | "read_and_write"
+    | "editor"
+}
+
+type FormulaCheckboxSubGroupByRequest = {
+  // The formula result type for grouping.
+  type: "checkbox"
+  // Sort order for groups.
+  sort: GroupSortRequest
+}
+
+type FormulaCheckboxSubGroupByResponse = {
+  // The formula result type for grouping.
+  type: "checkbox"
+  // Sort order for groups (only manual for checkbox).
+  sort: GroupSortResponse
+}
+
 type FormulaDatabasePropertyConfigResponse = {
   // Always `formula`
   type: "formula"
   formula: { expression: string }
+}
+
+type FormulaDateSubGroupByRequest = {
+  // The formula result type for grouping.
+  type: "date"
+  // Granularity for date grouping.
+  group_by: "relative" | "day" | "week" | "month" | "year"
+  // Sort order for groups.
+  sort: GroupSortRequest
+  // Start day of week for week grouping (0 = Sunday, 1 = Monday).
+  start_day_of_week?: 0 | 1
+}
+
+type FormulaDateSubGroupByResponse = {
+  // The formula result type for grouping.
+  type: "date"
+  // Granularity for date grouping.
+  group_by: "relative" | "day" | "week" | "month" | "year"
+  // Sort order for groups.
+  sort: GroupSortResponse
+  // Start day of week for week grouping (0 = Sunday, 1 = Monday).
+  start_day_of_week?: 0 | 1
+}
+
+type FormulaGroupByConfigRequest = {
+  // The property type for grouping.
+  type: "formula"
+  // Property ID of the formula to group by.
+  property_id: string
+  // Sub-group-by configuration based on the formula result type.
+  group_by:
+    | FormulaDateSubGroupByRequest
+    | FormulaTextSubGroupByRequest
+    | FormulaNumberSubGroupByRequest
+    | FormulaCheckboxSubGroupByRequest
+  // Whether to hide groups that have no items.
+  hide_empty_groups?: boolean
+}
+
+type FormulaGroupByConfigResponse = {
+  // The property type for grouping.
+  type: "formula"
+  // Property ID of the formula to group by.
+  property_id: string
+  // Sub-group-by configuration based on the formula result type.
+  group_by: FormulaSubGroupByResponse
+  // Property name (convenience field).
+  property_name?: string
+  // Whether to hide groups that have no items.
+  hide_empty_groups?: boolean
+}
+
+type FormulaNumberSubGroupByRequest = {
+  // The formula result type for grouping.
+  type: "number"
+  // Sort order for groups.
+  sort: GroupSortRequest
+  // Start of the range for number grouping buckets.
+  range_start?: number
+  // End of the range for number grouping buckets.
+  range_end?: number
+  // Size of each bucket in number grouping.
+  range_size?: number
+}
+
+type FormulaNumberSubGroupByResponse = {
+  // The formula result type for grouping.
+  type: "number"
+  // Sort order for groups (ascending or descending only).
+  sort: GroupSortResponse
+  // Start of the range for number grouping buckets.
+  range_start?: number
+  // End of the range for number grouping buckets.
+  range_end?: number
+  // Size of each bucket in number grouping.
+  range_size?: number
 }
 
 type FormulaPropertyConfigurationRequest = {
@@ -1666,6 +2302,93 @@ type FormulaSimplePropertyValueResponse = {
   formula: FormulaPropertyValueResponse
 }
 
+/**
+ * Sub-group-by configuration for formula properties based on result type.
+ */
+type FormulaSubGroupByResponse =
+  | FormulaDateSubGroupByResponse
+  | FormulaTextSubGroupByResponse
+  | FormulaNumberSubGroupByResponse
+  | FormulaCheckboxSubGroupByResponse
+
+type FormulaTextSubGroupByRequest = {
+  // The formula result type for grouping.
+  type: "text"
+  // How to group text values. "exact" = exact match, "alphabet_prefix" = first letter.
+  group_by: "exact" | "alphabet_prefix"
+  // Sort order for groups.
+  sort: GroupSortRequest
+}
+
+type FormulaTextSubGroupByResponse = {
+  // The formula result type for grouping.
+  type: "text"
+  // How to group text values. "exact" = exact match, "alphabet_prefix" = first letter.
+  group_by: "exact" | "alphabet_prefix"
+  // Sort order for groups.
+  sort: GroupSortResponse
+}
+
+type GalleryViewConfigRequest = {
+  // The view type. Must be "gallery".
+  type: "gallery"
+  // Property visibility and display configuration on gallery cards. Pass null to clear.
+  properties?: Array<ViewPropertyConfigRequest> | null
+  // Cover image configuration for cards. Pass null to clear.
+  cover?: CoverConfigRequest | null
+  // Size of the cover image on cards. Pass null to clear.
+  cover_size?: "small" | "medium" | "large" | null
+  // Aspect ratio mode for cover images. "contain" fits the image, "cover" fills the area.
+  // Pass null to clear.
+  cover_aspect?: "contain" | "cover" | null
+  // Card layout mode. "list" shows full cards, "compact" shows condensed cards. Pass null
+  // to clear.
+  card_layout?: "list" | "compact" | null
+}
+
+type GalleryViewConfigResponse = {
+  // The view configuration type.
+  type: "gallery"
+  // Properties to display on gallery cards.
+  properties?: Array<ViewPropertyConfigResponse>
+  // Card cover/preview image configuration.
+  cover?: CoverConfigResponse
+  // Cover image size.
+  cover_size?: "small" | "medium" | "large"
+  // Cover image aspect ratio.
+  cover_aspect?: "contain" | "cover"
+  // Card layout mode (list shows all properties, compact shows inline).
+  card_layout?: "list" | "compact"
+}
+
+/**
+ * Group-by configuration based on property type.
+ */
+type GroupByConfigRequest =
+  | SelectGroupByConfigRequest
+  | StatusGroupByConfigRequest
+  | PersonGroupByConfigRequest
+  | RelationGroupByConfigRequest
+  | DateGroupByConfigRequest
+  | TextGroupByConfigRequest
+  | NumberGroupByConfigRequest
+  | CheckboxGroupByConfigRequest
+  | FormulaGroupByConfigRequest
+
+/**
+ * Group-by configuration based on property type.
+ */
+type GroupByConfigResponse =
+  | SelectGroupByConfigResponse
+  | StatusGroupByConfigResponse
+  | PersonGroupByConfigResponse
+  | RelationGroupByConfigResponse
+  | DateGroupByConfigResponse
+  | TextGroupByConfigResponse
+  | NumberGroupByConfigResponse
+  | CheckboxGroupByConfigResponse
+  | FormulaGroupByConfigResponse
+
 type GroupFilterOperatorArray = Array<
   | PropertyOrTimestampFilter
   | { or: PropertyOrTimestampFilterArray }
@@ -1685,6 +2408,16 @@ export type GroupObjectResponse = {
   object: "group"
   // The name of the group.
   name: string | null
+}
+
+type GroupSortRequest = {
+  // Sort direction for groups.
+  type: "manual" | "ascending" | "descending"
+}
+
+type GroupSortResponse = {
+  // Sort direction for groups.
+  type: "manual" | "ascending" | "descending"
 }
 
 type HeaderContentWithRichTextAndColorRequest = {
@@ -2019,10 +2752,49 @@ export type LinkToPageBlockObjectResponse = {
   archived: boolean
 }
 
+type ListViewConfigRequest = {
+  // The view type. Must be "list".
+  type: "list"
+  // Property visibility and display configuration. Pass null to clear.
+  properties?: Array<ViewPropertyConfigRequest> | null
+}
+
+type ListViewConfigResponse = {
+  // The view configuration type.
+  type: "list"
+  // Properties to display in list items.
+  properties?: Array<ViewPropertyConfigResponse>
+}
+
 type LocationPropertyConfigurationRequest = {
   // Always `location`
   type?: "location"
   location: EmptyObject
+}
+
+type MapViewConfigRequest = {
+  // The view type. Must be "map".
+  type: "map"
+  // Map display height. Pass null to clear.
+  height?: "small" | "medium" | "large" | "extra_large" | null
+  // Property ID of the location property used to position items on the map. Pass null to
+  // clear.
+  map_by?: string | null
+  // Property visibility and display configuration on map pin cards. Pass null to clear.
+  properties?: Array<ViewPropertyConfigRequest> | null
+}
+
+type MapViewConfigResponse = {
+  // The view configuration type.
+  type: "map"
+  // Map display height.
+  height?: "small" | "medium" | "large" | "extra_large"
+  // Property ID of the location property used to position items on the map.
+  map_by?: string
+  // Map-by property name (convenience field).
+  map_by_property_name?: string
+  // Properties to display on map pin cards.
+  properties?: Array<ViewPropertyConfigResponse>
 }
 
 type MediaContentWithFileAndCaptionRequest =
@@ -2282,6 +3054,42 @@ type NumberFormulaPropertyValueResponse = {
   number: number | null
 }
 
+type NumberGroupByConfigRequest = {
+  // The property type for grouping.
+  type: "number"
+  // Property ID to group by.
+  property_id: string
+  // Sort order for groups.
+  sort: GroupSortRequest
+  // Whether to hide groups that have no items.
+  hide_empty_groups?: boolean
+  // Start of the range for number grouping buckets.
+  range_start?: number
+  // End of the range for number grouping buckets.
+  range_end?: number
+  // Size of each bucket in number grouping.
+  range_size?: number
+}
+
+type NumberGroupByConfigResponse = {
+  // The property type for grouping.
+  type: "number"
+  // Property ID to group by.
+  property_id: string
+  // Sort order for groups (ascending or descending only).
+  sort: GroupSortResponse
+  // Property name (convenience field).
+  property_name?: string
+  // Whether to hide groups that have no items.
+  hide_empty_groups?: boolean
+  // Start of the range for number grouping buckets.
+  range_start?: number
+  // End of the range for number grouping buckets.
+  range_end?: number
+  // Size of each bucket in number grouping.
+  range_size?: number
+}
+
 type NumberPartialRollupValueResponse = {
   // Always `number`
   type: "number"
@@ -2418,6 +3226,13 @@ type PagePositionSchema =
 type PagePropertyValueWithIdResponse = IdObjectResponse &
   (SimpleOrArrayPropertyValueResponse | PartialRollupPropertyResponse)
 
+type PageReferenceResponse = {
+  // The object type.
+  object: string
+  // The object ID.
+  id: IdResponse
+}
+
 export type ParagraphBlockObjectResponse = {
   type: "paragraph"
   paragraph: ContentWithRichTextAndColorResponse
@@ -2479,6 +3294,27 @@ export type PartialDataSourceObjectResponse = {
   id: IdResponse
   // The properties schema of the data source.
   properties: Record<string, DatabasePropertyConfigResponse>
+}
+
+type PartialDataSourceViewObjectResponse = {
+  // The object type name.
+  object: "view"
+  // The ID of the view.
+  id: IdResponse
+  // The parent database of the view.
+  parent: DatabaseParentResponse
+  // The view type.
+  type:
+    | "table"
+    | "board"
+    | "list"
+    | "calendar"
+    | "timeline"
+    | "gallery"
+    | "form"
+    | "chart"
+    | "map"
+    | "dashboard"
 }
 
 export type PartialDatabaseObjectResponse = {
@@ -2590,6 +3426,30 @@ export type PeoplePropertyItemObjectResponse = {
   people: PartialUserObjectResponse | UserObjectResponse
   object: "property_item"
   id: string
+}
+
+type PersonGroupByConfigRequest = {
+  // The property type for grouping.
+  type: "person" | "created_by" | "last_edited_by"
+  // Property ID to group by.
+  property_id: string
+  // Sort order for groups.
+  sort: GroupSortRequest
+  // Whether to hide groups that have no items.
+  hide_empty_groups?: boolean
+}
+
+type PersonGroupByConfigResponse = {
+  // The property type for grouping.
+  type: "person" | "created_by" | "last_edited_by"
+  // Property ID to group by.
+  property_id: string
+  // Sort order for groups (only manual supported).
+  sort: GroupSortResponse
+  // Property name (convenience field).
+  property_name?: string
+  // Whether to hide groups that have no items.
+  hide_empty_groups?: boolean
 }
 
 export type PersonUserObjectResponse = {
@@ -2834,6 +3694,13 @@ type PropertyOrTimestampFilter = PropertyFilter | TimestampFilter
 
 type PropertyOrTimestampFilterArray = Array<PropertyOrTimestampFilter>
 
+type PropertySortResponse = {
+  // The name or ID of the property to sort by.
+  property: string
+  // Sort direction.
+  direction: "ascending" | "descending"
+}
+
 export type QuoteBlockObjectResponse = {
   type: "quote"
   quote: ContentWithRichTextAndColorResponse
@@ -2860,6 +3727,30 @@ type RelationDatabasePropertyConfigResponse = {
   // Always `relation`
   type: "relation"
   relation: DatabasePropertyRelationConfigResponse
+}
+
+type RelationGroupByConfigRequest = {
+  // The property type for grouping.
+  type: "relation"
+  // Property ID to group by.
+  property_id: string
+  // Sort order for groups.
+  sort: GroupSortRequest
+  // Whether to hide groups that have no items.
+  hide_empty_groups?: boolean
+}
+
+type RelationGroupByConfigResponse = {
+  // The property type for grouping.
+  type: "relation"
+  // Property ID to group by.
+  property_id: string
+  // Sort order for groups.
+  sort: GroupSortResponse
+  // Property name (convenience field).
+  property_name?: string
+  // Whether to hide groups that have no items.
+  hide_empty_groups?: boolean
 }
 
 type RelationItemPropertyValueResponse = { id: IdRequest }
@@ -3061,6 +3952,30 @@ type SelectDatabasePropertyConfigResponse = {
   select: { options: Array<SelectPropertyResponse> }
 }
 
+type SelectGroupByConfigRequest = {
+  // The property type for grouping.
+  type: "select" | "multi_select"
+  // Property ID to group by.
+  property_id: string
+  // Sort order for groups.
+  sort: GroupSortRequest
+  // Whether to hide groups that have no items.
+  hide_empty_groups?: boolean
+}
+
+type SelectGroupByConfigResponse = {
+  // The property type for grouping.
+  type: "select" | "multi_select"
+  // Property ID to group by.
+  property_id: string
+  // Sort order for groups.
+  sort: GroupSortResponse
+  // Property name (convenience field).
+  property_name?: string
+  // Whether to hide groups that have no items.
+  hide_empty_groups?: boolean
+}
+
 type SelectPropertyConfigurationRequest = {
   // Always `select`
   type?: "select"
@@ -3129,6 +4044,11 @@ type SinglePropertyDatabasePropertyRelationConfigResponse = {
   single_property: EmptyObject
 }
 
+/**
+ * One of: `ascending`, `descending`
+ */
+type SortDirectionRequest = "ascending" | "descending"
+
 type StatusDatabasePropertyConfigResponse = {
   // Always `status`
   type: "status"
@@ -3147,6 +4067,36 @@ type StatusDatabasePropertyConfigResponse = {
       option_ids: Array<string>
     }>
   }
+}
+
+type StatusGroupByConfigRequest = {
+  // The property type for grouping.
+  type: "status"
+  // Property ID to group by.
+  property_id: string
+  // How to group status values. "group" groups by status group (To Do/In Progress/Done),
+  // "option" groups by individual option.
+  group_by: "group" | "option"
+  // Sort order for groups.
+  sort: GroupSortRequest
+  // Whether to hide groups that have no items.
+  hide_empty_groups?: boolean
+}
+
+type StatusGroupByConfigResponse = {
+  // The property type for grouping.
+  type: "status"
+  // Property ID to group by.
+  property_id: string
+  // How to group status values. "group" groups by status group (To Do/In Progress/Done),
+  // "option" groups by individual option.
+  group_by: "group" | "option"
+  // Sort order for groups.
+  sort: GroupSortResponse
+  // Property name (convenience field).
+  property_name?: string
+  // Whether to hide groups that have no items.
+  hide_empty_groups?: boolean
 }
 
 type StatusPropertyConfigurationRequest = {
@@ -3193,6 +4143,34 @@ type StringFormulaPropertyValueResponse = {
 }
 
 type StringRequest = string
+
+type SubtaskConfigRequest = {
+  // Relation property ID used for parent-child nesting.
+  property_id?: string
+  // How sub-items are displayed. "show" renders hierarchically with toggles, "hidden"
+  // shows parents with a count, "flattened" shows sub-items with a parent indicator,
+  // "disabled" turns off sub-item rendering.
+  display_mode?: "show" | "hidden" | "flattened" | "disabled"
+  // Which items are included when filtering. "parents" includes parent items only,
+  // "parents_and_subitems" includes both, "subitems" includes sub-items only.
+  filter_scope?: "parents" | "parents_and_subitems" | "subitems"
+  // Property ID of the column showing the sub-item expand/collapse toggle.
+  toggle_column_id?: string
+}
+
+type SubtaskConfigResponse = {
+  // Relation property ID used for parent-child nesting.
+  property_id?: string
+  // How sub-items are displayed. "show" renders hierarchically with toggles, "hidden"
+  // shows parents with a count, "flattened" shows sub-items with a parent indicator,
+  // "disabled" turns off sub-item rendering.
+  display_mode?: "show" | "hidden" | "flattened" | "disabled"
+  // Which items are included when filtering. "parents" includes parent items only,
+  // "parents_and_subitems" includes both, "subitems" includes sub-items only.
+  filter_scope?: "parents" | "parents_and_subitems" | "subitems"
+  // Property ID of the column showing the sub-item expand/collapse toggle.
+  toggle_column_id?: string
+}
 
 export type SyncedBlockBlockObjectResponse = {
   type: "synced_block"
@@ -3273,6 +4251,40 @@ type TableRowRequest = {
   object?: "block"
 }
 
+type TableViewConfigRequest = {
+  // The view type. Must be "table".
+  type: "table"
+  // Property visibility and display configuration. Pass null to clear.
+  properties?: Array<ViewPropertyConfigRequest> | null
+  // Group-by configuration for the table. Pass null to remove grouping.
+  group_by?: GroupByConfigRequest | null
+  // Subtask (sub-item) configuration. Pass null to disable subtasks.
+  subtasks?: SubtaskConfigRequest | null
+  // Whether to wrap cell content in the table.
+  wrap_cells?: boolean
+  // Number of columns frozen from the left side of the table.
+  frozen_column_index?: number
+  // Whether to show vertical grid lines between columns.
+  show_vertical_lines?: boolean
+}
+
+type TableViewConfigResponse = {
+  // The view configuration type.
+  type: "table"
+  // Columns/properties visible in the table view.
+  properties?: Array<ViewPropertyConfigResponse>
+  // Vertical (row) grouping configuration.
+  group_by?: GroupByConfigResponse
+  // Sub-item (subtask) display configuration.
+  subtasks?: SubtaskConfigResponse
+  // Whether to wrap cell content by default.
+  wrap_cells?: boolean
+  // Index of the last frozen column. Columns up to and including this index are frozen.
+  frozen_column_index?: number
+  // Whether to show vertical lines between columns.
+  show_vertical_lines?: boolean
+}
+
 export type TemplateBlockObjectResponse = {
   type: "template"
   template: { rich_text: Array<RichTextItemResponse> }
@@ -3332,6 +4344,34 @@ type TemplateMentionUserTemplateMentionResponse = {
  */
 type TemplateTimezone = string
 
+type TextGroupByConfigRequest = {
+  // The property type for grouping.
+  type: "text" | "title" | "url" | "email" | "phone_number"
+  // Property ID to group by.
+  property_id: string
+  // How to group text values. "exact" = exact match, "alphabet_prefix" = first letter.
+  group_by: "exact" | "alphabet_prefix"
+  // Sort order for groups.
+  sort: GroupSortRequest
+  // Whether to hide groups that have no items.
+  hide_empty_groups?: boolean
+}
+
+type TextGroupByConfigResponse = {
+  // The property type for grouping.
+  type: "text" | "title" | "url" | "email" | "phone_number"
+  // Property ID to group by.
+  property_id: string
+  // How to group text values. "exact" = exact match, "alphabet_prefix" = first letter.
+  group_by: "exact" | "alphabet_prefix"
+  // Sort order for groups.
+  sort: GroupSortResponse
+  // Property name (convenience field).
+  property_name?: string
+  // Whether to hide groups that have no items.
+  hide_empty_groups?: boolean
+}
+
 type TextPropertyFilter =
   | { equals: string }
   | { does_not_equal: string }
@@ -3377,6 +4417,94 @@ export type TextRichTextItemResponse = {
 
 type TimeZoneRequest = string
 
+type TimelineArrowsByRequest = {
+  // Relation property ID used for dependency arrows, or null to disable arrows.
+  property_id?: string | null
+}
+
+type TimelineArrowsByResponse = {
+  // Relation property ID used for dependency arrows.
+  property_id?: string | null
+}
+
+type TimelinePreferenceRequest = {
+  // Zoom level for the timeline.
+  zoom_level:
+    | "hours"
+    | "day"
+    | "week"
+    | "bi_week"
+    | "month"
+    | "quarter"
+    | "year"
+    | "5_years"
+  // Timestamp (ms) to center the timeline view on.
+  center_timestamp?: number
+}
+
+type TimelinePreferenceResponse = {
+  // Zoom level for the timeline.
+  zoom_level:
+    | "hours"
+    | "day"
+    | "week"
+    | "bi_week"
+    | "month"
+    | "quarter"
+    | "year"
+    | "5_years"
+  // Center timestamp for the timeline view (Unix timestamp in ms).
+  center_timestamp?: number
+}
+
+type TimelineViewConfigRequest = {
+  // The view type. Must be "timeline".
+  type: "timeline"
+  // Property ID of the date property used for the start of timeline items.
+  date_property_id: string
+  // Property ID of the date property used for the end of timeline items. Pass null to
+  // clear.
+  end_date_property_id?: string | null
+  // Property visibility and display configuration on timeline items. Pass null to clear.
+  properties?: Array<ViewPropertyConfigRequest> | null
+  // Whether to show the table panel alongside the timeline. Pass null to clear.
+  show_table?: boolean | null
+  // Property configuration for the table panel (when show_table is true). Pass null to
+  // clear.
+  table_properties?: Array<ViewPropertyConfigRequest> | null
+  // Timeline display preferences (zoom level and center position). Pass null to clear.
+  preference?: TimelinePreferenceRequest | null
+  // Configuration for dependency arrows between timeline items. Pass null to clear.
+  arrows_by?: TimelineArrowsByRequest | null
+  // Whether to color timeline items by a property. Pass null to clear.
+  color_by?: boolean | null
+}
+
+type TimelineViewConfigResponse = {
+  // The view configuration type.
+  type: "timeline"
+  // Start date property - required.
+  date_property_id: string
+  // Start date property name (convenience field).
+  date_property_name?: string
+  // End date property (optional, for items that span a range).
+  end_date_property_id?: string
+  // End date property name (convenience field).
+  end_date_property_name?: string
+  // Properties to display on timeline items.
+  properties?: Array<ViewPropertyConfigResponse>
+  // Whether to show the table panel alongside the timeline.
+  show_table?: boolean
+  // Properties to display in the table panel (when show_table is true).
+  table_properties?: Array<ViewPropertyConfigResponse>
+  // Timeline zoom/preference state.
+  preference?: TimelinePreferenceResponse
+  // Dependency arrows configuration.
+  arrows_by?: TimelineArrowsByResponse
+  // Whether to color-code items by property.
+  color_by?: boolean
+}
+
 type TimestampCreatedTimeFilter = {
   created_time: DatePropertyFilter
   timestamp: "created_time"
@@ -3391,6 +4519,13 @@ type TimestampLastEditedTimeFilter = {
   last_edited_time: DatePropertyFilter
   timestamp: "last_edited_time"
   type?: "last_edited_time"
+}
+
+type TimestampSortResponse = {
+  // The timestamp to sort by.
+  timestamp: "created_time" | "last_edited_time"
+  // Sort direction.
+  direction: "ascending" | "descending"
 }
 
 type TitleArrayBasedPropertyValueResponse = {
@@ -3549,6 +4684,20 @@ type UpdateMediaContentWithUrlAndCaptionRequest = {
   caption?: Array<RichTextItemRequest>
 }
 
+type UpdateViewRequest = {
+  // New name for the view.
+  name?: string
+  // Filter to apply to the view. Uses the same format as the data source query filter.
+  // Pass null to clear the filter.
+  filter?: ViewFilterRequest | null
+  // Property sorts to apply to the view. Only property-based sorts are supported. Pass
+  // null to clear the sorts.
+  sorts?: ViewPropertySortsRequest | null
+  // View presentation configuration. The type field must match the view type. Individual
+  // nullable fields within the configuration can be set to null to clear them.
+  configuration?: ViewConfigRequest
+}
+
 type UrlDatabasePropertyConfigResponse = {
   // Always `url`
   type: "url"
@@ -3646,6 +4795,280 @@ export type VideoBlockObjectResponse = {
   /** @deprecated Use `in_trash` instead. Present for backwards compatibility with API versions prior to 2026-03-11. */
   archived: boolean
 }
+
+/**
+ * View configuration, discriminated by the type field.
+ */
+type ViewConfigRequest =
+  | TableViewConfigRequest
+  | BoardViewConfigRequest
+  | CalendarViewConfigRequest
+  | TimelineViewConfigRequest
+  | GalleryViewConfigRequest
+  | ListViewConfigRequest
+  | MapViewConfigRequest
+  | FormViewConfigRequest
+  | ChartViewConfigRequest
+
+/**
+ * View configuration, typed by view type (table, board, calendar, etc.).
+ */
+type ViewConfigResponse =
+  | TableViewConfigResponse
+  | BoardViewConfigResponse
+  | CalendarViewConfigResponse
+  | TimelineViewConfigResponse
+  | GalleryViewConfigResponse
+  | ListViewConfigResponse
+  | MapViewConfigResponse
+  | FormViewConfigResponse
+  | ChartViewConfigResponse
+  | DashboardViewConfigResponse
+
+/**
+ * Filter for the view. Uses the same format as the data source query filter (property
+ * filters, timestamp filters, or compound and/or filters).
+ */
+type ViewFilterRequest = Record<string, never>
+
+/**
+ * Filter for the view. Can be a property filter (filter by property value), timestamp
+ * filter (filter by created_time or last_edited_time), or compound filter (combine
+ * filters with and/or logic). Compound filters support up to 2 levels of nesting.
+ */
+type ViewFilterResponse =
+  | (Record<string, unknown> & {
+      // The name or ID of the property to filter on.
+      property: string
+    })
+  | (Record<string, unknown> & {
+      // The timestamp to filter on.
+      timestamp: "created_time" | "last_edited_time"
+    })
+  | {
+      // Filters combined with OR logic.
+      or?: Array<
+        | (Record<string, unknown> & {
+            // The name or ID of the property to filter on.
+            property: string
+          })
+        | (Record<string, unknown> & {
+            // The timestamp to filter on.
+            timestamp: "created_time" | "last_edited_time"
+          })
+        | {
+            // Filters combined with OR logic.
+            or?: Array<
+              | (Record<string, unknown> & {
+                  // The name or ID of the property to filter on.
+                  property: string
+                })
+              | (Record<string, unknown> & {
+                  // The timestamp to filter on.
+                  timestamp: "created_time" | "last_edited_time"
+                })
+            >
+            // Filters combined with AND logic.
+            and?: Array<
+              | (Record<string, unknown> & {
+                  // The name or ID of the property to filter on.
+                  property: string
+                })
+              | (Record<string, unknown> & {
+                  // The timestamp to filter on.
+                  timestamp: "created_time" | "last_edited_time"
+                })
+            >
+          }
+      >
+      // Filters combined with AND logic.
+      and?: Array<
+        | (Record<string, unknown> & {
+            // The name or ID of the property to filter on.
+            property: string
+          })
+        | (Record<string, unknown> & {
+            // The timestamp to filter on.
+            timestamp: "created_time" | "last_edited_time"
+          })
+        | {
+            // Filters combined with OR logic.
+            or?: Array<
+              | (Record<string, unknown> & {
+                  // The name or ID of the property to filter on.
+                  property: string
+                })
+              | (Record<string, unknown> & {
+                  // The timestamp to filter on.
+                  timestamp: "created_time" | "last_edited_time"
+                })
+            >
+            // Filters combined with AND logic.
+            and?: Array<
+              | (Record<string, unknown> & {
+                  // The name or ID of the property to filter on.
+                  property: string
+                })
+              | (Record<string, unknown> & {
+                  // The timestamp to filter on.
+                  timestamp: "created_time" | "last_edited_time"
+                })
+            >
+          }
+      >
+    }
+
+/**
+ * Position of the new view in the database's view tab bar.
+ */
+type ViewPositionRequest =
+  | {
+      // Position type. "start" places the view as the first tab.
+      type: "start"
+    }
+  | {
+      // Position type. "end" places the view as the last tab.
+      type: "end"
+    }
+  | {
+      // Position type. "after_view" places the new view immediately after the specified view.
+      type: "after_view"
+      // The ID of an existing view in the database. The new view will be placed after this
+      // view.
+      view_id: IdRequest
+    }
+
+type ViewPropertyConfigRequest = {
+  // Property ID (stable identifier).
+  property_id: string
+  // Whether this property is visible in the view.
+  visible?: boolean
+  // Width of the property column in pixels (table view only).
+  width?: number
+  // Whether to wrap content in this property cell/card.
+  wrap?: boolean
+  // How to display status properties (select dropdown or checkbox).
+  status_show_as?: "select" | "checkbox"
+  // Property width mode in compact card layouts (board/gallery).
+  card_property_width_mode?: "full_line" | "inline"
+  // Date display format (date properties only).
+  date_format?:
+    | "full"
+    | "short"
+    | "month_day_year"
+    | "day_month_year"
+    | "year_month_day"
+    | "relative"
+  // Time display format (date properties only).
+  time_format?: "12_hour" | "24_hour" | "hidden"
+}
+
+type ViewPropertyConfigResponse = {
+  // Property ID (stable identifier).
+  property_id: string
+  // Property name (convenience field, not stable across renames).
+  property_name?: string
+  // Whether this property is visible in the view.
+  visible?: boolean
+  // Width of the property column in pixels (table view only).
+  width?: number
+  // Whether to wrap content in this property cell/card.
+  wrap?: boolean
+  // How to display status properties (as select dropdown or checkbox).
+  status_show_as?: "select" | "checkbox"
+  // Property width mode in compact card layouts (board/gallery).
+  card_property_width_mode?: "full_line" | "inline"
+  // Date display format (date properties only). "full" = localized full date, "short" =
+  // month and day, "month_day_year" = MM/DD/YYYY, "day_month_year" = DD/MM/YYYY,
+  // "year_month_day" = YYYY/MM/DD, "relative" = relative dates.
+  date_format?:
+    | "full"
+    | "short"
+    | "month_day_year"
+    | "day_month_year"
+    | "year_month_day"
+    | "relative"
+  // Time display format (date properties only). "12_hour" = 12-hour clock with AM/PM,
+  // "24_hour" = 24-hour clock, "hidden" = hide time.
+  time_format?: "12_hour" | "24_hour" | "hidden"
+}
+
+type ViewPropertySortRequest = {
+  // Property name or ID to sort by.
+  property: string
+  // Sort direction.
+  direction: SortDirectionRequest
+}
+
+type ViewPropertySortsRequest = Array<ViewPropertySortRequest>
+
+type ViewQueryResponse = {
+  // The object type.
+  object: "view_query"
+  // The query ID.
+  id: IdResponse
+  // The view this query was executed against.
+  view_id: IdResponse
+  // When the cached query results expire.
+  expires_at: string
+  // Total number of results in the query.
+  total_count: number
+  // The page results for this page.
+  results: Array<PageReferenceResponse>
+  // Cursor for the next page of results.
+  next_cursor: IdResponse | null
+  // Whether there are more results.
+  has_more: boolean
+}
+
+/**
+ * Sort for the view. Can be a property sort (with property and direction) or timestamp
+ * sort (with timestamp and direction).
+ */
+type ViewSortRequest = Record<string, never>
+
+/**
+ * Sort for the view. Can sort by property or timestamp.
+ */
+type ViewSortResponse = PropertySortResponse | TimestampSortResponse
+
+type ViewSortsRequest = Array<ViewSortRequest>
+
+/**
+ * One of: `table`, `board`, `list`, `calendar`, `timeline`, `gallery`, `form`, `chart`,
+ * `map`, `dashboard`
+ */
+type ViewTypeRequest =
+  | "table"
+  | "board"
+  | "list"
+  | "calendar"
+  | "timeline"
+  | "gallery"
+  | "form"
+  | "chart"
+  | "map"
+  | "dashboard"
+
+/**
+ * Where to place the new widget in the dashboard. "new_row" creates a new row,
+ * "existing_row" adds to an existing row side-by-side with other widgets.
+ */
+type WidgetPlacementRequest =
+  | {
+      // Placement type. "new_row" creates a new row containing the widget.
+      type: "new_row"
+      // The 0-based row position to insert the new row at. If omitted, the new row is appended
+      // at the end.
+      row_index?: number
+    }
+  | {
+      // Placement type. "existing_row" adds the widget to an existing row (side-by-side with
+      // other widgets).
+      type: "existing_row"
+      // The 0-based index of the existing row to add the widget to.
+      row_index: number
+    }
 
 type WorkspaceParentForBlockBasedObjectResponse = {
   // The parent type.
@@ -5453,6 +6876,222 @@ export const getFileUpload = {
 
   path: (p: GetFileUploadPathParameters): string =>
     `file_uploads/${p.file_upload_id}`,
+} as const
+
+type ListDatabaseViewsQueryParameters = {
+  // ID of a Notion database (collection view block) to list views for.
+  database_id: IdRequest
+  // If supplied, this endpoint will return a page of results starting after the cursor
+  // provided. If not supplied, this endpoint will return the first page of results.
+  start_cursor?: string
+  // The number of items from the full list desired in the response. Maximum: 100
+  page_size?: number
+}
+
+export type ListDatabaseViewsParameters = ListDatabaseViewsQueryParameters
+
+export type ListDatabaseViewsResponse = {
+  // Always `list`
+  object: "list"
+  next_cursor: IdResponse | null
+  has_more: boolean
+  results: Array<DataSourceViewReferenceResponse>
+  // Always `view`
+  type: "view"
+  view: EmptyObject
+}
+
+/**
+ * List views
+ */
+export const listDatabaseViews = {
+  method: "get",
+  pathParams: [],
+  queryParams: ["database_id", "start_cursor", "page_size"],
+  bodyParams: [],
+
+  path: (): string => `views`,
+} as const
+
+type CreateViewBodyParameters = CreateViewRequest
+
+export type CreateViewParameters = CreateViewBodyParameters
+
+export type CreateViewResponse =
+  | PartialDataSourceViewObjectResponse
+  | DataSourceViewObjectResponse
+
+/**
+ * Create a view
+ */
+export const createView = {
+  method: "post",
+  pathParams: [],
+  queryParams: [],
+  bodyParams: [],
+
+  path: (): string => `views`,
+} as const
+
+type GetViewPathParameters = {
+  // ID of a Notion view.
+  view_id: IdRequest
+}
+
+export type GetViewParameters = GetViewPathParameters
+
+export type GetViewResponse =
+  | PartialDataSourceViewObjectResponse
+  | DataSourceViewObjectResponse
+
+/**
+ * Retrieve a view
+ */
+export const getView = {
+  method: "get",
+  pathParams: ["view_id"],
+  queryParams: [],
+  bodyParams: [],
+
+  path: (p: GetViewPathParameters): string => `views/${p.view_id}`,
+} as const
+
+type UpdateViewPathParameters = {
+  // ID of a Notion view.
+  view_id: IdRequest
+}
+
+type UpdateViewBodyParameters = UpdateViewRequest
+
+export type UpdateViewParameters = UpdateViewPathParameters &
+  UpdateViewBodyParameters
+
+export type UpdateViewResponse =
+  | PartialDataSourceViewObjectResponse
+  | DataSourceViewObjectResponse
+
+/**
+ * Update a view
+ */
+export const updateView = {
+  method: "patch",
+  pathParams: ["view_id"],
+  queryParams: [],
+  bodyParams: [],
+
+  path: (p: UpdateViewPathParameters): string => `views/${p.view_id}`,
+} as const
+
+type DeleteViewPathParameters = {
+  // The ID of the view to delete.
+  view_id: IdRequest
+}
+
+export type DeleteViewParameters = DeleteViewPathParameters
+
+export type DeleteViewResponse = PartialDataSourceViewObjectResponse
+
+/**
+ * Delete a view
+ */
+export const deleteView = {
+  method: "delete",
+  pathParams: ["view_id"],
+  queryParams: [],
+  bodyParams: [],
+
+  path: (p: DeleteViewPathParameters): string => `views/${p.view_id}`,
+} as const
+
+type CreateViewQueryPathParameters = {
+  // The ID of the view.
+  view_id: string
+}
+
+type CreateViewQueryBodyParameters = CreateViewQueryRequest
+
+export type CreateViewQueryParameters = CreateViewQueryPathParameters &
+  CreateViewQueryBodyParameters
+
+export type CreateViewQueryResponse = ViewQueryResponse
+
+/**
+ * Create a view query
+ */
+export const createViewQuery = {
+  method: "post",
+  pathParams: ["view_id"],
+  queryParams: [],
+  bodyParams: [],
+
+  path: (p: CreateViewQueryPathParameters): string =>
+    `views/${p.view_id}/queries`,
+} as const
+
+type GetViewQueryResultsPathParameters = {
+  // The ID of the view.
+  view_id: string
+  // The ID of the query.
+  query_id: string
+}
+
+type GetViewQueryResultsQueryParameters = {
+  // If supplied, this endpoint will return a page of results starting after the cursor
+  // provided.
+  start_cursor?: string
+  // The number of results to return per page. Maximum: 100
+  page_size?: number
+}
+
+export type GetViewQueryResultsParameters = GetViewQueryResultsPathParameters &
+  GetViewQueryResultsQueryParameters
+
+export type GetViewQueryResultsResponse = {
+  // Always `list`
+  object: "list"
+  next_cursor: IdResponse | null
+  has_more: boolean
+  results: Array<PartialPageObjectResponse>
+  // Always `page`
+  type: "page"
+  page: EmptyObject
+}
+
+/**
+ * Get view query results
+ */
+export const getViewQueryResults = {
+  method: "get",
+  pathParams: ["view_id", "query_id"],
+  queryParams: ["start_cursor", "page_size"],
+  bodyParams: [],
+
+  path: (p: GetViewQueryResultsPathParameters): string =>
+    `views/${p.view_id}/queries/${p.query_id}`,
+} as const
+
+type DeleteViewQueryPathParameters = {
+  // The ID of the view.
+  view_id: string
+  // The ID of the query.
+  query_id: string
+}
+
+export type DeleteViewQueryParameters = DeleteViewQueryPathParameters
+
+export type DeleteViewQueryResponse = DeletedViewQueryResponse
+
+/**
+ * Delete a view query
+ */
+export const deleteViewQuery = {
+  method: "delete",
+  pathParams: ["view_id", "query_id"],
+  queryParams: [],
+  bodyParams: [],
+
+  path: (p: DeleteViewQueryPathParameters): string =>
+    `views/${p.view_id}/queries/${p.query_id}`,
 } as const
 
 type OauthTokenBodyParameters =
