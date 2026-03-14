@@ -14,6 +14,7 @@ on:
           - premajor
 
 permissions:
+  actions: write
   contents: write
   pull-requests: write
 
@@ -68,3 +69,8 @@ jobs:
             --base main \
             --head "${BRANCH_NAME}" \
             --assignee "${GITHUB_ACTOR}"
+
+      - name: Trigger CI on the new branch
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh workflow run ci.yml -f ref="${BRANCH_NAME}"
