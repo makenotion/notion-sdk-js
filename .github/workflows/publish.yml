@@ -1,0 +1,52 @@
+name: Publish Package
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: {}
+
+permissions: {}
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write # Required for OIDC / npm provenance
+      contents: write # Required to create and push tags
+    steps:
+      # v6.0.2
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+
+      # v5.0.0
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
+        with:
+          node-version: "22"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Update npm
+        run: npm install -g npm@11.11.1
+      - run: npm ci
+      - run: npm run build
+      - run: npm run lint
+      - run: npm run test
+      - name: Publish to npm
+        run: |
+          PACKAGE_NAME=$(jq -r '.name' package.json)
+          PACKAGE_VERSION=$(jq -r '.version' package.json)
+          if npm view "$PACKAGE_NAME" versions | grep -q "$PACKAGE_VERSION"; then
+            echo "Package $PACKAGE_NAME@$PACKAGE_VERSION already exists. Skipping publish."
+          else
+            echo "Publishing $PACKAGE_NAME@$PACKAGE_VERSION..."
+            npm publish --ignore-scripts --provenance
+          fi
+
+      - name: Create and push tag
+        if: github.event_name == 'push' && contains(github.event.head_commit.message, 'Bump version to')
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          VERSION=$(jq -r '.version' package.json)
+          git tag -a "v${VERSION}" -m "v${VERSION}"
+          git push origin "v${VERSION}"

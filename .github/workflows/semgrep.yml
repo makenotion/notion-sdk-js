@@ -3,8 +3,6 @@ name: Security - Semgrep
 on:
   pull_request: {}
   workflow_dispatch: {}
-  push:
-    branches-ignore: ["main"]
   schedule:
     - cron: "20 17 * * *"
 
@@ -12,11 +10,19 @@ jobs:
   semgrep:
     name: semgrep/ci
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+
     container:
-      image: returntocorp/semgrep
+      # v1.155.0
+      image: returntocorp/semgrep@sha256:3dab091ee3247fce7e4ed3df9f92b3bd72692c083295f53cec3f135b86404db1
     timeout-minutes: 480
     steps:
-      - uses: actions/checkout@v3
+      # v6.0.2
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          persist-credentials: false
       - run: semgrep ci
         env:
           SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP }}

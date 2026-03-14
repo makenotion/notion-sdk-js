@@ -8,6 +8,12 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: "Branch or ref to run CI on"
+        required: false
+        default: ""
 
 jobs:
   build-and-test:
@@ -15,12 +21,19 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x, 14.x, 15.x, 16.x]
+        node-version: [18.x, 19.x, 20.x, 22.x]
+
+    permissions: {}
 
     steps:
-      - uses: actions/checkout@v2
+      # v6.0.2
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          ref: ${{ github.event.inputs.ref || github.ref }}
+          persist-credentials: false
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
+        # v5.0.0
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm install

@@ -25,6 +25,7 @@ export enum APIErrorCode {
 export enum ClientErrorCode {
   RequestTimeout = "notionhq_client_request_timeout",
   ResponseError = "notionhq_client_response_error",
+  InvalidPathParameter = "notionhq_client_invalid_path_parameter",
 }
 
 /**
@@ -36,7 +37,7 @@ export type NotionErrorCode = APIErrorCode | ClientErrorCode
  * Base error type.
  */
 abstract class NotionClientErrorBase<
-  Code extends NotionErrorCode
+  Code extends NotionErrorCode,
 > extends Error {
   abstract code: Code
 }
@@ -48,6 +49,7 @@ export type NotionClientError =
   | RequestTimeoutError
   | UnknownHTTPResponseError
   | APIResponseError
+  | InvalidPathParameterError
 
 // Assert that NotionClientError's `code` property is a narrow type.
 // This prevents us from accidentally regressing to `string`-typed name field.
@@ -56,7 +58,10 @@ type _assertCodeIsNarrow = Assert<NotionErrorCode, NotionClientError["code"]>
 // Assert that the type of `name` in NotionErrorCode is a narrow type.
 // This prevents us from accidentally regressing to `string`-typed name field.
 type _assertNameIsNarrow = Assert<
-  "RequestTimeoutError" | "UnknownHTTPResponseError" | "APIResponseError",
+  | "RequestTimeoutError"
+  | "UnknownHTTPResponseError"
+  | "APIResponseError"
+  | "InvalidPathParameterError",
   NotionClientError["name"]
 >
 
@@ -117,16 +122,74 @@ export class RequestTimeoutError extends NotionClientErrorBase<ClientErrorCode.R
   }
 }
 
+/**
+ * Error thrown when a path parameter contains invalid characters such as
+ * path traversal sequences (..) that could alter the intended API endpoint.
+ */
+export class InvalidPathParameterError extends NotionClientErrorBase<ClientErrorCode.InvalidPathParameter> {
+  readonly code = ClientErrorCode.InvalidPathParameter
+  readonly name = "InvalidPathParameterError"
+
+  constructor(
+    message = "Path parameter contains invalid characters that could alter the request path"
+  ) {
+    super(message)
+  }
+
+  static isInvalidPathParameterError(
+    error: unknown
+  ): error is InvalidPathParameterError {
+    return isNotionClientErrorWithCode(error, {
+      [ClientErrorCode.InvalidPathParameter]: true,
+    })
+  }
+}
+
+/**
+ * Validates that a request path does not contain path traversal sequences.
+ * Throws InvalidPathParameterError if the path contains ".." segments,
+ * including URL-encoded variants like %2e%2e.
+ */
+export function validateRequestPath(path: string): void {
+  // Check for literal path traversal
+  if (path.includes("..")) {
+    throw new InvalidPathParameterError(
+      `Request path "${path}" contains path traversal sequence ".."`
+    )
+  }
+
+  // Check for URL-encoded path traversal (%2e = '.')
+  // Only decode if path contains potential encoded dots
+  if (/%2e/i.test(path)) {
+    let decoded: string
+    try {
+      decoded = decodeURIComponent(path)
+    } catch {
+      // Invalid percent encoding - not a traversal concern
+      return
+    }
+    if (decoded.includes("..")) {
+      throw new InvalidPathParameterError(
+        `Request path "${path}" contains encoded path traversal sequence`
+      )
+    }
+  }
+}
+
 type HTTPResponseErrorCode = ClientErrorCode.ResponseError | APIErrorCode
 
+type AdditionalData = Record<string, string | string[]>
+
 class HTTPResponseError<
-  Code extends HTTPResponseErrorCode
+  Code extends HTTPResponseErrorCode,
 > extends NotionClientErrorBase<Code> {
   readonly name: string = "HTTPResponseError"
   readonly code: Code
   readonly status: number
   readonly headers: SupportedResponse["headers"]
   readonly body: string
+  readonly additional_data: AdditionalData | undefined
+  readonly request_id: string | undefined
 
   constructor(args: {
     code: Code
@@ -134,13 +197,18 @@ class HTTPResponseError<
     message: string
     headers: SupportedResponse["headers"]
     rawBodyText: string
+    additional_data: AdditionalData | undefined
+    request_id: string | undefined
   }) {
     super(args.message)
-    const { code, status, headers, rawBodyText } = args
+    const { code, status, headers, rawBodyText, additional_data, request_id } =
+      args
     this.code = code
     this.status = status
     this.headers = headers
     this.body = rawBodyText
+    this.additional_data = additional_data
+    this.request_id = request_id
   }
 }
 
@@ -193,6 +261,8 @@ export class UnknownHTTPResponseError extends HTTPResponseError<ClientErrorCode.
       message:
         args.message ??
         `Request to Notion API failed with status: ${args.status}`,
+      additional_data: undefined,
+      request_id: undefined,
     })
   }
 
@@ -225,6 +295,7 @@ const apiErrorCodes: { [C in APIErrorCode]: true } = {
  */
 export class APIResponseError extends HTTPResponseError<APIErrorCode> {
   readonly name = "APIResponseError"
+  readonly request_id: string | undefined
 
   static isAPIResponseError(error: unknown): error is APIResponseError {
     return isNotionClientErrorWithCode(error, apiErrorCodes)
@@ -243,6 +314,8 @@ export function buildRequestError(
       headers: response.headers,
       status: response.status,
       rawBodyText: bodyText,
+      additional_data: apiErrorResponseBody.additional_data,
+      request_id: apiErrorResponseBody.request_id,
     })
   }
   return new UnknownHTTPResponseError({
@@ -253,9 +326,14 @@ export function buildRequestError(
   })
 }
 
-function parseAPIErrorResponseBody(
-  body: string
-): { code: APIErrorCode; message: string } | undefined {
+function parseAPIErrorResponseBody(body: string):
+  | {
+      code: APIErrorCode
+      message: string
+      additional_data: AdditionalData | undefined
+      request_id: string | undefined
+    }
+  | undefined {
   if (typeof body !== "string") {
     return
   }
@@ -275,10 +353,17 @@ function parseAPIErrorResponseBody(
     return
   }
 
+  const additional_data = parsed["additional_data"] as
+    | AdditionalData
+    | undefined
+  const request_id = parsed["request_id"] as string | undefined
+
   return {
     ...parsed,
     code: parsed["code"],
     message: parsed["message"],
+    additional_data,
+    request_id,
   }
 }
 
