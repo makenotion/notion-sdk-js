@@ -841,6 +841,258 @@ export type CalloutBlockObjectResponse = {
   archived: boolean
 }
 
+type ChartAggregationRequest = {
+  // The aggregation operator. "count" counts all rows and does not require a property_id.
+  // All other operators require a property_id.
+  aggregator:
+    | "count"
+    | "count_values"
+    | "sum"
+    | "average"
+    | "median"
+    | "min"
+    | "max"
+    | "range"
+    | "unique"
+    | "empty"
+    | "not_empty"
+    | "percent_empty"
+    | "percent_not_empty"
+    | "checked"
+    | "unchecked"
+    | "percent_checked"
+    | "percent_unchecked"
+    | "earliest_date"
+    | "latest_date"
+    | "date_range"
+  // The property to aggregate on. Required for all operators except "count".
+  property_id?: string
+}
+
+type ChartAggregationResponse = {
+  // The aggregation operator. "count" counts all rows and does not require a property_id.
+  // All other operators require a property_id.
+  aggregator:
+    | "count"
+    | "count_values"
+    | "sum"
+    | "average"
+    | "median"
+    | "min"
+    | "max"
+    | "range"
+    | "unique"
+    | "empty"
+    | "not_empty"
+    | "percent_empty"
+    | "percent_not_empty"
+    | "checked"
+    | "unchecked"
+    | "percent_checked"
+    | "percent_unchecked"
+    | "earliest_date"
+    | "latest_date"
+    | "date_range"
+  // The property to aggregate on. Required for all operators except "count".
+  property_id?: string
+}
+
+type ChartReferenceLineRequest = {
+  // The y-axis value where the reference line is drawn.
+  value: number
+  // Label displayed alongside the reference line.
+  label: string
+  // Color of the reference line.
+  color:
+    | "gray"
+    | "lightgray"
+    | "brown"
+    | "yellow"
+    | "orange"
+    | "green"
+    | "blue"
+    | "purple"
+    | "pink"
+    | "red"
+  // Line style: "solid" for a continuous line, "dash" for a dashed line.
+  dash_style: "solid" | "dash"
+  // Unique identifier for the reference line. Auto-generated if omitted.
+  id?: string
+}
+
+type ChartReferenceLineResponse = {
+  // Unique identifier for the reference line.
+  id: string
+  // The y-axis value where the reference line is drawn.
+  value: number
+  // Label displayed alongside the reference line.
+  label: string
+  // Color of the reference line.
+  color:
+    | "gray"
+    | "lightgray"
+    | "brown"
+    | "yellow"
+    | "orange"
+    | "green"
+    | "blue"
+    | "purple"
+    | "pink"
+    | "red"
+  // Line style: "solid" for a continuous line, "dash" for a dashed line.
+  dash_style: "solid" | "dash"
+}
+
+type ChartViewConfigRequest = {
+  // The view type. Must be "chart".
+  type: "chart"
+  // The chart type.
+  chart_type: "column" | "bar" | "line" | "donut" | "number"
+  // X-axis grouping configuration for grouped data mode. Pass null to clear.
+  x_axis?: GroupByConfigRequest | null
+  // Y-axis aggregation for grouped data mode. Pass null to clear.
+  y_axis?: ChartAggregationRequest | null
+  // Property ID for x-axis values in results mode. Pass null to clear.
+  x_axis_property_id?: string | null
+  // Property ID for y-axis values in results mode. Pass null to clear.
+  y_axis_property_id?: string | null
+  // Aggregation for number charts. Pass null to clear.
+  value?: ChartAggregationRequest | null
+  // Sort order for chart data. Pass null to clear.
+  sort?:
+    | "manual"
+    | "x_ascending"
+    | "x_descending"
+    | "y_ascending"
+    | "y_descending"
+    | null
+  // Color theme. Pass null to clear.
+  color_theme?:
+    | "gray"
+    | "blue"
+    | "yellow"
+    | "green"
+    | "purple"
+    | "teal"
+    | "orange"
+    | "pink"
+    | "red"
+    | "auto"
+    | "colorful"
+    | null
+  // Chart height. Pass null to clear.
+  height?: "small" | "medium" | "large" | "extra_large" | null
+  // Whether to hide groups with no data. Pass null to clear.
+  hide_empty_groups?: boolean | null
+  // Legend position. Pass null to clear.
+  legend_position?: "off" | "bottom" | "side" | null
+  // Whether to show data labels. Pass null to clear.
+  show_data_labels?: boolean | null
+  // Which axis labels to show. Pass null to clear.
+  axis_labels?: "none" | "x_axis" | "y_axis" | "both" | null
+  // Which grid lines to show. Pass null to clear.
+  grid_lines?: "none" | "horizontal" | "vertical" | "both" | null
+  // Cumulative values (line only). Pass null to clear.
+  cumulative?: boolean | null
+  // Smooth line curves (line only). Pass null to clear.
+  smooth_line?: boolean | null
+  // Hide area fill (line only). Pass null to clear.
+  hide_line_fill_area?: boolean | null
+  // Grouped/stacked bar display style. Pass null to clear.
+  group_style?: "normal" | "percent" | "side_by_side" | null
+  // Custom y-axis minimum. Pass null to clear.
+  y_axis_min?: number | null
+  // Custom y-axis maximum. Pass null to clear.
+  y_axis_max?: number | null
+  // Donut slice labels. Pass null to clear.
+  donut_labels?: "none" | "value" | "name" | "name_and_value" | null
+  // Hide title (number only). Pass null to clear.
+  hide_title?: boolean | null
+  // Stack-by grouping for stacked/grouped bar charts. Pass null to clear.
+  stack_by?: GroupByConfigRequest | null
+  // Reference lines on the chart. Pass null to clear.
+  reference_lines?: Array<ChartReferenceLineRequest> | null
+  // Chart caption text. Pass null to clear.
+  caption?: string | null
+}
+
+type ChartViewConfigResponse = {
+  // The view configuration type.
+  type: "chart"
+  // The chart type: column (vertical bars), bar (horizontal bars), line, donut, or number
+  // (single value display).
+  chart_type: "column" | "bar" | "line" | "donut" | "number"
+  // X-axis grouping configuration for column/bar/line/donut charts using grouped data.
+  // Null when using results (raw property values) mode.
+  x_axis?: GroupByConfigResponse | null
+  // Y-axis aggregation for column/bar/line/donut charts using grouped data. Null when
+  // using results mode.
+  y_axis?: ChartAggregationResponse | null
+  // Property ID for the x-axis name values when using results (raw property values) mode.
+  x_axis_property_id?: string
+  // Property ID for the y-axis numeric values when using results (raw property values)
+  // mode.
+  y_axis_property_id?: string
+  // Aggregation configuration for number charts (single value display).
+  value?: ChartAggregationResponse
+  // Sort order for chart data.
+  sort?:
+    | "manual"
+    | "x_ascending"
+    | "x_descending"
+    | "y_ascending"
+    | "y_descending"
+  // Color theme for the chart.
+  color_theme?:
+    | "gray"
+    | "blue"
+    | "yellow"
+    | "green"
+    | "purple"
+    | "teal"
+    | "orange"
+    | "pink"
+    | "red"
+    | "auto"
+    | "colorful"
+  // Chart height.
+  height?: "small" | "medium" | "large" | "extra_large"
+  // Whether to hide groups with no data on the x-axis.
+  hide_empty_groups?: boolean
+  // Legend display position. "off" hides the legend.
+  legend_position?: "off" | "bottom" | "side"
+  // Whether to show data value labels on chart elements.
+  show_data_labels?: boolean
+  // Which axis labels to display.
+  axis_labels?: "none" | "x_axis" | "y_axis" | "both"
+  // Which grid lines to display.
+  grid_lines?: "none" | "horizontal" | "vertical" | "both"
+  // Whether to show cumulative values (line charts only).
+  cumulative?: boolean
+  // Whether to use smooth curves (line charts only).
+  smooth_line?: boolean
+  // Whether to hide the shaded area under the line (line charts only).
+  hide_line_fill_area?: boolean
+  // How grouped/stacked bars are displayed. "normal" stacks values, "percent" normalizes
+  // to 100%, "side_by_side" places bars next to each other.
+  group_style?: "normal" | "percent" | "side_by_side"
+  // Custom minimum value for the y-axis. Null clears the override.
+  y_axis_min?: number | null
+  // Custom maximum value for the y-axis. Null clears the override.
+  y_axis_max?: number | null
+  // What to display on donut chart slices.
+  donut_labels?: "none" | "value" | "name" | "name_and_value"
+  // Whether to hide the title label (number charts only).
+  hide_title?: boolean
+  // Stack-by grouping configuration for stacked/grouped bar charts (column/bar/line only).
+  // Null when not stacked.
+  stack_by?: GroupByConfigResponse | null
+  // Reference lines drawn on the chart. Null when no reference lines are configured.
+  reference_lines?: Array<ChartReferenceLineResponse> | null
+  // Text caption displayed below the chart. Null when no caption is shown.
+  caption?: string | null
+}
+
 type CheckboxDatabasePropertyConfigResponse = {
   // Always `checkbox`
   type: "checkbox"
@@ -1111,6 +1363,12 @@ type CreateViewRequest = {
   sorts?: ViewSortsRequest
   // View presentation configuration. The type field must match the view type.
   configuration?: ViewConfigRequest
+  // Where to place the new view in the database's view tab bar. Only applicable when
+  // database_id is provided. Defaults to "end" (append).
+  position?: ViewPositionRequest
+  // Where to place the new widget in a dashboard view. Only applicable when view_id is
+  // provided. Defaults to creating a new row at the end.
+  placement?: WidgetPlacementRequest
 }
 
 type CreatedByDatabasePropertyConfigResponse = {
@@ -1216,6 +1474,9 @@ type DashboardWidgetResponse = {
   view_id: string
   // Width of the widget in a 12-column grid (1-12). 12 means full width.
   width?: number
+  // The 0-based index of the row this widget belongs to. Widgets in the same row share the
+  // same row_index.
+  row_index?: number
 }
 
 export type DataSourceObjectResponse = {
@@ -1874,6 +2135,40 @@ type FilesSimplePropertyValueResponse = {
   files: Array<InternalOrExternalFileWithNameResponse>
 }
 
+type FormViewConfigRequest = {
+  // The view type. Must be "form".
+  type: "form"
+  // Whether the form is closed for submissions. Pass null to clear.
+  is_form_closed?: boolean | null
+  // Whether anonymous (non-logged-in) submissions are allowed. Pass null to clear.
+  anonymous_submissions?: boolean | null
+  // Permission level granted to the submitter on the created page after form submission.
+  // Pass null to clear.
+  submission_permissions?:
+    | "none"
+    | "comment_only"
+    | "reader"
+    | "read_and_write"
+    | "editor"
+    | null
+}
+
+type FormViewConfigResponse = {
+  // The view configuration type.
+  type: "form"
+  // Whether the form is closed for submissions.
+  is_form_closed?: boolean
+  // Whether anonymous (non-logged-in) submissions are allowed.
+  anonymous_submissions?: boolean
+  // Permission level granted to the submitter on the created page after form submission.
+  submission_permissions?:
+    | "none"
+    | "comment_only"
+    | "reader"
+    | "read_and_write"
+    | "editor"
+}
+
 type FormulaCheckboxSubGroupByRequest = {
   // The formula result type for grouping.
   type: "checkbox"
@@ -2483,6 +2778,31 @@ type LocationPropertyConfigurationRequest = {
   // Always `location`
   type?: "location"
   location: EmptyObject
+}
+
+type MapViewConfigRequest = {
+  // The view type. Must be "map".
+  type: "map"
+  // Map display height. Pass null to clear.
+  height?: "small" | "medium" | "large" | "extra_large" | null
+  // Property ID of the location property used to position items on the map. Pass null to
+  // clear.
+  map_by?: string | null
+  // Property visibility and display configuration on map pin cards. Pass null to clear.
+  properties?: Array<ViewPropertyConfigRequest> | null
+}
+
+type MapViewConfigResponse = {
+  // The view configuration type.
+  type: "map"
+  // Map display height.
+  height?: "small" | "medium" | "large" | "extra_large"
+  // Property ID of the location property used to position items on the map.
+  map_by?: string
+  // Map-by property name (convenience field).
+  map_by_property_name?: string
+  // Properties to display on map pin cards.
+  properties?: Array<ViewPropertyConfigResponse>
 }
 
 type MediaContentWithFileAndCaptionRequest =
@@ -4494,6 +4814,9 @@ type ViewConfigRequest =
   | TimelineViewConfigRequest
   | GalleryViewConfigRequest
   | ListViewConfigRequest
+  | MapViewConfigRequest
+  | FormViewConfigRequest
+  | ChartViewConfigRequest
 
 /**
  * View configuration, typed by view type (table, board, calendar, etc.).
@@ -4505,6 +4828,9 @@ type ViewConfigResponse =
   | TimelineViewConfigResponse
   | GalleryViewConfigResponse
   | ListViewConfigResponse
+  | MapViewConfigResponse
+  | FormViewConfigResponse
+  | ChartViewConfigResponse
   | DashboardViewConfigResponse
 
 /**
@@ -4598,6 +4924,26 @@ type ViewFilterResponse =
             >
           }
       >
+    }
+
+/**
+ * Position of the new view in the database's view tab bar.
+ */
+type ViewPositionRequest =
+  | {
+      // Position type. "start" places the view as the first tab.
+      type: "start"
+    }
+  | {
+      // Position type. "end" places the view as the last tab.
+      type: "end"
+    }
+  | {
+      // Position type. "after_view" places the new view immediately after the specified view.
+      type: "after_view"
+      // The ID of an existing view in the database. The new view will be placed after this
+      // view.
+      view_id: IdRequest
     }
 
 type ViewPropertyConfigRequest = {
@@ -4711,6 +5057,26 @@ type ViewTypeRequest =
   | "chart"
   | "map"
   | "dashboard"
+
+/**
+ * Where to place the new widget in the dashboard. "new_row" creates a new row,
+ * "existing_row" adds to an existing row side-by-side with other widgets.
+ */
+type WidgetPlacementRequest =
+  | {
+      // Placement type. "new_row" creates a new row containing the widget.
+      type: "new_row"
+      // The 0-based row position to insert the new row at. If omitted, the new row is appended
+      // at the end.
+      row_index?: number
+    }
+  | {
+      // Placement type. "existing_row" adds the widget to an existing row (side-by-side with
+      // other widgets).
+      type: "existing_row"
+      // The 0-based index of the existing row to add the widget to.
+      row_index: number
+    }
 
 type WorkspaceParentForBlockBasedObjectResponse = {
   // The parent type.
