@@ -3149,10 +3149,29 @@ type StatusDatabasePropertyConfigResponse = {
   }
 }
 
+type StatusPropertyConfigRequest = {
+  // The initial status options. If not provided, defaults are created.
+  options?: Array<{
+    name: string
+    color?: SelectColor
+    description?: string | null
+  }>
+}
+
+type StatusPropertyConfigUpdateRequest = {
+  // Status options to add or update. New options are assigned to the To-do group.
+  options?: Array<
+    { color?: SelectColor; description?: string | null } & (
+      | { name: string; id?: string }
+      | { id: string; name?: string }
+    )
+  >
+}
+
 type StatusPropertyConfigurationRequest = {
   // Always `status`
   type?: "status"
-  status: EmptyObject
+  status: StatusPropertyConfigRequest
 }
 
 type StatusPropertyFilter =
@@ -4679,7 +4698,7 @@ type UpdateDataSourceBodyParameters = {
         | {
             // Always `status`
             type?: "status"
-            status: EmptyObject
+            status: StatusPropertyConfigUpdateRequest
           }
         | {
             // Always `relation`
