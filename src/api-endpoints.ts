@@ -3475,21 +3475,6 @@ export type ToggleBlockObjectResponse = {
   archived: boolean
 }
 
-export type MeetingNotesBlockObjectResponse = {
-  type: "meeting_notes"
-  meeting_notes: TranscriptionBlockResponse
-  parent: ParentForBlockBasedObjectResponse
-  object: "block"
-  id: string
-  created_time: string
-  created_by: PartialUserObjectResponse
-  last_edited_time: string
-  last_edited_by: PartialUserObjectResponse
-  has_children: boolean
-  archived: boolean
-  in_trash: boolean
-}
-
 type TranscriptionBlockResponse = {
   title?: Array<RichTextItemResponse>
   status?: ApiTranscriptionStatus
