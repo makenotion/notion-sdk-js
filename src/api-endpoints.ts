@@ -3711,6 +3711,8 @@ export const getUser = {
 type ListUsersQueryParameters = {
   start_cursor?: string
   page_size?: number
+  // If false, the response will not include bot users. Defaults to true.
+  include_bots?: boolean
 }
 
 export type ListUsersParameters = ListUsersQueryParameters
@@ -3730,7 +3732,7 @@ export type ListUsersResponse = {
 export const listUsers = {
   method: "get",
   pathParams: [],
-  queryParams: ["start_cursor", "page_size"],
+  queryParams: ["start_cursor", "page_size", "include_bots"],
   bodyParams: [],
 
   path: (): string => `users`,
