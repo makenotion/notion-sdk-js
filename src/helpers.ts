@@ -3,6 +3,7 @@ import {
   CommentObjectResponse,
   DatabaseObjectResponse,
   DataSourceObjectResponse,
+  DataSourceViewObjectResponse,
   EquationRichTextItemResponse,
   ListDataSourceTemplatesResponse,
   MentionRichTextItemResponse,
@@ -11,6 +12,7 @@ import {
   PartialCommentObjectResponse,
   PartialDatabaseObjectResponse,
   PartialDataSourceObjectResponse,
+  PartialDataSourceViewObjectResponse,
   PartialPageObjectResponse,
   PartialUserObjectResponse,
   RichTextItemResponse,
@@ -239,6 +241,15 @@ export function isFullComment(
   response: CommentObjectResponse | PartialCommentObjectResponse
 ): response is CommentObjectResponse {
   return "created_by" in response
+}
+
+/**
+ * @returns `true` if `response` is a full `DataSourceViewObjectResponse`.
+ */
+export function isFullView(
+  response: DataSourceViewObjectResponse | PartialDataSourceViewObjectResponse
+): response is DataSourceViewObjectResponse {
+  return "type" in response
 }
 
 /**

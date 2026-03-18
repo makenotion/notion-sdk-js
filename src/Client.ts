@@ -122,6 +122,30 @@ import {
   listDataSourceTemplates,
   ListDataSourceTemplatesResponse,
   ListDataSourceTemplatesParameters,
+  type ListDatabaseViewsParameters,
+  type ListDatabaseViewsResponse,
+  listDatabaseViews,
+  type CreateViewParameters,
+  type CreateViewResponse,
+  createView,
+  type GetViewParameters,
+  type GetViewResponse,
+  getView,
+  type UpdateViewParameters,
+  type UpdateViewResponse,
+  updateView,
+  type DeleteViewParameters,
+  type DeleteViewResponse,
+  deleteView,
+  type CreateViewQueryParameters,
+  type CreateViewQueryResponse,
+  createViewQuery,
+  type GetViewQueryResultsParameters,
+  type GetViewQueryResultsResponse,
+  getViewQueryResults,
+  type DeleteViewQueryParameters,
+  type DeleteViewQueryResponse,
+  deleteViewQuery,
 } from "./api-endpoints"
 import {
   version as PACKAGE_VERSION,
@@ -1079,6 +1103,152 @@ export default class Client {
         query: pick(args, completeFileUpload.queryParams),
         auth: args?.auth,
       })
+    },
+  }
+
+  public readonly views = {
+    /**
+     * Create a view
+     */
+    create: (
+      args: WithAuth<CreateViewParameters>
+    ): Promise<CreateViewResponse> => {
+      return this.request<CreateViewResponse>({
+        path: createView.path(),
+        method: createView.method,
+        query: pick(args, createView.queryParams),
+        body: pick(args, [
+          "data_source_id",
+          "name",
+          "type",
+          "database_id",
+          "view_id",
+          "filter",
+          "sorts",
+          "quick_filters",
+          "create_database",
+          "configuration",
+          "position",
+          "placement",
+        ] as const),
+        auth: args?.auth,
+      })
+    },
+
+    /**
+     * Retrieve a view
+     */
+    retrieve: (args: WithAuth<GetViewParameters>): Promise<GetViewResponse> => {
+      this.warnUnknownParams(args, getView)
+      return this.request<GetViewResponse>({
+        path: getView.path(args),
+        method: getView.method,
+        query: pick(args, getView.queryParams),
+        body: pick(args, getView.bodyParams),
+        auth: args?.auth,
+      })
+    },
+
+    /**
+     * Update a view
+     */
+    update: (
+      args: WithAuth<UpdateViewParameters>
+    ): Promise<UpdateViewResponse> => {
+      return this.request<UpdateViewResponse>({
+        path: updateView.path(args),
+        method: updateView.method,
+        query: pick(args, updateView.queryParams),
+        body: pick(args, [
+          "name",
+          "filter",
+          "sorts",
+          "quick_filters",
+          "configuration",
+        ] as const),
+        auth: args?.auth,
+      })
+    },
+
+    /**
+     * Delete a view
+     */
+    delete: (
+      args: WithAuth<DeleteViewParameters>
+    ): Promise<DeleteViewResponse> => {
+      this.warnUnknownParams(args, deleteView)
+      return this.request<DeleteViewResponse>({
+        path: deleteView.path(args),
+        method: deleteView.method,
+        query: pick(args, deleteView.queryParams),
+        body: pick(args, deleteView.bodyParams),
+        auth: args?.auth,
+      })
+    },
+
+    /**
+     * List views for a database
+     */
+    list: (
+      args: WithAuth<ListDatabaseViewsParameters>
+    ): Promise<ListDatabaseViewsResponse> => {
+      this.warnUnknownParams(args, listDatabaseViews)
+      return this.request<ListDatabaseViewsResponse>({
+        path: listDatabaseViews.path(),
+        method: listDatabaseViews.method,
+        query: pick(args, listDatabaseViews.queryParams),
+        body: pick(args, listDatabaseViews.bodyParams),
+        auth: args?.auth,
+      })
+    },
+
+    queries: {
+      /**
+       * Create a view query
+       */
+      create: (
+        args: WithAuth<CreateViewQueryParameters>
+      ): Promise<CreateViewQueryResponse> => {
+        return this.request<CreateViewQueryResponse>({
+          path: createViewQuery.path(args),
+          method: createViewQuery.method,
+          query: pick(args, createViewQuery.queryParams),
+          body: pick(args, ["page_size"] as const),
+          auth: args?.auth,
+        })
+      },
+
+      /**
+       * Get view query results
+       */
+      results: (
+        args: WithAuth<GetViewQueryResultsParameters>
+      ): Promise<GetViewQueryResultsResponse> => {
+        this.warnUnknownParams(args, getViewQueryResults)
+        return this.request<GetViewQueryResultsResponse>({
+          path: getViewQueryResults.path(args),
+          method: getViewQueryResults.method,
+          query: pick(args, getViewQueryResults.queryParams),
+          body: pick(args, getViewQueryResults.bodyParams),
+          auth: args?.auth,
+        })
+      },
+
+      /**
+       * Delete a view query
+       */
+      delete: (
+        args: WithAuth<DeleteViewQueryParameters>
+      ): Promise<DeleteViewQueryResponse> => {
+        this.warnUnknownParams(args, deleteViewQuery)
+        return this.request<DeleteViewQueryResponse>({
+          path: deleteViewQuery.path(args),
+          method: deleteViewQuery.method,
+          query: pick(args, deleteViewQuery.queryParams),
+          body: pick(args, deleteViewQuery.bodyParams),
+          auth: args?.auth,
+        })
+      },
     },
   }
 
