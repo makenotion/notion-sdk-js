@@ -27,6 +27,7 @@
     "node_modules/**",
     "examples/**/node_modules/**",
     "build/**",
-    "src/api-endpoints.ts"
+    "src/api-endpoints.ts",
+    "src/api-endpoints/**"
   ]
 }
