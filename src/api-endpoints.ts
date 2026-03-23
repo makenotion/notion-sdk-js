@@ -153,6 +153,7 @@ export type BlockObjectRequest =
     }
   | { divider: EmptyObject; type?: "divider"; object?: "block" }
   | { breadcrumb: EmptyObject; type?: "breadcrumb"; object?: "block" }
+  | { tab: TabRequestWithNestedTabItemChildren; type?: "tab"; object?: "block" }
   | {
       table_of_contents: { color?: ApiColor }
       type?: "table_of_contents"
@@ -342,6 +343,7 @@ export type BlockObjectRequestWithoutChildren =
     }
   | { divider: EmptyObject; type?: "divider"; object?: "block" }
   | { breadcrumb: EmptyObject; type?: "breadcrumb"; object?: "block" }
+  | { tab: EmptyObject; type?: "tab"; object?: "block" }
   | {
       table_of_contents: { color?: ApiColor }
       type?: "table_of_contents"
@@ -451,6 +453,7 @@ export type BlockObjectResponse =
   | DividerBlockObjectResponse
   | BreadcrumbBlockObjectResponse
   | TableOfContentsBlockObjectResponse
+  | TabBlockObjectResponse
   | ColumnListBlockObjectResponse
   | ColumnBlockObjectResponse
   | LinkToPageBlockObjectResponse
@@ -520,6 +523,7 @@ type BlockObjectWithSingleLevelOfChildrenRequest =
     }
   | { divider: EmptyObject; type?: "divider"; object?: "block" }
   | { breadcrumb: EmptyObject; type?: "breadcrumb"; object?: "block" }
+  | { tab: TabRequestWithTabItemChildren; type?: "tab"; object?: "block" }
   | {
       table_of_contents: { color?: ApiColor }
       type?: "table_of_contents"
@@ -4262,6 +4266,42 @@ export type SyncedBlockBlockObjectResponse = {
   archived: boolean
 }
 
+export type TabBlockObjectResponse = {
+  type: "tab"
+  tab: EmptyObject
+  parent: ParentForBlockBasedObjectResponse
+  object: "block"
+  id: string
+  created_time: string
+  created_by: PartialUserObjectResponse
+  last_edited_time: string
+  last_edited_by: PartialUserObjectResponse
+  has_children: boolean
+  in_trash: boolean
+  /** @deprecated Use `in_trash` instead. Present for backwards compatibility with API versions prior to 2026-03-11. */
+  archived: boolean
+}
+
+type TabItemRequestWithSingleLevelOfChildren = {
+  paragraph: ContentWithSingleLevelOfChildrenRequest
+  type?: "paragraph"
+  object?: "block"
+}
+
+type TabItemRequestWithoutChildren = {
+  paragraph: ContentWithRichTextAndColorRequest
+  type?: "paragraph"
+  object?: "block"
+}
+
+type TabRequestWithNestedTabItemChildren = {
+  children: Array<TabItemRequestWithSingleLevelOfChildren>
+}
+
+type TabRequestWithTabItemChildren = {
+  children: Array<TabItemRequestWithoutChildren>
+}
+
 export type TableBlockObjectResponse = {
   type: "table"
   table: ContentWithTableResponse
@@ -4724,7 +4764,7 @@ export type UnsupportedBlockObjectResponse = {
   type: "unsupported"
   unsupported: {
     // The underlying block type that is not currently supported by the Public API. Example
-    // values include: tab, form, button, drive.
+    // values include: form, button, drive.
     block_type: string
   }
   parent: ParentForBlockBasedObjectResponse
@@ -4835,7 +4875,7 @@ type VerificationPropertyResponse = {
   // One of: `verified`, `expired`
   state: "verified" | "expired"
   date: DateResponse | null
-  verified_by: PartialUserObjectResponse | null
+  verified_by: UserValueResponse | null
 }
 
 type VerificationPropertyStatusFilter = {
@@ -5312,6 +5352,12 @@ type CreatePageBodyParameters = {
         } | null
         type?: "place"
       }
+    | {
+        verification:
+          | { state: "verified"; date?: DateRequest }
+          | { state: "unverified" }
+        type?: "verification"
+      }
   >
   icon?: PageIconRequest | null
   cover?: PageCoverRequest | null
@@ -5471,6 +5517,12 @@ type UpdatePageBodyParameters = {
           google_place_id?: string | null
         } | null
         type?: "place"
+      }
+    | {
+        verification:
+          | { state: "verified"; date?: DateRequest }
+          | { state: "unverified" }
+        type?: "verification"
       }
   >
   icon?: PageIconRequest | null
@@ -5821,6 +5873,13 @@ type UpdateBlockBodyParameters =
       archived?: boolean
     }
   | {
+      tab: EmptyObject
+      type?: "tab"
+      in_trash?: boolean
+      /** @deprecated Use `in_trash` instead. */
+      archived?: boolean
+    }
+  | {
       table_of_contents: { color?: ApiColor }
       type?: "table_of_contents"
       in_trash?: boolean
@@ -5991,6 +6050,7 @@ export const updateBlock = {
     "equation",
     "divider",
     "breadcrumb",
+    "tab",
     "table_of_contents",
     "link_to_page",
     "table_row",
