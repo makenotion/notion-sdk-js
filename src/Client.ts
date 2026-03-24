@@ -146,6 +146,9 @@ import {
   type DeleteViewQueryParameters,
   type DeleteViewQueryResponse,
   deleteViewQuery,
+  type ListCustomEmojisParameters,
+  type ListCustomEmojisResponse,
+  listCustomEmojis,
 } from "./api-endpoints"
 import {
   version as PACKAGE_VERSION,
@@ -961,6 +964,24 @@ export default class Client {
         method: getSelf.method,
         query: pick(args, getSelf.queryParams),
         body: pick(args, getSelf.bodyParams),
+        auth: args?.auth,
+      })
+    },
+  }
+
+  public readonly customEmojis = {
+    /**
+     * List custom emojis
+     */
+    list: (
+      args?: WithAuth<ListCustomEmojisParameters>
+    ): Promise<ListCustomEmojisResponse> => {
+      this.warnUnknownParams(args ?? {}, listCustomEmojis)
+      return this.request<ListCustomEmojisResponse>({
+        path: listCustomEmojis.path(),
+        method: listCustomEmojis.method,
+        query: pick(args ?? {}, listCustomEmojis.queryParams),
+        body: pick(args ?? {}, listCustomEmojis.bodyParams),
         auth: args?.auth,
       })
     },
