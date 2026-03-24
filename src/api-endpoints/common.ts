@@ -377,7 +377,7 @@ type CustomEmojiPageIconResponse = {
   custom_emoji: CustomEmojiResponse
 }
 
-type CustomEmojiResponse = {
+export type CustomEmojiResponse = {
   // The ID of the custom emoji.
   id: IdResponse
   // The name of the custom emoji.
@@ -692,6 +692,13 @@ type GroupSortRequest = {
   type: "manual" | "ascending" | "descending"
 }
 
+type IconPageIconResponse = {
+  // Type of icon. In this case, a Notion native icon.
+  type: "icon"
+  // The Notion native icon, specified by name and color.
+  icon: NoticonIconResponse
+}
+
 export type IdRequest = string
 
 export type IdResponse = string
@@ -867,6 +874,33 @@ type MultiSelectPropertyFilter =
   | { does_not_contain: string }
   | ExistencePropertyFilter
 
+/**
+ * One of: `gray`, `lightgray`, `brown`, `yellow`, `orange`, `green`, `blue`, `purple`,
+ * `pink`, `red`
+ */
+type NoticonColor =
+  | "gray"
+  | "lightgray"
+  | "brown"
+  | "yellow"
+  | "orange"
+  | "green"
+  | "blue"
+  | "purple"
+  | "pink"
+  | "red"
+
+type NoticonIconResponse = {
+  // The name of the Notion icon (e.g. pizza, meeting, home). See the Notion icon picker
+  // for valid names.
+  name: NoticonName
+  // The color variant of the icon. Valid values: gray, lightgray, brown, yellow, orange,
+  // green, blue, purple, pink, red.
+  color: NoticonColor
+}
+
+type NoticonName = string
+
 type NumberGroupByConfigRequest = {
   // The property type for grouping.
   type: "number"
@@ -912,6 +946,7 @@ export type PageIconResponse =
   | FilePageIconResponse
   | ExternalPageIconResponse
   | CustomEmojiPageIconResponse
+  | IconPageIconResponse
 
 type PageIdParentForBlockBasedObjectResponse = {
   // The parent type.
@@ -1886,6 +1921,7 @@ export type PageIconRequest =
   | EmojiPageIconRequest
   | ExternalPageIconRequest
   | CustomEmojiPageIconRequest
+  | IconPageIconRequest
 
 export type PartialUserObjectRequest = {
   // The ID of the user.
@@ -2165,6 +2201,20 @@ type FileUploadPageIconRequest = {
   file_upload: {
     // ID of a FileUpload object that has the status `uploaded`.
     id: string
+  }
+}
+
+type IconPageIconRequest = {
+  // Always `icon`
+  type?: "icon"
+  // A Notion native icon, specified by name and optional color.
+  icon: {
+    // The name of the Notion icon (e.g. pizza, meeting, home). See the Notion icon picker
+    // for valid names.
+    name: NoticonName
+    // The color variant of the icon. Defaults to gray if not specified. Valid values: gray,
+    // lightgray, brown, yellow, orange, green, blue, purple, pink, red.
+    color?: NoticonColor
   }
 }
 
