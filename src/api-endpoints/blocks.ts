@@ -532,7 +532,11 @@ export type NumberedListItemBlockObjectResponse = {
 
 export type ParagraphBlockObjectResponse = {
   type: "paragraph"
-  paragraph: ContentWithRichTextAndColorResponse
+  paragraph: {
+    rich_text: Array<RichTextItemResponse>
+    color: ApiColor
+    icon: PageIconResponse | null
+  }
   parent: ParentForBlockBasedObjectResponse
   object: "block"
   id: string
@@ -933,7 +937,11 @@ type UpdateBlockBodyParameters =
       archived?: boolean
     }
   | {
-      paragraph: ContentWithRichTextAndColorRequest
+      paragraph: {
+        rich_text?: Array<RichTextItemRequest>
+        icon?: PageIconRequest
+        color?: ApiColor
+      }
       type?: "paragraph"
       in_trash?: boolean
       /** @deprecated Use `in_trash` instead. */
