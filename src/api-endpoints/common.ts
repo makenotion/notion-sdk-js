@@ -291,12 +291,6 @@ export type ContentPositionSchema =
   | { type: "start" }
   | { type: "end" }
 
-export type ContentWithRichTextColorAndIconUpdateRequest = {
-  rich_text?: Array<RichTextItemRequest>
-  icon?: PageIconRequest
-  color?: ApiColor
-}
-
 type CoverConfigRequest = {
   // Source of the cover image.
   type: "page_cover" | "page_content" | "property"
@@ -1834,7 +1828,6 @@ export type BlockObjectRequest =
       paragraph: {
         rich_text: Array<RichTextItemRequest>
         color?: ApiColor
-        icon?: PageIconRequest
         children?: Array<BlockObjectWithSingleLevelOfChildrenRequest>
       }
       type?: "paragraph"
@@ -2077,7 +2070,7 @@ type BlockObjectWithSingleLevelOfChildrenRequest =
       object?: "block"
     }
   | {
-      paragraph: ParagraphWithSingleLevelOfChildrenRequest
+      paragraph: ContentWithSingleLevelOfChildrenRequest
       type?: "paragraph"
       object?: "block"
     }
@@ -2548,7 +2541,7 @@ export type BlockObjectRequestWithoutChildren =
       object?: "block"
     }
   | {
-      paragraph: ContentWithRichTextColorAndIconRequest
+      paragraph: ContentWithRichTextAndColorRequest
       type?: "paragraph"
       object?: "block"
     }
@@ -2622,15 +2615,8 @@ type HeaderContentWithSingleLevelOfChildrenRequest = {
   children?: Array<BlockObjectRequestWithoutChildren>
 }
 
-type ParagraphWithSingleLevelOfChildrenRequest = {
-  rich_text: Array<RichTextItemRequest>
-  color?: ApiColor
-  icon?: PageIconRequest
-  children?: Array<BlockObjectRequestWithoutChildren>
-}
-
 type TabItemRequestWithSingleLevelOfChildren = {
-  paragraph: ParagraphWithSingleLevelOfChildrenRequest
+  paragraph: ContentWithSingleLevelOfChildrenRequest
   type?: "paragraph"
   object?: "block"
 }
@@ -2666,12 +2652,6 @@ export type ContentWithRichTextAndColorRequest = {
   color?: ApiColor
 }
 
-type ContentWithRichTextColorAndIconRequest = {
-  rich_text: Array<RichTextItemRequest>
-  color?: ApiColor
-  icon?: PageIconRequest
-}
-
 export type ContentWithRichTextRequest = {
   rich_text: Array<RichTextItemRequest>
 }
@@ -2683,7 +2663,7 @@ export type HeaderContentWithRichTextAndColorRequest = {
 }
 
 type TabItemRequestWithoutChildren = {
-  paragraph: ContentWithRichTextColorAndIconRequest
+  paragraph: ContentWithRichTextAndColorRequest
   type?: "paragraph"
   object?: "block"
 }

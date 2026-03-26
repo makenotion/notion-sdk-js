@@ -7,7 +7,6 @@ import type {
   ContentPositionSchema,
   ContentWithExpressionRequest,
   ContentWithRichTextAndColorRequest,
-  ContentWithRichTextColorAndIconUpdateRequest,
   ContentWithRichTextRequest,
   ContentWithTableRowRequest,
   EmptyObject,
@@ -256,12 +255,6 @@ type ContentWithRichTextAndColorAndListResponse = {
 type ContentWithRichTextAndColorResponse = {
   rich_text: Array<RichTextItemResponse>
   color: ApiColor
-}
-
-type ContentWithRichTextColorAndIconResponse = {
-  rich_text: Array<RichTextItemResponse>
-  color: ApiColor
-  icon: PageIconResponse | null
 }
 
 type ContentWithTableResponse = {
@@ -539,7 +532,7 @@ export type NumberedListItemBlockObjectResponse = {
 
 export type ParagraphBlockObjectResponse = {
   type: "paragraph"
-  paragraph: ContentWithRichTextColorAndIconResponse
+  paragraph: ContentWithRichTextAndColorResponse
   parent: ParentForBlockBasedObjectResponse
   object: "block"
   id: string
@@ -940,7 +933,7 @@ type UpdateBlockBodyParameters =
       archived?: boolean
     }
   | {
-      paragraph: ContentWithRichTextColorAndIconUpdateRequest
+      paragraph: ContentWithRichTextAndColorRequest
       type?: "paragraph"
       in_trash?: boolean
       /** @deprecated Use `in_trash` instead. */
