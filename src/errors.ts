@@ -17,6 +17,7 @@ export enum APIErrorCode {
   ConflictError = "conflict_error",
   InternalServerError = "internal_server_error",
   ServiceUnavailable = "service_unavailable",
+  GatewayTimeout = "gateway_timeout",
 }
 
 /**
@@ -225,6 +226,7 @@ const httpResponseErrorCodes: { [C in HTTPResponseErrorCode]: true } = {
   [APIErrorCode.ConflictError]: true,
   [APIErrorCode.InternalServerError]: true,
   [APIErrorCode.ServiceUnavailable]: true,
+  [APIErrorCode.GatewayTimeout]: true,
 }
 
 export function isHTTPResponseError(
@@ -287,6 +289,7 @@ const apiErrorCodes: { [C in APIErrorCode]: true } = {
   [APIErrorCode.ConflictError]: true,
   [APIErrorCode.InternalServerError]: true,
   [APIErrorCode.ServiceUnavailable]: true,
+  [APIErrorCode.GatewayTimeout]: true,
 }
 
 /**
