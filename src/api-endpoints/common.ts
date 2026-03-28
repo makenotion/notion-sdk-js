@@ -1014,8 +1014,8 @@ type PeoplePropertyConfigurationRequest = {
 }
 
 type PeoplePropertyFilter =
-  | { contains: IdRequest }
-  | { does_not_contain: IdRequest }
+  | { contains: PersonIdOrMe }
+  | { does_not_contain: PersonIdOrMe }
   | ExistencePropertyFilter
 
 type PersonGroupByConfigRequest = {
@@ -1028,6 +1028,8 @@ type PersonGroupByConfigRequest = {
   // Whether to hide groups that have no items.
   hide_empty_groups?: boolean
 }
+
+type PersonIdOrMe = IdRequest | "me"
 
 export type PersonUserObjectResponse = {
   // Indicates this user is a person.
@@ -1831,6 +1833,16 @@ export type BlockObjectRequest =
       object?: "block"
     }
   | {
+      heading_4: {
+        rich_text: Array<RichTextItemRequest>
+        color?: ApiColor
+        is_toggleable?: boolean
+        children?: Array<BlockObjectWithSingleLevelOfChildrenRequest>
+      }
+      type?: "heading_4"
+      object?: "block"
+    }
+  | {
       paragraph: {
         rich_text: Array<RichTextItemRequest>
         color?: ApiColor
@@ -2074,6 +2086,11 @@ type BlockObjectWithSingleLevelOfChildrenRequest =
   | {
       heading_3: HeaderContentWithSingleLevelOfChildrenRequest
       type?: "heading_3"
+      object?: "block"
+    }
+  | {
+      heading_4: HeaderContentWithSingleLevelOfChildrenRequest
+      type?: "heading_4"
       object?: "block"
     }
   | {
@@ -2545,6 +2562,11 @@ export type BlockObjectRequestWithoutChildren =
   | {
       heading_3: HeaderContentWithRichTextAndColorRequest
       type?: "heading_3"
+      object?: "block"
+    }
+  | {
+      heading_4: HeaderContentWithRichTextAndColorRequest
+      type?: "heading_4"
       object?: "block"
     }
   | {
