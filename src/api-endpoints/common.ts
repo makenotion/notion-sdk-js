@@ -430,6 +430,8 @@ type DateGroupByConfigRequest = {
   start_day_of_week?: 0 | 1
 }
 
+type DateOrRelativeDate = string | RelativeDateValue
+
 type DatePropertyConfigurationRequest = {
   // Always `date`
   type?: "date"
@@ -437,11 +439,11 @@ type DatePropertyConfigurationRequest = {
 }
 
 type DatePropertyFilter =
-  | { equals: string }
-  | { before: string }
-  | { after: string }
-  | { on_or_before: string }
-  | { on_or_after: string }
+  | { equals: DateOrRelativeDate }
+  | { before: DateOrRelativeDate }
+  | { after: DateOrRelativeDate }
+  | { on_or_before: DateOrRelativeDate }
+  | { on_or_after: DateOrRelativeDate }
   | { this_week: EmptyObject }
   | { past_week: EmptyObject }
   | { past_month: EmptyObject }
@@ -1182,6 +1184,15 @@ type RelationPropertyFilter =
   | { contains: IdRequest }
   | { does_not_contain: IdRequest }
   | ExistencePropertyFilter
+
+type RelativeDateValue =
+  | "today"
+  | "tomorrow"
+  | "yesterday"
+  | "one_week_ago"
+  | "one_week_from_now"
+  | "one_month_ago"
+  | "one_month_from_now"
 
 export type RichTextItemResponse = RichTextItemResponseCommon &
   (
