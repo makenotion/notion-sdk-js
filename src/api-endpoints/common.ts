@@ -1844,6 +1844,16 @@ export type BlockObjectRequest =
       object?: "block"
     }
   | {
+      heading_4: {
+        rich_text: Array<RichTextItemRequest>
+        color?: ApiColor
+        is_toggleable?: boolean
+        children?: Array<BlockObjectWithSingleLevelOfChildrenRequest>
+      }
+      type?: "heading_4"
+      object?: "block"
+    }
+  | {
       paragraph: {
         rich_text: Array<RichTextItemRequest>
         color?: ApiColor
@@ -2087,6 +2097,11 @@ type BlockObjectWithSingleLevelOfChildrenRequest =
   | {
       heading_3: HeaderContentWithSingleLevelOfChildrenRequest
       type?: "heading_3"
+      object?: "block"
+    }
+  | {
+      heading_4: HeaderContentWithSingleLevelOfChildrenRequest
+      type?: "heading_4"
       object?: "block"
     }
   | {
@@ -2558,6 +2573,11 @@ export type BlockObjectRequestWithoutChildren =
   | {
       heading_3: HeaderContentWithRichTextAndColorRequest
       type?: "heading_3"
+      object?: "block"
+    }
+  | {
+      heading_4: HeaderContentWithRichTextAndColorRequest
+      type?: "heading_4"
       object?: "block"
     }
   | {
