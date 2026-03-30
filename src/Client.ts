@@ -17,6 +17,13 @@ import {
 } from "./errors"
 import { pick, getUnknownParams, type EndpointDefinition } from "./utils"
 import {
+  DEFAULT_BASE_URL,
+  DEFAULT_TIMEOUT_MS,
+  DEFAULT_MAX_RETRIES,
+  DEFAULT_INITIAL_RETRY_DELAY_MS,
+  DEFAULT_MAX_RETRY_DELAY_MS,
+} from "./constants"
+import {
   type GetBlockParameters,
   type GetBlockResponse,
   getBlock,
@@ -237,8 +244,8 @@ export default class Client {
     this.#auth = options?.auth
     this.#logLevel = options?.logLevel ?? LogLevel.WARN
     this.#logger = options?.logger ?? makeConsoleLogger(PACKAGE_NAME)
-    this.#prefixUrl = `${options?.baseUrl ?? "https://api.notion.com"}/v1/`
-    this.#timeoutMs = options?.timeoutMs ?? 60_000
+    this.#prefixUrl = `${options?.baseUrl ?? DEFAULT_BASE_URL}/v1/`
+    this.#timeoutMs = options?.timeoutMs ?? DEFAULT_TIMEOUT_MS
     this.#notionVersion = options?.notionVersion ?? Client.defaultNotionVersion
     this.#fetch = options?.fetch ?? fetch.bind(globalThis)
     this.#agent = options?.agent
@@ -249,9 +256,11 @@ export default class Client {
       this.#initialRetryDelayMs = 0
       this.#maxRetryDelayMs = 0
     } else {
-      this.#maxRetries = options?.retry?.maxRetries ?? 2
-      this.#initialRetryDelayMs = options?.retry?.initialRetryDelayMs ?? 1000
-      this.#maxRetryDelayMs = options?.retry?.maxRetryDelayMs ?? 60_000
+      this.#maxRetries = options?.retry?.maxRetries ?? DEFAULT_MAX_RETRIES
+      this.#initialRetryDelayMs =
+        options?.retry?.initialRetryDelayMs ?? DEFAULT_INITIAL_RETRY_DELAY_MS
+      this.#maxRetryDelayMs =
+        options?.retry?.maxRetryDelayMs ?? DEFAULT_MAX_RETRY_DELAY_MS
     }
   }
 

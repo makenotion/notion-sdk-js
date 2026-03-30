@@ -134,15 +134,15 @@ You may also set a custom `logger` to emit logs to a destination other than `std
 
 The `Client` supports the following options on initialization. These options are all keys in the single constructor parameter.
 
-| Option      | Default value              | Type           | Description                                                                                                                                                  |
-| ----------- | -------------------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `auth`      | `undefined`                | `string`       | Bearer token for authentication. If left undefined, the `auth` parameter should be set on each request.                                                      |
-| `logLevel`  | `LogLevel.WARN`            | `LogLevel`     | Verbosity of logs the instance will produce. By default, logs are written to `stdout`.                                                                       |
-| `timeoutMs` | `60_000`                   | `number`       | Number of milliseconds to wait before emitting a `RequestTimeoutError`                                                                                       |
-| `baseUrl`   | `"https://api.notion.com"` | `string`       | The root URL for sending API requests. This can be changed to test with a mock server.                                                                       |
-| `logger`    | Log to console             | `Logger`       | A custom logging function. This function is only called when the client emits a log that is equal or greater severity than `logLevel`.                       |
-| `agent`     | Default node agent         | `http.Agent`   | Used to control creation of TCP sockets. A common use is to proxy requests with [`https-proxy-agent`](https://github.com/TooTallNate/node-https-proxy-agent) |
-| `retry`     | `{ maxRetries: 2 }`        | `RetryOptions` | Configuration for automatic retries on rate limits (429) and server errors (500, 503). See [Automatic retries](#automatic-retries) below.                    |
+| Option      | Default value               | Type           | Description                                                                                                                                                  |
+| ----------- | --------------------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `auth`      | `undefined`                 | `string`       | Bearer token for authentication. If left undefined, the `auth` parameter should be set on each request.                                                      |
+| `logLevel`  | `LogLevel.WARN`             | `LogLevel`     | Verbosity of logs the instance will produce. By default, logs are written to `stdout`.                                                                       |
+| `timeoutMs` | `DEFAULT_TIMEOUT_MS`        | `number`       | Number of milliseconds to wait before emitting a `RequestTimeoutError`                                                                                       |
+| `baseUrl`   | `DEFAULT_BASE_URL`          | `string`       | The root URL for sending API requests. This can be changed to test with a mock server.                                                                       |
+| `logger`    | Log to console              | `Logger`       | A custom logging function. This function is only called when the client emits a log that is equal or greater severity than `logLevel`.                       |
+| `agent`     | Default node agent          | `http.Agent`   | Used to control creation of TCP sockets. A common use is to proxy requests with [`https-proxy-agent`](https://github.com/TooTallNate/node-https-proxy-agent) |
+| `retry`     | See [constants](#constants) | `RetryOptions` | Configuration for automatic retries on rate limits (429) and server errors (500, 503). See [Automatic retries](#automatic-retries) below.                    |
 
 ### Automatic retries
 
@@ -181,6 +181,42 @@ To disable automatic retries:
 const notion = new Client({
   auth: process.env.NOTION_TOKEN,
   retry: false,
+})
+```
+
+### Constants
+
+The SDK exports named constants for all default values used by the client, as well as useful Notion-specific values. You can import them directly:
+
+```js
+const {
+  DEFAULT_BASE_URL, // "https://api.notion.com"
+  DEFAULT_TIMEOUT_MS, // 60_000
+  DEFAULT_MAX_RETRIES, // 2
+  DEFAULT_INITIAL_RETRY_DELAY_MS, // 1_000
+  DEFAULT_MAX_RETRY_DELAY_MS, // 60_000
+  MIN_VIEW_COLUMN_WIDTH, // 32
+} = require("@notionhq/client")
+```
+
+`MIN_VIEW_COLUMN_WIDTH` is the minimum width (in pixels) that a table column can have in the Notion UI. Set a property's `width` to this value when creating or updating a view to make a column appear collapsed -- useful for checkbox or status-as-checkbox columns:
+
+```js
+await notion.views.create({
+  database_id: databaseId,
+  name: "My view",
+  type: "table",
+  configuration: {
+    table: {
+      properties: [
+        {
+          property_id: checkboxPropId,
+          visible: true,
+          width: MIN_VIEW_COLUMN_WIDTH,
+        },
+      ],
+    },
+  },
 })
 ```
 
