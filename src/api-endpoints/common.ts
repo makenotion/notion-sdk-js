@@ -430,6 +430,8 @@ type DateGroupByConfigRequest = {
   start_day_of_week?: 0 | 1
 }
 
+type DateOrRelativeDate = string | RelativeDateValue
+
 type DatePropertyConfigurationRequest = {
   // Always `date`
   type?: "date"
@@ -437,11 +439,11 @@ type DatePropertyConfigurationRequest = {
 }
 
 type DatePropertyFilter =
-  | { equals: string }
-  | { before: string }
-  | { after: string }
-  | { on_or_before: string }
-  | { on_or_after: string }
+  | { equals: DateOrRelativeDate }
+  | { before: DateOrRelativeDate }
+  | { after: DateOrRelativeDate }
+  | { on_or_before: DateOrRelativeDate }
+  | { on_or_after: DateOrRelativeDate }
   | { this_week: EmptyObject }
   | { past_week: EmptyObject }
   | { past_month: EmptyObject }
@@ -1014,8 +1016,8 @@ type PeoplePropertyConfigurationRequest = {
 }
 
 type PeoplePropertyFilter =
-  | { contains: IdRequest }
-  | { does_not_contain: IdRequest }
+  | { contains: PersonIdOrMe }
+  | { does_not_contain: PersonIdOrMe }
   | ExistencePropertyFilter
 
 type PersonGroupByConfigRequest = {
@@ -1028,6 +1030,8 @@ type PersonGroupByConfigRequest = {
   // Whether to hide groups that have no items.
   hide_empty_groups?: boolean
 }
+
+type PersonIdOrMe = IdRequest | "me"
 
 export type PersonUserObjectResponse = {
   // Indicates this user is a person.
@@ -1180,6 +1184,15 @@ type RelationPropertyFilter =
   | { contains: IdRequest }
   | { does_not_contain: IdRequest }
   | ExistencePropertyFilter
+
+type RelativeDateValue =
+  | "today"
+  | "tomorrow"
+  | "yesterday"
+  | "one_week_ago"
+  | "one_week_from_now"
+  | "one_month_ago"
+  | "one_month_from_now"
 
 export type RichTextItemResponse = RichTextItemResponseCommon &
   (
@@ -1831,6 +1844,16 @@ export type BlockObjectRequest =
       object?: "block"
     }
   | {
+      heading_4: {
+        rich_text: Array<RichTextItemRequest>
+        color?: ApiColor
+        is_toggleable?: boolean
+        children?: Array<BlockObjectWithSingleLevelOfChildrenRequest>
+      }
+      type?: "heading_4"
+      object?: "block"
+    }
+  | {
       paragraph: {
         rich_text: Array<RichTextItemRequest>
         color?: ApiColor
@@ -2074,6 +2097,11 @@ type BlockObjectWithSingleLevelOfChildrenRequest =
   | {
       heading_3: HeaderContentWithSingleLevelOfChildrenRequest
       type?: "heading_3"
+      object?: "block"
+    }
+  | {
+      heading_4: HeaderContentWithSingleLevelOfChildrenRequest
+      type?: "heading_4"
       object?: "block"
     }
   | {
@@ -2545,6 +2573,11 @@ export type BlockObjectRequestWithoutChildren =
   | {
       heading_3: HeaderContentWithRichTextAndColorRequest
       type?: "heading_3"
+      object?: "block"
+    }
+  | {
+      heading_4: HeaderContentWithRichTextAndColorRequest
+      type?: "heading_4"
       object?: "block"
     }
   | {

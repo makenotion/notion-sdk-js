@@ -55,6 +55,7 @@ export type BlockObjectResponse =
   | Heading1BlockObjectResponse
   | Heading2BlockObjectResponse
   | Heading3BlockObjectResponse
+  | Heading4BlockObjectResponse
   | BulletedListItemBlockObjectResponse
   | NumberedListItemBlockObjectResponse
   | QuoteBlockObjectResponse
@@ -405,6 +406,22 @@ export type Heading2BlockObjectResponse = {
 export type Heading3BlockObjectResponse = {
   type: "heading_3"
   heading_3: HeaderContentWithRichTextAndColorResponse
+  parent: ParentForBlockBasedObjectResponse
+  object: "block"
+  id: string
+  created_time: string
+  created_by: PartialUserObjectResponse
+  last_edited_time: string
+  last_edited_by: PartialUserObjectResponse
+  has_children: boolean
+  in_trash: boolean
+  /** @deprecated Use `in_trash` instead. Present for backwards compatibility with API versions prior to 2026-03-11. */
+  archived: boolean
+}
+
+export type Heading4BlockObjectResponse = {
+  type: "heading_4"
+  heading_4: HeaderContentWithRichTextAndColorResponse
   parent: ParentForBlockBasedObjectResponse
   object: "block"
   id: string
@@ -940,6 +957,13 @@ type UpdateBlockBodyParameters =
       archived?: boolean
     }
   | {
+      heading_4: HeaderContentWithRichTextAndColorRequest
+      type?: "heading_4"
+      in_trash?: boolean
+      /** @deprecated Use `in_trash` instead. */
+      archived?: boolean
+    }
+  | {
       paragraph: ContentWithRichTextColorAndIconUpdateRequest
       type?: "paragraph"
       in_trash?: boolean
@@ -1072,6 +1096,7 @@ export const updateBlock = {
     "heading_1",
     "heading_2",
     "heading_3",
+    "heading_4",
     "paragraph",
     "bulleted_list_item",
     "numbered_list_item",
