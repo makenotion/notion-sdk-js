@@ -66,8 +66,12 @@ export type PartialCommentObjectResponse = {
 }
 
 type CreateCommentBodyParameters = {
-  // An array of rich text objects that represent the content of the comment.
-  rich_text: Array<RichTextItemRequest>
+  // An array of rich text objects that represent the content of the comment. Cannot be
+  // provided together with 'markdown'.
+  rich_text?: Array<RichTextItemRequest>
+  // The content of the comment as a Markdown string. Supports inline formatting (bold,
+  // italic, strikethrough, code, links). Cannot be provided together with 'rich_text'.
+  markdown?: string
   // An array of files to attach to the comment. Maximum of 3 allowed.
   attachments?: Array<{
     // ID of a FileUpload object that has the status `uploaded`.
@@ -133,6 +137,7 @@ export const createComment = {
   queryParams: [],
   bodyParams: [
     "rich_text",
+    "markdown",
     "attachments",
     "display_name",
     "parent",
