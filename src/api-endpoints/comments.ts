@@ -66,12 +66,6 @@ export type PartialCommentObjectResponse = {
 }
 
 type CreateCommentBodyParameters = {
-  // An array of rich text objects that represent the content of the comment. Cannot be
-  // provided together with 'markdown'.
-  rich_text?: Array<RichTextItemRequest>
-  // The content of the comment as a Markdown string. Supports inline formatting (bold,
-  // italic, strikethrough, code, links). Cannot be provided together with 'rich_text'.
-  markdown?: string
   // An array of files to attach to the comment. Maximum of 3 allowed.
   attachments?: Array<{
     // ID of a FileUpload object that has the status `uploaded`.
@@ -115,10 +109,42 @@ type CreateCommentBodyParameters = {
             // Always `block_id`
             type?: "block_id"
           }
+      // An array of rich text objects that represent the content of the comment.
+      rich_text: Array<RichTextItemRequest>
+    }
+  | {
+      // The parent of the comment. This can be a page or a block.
+      parent:
+        | {
+            // The ID of the parent page (with or without dashes), for example,
+            // 195de9221179449fab8075a27c979105
+            page_id: IdRequest
+            // Always `page_id`
+            type?: "page_id"
+          }
+        | {
+            // The ID of the parent block (with or without dashes), for example,
+            // 195de9221179449fab8075a27c979105
+            block_id: IdRequest
+            // Always `block_id`
+            type?: "block_id"
+          }
+      // The content of the comment as a Markdown string. Supports inline formatting (bold,
+      // italic, strikethrough, code, links), inline equations ($expression$), and mentions.
+      markdown: string
     }
   | {
       // The ID of the discussion to comment on.
       discussion_id: IdRequest
+      // An array of rich text objects that represent the content of the comment.
+      rich_text: Array<RichTextItemRequest>
+    }
+  | {
+      // The ID of the discussion to comment on.
+      discussion_id: IdRequest
+      // The content of the comment as a Markdown string. Supports inline formatting (bold,
+      // italic, strikethrough, code, links), inline equations ($expression$), and mentions.
+      markdown: string
     }
 )
 
@@ -136,11 +162,11 @@ export const createComment = {
   pathParams: [],
   queryParams: [],
   bodyParams: [
-    "rich_text",
-    "markdown",
     "attachments",
     "display_name",
     "parent",
+    "rich_text",
+    "markdown",
     "discussion_id",
   ],
 
