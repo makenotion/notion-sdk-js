@@ -96,6 +96,9 @@ import {
   type UpdateCommentParameters,
   type UpdateCommentResponse,
   updateComment,
+  type DeleteCommentParameters,
+  type DeleteCommentResponse,
+  deleteComment,
   type OauthTokenResponse,
   type OauthTokenParameters,
   oauthToken,
@@ -1060,6 +1063,22 @@ export default class Client {
         method: updateComment.method,
         query: pick(args, updateComment.queryParams),
         body: pick(args, updateComment.bodyParams),
+        auth: args?.auth,
+      })
+    },
+
+    /**
+     * Delete a comment
+     */
+    delete: (
+      args: WithAuth<DeleteCommentParameters>
+    ): Promise<DeleteCommentResponse> => {
+      this.warnUnknownParams(args, deleteComment)
+      return this.request<DeleteCommentResponse>({
+        path: deleteComment.path(args),
+        method: deleteComment.method,
+        query: pick(args, deleteComment.queryParams),
+        body: pick(args, deleteComment.bodyParams),
         auth: args?.auth,
       })
     },

@@ -266,3 +266,26 @@ export const updateComment = {
 
   path: (p: UpdateCommentPathParameters): string => `comments/${p.comment_id}`,
 } as const
+
+type DeleteCommentPathParameters = {
+  // The ID of the comment to delete.
+  comment_id: IdRequest
+}
+
+export type DeleteCommentParameters = DeleteCommentPathParameters
+
+export type DeleteCommentResponse =
+  | PartialCommentObjectResponse
+  | CommentObjectResponse
+
+/**
+ * Delete a comment
+ */
+export const deleteComment = {
+  method: "delete",
+  pathParams: ["comment_id"],
+  queryParams: [],
+  bodyParams: [],
+
+  path: (p: DeleteCommentPathParameters): string => `comments/${p.comment_id}`,
+} as const
