@@ -93,6 +93,9 @@ import {
   type GetCommentParameters,
   type GetCommentResponse,
   getComment,
+  type UpdateCommentParameters,
+  type UpdateCommentResponse,
+  updateComment,
   type OauthTokenResponse,
   type OauthTokenParameters,
   oauthToken,
@@ -1041,6 +1044,22 @@ export default class Client {
         method: getComment.method,
         query: pick(args, getComment.queryParams),
         body: pick(args, getComment.bodyParams),
+        auth: args?.auth,
+      })
+    },
+
+    /**
+     * Update a comment
+     */
+    update: (
+      args: WithAuth<UpdateCommentParameters>
+    ): Promise<UpdateCommentResponse> => {
+      this.warnUnknownParams(args, updateComment)
+      return this.request<UpdateCommentResponse>({
+        path: updateComment.path(args),
+        method: updateComment.method,
+        query: pick(args, updateComment.queryParams),
+        body: pick(args, updateComment.bodyParams),
         auth: args?.auth,
       })
     },
