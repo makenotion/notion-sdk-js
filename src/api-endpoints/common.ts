@@ -878,8 +878,8 @@ type MultiSelectPropertyConfigurationRequest = {
 }
 
 type MultiSelectPropertyFilter =
-  | { contains: string }
-  | { does_not_contain: string }
+  | { contains: StringOrStringArray }
+  | { does_not_contain: StringOrStringArray }
   | ExistencePropertyFilter
 
 /**
@@ -1316,8 +1316,8 @@ type SelectPropertyConfigurationRequest = {
 }
 
 type SelectPropertyFilter =
-  | { equals: string }
-  | { does_not_equal: string }
+  | { equals: StringOrStringArray }
+  | { does_not_equal: StringOrStringArray }
   | ExistencePropertyFilter
 
 /**
@@ -1365,9 +1365,11 @@ type StatusPropertyConfigurationRequest = {
 }
 
 type StatusPropertyFilter =
-  | { equals: string }
-  | { does_not_equal: string }
+  | { equals: StringOrStringArray }
+  | { does_not_equal: StringOrStringArray }
   | ExistencePropertyFilter
+
+type StringOrStringArray = string | Array<string>
 
 type SubtaskConfigRequest = {
   // Relation property ID used for parent-child nesting.
@@ -1624,9 +1626,9 @@ type ViewConfigRequest =
 /**
  * Filter for the view. Uses the same format as the data source query filter (property
  * filters, timestamp filters, or compound and/or filters). Simple property filters appear
- * in the view's filter bar in the Notion UI. To filter by multiple values on a select or
- * status property, use a compound "or" filter with separate "equals" conditions for each
- * value.
+ * in the view's filter bar in the Notion UI. Select, status, and multi_select filter
+ * operators accept a single string or an array of strings to filter by multiple values
+ * (e.g. { "does_not_equal": ["Done", "Archive"] }).
  */
 type ViewFilterRequest = Record<string, never>
 
