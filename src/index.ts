@@ -52,6 +52,8 @@ export type {
   DatePropertyItemObjectResponse,
   DeleteBlockParameters,
   DeleteBlockResponse,
+  DeleteCommentParameters,
+  DeleteCommentResponse,
   DeletedViewQueryResponse,
   DeleteViewParameters,
   DeleteViewResponse,
