@@ -129,8 +129,11 @@ type CreateCommentBodyParameters = {
             // Always `block_id`
             type?: "block_id"
           }
-      // The content of the comment as a Markdown string. Supports inline formatting (bold,
-      // italic, strikethrough, code, links), inline equations ($expression$), and mentions.
+      // The content of the comment as a Markdown string. Comment Markdown supports inline
+      // formatting only (bold, italic, strikethrough, code, links), inline equations
+      // ($expression$), and mentions. Block-level Markdown such as fenced code blocks,
+      // headings, lists, tables, and blockquotes does not render as structured blocks in
+      // comments.
       markdown: string
     }
   | {
@@ -142,8 +145,11 @@ type CreateCommentBodyParameters = {
   | {
       // The ID of the discussion to comment on.
       discussion_id: IdRequest
-      // The content of the comment as a Markdown string. Supports inline formatting (bold,
-      // italic, strikethrough, code, links), inline equations ($expression$), and mentions.
+      // The content of the comment as a Markdown string. Comment Markdown supports inline
+      // formatting only (bold, italic, strikethrough, code, links), inline equations
+      // ($expression$), and mentions. Block-level Markdown such as fenced code blocks,
+      // headings, lists, tables, and blockquotes does not render as structured blocks in
+      // comments.
       markdown: string
     }
 )
@@ -242,9 +248,11 @@ type UpdateCommentBodyParameters =
       rich_text: Array<RichTextItemRequest>
     }
   | {
-      // The updated content of the comment as a Markdown string. Supports inline formatting
-      // (bold, italic, strikethrough, code, links), inline equations ($expression$), and
-      // mentions.
+      // The updated content of the comment as a Markdown string. Comment Markdown supports
+      // inline formatting only (bold, italic, strikethrough, code, links), inline equations
+      // ($expression$), and mentions. Block-level Markdown such as fenced code blocks,
+      // headings, lists, tables, and blockquotes does not render as structured blocks in
+      // comments.
       markdown: string
     }
 
