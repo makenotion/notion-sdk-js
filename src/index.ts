@@ -165,6 +165,8 @@ export type {
   UnsupportedBlockObjectResponse,
   UpdateBlockParameters,
   UpdateBlockResponse,
+  UpdateCommentParameters,
+  UpdateCommentResponse,
   UpdateDatabaseParameters,
   UpdateDatabaseResponse,
   UpdateDataSourceParameters,

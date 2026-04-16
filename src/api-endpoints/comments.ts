@@ -230,3 +230,39 @@ export const getComment = {
 
   path: (p: GetCommentPathParameters): string => `comments/${p.comment_id}`,
 } as const
+
+type UpdateCommentPathParameters = {
+  // The ID of the comment to update.
+  comment_id: IdRequest
+}
+
+type UpdateCommentBodyParameters =
+  | {
+      // An array of rich text objects that represent the updated content of the comment.
+      rich_text: Array<RichTextItemRequest>
+    }
+  | {
+      // The updated content of the comment as a Markdown string. Supports inline formatting
+      // (bold, italic, strikethrough, code, links), inline equations ($expression$), and
+      // mentions.
+      markdown: string
+    }
+
+export type UpdateCommentParameters = UpdateCommentPathParameters &
+  UpdateCommentBodyParameters
+
+export type UpdateCommentResponse =
+  | PartialCommentObjectResponse
+  | CommentObjectResponse
+
+/**
+ * Update a comment
+ */
+export const updateComment = {
+  method: "patch",
+  pathParams: ["comment_id"],
+  queryParams: [],
+  bodyParams: ["rich_text", "markdown"],
+
+  path: (p: UpdateCommentPathParameters): string => `comments/${p.comment_id}`,
+} as const
