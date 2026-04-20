@@ -1,7 +1,12 @@
 // cspell:disable-file
 // Note: This is a generated file. DO NOT EDIT!
 
-import type { EmptyObject, IdRequest, IdResponse } from "./common"
+import type {
+  EmptyObject,
+  IdRequest,
+  IdResponse,
+  RequestStatusResponse,
+} from "./common"
 
 export type FileUploadObjectResponse = {
   // Always `file_upload`
@@ -124,6 +129,7 @@ export type ListFileUploadsResponse = {
   // Always `file_upload`
   type: "file_upload"
   file_upload: EmptyObject
+  request_status?: RequestStatusResponse
 }
 
 /**

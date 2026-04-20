@@ -11,6 +11,7 @@ import type {
   IdResponse,
   PartialPageObjectResponse,
   PartialUserObjectResponse,
+  RequestStatusResponse,
   UpdateViewRequest,
 } from "./common"
 
@@ -519,15 +520,6 @@ type RelationGroupByConfigResponse = {
   hide_empty_groups?: boolean
 }
 
-type RequestStatusResponse = {
-  // Whether the result set is complete or incomplete. `incomplete` means the response does
-  // not include all rows that match the query parameters (e.g. due to a server-side
-  // pagination depth limit).
-  type: "complete" | "incomplete"
-  // Why the result set is incomplete. Only present when `type` is `incomplete`.
-  incomplete_reason?: "query_result_limit_reached"
-}
-
 type SelectGroupByConfigResponse = {
   // The property type for grouping.
   type: "select" | "multi_select"
@@ -840,6 +832,7 @@ export type ListDatabaseViewsResponse = {
   // Always `view`
   type: "view"
   view: EmptyObject
+  request_status?: RequestStatusResponse
 }
 
 /**
@@ -996,6 +989,7 @@ export type GetViewQueryResultsResponse = {
   // Always `page`
   type: "page"
   page: EmptyObject
+  request_status?: RequestStatusResponse
 }
 
 /**

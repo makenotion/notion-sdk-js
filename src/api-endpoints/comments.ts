@@ -7,6 +7,7 @@ import type {
   IdResponse,
   InternalFileResponse,
   PartialUserObjectResponse,
+  RequestStatusResponse,
   RichTextItemRequest,
   RichTextItemResponse,
 } from "./common"
@@ -200,6 +201,7 @@ export type ListCommentsResponse = {
   // Always `comment`
   type: "comment"
   comment: EmptyObject
+  request_status?: RequestStatusResponse
 }
 
 /**
