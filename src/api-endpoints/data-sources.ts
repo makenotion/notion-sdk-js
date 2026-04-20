@@ -589,6 +589,10 @@ export type QueryDataSourceResponse = {
     | PartialDataSourceObjectResponse
     | DataSourceObjectResponse
   >
+  request_status?: {
+    type: "complete" | "incomplete"
+    incomplete_reason?: "query_result_limit_reached"
+  }
 }
 
 /**

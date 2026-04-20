@@ -519,6 +519,15 @@ type RelationGroupByConfigResponse = {
   hide_empty_groups?: boolean
 }
 
+type RequestStatusResponse = {
+  // Whether the result set is complete or incomplete. `incomplete` means the response does
+  // not include all rows that match the query parameters (e.g. due to a server-side
+  // pagination depth limit).
+  type: "complete" | "incomplete"
+  // Why the result set is incomplete. Only present when `type` is `incomplete`.
+  incomplete_reason?: "query_result_limit_reached"
+}
+
 type SelectGroupByConfigResponse = {
   // The property type for grouping.
   type: "select" | "multi_select"
@@ -795,6 +804,10 @@ export type ViewQueryResponse = {
   next_cursor: IdResponse | null
   // Whether there are more results.
   has_more: boolean
+  // Set to `{ type: 'incomplete', incomplete_reason: 'query_result_limit_reached' }` when
+  // the view's underlying data source has more rows matching this query than the
+  // server-side pagination depth limit allows.
+  request_status?: RequestStatusResponse
 }
 
 /**
