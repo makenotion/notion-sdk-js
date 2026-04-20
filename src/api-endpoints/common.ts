@@ -1973,6 +1973,15 @@ export type StringRequest = string
 
 export type TextRequest = string
 
+export type RequestStatusResponse = {
+  // Whether the result set is complete or incomplete. `incomplete` means the response does
+  // not include all rows that match the query parameters (e.g. due to a server-side
+  // pagination depth limit).
+  type: "complete" | "incomplete"
+  // Why the result set is incomplete. Only present when `type` is `incomplete`.
+  incomplete_reason?: "query_result_limit_reached"
+}
+
 export type PartialPageObjectResponse = {
   // The page object type name.
   object: "page"

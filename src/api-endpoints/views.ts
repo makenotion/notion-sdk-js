@@ -11,6 +11,7 @@ import type {
   IdResponse,
   PartialPageObjectResponse,
   PartialUserObjectResponse,
+  RequestStatusResponse,
   UpdateViewRequest,
 } from "./common"
 
@@ -795,6 +796,10 @@ export type ViewQueryResponse = {
   next_cursor: IdResponse | null
   // Whether there are more results.
   has_more: boolean
+  // Set to `{ type: 'incomplete', incomplete_reason: 'query_result_limit_reached' }` when
+  // the view's underlying data source has more rows matching this query than the
+  // server-side pagination depth limit allows.
+  request_status?: RequestStatusResponse
 }
 
 /**
@@ -827,6 +832,7 @@ export type ListDatabaseViewsResponse = {
   // Always `view`
   type: "view"
   view: EmptyObject
+  request_status?: RequestStatusResponse
 }
 
 /**
@@ -983,6 +989,7 @@ export type GetViewQueryResultsResponse = {
   // Always `page`
   type: "page"
   page: EmptyObject
+  request_status?: RequestStatusResponse
 }
 
 /**
