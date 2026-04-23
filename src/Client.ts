@@ -162,9 +162,11 @@ import {
   type ListCustomEmojisParameters,
   type ListCustomEmojisResponse,
   listCustomEmojis,
+} from "./api-endpoints"
+import {
   type QueryMeetingNotesResponse,
   queryMeetingNotes,
-} from "./api-endpoints"
+} from "./api-endpoints/meeting-notes"
 import type { QueryMeetingNotesParameters } from "./meeting-notes"
 import {
   version as PACKAGE_VERSION,

@@ -1,4 +1,4 @@
-import type { QueryMeetingNotesParameters as ApiQueryMeetingNotesParameters } from "./api-endpoints"
+import type { QueryMeetingNotesParameters as ApiQueryMeetingNotesParameters } from "./api-endpoints/meeting-notes"
 
 // cspell:ignore daterange
 

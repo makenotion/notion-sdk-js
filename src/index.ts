@@ -142,7 +142,6 @@ export type {
   PropertyItemObjectResponse,
   QueryDataSourceParameters,
   QueryDataSourceResponse,
-  QueryMeetingNotesResponse,
   QuoteBlockObjectResponse,
   RelationPropertyItemObjectResponse,
   RichTextItemResponse,
@@ -261,6 +260,7 @@ export {
   extractPageId,
   extractBlockId,
 } from "./helpers"
+export type { QueryMeetingNotesResponse } from "./api-endpoints/meeting-notes"
 export type {
   QueryMeetingNotesParameters,
   MeetingNotesCombinatorFilter,
