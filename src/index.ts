@@ -260,3 +260,13 @@ export {
   extractPageId,
   extractBlockId,
 } from "./helpers"
+export type { QueryMeetingNotesResponse } from "./api-endpoints/meeting-notes"
+export type {
+  QueryMeetingNotesParameters,
+  MeetingNotesCombinatorFilter,
+  MeetingNotesFilterNode,
+  MeetingNotesPropertyFilter,
+  MeetingNotesPropertyName,
+  MeetingNotesSort,
+} from "./meeting-notes"
+export { meetingNotesFilterableProperties } from "./meeting-notes"
