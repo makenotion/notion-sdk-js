@@ -521,7 +521,7 @@ type WebhookParentBlock = {
   // The ID of the parent.
   id: IdResponse
   // The type of the parent.
-  type: "space" | "block" | "page" | "database" | "team"
+  type: "space" | "block" | "page" | "database" | "team" | "agent"
   // The data source ID of the parent, if applicable.
   data_source_id?: IdResponse
 }
