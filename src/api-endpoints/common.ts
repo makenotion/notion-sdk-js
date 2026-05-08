@@ -1,6 +1,13 @@
 // cspell:disable-file
 // Note: This is a generated file. DO NOT EDIT!
 
+type AgentIdParentForBlockBasedObjectResponse = {
+  // The parent type.
+  type: "agent_id"
+  // The ID of the parent agent.
+  agent_id: IdResponse
+}
+
 type AnnotationResponse = {
   bold: boolean
   italic: boolean
@@ -987,6 +994,7 @@ export type ParentForBlockBasedObjectResponse =
   | DataSourceParentResponse
   | PageIdParentForBlockBasedObjectResponse
   | BlockIdParentForBlockBasedObjectResponse
+  | AgentIdParentForBlockBasedObjectResponse
   | WorkspaceParentForBlockBasedObjectResponse
 
 export type ParentOfDataSourceRequest = {
