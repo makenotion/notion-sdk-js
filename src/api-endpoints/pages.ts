@@ -746,6 +746,17 @@ type UpdatePageMarkdownBodyParameters =
         // Selection of existing content to insert after, using the ellipsis format ("start
         // text...end text"). Omit to append at the end of the page.
         after?: string
+        // Explicit position for inserted content. Use {"type":"start"} to prepend or
+        // {"type":"end"} to append. Cannot be combined with after.
+        position?:
+          | {
+              // Insert the content at the start of the page.
+              type: "start"
+            }
+          | {
+              // Insert the content at the end of the page.
+              type: "end"
+            }
       }
     }
   | {
