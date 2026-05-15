@@ -20,7 +20,6 @@ type SearchBodyParameters = {
   start_cursor?: string
   page_size?: number
   filter?: { property: "object"; value: "page" | "data_source" }
-  attributes_to_get?: Array<"id" | "object" | "title">
 }
 
 export type SearchParameters = SearchBodyParameters
@@ -50,14 +49,7 @@ export const search = {
   method: "post",
   pathParams: [],
   queryParams: [],
-  bodyParams: [
-    "sort",
-    "query",
-    "start_cursor",
-    "page_size",
-    "filter",
-    "attributes_to_get",
-  ],
+  bodyParams: ["sort", "query", "start_cursor", "page_size", "filter"],
 
   path: (): string => `search`,
 } as const

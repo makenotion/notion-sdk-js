@@ -567,7 +567,6 @@ type QueryDataSourceBodyParameters = {
   in_trash?: boolean
   /** @deprecated Use `in_trash` instead. */
   archived?: boolean
-  attributes_to_get?: Array<"id" | "object" | "title">
   // Optionally filter the results to only include pages or data sources. Regular, non-wiki
   // databases only support page children. The default behavior is no result type
   // filtering, in other words, returning both pages and data sources for wikis.
@@ -610,7 +609,6 @@ export const queryDataSource = {
     "start_cursor",
     "page_size",
     "in_trash",
-    "attributes_to_get",
     "result_type",
   ],
 
