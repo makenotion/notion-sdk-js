@@ -377,6 +377,43 @@ The `notion.request<ResponseBody>({...})` method is generic; `ResponseBody` repr
 
 Another customization you can make is to pass your own `fetch` function to the `Client` constructor. This might be helpful for some execution environments where the default, built-in `fetch` isn't suitable.
 
+### Verifying webhook signatures
+
+If your integration receives [Notion webhook deliveries](https://developers.notion.com/reference/webhooks), use `verifyWebhookSignature` to confirm each request was sent by Notion and was not tampered with in transit. Notion signs every delivery with HMAC-SHA256 over the raw request body using the subscription's verification token, and places the result in the `X-Notion-Signature` header as `sha256=<hex>`.
+
+```ts
+import { verifyWebhookSignature } from "@notionhq/client"
+
+// Express example. The body must be read as the raw text/bytes that
+// arrived over the wire — JSON-parsed and re-serialized bodies will not
+// verify, because re-serialization changes whitespace and key order.
+app.post(
+  "/notion-webhook",
+  express.text({ type: "application/json" }),
+  async (req, res) => {
+    const ok = await verifyWebhookSignature({
+      body: req.body,
+      signature: req.header("x-notion-signature"),
+      verificationToken: process.env.NOTION_WEBHOOK_VERIFICATION_TOKEN!,
+    })
+    if (!ok) {
+      return res.status(401).send("invalid signature")
+    }
+
+    const event = JSON.parse(req.body)
+    // …handle the event
+    res.status(200).send("ok")
+  }
+)
+```
+
+The same helper handles the initial verification handshake that Notion sends when you first register a webhook URL — the handshake body (`{ "verification_token": "..." }`) is signed with the same token, so a single code path covers both cases.
+
+`signWebhookPayload({ body, verificationToken })` produces the same `sha256=<hex>` header value, which is useful for unit-testing your webhook handler without standing up a real subscription.
+
+> [!NOTE]
+> Both helpers are async (they use the Web Crypto API) so they run in Node.js, edge runtimes such as Vercel Edge Functions and Cloudflare Workers, and Deno without depending on `node:crypto`.
+
 ## Examples
 
 For sample code and example projects, see [notion-cookbook](https://github.com/makenotion/notion-cookbook/tree/main/examples).
