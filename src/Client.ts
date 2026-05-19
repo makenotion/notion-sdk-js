@@ -215,6 +215,8 @@ type FileParam = {
   data: string | Blob
 }
 
+const START_CURSOR_PARAM_NAME = "start_cursor"
+
 export type RequestParameters = {
   path: string
   method: Method
@@ -336,10 +338,20 @@ export default class Client {
   private serializeBody(
     body: Record<string, unknown> | undefined
   ): string | undefined {
-    if (!body || Object.entries(body).length === 0) {
+    if (!body) {
       return undefined
     }
-    return JSON.stringify(body)
+
+    const serializedBody = { ...body }
+    if (serializedBody[START_CURSOR_PARAM_NAME] === null) {
+      delete serializedBody[START_CURSOR_PARAM_NAME]
+    }
+
+    if (Object.entries(serializedBody).length === 0) {
+      return undefined
+    }
+
+    return JSON.stringify(serializedBody)
   }
 
   /**

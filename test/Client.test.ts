@@ -811,6 +811,12 @@ describe("Notion SDK Client", () => {
       mockFetch = createMockFetch()
     })
 
+    function getFirstRequestBody() {
+      const firstCall = mockFetch.mock.calls[0]
+      const firstCallParams = firstCall?.[1]
+      return JSON.parse(String(firstCallParams?.body) ?? "{}")
+    }
+
     it("handles empty query parameters", async () => {
       const notion = new Client({ fetch: mockFetch })
 
@@ -877,6 +883,45 @@ describe("Notion SDK Client", () => {
 
       const requestInit = mockFetch.mock.calls[0]?.[1]
       expect(requestInit?.body).toBeUndefined()
+    })
+
+    it("omits null start_cursor from JSON body", async () => {
+      const notion = new Client({ fetch: mockFetch })
+
+      await notion.request({
+        path: "search",
+        method: "post",
+        body: { start_cursor: null, page_size: 10 },
+      })
+
+      const requestBody = getFirstRequestBody()
+      expect(requestBody).toEqual({ page_size: 10 })
+    })
+
+    it("omits body when JSON body only has null start_cursor", async () => {
+      const notion = new Client({ fetch: mockFetch })
+
+      await notion.request({
+        path: "search",
+        method: "post",
+        body: { start_cursor: null },
+      })
+
+      const requestInit = mockFetch.mock.calls[0]?.[1]
+      expect(requestInit?.body).toBeUndefined()
+    })
+
+    it("preserves other null JSON body fields", async () => {
+      const notion = new Client({ fetch: mockFetch })
+
+      await notion.request({
+        path: "search",
+        method: "post",
+        body: { start_cursor: null, filter: null },
+      })
+
+      const requestBody = getFirstRequestBody()
+      expect(requestBody).toEqual({ filter: null })
     })
 
     it("includes content-type header only when body is provided", async () => {
