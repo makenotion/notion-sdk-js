@@ -199,3 +199,35 @@ describe("signWebhookPayload", () => {
     expect(actual).toBe(expected)
   })
 })
+
+describe("verifyWebhookSignature: fallback to node:crypto", () => {
+  // Exercises the path used on Node.js 18.0–18.18, where `globalThis.crypto`
+  // is not enabled by default. We can't downgrade the test runner, so we
+  // simulate the missing global and re-import the module fresh so its
+  // `cachedSubtle` is empty.
+  const originalGlobalCrypto = (globalThis as { crypto?: unknown }).crypto
+
+  afterEach(() => {
+    const g = globalThis as { crypto?: unknown }
+    g.crypto = originalGlobalCrypto
+    jest.resetModules()
+  })
+
+  it("verifies a real signature using node:crypto webcrypto when globalThis.crypto is missing", async () => {
+    delete (globalThis as { crypto?: unknown }).crypto
+
+    let verify: typeof verifyWebhookSignature | undefined
+    jest.isolateModules(() => {
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      verify = require("../src/webhooks").verifyWebhookSignature
+    })
+    if (!verify) throw new Error("module did not load")
+
+    const body = JSON.stringify({ id: "evt_fallback" })
+    const signature = nodeSign(body, VERIFICATION_TOKEN)
+
+    await expect(
+      verify({ body, signature, verificationToken: VERIFICATION_TOKEN })
+    ).resolves.toBe(true)
+  })
+})

@@ -1,16 +1,19 @@
 /**
  * Helpers for receiving and verifying Notion webhook deliveries.
  *
- * Notion signs each webhook request with HMAC-SHA256 over the raw HTTP body
- * using the subscription's verification token as the key, and sends the
- * resulting hex digest in the `X-Notion-Signature` header as
+ * Notion signs each webhook request with HMAC-SHA256 over the raw HTTP
+ * body using the subscription's verification token as the key, and sends
+ * the resulting hex digest in the `X-Notion-Signature` header as
  * `sha256=<hex>`. To verify a delivery, callers must pass the body
- * **exactly as it arrived over the wire** — any JSON re-serialization will
- * change the bytes and invalidate the signature.
+ * **exactly as it arrived over the wire** — any JSON re-serialization
+ * will change the bytes and invalidate the signature.
  *
- * These helpers use the Web Crypto API (`globalThis.crypto.subtle`) so they
- * work in Node.js (>= 18), edge runtimes (Vercel, Cloudflare Workers, Deno),
- * and modern browsers without depending on `node:crypto`.
+ * The helpers prefer the Web Crypto API (`globalThis.crypto.subtle`)
+ * when present (browsers, edge runtimes, Node.js >= 18.19) and
+ * transparently fall back to `node:crypto`'s `webcrypto.subtle` on older
+ * Node.js 18 builds where `globalThis.crypto` is not yet enabled by
+ * default. They work without configuration in Node.js, Bun, Deno,
+ * Vercel Edge Functions, Cloudflare Workers, and modern browsers.
  */
 
 const SIGNATURE_PREFIX = "sha256="
@@ -40,10 +43,10 @@ export type VerifyWebhookSignatureArgs = {
  * Verify that a webhook delivery came from Notion and has not been
  * tampered with.
  *
- * Performs a constant-time comparison; returns `true` only if the supplied
- * `signature` matches HMAC-SHA256 of `body` keyed by `verificationToken`.
- * Returns `false` (rather than throwing) for any malformed input so the
- * caller can respond with a single 401/403 path.
+ * Performs a constant-time comparison; returns `true` only if the
+ * supplied `signature` matches HMAC-SHA256 of `body` keyed by
+ * `verificationToken`. Returns `false` (rather than throwing) for any
+ * malformed input so the caller can respond with a single 401/403 path.
  */
 export async function verifyWebhookSignature(
   args: VerifyWebhookSignatureArgs
@@ -62,9 +65,9 @@ export async function verifyWebhookSignature(
 }
 
 /**
- * Compute the value Notion would send in `X-Notion-Signature` for a given
- * body and verification token. Useful for unit-testing webhook handlers
- * without standing up a real subscription.
+ * Compute the value Notion would send in `X-Notion-Signature` for a
+ * given body and verification token. Useful for unit-testing webhook
+ * handlers without standing up a real subscription.
  */
 export async function signWebhookPayload(args: {
   body: string | Uint8Array
@@ -78,22 +81,13 @@ async function computeHmacSha256Hex(
   key: string,
   body: string | Uint8Array
 ): Promise<string> {
-  const subtle = globalThis.crypto?.subtle
-  if (!subtle) {
-    // Web Crypto is present on Node >= 15 and all supported runtimes; if a
-    // host strips it, fail loudly rather than silently weakening security.
-    throw new Error(
-      "verifyWebhookSignature requires Web Crypto support " +
-        "(globalThis.crypto.subtle). Upgrade to Node.js 18+ or a runtime " +
-        "that provides Web Crypto."
-    )
-  }
+  const subtle = await getSubtle()
 
   const encoder = new TextEncoder()
   const keyBytes = encoder.encode(key)
-  // Copy any Uint8Array input into a fresh ArrayBuffer-backed view so the
-  // subtle.sign signature (which forbids SharedArrayBuffer-backed views)
-  // is satisfied regardless of the caller's buffer source (e.g. Node Buffer).
+  // Copy any Uint8Array input into a fresh ArrayBuffer-backed view so
+  // subtle.sign (which forbids SharedArrayBuffer-backed views) is
+  // satisfied regardless of where the caller's buffer came from.
   const bodyBytes =
     typeof body === "string" ? encoder.encode(body) : Uint8Array.from(body)
 
@@ -108,6 +102,49 @@ async function computeHmacSha256Hex(
   return bytesToHex(new Uint8Array(signatureBuffer))
 }
 
+let cachedSubtle: SubtleCrypto | undefined
+
+async function getSubtle(): Promise<SubtleCrypto> {
+  if (cachedSubtle) return cachedSubtle
+
+  // Preferred path: every modern runtime exposes Web Crypto on the
+  // global object. This includes browsers, Vercel Edge, Cloudflare
+  // Workers, Deno, Bun, and Node.js >= 18.19 (which backported the
+  // change from Node.js 19).
+  const fromGlobal = (globalThis as { crypto?: { subtle?: SubtleCrypto } })
+    .crypto?.subtle
+  if (fromGlobal) {
+    cachedSubtle = fromGlobal
+    return cachedSubtle
+  }
+
+  // Fallback for Node.js 18.0–18.18, which ships Web Crypto via
+  // `node:crypto` but does not expose it on `globalThis` by default.
+  // Using `require` (rather than a static `import`) keeps the
+  // node:crypto reference off the dependency graph of browser bundlers
+  // that would otherwise fail to resolve it.
+  try {
+    /* eslint-disable @typescript-eslint/no-var-requires */
+    const nodeCrypto = require("crypto") as {
+      webcrypto?: { subtle?: SubtleCrypto }
+    }
+    /* eslint-enable @typescript-eslint/no-var-requires */
+    if (nodeCrypto.webcrypto?.subtle) {
+      cachedSubtle = nodeCrypto.webcrypto.subtle
+      return cachedSubtle
+    }
+  } catch {
+    // node:crypto unavailable (e.g. a browser bundle that stubbed it).
+    // Fall through to the error below.
+  }
+
+  throw new Error(
+    "verifyWebhookSignature requires Web Crypto support " +
+      "(globalThis.crypto.subtle or node:crypto.webcrypto). Upgrade to " +
+      "a runtime that provides one of them."
+  )
+}
+
 function bytesToHex(bytes: Uint8Array): string {
   let hex = ""
   for (let i = 0; i < bytes.length; i++) {
@@ -116,7 +153,7 @@ function bytesToHex(bytes: Uint8Array): string {
   return hex
 }
 
-// Constant-time string comparison. The two inputs are already known to be
+// Constant-time string comparison. The inputs are already known to be
 // the same length (callers enforce SHA256_HEX_LENGTH), so this purely
 // avoids early-exit on the first differing character.
 function timingSafeEqualHex(a: string, b: string): boolean {

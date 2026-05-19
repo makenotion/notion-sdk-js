@@ -412,7 +412,7 @@ The same helper handles the initial verification handshake that Notion sends whe
 `signWebhookPayload({ body, verificationToken })` produces the same `sha256=<hex>` header value, which is useful for unit-testing your webhook handler without standing up a real subscription.
 
 > [!NOTE]
-> Both helpers are async (they use the Web Crypto API) so they run in Node.js, edge runtimes such as Vercel Edge Functions and Cloudflare Workers, and Deno without depending on `node:crypto`.
+> Both helpers are async. They prefer the Web Crypto API (`globalThis.crypto.subtle`) when present and transparently fall back to `node:crypto` on older Node.js 18 builds, so they run unchanged on Node.js, Bun, Deno, Vercel Edge Functions, Cloudflare Workers, and modern browsers.
 
 ## Examples
 
