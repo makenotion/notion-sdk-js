@@ -312,7 +312,11 @@ export default class Client {
     const url = new URL(`${this.#prefixUrl}${path}`)
     if (query) {
       for (const [key, value] of Object.entries(query)) {
-        if (value !== undefined) {
+        // Skip `null` for the same reason as `undefined`: callers pipe
+        // `next_cursor` (which can be `null`) back as `start_cursor`, and a
+        // null cursor means "no cursor" — encoding it as the string "null"
+        // would send a bogus value to the server.
+        if (value !== undefined && value !== null) {
           if (Array.isArray(value)) {
             for (const val of value) {
               url.searchParams.append(key, decodeURIComponent(val))
@@ -1487,7 +1491,7 @@ export default class Client {
  */
 type Method = "get" | "post" | "patch" | "delete"
 type QueryParams =
-  | Record<string, string | number | boolean | string[]>
+  | Record<string, string | number | boolean | string[] | null>
   | URLSearchParams
 
 type WithAuth<P> = P & { auth?: string }

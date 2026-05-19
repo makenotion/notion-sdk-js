@@ -852,6 +852,20 @@ describe("Notion SDK Client", () => {
       expect(url).toContain("filter=database")
     })
 
+    it("omits null query parameters", async () => {
+      const notion = new Client({ fetch: mockFetch })
+
+      await notion.request({
+        path: "blocks/123/children",
+        method: "get",
+        query: { start_cursor: null, page_size: 10 },
+      })
+
+      const url = mockFetch.mock.calls[0]?.[0] as string
+      expect(url).not.toContain("start_cursor")
+      expect(url).toContain("page_size=10")
+    })
+
     it("omits body when empty object provided", async () => {
       const notion = new Client({ fetch: mockFetch })
 
