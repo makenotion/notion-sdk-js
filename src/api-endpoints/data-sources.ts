@@ -562,7 +562,7 @@ type QueryDataSourceBodyParameters = {
     | { and: GroupFilterOperatorArray }
     | PropertyFilter
     | TimestampFilter
-  start_cursor?: string
+  start_cursor?: string | null
   page_size?: number
   in_trash?: boolean
   /** @deprecated Use `in_trash` instead. */
@@ -655,7 +655,7 @@ type ListDataSourceTemplatesQueryParameters = {
   name?: string
   // If supplied, this endpoint will return a page of results starting after the cursor
   // provided. If not supplied, this endpoint will return the first page of results.
-  start_cursor?: string
+  start_cursor?: string | null
   // The number of items from the full list desired in the response. Maximum: 100
   page_size?: number
 }

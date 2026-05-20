@@ -40,7 +40,7 @@ export const getUser = {
 } as const
 
 type ListUsersQueryParameters = {
-  start_cursor?: string
+  start_cursor?: string | null
   page_size?: number
 }
 

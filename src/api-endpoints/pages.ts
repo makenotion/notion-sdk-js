@@ -675,7 +675,7 @@ type GetPagePropertyPathParameters = {
 }
 
 type GetPagePropertyQueryParameters = {
-  start_cursor?: string
+  start_cursor?: string | null
   page_size?: number
 }
 

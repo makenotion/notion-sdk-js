@@ -16,7 +16,7 @@ type SearchBodyParameters = {
     | { timestamp: "last_edited_time"; direction: "ascending" | "descending" }
     | { timestamp: "relevance" }
   query?: string
-  start_cursor?: string
+  start_cursor?: string | null
   page_size?: number
   filter?: { property: "object"; value: "page" | "data_source" }
 }

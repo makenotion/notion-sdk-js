@@ -1140,7 +1140,7 @@ type ListBlockChildrenPathParameters = {
 }
 
 type ListBlockChildrenQueryParameters = {
-  start_cursor?: string
+  start_cursor?: string | null
   page_size?: number
 }
 
