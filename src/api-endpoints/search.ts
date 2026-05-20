@@ -14,7 +14,7 @@ import type {
 type SearchBodyParameters = {
   sort?:
     | { timestamp: "last_edited_time"; direction: "ascending" | "descending" }
-    | { timestamp: "relevance" }
+    | { property: "relevance" }
   query?: string
   start_cursor?: string | null
   page_size?: number
