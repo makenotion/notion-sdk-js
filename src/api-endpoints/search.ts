@@ -17,7 +17,7 @@ type SearchBodyParameters = {
     direction: "ascending" | "descending"
   }
   query?: string
-  start_cursor?: string
+  start_cursor?: string | null
   page_size?: number
   filter?: { property: "object"; value: "page" | "data_source" }
 }
