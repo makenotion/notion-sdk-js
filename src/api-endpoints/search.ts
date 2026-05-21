@@ -12,10 +12,9 @@ import type {
 } from "./data-sources"
 
 type SearchBodyParameters = {
-  sort?: {
-    timestamp: "last_edited_time"
-    direction: "ascending" | "descending"
-  }
+  sort?:
+    | { timestamp: "last_edited_time"; direction: "ascending" | "descending" }
+    | { property: "relevance" }
   query?: string
   start_cursor?: string | null
   page_size?: number
