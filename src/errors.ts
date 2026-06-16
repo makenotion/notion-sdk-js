@@ -16,6 +16,7 @@ export enum APIErrorCode {
   ValidationError = "validation_error",
   ConflictError = "conflict_error",
   InternalServerError = "internal_server_error",
+  ServiceOverload = "service_overload",
   ServiceUnavailable = "service_unavailable",
   GatewayTimeout = "gateway_timeout",
 }
@@ -225,6 +226,7 @@ const httpResponseErrorCodes: { [C in HTTPResponseErrorCode]: true } = {
   [APIErrorCode.ValidationError]: true,
   [APIErrorCode.ConflictError]: true,
   [APIErrorCode.InternalServerError]: true,
+  [APIErrorCode.ServiceOverload]: true,
   [APIErrorCode.ServiceUnavailable]: true,
   [APIErrorCode.GatewayTimeout]: true,
 }
@@ -288,6 +290,7 @@ const apiErrorCodes: { [C in APIErrorCode]: true } = {
   [APIErrorCode.ValidationError]: true,
   [APIErrorCode.ConflictError]: true,
   [APIErrorCode.InternalServerError]: true,
+  [APIErrorCode.ServiceOverload]: true,
   [APIErrorCode.ServiceUnavailable]: true,
   [APIErrorCode.GatewayTimeout]: true,
 }
