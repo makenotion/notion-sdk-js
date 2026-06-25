@@ -254,7 +254,11 @@ export async function* iterateAllDataSourceRows(
         start_cursor: cursor,
       })
       for (const row of response.results) {
-        if (isFullPage(row)) {
+        // Wiki data sources can return child data-source rows alongside pages.
+        // Both carry created_time and either can be the window's boundary row,
+        // so advance on either; reading only pages would stall a window made up
+        // of data-source rows and throw spuriously.
+        if (isFullPageOrDataSource(row)) {
           lastCreatedTime = row.created_time
         }
         if (!seenRowIds.has(row.id)) {
