@@ -310,8 +310,17 @@ describe("Notion API helpers", () => {
       }
     }
 
+    // A child data-source row, as returned when querying a wiki data source.
+    function dataSource(id: string, createdTime: string) {
+      return {
+        object: "data_source",
+        id,
+        created_time: createdTime,
+      }
+    }
+
     function queryResponse(
-      results: Array<ReturnType<typeof page>>,
+      results: Array<ReturnType<typeof page> | ReturnType<typeof dataSource>>,
       opts: { nextCursor?: string | null; incomplete?: boolean } = {}
     ): Response {
       const nextCursor = opts.nextCursor ?? null
@@ -450,6 +459,43 @@ describe("Notion API helpers", () => {
               created_time: { on_or_after: "2024-01-01T00:00:00.000Z" },
             },
           ],
+        })
+      })
+
+      it("Advances on a data-source boundary row, not only pages", async () => {
+        // Window 1 ends at the limit on a child data-source row (wiki data
+        // source). The window must advance from that row's created_time, even
+        // though it is not a page.
+        mockFetch
+          .mockResolvedValueOnce(
+            queryResponse(
+              [
+                page("r1", "2024-01-01T00:00:00.000Z"),
+                dataSource("ds-child", "2024-01-02T00:00:00.000Z"),
+              ],
+              { incomplete: true }
+            )
+          )
+          .mockResolvedValueOnce(
+            queryResponse([
+              dataSource("ds-child", "2024-01-02T00:00:00.000Z"),
+              page("r2", "2024-01-03T00:00:00.000Z"),
+            ])
+          )
+
+        const ids: string[] = []
+        for await (const row of iterateAllDataSourceRows(client, {
+          data_source_id: "ds-1",
+        })) {
+          ids.push(row.id)
+        }
+
+        expect(ids).toEqual(["r1", "ds-child", "r2"])
+        expect(mockFetch).toHaveBeenCalledTimes(2)
+        // The second window advanced from the data-source row's created_time.
+        expect(bodyOf(mockFetch.mock.calls[1]).filter).toEqual({
+          timestamp: "created_time",
+          created_time: { on_or_after: "2024-01-02T00:00:00.000Z" },
         })
       })
 
