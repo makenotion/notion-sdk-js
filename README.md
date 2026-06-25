@@ -350,6 +350,79 @@ const blocks = await collectPaginatedAPI(notion.blocks.children.list, {
 // Do something with blocks.
 ```
 
+#### `iterateAllDataSourceRows(client, args)`
+
+A single data source query (one filter and sort) returns at most a fixed number
+of rows, 10,000 by default. Once that limit is reached, `has_more` becomes
+`false` and the response carries `request_status.type === "incomplete"`. Plain
+pagination such as `iteratePaginatedAPI` stops there and silently misses the rest
+of a larger data source.
+
+This utility reads every row anyway. It partitions the data source into
+`created_time` windows: it sorts by `created_time` ascending, and whenever a
+window hits the limit it starts a fresh query from the last row's timestamp.
+Each fresh query has a different filter, so it gets its own result budget. Rows
+that share a boundary timestamp are de-duplicated by id, so every row is yielded
+exactly once.
+
+`created_time` is used because it never changes. `last_edited_time` would shift
+rows between windows as they are edited, causing gaps or duplicates.
+
+**Parameters:**
+
+- `client`: A Notion client instance.
+- `args`: The same arguments as `dataSources.query`, minus the fields the helper
+  controls: `start_cursor` (pagination is automatic) and `sorts` (set to
+  `created_time` ascending to partition). `data_source_id` is required. Any
+  `filter` you pass is combined with the window bound using `and`.
+
+**Returns:**
+
+An async iterator over every row in the data source.
+
+**Throws:**
+
+If a single `created_time` value holds more rows than the limit, the window
+cannot be narrowed by time alone. Pass a `filter` in that case so each window
+stays under the limit.
+
+**Example:**
+
+```javascript
+for await (const row of iterateAllDataSourceRows(notion, {
+  data_source_id: dataSourceId,
+})) {
+  // Do something with row.
+}
+```
+
+#### `collectAllDataSourceRows(client, args)`
+
+This utility accepts the same arguments as `iterateAllDataSourceRows`, but
+collects the results into an in-memory array.
+
+Before using this utility, check that the full data source fits in memory. For
+very large data sources, prefer `iterateAllDataSourceRows` and process rows as
+they stream.
+
+**Parameters:**
+
+- `client`: A Notion client instance.
+- `args`: The same arguments as `iterateAllDataSourceRows`.
+
+**Returns:**
+
+An array with every row in the data source.
+
+**Example:**
+
+```javascript
+const rows = await collectAllDataSourceRows(notion, {
+  data_source_id: dataSourceId,
+})
+// Do something with rows.
+```
+
 ### Custom requests
 
 To make requests directly to a Notion API endpoint instead of using the pre-built families of methods, call the `request()` method. For example:
