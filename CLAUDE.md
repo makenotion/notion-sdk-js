@@ -82,10 +82,11 @@ All API calls flow through `Client.request()` which:
 The client automatically retries failed requests for these error codes:
 
 - `rate_limited` (HTTP 429) - retried for all HTTP methods; respects `retry-after` header if present
+- `service_overload` (HTTP 529) - retried for all HTTP methods; respects `retry-after` header if present
 - `internal_server_error` (HTTP 500) - retried only for idempotent methods (GET, DELETE)
 - `service_unavailable` (HTTP 503) - retried only for idempotent methods (GET, DELETE)
 
-Server errors (500, 503) are only retried for idempotent methods to avoid duplicate side effects. Rate limits (429) are retried for all methods since the server explicitly asks clients to retry.
+Server errors (500, 503) are only retried for idempotent methods to avoid duplicate side effects. Rate limits (429) and service overloads (529) are retried for all methods since the server explicitly asks clients to retry.
 
 Configuration via `ClientOptions.retry`:
 

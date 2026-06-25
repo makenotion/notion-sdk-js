@@ -134,15 +134,15 @@ You may also set a custom `logger` to emit logs to a destination other than `std
 
 The `Client` supports the following options on initialization. These options are all keys in the single constructor parameter.
 
-| Option      | Default value               | Type           | Description                                                                                                                                                  |
-| ----------- | --------------------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `auth`      | `undefined`                 | `string`       | Bearer token for authentication. If left undefined, the `auth` parameter should be set on each request.                                                      |
-| `logLevel`  | `LogLevel.WARN`             | `LogLevel`     | Verbosity of logs the instance will produce. By default, logs are written to `stdout`.                                                                       |
-| `timeoutMs` | `DEFAULT_TIMEOUT_MS`        | `number`       | Number of milliseconds to wait before emitting a `RequestTimeoutError`                                                                                       |
-| `baseUrl`   | `DEFAULT_BASE_URL`          | `string`       | The root URL for sending API requests. This can be changed to test with a mock server.                                                                       |
-| `logger`    | Log to console              | `Logger`       | A custom logging function. This function is only called when the client emits a log that is equal or greater severity than `logLevel`.                       |
-| `agent`     | Default node agent          | `http.Agent`   | Used to control creation of TCP sockets. A common use is to proxy requests with [`https-proxy-agent`](https://github.com/TooTallNate/node-https-proxy-agent) |
-| `retry`     | See [constants](#constants) | `RetryOptions` | Configuration for automatic retries on rate limits (429) and server errors (500, 503). See [Automatic retries](#automatic-retries) below.                    |
+| Option      | Default value               | Type           | Description                                                                                                                                                         |
+| ----------- | --------------------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `auth`      | `undefined`                 | `string`       | Bearer token for authentication. If left undefined, the `auth` parameter should be set on each request.                                                             |
+| `logLevel`  | `LogLevel.WARN`             | `LogLevel`     | Verbosity of logs the instance will produce. By default, logs are written to `stdout`.                                                                              |
+| `timeoutMs` | `DEFAULT_TIMEOUT_MS`        | `number`       | Number of milliseconds to wait before emitting a `RequestTimeoutError`                                                                                              |
+| `baseUrl`   | `DEFAULT_BASE_URL`          | `string`       | The root URL for sending API requests. This can be changed to test with a mock server.                                                                              |
+| `logger`    | Log to console              | `Logger`       | A custom logging function. This function is only called when the client emits a log that is equal or greater severity than `logLevel`.                              |
+| `agent`     | Default node agent          | `http.Agent`   | Used to control creation of TCP sockets. A common use is to proxy requests with [`https-proxy-agent`](https://github.com/TooTallNate/node-https-proxy-agent)        |
+| `retry`     | See [constants](#constants) | `RetryOptions` | Configuration for automatic retries on rate limits (429), service overloads (529), and server errors (500, 503). See [Automatic retries](#automatic-retries) below. |
 
 ### Automatic retries
 
@@ -151,10 +151,11 @@ The client automatically retries requests that fail due to rate limiting or tran
 **Retryable errors:**
 
 - `rate_limited` (HTTP 429) - Too many requests; retried for all HTTP methods
+- `service_overload` (HTTP 529) - Service overloaded; retried for all HTTP methods
 - `internal_server_error` (HTTP 500) - Server error; retried only for GET and DELETE
 - `service_unavailable` (HTTP 503) - Service temporarily unavailable; retried only for GET and DELETE
 
-Server errors (500, 503) are only retried for idempotent HTTP methods (GET, DELETE) to avoid duplicate side effects. Rate limits (429) are retried for all methods since the server explicitly asks clients to retry.
+Server errors (500, 503) are only retried for idempotent HTTP methods (GET, DELETE) to avoid duplicate side effects. Rate limits (429) and service overloads (529) are retried for all methods since the server explicitly asks clients to retry.
 
 **Retry behavior:**
 
