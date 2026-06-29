@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, no-useless-escape */
+
 /* =============================================================================
 
 	GENERATED FILE - DO NOT EDIT MANUALLY
@@ -9,31 +11,31 @@
 // This file is self-contained with no external imports.
 
 declare const notionIconColors: [
-	"gray",
-	"lightgray",
-	"brown",
-	"yellow",
-	"orange",
-	"green",
-	"blue",
-	"purple",
-	"pink",
-	"red",
+  "gray",
+  "lightgray",
+  "brown",
+  "yellow",
+  "orange",
+  "green",
+  "blue",
+  "purple",
+  "pink",
+  "red",
 ]
 
 type NotionIconColor = (typeof notionIconColors)[number]
 
 declare const selectColors: [
-	"default",
-	"gray",
-	"brown",
-	"orange",
-	"yellow",
-	"green",
-	"blue",
-	"purple",
-	"pink",
-	"red",
+  "default",
+  "gray",
+  "brown",
+  "orange",
+  "yellow",
+  "green",
+  "blue",
+  "purple",
+  "pink",
+  "red",
 ]
 
 type SelectColor = (typeof selectColors)[number]
@@ -59,8 +61,8 @@ type MentionToken = unknown
 
 // Internal helper generic used by PropertiesInputForSchema
 type ExtractByName<
-	P extends PropertySchemaDefinition[],
-	N extends string,
+  P extends PropertySchemaDefinition[],
+  N extends string,
 > = Extract<P[number], { name: N }>
 
 type ResourceId = string
@@ -72,8 +74,8 @@ type ResourceId = string
  * icon: { type: "emoji", emoji: "📊" }
  */
 type EmojiIcon = {
-	type: "emoji"
-	emoji: string
+  type: "emoji"
+  emoji: string
 }
 
 /**
@@ -98,17 +100,17 @@ type EmojiIcon = {
  * icon: { type: "notion_icon", description: "calendar", color: "blue" }
  */
 type NotionIcon = {
-	type: "notion_icon"
-	/**
-	 * Either an exact Notion icon slug (preferred when known) or a
-	 * natural-language description used for semantic search.
-	 */
-	description: string
-	/**
-	 * Optional color for the icon. Defaults to "gray" if not specified.
-	 * Available colors: gray, lightgray, brown, yellow, orange, green, blue, purple, pink, red
-	 */
-	color?: NotionIconColor
+  type: "notion_icon"
+  /**
+   * Either an exact Notion icon slug (preferred when known) or a
+   * natural-language description used for semantic search.
+   */
+  description: string
+  /**
+   * Optional color for the icon. Defaults to "gray" if not specified.
+   * Available colors: gray, lightgray, brown, yellow, orange, green, blue, purple, pink, red
+   */
+  color?: NotionIconColor
 }
 
 /**
@@ -130,8 +132,8 @@ type NotionIcon = {
 type InfraAsCodeIcon = EmojiIcon | NotionIcon | FileReference
 
 type Parent = {
-	type: "resourceId"
-	resourceId: ResourceId
+  type: "resourceId"
+  resourceId: ResourceId
 }
 
 /**
@@ -146,100 +148,100 @@ type Parent = {
  * for permission safety reasons.
  */
 type PageIntent = {
-	resourceId: ResourceId
-	parent: Parent
-	/**
-	 * Internal: update an existing block pointer pre-seeded in the resource registry
-	 * instead of creating and linking a new page block.
-	 */
-	updateExisting?: boolean
-	/**
-	 * Page properties including the title.
-	 * - For pages not in a database: Use `properties.title` to set the page title
-	 * - For database pages: Use property names matching the database schema
-	 *
-	 * Person property values are not supported.
-	 *
-	 * @example
-	 * // Regular page
-	 * properties: { title: notion.text("My Page Title") }
-	 *
-	 * // Database page
-	 * properties: { Name: notion.text("Task Name"), Status: "In Progress" }
-	 */
-	properties?: Record<string, PropertyValue | undefined>
-	/**
-	 * Icon for the page. Can be an emoji or a notion_icon (resolved by exact slug match or semantic search description).
-	 */
-	icon?: InfraAsCodeIcon
-	/**
-	 * Optional page content in Notion flavored markdown format.
-	 * When provided, the markdown will be parsed into blocks and added as children of the page.
-	 *
-	 * NOTE: The page title should be set via `properties.title`, NOT extracted from content.
-	 * Content markdown is only used to generate child blocks, not the page title.
-	 *
-	 * INLINE PAGES: To place another in-script page inline within this content
-	 * (a real child subpage at a chosen position, rather than appended at the
-	 * end), create that page with its `parent` set to THIS page's resourceId,
-	 * then reference it in this content with a
-	 * `<page url="{{that-resource-id}}">Title</page>` tag. The tag controls only
-	 * the placement; the child page's `parent` is the source of truth for
-	 * containment. The referenced page must be created in the same script and may
-	 * be referenced at most once per content body.
-	 *
-	 * The `<page url="{{...}}">` tag may appear anywhere in the content — at the
-	 * top level, or nested inside a column, callout, toggle, or other container
-	 * block (ideal for multi-column hub layouts). When nested, the child page is
-	 * re-parented into that container while remaining a real page.
-	 *
-	 * @example
-	 * // Hub page that lists a real child subpage under a heading:
-	 * content: '# Team\n<page url="{{getting-started}}">Getting Started</page>'
-	 * // ...elsewhere in the same script:
-	 * notion.page.create({
-	 *   resourceId: "getting-started",
-	 *   parent: { type: "resourceId", resourceId: "hub-page" },
-	 *   properties: { title: notion.text("Getting Started") },
-	 * })
-	 */
-	content?: string
-	/**
-	 * Whether this page should be created as a data source template.
-	 *
-	 * Template pages must be parented to a data source.
-	 */
-	template?: boolean
-	/**
-	 * Optional cover image for the page.
-	 */
-	cover?: FileReference
+  resourceId: ResourceId
+  parent: Parent
+  /**
+   * Internal: update an existing block pointer pre-seeded in the resource registry
+   * instead of creating and linking a new page block.
+   */
+  updateExisting?: boolean
+  /**
+   * Page properties including the title.
+   * - For pages not in a database: Use `properties.title` to set the page title
+   * - For database pages: Use property names matching the database schema
+   *
+   * Person property values are not supported.
+   *
+   * @example
+   * // Regular page
+   * properties: { title: notion.text("My Page Title") }
+   *
+   * // Database page
+   * properties: { Name: notion.text("Task Name"), Status: "In Progress" }
+   */
+  properties?: Record<string, PropertyValue | undefined>
+  /**
+   * Icon for the page. Can be an emoji or a notion_icon (resolved by exact slug match or semantic search description).
+   */
+  icon?: InfraAsCodeIcon
+  /**
+   * Optional page content in Notion flavored markdown format.
+   * When provided, the markdown will be parsed into blocks and added as children of the page.
+   *
+   * NOTE: The page title should be set via `properties.title`, NOT extracted from content.
+   * Content markdown is only used to generate child blocks, not the page title.
+   *
+   * INLINE PAGES: To place another in-script page inline within this content
+   * (a real child subpage at a chosen position, rather than appended at the
+   * end), create that page with its `parent` set to THIS page's resourceId,
+   * then reference it in this content with a
+   * `<page url="{{that-resource-id}}">Title</page>` tag. The tag controls only
+   * the placement; the child page's `parent` is the source of truth for
+   * containment. The referenced page must be created in the same script and may
+   * be referenced at most once per content body.
+   *
+   * The `<page url="{{...}}">` tag may appear anywhere in the content — at the
+   * top level, or nested inside a column, callout, toggle, or other container
+   * block (ideal for multi-column hub layouts). When nested, the child page is
+   * re-parented into that container while remaining a real page.
+   *
+   * @example
+   * // Hub page that lists a real child subpage under a heading:
+   * content: '# Team\n<page url="{{getting-started}}">Getting Started</page>'
+   * // ...elsewhere in the same script:
+   * notion.page.create({
+   *   resourceId: "getting-started",
+   *   parent: { type: "resourceId", resourceId: "hub-page" },
+   *   properties: { title: notion.text("Getting Started") },
+   * })
+   */
+  content?: string
+  /**
+   * Whether this page should be created as a data source template.
+   *
+   * Template pages must be parented to a data source.
+   */
+  template?: boolean
+  /**
+   * Optional cover image for the page.
+   */
+  cover?: FileReference
 }
 
 /**
  * Base property schema definition shared by all property types.
  */
 type BasePropertySchemaDefinition = {
-	/** Display name of the property in the database */
-	name: string
-	/**
-	 * Unique identifier for this property within the infra as code script.
-	 * Required for all properties to enable unambiguous references (e.g., for rollups).
-	 *
-	 * For two-way relations, use this to reference the property
-	 * from the other side of the relation via targetDataSourcePropertyResourceId.
-	 *
-	 * @example
-	 * // Projects database
-	 * {
-	 *   name: "Related Issues",
-	 *   type: "relation",
-	 *   resourceId: "related-issues-prop",  // Required identifier
-	 *   targetDataSourceResourceId: "issues-datasource",
-	 *   targetDataSourcePropertyResourceId: "project-prop"  // Points to other side
-	 * }
-	 */
-	resourceId: ResourceId
+  /** Display name of the property in the database */
+  name: string
+  /**
+   * Unique identifier for this property within the infra as code script.
+   * Required for all properties to enable unambiguous references (e.g., for rollups).
+   *
+   * For two-way relations, use this to reference the property
+   * from the other side of the relation via targetDataSourcePropertyResourceId.
+   *
+   * @example
+   * // Projects database
+   * {
+   *   name: "Related Issues",
+   *   type: "relation",
+   *   resourceId: "related-issues-prop",  // Required identifier
+   *   targetDataSourceResourceId: "issues-datasource",
+   *   targetDataSourcePropertyResourceId: "project-prop"  // Points to other side
+   * }
+   */
+  resourceId: ResourceId
 }
 
 /**
@@ -250,7 +252,7 @@ type BasePropertySchemaDefinition = {
  * { resourceId: "name-prop", name: "Name", type: "title" }
  */
 type TitlePropertySchemaDefinition = BasePropertySchemaDefinition & {
-	type: "title"
+  type: "title"
 }
 
 /**
@@ -260,7 +262,7 @@ type TitlePropertySchemaDefinition = BasePropertySchemaDefinition & {
  * { resourceId: "desc-prop", name: "Description", type: "text" }
  */
 type TextPropertySchemaDefinition = BasePropertySchemaDefinition & {
-	type: "text"
+  type: "text"
 }
 
 /**
@@ -270,7 +272,7 @@ type TextPropertySchemaDefinition = BasePropertySchemaDefinition & {
  * { resourceId: "budget-prop", name: "Budget", type: "number" }
  */
 type NumberPropertySchemaDefinition = BasePropertySchemaDefinition & {
-	type: "number"
+  type: "number"
 }
 
 /**
@@ -289,8 +291,8 @@ type NumberPropertySchemaDefinition = BasePropertySchemaDefinition & {
  * }
  */
 type SelectPropertySchemaDefinition = BasePropertySchemaDefinition & {
-	type: "select"
-	options?: Array<SelectOptionDefinition>
+  type: "select"
+  options?: Array<SelectOptionDefinition>
 }
 
 /**
@@ -309,8 +311,8 @@ type SelectPropertySchemaDefinition = BasePropertySchemaDefinition & {
  * }
  */
 type MultiSelectPropertySchemaDefinition = BasePropertySchemaDefinition & {
-	type: "multi_select"
-	options?: Array<SelectOptionDefinition>
+  type: "multi_select"
+  options?: Array<SelectOptionDefinition>
 }
 
 /**
@@ -329,10 +331,10 @@ type SelectOptionColor = SelectColor
  * { name: "High", color: "red" }
  */
 type SelectOptionDefinition = {
-	/** Display name of the option */
-	name: string
-	/** Color for the option. If not specified, Notion's default color is used. */
-	color?: SelectOptionColor
+  /** Display name of the option */
+  name: string
+  /** Color for the option. If not specified, Notion's default color is used. */
+  color?: SelectOptionColor
 }
 
 declare const statusOptionColors: typeof selectColors
@@ -346,12 +348,12 @@ type StatusOptionColor = SelectColor
  * { name: "In Progress", color: "blue" }
  */
 type StatusOptionDefinition = {
-	/** Display name of the option */
-	name: string
-	/** Color for the option. If not specified, the status group's default color is used. */
-	color?: StatusOptionColor
-	/** Whether this option should be the status property's default. Only one option can be set to default. */
-	default?: boolean
+  /** Display name of the option */
+  name: string
+  /** Color for the option. If not specified, the status group's default color is used. */
+  color?: StatusOptionColor
+  /** Whether this option should be the status property's default. Only one option can be set to default. */
+  default?: boolean
 }
 
 /**
@@ -382,19 +384,19 @@ type StatusOptionDefinition = {
  * }
  */
 type StatusPropertySchemaDefinition = BasePropertySchemaDefinition & {
-	type: "status"
-	/**
-	 * Status options organized by workflow group.
-	 * All three groups (todo, inProgress, complete) are required.
-	 */
-	options: {
-		/** Options in the "To-do" group (not started) */
-		todo: Array<StatusOptionDefinition>
-		/** Options in the "In progress" group (actively being worked on) */
-		inProgress: Array<StatusOptionDefinition>
-		/** Options in the "Complete" group (finished) */
-		complete: Array<StatusOptionDefinition>
-	}
+  type: "status"
+  /**
+   * Status options organized by workflow group.
+   * All three groups (todo, inProgress, complete) are required.
+   */
+  options: {
+    /** Options in the "To-do" group (not started) */
+    todo: Array<StatusOptionDefinition>
+    /** Options in the "In progress" group (actively being worked on) */
+    inProgress: Array<StatusOptionDefinition>
+    /** Options in the "Complete" group (finished) */
+    complete: Array<StatusOptionDefinition>
+  }
 }
 
 /**
@@ -404,7 +406,7 @@ type StatusPropertySchemaDefinition = BasePropertySchemaDefinition & {
  * { resourceId: "due-date-prop", name: "Due Date", type: "date" }
  */
 type DatePropertySchemaDefinition = BasePropertySchemaDefinition & {
-	type: "date"
+  type: "date"
 }
 
 /**
@@ -414,7 +416,7 @@ type DatePropertySchemaDefinition = BasePropertySchemaDefinition & {
  * { resourceId: "completed-prop", name: "Completed", type: "checkbox" }
  */
 type CheckboxPropertySchemaDefinition = BasePropertySchemaDefinition & {
-	type: "checkbox"
+  type: "checkbox"
 }
 
 /**
@@ -424,7 +426,7 @@ type CheckboxPropertySchemaDefinition = BasePropertySchemaDefinition & {
  * { resourceId: "website-prop", name: "Website", type: "url" }
  */
 type UrlPropertySchemaDefinition = BasePropertySchemaDefinition & {
-	type: "url"
+  type: "url"
 }
 
 /**
@@ -434,7 +436,7 @@ type UrlPropertySchemaDefinition = BasePropertySchemaDefinition & {
  * { resourceId: "email-prop", name: "Contact Email", type: "email" }
  */
 type EmailPropertySchemaDefinition = BasePropertySchemaDefinition & {
-	type: "email"
+  type: "email"
 }
 
 /**
@@ -444,7 +446,7 @@ type EmailPropertySchemaDefinition = BasePropertySchemaDefinition & {
  * { resourceId: "phone-prop", name: "Phone", type: "phone_number" }
  */
 type PhoneNumberPropertySchemaDefinition = BasePropertySchemaDefinition & {
-	type: "phone_number"
+  type: "phone_number"
 }
 
 /**
@@ -489,25 +491,25 @@ type PhoneNumberPropertySchemaDefinition = BasePropertySchemaDefinition & {
  * - Both sides stay in sync automatically
  */
 type RelationPropertySchemaDefinition = BasePropertySchemaDefinition & {
-	type: "relation"
-	/**
-	 * ResourceId of the target data source to create relations to.
-	 * This identifies which database this relation points to.
-	 */
-	targetDataSourceResourceId: ResourceId
-	/**
-	 * ResourceId of the relation property on the target data source for two-way relations.
-	 * When specified, changes on either side automatically sync to the other side.
-	 *
-	 * To create a two-way relation:
-	 * 1. Give both relation properties a resourceId
-	 * 2. Set each property's targetDataSourcePropertyResourceId to point to the other's resourceId
-	 *
-	 * Leave undefined for one-way relations where only the source database tracks the relationship.
-	 */
-	targetDataSourcePropertyResourceId?: ResourceId
-	/** Limit the relation to a single item (makes it a 1:1 relation instead of 1:many) */
-	limit?: 1
+  type: "relation"
+  /**
+   * ResourceId of the target data source to create relations to.
+   * This identifies which database this relation points to.
+   */
+  targetDataSourceResourceId: ResourceId
+  /**
+   * ResourceId of the relation property on the target data source for two-way relations.
+   * When specified, changes on either side automatically sync to the other side.
+   *
+   * To create a two-way relation:
+   * 1. Give both relation properties a resourceId
+   * 2. Set each property's targetDataSourcePropertyResourceId to point to the other's resourceId
+   *
+   * Leave undefined for one-way relations where only the source database tracks the relationship.
+   */
+  targetDataSourcePropertyResourceId?: ResourceId
+  /** Limit the relation to a single item (makes it a 1:1 relation instead of 1:many) */
+  limit?: 1
 }
 
 /**
@@ -530,8 +532,8 @@ type RelationPropertySchemaDefinition = BasePropertySchemaDefinition & {
  * }
  */
 type FormulaPropertySchemaDefinition = BasePropertySchemaDefinition & {
-	type: "formula"
-	expression?: string
+  type: "formula"
+  expression?: string
 }
 
 /**
@@ -543,48 +545,48 @@ type FormulaPropertySchemaDefinition = BasePropertySchemaDefinition & {
  * - Dates: earliest_date, latest_date, date_range
  */
 type RollupAggregationType =
-	// Default/property aggregations (available for all types)
-	| "count_values"
-	| "unique"
-	| "empty"
-	| "not_empty"
-	| "percent_empty"
-	| "percent_not_empty"
-	| "show_unique"
-	// Numeric aggregations (only for number properties)
-	| "sum"
-	| "average"
-	| "median"
-	| "min"
-	| "max"
-	| "range"
-	// Date aggregations (only for date properties)
-	| "earliest_date"
-	| "latest_date"
-	| "date_range"
+  // Default/property aggregations (available for all types)
+  | "count_values"
+  | "unique"
+  | "empty"
+  | "not_empty"
+  | "percent_empty"
+  | "percent_not_empty"
+  | "show_unique"
+  // Numeric aggregations (only for number properties)
+  | "sum"
+  | "average"
+  | "median"
+  | "min"
+  | "max"
+  | "range"
+  // Date aggregations (only for date properties)
+  | "earliest_date"
+  | "latest_date"
+  | "date_range"
 
 /**
  * Target property types that can be rolled up.
  * Note: rollup of rollup is NOT supported.
  */
 type RollupTargetPropertyType =
-	| "title"
-	| "text"
-	| "number"
-	| "select"
-	| "multi_select"
-	| "status"
-	| "date"
-	| "checkbox"
-	| "url"
-	| "email"
-	| "phone_number"
-	| "relation"
-	| "person"
-	| "created_time"
-	| "last_edited_time"
-	| "created_by"
-	| "last_edited_by"
+  | "title"
+  | "text"
+  | "number"
+  | "select"
+  | "multi_select"
+  | "status"
+  | "date"
+  | "checkbox"
+  | "url"
+  | "email"
+  | "phone_number"
+  | "relation"
+  | "person"
+  | "created_time"
+  | "last_edited_time"
+  | "created_by"
+  | "last_edited_by"
 
 /**
  * Rollup property schema definition for aggregating data from related records.
@@ -634,39 +636,39 @@ type RollupTargetPropertyType =
  * }
  */
 type RollupPropertySchemaDefinition = BasePropertySchemaDefinition & {
-	type: "rollup"
-	/**
-	 * ResourceId of the relation property in the same database that provides the related records.
-	 * This must match the `resourceId` of a relation property defined earlier in the same data source.
-	 *
-	 * Note: The relation property must be defined BEFORE the rollup property in the properties array.
-	 */
-	relationPropertyResourceId: ResourceId
-	/**
-	 * ResourceId of the property in the target database to aggregate.
-	 * Must match a property resourceId in the database that the relation points to.
-	 */
-	targetPropertyResourceId: ResourceId
-	/**
-	 * Type of the target property. Required because:
-	 * 1. It's part of Notion's rollup schema that gets persisted to the database
-	 * 2. It enables early validation of aggregation compatibility
-	 * 3. It catches mismatches if the target property type changes later
-	 *
-	 * Must match the actual type of the target property in the target database.
-	 * We validate this at runtime and throw a helpful error if there's a mismatch.
-	 */
-	targetPropertyType: RollupTargetPropertyType
-	/**
-	 * Aggregation function to apply to the related values.
-	 * If omitted, the rollup acts as a lookup, showing all related values.
-	 *
-	 * Available aggregations depend on targetPropertyType:
-	 * - Numbers: sum, average, median, min, max, range
-	 * - Dates: earliest_date, latest_date, date_range
-	 * - All types: count_values, unique, empty, not_empty, percent_empty, percent_not_empty, show_unique
-	 */
-	aggregation?: RollupAggregationType
+  type: "rollup"
+  /**
+   * ResourceId of the relation property in the same database that provides the related records.
+   * This must match the `resourceId` of a relation property defined earlier in the same data source.
+   *
+   * Note: The relation property must be defined BEFORE the rollup property in the properties array.
+   */
+  relationPropertyResourceId: ResourceId
+  /**
+   * ResourceId of the property in the target database to aggregate.
+   * Must match a property resourceId in the database that the relation points to.
+   */
+  targetPropertyResourceId: ResourceId
+  /**
+   * Type of the target property. Required because:
+   * 1. It's part of Notion's rollup schema that gets persisted to the database
+   * 2. It enables early validation of aggregation compatibility
+   * 3. It catches mismatches if the target property type changes later
+   *
+   * Must match the actual type of the target property in the target database.
+   * We validate this at runtime and throw a helpful error if there's a mismatch.
+   */
+  targetPropertyType: RollupTargetPropertyType
+  /**
+   * Aggregation function to apply to the related values.
+   * If omitted, the rollup acts as a lookup, showing all related values.
+   *
+   * Available aggregations depend on targetPropertyType:
+   * - Numbers: sum, average, median, min, max, range
+   * - Dates: earliest_date, latest_date, date_range
+   * - All types: count_values, unique, empty, not_empty, percent_empty, percent_not_empty, show_unique
+   */
+  aggregation?: RollupAggregationType
 }
 
 /**
@@ -679,7 +681,7 @@ type RollupPropertySchemaDefinition = BasePropertySchemaDefinition & {
  * { resourceId: "created-prop", name: "Created", type: "created_time" }
  */
 type CreatedTimePropertySchemaDefinition = BasePropertySchemaDefinition & {
-	type: "created_time"
+  type: "created_time"
 }
 
 /**
@@ -692,7 +694,7 @@ type CreatedTimePropertySchemaDefinition = BasePropertySchemaDefinition & {
  * { resourceId: "last-modified-prop", name: "Last Modified", type: "last_edited_time" }
  */
 type LastEditedTimePropertySchemaDefinition = BasePropertySchemaDefinition & {
-	type: "last_edited_time"
+  type: "last_edited_time"
 }
 
 /**
@@ -705,7 +707,7 @@ type LastEditedTimePropertySchemaDefinition = BasePropertySchemaDefinition & {
  * { resourceId: "author-prop", name: "Author", type: "created_by" }
  */
 type CreatedByPropertySchemaDefinition = BasePropertySchemaDefinition & {
-	type: "created_by"
+  type: "created_by"
 }
 
 /**
@@ -718,7 +720,7 @@ type CreatedByPropertySchemaDefinition = BasePropertySchemaDefinition & {
  * { resourceId: "editor-prop", name: "Editor", type: "last_edited_by" }
  */
 type LastEditedByPropertySchemaDefinition = BasePropertySchemaDefinition & {
-	type: "last_edited_by"
+  type: "last_edited_by"
 }
 
 /**
@@ -734,13 +736,13 @@ type LastEditedByPropertySchemaDefinition = BasePropertySchemaDefinition & {
  * { resourceId: "task-id-prop", name: "Task ID", type: "auto_increment_id", prefix: "TASK" }
  */
 type AutoIncrementIdPropertySchemaDefinition = BasePropertySchemaDefinition & {
-	type: "auto_increment_id"
-	/**
-	 * Optional prefix for the auto-increment ID (e.g., "TASK" produces TASK-1, TASK-2, ...)
-	 *
-	 * This must be unique within the workspace
-	 */
-	prefix?: string
+  type: "auto_increment_id"
+  /**
+   * Optional prefix for the auto-increment ID (e.g., "TASK" produces TASK-1, TASK-2, ...)
+   *
+   * This must be unique within the workspace
+   */
+  prefix?: string
 }
 
 /**
@@ -751,57 +753,57 @@ type AutoIncrementIdPropertySchemaDefinition = BasePropertySchemaDefinition & {
  * { resourceId: "attachments-prop", name: "Attachments", type: "file" }
  */
 type FilePropertySchemaDefinition = BasePropertySchemaDefinition & {
-	type: "file"
+  type: "file"
 }
 
 /**
  * Person property - stores references to Notion users.
  */
 type PersonPropertySchemaDefinition = BasePropertySchemaDefinition & {
-	type: "person"
-	/** Limit the property to a single user (omit for unlimited). */
-	limit?: 1
+  type: "person"
+  /** Limit the property to a single user (omit for unlimited). */
+  limit?: 1
 }
 
 type PropertySchemaDefinition =
-	| TitlePropertySchemaDefinition
-	| TextPropertySchemaDefinition
-	| NumberPropertySchemaDefinition
-	| SelectPropertySchemaDefinition
-	| MultiSelectPropertySchemaDefinition
-	| StatusPropertySchemaDefinition
-	| DatePropertySchemaDefinition
-	| CheckboxPropertySchemaDefinition
-	| UrlPropertySchemaDefinition
-	| EmailPropertySchemaDefinition
-	| PhoneNumberPropertySchemaDefinition
-	| RelationPropertySchemaDefinition
-	| FormulaPropertySchemaDefinition
-	| RollupPropertySchemaDefinition
-	| CreatedTimePropertySchemaDefinition
-	| LastEditedTimePropertySchemaDefinition
-	| CreatedByPropertySchemaDefinition
-	| LastEditedByPropertySchemaDefinition
-	| AutoIncrementIdPropertySchemaDefinition
-	| FilePropertySchemaDefinition
-	| PersonPropertySchemaDefinition
+  | TitlePropertySchemaDefinition
+  | TextPropertySchemaDefinition
+  | NumberPropertySchemaDefinition
+  | SelectPropertySchemaDefinition
+  | MultiSelectPropertySchemaDefinition
+  | StatusPropertySchemaDefinition
+  | DatePropertySchemaDefinition
+  | CheckboxPropertySchemaDefinition
+  | UrlPropertySchemaDefinition
+  | EmailPropertySchemaDefinition
+  | PhoneNumberPropertySchemaDefinition
+  | RelationPropertySchemaDefinition
+  | FormulaPropertySchemaDefinition
+  | RollupPropertySchemaDefinition
+  | CreatedTimePropertySchemaDefinition
+  | LastEditedTimePropertySchemaDefinition
+  | CreatedByPropertySchemaDefinition
+  | LastEditedByPropertySchemaDefinition
+  | AutoIncrementIdPropertySchemaDefinition
+  | FilePropertySchemaDefinition
+  | PersonPropertySchemaDefinition
 
 type DataSourceSchema = {
-	resourceId: ResourceId
-	name: string
-	/**
-	 * Icon for the data source. Can be an emoji or a notion_icon (looked up via semantic search).
-	 */
-	icon?: InfraAsCodeIcon
-	/**
-	 * Optional resource ID of a template page in this data source to use as the
-	 * data source default template.
-	 *
-	 * The referenced page must be created with `template: true` and be parented to
-	 * this same data source.
-	 */
-	defaultTemplate?: ResourceId
-	properties: Array<PropertySchemaDefinition>
+  resourceId: ResourceId
+  name: string
+  /**
+   * Icon for the data source. Can be an emoji or a notion_icon (looked up via semantic search).
+   */
+  icon?: InfraAsCodeIcon
+  /**
+   * Optional resource ID of a template page in this data source to use as the
+   * data source default template.
+   *
+   * The referenced page must be created with `template: true` and be parented to
+   * this same data source.
+   */
+  defaultTemplate?: ResourceId
+  properties: Array<PropertySchemaDefinition>
 }
 
 /**
@@ -810,8 +812,8 @@ type DataSourceSchema = {
  * @generateValidator
  */
 type FileReference = {
-	type: "file"
-	resourceId: ResourceId
+  type: "file"
+  resourceId: ResourceId
 }
 
 /**
@@ -823,37 +825,37 @@ type FileReference = {
  * - undefined
  */
 type PropertyValue =
-	| string
-	| SimpleTextValue
-	| string[]
-	| FileReference[]
-	| undefined
+  | string
+  | SimpleTextValue
+  | string[]
+  | FileReference[]
+  | undefined
 
 /**
  * Maps a literal properties tuple to the union of property names.
  */
 type PropertyNameUnion<P extends PropertySchemaDefinition[]> =
-	P[number] extends { name: infer N } ? (N extends string ? N : never) : never
+  P[number] extends { name: infer N } ? (N extends string ? N : never) : never
 
 /**
  * Allowed input value type for a particular property schema definition.
  * Person properties are filter-only and map to `never`.
  */
 type PropertyInputForDefinition<S extends PropertySchemaDefinition> =
-	S extends RelationPropertySchemaDefinition
-		? string | string[]
-		: S extends PersonPropertySchemaDefinition
-			? never
-			: SimpleTextValue
+  S extends RelationPropertySchemaDefinition
+    ? string | string[]
+    : S extends PersonPropertySchemaDefinition
+      ? never
+      : SimpleTextValue
 
 /**
  * Shape of the properties object accepted by DataSourceHandle.addPage based on a
  * literal schema snapshot provided at database creation time.
  */
 type PropertiesInputForSchema<P extends PropertySchemaDefinition[]> = {
-	[K in PropertyNameUnion<P>]?:
-		| PropertyInputForDefinition<Extract<P[number], { name: K }>>
-		| undefined
+  [K in PropertyNameUnion<P>]?:
+    | PropertyInputForDefinition<Extract<P[number], { name: K }>>
+    | undefined
 }
 
 type ViewType = "table" | "board" | "calendar" | "list" | "gallery" | "timeline"
@@ -870,11 +872,11 @@ type PropertyVisibility = "show" | "hide" | "hide_if_empty"
  *
  */
 type PropertyFormat = {
-	/** ResourceId of the property in the view's data source. */
-	property: ResourceId
-	visible?: boolean
-	width?: number
-	visibility?: PropertyVisibility
+  /** ResourceId of the property in the view's data source. */
+  property: ResourceId
+  visible?: boolean
+  width?: number
+  visibility?: PropertyVisibility
 }
 
 /**
@@ -886,13 +888,13 @@ type PropertyFormat = {
  *
  */
 type GroupFormat = {
-	/** ResourceId of the property in the view's data source. */
-	property: ResourceId
-	hidden?: boolean | undefined
-	value?: {
-		type: string
-		value?: string | boolean | number | null
-	}
+  /** ResourceId of the property in the view's data source. */
+  property: ResourceId
+  hidden?: boolean | undefined
+  value?: {
+    type: string
+    value?: string | boolean | number | null
+  }
 }
 
 /**
@@ -904,37 +906,37 @@ type GroupFormat = {
  *
  */
 type GroupByFormat = {
-	/** ResourceId of the property in the view's data source. */
-	property: ResourceId
-	type?:
-		| "number"
-		| "select"
-		| "multi_select"
-		| "status"
-		| "person"
-		| "created_by"
-		| "last_edited_by"
-		| "date"
-		| "created_time"
-		| "last_edited_time"
-		| "last_visited_time"
-		| "text"
-		| "title"
-		| "url"
-		| "email"
-		| "phone_number"
-		| "checkbox"
-		| "relation"
-		| "location"
-		| "formula"
-		| undefined
+  /** ResourceId of the property in the view's data source. */
+  property: ResourceId
+  type?:
+    | "number"
+    | "select"
+    | "multi_select"
+    | "status"
+    | "person"
+    | "created_by"
+    | "last_edited_by"
+    | "date"
+    | "created_time"
+    | "last_edited_time"
+    | "last_visited_time"
+    | "text"
+    | "title"
+    | "url"
+    | "email"
+    | "phone_number"
+    | "checkbox"
+    | "relation"
+    | "location"
+    | "formula"
+    | undefined
 }
 
 type CoverFormat =
-	| { type: "page_cover" }
-	| { type: "page_content" }
-	| { type: "page_content_first" }
-	| { type: "property"; property: string }
+  | { type: "page_cover" }
+  | { type: "page_content" }
+  | { type: "page_content_first" }
+  | { type: "property"; property: string }
 
 type CoverSizeFormat = "small" | "medium" | "large"
 
@@ -948,79 +950,79 @@ type DatabaseViewSortDirection = "ascending" | "descending"
  * then ties are broken by the second sort, and so on.
  */
 type PropertyViewSortSchema = {
-	propertyId: string
-	direction: DatabaseViewSortDirection
+  propertyId: string
+  direction: DatabaseViewSortDirection
 }
 
 type BasePropertyFilter = {
-	propertyId: string
+  propertyId: string
 }
 
 type TextPropertyFilter = {
-	propertyType: "text" | "title" | "url" | "email" | "phone_number"
-	operator:
-		| "string_is"
-		| "string_is_not"
-		| "string_contains"
-		| "string_does_not_contain"
-		| "string_starts_with"
-		| "string_ends_with"
-	value: string
+  propertyType: "text" | "title" | "url" | "email" | "phone_number"
+  operator:
+    | "string_is"
+    | "string_is_not"
+    | "string_contains"
+    | "string_does_not_contain"
+    | "string_starts_with"
+    | "string_ends_with"
+  value: string
 } & BasePropertyFilter
 
 type NumberPropertyFilter = {
-	propertyType: Extract<PropertyType, "number">
-	operator:
-		| "number_equals"
-		| "number_does_not_equal"
-		| "number_greater_than"
-		| "number_less_than"
-		| "number_greater_than_or_equal_to"
-		| "number_less_than_or_equal_to"
-	value: number
+  propertyType: Extract<PropertyType, "number">
+  operator:
+    | "number_equals"
+    | "number_does_not_equal"
+    | "number_greater_than"
+    | "number_less_than"
+    | "number_greater_than_or_equal_to"
+    | "number_less_than_or_equal_to"
+  value: number
 } & BasePropertyFilter
 
 type CheckboxPropertyFilter = {
-	propertyType: Extract<PropertyType, "checkbox">
-	operator: "checkbox_is" | "checkbox_is_not"
-	value: boolean
+  propertyType: Extract<PropertyType, "checkbox">
+  operator: "checkbox_is" | "checkbox_is_not"
+  value: boolean
 } & BasePropertyFilter
 
 type SelectPropertyFilter = {
-	propertyType: Extract<PropertyType, "select">
-	operator: "enum_is" | "enum_is_not"
-	value: string
+  propertyType: Extract<PropertyType, "select">
+  operator: "enum_is" | "enum_is_not"
+  value: string
 } & BasePropertyFilter
 
 type MultiSelectPropertyFilter = {
-	propertyType: Extract<PropertyType, "multi_select">
-	operator: "enum_contains" | "enum_does_not_contain" | "enum_contains_all"
-	value: string
+  propertyType: Extract<PropertyType, "multi_select">
+  operator: "enum_contains" | "enum_does_not_contain" | "enum_contains_all"
+  value: string
 } & BasePropertyFilter
 
 type StatusPropertyFilter = {
-	propertyType: Extract<PropertyType, "status">
-	operator: "status_is" | "status_is_not"
-	value: string
+  propertyType: Extract<PropertyType, "status">
+  operator: "status_is" | "status_is_not"
+  value: string
 } & BasePropertyFilter
 
 type DatePropertyFilter = {
-	propertyType: "date" | "created_time" | "last_edited_time"
-	operator:
-		| "date_is"
-		| "date_is_before"
-		| "date_is_after"
-		| "date_is_on_or_before"
-		| "date_is_on_or_after"
-	/** Date value in YYYY-MM-DD format */
-	value: string
+  propertyType: "date" | "created_time" | "last_edited_time"
+  operator:
+    | "date_is"
+    | "date_is_before"
+    | "date_is_after"
+    | "date_is_on_or_before"
+    | "date_is_on_or_after"
+  /** Date value in YYYY-MM-DD format */
+  value: string
 } & BasePropertyFilter
 
 type RelationPropertyFilter = {
-	propertyType: Extract<PropertyType, "relation">
-	operator: "relation_contains" | "relation_does_not_contain"
-	/** Resource ID of the related page (must reference a page created in the same script) */
-	value: string
+  propertyType: Extract<PropertyType, "relation">
+  operator: "relation_contains" | "relation_does_not_contain"
+  /** Resource ID of the related page (must reference a page created in the same script) */
+  value: string
 } & BasePropertyFilter
 
 /**
@@ -1029,9 +1031,9 @@ type RelationPropertyFilter = {
  * read time).
  */
 type PersonPropertyFilter = {
-	propertyType: "person" | "created_by" | "last_edited_by"
-	operator: "person_contains" | "person_does_not_contain"
-	value: { type: "relative"; value: "me" }
+  propertyType: "person" | "created_by" | "last_edited_by"
+  operator: "person_contains" | "person_does_not_contain"
+  value: { type: "relative"; value: "me" }
 } & BasePropertyFilter
 
 /**
@@ -1050,15 +1052,15 @@ type PersonPropertyFilter = {
  * }
  */
 type PropertyViewFilterSchema =
-	| TextPropertyFilter
-	| NumberPropertyFilter
-	| CheckboxPropertyFilter
-	| SelectPropertyFilter
-	| MultiSelectPropertyFilter
-	| StatusPropertyFilter
-	| DatePropertyFilter
-	| RelationPropertyFilter
-	| PersonPropertyFilter
+  | TextPropertyFilter
+  | NumberPropertyFilter
+  | CheckboxPropertyFilter
+  | SelectPropertyFilter
+  | MultiSelectPropertyFilter
+  | StatusPropertyFilter
+  | DatePropertyFilter
+  | RelationPropertyFilter
+  | PersonPropertyFilter
 
 /**
  * Base view schema shared by all view types.
@@ -1081,102 +1083,102 @@ type PropertyViewFilterSchema =
  * })
  */
 type BaseViewSchema = {
-	resourceId: ResourceId
-	name?: string
-	type: ViewType
-	/** REQUIRED: Must match an existing data source's resourceId */
-	dataSourceResourceId: ResourceId
-	/**
-	 * Optional resource ID of a template page in this view's data source to use as
-	 * the view default template.
-	 *
-	 * The referenced page must be created with `template: true` and be parented to
-	 * this same data source.
-	 */
-	defaultTemplate?: ResourceId
-	/**
-	 * Optional: create this view to be used as a linked views referenced by
-	 * `<database>` tags in page content markdown. Does not attach the view to the
-	 * database block's.
-	 */
-	ephemeral?: boolean
-	sorts?: Array<PropertyViewSortSchema>
-	/** Optional filter to control which pages appear in this view. */
-	filters?: PropertyViewFilterSchema[]
+  resourceId: ResourceId
+  name?: string
+  type: ViewType
+  /** REQUIRED: Must match an existing data source's resourceId */
+  dataSourceResourceId: ResourceId
+  /**
+   * Optional resource ID of a template page in this view's data source to use as
+   * the view default template.
+   *
+   * The referenced page must be created with `template: true` and be parented to
+   * this same data source.
+   */
+  defaultTemplate?: ResourceId
+  /**
+   * Optional: create this view to be used as a linked views referenced by
+   * `<database>` tags in page content markdown. Does not attach the view to the
+   * database block's.
+   */
+  ephemeral?: boolean
+  sorts?: Array<PropertyViewSortSchema>
+  /** Optional filter to control which pages appear in this view. */
+  filters?: PropertyViewFilterSchema[]
 }
 
 type TableViewSchema = BaseViewSchema & {
-	type: "table"
-	properties?: Array<PropertyFormat>
-	wrap?: boolean
+  type: "table"
+  properties?: Array<PropertyFormat>
+  wrap?: boolean
 }
 
 type BoardViewSchema = BaseViewSchema & {
-	type: "board"
-	properties?: Array<PropertyFormat>
-	groupBy?: GroupByFormat
-	columns?: Array<GroupFormat>
-	cover?: CoverFormat
-	coverSize?: CoverSizeFormat
-	coverAspect?: CoverAspectFormat
-	wrap?: boolean
+  type: "board"
+  properties?: Array<PropertyFormat>
+  groupBy?: GroupByFormat
+  columns?: Array<GroupFormat>
+  cover?: CoverFormat
+  coverSize?: CoverSizeFormat
+  coverAspect?: CoverAspectFormat
+  wrap?: boolean
 }
 
 type CalendarViewSchema = BaseViewSchema & {
-	type: "calendar"
-	properties?: Array<PropertyFormat>
-	/**
-	 * REQUIRED: ResourceId of the date property to use for the calendar.
-	 * Must match the `resourceId` of a date property in the database schema.
-	 *
-	 * @example
-	 * calendarBy: "due-date-prop"  // resourceId of a property of type "date"
-	 */
-	calendarBy: ResourceId
-	showWeekends?: boolean
+  type: "calendar"
+  properties?: Array<PropertyFormat>
+  /**
+   * REQUIRED: ResourceId of the date property to use for the calendar.
+   * Must match the `resourceId` of a date property in the database schema.
+   *
+   * @example
+   * calendarBy: "due-date-prop"  // resourceId of a property of type "date"
+   */
+  calendarBy: ResourceId
+  showWeekends?: boolean
 }
 
 type ListViewSchema = BaseViewSchema & {
-	type: "list"
-	properties?: Array<PropertyFormat>
+  type: "list"
+  properties?: Array<PropertyFormat>
 }
 
 type GalleryViewSchema = BaseViewSchema & {
-	type: "gallery"
-	properties?: Array<PropertyFormat>
-	cover?: CoverFormat
-	coverSize?: CoverSizeFormat
-	coverAspect?: CoverAspectFormat
+  type: "gallery"
+  properties?: Array<PropertyFormat>
+  cover?: CoverFormat
+  coverSize?: CoverSizeFormat
+  coverAspect?: CoverAspectFormat
 }
 
 type TimelineViewSchema = BaseViewSchema & {
-	type: "timeline"
-	properties?: Array<PropertyFormat>
-	tableProperties?: Array<PropertyFormat>
-	/**
-	 * REQUIRED: ResourceId of the date property to use for the timeline start.
-	 * Must match the `resourceId` of a date property in the database schema.
-	 *
-	 * @example
-	 * timelineBy: "start-date-prop"  // resourceId of a property of type "date"
-	 */
-	timelineBy: ResourceId
-	/**
-	 * Optional: ResourceId of the date property to use for the timeline end
-	 * (for date ranges). Must match the `resourceId` of a date property in
-	 * the database schema.
-	 */
-	timelineByEnd?: ResourceId
-	showTable?: boolean
+  type: "timeline"
+  properties?: Array<PropertyFormat>
+  tableProperties?: Array<PropertyFormat>
+  /**
+   * REQUIRED: ResourceId of the date property to use for the timeline start.
+   * Must match the `resourceId` of a date property in the database schema.
+   *
+   * @example
+   * timelineBy: "start-date-prop"  // resourceId of a property of type "date"
+   */
+  timelineBy: ResourceId
+  /**
+   * Optional: ResourceId of the date property to use for the timeline end
+   * (for date ranges). Must match the `resourceId` of a date property in
+   * the database schema.
+   */
+  timelineByEnd?: ResourceId
+  showTable?: boolean
 }
 
 type ViewSchema =
-	| TableViewSchema
-	| BoardViewSchema
-	| CalendarViewSchema
-	| ListViewSchema
-	| GalleryViewSchema
-	| TimelineViewSchema
+  | TableViewSchema
+  | BoardViewSchema
+  | CalendarViewSchema
+  | ListViewSchema
+  | GalleryViewSchema
+  | TimelineViewSchema
 
 /**
  * Arguments for creating a database.
@@ -1186,25 +1188,25 @@ type ViewSchema =
  * for permission safety reasons.
  */
 type DatabaseIntent = {
-	resourceId: ResourceId
-	parent: Parent
-	dataSources: Array<DataSourceSchema>
-	views?: Array<ViewSchema>
-	/**
-	 * Icon for the database. Can be an emoji or a notion_icon (looked up via semantic search).
-	 */
-	icon?: InfraAsCodeIcon
-	name?: string
-	/**
-	 * Optional description for the database. A database with a description must
-	 * have at least one data source, i.e. a purely linked database should not
-	 * have a description set on it.
-	 */
-	description?: string
+  resourceId: ResourceId
+  parent: Parent
+  dataSources: Array<DataSourceSchema>
+  views?: Array<ViewSchema>
+  /**
+   * Icon for the database. Can be an emoji or a notion_icon (looked up via semantic search).
+   */
+  icon?: InfraAsCodeIcon
+  name?: string
+  /**
+   * Optional description for the database. A database with a description must
+   * have at least one data source, i.e. a purely linked database should not
+   * have a description set on it.
+   */
+  description?: string
 }
 
 type SpaceUserMember = {
-	role: "page_guest" | "restricted_member" | "member" | "owner"
+  role: "page_guest" | "restricted_member" | "member" | "owner"
 } & ({ userId: string } | { email: string })
 
 /**
@@ -1215,22 +1217,22 @@ type SpaceUserMember = {
  * run in a freshly created space where the executing user has full ownership.
  */
 type SpaceIntent = {
-	resourceId: ResourceId
-	name: string
-	/**
-	 * Icon for the space. Can be an emoji or a notion_icon (resolved by exact slug match or semantic search description).
-	 */
-	icon?: InfraAsCodeIcon
-	/**
-	 * Additional members to add to the workspace.
-	 * The executing actor is always added automatically as an owner.
-	 */
-	members?: SpaceUserMember[]
+  resourceId: ResourceId
+  name: string
+  /**
+   * Icon for the space. Can be an emoji or a notion_icon (resolved by exact slug match or semantic search description).
+   */
+  icon?: InfraAsCodeIcon
+  /**
+   * Additional members to add to the workspace.
+   * The executing actor is always added automatically as an owner.
+   */
+  members?: SpaceUserMember[]
 }
 
 type TeamspaceMember = {
-	userId: string
-	role: "owner" | "member"
+  userId: string
+  role: "owner" | "member"
 }
 
 type TeamspaceAccessLevel = "default" | "open" | "closed" | "private"
@@ -1243,15 +1245,15 @@ type TeamspaceAccessLevel = "default" | "open" | "closed" | "private"
  * permission safety reasons.
  */
 type TeamspaceIntent = {
-	resourceId: ResourceId
-	name: string
-	accessLevel: TeamspaceAccessLevel
-	parent?: Parent
-	/**
-	 * Icon for the teamspace. Can be an emoji or a notion_icon (resolved by exact slug match or semantic search description).
-	 */
-	icon?: InfraAsCodeIcon
-	description?: string
+  resourceId: ResourceId
+  name: string
+  accessLevel: TeamspaceAccessLevel
+  parent?: Parent
+  /**
+   * Icon for the teamspace. Can be an emoji or a notion_icon (resolved by exact slug match or semantic search description).
+   */
+  icon?: InfraAsCodeIcon
+  description?: string
 }
 
 /**
@@ -1261,67 +1263,67 @@ type TeamspaceIntent = {
  *
  */
 type CustomAgentIntent = {
-	resourceId: ResourceId
-	name: string
-	/**
-	 * Icon shown next to the agent in the sidebar, agents list, mentions,
-	 * and settings. Accepts the two shapes Notion's `data.icon` field
-	 * actually persists for workflow rows:
-	 * - `{ type: "emoji", emoji: "🛟" }` — written verbatim to `data.icon`.
-	 * - `{ type: "notion_icon", description: "rocket", color: "purple" }` —
-	 *   resolved to a `/icons/<slug>_<color>.svg` path; exact slug matches
-	 *   skip the embeddings round-trip.
-	 *
-	 * `FileReference` (the third `InfraAsCodeIcon` variant) is intentionally
-	 * NOT supported here yet.
-	 * [ref:custom_agent_file_uploads]
-	 *
-	 * When omitted, the workflow row is created without an icon and the
-	 * Notion UI renders the default agent avatar.
-	 */
-	icon?: EmojiIcon | NotionIcon
-	/**
-	 * Markdown instructions that tell the agent how to behave. The string
-	 * is parsed as markdown and materialized into a hidden instruction
-	 * page (a block tree under the agent's own space), and
-	 * `workflow.data.instructions` is set to a `block_page` pointer to
-	 * that page rather than to the raw text.
-	 *
-	 * Use standard markdown — headings, lists, bold, links, etc. — and
-	 * the agent runtime will see the rendered page content. Plain text
-	 * also works: it becomes a single paragraph block on the instruction
-	 * page.
-	 *
-	 * When omitted, the workflow row is created without instructions.
-	 */
-	instructions?: string
-	/**
-	 * Inference model identifier for this agent. Currently supports a
-	 * curated subset:
-	 * - `"ambrosia-tart-high"` — Opus 4.8 (High)
-	 * - `"opal-quince-medium"` — GPT 5.5 (Medium)
-	 * - `"almond-croissant-low"` — Sonnet 4.6 (Low)
-	 *
-	 * When omitted the agent inherits the workspace default model.
-	 *
-	 * TODO: Externalize the model names. These are internal codename
-	 * slugs that rotate with model releases; we need a stable external
-	 * naming scheme before this becomes a real public surface.
-	 * [ref:custom_agent_model_externalize]
-	 */
-	model?: "ambrosia-tart-high" | "opal-quince-medium" | "almond-croissant-low"
-	/**
-	 * ResourceIds of pages and databases the agent should have access to.
-	 *
-	 * Each entry must reference a page or database that is either created
-	 * earlier in the same script or pre-seeded as an existing resource.
-	 * Entries are materialized as `pageOrCollectionViewBlock` permissions on
-	 * the agent's Notion module with `["editor"]` actions (read + write).
-	 *
-	 * Referencing a resource that is not a page or database (e.g. a teamspace
-	 * or workspace) throws at finalize time.
-	 */
-	sharedResources?: Array<ResourceId>
+  resourceId: ResourceId
+  name: string
+  /**
+   * Icon shown next to the agent in the sidebar, agents list, mentions,
+   * and settings. Accepts the two shapes Notion's `data.icon` field
+   * actually persists for workflow rows:
+   * - `{ type: "emoji", emoji: "🛟" }` — written verbatim to `data.icon`.
+   * - `{ type: "notion_icon", description: "rocket", color: "purple" }` —
+   *   resolved to a `/icons/<slug>_<color>.svg` path; exact slug matches
+   *   skip the embeddings round-trip.
+   *
+   * `FileReference` (the third `InfraAsCodeIcon` variant) is intentionally
+   * NOT supported here yet.
+   * [ref:custom_agent_file_uploads]
+   *
+   * When omitted, the workflow row is created without an icon and the
+   * Notion UI renders the default agent avatar.
+   */
+  icon?: EmojiIcon | NotionIcon
+  /**
+   * Markdown instructions that tell the agent how to behave. The string
+   * is parsed as markdown and materialized into a hidden instruction
+   * page (a block tree under the agent's own space), and
+   * `workflow.data.instructions` is set to a `block_page` pointer to
+   * that page rather than to the raw text.
+   *
+   * Use standard markdown — headings, lists, bold, links, etc. — and
+   * the agent runtime will see the rendered page content. Plain text
+   * also works: it becomes a single paragraph block on the instruction
+   * page.
+   *
+   * When omitted, the workflow row is created without instructions.
+   */
+  instructions?: string
+  /**
+   * Inference model identifier for this agent. Currently supports a
+   * curated subset:
+   * - `"ambrosia-tart-high"` — Opus 4.8 (High)
+   * - `"opal-quince-medium"` — GPT 5.5 (Medium)
+   * - `"almond-croissant-low"` — Sonnet 4.6 (Low)
+   *
+   * When omitted the agent inherits the workspace default model.
+   *
+   * TODO: Externalize the model names. These are internal codename
+   * slugs that rotate with model releases; we need a stable external
+   * naming scheme before this becomes a real public surface.
+   * [ref:custom_agent_model_externalize]
+   */
+  model?: "ambrosia-tart-high" | "opal-quince-medium" | "almond-croissant-low"
+  /**
+   * ResourceIds of pages and databases the agent should have access to.
+   *
+   * Each entry must reference a page or database that is either created
+   * earlier in the same script or pre-seeded as an existing resource.
+   * Entries are materialized as `pageOrCollectionViewBlock` permissions on
+   * the agent's Notion module with `["editor"]` actions (read + write).
+   *
+   * Referencing a resource that is not a page or database (e.g. a teamspace
+   * or workspace) throws at finalize time.
+   */
+  sharedResources?: Array<ResourceId>
 }
 
 /**
@@ -1332,7 +1334,7 @@ type CustomAgentIntent = {
  * by its forward-declared ID.
  */
 type CustomAgentHandle = {
-	resourceId: ResourceId
+  resourceId: ResourceId
 }
 
 /**
@@ -1352,66 +1354,66 @@ type CustomAgentHandle = {
  * }
  */
 type PageHandle = {
-	resourceId: ResourceId
+  resourceId: ResourceId
 }
 
 type DataSourceHandle<P extends PropertySchemaDefinition[]> = {
-	resourceId: ResourceId
-	/** Literal snapshot of the data source's properties at database creation */
-	schema: P
-	addPage(args: {
-		resourceId: ResourceId
-		/**
-		 * Icon for the page. Can be an emoji or a notion_icon (resolved by exact slug match or semantic search description).
-		 */
-		icon?: InfraAsCodeIcon
-		/**
-		 * Properties for the database page, matching the schema defined in the data source.
-		 * Must include values for required properties (e.g., the title property).
-		 * @example
-		 * properties: { Name: notion.text("Task"), Status: "Done" }
-		 */
-		properties: PropertiesInputForSchema<P>
-		/**
-		 * Optional page content in Notion flavored markdown format.
-		 * When provided, the markdown will be parsed into blocks and added as children of the page.
-		 *
-		 * NOTE: The page title must be set via the title property in `properties`, NOT from content.
-		 * Content markdown is only used to generate child blocks.
-		 */
-		content?: string
-		/**
-		 * Whether this page should be created as a data source template.
-		 */
-		template?: boolean
-		/**
-		 * Optional cover image referencing a file resource ID from the file manifest.
-		 * The file must be an image type (png, jpg, gif, svg, webp).
-		 */
-		cover?: FileReference
-	}): PageHandle
+  resourceId: ResourceId
+  /** Literal snapshot of the data source's properties at database creation */
+  schema: P
+  addPage(args: {
+    resourceId: ResourceId
+    /**
+     * Icon for the page. Can be an emoji or a notion_icon (resolved by exact slug match or semantic search description).
+     */
+    icon?: InfraAsCodeIcon
+    /**
+     * Properties for the database page, matching the schema defined in the data source.
+     * Must include values for required properties (e.g., the title property).
+     * @example
+     * properties: { Name: notion.text("Task"), Status: "Done" }
+     */
+    properties: PropertiesInputForSchema<P>
+    /**
+     * Optional page content in Notion flavored markdown format.
+     * When provided, the markdown will be parsed into blocks and added as children of the page.
+     *
+     * NOTE: The page title must be set via the title property in `properties`, NOT from content.
+     * Content markdown is only used to generate child blocks.
+     */
+    content?: string
+    /**
+     * Whether this page should be created as a data source template.
+     */
+    template?: boolean
+    /**
+     * Optional cover image referencing a file resource ID from the file manifest.
+     * The file must be an image type (png, jpg, gif, svg, webp).
+     */
+    cover?: FileReference
+  }): PageHandle
 }
 
 /**
  * Handle returned when creating a database.
  */
 type DatabaseHandle<
-	DS extends {
-		resourceId: ResourceId
-		properties: PropertySchemaDefinition[]
-	}[],
+  DS extends {
+    resourceId: ResourceId
+    properties: PropertySchemaDefinition[]
+  }[],
 > = {
-	resourceId: ResourceId
-	dataSources: Record<ResourceId, DataSourceHandle<PropertySchemaDefinition[]>>
-	/** Get a data source handle by id with schema-aware typing */
-	getDataSource: <K extends DS[number]>(
-		id: K["resourceId"],
-	) => DataSourceHandle<K["properties"]>
-	/**
-	 * Record view intent.
-	 * Views require a dataSourceResourceId that matches one of the database's data sources.
-	 */
-	addView: (view: ViewSchema) => void
+  resourceId: ResourceId
+  dataSources: Record<ResourceId, DataSourceHandle<PropertySchemaDefinition[]>>
+  /** Get a data source handle by id with schema-aware typing */
+  getDataSource: <K extends DS[number]>(
+    id: K["resourceId"]
+  ) => DataSourceHandle<K["properties"]>
+  /**
+   * Record view intent.
+   * Views require a dataSourceResourceId that matches one of the database's data sources.
+   */
+  addView: (view: ViewSchema) => void
 }
 
 /**
@@ -1434,52 +1436,52 @@ type DatabaseHandle<
  * })
  */
 type TeamspaceHandle = {
-	resourceId: ResourceId
-	/** Add a database to this teamspace */
-	addDatabase<
-		DS extends {
-			resourceId: ResourceId
-			name: string
-			properties: PropertySchemaDefinition[]
-		}[],
-	>(
-		args: Omit<DatabaseIntent, "parent" | "dataSources"> & {
-			dataSources: DS
-		},
-	): DatabaseHandle<DS>
-	/** Add a page to this teamspace */
-	addPage(args: {
-		resourceId: ResourceId
-		/**
-		 * Icon for the page. Can be an emoji or a notion_icon (resolved by exact slug match or semantic search description).
-		 */
-		icon?: InfraAsCodeIcon
-		/**
-		 * Page properties including the title.
-		 * Use `properties.title` to set the page title.
-		 * @example
-		 * properties: { title: notion.text("My Page Title") }
-		 */
-		properties?: Record<string, PropertyValue | undefined>
-		/**
-		 * Optional page content in Notion flavored markdown format.
-		 * When provided, the markdown will be parsed into blocks and added as children of the page.
-		 *
-		 * NOTE: The page title must be set via `properties.title`, NOT from content.
-		 * Content markdown is only used to generate child blocks.
-		 */
-		content?: string
-		/**
-		 * Optional cover image referencing a file resource ID from the file manifest.
-		 * The file must be an image type (png, jpg, gif, svg, webp).
-		 */
-		cover?: FileReference
-	}): PageHandle
+  resourceId: ResourceId
+  /** Add a database to this teamspace */
+  addDatabase<
+    DS extends {
+      resourceId: ResourceId
+      name: string
+      properties: PropertySchemaDefinition[]
+    }[],
+  >(
+    args: Omit<DatabaseIntent, "parent" | "dataSources"> & {
+      dataSources: DS
+    }
+  ): DatabaseHandle<DS>
+  /** Add a page to this teamspace */
+  addPage(args: {
+    resourceId: ResourceId
+    /**
+     * Icon for the page. Can be an emoji or a notion_icon (resolved by exact slug match or semantic search description).
+     */
+    icon?: InfraAsCodeIcon
+    /**
+     * Page properties including the title.
+     * Use `properties.title` to set the page title.
+     * @example
+     * properties: { title: notion.text("My Page Title") }
+     */
+    properties?: Record<string, PropertyValue | undefined>
+    /**
+     * Optional page content in Notion flavored markdown format.
+     * When provided, the markdown will be parsed into blocks and added as children of the page.
+     *
+     * NOTE: The page title must be set via `properties.title`, NOT from content.
+     * Content markdown is only used to generate child blocks.
+     */
+    content?: string
+    /**
+     * Optional cover image referencing a file resource ID from the file manifest.
+     * The file must be an image type (png, jpg, gif, svg, webp).
+     */
+    cover?: FileReference
+  }): PageHandle
 }
 
 type SpaceHandle = {
-	resourceId: ResourceId
-	addTeamspace(args: Omit<TeamspaceIntent, "parent">): TeamspaceHandle
+  resourceId: ResourceId
+  addTeamspace(args: Omit<TeamspaceIntent, "parent">): TeamspaceHandle
 }
 
 // Property value helper functions
@@ -1488,97 +1490,97 @@ type SpaceHandle = {
  * Property types supported by infra as code scripts.
  */
 type PropertyType =
-	| "title"
-	| "text"
-	| "number"
-	| "select"
-	| "multi_select"
-	| "status"
-	| "date"
-	| "checkbox"
-	| "url"
-	| "email"
-	| "phone_number"
-	| "relation"
-	| "rollup"
-	| "created_time"
-	| "last_edited_time"
-	| "created_by"
-	| "last_edited_by"
+  | "title"
+  | "text"
+  | "number"
+  | "select"
+  | "multi_select"
+  | "status"
+  | "date"
+  | "checkbox"
+  | "url"
+  | "email"
+  | "phone_number"
+  | "relation"
+  | "rollup"
+  | "created_time"
+  | "last_edited_time"
+  | "created_by"
+  | "last_edited_by"
 
 declare const notion: {
-	/**
-	 * Page operations - create pages in your workspace.
-	 * Pages are the basic content units in Notion that can contain rich content.
-	 */
-	page: {
-		/**
-		 * Creates a new page under a page, database, or teamspace.
-		 */
-		create: (args: PageIntent) => PageHandle
-	}
+  /**
+   * Page operations - create pages in your workspace.
+   * Pages are the basic content units in Notion that can contain rich content.
+   */
+  page: {
+    /**
+     * Creates a new page under a page, database, or teamspace.
+     */
+    create: (args: PageIntent) => PageHandle
+  }
 
-	/**
-	 * Database operations - create databases with custom schemas.
-	 * Databases contain structured data with properties and views.
-	 */
-	database: {
-		/**
-		 * Creates a new database and returns a typed DatabaseHandle for quick addPage().
-		 */
-		create<
-			DS extends Array<{
-				resourceId: ResourceId
-				name: string
-				properties: Array<PropertySchemaDefinition>
-			}>,
-		>(
-			args: Omit<DatabaseIntent, "dataSources"> & { dataSources: DS },
-		): DatabaseHandle<DS>
-	}
+  /**
+   * Database operations - create databases with custom schemas.
+   * Databases contain structured data with properties and views.
+   */
+  database: {
+    /**
+     * Creates a new database and returns a typed DatabaseHandle for quick addPage().
+     */
+    create<
+      DS extends Array<{
+        resourceId: ResourceId
+        name: string
+        properties: Array<PropertySchemaDefinition>
+      }>,
+    >(
+      args: Omit<DatabaseIntent, "dataSources"> & { dataSources: DS }
+    ): DatabaseHandle<DS>
+  }
 
-	/**
-	 * Teamspace operations - create teamspaces.
-	 */
-	teamspace: {
-		/**
-		 * Creates a new teamspace and returns a TeamspaceHandle for adding databases.
-		 */
-		create: (args: TeamspaceIntent) => TeamspaceHandle
-	}
+  /**
+   * Teamspace operations - create teamspaces.
+   */
+  teamspace: {
+    /**
+     * Creates a new teamspace and returns a TeamspaceHandle for adding databases.
+     */
+    create: (args: TeamspaceIntent) => TeamspaceHandle
+  }
 
-	/**
-	 * Space operations - create Notion workspaces.
-	 */
-	space: {
-		/**
-		 * Creates a new Notion workspace and returns a SpaceHandle for adding teamspaces.
-		 */
-		create: (args: SpaceIntent) => SpaceHandle
-	}
+  /**
+   * Space operations - create Notion workspaces.
+   */
+  space: {
+    /**
+     * Creates a new Notion workspace and returns a SpaceHandle for adding teamspaces.
+     */
+    create: (args: SpaceIntent) => SpaceHandle
+  }
 
-	/**
-	 * Custom agent operations - create AI agents scoped to a workspace.
-	 */
-	customAgent: {
-		/**
-		 * Creates a new custom agent and returns a CustomAgentHandle.
-		 */
-		create: (args: CustomAgentIntent) => CustomAgentHandle
-	}
+  /**
+   * Custom agent operations - create AI agents scoped to a workspace.
+   */
+  customAgent: {
+    /**
+     * Creates a new custom agent and returns a CustomAgentHandle.
+     */
+    create: (args: CustomAgentIntent) => CustomAgentHandle
+  }
 
-	date: (startDate: string, endDate?: string) => TextValue
-	text: (value: string) => TextValue
-	number: (value: number) => TextValue
-	select: (value: string) => string
-	status: (value: string) => string
-	multiSelect: (values: Array<string>) => string
-	checkbox: (value: boolean) => TextValue
-	url: (value: string) => TextValue
-	email: (value: string) => TextValue
-	phone: (value: string) => TextValue
-	relation: (items: Array<ResourceId>) => Array<ResourceId>
-	file: (resourceId: ResourceId) => FileReference
+  date: (startDate: string, endDate?: string) => TextValue
+  text: (value: string) => TextValue
+  number: (value: number) => TextValue
+  select: (value: string) => string
+  status: (value: string) => string
+  multiSelect: (values: Array<string>) => string
+  checkbox: (value: boolean) => TextValue
+  url: (value: string) => TextValue
+  email: (value: string) => TextValue
+  phone: (value: string) => TextValue
+  relation: (items: Array<ResourceId>) => Array<ResourceId>
+  file: (resourceId: ResourceId) => FileReference
 }
 
 /**
@@ -1831,3 +1833,49 @@ Unknown (a block type that is not supported in the API yet):
 <unknown url="{{URL}}" alt="Alt"/>
 </advanced-blocks>
 `
+
+// ===============================
+// Sandbox Output Types
+// ===============================
+
+/**
+ * Intent for adding a view to a database.
+ * Emitted separately from the database intent to allow streaming output
+ * without needing to buffer views until the database is finalized.
+ */
+type ViewIntent = {
+  /** The resourceId of the database to add the view to */
+  databaseResourceId: ResourceId
+  /** The view configuration */
+  view: ViewSchema
+}
+
+/**
+ * Intent for attaching a file to a parent block, database page property, teamspace icon, or space icon.
+ * Used for database file property values where the file
+ * is not embedded inline via markdown content.
+ */
+type FileAttachmentIntent = {
+  /** Resource ID of the file from the file manifest */
+  resourceId: ResourceId
+  /** Resource ID of the parent page to attach the file to */
+  parentResourceId: ResourceId
+  /**
+   * Property name on the parent page to set the file as value.
+   * Only applicable when the parent is a database page with a file property.
+   */
+  propertyName?: string
+}
+
+/**
+ * Discriminated union of all intent types for sandbox output.
+ * Each intent includes a `type` discriminator and the corresponding args.
+ */
+type InfraAsCodeIntent =
+  | ({ type: "space" } & SpaceIntent)
+  | ({ type: "teamspace" } & TeamspaceIntent)
+  | ({ type: "database" } & DatabaseIntent)
+  | ({ type: "page" } & PageIntent)
+  | ({ type: "view" } & ViewIntent)
+  | ({ type: "file_attachment" } & FileAttachmentIntent)
+  | ({ type: "custom_agent" } & CustomAgentIntent)
