@@ -1,10 +1,6 @@
 /* =============================================================================
 
-	infraAsCodeExternalTypes.generated.d.ts
-
 	GENERATED FILE - DO NOT EDIT MANUALLY
-	Copied from: notion-next repository
-
 	Ambient type declarations for Infrastructure as Code scripts.
 
 ============================================================================= */
