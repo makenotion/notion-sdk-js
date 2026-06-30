@@ -420,6 +420,9 @@ type CreatePageBodyParameters = {
   children?: Array<BlockObjectRequest>
   // Page content as Notion-flavored Markdown. Mutually exclusive with content/children.
   markdown?: string
+  // Set to true to receive an async_task response for markdown page creation. Only
+  // supported when markdown is provided.
+  allow_async?: boolean
   template?:
     | { type: "none" }
     | { type: "default"; timezone?: TemplateTimezone }
@@ -450,6 +453,7 @@ export const createPage = {
     "content",
     "children",
     "markdown",
+    "allow_async",
     "template",
     "position",
   ],
