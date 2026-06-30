@@ -539,17 +539,21 @@ export default class Client {
 
   /**
    * Determines if an error can be retried based on its error code and method.
-   * Rate limits (429) are always retryable since the server explicitly asks us
-   * to retry. Server errors (500, 503) are only retried for idempotent methods
-   * (GET, DELETE) to avoid duplicate side effects.
+   * Rate limits (429) and service overloads (529) are always retryable since
+   * the server explicitly asks us to retry. Server errors (500, 503) are only
+   * retried for idempotent methods (GET, DELETE) to avoid duplicate side
+   * effects.
    */
   private canRetry(error: unknown, method: Method): boolean {
     if (!APIResponseError.isAPIResponseError(error)) {
       return false
     }
 
-    // Rate limits are always retryable - server says "try again later"
-    if (error.code === APIErrorCode.RateLimited) {
+    // Server says "try again later"; retry these for every HTTP method.
+    if (
+      error.code === APIErrorCode.RateLimited ||
+      error.code === APIErrorCode.ServiceOverload
+    ) {
       return true
     }
 

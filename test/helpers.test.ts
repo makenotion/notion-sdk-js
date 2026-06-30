@@ -1,6 +1,8 @@
 import {
+  collectAllDataSourceRows,
   collectDataSourceTemplates,
   collectPaginatedAPI,
+  iterateAllDataSourceRows,
   iterateDataSourceTemplates,
   iteratePaginatedAPI,
 } from "../src/helpers"
@@ -286,6 +288,258 @@ describe("Notion API helpers", () => {
 
         const call = mockFetch.mock.calls[0]
         expect(call?.[0]).toContain("start_cursor=initial-cursor")
+      })
+    })
+  })
+
+  describe("Full data source query helpers", () => {
+    let mockFetch: jest.MockedFn<typeof fetch>
+    let client: Client
+
+    beforeEach(() => {
+      mockFetch = jest.fn()
+      client = new Client({ auth: "test-token", fetch: mockFetch })
+    })
+
+    function page(id: string, createdTime: string) {
+      return {
+        object: "page",
+        id,
+        url: `https://notion.so/${id}`,
+        created_time: createdTime,
+      }
+    }
+
+    // A child data-source row, as returned when querying a wiki data source.
+    function dataSource(id: string, createdTime: string) {
+      return {
+        object: "data_source",
+        id,
+        created_time: createdTime,
+      }
+    }
+
+    function queryResponse(
+      results: Array<ReturnType<typeof page> | ReturnType<typeof dataSource>>,
+      opts: { nextCursor?: string | null; incomplete?: boolean } = {}
+    ): Response {
+      const nextCursor = opts.nextCursor ?? null
+      const body: Record<string, unknown> = {
+        object: "list",
+        type: "page_or_data_source",
+        page_or_data_source: {},
+        results,
+        has_more: nextCursor !== null,
+        next_cursor: nextCursor,
+      }
+      if (opts.incomplete) {
+        body["request_status"] = {
+          type: "incomplete",
+          incomplete_reason: "query_result_limit_reached",
+        }
+      }
+      return {
+        ok: true,
+        status: 200,
+        headers: new Headers(),
+        text: () => Promise.resolve(JSON.stringify(body)),
+      } as Response
+    }
+
+    function bodyOf(call: Parameters<typeof fetch> | undefined) {
+      return JSON.parse(String(call?.[1]?.body))
+    }
+
+    describe(iterateAllDataSourceRows, () => {
+      it("Returns a single complete window without re-querying", async () => {
+        mockFetch.mockResolvedValueOnce(
+          queryResponse([
+            page("r1", "2024-01-01T00:00:00.000Z"),
+            page("r2", "2024-01-02T00:00:00.000Z"),
+          ])
+        )
+
+        const ids: string[] = []
+        for await (const row of iterateAllDataSourceRows(client, {
+          data_source_id: "ds-1",
+        })) {
+          ids.push(row.id)
+        }
+
+        expect(ids).toEqual(["r1", "r2"])
+        expect(mockFetch).toHaveBeenCalledTimes(1)
+        const body = bodyOf(mockFetch.mock.calls[0])
+        expect(body.sorts).toEqual([
+          { timestamp: "created_time", direction: "ascending" },
+        ])
+        expect(body.filter).toBeUndefined()
+        expect(body.start_cursor).toBeFalsy()
+      })
+
+      it("Advances past the per-query limit and de-duplicates boundaries", async () => {
+        // Window 1: two pages, the second hits the limit (incomplete).
+        mockFetch
+          .mockResolvedValueOnce(
+            queryResponse(
+              [
+                page("r1", "2024-01-01T00:00:00.000Z"),
+                page("r2", "2024-01-02T00:00:00.000Z"),
+              ],
+              { nextCursor: "c1" }
+            )
+          )
+          .mockResolvedValueOnce(
+            queryResponse(
+              [
+                page("r3", "2024-01-03T00:00:00.000Z"),
+                page("r4", "2024-01-04T00:00:00.000Z"),
+              ],
+              { incomplete: true }
+            )
+          )
+          // Window 2: starts at the last created_time, re-sees r4, then finishes.
+          .mockResolvedValueOnce(
+            queryResponse([
+              page("r4", "2024-01-04T00:00:00.000Z"),
+              page("r5", "2024-01-05T00:00:00.000Z"),
+            ])
+          )
+
+        const ids: string[] = []
+        for await (const row of iterateAllDataSourceRows(client, {
+          data_source_id: "ds-1",
+        })) {
+          ids.push(row.id)
+        }
+
+        expect(ids).toEqual(["r1", "r2", "r3", "r4", "r5"])
+        expect(mockFetch).toHaveBeenCalledTimes(3)
+        // Inner pagination carried the cursor within window 1.
+        expect(bodyOf(mockFetch.mock.calls[1]).start_cursor).toEqual("c1")
+        // Window 2 reset the cursor and added the created_time lower bound.
+        expect(bodyOf(mockFetch.mock.calls[2]).start_cursor).toBeFalsy()
+        expect(bodyOf(mockFetch.mock.calls[2]).filter).toEqual({
+          timestamp: "created_time",
+          created_time: { on_or_after: "2024-01-04T00:00:00.000Z" },
+        })
+      })
+
+      it("Combines a caller filter with the window bound using and", async () => {
+        const filter = { property: "Status", status: { equals: "Done" } }
+        mockFetch
+          .mockResolvedValueOnce(
+            queryResponse([page("r1", "2024-01-01T00:00:00.000Z")], {
+              incomplete: true,
+            })
+          )
+          .mockResolvedValueOnce(
+            queryResponse([
+              page("r1", "2024-01-01T00:00:00.000Z"),
+              page("r2", "2024-02-01T00:00:00.000Z"),
+            ])
+          )
+
+        const ids: string[] = []
+        for await (const row of iterateAllDataSourceRows(client, {
+          data_source_id: "ds-1",
+          filter,
+        })) {
+          ids.push(row.id)
+        }
+
+        expect(ids).toEqual(["r1", "r2"])
+        // First window: caller filter only.
+        expect(bodyOf(mockFetch.mock.calls[0]).filter).toEqual(filter)
+        // Second window: caller filter AND created_time bound.
+        expect(bodyOf(mockFetch.mock.calls[1]).filter).toEqual({
+          and: [
+            filter,
+            {
+              timestamp: "created_time",
+              created_time: { on_or_after: "2024-01-01T00:00:00.000Z" },
+            },
+          ],
+        })
+      })
+
+      it("Advances on a data-source boundary row, not only pages", async () => {
+        // Window 1 ends at the limit on a child data-source row (wiki data
+        // source). The window must advance from that row's created_time, even
+        // though it is not a page.
+        mockFetch
+          .mockResolvedValueOnce(
+            queryResponse(
+              [
+                page("r1", "2024-01-01T00:00:00.000Z"),
+                dataSource("ds-child", "2024-01-02T00:00:00.000Z"),
+              ],
+              { incomplete: true }
+            )
+          )
+          .mockResolvedValueOnce(
+            queryResponse([
+              dataSource("ds-child", "2024-01-02T00:00:00.000Z"),
+              page("r2", "2024-01-03T00:00:00.000Z"),
+            ])
+          )
+
+        const ids: string[] = []
+        for await (const row of iterateAllDataSourceRows(client, {
+          data_source_id: "ds-1",
+        })) {
+          ids.push(row.id)
+        }
+
+        expect(ids).toEqual(["r1", "ds-child", "r2"])
+        expect(mockFetch).toHaveBeenCalledTimes(2)
+        // The second window advanced from the data-source row's created_time.
+        expect(bodyOf(mockFetch.mock.calls[1]).filter).toEqual({
+          timestamp: "created_time",
+          created_time: { on_or_after: "2024-01-02T00:00:00.000Z" },
+        })
+      })
+
+      it("Throws when one created_time holds more rows than the limit", async () => {
+        const sameTime = "2024-01-01T00:00:00.000Z"
+        mockFetch
+          .mockResolvedValueOnce(
+            queryResponse([page("r1", sameTime), page("r2", sameTime)], {
+              incomplete: true,
+            })
+          )
+          .mockResolvedValueOnce(
+            queryResponse([page("r1", sameTime), page("r2", sameTime)], {
+              incomplete: true,
+            })
+          )
+
+        await expect(
+          collectAllDataSourceRows(client, { data_source_id: "ds-1" })
+        ).rejects.toThrow("cannot make progress")
+      })
+    })
+
+    describe(collectAllDataSourceRows, () => {
+      it("Collects every row across windows into an array", async () => {
+        mockFetch
+          .mockResolvedValueOnce(
+            queryResponse([page("r1", "2024-01-01T00:00:00.000Z")], {
+              incomplete: true,
+            })
+          )
+          .mockResolvedValueOnce(
+            queryResponse([
+              page("r1", "2024-01-01T00:00:00.000Z"),
+              page("r2", "2024-01-02T00:00:00.000Z"),
+            ])
+          )
+
+        const rows = await collectAllDataSourceRows(client, {
+          data_source_id: "ds-1",
+        })
+
+        expect(rows.map(r => r.id)).toEqual(["r1", "r2"])
+        expect(mockFetch).toHaveBeenCalledTimes(2)
       })
     })
   })

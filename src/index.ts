@@ -247,6 +247,8 @@ export {
   iteratePaginatedAPI,
   collectDataSourceTemplates,
   iterateDataSourceTemplates,
+  iterateAllDataSourceRows,
+  collectAllDataSourceRows,
   isFullBlock,
   isFullDataSource,
   isFullDatabase,
@@ -259,6 +261,10 @@ export {
   extractDatabaseId,
   extractPageId,
   extractBlockId,
+} from "./helpers"
+export type {
+  FullDataSourceQueryArgs,
+  FullDataSourceQueryFilter,
 } from "./helpers"
 export { verifyWebhookSignature, signWebhookPayload } from "./webhooks"
 export type { VerifyWebhookSignatureArgs } from "./webhooks"
