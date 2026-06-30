@@ -1,7 +1,7 @@
 import { readFile, writeFile } from "node:fs/promises"
 
 import type { InfraAsCodeApiResult } from "./api"
-import { getErrorCode } from "./utils"
+import { isEnoentError } from "./utils"
 
 export type InfraAsCodeSessionState = {
   existingResources: Record<string, unknown>
@@ -41,7 +41,7 @@ export async function readSessionState(
         {},
     }
   } catch (error) {
-    if (getErrorCode(error) === "ENOENT") {
+    if (isEnoentError(error)) {
       return emptySessionState()
     }
     throw error

@@ -10,13 +10,13 @@ export const DEFAULT_SESSION_STATE_FILE_DIRECTORY = path.resolve(
 export const DEFAULT_SESSION_STATE_FILE_PREFIX = "infra-as-code-session-state"
 
 /**
- * Extracts Node-style error codes such as `ENOENT` from caught values.
+ * Returns whether a caught filesystem error means "file not found".
  */
-export function getErrorCode(error: unknown): string | undefined {
-  return typeof error === "object" &&
+export function isEnoentError(error: unknown): boolean {
+  return (
+    typeof error === "object" &&
     error !== null &&
     "code" in error &&
-    typeof error.code === "string"
-    ? error.code
-    : undefined
+    error.code === "ENOENT"
+  )
 }

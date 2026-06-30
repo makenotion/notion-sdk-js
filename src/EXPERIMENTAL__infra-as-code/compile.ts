@@ -6,7 +6,7 @@ import path = require("node:path")
 import ts = require("typescript")
 
 import { createInfraAsCodeStubRuntime } from "./runtime"
-import { getErrorCode } from "./utils"
+import { isEnoentError } from "./utils"
 
 const execFileAsync = promisify(execFile)
 
@@ -60,7 +60,7 @@ async function readScript(scriptPath: string): Promise<string> {
   try {
     return await readFile(scriptPath, "utf8")
   } catch (error) {
-    if (getErrorCode(error) === "ENOENT") {
+    if (isEnoentError(error)) {
       throw new Error(`Infra as code script not found: ${scriptPath}`)
     }
 
