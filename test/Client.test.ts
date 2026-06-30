@@ -495,6 +495,21 @@ describe("Notion SDK Client", () => {
       expect(mockFetch).toHaveBeenCalledTimes(2)
     })
 
+    it("retries on service overload (529) and succeeds", async () => {
+      setupMockSequence(mockFetch, [
+        { type: "service_overload", options: { retryAfter: "5" } },
+        "success",
+      ])
+
+      const notion = new Client({ fetch: mockFetch, retry: { maxRetries: 2 } })
+      const promise = notion.blocks.retrieve({ block_id: TEST_BLOCK_ID })
+
+      await jest.advanceTimersByTimeAsync(5000)
+      await promise
+
+      expect(mockFetch).toHaveBeenCalledTimes(2)
+    })
+
     it("does not retry when retry is disabled", async () => {
       mockFetch.mockResolvedValue(mockResponse("rate_limited"))
 
@@ -739,6 +754,27 @@ describe("Notion SDK Client", () => {
       it("retries POST on rate limit (429)", async () => {
         setupMockSequence(mockFetch, [
           { type: "rate_limited", options: { retryAfter: "1" } },
+          "success",
+        ])
+
+        const notion = new Client({
+          fetch: mockFetch,
+          retry: { maxRetries: 2, initialRetryDelayMs: 1000 },
+        })
+        const promise = notion.pages.create({
+          parent: { page_id: TEST_BLOCK_ID },
+          properties: {},
+        })
+
+        await jest.advanceTimersByTimeAsync(1000)
+        await promise
+
+        expect(mockFetch).toHaveBeenCalledTimes(2)
+      })
+
+      it("retries POST on service overload (529)", async () => {
+        setupMockSequence(mockFetch, [
+          { type: "service_overload", options: { retryAfter: "1" } },
           "success",
         ])
 

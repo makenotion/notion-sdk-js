@@ -9,6 +9,7 @@ export const TEST_BLOCK_ID = "9f96555b-cf98-4889-83b0-bd6bbe53911e"
 export type ResponseType =
   | "success"
   | "rate_limited"
+  | "service_overload"
   | "internal_server_error"
   | "service_unavailable"
   | "validation_error"
@@ -26,6 +27,11 @@ const RESPONSE_CONFIG: Record<
 > = {
   success: { status: 200, message: "" },
   rate_limited: { status: 429, code: "rate_limited", message: "Rate limited" },
+  service_overload: {
+    status: 529,
+    code: "service_overload",
+    message: "Service overloaded",
+  },
   internal_server_error: {
     status: 500,
     code: "internal_server_error",
