@@ -5,7 +5,8 @@ import { promisify } from "node:util"
 import path = require("node:path")
 import ts = require("typescript")
 
-import { createInfraAsCodeRuntime } from "./runtime"
+import { createInfraAsCodeStubRuntime } from "./runtime"
+import { getErrorCode } from "./utils"
 
 const execFileAsync = promisify(execFile)
 
@@ -14,6 +15,13 @@ type CompileInfraAsCodeScriptToIntentsResult = {
   logs: string[]
 }
 
+/**
+ * Runs a user's infra as code TypeScript file and returns the intents it emits.
+ *
+ * The compiler wraps the script with the local runtime from `runtime.ts`,
+ * converts that temporary wrapper to JavaScript, and executes it in a child
+ * Node process. The child process prints the collected intents as JSON.
+ */
 export async function compileInfraAsCodeScriptToIntents({
   filePathToScript,
 }: {
@@ -47,19 +55,14 @@ export async function compileInfraAsCodeScriptToIntents({
   }
 }
 
+/**
+ * Reads the user script and turns missing-file errors into a clearer message.
+ */
 async function readScript(scriptPath: string): Promise<string> {
   try {
     return await readFile(scriptPath, "utf8")
   } catch (error) {
-    const code =
-      typeof error === "object" &&
-      error !== null &&
-      "code" in error &&
-      typeof error.code === "string"
-        ? error.code
-        : undefined
-
-    if (code === "ENOENT") {
+    if (getErrorCode(error) === "ENOENT") {
       throw new Error(`Infra as code script not found: ${scriptPath}`)
     }
 
@@ -71,9 +74,15 @@ async function readScript(scriptPath: string): Promise<string> {
   }
 }
 
+/**
+ * Creates the temporary program that the child Node process runs.
+ *
+ * `createInfraAsCodeStubRuntime` is embedded as source so the child process does
+ * not need to import SDK internals while evaluating the user's script.
+ */
 function buildExecutableScriptSource(script: string): string {
-  return `const createInfraAsCodeRuntime = ${createInfraAsCodeRuntime.toString()}
-const infraAsCodeRuntime = createInfraAsCodeRuntime()
+  return `const createInfraAsCodeStubRuntime = ${createInfraAsCodeStubRuntime.toString()}
+const infraAsCodeRuntime = createInfraAsCodeStubRuntime()
 const notion = infraAsCodeRuntime.notion
 
 ;(async () => {
@@ -94,6 +103,9 @@ ${script}
 `
 }
 
+/**
+ * Converts the generated TypeScript wrapper into executable JavaScript.
+ */
 function transpileExecutableScriptSource(scriptSource: string): string {
   const result = ts.transpileModule(scriptSource, {
     fileName: "script.executable.ts",

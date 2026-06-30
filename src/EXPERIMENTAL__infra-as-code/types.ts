@@ -5,6 +5,10 @@
 	GENERATED FILE - DO NOT EDIT MANUALLY
 	Ambient type declarations for Infrastructure as Code scripts.
 
+  Note: Some things were temporarily edited manually to this file to match sdk types, 
+  we would need to update the original file to match.
+  [tag: update-infra-as-code-generated-types]
+
 ============================================================================= */
 
 // Type definitions for infra as code scripts (external SDK)
@@ -46,8 +50,9 @@ type SelectColor = (typeof selectColors)[number]
 /**
  * Represents formatted text content in Notion.
  * This is an opaque type - use notion.text(), notion.date(), etc. to create values.
+ * [ref: update-infra-as-code-generated-types]
  */
-type TextValue = unknown
+type TextValue = SimpleTextValue
 
 type SimpleTextToken = [string] | [string, ...unknown[]]
 
@@ -840,13 +845,29 @@ type PropertyNameUnion<P extends PropertySchemaDefinition[]> =
 /**
  * Allowed input value type for a particular property schema definition.
  * Person properties are filter-only and map to `never`.
+ * [ref: update-infra-as-code-generated-types]
  */
 type PropertyInputForDefinition<S extends PropertySchemaDefinition> =
   S extends RelationPropertySchemaDefinition
     ? string | string[]
-    : S extends PersonPropertySchemaDefinition
-      ? never
-      : SimpleTextValue
+    : S extends FilePropertySchemaDefinition
+      ? FileReference[]
+      : S extends
+            | SelectPropertySchemaDefinition
+            | MultiSelectPropertySchemaDefinition
+            | StatusPropertySchemaDefinition
+        ? string
+        : S extends
+              | FormulaPropertySchemaDefinition
+              | RollupPropertySchemaDefinition
+              | CreatedTimePropertySchemaDefinition
+              | LastEditedTimePropertySchemaDefinition
+              | CreatedByPropertySchemaDefinition
+              | LastEditedByPropertySchemaDefinition
+              | AutoIncrementIdPropertySchemaDefinition
+              | PersonPropertySchemaDefinition
+          ? never
+          : SimpleTextValue
 
 /**
  * Shape of the properties object accepted by DataSourceHandle.addPage based on a

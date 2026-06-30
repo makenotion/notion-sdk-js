@@ -3,7 +3,14 @@ type RuntimeNotion = typeof notion & {
   log(message: unknown): void
 }
 
-export function createInfraAsCodeRuntime(): {
+/**
+ * Creates the `notion` object exposed to an infra as code script.
+ *
+ * The compiler embeds this function into a generated script and runs it in a
+ * child Node process. Calls such as `notion.page.create()` append plain intents
+ * to the returned `intents` array instead of calling the Notion API directly.
+ */
+export function createInfraAsCodeStubRuntime(): {
   notion: RuntimeNotion
   intents: InfraAsCodeIntent[]
   logs: string[]

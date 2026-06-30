@@ -169,6 +169,11 @@ import {
 } from "./api-endpoints/meeting-notes"
 import type { QueryMeetingNotesParameters } from "./meeting-notes"
 import {
+  runInfraAsCode,
+  type InfraAsCodeRunParameters,
+  type InfraAsCodeRunResponse,
+} from "./EXPERIMENTAL__infra-as-code/run"
+import {
   version as PACKAGE_VERSION,
   name as PACKAGE_NAME,
 } from "../package.json"
@@ -640,6 +645,15 @@ export default class Client {
   /*
    * Notion API endpoints
    */
+
+  public readonly infraAsCode = {
+    /**
+     * Run an infra as code script.
+     */
+    run: (args: InfraAsCodeRunParameters): Promise<InfraAsCodeRunResponse> => {
+      return runInfraAsCode(args, requestArgs => this.request(requestArgs))
+    },
+  }
 
   public readonly blocks = {
     /**
