@@ -735,7 +735,12 @@ type UpdatePageMarkdownPathParameters = {
   page_id: IdRequest
 }
 
-type UpdatePageMarkdownBodyParameters =
+type UpdatePageMarkdownBodyParameters = {
+  // Set to true to opt into receiving an async_task result when this update operation is
+  // accepted for background execution. If omitted or false, the endpoint keeps the
+  // existing synchronous response shape.
+  allow_async?: boolean
+} & (
   | {
       // Always `insert_content`
       type: "insert_content"
@@ -807,6 +812,7 @@ type UpdatePageMarkdownBodyParameters =
         allow_deleting_content?: boolean
       }
     }
+)
 
 export type UpdatePageMarkdownParameters = UpdatePageMarkdownPathParameters &
   UpdatePageMarkdownBodyParameters
@@ -821,6 +827,7 @@ export const updatePageMarkdown = {
   pathParams: ["page_id"],
   queryParams: [],
   bodyParams: [
+    "allow_async",
     "type",
     "insert_content",
     "replace_content_range",
