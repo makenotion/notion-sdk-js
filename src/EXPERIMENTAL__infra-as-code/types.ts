@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars, no-useless-escape */
-
 /* =============================================================================
 
 	GENERATED FILE - DO NOT EDIT MANUALLY
