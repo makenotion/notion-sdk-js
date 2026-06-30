@@ -1,0 +1,60 @@
+{
+  "existingResources": {
+    "test-js-sdk-space": {
+      "table": "space",
+      "id": "7e21febe-57bd-8100-9b54-0003a4ddfd7f",
+      "spaceId": "7e21febe-57bd-8100-9b54-0003a4ddfd7f"
+    },
+    "general-teamspace": {
+      "table": "team",
+      "id": "38f1febe-57bd-8167-8948-0042b6b7a692",
+      "spaceId": "7e21febe-57bd-8100-9b54-0003a4ddfd7f"
+    },
+    "welcome-page": {
+      "table": "block",
+      "id": "38f1febe-57bd-81e7-845a-f610a33ea2bc",
+      "spaceId": "7e21febe-57bd-8100-9b54-0003a4ddfd7f"
+    },
+    "tasks-db": {
+      "table": "block",
+      "id": "38f1febe-57bd-8174-b017-ea1f0114b528",
+      "spaceId": "7e21febe-57bd-8100-9b54-0003a4ddfd7f"
+    },
+    "tasks-ds": {
+      "table": "collection",
+      "id": "38f1febe-57bd-81fc-bbe9-000bb63a0985",
+      "spaceId": "7e21febe-57bd-8100-9b54-0003a4ddfd7f"
+    },
+    "tasks-table-view": {
+      "table": "collection_view",
+      "id": "38f1febe-57bd-81d1-aa8f-000cbd9e1c8f",
+      "spaceId": "7e21febe-57bd-8100-9b54-0003a4ddfd7f"
+    },
+    "tasks-board-view": {
+      "table": "collection_view",
+      "id": "38f1febe-57bd-8101-8c35-000c0bba43bd",
+      "spaceId": "7e21febe-57bd-8100-9b54-0003a4ddfd7f"
+    },
+    "task-1": {
+      "table": "block",
+      "id": "38f1febe-57bd-8121-affa-dd8bd9498ae9",
+      "spaceId": "7e21febe-57bd-8100-9b54-0003a4ddfd7f"
+    },
+    "task-2": {
+      "table": "block",
+      "id": "38f1febe-57bd-8119-b207-fa5cb811f367",
+      "spaceId": "7e21febe-57bd-8100-9b54-0003a4ddfd7f"
+    },
+    "task-3": {
+      "table": "block",
+      "id": "38f1febe-57bd-81d4-8db2-f4f67cc0c482",
+      "spaceId": "7e21febe-57bd-8100-9b54-0003a4ddfd7f"
+    }
+  },
+  "existingProperties": {
+    "task-name-prop": "title",
+    "task-status-prop": "CsrX",
+    "task-priority-prop": "Z|L]",
+    "task-due-date-prop": "_A\\i"
+  }
+}

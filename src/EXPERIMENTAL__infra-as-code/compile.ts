@@ -10,11 +10,6 @@ import { getErrorCode } from "./utils"
 
 const execFileAsync = promisify(execFile)
 
-type CompileInfraAsCodeScriptToIntentsResult = {
-  intents: InfraAsCodeIntent[]
-  logs: string[]
-}
-
 /**
  * Runs a user's infra as code TypeScript file and returns the intents it emits.
  *
@@ -26,7 +21,10 @@ export async function compileInfraAsCodeScriptToIntents({
   filePathToScript,
 }: {
   filePathToScript: string
-}): Promise<CompileInfraAsCodeScriptToIntentsResult> {
+}): Promise<{
+  intents: InfraAsCodeIntent[]
+  logs: string[]
+}> {
   const scriptPath = path.resolve(filePathToScript)
   const script = await readScript(scriptPath)
   const tempDir = await mkdtemp(path.join(tmpdir(), "notion-iac-"))

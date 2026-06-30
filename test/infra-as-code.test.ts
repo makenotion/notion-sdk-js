@@ -3,6 +3,10 @@ import { tmpdir } from "node:os"
 import path = require("node:path")
 
 import { Client, compileInfraAsCodeScriptToIntents } from "../src"
+import {
+  DEFAULT_SESSION_STATE_FILE_DIRECTORY,
+  DEFAULT_SESSION_STATE_FILE_PREFIX,
+} from "../src/EXPERIMENTAL__infra-as-code/utils"
 
 const TEST_SCRIPT_SOURCE = `
 const properties = {
@@ -71,13 +75,11 @@ describe("Client.infraAsCode.run", () => {
     const scriptPath = await writeInfraAsCodeScript(tempDir)
     const mockFetch: jest.MockedFn<typeof fetch> = jest.fn()
     const notion = new Client({ fetch: mockFetch })
-    let generatedSessionStateDir: string | undefined
 
     try {
       const result = await notion.infraAsCode.run({
         scriptFilePath: scriptPath,
       })
-      generatedSessionStateDir = path.dirname(result.sessionStateFilePath)
 
       expect(mockFetch).not.toHaveBeenCalled()
       expect(consoleDir).toHaveBeenCalledWith(
@@ -94,6 +96,15 @@ describe("Client.infraAsCode.run", () => {
         logs: [],
         sessionStateFilePath: expect.any(String),
       })
+      const expectedSessionStateDirectoryPrefix = path.join(
+        DEFAULT_SESSION_STATE_FILE_DIRECTORY,
+        `${DEFAULT_SESSION_STATE_FILE_PREFIX}-`
+      )
+      expect(
+        path
+          .dirname(result.sessionStateFilePath)
+          .startsWith(expectedSessionStateDirectoryPrefix)
+      ).toBe(true)
       expect(
         JSON.parse(await readFile(result.sessionStateFilePath, "utf8"))
       ).toEqual({
@@ -101,9 +112,10 @@ describe("Client.infraAsCode.run", () => {
         resourceIdToPropertyIdMappings: {},
       })
     } finally {
-      if (generatedSessionStateDir !== undefined) {
-        await rm(generatedSessionStateDir, { recursive: true, force: true })
-      }
+      await rm(DEFAULT_SESSION_STATE_FILE_DIRECTORY, {
+        recursive: true,
+        force: true,
+      })
       await rm(tempDir, { recursive: true, force: true })
     }
   })
