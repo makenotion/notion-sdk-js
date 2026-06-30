@@ -1150,6 +1150,14 @@ type PropertyOrTimestampFilter = PropertyFilter | TimestampFilter
 
 type PropertyOrTimestampFilterArray = Array<PropertyOrTimestampFilter>
 
+export type PublicApiAsyncTaskStatusResultJsonValue =
+  | string
+  | number
+  | boolean
+  | null
+  | Array<PublicApiAsyncTaskStatusResultJsonValue>
+  | { [key: string]: PublicApiAsyncTaskStatusResultJsonValue }
+
 /**
  * A property filter condition. Same shape as a property filter but without the
  * "property" field (the hashmap key identifies the property). For example: { "select": {

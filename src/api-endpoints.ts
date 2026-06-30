@@ -5,6 +5,7 @@
 // Import from this file for backwards compatibility, or import
 // directly from the specific resource module.
 
+export * from "./api-endpoints/async-tasks"
 export * from "./api-endpoints/blocks"
 export * from "./api-endpoints/comments"
 export * from "./api-endpoints/common"
