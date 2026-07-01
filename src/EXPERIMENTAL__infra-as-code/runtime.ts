@@ -1,6 +1,5 @@
 type RuntimeNotion = typeof notion & {
   intent(intent: InfraAsCodeIntent): void
-  log(message: unknown): void
 }
 
 /**
@@ -13,17 +12,11 @@ type RuntimeNotion = typeof notion & {
 export function createInfraAsCodeStubRuntime(): {
   notion: RuntimeNotion
   intents: InfraAsCodeIntent[]
-  logs: string[]
 } {
   const intents: InfraAsCodeIntent[] = []
-  const logs: string[] = []
   const notion: RuntimeNotion = {
     intent(intent) {
       intents.push(intent)
-    },
-
-    log(message) {
-      logs.push(String(message))
     },
 
     space: {
@@ -153,6 +146,5 @@ export function createInfraAsCodeStubRuntime(): {
   return {
     notion,
     intents,
-    logs,
   }
 }

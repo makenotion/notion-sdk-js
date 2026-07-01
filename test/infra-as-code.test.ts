@@ -6,7 +6,7 @@ import { Client, compileInfraAsCodeScriptToIntents } from "../src"
 import {
   DEFAULT_SESSION_STATE_FILE_DIRECTORY,
   DEFAULT_SESSION_STATE_FILE_PREFIX,
-} from "../src/EXPERIMENTAL__infra-as-code/utils"
+} from "../src/EXPERIMENTAL__infra-as-code/session"
 
 const TEST_SCRIPT_SOURCE = `
 const properties = {
@@ -51,7 +51,6 @@ describe("compileInfraAsCodeScriptToIntents", () => {
 
       expect(result).toEqual({
         intents: EXPECTED_INTENTS,
-        logs: [],
       })
     } finally {
       await rm(tempDir, { recursive: true, force: true })
@@ -93,7 +92,6 @@ describe("Client.infraAsCode.run", () => {
       expect(result).toEqual({
         resourceIdToPointerMappings: {},
         resourceIdToPropertyIdMappings: {},
-        logs: [],
         sessionStateFilePath: expect.any(String),
       })
       const expectedSessionStateDirectoryPrefix = path.join(
@@ -176,55 +174,6 @@ describe("Client.infraAsCode.run", () => {
           "name-property": "title",
         },
       })
-    } finally {
-      await rm(tempDir, { recursive: true, force: true })
-    }
-  })
-
-  it("reads legacy session-state mapping keys", async () => {
-    const tempDir = await mkdtemp(path.join(tmpdir(), "notion-iac-test-"))
-    const scriptPath = await writeInfraAsCodeScript(tempDir)
-    const existingResourcesFilePath = path.join(
-      tempDir,
-      "existing-resources.json"
-    )
-    const sessionStateFilePath = path.join(tempDir, "iac-session.json")
-    const mockFetch: jest.MockedFn<typeof fetch> = jest.fn()
-
-    try {
-      await writeFile(
-        existingResourcesFilePath,
-        JSON.stringify({
-          resourceIdToPointerMappings: {
-            "existing-page": { type: "block", id: "existing-page-id" },
-          },
-          resourceIdToPropertyIdMappings: {
-            "name-property": "title",
-          },
-        }),
-        "utf8"
-      )
-
-      const notion = new Client({ fetch: mockFetch })
-      await notion.infraAsCode.run({
-        scriptFilePath: scriptPath,
-        existingResourcesFilePath,
-        sessionStateFilePath,
-      })
-
-      expect(consoleDir).toHaveBeenCalledWith(
-        {
-          intents: EXPECTED_INTENTS,
-          existingResources: {
-            "existing-page": { type: "block", id: "existing-page-id" },
-          },
-          existingProperties: {
-            "name-property": "title",
-          },
-        },
-        { depth: null }
-      )
-      expect(mockFetch).not.toHaveBeenCalled()
     } finally {
       await rm(tempDir, { recursive: true, force: true })
     }

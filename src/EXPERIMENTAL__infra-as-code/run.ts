@@ -1,6 +1,3 @@
-import { mkdir, mkdtemp } from "node:fs/promises"
-import path = require("node:path")
-
 import {
   pollInfraAsCodeTask,
   submitInfraAsCodeRunToApi,
@@ -8,11 +5,11 @@ import {
   type InfraAsCodeRequest,
 } from "./api"
 import { compileInfraAsCodeScriptToIntents } from "./compile"
-import { readSessionState, writeSessionState } from "./session"
 import {
-  DEFAULT_SESSION_STATE_FILE_DIRECTORY,
-  DEFAULT_SESSION_STATE_FILE_PREFIX,
-} from "./utils"
+  createDefaultSessionStateFilePath,
+  readSessionState,
+  writeSessionState,
+} from "./session"
 
 export type InfraAsCodeRunParameters = {
   /**
@@ -32,7 +29,6 @@ export type InfraAsCodeRunParameters = {
 }
 
 export type InfraAsCodeRunResponse = InfraAsCodeApiResult & {
-  logs: string[]
   sessionStateFilePath: string
 }
 
@@ -48,7 +44,7 @@ export async function runInfraAsCode(
   request: InfraAsCodeRequest
 ): Promise<InfraAsCodeRunResponse> {
   const priorState = await readSessionState(args.existingResourcesFilePath)
-  const { intents, logs } = await compileInfraAsCodeScriptToIntents({
+  const { intents } = await compileInfraAsCodeScriptToIntents({
     filePathToScript: args.scriptFilePath,
   })
   const sessionStateFilePath =
@@ -80,18 +76,6 @@ export async function runInfraAsCode(
 
   return {
     ...result,
-    logs,
     sessionStateFilePath,
   }
-}
-
-async function createDefaultSessionStateFilePath(): Promise<string> {
-  await mkdir(DEFAULT_SESSION_STATE_FILE_DIRECTORY, { recursive: true })
-  const tempDir = await mkdtemp(
-    path.join(
-      DEFAULT_SESSION_STATE_FILE_DIRECTORY,
-      `${DEFAULT_SESSION_STATE_FILE_PREFIX}-`
-    )
-  )
-  return path.join(tempDir, "session-state.json")
 }

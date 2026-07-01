@@ -23,7 +23,6 @@ export async function compileInfraAsCodeScriptToIntents({
   filePathToScript: string
 }): Promise<{
   intents: InfraAsCodeIntent[]
-  logs: string[]
 }> {
   const scriptPath = path.resolve(filePathToScript)
   const script = await readScript(scriptPath)
@@ -46,7 +45,6 @@ export async function compileInfraAsCodeScriptToIntents({
 
     return {
       intents: parsed.intents,
-      logs: parsed.logs,
     }
   } finally {
     await rm(tempDir, { recursive: true, force: true })
@@ -89,7 +87,6 @@ ${script}
   .then(() => {
     console.log(JSON.stringify({
       intents: infraAsCodeRuntime.intents,
-      logs: infraAsCodeRuntime.logs,
     }))
   })
   .catch(error => {
@@ -102,7 +99,11 @@ ${script}
 }
 
 /**
- * Converts the generated TypeScript wrapper into executable JavaScript.
+ * Converts the generated TypeScript wrapper into JavaScript for Node.
+ *
+ * The SDK runs this wrapper with Node, so it cannot execute the temporary
+ * TypeScript file directly and needs to be transpiled. The original Bun-base flow 
+ * does not need this extra transpile step.
  */
 function transpileExecutableScriptSource(scriptSource: string): string {
   const result = ts.transpileModule(scriptSource, {

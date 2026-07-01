@@ -23,7 +23,7 @@ export async function submitInfraAsCodeRunToApi(_args: {
   existingResources: Record<string, unknown>
   existingProperties: Record<string, string>
 }): Promise<{ id: string }> {
-  // TODO: replace the temporary logger above with the real API call once endpoint is available.
+  // TODO: uncomment the real API call once endpoint is available.
   // return args.request<{ id: string }>({
   //   path: "infra_as_code",
   //   method: "post",
