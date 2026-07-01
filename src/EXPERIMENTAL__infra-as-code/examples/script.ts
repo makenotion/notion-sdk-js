@@ -1,12 +1,15 @@
 /**
- * This script will edit an existing space with the id
- * you provided in the existingResources.json file.
+ * This is the infra as code script compiled by runInfraAsCode.ts.
  *
- * You can edit the name and icon details below to match your desired space.
+ * No imports are needed: the runner provides a global `notion` helper.
+ * The resourceId "my-space" matches the key in existingResources.json, so the
+ * example run updates that mapped space.
+ *
+ * Try changing the name or icon, then rebuild and rerun the example.
  */
 
 {
-  const space = notion.space.create({
+  notion.space.create({
     resourceId: "my-space",
     name: "My Space",
     icon: { type: "notion_icon", description: "code", color: "blue" },

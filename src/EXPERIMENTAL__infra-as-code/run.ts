@@ -17,27 +17,34 @@ export type InfraAsCodeRunParameters = {
    */
   scriptFilePath: string
   /**
-   * Optional path to existing resource/property mappings used as run input.
-   * This file is read but never written to.
+   * Optional path to JSON mappings for resources that already exist in Notion.
+   *
+   * Use this when testing against an existing space, or when a rerun should
+   * update the same known resources. The file is read but never written to.
    */
   existingResourcesFilePath?: string
   /**
-   * Optional path where the next session-state file should be written. When
-   * omitted, a new file is created under the default session-state directory.
+   * Optional path where the session-state file for this run should be written.
+   *
+   * When omitted, the SDK writes a new file under
+   * `tmp/infra-as-code/sessions`.
    */
   sessionStateFilePath?: string
 }
 
 export type InfraAsCodeRunResponse = InfraAsCodeApiResult & {
+  /**
+   * Location of the session-state file written for this run.
+   */
   sessionStateFilePath: string
 }
 
 /**
- * Implements `Client.infraAsCode.run()`.
+ * Implements `Client.EXPERIMENTAL__infraAsCode.run()`.
  *
  * This is the SDK-facing workflow: compile the local script into intents,
- * send those intents plus any existing resource mappings to Notion, poll the
- * async task, then write the next session-state file.
+ * send those intents plus current resource mappings to Notion, poll the async
+ * task, then write the session-state file for the run.
  */
 export async function runInfraAsCode(
   args: InfraAsCodeRunParameters,

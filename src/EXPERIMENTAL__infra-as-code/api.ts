@@ -46,6 +46,7 @@ export async function pollInfraAsCodeTask(args: {
   request: Client["request"]
   taskId: string
 }): Promise<InfraAsCodeApiResult> {
+  // TODO: remove empty mappings once the API endpoint is available.
   if (args.taskId === LOGGED_TASK_ID) {
     return {
       resourceIdToPointerMappings: {},

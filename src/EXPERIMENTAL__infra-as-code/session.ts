@@ -24,7 +24,10 @@ type InfraAsCodeSessionOutput = {
 }
 
 /**
- * Reads optional existing resource mappings used to make reruns incremental.
+ * Reads mappings that let a script target existing Notion resources.
+ *
+ * A missing file is treated as empty state so first-time tests can run before
+ * any mappings have been generated.
  */
 export async function readSessionState(
   existingResourcesFilePath: string | undefined
@@ -49,7 +52,10 @@ export async function readSessionState(
 }
 
 /**
- * Writes the next session-state file using the API result mapping names.
+ * Writes the resource mappings returned by an infra as code run.
+ *
+ * This does not mutate the input mapping file. Each run gets its own output
+ * file unless the caller provides a specific `sessionStateFilePath`.
  */
 export async function writeSessionState(
   sessionStateFilePath: string,
@@ -75,7 +81,7 @@ export async function writeSessionState(
 }
 
 /**
- * Creates a unique default path where the next session-state file can be saved.
+ * Creates a unique default path for the session-state file from this run.
  */
 export async function createDefaultSessionStateFilePath(): Promise<string> {
   await mkdir(DEFAULT_SESSION_STATE_FILE_DIRECTORY, { recursive: true })
@@ -89,7 +95,7 @@ export async function createDefaultSessionStateFilePath(): Promise<string> {
 }
 
 /**
- * Provides empty mappings when no session-state file exists yet.
+ * Provides empty mappings when no existing resource file is supplied.
  */
 function emptySessionState(): InfraAsCodeSessionInput {
   return {

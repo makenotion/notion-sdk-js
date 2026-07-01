@@ -11,7 +11,7 @@ import { isEnoentError } from "./utils"
 const execFileAsync = promisify(execFile)
 
 /**
- * Runs a user's infra as code TypeScript file and returns the intents it emits.
+ * Executes a user's infra as code TypeScript file and returns the intents it emits.
  *
  * The compiler wraps the script with the local runtime from `runtime.ts`,
  * converts that temporary wrapper to JavaScript, and executes it in a child
@@ -71,8 +71,8 @@ async function readScript(scriptPath: string): Promise<string> {
 /**
  * Creates the temporary program that the child Node process runs.
  *
- * `createInfraAsCodeStubRuntime` is embedded as source so the child process does
- * not need to import SDK internals while evaluating the user's script.
+ * `createInfraAsCodeStubRuntime` is embedded as source so the child process
+ * can evaluate the user's script without importing SDK internals.
  */
 function buildExecutableScriptSource(script: string): string {
   return `const createInfraAsCodeStubRuntime = ${createInfraAsCodeStubRuntime.toString()}
@@ -99,9 +99,8 @@ ${script}
 /**
  * Converts the generated TypeScript wrapper into JavaScript for Node.
  *
- * The SDK runs this wrapper with Node, so it cannot execute the temporary
- * TypeScript file directly and needs to be transpiled. The original Bun-base flow
- * does not need this extra transpile step.
+ * The SDK runs this wrapper with Node, so the temporary TypeScript program
+ * needs this transpile step before execution.
  */
 function transpileExecutableScriptSource(scriptSource: string): string {
   const result = ts.transpileModule(scriptSource, {
