@@ -2,8 +2,8 @@ import {
   pollInfraAsCodeTask,
   submitInfraAsCodeRunToApi,
   type InfraAsCodeApiResult,
-  type InfraAsCodeRequest,
 } from "./api"
+import type Client from "../Client"
 import { compileInfraAsCodeScriptToIntents } from "./compile"
 import {
   createDefaultSessionStateFilePath,
@@ -41,10 +41,10 @@ export type InfraAsCodeRunResponse = InfraAsCodeApiResult & {
  */
 export async function runInfraAsCode(
   args: InfraAsCodeRunParameters,
-  request: InfraAsCodeRequest
+  request: Client["request"]
 ): Promise<InfraAsCodeRunResponse> {
   const priorState = await readSessionState(args.existingResourcesFilePath)
-  const { intents } = await compileInfraAsCodeScriptToIntents({
+  const intents = await compileInfraAsCodeScriptToIntents({
     filePathToScript: args.scriptFilePath,
   })
   const sessionStateFilePath =

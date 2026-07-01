@@ -21,9 +21,7 @@ export async function compileInfraAsCodeScriptToIntents({
   filePathToScript,
 }: {
   filePathToScript: string
-}): Promise<{
-  intents: InfraAsCodeIntent[]
-}> {
+}): Promise<InfraAsCodeIntent[]> {
   const scriptPath = path.resolve(filePathToScript)
   const script = await readScript(scriptPath)
   const tempDir = await mkdtemp(path.join(tmpdir(), "notion-iac-"))
@@ -36,6 +34,8 @@ export async function compileInfraAsCodeScriptToIntents({
       "utf8"
     )
 
+    // Run the generated wrapper with the same Node executable as this process.
+    // The child prints the collected intents as JSON on stdout.
     const { stdout } = await execFileAsync(
       process.execPath,
       [executableScriptPath],
@@ -43,9 +43,7 @@ export async function compileInfraAsCodeScriptToIntents({
     )
     const parsed = JSON.parse(stdout.toString().trim())
 
-    return {
-      intents: parsed.intents,
-    }
+    return parsed.intents
   } finally {
     await rm(tempDir, { recursive: true, force: true })
   }

@@ -646,9 +646,12 @@ export default class Client {
    * Notion API endpoints
    */
 
-  public readonly infraAsCode = {
+  public readonly EXPERIMENTAL__infraAsCode = {
     /**
      * Run an infra as code script.
+     *
+     * Infra as code requires a Personal Access Token:
+     * https://developers.notion.com/guides/get-started/personal-access-tokens
      */
     run: (args: InfraAsCodeRunParameters): Promise<InfraAsCodeRunResponse> => {
       return runInfraAsCode(args, requestArgs => this.request(requestArgs))

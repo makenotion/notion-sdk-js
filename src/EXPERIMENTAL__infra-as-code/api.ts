@@ -1,13 +1,15 @@
-export type InfraAsCodeRequest = <ResponseBody extends object>(args: {
-  path: string
-  method: "get" | "post"
-  body?: Record<string, unknown>
-}) => Promise<ResponseBody>
+import type Client from "../Client"
 
 export type InfraAsCodeApiResult = {
   resourceIdToPointerMappings?: Record<string, unknown>
   resourceIdToPropertyIdMappings?: Record<string, string>
   [key: string]: unknown
+}
+
+type InfraAsCodeAsyncTaskResponse = {
+  status: string
+  result?: InfraAsCodeApiResult
+  error?: unknown
 }
 
 const POLL_INTERVAL_MS = 1000
@@ -18,7 +20,7 @@ const LOGGED_TASK_ID = "logged-infra-as-code-run"
  * Submits an infra as code run to Notion and returns the async task id.
  */
 export async function submitInfraAsCodeRunToApi(_args: {
-  request: InfraAsCodeRequest
+  request: Client["request"]
   intents: InfraAsCodeIntent[]
   existingResources: Record<string, unknown>
   existingProperties: Record<string, string>
@@ -41,7 +43,7 @@ export async function submitInfraAsCodeRunToApi(_args: {
  * Polls the Notion async task endpoint until the infra as code run finishes.
  */
 export async function pollInfraAsCodeTask(args: {
-  request: InfraAsCodeRequest
+  request: Client["request"]
   taskId: string
 }): Promise<InfraAsCodeApiResult> {
   if (args.taskId === LOGGED_TASK_ID) {
@@ -52,11 +54,7 @@ export async function pollInfraAsCodeTask(args: {
   }
 
   for (let pollCount = 0; pollCount < MAX_POLL_COUNT; pollCount++) {
-    const task = await args.request<{
-      status: string
-      result?: InfraAsCodeApiResult
-      error?: unknown
-    }>({
+    const task = await args.request<InfraAsCodeAsyncTaskResponse>({
       path: `async_tasks/${args.taskId}`,
       method: "get",
     })

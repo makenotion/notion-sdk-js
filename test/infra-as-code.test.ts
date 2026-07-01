@@ -49,9 +49,7 @@ describe("compileInfraAsCodeScriptToIntents", () => {
         filePathToScript: scriptPath,
       })
 
-      expect(result).toEqual({
-        intents: EXPECTED_INTENTS,
-      })
+      expect(result).toEqual(EXPECTED_INTENTS)
     } finally {
       await rm(tempDir, { recursive: true, force: true })
     }
@@ -76,7 +74,7 @@ describe("Client.infraAsCode.run", () => {
     const notion = new Client({ fetch: mockFetch })
 
     try {
-      const result = await notion.infraAsCode.run({
+      const result = await notion.EXPERIMENTAL__infraAsCode.run({
         scriptFilePath: scriptPath,
       })
 
@@ -144,7 +142,7 @@ describe("Client.infraAsCode.run", () => {
       )
 
       const notion = new Client({ fetch: mockFetch })
-      await notion.infraAsCode.run({
+      await notion.EXPERIMENTAL__infraAsCode.run({
         scriptFilePath: scriptPath,
         existingResourcesFilePath,
         sessionStateFilePath,
@@ -207,7 +205,7 @@ describe("Client.infraAsCode.run", () => {
       )
 
       const notion = new Client({ fetch: mockFetch })
-      await notion.infraAsCode.run({
+      await notion.EXPERIMENTAL__infraAsCode.run({
         scriptFilePath: scriptPath,
         existingResourcesFilePath,
         sessionStateFilePath,
@@ -246,7 +244,7 @@ describe("Client.infraAsCode.run", () => {
 
     try {
       const notion = new Client({ fetch: mockFetch })
-      await notion.infraAsCode.run({
+      await notion.EXPERIMENTAL__infraAsCode.run({
         scriptFilePath: scriptPath,
         existingResourcesFilePath,
         sessionStateFilePath,
