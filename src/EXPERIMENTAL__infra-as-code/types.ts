@@ -3,8 +3,8 @@
 	GENERATED FILE - DO NOT EDIT MANUALLY
 	Ambient type declarations for Infrastructure as Code scripts.
 
-  Note: Some things were temporarily edited manually to this file to match sdk types, 
-  we would need to update the original file to match.
+  TODO: Some things in this file were temporarily edited manually to 
+  match sdk types, we would need to update the source file to match.
   [tag: update-infra-as-code-generated-types]
 
 ============================================================================= */

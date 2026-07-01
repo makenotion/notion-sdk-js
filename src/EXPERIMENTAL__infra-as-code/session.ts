@@ -2,7 +2,7 @@ import { mkdir, mkdtemp, readFile, writeFile } from "node:fs/promises"
 import path = require("node:path")
 
 import type { InfraAsCodeApiResult } from "./api"
-import { isEnoentError } from "./utils"
+import { isFileNotFoundError } from "./utils"
 
 export const DEFAULT_SESSION_STATE_FILE_DIRECTORY = path.resolve(
   process.cwd(),
@@ -44,7 +44,7 @@ export async function readSessionState(
       existingProperties: parsed?.existingProperties ?? {},
     }
   } catch (error) {
-    if (isEnoentError(error)) {
+    if (isFileNotFoundError(error)) {
       return emptySessionState()
     }
     throw error

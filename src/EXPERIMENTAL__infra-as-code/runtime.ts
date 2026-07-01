@@ -1,3 +1,11 @@
+/**
+ * This file needs no dependencies.
+ *
+ * `compile.ts` copies only this function into the generated user script. Any
+ * imported value or top-level helper used inside the function would be missing
+ * in the child process. Type-only references are okay because TypeScript erases
+ * them before the generated script runs.
+ */
 type RuntimeNotion = typeof notion & {
   intent(intent: InfraAsCodeIntent): void
 }

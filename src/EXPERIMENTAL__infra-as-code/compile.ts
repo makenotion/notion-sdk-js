@@ -6,7 +6,7 @@ import path = require("node:path")
 import ts = require("typescript")
 
 import { createInfraAsCodeStubRuntime } from "./runtime"
-import { isEnoentError } from "./utils"
+import { isFileNotFoundError } from "./utils"
 
 const execFileAsync = promisify(execFile)
 
@@ -34,8 +34,8 @@ export async function compileInfraAsCodeScriptToIntents({
       "utf8"
     )
 
-    // Run the generated wrapper with the same Node executable as this process.
-    // The child prints the collected intents as JSON on stdout.
+    // Run the temporary JavaScript file in a separate Node process. It prints
+    // the actions the user's script asked for, and we read them back as JSON.
     const { stdout } = await execFileAsync(
       process.execPath,
       [executableScriptPath],
@@ -56,7 +56,7 @@ async function readScript(scriptPath: string): Promise<string> {
   try {
     return await readFile(scriptPath, "utf8")
   } catch (error) {
-    if (isEnoentError(error)) {
+    if (isFileNotFoundError(error)) {
       throw new Error(`Infra as code script not found: ${scriptPath}`)
     }
 
@@ -75,8 +75,14 @@ async function readScript(scriptPath: string): Promise<string> {
  * can evaluate the user's script without importing SDK internals.
  */
 function buildExecutableScriptSource(script: string): string {
-  return `const createInfraAsCodeStubRuntime = ${createInfraAsCodeStubRuntime.toString()}
+  return `// Embed the runtime so the temporary Node process can run without SDK imports.
+const createInfraAsCodeStubRuntime = ${createInfraAsCodeStubRuntime.toString()}
+
+// Initialize the runtime that owns the intents array. Calls to notion.* append
+// intents here while the user's script runs.
 const infraAsCodeRuntime = createInfraAsCodeStubRuntime()
+
+// Put the Notion DSL in scope so the user's script can call notion.page.create().
 const notion = infraAsCodeRuntime.notion
 
 ;(async () => {
@@ -105,6 +111,8 @@ ${script}
 function transpileExecutableScriptSource(scriptSource: string): string {
   const result = ts.transpileModule(scriptSource, {
     fileName: "script.executable.ts",
+    // Ask TypeScript to report problems while converting this file to
+    // JavaScript, so we can show a clear error before Node runs it.
     reportDiagnostics: true,
     compilerOptions: {
       esModuleInterop: true,
