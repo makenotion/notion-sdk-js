@@ -18,7 +18,7 @@
 import { Client } from "../.."
 
 // The token must have access to the space in existingResources.json.
-const NOTION_TOKEN = ""
+const NOTION_TOKEN = "<INSERT_YOUR_TOKEN_HERE>"
 const notion = new Client({ auth: NOTION_TOKEN ?? process.env["NOTION_TOKEN"] })
 
 notion.EXPERIMENTAL__infraAsCode.run({
