@@ -82,7 +82,7 @@ const createInfraAsCodeStubRuntime = ${createInfraAsCodeStubRuntime.toString()}
 // intents here while the user's script runs.
 const infraAsCodeRuntime = createInfraAsCodeStubRuntime()
 
-// Put the Notion DSL in scope so the user's script can call notion.page.create().
+// Put the notion helper object in scope for calls like notion.page.create().
 const notion = infraAsCodeRuntime.notion
 
 ;(async () => {
