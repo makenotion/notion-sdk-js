@@ -325,6 +325,33 @@ describe("Notion SDK Client", () => {
     })
   })
 
+  describe("async tasks endpoints", () => {
+    let mockFetch: jest.MockedFn<typeof fetch>
+    let notion: Client
+
+    beforeEach(() => {
+      mockFetch = jest.fn()
+      mockFetch.mockResolvedValue({
+        ok: true,
+        text: () => Promise.resolve("{}"),
+        headers: new Headers(),
+        status: 200,
+      } as Response)
+
+      notion = new Client({ fetch: mockFetch })
+    })
+
+    it("calls asyncTasks.retrieve with correct URL and method", async () => {
+      const taskId = "abc123"
+      await notion.asyncTasks.retrieve({ task_id: taskId })
+
+      expect(mockFetch).toHaveBeenCalledWith(
+        expect.stringContaining(`/v1/async_tasks/${taskId}`),
+        expect.objectContaining({ method: "GET" })
+      )
+    })
+  })
+
   describe("path traversal prevention", () => {
     let mockFetch: jest.MockedFn<typeof fetch>
     let notion: Client

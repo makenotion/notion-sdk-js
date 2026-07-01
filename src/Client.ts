@@ -162,6 +162,9 @@ import {
   type ListCustomEmojisParameters,
   type ListCustomEmojisResponse,
   listCustomEmojis,
+  type GetAsyncTaskParameters,
+  type GetAsyncTaskResponse,
+  getAsyncTask,
 } from "./api-endpoints"
 import {
   type QueryMeetingNotesResponse,
@@ -640,6 +643,24 @@ export default class Client {
   /*
    * Notion API endpoints
    */
+
+  public readonly asyncTasks = {
+    /**
+     * Retrieve an async task
+     */
+    retrieve: (
+      args: WithAuth<GetAsyncTaskParameters>
+    ): Promise<GetAsyncTaskResponse> => {
+      this.warnUnknownParams(args, getAsyncTask)
+      return this.request<GetAsyncTaskResponse>({
+        path: getAsyncTask.path(args),
+        method: getAsyncTask.method,
+        query: pick(args, getAsyncTask.queryParams),
+        body: pick(args, getAsyncTask.bodyParams),
+        auth: args?.auth,
+      })
+    },
+  }
 
   public readonly blocks = {
     /**
