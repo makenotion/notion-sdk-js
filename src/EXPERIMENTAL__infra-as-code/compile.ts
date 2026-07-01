@@ -102,7 +102,7 @@ ${script}
  * Converts the generated TypeScript wrapper into JavaScript for Node.
  *
  * The SDK runs this wrapper with Node, so it cannot execute the temporary
- * TypeScript file directly and needs to be transpiled. The original Bun-base flow 
+ * TypeScript file directly and needs to be transpiled. The original Bun-base flow
  * does not need this extra transpile step.
  */
 function transpileExecutableScriptSource(scriptSource: string): string {

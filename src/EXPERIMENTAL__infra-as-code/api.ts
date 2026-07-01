@@ -15,7 +15,7 @@ const MAX_POLL_COUNT = 600
 const LOGGED_TASK_ID = "logged-infra-as-code-run"
 
 /**
- * Temporarily logs the payload that will eventually go to the IaC API.
+ * Submits an infra as code run to Notion and returns the async task id.
  */
 export async function submitInfraAsCodeRunToApi(_args: {
   request: InfraAsCodeRequest

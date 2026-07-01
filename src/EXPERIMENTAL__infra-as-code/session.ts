@@ -34,9 +34,7 @@ export async function readSessionState(
   }
 
   try {
-    const parsed = JSON.parse(
-      await readFile(existingResourcesFilePath, "utf8")
-    )
+    const parsed = JSON.parse(await readFile(existingResourcesFilePath, "utf8"))
 
     return {
       existingResources: parsed?.existingResources ?? {},
