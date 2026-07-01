@@ -1,0 +1,88 @@
+import type Client from "../Client"
+
+export type InfraAsCodeApiResult = {
+  resourceIdToPointerMappings?: Record<string, unknown>
+  resourceIdToPropertyIdMappings?: Record<string, string>
+  [key: string]: unknown
+}
+
+type InfraAsCodeAsyncTaskResponse = {
+  status: string
+  result?: InfraAsCodeApiResult
+  error?: unknown
+}
+
+const POLL_INTERVAL_MS = 1000
+const MAX_POLL_COUNT = 600
+const LOGGED_TASK_ID = "logged-infra-as-code-run"
+
+/**
+ * Submits an infra as code run to Notion and returns the async task id.
+ */
+export async function submitInfraAsCodeRunToApi(_args: {
+  request: Client["request"]
+  intents: InfraAsCodeIntent[]
+  existingResources: Record<string, unknown>
+  existingProperties: Record<string, string>
+}): Promise<{ id: string }> {
+  // TODO: uncomment the real API call once endpoint is available.
+  // return args.request<{ id: string }>({
+  //   path: "infra_as_code",
+  //   method: "post",
+  //   body: {
+  //     intents: args.intents,
+  //     existingResources: args.existingResources,
+  //     existingProperties: args.existingProperties,
+  //   },
+  // })
+
+  return { id: LOGGED_TASK_ID }
+}
+
+/**
+ * Polls the Notion async task endpoint until the infra as code run finishes.
+ */
+export async function pollInfraAsCodeTask(args: {
+  request: Client["request"]
+  taskId: string
+}): Promise<InfraAsCodeApiResult> {
+  // TODO: remove empty mappings once the API endpoint is available.
+  if (args.taskId === LOGGED_TASK_ID) {
+    return {
+      resourceIdToPointerMappings: {},
+      resourceIdToPropertyIdMappings: {},
+    }
+  }
+
+  for (let pollCount = 0; pollCount < MAX_POLL_COUNT; pollCount++) {
+    const task = await args.request<InfraAsCodeAsyncTaskResponse>({
+      path: `async_tasks/${args.taskId}`,
+      method: "get",
+    })
+
+    if (task.status === "succeeded") {
+      return task.result ?? {}
+    }
+
+    if (task.status === "failed") {
+      throw new Error(
+        `Infra as code async task ${args.taskId} failed: ${JSON.stringify(
+          task.error
+        )}`
+      )
+    }
+
+    await sleep(POLL_INTERVAL_MS)
+  }
+
+  throw new Error(
+    `Infra as code async task ${args.taskId} did not finish after ${MAX_POLL_COUNT} polls`
+  )
+}
+
+/**
+ * Waits between async task polls.
+ */
+function sleep(ms: number): Promise<void> {
+  return new Promise(resolve => setTimeout(resolve, ms))
+}
