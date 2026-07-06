@@ -1,9 +1,9 @@
 {
   "resourceIdToPointerMappings": {
     "my-space": {
-      "spaceId": "7e21febe-57bd-8100-9b54-0003a4ddfd7f",
       "table": "space",
-      "id": "7e21febe-57bd-8100-9b54-0003a4ddfd7f"
+      "id": "<INSERT_YOUR_SPACE_ID_HERE>",
+      "spaceId": "<INSERT_YOUR_SPACE_ID_HERE>"
     }
   },
   "resourceIdToPropertyIdMappings": {}

@@ -19,12 +19,7 @@ import { Client } from "../.."
 
 // The token must have access to the space in sessionState.json.
 const NOTION_TOKEN = ""
-// const notion = new Client({ auth: NOTION_TOKEN || process.env["NOTION_TOKEN"] })
-
-const notion = new Client({
-  auth: process.env["NOTION_TOKEN"],
-  baseUrl: "http://localhost:3000",
-})
+const notion = new Client({ auth: NOTION_TOKEN || process.env["NOTION_TOKEN"] })
 
 notion.EXPERIMENTAL__infraAsCode.run({
   // The TypeScript infra as code script to compile and run.
