@@ -904,14 +904,29 @@ type PropertyNameUnion<P extends PropertySchemaDefinition[]> =
  * Allowed input value type for a particular property schema definition.
  * Person properties are filter-only and map to `never`.
  */
-type PropertyInputForDefinition<S extends PropertySchemaDefinition> =
-	S extends RelationPropertySchemaDefinition
-		? ResourceId | Array<ResourceId>
-		: S extends FilePropertySchemaDefinition
-			? Array<FileReference>
-			: S extends PersonPropertySchemaDefinition
-				? never
-				: PropertyValue
+type PropertyInputForDefinition<S extends PropertySchemaDefinition> = {
+	relation: ResourceId | Array<ResourceId>
+	file: Array<FileReference>
+	select: string
+	status: string
+	multi_select: string | Array<string>
+	formula: never
+	rollup: never
+	created_time: never
+	last_edited_time: never
+	created_by: never
+	last_edited_by: never
+	auto_increment_id: never
+	person: never
+	title: TextValue | string | number
+	text: TextValue | string | number
+	number: TextValue | string | number
+	date: TextValue
+	checkbox: TextValue
+	url: TextValue | string
+	email: TextValue | string
+	phone_number: TextValue | string
+}[S["type"]]
 
 /**
  * Shape of the properties object accepted by DataSourceHandle.addPage based on a
