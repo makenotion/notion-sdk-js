@@ -1,17 +1,6 @@
-import { mkdir, mkdtemp, readFile, writeFile } from "node:fs/promises"
-import path = require("node:path")
+import { readFile, writeFile } from "node:fs/promises"
 
 import type { InfraAsCodeApiResult } from "./api"
-import { isFileNotFoundError } from "./utils"
-
-export const DEFAULT_SESSION_STATE_FILE_DIRECTORY = path.resolve(
-  process.cwd(),
-  "tmp",
-  "infra-as-code",
-  "sessions"
-)
-
-export const DEFAULT_SESSION_STATE_FILE_PREFIX = "infra-as-code-session-state"
 
 export type InfraAsCodeSessionState = {
   resourceIdToPointerMappings: Record<string, unknown>
@@ -28,35 +17,21 @@ type InfraAsCodeSessionStateFile = Partial<InfraAsCodeSessionState> & {
  *
  * The preferred persisted shape uses resourceIdTo* keys. For compatibility,
  * this also accepts the user/importer-facing existingResources wrapper.
- *
- * A missing file is treated as empty state so first-time tests can run before
- * any mappings have been generated.
  */
 export async function readSessionState(
-  sessionStateFilePath: string | undefined
+  sessionStateFilePath: string
 ): Promise<InfraAsCodeSessionState> {
-  if (sessionStateFilePath === undefined) {
-    return emptySessionState()
-  }
+  const parsed: InfraAsCodeSessionStateFile | null = JSON.parse(
+    await readFile(sessionStateFilePath, "utf8")
+  )
 
-  try {
-    const parsed: InfraAsCodeSessionStateFile | null = JSON.parse(
-      await readFile(sessionStateFilePath, "utf8")
-    )
-
-    return {
-      resourceIdToPointerMappings:
-        parsed?.resourceIdToPointerMappings ?? parsed?.existingResources ?? {},
-      resourceIdToPropertyIdMappings:
-        parsed?.resourceIdToPropertyIdMappings ??
-        parsed?.existingProperties ??
-        {},
-    }
-  } catch (error) {
-    if (isFileNotFoundError(error)) {
-      return emptySessionState()
-    }
-    throw error
+  return {
+    resourceIdToPointerMappings:
+      parsed?.resourceIdToPointerMappings ?? parsed?.existingResources ?? {},
+    resourceIdToPropertyIdMappings:
+      parsed?.resourceIdToPropertyIdMappings ??
+      parsed?.existingProperties ??
+      {},
   }
 }
 
@@ -84,28 +59,4 @@ export async function writeSessionState(
     `${JSON.stringify(nextState, null, 2)}\n`,
     "utf8"
   )
-}
-
-/**
- * Creates a unique default path for the session-state file from this run.
- */
-export async function createDefaultSessionStateFilePath(): Promise<string> {
-  await mkdir(DEFAULT_SESSION_STATE_FILE_DIRECTORY, { recursive: true })
-  const tempDir = await mkdtemp(
-    path.join(
-      DEFAULT_SESSION_STATE_FILE_DIRECTORY,
-      `${DEFAULT_SESSION_STATE_FILE_PREFIX}-`
-    )
-  )
-  return path.join(tempDir, "session-state.json")
-}
-
-/**
- * Provides empty mappings when no session-state file exists yet.
- */
-function emptySessionState(): InfraAsCodeSessionState {
-  return {
-    resourceIdToPointerMappings: {},
-    resourceIdToPropertyIdMappings: {},
-  }
 }

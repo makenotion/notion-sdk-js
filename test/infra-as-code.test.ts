@@ -9,10 +9,6 @@ import {
   submitInfraAsCodeRunToApi,
   type InfraAsCodeApiResult,
 } from "../src/EXPERIMENTAL__infra-as-code/api"
-import {
-  DEFAULT_SESSION_STATE_FILE_DIRECTORY,
-  DEFAULT_SESSION_STATE_FILE_PREFIX,
-} from "../src/EXPERIMENTAL__infra-as-code/session"
 import { mockResponse } from "./test-utils"
 
 const TEST_SCRIPT_SOURCE = `
@@ -221,64 +217,35 @@ describe("infra as code API helpers", () => {
 })
 
 describe("Client.infraAsCode.run", () => {
-  let consoleDir: jest.SpyInstance
-
-  beforeEach(() => {
-    consoleDir = jest.spyOn(console, "dir").mockImplementation()
-  })
-
-  afterEach(() => {
-    consoleDir.mockRestore()
-  })
-
-  it("compiles a script and logs intents with empty maps", async () => {
+  it("compiles a script and submits empty maps from session state", async () => {
     const tempDir = await mkdtemp(path.join(tmpdir(), "notion-iac-test-"))
     const scriptPath = await writeInfraAsCodeScript(tempDir)
+    const sessionStateFilePath = path.join(tempDir, "iac-session.json")
     const mockFetch: jest.MockedFn<typeof fetch> = jest.fn()
     mockInfraAsCodeRun(mockFetch)
     const notion = new Client({ fetch: mockFetch })
 
     try {
+      await writeSessionStateFile(sessionStateFilePath)
+
       const result = await notion.EXPERIMENTAL__infraAsCode.run({
         scriptFilePath: scriptPath,
+        sessionStateFilePath,
       })
 
       expectInfraAsCodeSubmit(mockFetch, {}, {})
       expectInfraAsCodePoll(mockFetch)
-      expect(consoleDir).toHaveBeenCalledWith(
-        {
-          intents: EXPECTED_INTENTS,
-          existingResources: {},
-          existingProperties: {},
-        },
-        { depth: null }
-      )
       expect(result).toEqual({
         ...EXPECTED_API_RESULT,
-        sessionStateFilePath: expect.any(String),
+        sessionStateFilePath,
       })
-      const expectedSessionStateDirectoryPrefix = path.join(
-        DEFAULT_SESSION_STATE_FILE_DIRECTORY,
-        `${DEFAULT_SESSION_STATE_FILE_PREFIX}-`
-      )
-      expect(
-        path
-          .dirname(result.sessionStateFilePath)
-          .startsWith(expectedSessionStateDirectoryPrefix)
-      ).toBe(true)
-      expect(
-        JSON.parse(await readFile(result.sessionStateFilePath, "utf8"))
-      ).toEqual({
+      expect(JSON.parse(await readFile(sessionStateFilePath, "utf8"))).toEqual({
         resourceIdToPointerMappings:
           EXPECTED_API_RESULT.resourceIdToPointerMappings,
         resourceIdToPropertyIdMappings:
           EXPECTED_API_RESULT.resourceIdToPropertyIdMappings,
       })
     } finally {
-      await rm(DEFAULT_SESSION_STATE_FILE_DIRECTORY, {
-        recursive: true,
-        force: true,
-      })
       await rm(tempDir, { recursive: true, force: true })
     }
   })
@@ -321,18 +288,6 @@ describe("Client.infraAsCode.run", () => {
         }
       )
       expectInfraAsCodePoll(mockFetch)
-      expect(consoleDir).toHaveBeenCalledWith(
-        {
-          intents: EXPECTED_INTENTS,
-          existingResources: {
-            "existing-page": { type: "block", id: "existing-page-id" },
-          },
-          existingProperties: {
-            "name-property": "title",
-          },
-        },
-        { depth: null }
-      )
       expect(JSON.parse(await readFile(sessionStateFilePath, "utf8"))).toEqual({
         resourceIdToPointerMappings: {
           "existing-page": { type: "block", id: "existing-page-id" },
@@ -386,18 +341,6 @@ describe("Client.infraAsCode.run", () => {
         }
       )
       expectInfraAsCodePoll(mockFetch)
-      expect(consoleDir).toHaveBeenCalledWith(
-        {
-          intents: EXPECTED_INTENTS,
-          existingResources: {
-            "existing-page": { type: "block", id: "existing-page-id" },
-          },
-          existingProperties: {
-            "name-property": "title",
-          },
-        },
-        { depth: null }
-      )
       expect(JSON.parse(await readFile(sessionStateFilePath, "utf8"))).toEqual({
         resourceIdToPointerMappings: {
           "existing-page": { type: "block", id: "existing-page-id" },
@@ -474,7 +417,7 @@ describe("Client.infraAsCode.run", () => {
     }
   })
 
-  it("treats a missing session-state file as empty state", async () => {
+  it("throws when the session-state file does not exist", async () => {
     const tempDir = await mkdtemp(path.join(tmpdir(), "notion-iac-test-"))
     const scriptPath = await writeInfraAsCodeScript(tempDir)
     const sessionStateFilePath = path.join(tempDir, "missing-session.json")
@@ -483,27 +426,13 @@ describe("Client.infraAsCode.run", () => {
 
     try {
       const notion = new Client({ fetch: mockFetch })
-      await notion.EXPERIMENTAL__infraAsCode.run({
-        scriptFilePath: scriptPath,
-        sessionStateFilePath,
-      })
-
-      expectInfraAsCodeSubmit(mockFetch, {}, {})
-      expectInfraAsCodePoll(mockFetch)
-      expect(consoleDir).toHaveBeenCalledWith(
-        {
-          intents: EXPECTED_INTENTS,
-          existingResources: {},
-          existingProperties: {},
-        },
-        { depth: null }
-      )
-      expect(JSON.parse(await readFile(sessionStateFilePath, "utf8"))).toEqual({
-        resourceIdToPointerMappings:
-          EXPECTED_API_RESULT.resourceIdToPointerMappings,
-        resourceIdToPropertyIdMappings:
-          EXPECTED_API_RESULT.resourceIdToPropertyIdMappings,
-      })
+      await expect(
+        notion.EXPERIMENTAL__infraAsCode.run({
+          scriptFilePath: scriptPath,
+          sessionStateFilePath,
+        })
+      ).rejects.toMatchObject({ code: "ENOENT" })
+      expect(mockFetch).not.toHaveBeenCalled()
     } finally {
       await rm(tempDir, { recursive: true, force: true })
     }
@@ -514,6 +443,19 @@ async function writeInfraAsCodeScript(tempDir: string): Promise<string> {
   const scriptPath = path.join(tempDir, "script.ts")
   await writeFile(scriptPath, TEST_SCRIPT_SOURCE, "utf8")
   return scriptPath
+}
+
+async function writeSessionStateFile(
+  sessionStateFilePath: string
+): Promise<void> {
+  await writeFile(
+    sessionStateFilePath,
+    JSON.stringify({
+      resourceIdToPointerMappings: {},
+      resourceIdToPropertyIdMappings: {},
+    }),
+    "utf8"
+  )
 }
 
 function mockClientRequest(

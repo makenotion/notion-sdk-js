@@ -12,7 +12,7 @@ through `Client.EXPERIMENTAL__infraAsCode.run()`.
 Use this guide when helping a user create or edit:
 
 - a raw infra as code script, usually `examples/script.ts`
-- an optional session-state file, usually `examples/sessionState.json`
+- a required session-state file, usually `examples/sessionState.json`
 - a runner file, usually `examples/runInfraAsCode.ts`
 
 The goal is to make it easy for users to generate scripts ranging from a tiny
@@ -156,9 +156,9 @@ Common helpers include:
 
 ## Session State Files
 
-Use `sessionStateFilePath` when the script should update or refer to resources
-that already exist in Notion, or when a rerun should write mappings back to the
-same file. Prefer this session-state file shape:
+Every run must provide `sessionStateFilePath`. Use it to tell the API which
+existing workspace/resources the script should target, and to write returned
+mappings back to the same file. Prefer this session-state file shape:
 
 ```json
 {
@@ -174,6 +174,10 @@ same file. Prefer this session-state file shape:
   }
 }
 ```
+
+The session-state file must always include exactly one existing space mapping.
+Without a space in `resourceIdToPointerMappings` or `existingResources`, the
+public API returns a validation error.
 
 The keys in `resourceIdToPointerMappings` and
 `resourceIdToPropertyIdMappings` must match `resourceId` values in the script.

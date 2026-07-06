@@ -5,11 +5,7 @@ import {
 } from "./api"
 import type Client from "../Client"
 import { compileInfraAsCodeScriptToIntents } from "./compile"
-import {
-  createDefaultSessionStateFilePath,
-  readSessionState,
-  writeSessionState,
-} from "./session"
+import { readSessionState, writeSessionState } from "./session"
 
 export type InfraAsCodeRunParameters = {
   /**
@@ -17,13 +13,11 @@ export type InfraAsCodeRunParameters = {
    */
   scriptFilePath: string
   /**
-   * Optional path to the session-state file for this run.
+   * Path to the session-state file for this run.
    *
-   * When provided, the SDK reads and writes the same file. When omitted, the SDK
-   * writes a new file under
-   * `tmp/infra-as-code/sessions`.
+   * The SDK reads and writes the same file.
    */
-  sessionStateFilePath?: string
+  sessionStateFilePath: string
 }
 
 export type InfraAsCodeRunResponse = InfraAsCodeApiResult & {
@@ -44,9 +38,7 @@ export async function runInfraAsCode(
   args: InfraAsCodeRunParameters,
   request: Client["request"]
 ): Promise<InfraAsCodeRunResponse> {
-  const sessionStateFilePath =
-    args.sessionStateFilePath ?? (await createDefaultSessionStateFilePath())
-  const priorState = await readSessionState(sessionStateFilePath)
+  const priorState = await readSessionState(args.sessionStateFilePath)
   const intents = await compileInfraAsCodeScriptToIntents({
     filePathToScript: args.scriptFilePath,
   })
@@ -65,10 +57,10 @@ export async function runInfraAsCode(
     taskId: asyncTask.id,
   })
 
-  await writeSessionState(sessionStateFilePath, priorState, result)
+  await writeSessionState(args.sessionStateFilePath, priorState, result)
 
   return {
     ...result,
-    sessionStateFilePath,
+    sessionStateFilePath: args.sessionStateFilePath,
   }
 }
