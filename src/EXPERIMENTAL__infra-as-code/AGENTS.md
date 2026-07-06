@@ -12,7 +12,7 @@ through `Client.EXPERIMENTAL__infraAsCode.run()`.
 Use this guide when helping a user create or edit:
 
 - a raw infra as code script, usually `examples/script.ts`
-- an optional existing resources file, usually `examples/existingResources.json`
+- an optional session-state file, usually `examples/sessionState.json`
 - a runner file, usually `examples/runInfraAsCode.ts`
 
 The goal is to make it easy for users to generate scripts ranging from a tiny
@@ -29,7 +29,7 @@ databases, data sources, views, and seeded pages.
 - `utils.ts`: small shared helpers
 - `types.ts`: generated ambient types for script authoring
 - `examples/script.ts`: simple raw infra as code script
-- `examples/existingResources.json`: sample input mapping for known resources
+- `examples/sessionState.json`: sample persisted mappings for known resources
 - `examples/runInfraAsCode.ts`: simple runner for the example script
 
 `compile.ts` is the key piece for script generation. It wraps the user's script
@@ -38,13 +38,9 @@ reads the emitted intents back as JSON.
 
 ## Current Limitations
 
-The real public API endpoint is not available yet. `api.ts` currently keeps the
-future API call commented out and returns a local placeholder task id. The run
-flow still compiles scripts, logs the request payload, polls the local
-placeholder, and writes session output, but it does not actually apply changes
-through Notion yet.
-
-TODO: Update this section once the public infra as code API endpoint is ready.
+`api.ts` submits compiled intents to the public infra as code API endpoint,
+polls the async task endpoint, and writes returned mappings back to the
+session-state file.
 
 Keep implementation changes minimal unless the user explicitly asks to work on
 the SDK internals.
@@ -63,8 +59,8 @@ const notion = new Client({ auth: process.env["NOTION_TOKEN"] })
 
 notion.EXPERIMENTAL__infraAsCode.run({
   scriptFilePath: "./src/EXPERIMENTAL__infra-as-code/examples/script.ts",
-  existingResourcesFilePath:
-    "./src/EXPERIMENTAL__infra-as-code/examples/existingResources.json",
+  sessionStateFilePath:
+    "./src/EXPERIMENTAL__infra-as-code/examples/sessionState.json",
 })
   .then(result => console.dir(result, { depth: null }))
   .catch(error => {
@@ -158,10 +154,31 @@ Common helpers include:
 - `notion.status(...)`
 - `notion.multiSelect(...)`
 
-## Existing Resources Files
+## Session State Files
 
-Use `existingResourcesFilePath` when the script should update or refer to
-resources that already exist in Notion. The input file shape is:
+Use `sessionStateFilePath` when the script should update or refer to resources
+that already exist in Notion, or when a rerun should write mappings back to the
+same file. Prefer this session-state file shape:
+
+```json
+{
+  "resourceIdToPointerMappings": {
+    "my-space": {
+      "table": "space",
+      "id": "<space-id>",
+      "spaceId": "<space-id>"
+    }
+  },
+  "resourceIdToPropertyIdMappings": {
+    "task-name-prop": "title"
+  }
+}
+```
+
+The keys in `resourceIdToPointerMappings` and
+`resourceIdToPropertyIdMappings` must match `resourceId` values in the script.
+
+For compatibility, the SDK can also read files that use this wrapper shape:
 
 ```json
 {
@@ -178,25 +195,14 @@ resources that already exist in Notion. The input file shape is:
 }
 ```
 
-The keys must match `resourceId` values in the script.
+After the run, the SDK writes the preferred `resourceIdTo*` session-state shape
+back to `sessionStateFilePath`.
 
 Do not invent real Notion IDs. If the user wants to target existing local
 resources and has not provided IDs, ask for them or leave clear placeholders.
 
-`sessionStateFilePath` is output from a run. Current output keys are:
-
-```json
-{
-  "resourceIdToPointerMappings": {},
-  "resourceIdToPropertyIdMappings": {}
-}
-```
-
-That output shape is not the same as the input `existingResourcesFilePath`
-shape. Convert keys before using a run output file as an input mapping file.
-
-TODO: Update this section once session state reads from and writes to the same
-file shape.
+The SDK reads this file before a run and writes the merged session state back to
+the same file after the run.
 
 ## Authoring Workflow For Agents
 
@@ -206,8 +212,8 @@ When helping a user create a new infra as code example:
    properties, views, and seed pages.
 2. Choose stable `resourceId` values before writing the script.
 3. Create or update the raw script with the global `notion` helper.
-4. Add or update `existingResources.json` only for resources the user already
-   has and explicitly wants to target.
+4. Add or update `sessionState.json` only for resources the user already has and
+   explicitly wants to target.
 5. Keep the runner small and point it at the script and mapping file.
 6. Run `npm run build` to type-check the SDK and examples.
 7. Optionally run the built example if the user asks and a suitable token/setup
@@ -241,8 +247,8 @@ If the user asks to run an example:
 
 ```bash
 npm run build
-NOTION_TOKEN=secret_... node build/src/EXPERIMENTAL__infra-as-code/examples/runInfraAsCode.js
+NOTION_TOKEN=<personal-access-token> node build/src/EXPERIMENTAL__infra-as-code/examples/runInfraAsCode.js
 ```
 
-The current stubbed API path logs the compiled payload and writes a local
-session-state output file, but does not yet apply changes through the real API.
+The API path logs the compiled payload, submits it to Notion, polls the async
+task, and writes the returned mappings back to the session-state file.

@@ -13,35 +13,44 @@ export const DEFAULT_SESSION_STATE_FILE_DIRECTORY = path.resolve(
 
 export const DEFAULT_SESSION_STATE_FILE_PREFIX = "infra-as-code-session-state"
 
-export type InfraAsCodeSessionInput = {
-  existingResources: Record<string, unknown>
-  existingProperties: Record<string, string>
-}
-
-type InfraAsCodeSessionOutput = {
+export type InfraAsCodeSessionState = {
   resourceIdToPointerMappings: Record<string, unknown>
   resourceIdToPropertyIdMappings: Record<string, string>
 }
 
+type InfraAsCodeSessionStateFile = Partial<InfraAsCodeSessionState> & {
+  existingResources?: Record<string, unknown>
+  existingProperties?: Record<string, string>
+}
+
 /**
- * Reads mappings that let a script target existing Notion resources.
+ * Reads the persisted session state for an infra as code run.
+ *
+ * The preferred persisted shape uses resourceIdTo* keys. For compatibility,
+ * this also accepts the user/importer-facing existingResources wrapper.
  *
  * A missing file is treated as empty state so first-time tests can run before
  * any mappings have been generated.
  */
 export async function readSessionState(
-  existingResourcesFilePath: string | undefined
-): Promise<InfraAsCodeSessionInput> {
-  if (existingResourcesFilePath === undefined) {
+  sessionStateFilePath: string | undefined
+): Promise<InfraAsCodeSessionState> {
+  if (sessionStateFilePath === undefined) {
     return emptySessionState()
   }
 
   try {
-    const parsed = JSON.parse(await readFile(existingResourcesFilePath, "utf8"))
+    const parsed: InfraAsCodeSessionStateFile | null = JSON.parse(
+      await readFile(sessionStateFilePath, "utf8")
+    )
 
     return {
-      existingResources: parsed?.existingResources ?? {},
-      existingProperties: parsed?.existingProperties ?? {},
+      resourceIdToPointerMappings:
+        parsed?.resourceIdToPointerMappings ?? parsed?.existingResources ?? {},
+      resourceIdToPropertyIdMappings:
+        parsed?.resourceIdToPropertyIdMappings ??
+        parsed?.existingProperties ??
+        {},
     }
   } catch (error) {
     if (isFileNotFoundError(error)) {
@@ -52,23 +61,20 @@ export async function readSessionState(
 }
 
 /**
- * Writes the resource mappings returned by an infra as code run.
- *
- * This does not mutate the input mapping file. Each run gets its own output
- * file unless the caller provides a specific `sessionStateFilePath`.
+ * Writes the next session state back to the same session-state file.
  */
 export async function writeSessionState(
   sessionStateFilePath: string,
-  priorState: InfraAsCodeSessionInput,
+  priorState: InfraAsCodeSessionState,
   result: InfraAsCodeApiResult
 ): Promise<void> {
-  const nextState: InfraAsCodeSessionOutput = {
+  const nextState: InfraAsCodeSessionState = {
     resourceIdToPointerMappings: {
-      ...priorState.existingResources,
+      ...priorState.resourceIdToPointerMappings,
       ...(result.resourceIdToPointerMappings ?? {}),
     },
     resourceIdToPropertyIdMappings: {
-      ...priorState.existingProperties,
+      ...priorState.resourceIdToPropertyIdMappings,
       ...(result.resourceIdToPropertyIdMappings ?? {}),
     },
   }
@@ -95,11 +101,11 @@ export async function createDefaultSessionStateFilePath(): Promise<string> {
 }
 
 /**
- * Provides empty mappings when no existing resource file is supplied.
+ * Provides empty mappings when no session-state file exists yet.
  */
-function emptySessionState(): InfraAsCodeSessionInput {
+function emptySessionState(): InfraAsCodeSessionState {
   return {
-    existingResources: {},
-    existingProperties: {},
+    resourceIdToPointerMappings: {},
+    resourceIdToPropertyIdMappings: {},
   }
 }

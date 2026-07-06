@@ -17,16 +17,10 @@ export type InfraAsCodeRunParameters = {
    */
   scriptFilePath: string
   /**
-   * Optional path to JSON mappings for resources that already exist in Notion.
+   * Optional path to the session-state file for this run.
    *
-   * Use this when testing against an existing space, or when a rerun should
-   * update the same known resources. The file is read but never written to.
-   */
-  existingResourcesFilePath?: string
-  /**
-   * Optional path where the session-state file for this run should be written.
-   *
-   * When omitted, the SDK writes a new file under
+   * When provided, the SDK reads and writes the same file. When omitted, the SDK
+   * writes a new file under
    * `tmp/infra-as-code/sessions`.
    */
   sessionStateFilePath?: string
@@ -50,28 +44,20 @@ export async function runInfraAsCode(
   args: InfraAsCodeRunParameters,
   request: Client["request"]
 ): Promise<InfraAsCodeRunResponse> {
-  const priorState = await readSessionState(args.existingResourcesFilePath)
+  const sessionStateFilePath =
+    args.sessionStateFilePath ?? (await createDefaultSessionStateFilePath())
+  const priorState = await readSessionState(sessionStateFilePath)
   const intents = await compileInfraAsCodeScriptToIntents({
     filePathToScript: args.scriptFilePath,
   })
-  const sessionStateFilePath =
-    args.sessionStateFilePath ?? (await createDefaultSessionStateFilePath())
-
-  // Temporary logging to see json intents
-  console.dir(
-    {
-      intents,
-      existingResources: priorState.existingResources,
-      existingProperties: priorState.existingProperties,
-    },
-    { depth: null }
-  )
+  const existingResources = priorState.resourceIdToPointerMappings
+  const existingProperties = priorState.resourceIdToPropertyIdMappings
 
   const asyncTask = await submitInfraAsCodeRunToApi({
     request,
     intents,
-    existingResources: priorState.existingResources,
-    existingProperties: priorState.existingProperties,
+    existingResources,
+    existingProperties,
   })
 
   const result = await pollInfraAsCodeTask({

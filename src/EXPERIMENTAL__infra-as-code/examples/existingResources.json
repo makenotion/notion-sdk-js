@@ -1,9 +1,0 @@
-{
-  "existingResources": {
-    "my-space": {
-      "table": "space",
-      "id": "<INSERT_YOUR_SPACE_ID_HERE>",
-      "spaceId": "<INSERT_YOUR_SPACE_ID_HERE>"
-    }
-  }
-}

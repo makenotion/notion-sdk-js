@@ -1,11 +1,9 @@
 /* =============================================================================
 
 	GENERATED FILE - DO NOT EDIT MANUALLY
+
 	Ambient type declarations for Infrastructure as Code scripts.
 
-  TODO: Some things in this file were temporarily edited manually to
-  match sdk types, we would need to update the source file to match.
-  [tag: update-infra-as-code-generated-types]
 
 ============================================================================= */
 
@@ -42,19 +40,14 @@ declare const selectColors: [
 
 type SelectColor = (typeof selectColors)[number]
 
-// Opaque types - external consumers should not construct these directly
-// They are returned by the notion helper functions
+// Helper types returned by the notion helper functions
 
 /**
- * Represents formatted text content in Notion.
- * This is an opaque type - use notion.text(), notion.date(), etc. to create values.
- * [ref: update-infra-as-code-generated-types]
+ * Represents formatted text content in Infra as Code scripts.
+ * This aliases the JSON-serializable text token format returned by
+ * notion.text(), notion.date(), and related helpers.
  */
 type TextValue = SimpleTextValue
-
-type SimpleTextToken = [string] | [string, ...unknown[]]
-
-type SimpleTextValue = Array<SimpleTextToken>
 
 /**
  * Represents a mention token in Notion text.
@@ -218,7 +211,7 @@ type PageIntent = {
   /**
    * Optional cover image for the page.
    */
-  cover?: FileReference
+  cover?: PageCoverReference
 }
 
 /**
@@ -791,6 +784,37 @@ type PropertySchemaDefinition =
   | FilePropertySchemaDefinition
   | PersonPropertySchemaDefinition
 
+type DatabasePageLayoutPropertyModule = {
+  id?: string
+  type: "property"
+  propertyResourceId: ResourceId
+}
+
+type DatabasePageLayoutTitleWithIconModule = {
+  id?: string
+  type: "titleWithIcon"
+  propertyResourceIds?: Array<ResourceId>
+  propertyLabels?: "show" | "hide"
+}
+
+type DatabasePageLayoutSimpleModule = {
+  id?: string
+  type: "cover" | "properties" | "discussions" | "editor"
+}
+
+type DatabasePageLayoutModule =
+  | DatabasePageLayoutPropertyModule
+  | DatabasePageLayoutTitleWithIconModule
+  | DatabasePageLayoutSimpleModule
+
+type DatabasePageLayout = {
+  main: Array<DatabasePageLayoutModule>
+  details?: Array<DatabasePageLayoutModule>
+  propertyIconsVisibility?: "show" | "hide"
+  fullWidth?: boolean
+  databaseTemplatesVisibility?: "show" | "hide"
+}
+
 type DataSourceSchema = {
   resourceId: ResourceId
   name: string
@@ -806,8 +830,27 @@ type DataSourceSchema = {
    * this same data source.
    */
   defaultTemplate?: ResourceId
+  /**
+   * Optional database page layout used for pages in this data source.
+   */
+  pageLayout?: DatabasePageLayout
   properties: Array<PropertySchemaDefinition>
 }
+
+/**
+ * A single text token - either plain text [string] or text with annotations [string, annotations[]].
+ */
+type SimpleTextToken = [string] | [string, ...unknown[]]
+
+/**
+ * Simplified text value for Infra as Code property values.
+ * This is the JSON-serializable subset of TextValue - an array of text tokens.
+ *
+ * The full TextValue type includes React.ReactNode which contains `any`,
+ * preventing validator generation. This simplified type matches what the
+ * runtime validation in validation.ts actually checks.
+ */
+type SimpleTextValue = Array<SimpleTextToken>
 
 /**
  * A reference to an uploaded file, returned by `notion.file()`.
@@ -820,6 +863,22 @@ type FileReference = {
 }
 
 /**
+ * A reference to a page cover image.
+ *
+ * Uploaded file references are resolved through the file manifest. URL
+ * references are written directly to the page's `format.page_cover`, matching
+ * built-in Notion cover URLs and externally hosted images.
+ * @generateValidator
+ */
+type PageCoverReference =
+  | FileReference
+  | {
+      type: "url"
+      url: string
+      position?: number
+    }
+
+/**
  * Property values can be:
  * - SimpleTextValue (array format from runtime helpers - includes annotations)
  * - Array<string> (relation values)
@@ -828,10 +887,10 @@ type FileReference = {
  * - undefined
  */
 type PropertyValue =
-  | string
   | SimpleTextValue
-  | string[]
-  | FileReference[]
+  | Array<string>
+  | string
+  | Array<FileReference>
   | undefined
 
 /**
@@ -843,29 +902,15 @@ type PropertyNameUnion<P extends PropertySchemaDefinition[]> =
 /**
  * Allowed input value type for a particular property schema definition.
  * Person properties are filter-only and map to `never`.
- * [ref: update-infra-as-code-generated-types]
  */
 type PropertyInputForDefinition<S extends PropertySchemaDefinition> =
   S extends RelationPropertySchemaDefinition
-    ? string | string[]
+    ? ResourceId | Array<ResourceId>
     : S extends FilePropertySchemaDefinition
-      ? FileReference[]
-      : S extends
-            | SelectPropertySchemaDefinition
-            | MultiSelectPropertySchemaDefinition
-            | StatusPropertySchemaDefinition
-        ? string
-        : S extends
-              | FormulaPropertySchemaDefinition
-              | RollupPropertySchemaDefinition
-              | CreatedTimePropertySchemaDefinition
-              | LastEditedTimePropertySchemaDefinition
-              | CreatedByPropertySchemaDefinition
-              | LastEditedByPropertySchemaDefinition
-              | AutoIncrementIdPropertySchemaDefinition
-              | PersonPropertySchemaDefinition
-          ? never
-          : SimpleTextValue
+      ? Array<FileReference>
+      : S extends PersonPropertySchemaDefinition
+        ? never
+        : PropertyValue
 
 /**
  * Shape of the properties object accepted by DataSourceHandle.addPage based on a
@@ -949,6 +994,7 @@ type GroupByFormat = {
     | "location"
     | "formula"
     | undefined
+  hideEmptyGroups?: boolean | undefined
 }
 
 type CoverFormat =
@@ -1160,6 +1206,7 @@ type CalendarViewSchema = BaseViewSchema & {
 type ListViewSchema = BaseViewSchema & {
   type: "list"
   properties?: Array<PropertyFormat>
+  groupBy?: GroupByFormat
 }
 
 type GalleryViewSchema = BaseViewSchema & {
@@ -1215,6 +1262,10 @@ type DatabaseIntent = {
    * Icon for the database. Can be an emoji or a notion_icon (looked up via semantic search).
    */
   icon?: InfraAsCodeIcon
+  /**
+   * Optional cover for the database page.
+   */
+  cover?: PageCoverReference
   name?: string
   /**
    * Optional description for the database. A database with a description must
@@ -1407,9 +1458,10 @@ type DataSourceHandle<P extends PropertySchemaDefinition[]> = {
     template?: boolean
     /**
      * Optional cover image referencing a file resource ID from the file manifest.
-     * The file must be an image type (png, jpg, gif, svg, webp).
+     * The file must be an image type (png, jpg, gif, svg, webp). URL cover
+     * references are also accepted.
      */
-    cover?: FileReference
+    cover?: PageCoverReference
   }): PageHandle
 }
 
@@ -1492,9 +1544,10 @@ type TeamspaceHandle = {
     content?: string
     /**
      * Optional cover image referencing a file resource ID from the file manifest.
-     * The file must be an image type (png, jpg, gif, svg, webp).
+     * The file must be an image type (png, jpg, gif, svg, webp). URL cover
+     * references are also accepted.
      */
-    cover?: FileReference
+    cover?: PageCoverReference
   }): PageHandle
 }
 
@@ -1502,6 +1555,52 @@ type SpaceHandle = {
   resourceId: ResourceId
   addTeamspace(args: Omit<TeamspaceIntent, "parent">): TeamspaceHandle
 }
+
+/**
+ * Intent for adding a view to a database.
+ * Emitted separately from the database intent to allow streaming output
+ * without needing to buffer views until the database is finalized.
+ *
+ */
+type ViewIntent = {
+  /** The resourceId of the database to add the view to */
+  databaseResourceId: ResourceId
+  /** The view configuration */
+  view: ViewSchema
+}
+
+/**
+ * Intent for attaching a file to a parent block, database page property, teamspace icon, or space icon.
+ * Used for database file property values where the file
+ * is not embedded inline via markdown content.
+ *
+ */
+type FileAttachmentIntent = {
+  /** Resource ID of the file from the file manifest */
+  resourceId: ResourceId
+  /** Resource ID of the parent page to attach the file to */
+  parentResourceId: ResourceId
+  /**
+   * Property name on the parent page to set the file as value.
+   * Only applicable when the parent is a database page with a file property.
+   */
+  propertyName?: string
+}
+
+/**
+ * Discriminated union of all intent types for sandbox output.
+ * Each intent includes a `type` discriminator and the corresponding args.
+ *
+ * @generateValidator
+ */
+type InfraAsCodeIntent =
+  | ({ type: "space" } & SpaceIntent)
+  | ({ type: "teamspace" } & TeamspaceIntent)
+  | ({ type: "database" } & DatabaseIntent)
+  | ({ type: "page" } & PageIntent)
+  | ({ type: "view" } & ViewIntent)
+  | ({ type: "file_attachment" } & FileAttachmentIntent)
+  | ({ type: "custom_agent" } & CustomAgentIntent)
 
 // Property value helper functions
 
@@ -1852,49 +1951,3 @@ Unknown (a block type that is not supported in the API yet):
 <unknown url="{{URL}}" alt="Alt"/>
 </advanced-blocks>
 `
-
-// ===============================
-// Sandbox Output Types
-// ===============================
-
-/**
- * Intent for adding a view to a database.
- * Emitted separately from the database intent to allow streaming output
- * without needing to buffer views until the database is finalized.
- */
-type ViewIntent = {
-  /** The resourceId of the database to add the view to */
-  databaseResourceId: ResourceId
-  /** The view configuration */
-  view: ViewSchema
-}
-
-/**
- * Intent for attaching a file to a parent block, database page property, teamspace icon, or space icon.
- * Used for database file property values where the file
- * is not embedded inline via markdown content.
- */
-type FileAttachmentIntent = {
-  /** Resource ID of the file from the file manifest */
-  resourceId: ResourceId
-  /** Resource ID of the parent page to attach the file to */
-  parentResourceId: ResourceId
-  /**
-   * Property name on the parent page to set the file as value.
-   * Only applicable when the parent is a database page with a file property.
-   */
-  propertyName?: string
-}
-
-/**
- * Discriminated union of all intent types for sandbox output.
- * Each intent includes a `type` discriminator and the corresponding args.
- */
-type InfraAsCodeIntent =
-  | ({ type: "space" } & SpaceIntent)
-  | ({ type: "teamspace" } & TeamspaceIntent)
-  | ({ type: "database" } & DatabaseIntent)
-  | ({ type: "page" } & PageIntent)
-  | ({ type: "view" } & ViewIntent)
-  | ({ type: "file_attachment" } & FileAttachmentIntent)
-  | ({ type: "custom_agent" } & CustomAgentIntent)
