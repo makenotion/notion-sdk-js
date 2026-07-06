@@ -23,10 +23,10 @@ const notion = new Client({ auth: NOTION_TOKEN || process.env["NOTION_TOKEN"] })
 
 notion.EXPERIMENTAL__infraAsCode.run({
   // The TypeScript infra as code script to compile and run.
-  scriptFilePath: "./src/EXPERIMENTAL__infra-as-code/examples/testDontCommitScript.ts",
-  // Reads and writes resource mappings for this run.
+  scriptFilePath: "./src/EXPERIMENTAL__infra-as-code/examples/script.ts",
+  // Reads and writes existing resources and their mappings for this run.
   sessionStateFilePath:
-    "./src/EXPERIMENTAL__infra-as-code/examples/testDontCommitExistingResources.json",
+    "./src/EXPERIMENTAL__infra-as-code/examples/sessionState.json",
 })
   .then(result => console.dir(result, { depth: null }))
   .catch(error => {
