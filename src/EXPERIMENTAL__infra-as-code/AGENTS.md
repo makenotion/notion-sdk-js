@@ -177,6 +177,10 @@ same file. Prefer this session-state file shape:
 
 The keys in `resourceIdToPointerMappings` and
 `resourceIdToPropertyIdMappings` must match `resourceId` values in the script.
+When a script uses a `resourceId` that is present in the session-state file,
+the run targets that existing Notion resource. When a script uses a new
+`resourceId` that is not in the session-state file, the run creates a new
+resource and writes the returned mapping back to the same file.
 
 For compatibility, the SDK can also read files that use this wrapper shape:
 
