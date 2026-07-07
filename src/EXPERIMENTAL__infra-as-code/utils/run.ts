@@ -3,7 +3,7 @@ import {
   submitInfraAsCodeRunToApi,
   type InfraAsCodeApiResult,
 } from "./api"
-import type Client from "../Client"
+import type Client from "../../Client"
 import { compileInfraAsCodeScriptToIntents } from "./compile"
 import { readSessionState, writeSessionState } from "./session"
 

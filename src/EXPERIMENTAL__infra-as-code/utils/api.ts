@@ -1,4 +1,4 @@
-import type Client from "../Client"
+import type Client from "../../Client"
 
 export type InfraAsCodeApiResult = {
   object: "infra_as_code_result"

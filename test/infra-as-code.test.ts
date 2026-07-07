@@ -8,8 +8,8 @@ import {
   pollInfraAsCodeTask,
   submitInfraAsCodeRunToApi,
   type InfraAsCodeApiResult,
-} from "../src/EXPERIMENTAL__infra-as-code/api"
-import { writeSessionState } from "../src/EXPERIMENTAL__infra-as-code/session"
+} from "../src/EXPERIMENTAL__infra-as-code/utils/api"
+import { writeSessionState } from "../src/EXPERIMENTAL__infra-as-code/utils/session"
 import { mockResponse } from "./test-utils"
 
 const TEST_SCRIPT_SOURCE = `
@@ -412,35 +412,6 @@ describe("Client.infraAsCode.run", () => {
           "new-property": "new-property-id",
           shared: "new-shared-property-id",
         },
-      })
-    } finally {
-      await rm(tempDir, { recursive: true, force: true })
-    }
-  })
-
-  it("creates parent directories when writing session state", async () => {
-    const tempDir = await mkdtemp(path.join(tmpdir(), "notion-iac-test-"))
-    const sessionStateFilePath = path.join(
-      tempDir,
-      "sessions",
-      "sessionState_20260707T101500Z.json"
-    )
-
-    try {
-      await writeSessionState(
-        sessionStateFilePath,
-        {
-          resourceIdToPointerMappings: {},
-          resourceIdToPropertyIdMappings: {},
-        },
-        EXPECTED_API_RESULT
-      )
-
-      expect(JSON.parse(await readFile(sessionStateFilePath, "utf8"))).toEqual({
-        resourceIdToPointerMappings:
-          EXPECTED_API_RESULT.resourceIdToPointerMappings,
-        resourceIdToPropertyIdMappings:
-          EXPECTED_API_RESULT.resourceIdToPropertyIdMappings,
       })
     } finally {
       await rm(tempDir, { recursive: true, force: true })

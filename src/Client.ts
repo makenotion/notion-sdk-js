@@ -175,7 +175,7 @@ import {
   runInfraAsCode,
   type InfraAsCodeRunParameters,
   type InfraAsCodeRunResponse,
-} from "./EXPERIMENTAL__infra-as-code/run"
+} from "./EXPERIMENTAL__infra-as-code/utils/run"
 import {
   version as PACKAGE_VERSION,
   name as PACKAGE_NAME,
