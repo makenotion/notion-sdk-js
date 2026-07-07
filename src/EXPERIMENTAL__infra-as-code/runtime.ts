@@ -142,7 +142,6 @@ export function createInfraAsCodeStubRuntime(): {
     select: value => value,
     status: value => value,
     multiSelect: values => values.join(","),
-    // rollup: value => value, TODO: update source to support rollup in runtime
     date: (startDate, endDate) => {
       const dateData = endDate
         ? { type: "daterange", start_date: startDate, end_date: endDate }
