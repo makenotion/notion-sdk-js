@@ -27,4 +27,12 @@ module.exports = {
     ],
     "no-mixed-spaces-and-tabs": ["error", "smart-tabs"],
   },
+  overrides: [
+    {
+      files: ["src/EXPERIMENTAL__infra-as-code/types.ts"],
+      rules: {
+        "@typescript-eslint/no-unused-vars": "off",
+      },
+    },
+  ],
 }

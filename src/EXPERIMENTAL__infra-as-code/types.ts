@@ -1737,8 +1737,8 @@ declare const INFRA_AS_CODE_MARKDOWN_SPEC = `
 ### Notion-flavored Markdown
 Notion-flavored Markdown is a variant of standard Markdown with additional features to support all Block and Rich text types.
 Use tabs for indentation.
-Use backslashes to escape characters. For example, \* will render as * and not as a bold delimiter.
-These are the characters that should be escaped: \ * ~ \` $ [ ] < > { } | ^
+Use backslashes to escape characters. For example, \\* will render as * and not as a bold delimiter.
+These are the characters that should be escaped: \\ * ~ \` $ [ ] < > { } | ^
 Block types:
 Markdown blocks use a {color="Color"} attribute list to set a block color.
 Text:
@@ -1853,8 +1853,8 @@ $$
 \`\`\`language
 Code
 \`\`\`
-Note: Set the language if known (e.g. mermaid). Do NOT escape special characters inside code blocks. Code block content is literal - write it exactly as it should appear. For example, write \`const arr = [1, 2, 3]\` NOT \`const arr = \[1, 2, 3\]\`. Backslash escaping rules only apply outside of code blocks.
-Mermaid diagrams: Use \`\`\`mermaid as the language. Enclose node text in double quotes when it contains special characters like parentheses, e.g. \`A["Notion (App + API)"]\`. Use \`<br>\` for line breaks inside node labels, not \n. Do not use \( or \) inside Mermaid — instead just wrap the whole label in double quotes.
+Note: Set the language if known (e.g. mermaid). Do NOT escape special characters inside code blocks. Code block content is literal - write it exactly as it should appear. For example, write \`const arr = [1, 2, 3]\` NOT \`const arr = \\[1, 2, 3\\]\`. Backslash escaping rules only apply outside of code blocks.
+Mermaid diagrams: Use \`\`\`mermaid as the language. Enclose node text in double quotes when it contains special characters like parentheses, e.g. \`A["Notion (App + API)"]\`. Use \`<br>\` for line breaks inside node labels, not \\n. Do not use \\( or \\) inside Mermaid — instead just wrap the whole label in double quotes.
 XML blocks use the 'color' attribute to set a block color.
 Mentions:
 Users, pages, databases, data sources, agents, dates, and datetimes can be mentioned:
