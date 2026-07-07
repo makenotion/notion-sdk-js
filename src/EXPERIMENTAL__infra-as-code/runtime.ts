@@ -8,14 +8,17 @@
  */
 type RuntimeNotion = typeof notion & {
   intent(intent: InfraAsCodeIntent): void
+  rollup(value: unknown): unknown
 }
+type ChildPageArgs = Omit<PageIntent, "parent">
+type ChildDatabaseArgs = Omit<DatabaseIntent, "parent">
 
 /**
  * Creates the `notion` object exposed to an infra as code script.
  *
  * The compiler embeds this function into a generated script and runs it in a
- * child Node process. Calls such as `notion.page.create()` append plain intents
- * to the returned `intents` array instead of calling the Notion API directly.
+ * child Node process. Calls such as `notion.page()` append plain intents to the
+ * returned `intents` array instead of calling the Notion API directly.
  */
 export function createInfraAsCodeStubRuntime(): {
   notion: RuntimeNotion
@@ -27,104 +30,104 @@ export function createInfraAsCodeStubRuntime(): {
       intents.push(intent)
     },
 
-    space: {
-      create: args => {
-        notion.intent({ type: "space", ...args })
-        return {
-          resourceId: args.resourceId,
-          addTeamspace: tsArgs =>
-            notion.teamspace.create({
-              ...tsArgs,
-              parent: { type: "resourceId", resourceId: args.resourceId },
-            }),
-        }
-      },
+    space: args => {
+      notion.intent({ type: "space", ...args })
+      return {
+        resourceId: args.resourceId,
+        addTeamspace: tsArgs =>
+          notion.teamspace({
+            ...tsArgs,
+            parent: { type: "resourceId", resourceId: args.resourceId },
+          }),
+      }
     },
 
-    teamspace: {
-      create: args => {
-        notion.intent({ type: "teamspace", ...args })
-        return {
-          resourceId: args.resourceId,
-          addDatabase: dbArgs =>
-            notion.database.create({
-              ...dbArgs,
-              parent: { type: "resourceId", resourceId: args.resourceId },
-            }),
+    teamspace: args => {
+      notion.intent({ type: "teamspace", ...args })
+      return {
+        resourceId: args.resourceId,
+        addDatabase: dbArgs =>
+          notion.database({
+            ...dbArgs,
+            parent: { type: "resourceId", resourceId: args.resourceId },
+          }),
+        addPage: pageArgs =>
+          notion.page({
+            ...pageArgs,
+            parent: { type: "resourceId", resourceId: args.resourceId },
+          }),
+      }
+    },
+
+    database: args => {
+      notion.intent({
+        type: "database",
+        ...args,
+      })
+
+      const dataSources: Record<
+        ResourceId,
+        DataSourceHandle<PropertySchemaDefinition[]>
+      > = {}
+      for (const ds of args.dataSources || []) {
+        const dataSourceResourceId = ds.resourceId
+        dataSources[ds.resourceId] = {
+          resourceId: dataSourceResourceId,
+          schema: ds.properties || [],
           addPage: pageArgs =>
-            notion.page.create({
+            notion.page({
               ...pageArgs,
-              parent: { type: "resourceId", resourceId: args.resourceId },
+              parent: {
+                type: "resourceId",
+                resourceId: dataSourceResourceId,
+              },
             }),
         }
-      },
-    },
+      }
 
-    database: {
-      create: args => {
-        notion.intent({
-          type: "database",
-          ...args,
-        })
-
-        const dataSources: Record<
-          ResourceId,
-          DataSourceHandle<PropertySchemaDefinition[]>
-        > = {}
-        for (const ds of args.dataSources || []) {
-          const dataSourceResourceId = ds.resourceId
-          dataSources[ds.resourceId] = {
-            resourceId: dataSourceResourceId,
-            schema: ds.properties || [],
-            addPage: pageArgs =>
-              notion.page.create({
-                ...pageArgs,
-                parent: {
-                  type: "resourceId",
-                  resourceId: dataSourceResourceId,
-                },
-              }),
+      return {
+        resourceId: args.resourceId,
+        dataSources,
+        getDataSource: id => {
+          const dataSource = dataSources[id]
+          if (dataSource === undefined) {
+            throw new Error(`Unknown data source resourceId: ${id}`)
           }
-        }
 
-        return {
-          resourceId: args.resourceId,
-          dataSources,
-          getDataSource: id => {
-            const dataSource = dataSources[id]
-            if (dataSource === undefined) {
-              throw new Error(`Unknown data source resourceId: ${id}`)
-            }
-
-            return dataSource as DataSourceHandle<typeof dataSource.schema>
-          },
-          addView: view => {
-            notion.intent({
-              type: "view",
-              databaseResourceId: args.resourceId,
-              view,
-            })
-          },
-        }
-      },
+          return dataSource as DataSourceHandle<typeof dataSource.schema>
+        },
+        addView: view => {
+          notion.intent({
+            type: "view",
+            databaseResourceId: args.resourceId,
+            view,
+          })
+        },
+      }
     },
 
-    page: {
-      create: args => {
-        notion.intent({ type: "page", ...args })
-        return {
-          resourceId: args.resourceId,
-        }
-      },
+    page: args => {
+      notion.intent({ type: "page", ...args })
+      return {
+        resourceId: args.resourceId,
+        addPage: (pageArgs: ChildPageArgs) =>
+          notion.page({
+            ...pageArgs,
+            parent: { type: "resourceId", resourceId: args.resourceId },
+          }),
+        addDatabase: (dbArgs: ChildDatabaseArgs) =>
+          notion.database({
+            ...dbArgs,
+            parent: { type: "resourceId", resourceId: args.resourceId },
+          }),
+      }
     },
 
-    customAgent: {
-      create: args => {
-        notion.intent({ type: "custom_agent", ...args })
-        return {
-          resourceId: args.resourceId,
-        }
-      },
+    customAgent: args => {
+      notion.intent({ type: "custom_agent", ...args })
+      return {
+        resourceId: args.resourceId,
+      }
     },
 
     /**
@@ -140,6 +143,7 @@ export function createInfraAsCodeStubRuntime(): {
     select: value => value,
     status: value => value,
     multiSelect: values => values.join(","),
+    rollup: value => value,
     date: (startDate, endDate) => {
       const dateData = endDate
         ? { type: "daterange", start_date: startDate, end_date: endDate }

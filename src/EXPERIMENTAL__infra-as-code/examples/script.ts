@@ -9,7 +9,7 @@
  */
 
 {
-  notion.space.create({
+  notion.space({
     resourceId: "my-space",
     name: "My Space",
     icon: { type: "notion_icon", description: "code", color: "blue" },

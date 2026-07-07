@@ -17,7 +17,7 @@ const properties = {
   title: notion.text("Test page"),
 } as const
 
-notion.page.create({
+notion.page({
   resourceId: "test-page",
   parent: {
     type: "resourceId",
