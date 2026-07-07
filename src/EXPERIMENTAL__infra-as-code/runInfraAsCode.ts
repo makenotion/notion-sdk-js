@@ -31,7 +31,9 @@ notion.EXPERIMENTAL__infraAsCode.run({
   sessionStateFilePath:
     "./src/EXPERIMENTAL__infra-as-code/sessions/sessionState_example.json",
 })
-  .then((result: InfraAsCodeRunResponse) => console.dir(result, { depth: null }))
+  .then((result: InfraAsCodeRunResponse) =>
+    console.dir(result, { depth: null })
+  )
   .catch((error: Error | string) => {
     console.error(error instanceof Error ? error.message : String(error))
     process.exitCode = 1
