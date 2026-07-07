@@ -113,6 +113,17 @@ Important rules:
 - Use stable, human-readable `resourceId` values.
 - Keep every `resourceId` unique within the script file. Reusing a resource ID
   can cause later declarations to overwrite or target the wrong resource.
+- Only emit a resource when the run should create it or update one of its own
+  fields. If an existing mapped resource is only needed as a parent, reference
+  its `resourceId` in the child's `parent` field instead of calling its helper
+  just to get a handle. For example, call `notion.space(...)` only when changing
+  the space name, icon, or members; otherwise create child resources with
+  `parent: { type: "resourceId", resourceId: "my-space" }`.
+- Use convenience methods such as `space.addTeamspace(...)`,
+  `teamspace.addPage(...)`, and `teamspace.addDatabase(...)` only when the
+  parent resource is also intentionally being emitted by the script. For
+  existing parents that should not change, use the top-level helper with an
+  explicit `parent`.
 - Wrap top-level script content in `{ ... }` so multiple script files can be
   type-checked in the same TypeScript project without duplicate global `const`
   declarations.
@@ -123,14 +134,9 @@ Good raw script shape:
 
 ```typescript
 {
-  const space = notion.space.create({
-    resourceId: "my-space",
-    name: "My Space",
-    icon: { type: "notion_icon", description: "code", color: "blue" },
-  })
-
-  const teamspace = space.addTeamspace({
+  const teamspace = notion.teamspace({
     resourceId: "general-teamspace",
+    parent: { type: "resourceId", resourceId: "my-space" },
     name: "General",
     accessLevel: "open",
   })
@@ -154,7 +160,10 @@ types describe.
 
 Common helpers include:
 
-- `notion.space.create(...)`
+- `notion.space(...)`
+- `notion.teamspace(...)`
+- `notion.page(...)`
+- `notion.database(...)`
 - `space.addTeamspace(...)`
 - `teamspace.addPage(...)`
 - `teamspace.addDatabase(...)`
