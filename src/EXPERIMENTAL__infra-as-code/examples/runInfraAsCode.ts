@@ -11,7 +11,7 @@
  * https://developers.notion.com/guides/get-started/personal-access-tokens
  *
  * To try it out:
- * 1. Set NOTION_TOKEN in your shell, or paste your token into NOTION_TOKEN below.
+ * 1. Set NOTION_TOKEN in your shell, or paste your Personal Access Token into NOTION_TOKEN below.
  * 2. Replace <INSERT_YOUR_SPACE_ID_HERE> with your workspace id in sessionState.json.
  *    To find your workspace id, go to Settings > General, scroll all the way down, and copy the workspace id.
  * 3. Run the following commands from the repository root:
