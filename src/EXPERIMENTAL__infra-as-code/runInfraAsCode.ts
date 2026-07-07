@@ -5,9 +5,6 @@
  * space. Use a scratch space while testing: the script can create or update
  * resources in whichever workspace you map in sessionState.json.
  *
- * Infra as code requires a Personal Access Token:
- * https://developers.notion.com/guides/get-started/personal-access-tokens
- *
  * To try it out:
  * 1. Set NOTION_TOKEN in your shell, or paste your Personal Access Token into NOTION_TOKEN below.
  * 2. Replace <INSERT_YOUR_WORKSPACE_ID_HERE> with your workspace id in sessionState.json.
@@ -19,7 +16,9 @@
  * To test your own script, change scriptFilePath. To target a different
  * existing workspace or reuse known resources, change sessionStateFilePath.
  */
-import { Client } from "../.."
+
+import Client from "../Client"
+import { InfraAsCodeRunResponse } from "./utils/run"
 
 // The token must have access to the workspace in sessionState.json.
 const NOTION_TOKEN = ""
@@ -32,8 +31,8 @@ notion.EXPERIMENTAL__infraAsCode.run({
   sessionStateFilePath:
     "./src/EXPERIMENTAL__infra-as-code/sessions/sessionState_example.json",
 })
-  .then(result => console.dir(result, { depth: null }))
-  .catch(error => {
+  .then((result: InfraAsCodeRunResponse) => console.dir(result, { depth: null }))
+  .catch((error: Error | string) => {
     console.error(error instanceof Error ? error.message : String(error))
     process.exitCode = 1
   })
