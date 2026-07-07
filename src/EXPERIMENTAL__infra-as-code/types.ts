@@ -187,7 +187,7 @@ type PageIntent = {
 	 * // Hub page that lists a real child subpage under a heading:
 	 * content: '# Team\n<page url="{{getting-started}}">Getting Started</page>'
 	 * // ...elsewhere in the same script:
-	 * notion.page.create({
+	 * notion.page({
 	 *   resourceId: "getting-started",
 	 *   parent: { type: "resourceId", resourceId: "hub-page" },
 	 *   properties: { title: notion.text("Getting Started") },
@@ -776,35 +776,55 @@ type PropertySchemaDefinition =
 	| FilePropertySchemaDefinition
 	| PersonPropertySchemaDefinition
 
-type DatabasePageLayoutPropertyModule = {
-	id?: string
-	type: "property"
-	propertyResourceId: ResourceId
+/**
+ * Pins the property in the row of compact chips directly below the page
+ * title. At most 15 properties can be pinned.
+ */
+type PinnedPropertyConfig = {
+	property: ResourceId
+	position: "pinned"
 }
 
-type DatabasePageLayoutTitleWithIconModule = {
-	id?: string
-	type: "titleWithIcon"
-	propertyResourceIds?: Array<ResourceId>
-	propertyLabels?: "show" | "hide"
+/**
+ * Renders the property as its own full-width section between the page title
+ * and the page content. Use for properties that deserve prominent placement,
+ * such as an AI summary or meeting attendees.
+ */
+type StandalonePropertyConfig = {
+	property: ResourceId
+	position: "standalone"
 }
 
-type DatabasePageLayoutSimpleModule = {
-	id?: string
-	type: "cover" | "properties" | "discussions" | "editor"
-}
-
-type DatabasePageLayoutModule =
-	| DatabasePageLayoutPropertyModule
-	| DatabasePageLayoutTitleWithIconModule
-	| DatabasePageLayoutSimpleModule
-
+/**
+ * A named database page layout preset for pages in a data source.
+ *
+ * "simpleWithPropertiesInSidebar" shows the cover, title, pinned properties,
+ * standalone property sections, and page content, with the remaining
+ * properties grouped in the page sidebar.
+ */
 type DatabasePageLayout = {
-	main: Array<DatabasePageLayoutModule>
-	details?: Array<DatabasePageLayoutModule>
-	propertyIconsVisibility?: "show" | "hide"
+	type: "simpleWithPropertiesInSidebar"
+	/**
+	 * Per-property placement on the page, in display order: pinned properties
+	 * render as chips in the order listed, and standalone properties render as
+	 * sections in the order listed. A property can appear at most once.
+	 * Properties not listed are automatically grouped in the page sidebar.
+	 */
+	properties?: Array<PinnedPropertyConfig | StandalonePropertyConfig>
+	/**
+	 * Whether pages use the full width of the window. Defaults to false.
+	 */
 	fullWidth?: boolean
-	databaseTemplatesVisibility?: "show" | "hide"
+	/**
+	 * Whether property icons are shown next to property names. Defaults to
+	 * true.
+	 */
+	showPropertyIcons?: boolean
+	/**
+	 * Whether the database templates section is shown on new pages.
+	 * Defaults to true.
+	 */
+	showTemplates?: boolean
 }
 
 type DataSourceSchema = {
@@ -866,24 +886,31 @@ type FileReference = {
 /**
  * A reference to a page cover image.
  *
- * Uploaded file references are resolved through the file manifest. URL
- * references are written directly to the page's `format.page_cover`, matching
- * built-in Notion cover URLs and externally hosted images.
+ * Uploaded file references (from `notion.file()`) are resolved through the
+ * file manifest. URL references are written directly to the page's
+ * `format.page_cover`, matching built-in Notion cover URLs.
  * @generateValidator
  */
-type PageCoverReference =
+type PageCoverReference = (
 	| FileReference
 	| {
 			type: "url"
 			url: string
-			position?: number
 	  }
+) & {
+	/**
+	 * Vertical position of the cover image as a percentage from the top, in
+	 * [0, 1]. Defaults to 0.5 (center).
+	 */
+	position?: number
+}
 
 /**
  * Property values can be:
  * - SimpleTextValue (array format from runtime helpers - includes annotations)
  * - Array<string> (relation values)
  * - string (single relation reference)
+ * - number (raw values for title, text, and number properties)
  * - Array<FileReference> (from notion.file() for file properties)
  * - undefined
  */
@@ -891,6 +918,7 @@ type PropertyValue =
 	| SimpleTextValue
 	| Array<string>
 	| string
+	| number
 	| Array<FileReference>
 	| undefined
 
@@ -901,15 +929,19 @@ type PropertyNameUnion<P extends PropertySchemaDefinition[]> =
 	P[number] extends { name: infer N } ? (N extends string ? N : never) : never
 
 /**
- * Allowed input value type for a particular property schema definition.
- * Person properties are filter-only and map to `never`.
+ * Allowed input value type for a particular property schema definition, keyed
+ * by property type. Computed properties (formula, rollup, timestamps, audit
+ * people, auto-increment ids) take no input, and person properties are
+ * filter-only. Helper-valued properties take their runtime helper results
+ * (`notion.file`, `notion.date`, `notion.checkbox`, `notion.select`,
+ * `notion.multiSelect`, etc.).
  */
 type PropertyInputForDefinition<S extends PropertySchemaDefinition> = {
 	relation: ResourceId | Array<ResourceId>
 	file: Array<FileReference>
 	select: string
 	status: string
-	multi_select: string | Array<string>
+	multi_select: string
 	formula: never
 	rollup: never
 	created_time: never
@@ -918,14 +950,14 @@ type PropertyInputForDefinition<S extends PropertySchemaDefinition> = {
 	last_edited_by: never
 	auto_increment_id: never
 	person: never
-	title: TextValue | string | number
-	text: TextValue | string | number
-	number: TextValue | string | number
-	date: TextValue
-	checkbox: TextValue
-	url: TextValue | string
-	email: TextValue | string
-	phone_number: TextValue | string
+	title: SimpleTextValue | string | number
+	text: SimpleTextValue | string | number
+	number: SimpleTextValue | string | number
+	date: SimpleTextValue
+	checkbox: SimpleTextValue
+	url: SimpleTextValue | string
+	email: SimpleTextValue | string
+	phone_number: SimpleTextValue | string
 }[S["type"]]
 
 /**
@@ -1010,7 +1042,8 @@ type GroupByFormat = {
 		| "location"
 		| "formula"
 		| undefined
-	hideEmptyGroups?: boolean | undefined
+	/** Whether groups with no pages are visible. Defaults to "show". */
+	emptyGroupVisibility?: "show" | "hide"
 }
 
 type CoverFormat =
@@ -1151,7 +1184,7 @@ type PropertyViewFilterSchema =
  *
  * @example
  * // When creating a database with a data source
- * const db = await notion.database.create({
+ * const db = await notion.database({
  *   resourceId: "my-database",
  *   dataSources: [{ resourceId: "my-datasource", name: "Main", properties: [...] }]
  * })
@@ -1192,6 +1225,7 @@ type TableViewSchema = BaseViewSchema & {
 	type: "table"
 	properties?: Array<PropertyFormat>
 	wrap?: boolean
+	groupBy?: GroupByFormat
 }
 
 type BoardViewSchema = BaseViewSchema & {
@@ -1507,7 +1541,7 @@ type DatabaseHandle<
  * Handle returned when creating a teamspace.
  *
  * @example Creating a page in a teamspace
- * const teamspace = await notion.teamspace.create({ ... })
+ * const teamspace = await notion.teamspace({ ... })
  *
  * // Using the addPage convenience method
  * const page = await teamspace.addPage({
@@ -1515,8 +1549,8 @@ type DatabaseHandle<
  *   properties: { title: notion.text("Page Title") }
  * })
  *
- * // Or using notion.page.create() directly
- * const page = await notion.page.create({
+ * // Or using notion.page() directly
+ * const page = await notion.page({
  *   resourceId: "my-page",
  *   parent: { type: "resourceId", resourceId: teamspace.resourceId },
  *   properties: { title: notion.text("Page Title") }
@@ -1644,64 +1678,41 @@ type PropertyType =
 
 declare const notion: {
 	/**
-	 * Page operations - create pages in your workspace.
+	 * Creates a new page under a page, database, or teamspace.
 	 * Pages are the basic content units in Notion that can contain rich content.
 	 */
-	page: {
-		/**
-		 * Creates a new page under a page, database, or teamspace.
-		 */
-		create: (args: PageIntent) => PageHandle
-	}
+	page: (args: PageIntent) => PageHandle
 
 	/**
-	 * Database operations - create databases with custom schemas.
+	 * Creates a new database with a custom schema and returns a typed
+	 * DatabaseHandle for data source access and views.
 	 * Databases contain structured data with properties and views.
 	 */
-	database: {
-		/**
-		 * Creates a new database and returns a typed DatabaseHandle for quick addPage().
-		 */
-		create<
-			DS extends Array<{
-				resourceId: ResourceId
-				name: string
-				properties: Array<PropertySchemaDefinition>
-			}>,
-		>(
-			args: Omit<DatabaseIntent, "dataSources"> & { dataSources: DS },
-		): DatabaseHandle<DS>
-	}
+	database: <
+		DS extends Array<{
+			resourceId: ResourceId
+			name: string
+			properties: Array<PropertySchemaDefinition>
+		}>,
+	>(
+		args: Omit<DatabaseIntent, "dataSources"> & { dataSources: DS },
+	) => DatabaseHandle<DS>
 
 	/**
-	 * Teamspace operations - create teamspaces.
+	 * Creates a new teamspace and returns a TeamspaceHandle for adding databases.
 	 */
-	teamspace: {
-		/**
-		 * Creates a new teamspace and returns a TeamspaceHandle for adding databases.
-		 */
-		create: (args: TeamspaceIntent) => TeamspaceHandle
-	}
+	teamspace: (args: TeamspaceIntent) => TeamspaceHandle
 
 	/**
-	 * Space operations - create Notion workspaces.
+	 * Creates a new Notion workspace and returns a SpaceHandle for adding teamspaces.
 	 */
-	space: {
-		/**
-		 * Creates a new Notion workspace and returns a SpaceHandle for adding teamspaces.
-		 */
-		create: (args: SpaceIntent) => SpaceHandle
-	}
+	space: (args: SpaceIntent) => SpaceHandle
 
 	/**
-	 * Custom agent operations - create AI agents scoped to a workspace.
+	 * Creates a new custom agent (an AI agent scoped to the workspace) and
+	 * returns a CustomAgentHandle.
 	 */
-	customAgent: {
-		/**
-		 * Creates a new custom agent and returns a CustomAgentHandle.
-		 */
-		create: (args: CustomAgentIntent) => CustomAgentHandle
-	}
+	customAgent: (args: CustomAgentIntent) => CustomAgentHandle
 
 	date: (startDate: string, endDate?: string) => TextValue
 	text: (value: string) => TextValue
