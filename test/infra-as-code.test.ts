@@ -9,7 +9,6 @@ import {
   submitInfraAsCodeRunToApi,
   type InfraAsCodeApiResult,
 } from "../src/EXPERIMENTAL__infra-as-code/utils/api"
-import { writeSessionState } from "../src/EXPERIMENTAL__infra-as-code/utils/session"
 import { mockResponse } from "./test-utils"
 
 const TEST_SCRIPT_SOURCE = `

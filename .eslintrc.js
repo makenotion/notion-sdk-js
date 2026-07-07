@@ -29,7 +29,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: ["src/EXPERIMENTAL__infra-as-code/types.ts"],
+      files: ["src/EXPERIMENTAL__infra-as-code/**/types.ts"],
       rules: {
         "@typescript-eslint/no-unused-vars": "off",
       },
