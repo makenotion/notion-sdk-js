@@ -1,5 +1,4 @@
-import { mkdir, readFile, writeFile } from "node:fs/promises"
-import { dirname } from "node:path"
+import { readFile, writeFile } from "node:fs/promises"
 
 import type { InfraAsCodeApiResult } from "./api"
 
