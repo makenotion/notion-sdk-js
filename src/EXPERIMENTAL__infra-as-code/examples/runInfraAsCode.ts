@@ -3,16 +3,14 @@
  *
  * This example runs the SDK's infra as code entry point against one Notion
  * space. Use a scratch space while testing: the script can create or update
- * resources in whichever workspace you map in sessionState.json. Resource IDs in
- * sessionState.json target existing resources in your workspace; unmapped
- * resource IDs create new resources.
+ * resources in whichever workspace you map in sessionState.json.
  *
  * Infra as code requires a Personal Access Token:
  * https://developers.notion.com/guides/get-started/personal-access-tokens
  *
  * To try it out:
  * 1. Set NOTION_TOKEN in your shell, or paste your Personal Access Token into NOTION_TOKEN below.
- * 2. Replace <INSERT_YOUR_SPACE_ID_HERE> with your workspace id in sessionState.json.
+ * 2. Replace <INSERT_YOUR_WORKSPACE_ID_HERE> with your workspace id in sessionState.json.
  *    To find your workspace id, go to Settings > General, scroll all the way down, and copy the workspace id.
  * 3. Run the following commands from the repository root:
  *       npm run build
@@ -29,10 +27,10 @@ const notion = new Client({ auth: NOTION_TOKEN || process.env["NOTION_TOKEN"] })
 
 notion.EXPERIMENTAL__infraAsCode.run({
   // The TypeScript infra as code script to compile and run.
-  scriptFilePath: "./src/EXPERIMENTAL__infra-as-code/examples/script.ts",
+  scriptFilePath: "./src/EXPERIMENTAL__infra-as-code/scripts/script_example.ts",
   // Reads and writes existing resources and their mappings for this run.
   sessionStateFilePath:
-    "./src/EXPERIMENTAL__infra-as-code/examples/sessionState.json",
+    "./src/EXPERIMENTAL__infra-as-code/sessions/sessionState_example.json",
 })
   .then(result => console.dir(result, { depth: null }))
   .catch(error => {
