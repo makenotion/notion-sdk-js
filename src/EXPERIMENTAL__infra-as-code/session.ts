@@ -55,7 +55,6 @@ export async function writeSessionState(
     },
   }
 
-  await mkdir(dirname(sessionStateFilePath), { recursive: true })
   await writeFile(
     sessionStateFilePath,
     `${JSON.stringify(nextState, null, 2)}\n`,
