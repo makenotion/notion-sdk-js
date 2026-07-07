@@ -8,7 +8,6 @@
  */
 type RuntimeNotion = typeof notion & {
   intent(intent: InfraAsCodeIntent): void
-  rollup(value: unknown): unknown
 }
 type ChildPageArgs = Omit<PageIntent, "parent">
 type ChildDatabaseArgs = Omit<DatabaseIntent, "parent">
@@ -143,7 +142,7 @@ export function createInfraAsCodeStubRuntime(): {
     select: value => value,
     status: value => value,
     multiSelect: values => values.join(","),
-    rollup: value => value,
+    // rollup: value => value, TODO: update source to support rollup in runtime
     date: (startDate, endDate) => {
       const dateData = endDate
         ? { type: "daterange", start_date: startDate, end_date: endDate }
