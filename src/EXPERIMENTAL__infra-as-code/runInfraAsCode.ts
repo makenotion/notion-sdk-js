@@ -11,7 +11,7 @@
  * Supported flags use camelCase and a leading `--`:
  *       --scriptFilePath=./src/EXPERIMENTAL__infra-as-code/scripts/script_example.ts
  *       --sessionStateFilePath=./src/EXPERIMENTAL__infra-as-code/sessions/sessionState_example.json
- *       --spaceId=<workspace-id>
+ *       --spaceId=<YOUR_WORKSPACE_ID>
  *
  * If `--spaceId` is provided without `--sessionStateFilePath`, the SDK infers
  * the script resourceId for that workspace from the compiled script.
@@ -31,13 +31,14 @@ const NOTION_TOKEN = ""
 
 const auth = NOTION_TOKEN || process.env["NOTION_TOKEN"]
 const notion = new Client({ auth })
+const notionLocal = new Client({ auth, baseUrl: "http://localhost:3000" })
 
 const runArgs = buildRunArgsFromCommandLineArgs(
   parseCommandLineArgs(process.argv.slice(2))
 )
 
 if (runArgs !== undefined) {
-  notion.EXPERIMENTAL__infraAsCode.run(runArgs)
+  notionLocal.EXPERIMENTAL__infraAsCode.run(runArgs)
     .then(result => printInfraAsCodeRunSuccessMessage({ result, runArgs }))
     .catch((error: Error | string) => {
       console.error(error instanceof Error ? error.message : String(error))

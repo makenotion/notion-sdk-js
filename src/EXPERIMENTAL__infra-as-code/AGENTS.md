@@ -64,7 +64,7 @@ Supported command-line flags are camelCase and use a leading `--`:
 ```text
 --scriptFilePath=./src/EXPERIMENTAL__infra-as-code/scripts/script_example.ts
 --sessionStateFilePath=./src/EXPERIMENTAL__infra-as-code/sessions/sessionState_example.json
---spaceId=<workspace-id>
+--spaceId=<YOUR_WORKSPACE_ID>
 ```
 
 Flags can be passed as either `--name=value` or `--name value`.
@@ -72,10 +72,12 @@ Flags can be passed as either `--name=value` or `--name value`.
 `scriptFilePath` is required. If it is missing, the runner should fail with a
 friendly error that includes a runnable example command.
 
-`spaceId` is the workspace ID. When the user passes `--spaceId` without a
-session-state file, the SDK creates an initial existing-space mapping from the
-compiled script, runs the script, then writes a timestamped session-state file
-such as:
+`spaceId` is the workspace ID and is required by the root runner. If it is
+missing, the runner should fail with a friendly error that tells the user to
+attach their workspace ID with `--spaceId` and includes a runnable example
+command. When the user passes `--spaceId` without a session-state file, the SDK
+creates an initial existing-space mapping from the compiled script, runs the
+script, then writes a timestamped session-state file such as:
 
 ```text
 ./src/EXPERIMENTAL__infra-as-code/sessions/sessionState_20260707T173844Z.json
@@ -90,9 +92,9 @@ either:
 If the script has multiple possible space resource IDs, the SDK throws and asks
 the user to pass `sessionStateFilePath` instead.
 
-If both `sessionStateFilePath` and `spaceId` are provided, session state takes
-precedence. If they appear to point at different workspaces, the SDK logs an
-educational warning and continues with the mappings from the session-state file.
+If both `sessionStateFilePath` and `spaceId` are provided, the session-state
+file and `spaceId` must point at the same workspace. If they conflict, the SDK
+throws and stops the run before submitting to the API.
 
 At least one of `sessionStateFilePath` or `spaceId` is required by the SDK.
 The root runner does not provide a default script path or session-state path.
@@ -107,14 +109,14 @@ First run against an existing workspace by workspace ID:
 
 ```bash
 npm run build
-NOTION_TOKEN=<personal-access-token> node build/src/EXPERIMENTAL__infra-as-code/runInfraAsCode.js --spaceId=<workspace-id> --scriptFilePath=./src/EXPERIMENTAL__infra-as-code/scripts/script_example.ts
+NOTION_TOKEN=<YOUR_PERSONAL_ACCESS_TOKEN> node build/src/EXPERIMENTAL__infra-as-code/runInfraAsCode.js --spaceId=<YOUR_WORKSPACE_ID> --scriptFilePath=./src/EXPERIMENTAL__infra-as-code/scripts/script_example.ts
 ```
 
 Follow-up run using a written session-state file:
 
 ```bash
 npm run build
-NOTION_TOKEN=<personal-access-token> node build/src/EXPERIMENTAL__infra-as-code/runInfraAsCode.js --scriptFilePath=./src/EXPERIMENTAL__infra-as-code/scripts/script_example.ts --sessionStateFilePath=./src/EXPERIMENTAL__infra-as-code/sessions/sessionState_TIMESTAMP.json
+NOTION_TOKEN=<YOUR_PERSONAL_ACCESS_TOKEN> node build/src/EXPERIMENTAL__infra-as-code/runInfraAsCode.js --spaceId=<YOUR_WORKSPACE_ID> --scriptFilePath=./src/EXPERIMENTAL__infra-as-code/scripts/script_example.ts --sessionStateFilePath=./src/EXPERIMENTAL__infra-as-code/sessions/sessionState_TIMESTAMP.json
 ```
 
 When the token is already pasted into a local scratch runner file, omit the
@@ -166,7 +168,7 @@ anchor:
 }
 ```
 
-In that example, `--spaceId=<workspace-id>` maps the real workspace to the
+In that example, `--spaceId=<YOUR_WORKSPACE_ID>` maps the real workspace to the
 script resource ID `"my-space"`. The teamspace and page are new resources. If
 the mapped `notion.space(...)` includes fields like `name` or `icon`, the run
 may update those fields on the existing workspace.
@@ -242,8 +244,8 @@ Preferred session-state file shape:
   "resourceIdToPointerMappings": {
     "my-space": {
       "table": "space",
-      "id": "<space-id>",
-      "spaceId": "<space-id>"
+      "id": "<YOUR_WORKSPACE_ID>",
+      "spaceId": "<YOUR_WORKSPACE_ID>"
     }
   },
   "resourceIdToPropertyIdMappings": {
@@ -259,8 +261,8 @@ For compatibility, the SDK can also read files that use this wrapper shape:
   "existingResources": {
     "my-space": {
       "table": "space",
-      "id": "<space-id>",
-      "spaceId": "<space-id>"
+      "id": "<YOUR_WORKSPACE_ID>",
+      "spaceId": "<YOUR_WORKSPACE_ID>"
     }
   },
   "existingProperties": {
@@ -291,8 +293,8 @@ When helping a user create a new infra as code example:
 2. Choose stable `resourceId` values before writing the script.
 3. Use `scripts/script_example.ts` only when the user asks to update the shared
    example. Otherwise create a timestamped script in `scripts/`.
-4. If the user already has a session-state file or existing mappings, use that
-   `sessionStateFilePath` for the run command.
+4. If the user already has a session-state file or existing mappings, include
+   that `sessionStateFilePath` in the run command.
 5. If no session-state file is available, ask for the workspace ID before
    finalizing the run command. Use that ID with the `--spaceId` flow instead of
    manually creating a session-state file.
@@ -315,14 +317,14 @@ src/EXPERIMENTAL__infra-as-code/scripts/script_TIMESTAMP.ts
 
 You can run it with:
 npm run build
-NOTION_TOKEN=<personal-access-token> node build/src/EXPERIMENTAL__infra-as-code/runInfraAsCode.js --scriptFilePath=src/EXPERIMENTAL__infra-as-code/scripts/script_TIMESTAMP.ts --spaceId=<workspace-id>
+NOTION_TOKEN=<YOUR_PERSONAL_ACCESS_TOKEN> node build/src/EXPERIMENTAL__infra-as-code/runInfraAsCode.js --scriptFilePath=src/EXPERIMENTAL__infra-as-code/scripts/script_TIMESTAMP.ts --spaceId=<YOUR_WORKSPACE_ID>
 ```
 
-If a session-state file is already known, use it instead of `--spaceId`:
+If a session-state file is already known, include it alongside `--spaceId`:
 
 ```text
 npm run build
-NOTION_TOKEN=<personal-access-token> node build/src/EXPERIMENTAL__infra-as-code/runInfraAsCode.js --scriptFilePath=src/EXPERIMENTAL__infra-as-code/scripts/script_TIMESTAMP.ts --sessionStateFilePath=src/EXPERIMENTAL__infra-as-code/sessions/sessionState_TIMESTAMP.json
+NOTION_TOKEN=<YOUR_PERSONAL_ACCESS_TOKEN> node build/src/EXPERIMENTAL__infra-as-code/runInfraAsCode.js --scriptFilePath=src/EXPERIMENTAL__infra-as-code/scripts/script_TIMESTAMP.ts --spaceId=<YOUR_WORKSPACE_ID> --sessionStateFilePath=src/EXPERIMENTAL__infra-as-code/sessions/sessionState_TIMESTAMP.json
 ```
 
 If the token is already pasted into the local runner file, omit the
@@ -356,7 +358,7 @@ If the user asks to run the example:
 
 ```bash
 npm run build
-NOTION_TOKEN=<personal-access-token> node build/src/EXPERIMENTAL__infra-as-code/runInfraAsCode.js --spaceId=<workspace-id> --scriptFilePath=./src/EXPERIMENTAL__infra-as-code/scripts/script_example.ts
+NOTION_TOKEN=<YOUR_PERSONAL_ACCESS_TOKEN> node build/src/EXPERIMENTAL__infra-as-code/runInfraAsCode.js --spaceId=<YOUR_WORKSPACE_ID> --scriptFilePath=./src/EXPERIMENTAL__infra-as-code/scripts/script_example.ts
 ```
 
 The run compiles the script, submits it to Notion, polls the async task, and

@@ -45,7 +45,7 @@ If the run succeeds, you should see a message like:
 The session-state file has been saved to ./src/EXPERIMENTAL__infra-as-code/sessions/sessionState_TIMESTAMP.json.
 
 To run new scripts against this workspace, run the following command:
-npm run build && node build/src/EXPERIMENTAL__infra-as-code/runInfraAsCode.js --scriptFilePath=<YOUR_NEW_SCRIPT_FILE_PATH> --sessionStateFilePath=./src/EXPERIMENTAL__infra-as-code/sessions/sessionState_TIMESTAMP.json
+npm run build && node build/src/EXPERIMENTAL__infra-as-code/runInfraAsCode.js --scriptFilePath=<YOUR_NEW_SCRIPT_FILE_PATH> --spaceId=<YOUR_WORKSPACE_ID> --sessionStateFilePath=./src/EXPERIMENTAL__infra-as-code/sessions/sessionState_TIMESTAMP.json 
 ```
 
 The session-state file is important. It stores the mapping between names in your script and the real Notion resources that were created. Use it for future runs so Infra as Code can update the same resources instead of creating duplicates.
@@ -91,13 +91,13 @@ A session-state file remembers what happened after a run. It connects script res
   "resourceIdToPointerMappings": {
     "my-space": {
       "table": "space",
-      "id": "<workspace-id>",
-      "spaceId": "<workspace-id>"
+      "id": "<YOUR_WORKSPACE_ID>",
+      "spaceId": "<YOUR_WORKSPACE_ID>"
     },
     "general-teamspace": {
       "table": "team",
       "id": "<teamspace-id>",
-      "spaceId": "<workspace-id>"
+      "spaceId": "<YOUR_WORKSPACE_ID>"
     }
   },
   "resourceIdToPropertyIdMappings": {}
@@ -106,11 +106,11 @@ A session-state file remembers what happened after a run. It connects script res
 
 You usually do not need to write this file by hand for a first run. If you pass `--spaceId`, Infra as Code creates the initial mapping and writes a timestamped session-state file for you.
 
-For future runs, use the generated `--sessionStateFilePath`.
+For future runs, include the generated `--sessionStateFilePath` with the same `--spaceId`.
 
 ## Command-Line Flags
 
-The runner supports these optional flags:
+The runner supports these flags:
 
 ```
 --scriptFilePath=...
@@ -122,17 +122,17 @@ Use `--spaceId` for a first run against a workspace:
 
 ```
 npm run build
-node build/src/EXPERIMENTAL__infra-as-code/runInfraAsCode.js --spaceId=<workspace-id>
+node build/src/EXPERIMENTAL__infra-as-code/runInfraAsCode.js --spaceId=<YOUR_WORKSPACE_ID> --scriptFilePath=./src/EXPERIMENTAL__infra-as-code/scripts/script_example.ts
 ```
 
-Use `--sessionStateFilePath` for follow-up runs:
+Use `--sessionStateFilePath` with the same `--spaceId` for follow-up runs:
 
 ```
 npm run build
-node build/src/EXPERIMENTAL__infra-as-code/runInfraAsCode.js --scriptFilePath=./src/EXPERIMENTAL__infra-as-code/scripts/my_script.ts --sessionStateFilePath=./src/EXPERIMENTAL__infra-as-code/sessions/sessionState_TIMESTAMP.json
+node build/src/EXPERIMENTAL__infra-as-code/runInfraAsCode.js --spaceId=<YOUR_WORKSPACE_ID> --scriptFilePath=./src/EXPERIMENTAL__infra-as-code/scripts/my_script.ts --sessionStateFilePath=./src/EXPERIMENTAL__infra-as-code/sessions/sessionState_TIMESTAMP.json
 ```
 
-If both `--spaceId` and `--sessionStateFilePath` are provided, the session-state file takes precedence.
+If `--spaceId` and `--sessionStateFilePath` point at different workspaces, the run stops with an error.
 
 ## How It Works
 

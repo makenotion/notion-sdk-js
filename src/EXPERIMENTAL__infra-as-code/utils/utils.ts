@@ -1,4 +1,4 @@
-import { InfraAsCodeRunParameters, InfraAsCodeRunResponse } from "./run"
+import type { InfraAsCodeRunParameters, InfraAsCodeRunResponse } from "./run"
 
 export type CommandLineArgs = {
   scriptFilePath?: string
@@ -53,20 +53,31 @@ export function parseCommandLineArgs(argv: string[]): CommandLineArgs {
 /**
  * Builds runnable infra as code args from parsed CLI flags.
  *
- * If `--scriptFilePath` is missing, this prints a friendly command example and
+ * If required flags are missing, this prints a friendly command example and
  * sets the process exit code instead of throwing a stack trace.
  */
 export function buildRunArgsFromCommandLineArgs({
   scriptFilePath,
   sessionStateFilePath,
   spaceId,
-}: CommandLineArgs): InfraAsCodeRunParameters | undefined {
+}: CommandLineArgs) {
   if (!isDefined(scriptFilePath)) {
     console.error(
       `You have not provided a --scriptFilePath. You can try the example script with this command:
 
 npm run build
-NOTION_TOKEN=<personal-access-token> node build/src/EXPERIMENTAL__infra-as-code/runInfraAsCode.js --spaceId=<workspace-id> --scriptFilePath=./src/EXPERIMENTAL__infra-as-code/scripts/script_example.ts`
+NOTION_TOKEN=<YOUR_PERSONAL_ACCESS_TOKEN> node build/src/EXPERIMENTAL__infra-as-code/runInfraAsCode.js --spaceId=<YOUR_WORKSPACE_ID> --scriptFilePath=./src/EXPERIMENTAL__infra-as-code/scripts/script_example.ts`
+    )
+    process.exitCode = 1
+    return undefined
+  }
+
+  if (!isDefined(spaceId)) {
+    console.error(
+      `Make sure to attach your workspace ID with --spaceId. You can run this command:
+
+npm run build
+NOTION_TOKEN=<YOUR_PERSONAL_ACCESS_TOKEN> node build/src/EXPERIMENTAL__infra-as-code/runInfraAsCode.js --spaceId=<YOUR_WORKSPACE_ID> --scriptFilePath=${scriptFilePath}`
     )
     process.exitCode = 1
     return undefined
@@ -89,17 +100,14 @@ export function printInfraAsCodeRunSuccessMessage({
   result: InfraAsCodeRunResponse
   runArgs: InfraAsCodeRunParameters
 }): void {
-  const workspace =
-    runArgs.spaceId === undefined
-      ? "Your workspace"
-      : `Your workspace ${runArgs.spaceId}`
+  const workspace = `Your workspace ${runArgs.spaceId}`
 
   console.log(
     `✅ ${workspace} has been successfully updated with ${runArgs.scriptFilePath}.
 The session-state file has been saved to ${result.sessionStateFilePath}.
 
 To run new scripts against this workspace, run the following command:
-npm run build && node build/src/EXPERIMENTAL__infra-as-code/runInfraAsCode.js --scriptFilePath=<YOUR_NEW_SCRIPT_FILE_PATH> --sessionStateFilePath=${result.sessionStateFilePath}`
+npm run build && node build/src/EXPERIMENTAL__infra-as-code/runInfraAsCode.js --spaceId=${runArgs.spaceId} --scriptFilePath=<YOUR_NEW_SCRIPT_FILE_PATH> --sessionStateFilePath=${result.sessionStateFilePath}`
   )
 }
 

@@ -9,6 +9,7 @@ import {
   submitInfraAsCodeRunToApi,
   type InfraAsCodeApiResult,
 } from "../src/EXPERIMENTAL__infra-as-code/utils/api"
+import { buildRunArgsFromCommandLineArgs } from "../src/EXPERIMENTAL__infra-as-code/utils/utils"
 import { mockResponse } from "./test-utils"
 
 const TEST_SCRIPT_SOURCE = `
@@ -261,10 +262,40 @@ describe("infra as code API helpers", () => {
   })
 })
 
+describe("infra as code command-line helpers", () => {
+  it("prints a friendly error when spaceId is missing", () => {
+    const error = jest
+      .spyOn(console, "error")
+      .mockImplementation(() => undefined)
+    const priorExitCode = process.exitCode
+    process.exitCode = undefined
+
+    try {
+      expect(
+        buildRunArgsFromCommandLineArgs({
+          scriptFilePath: "src/EXPERIMENTAL__infra-as-code/scripts/script.ts",
+        })
+      ).toBeUndefined()
+      expect(process.exitCode).toBe(1)
+      expect(error).toHaveBeenCalledWith(
+        expect.stringContaining(
+          "Make sure to attach your workspace ID with --spaceId"
+        )
+      )
+    } finally {
+      error.mockRestore()
+      process.exitCode = priorExitCode
+    }
+  })
+})
+
 describe("Client.infraAsCode.run", () => {
-  it("compiles a script and submits empty maps from session state", async () => {
+  it("compiles a script and writes spaceId into session state", async () => {
     const tempDir = await mkdtemp(path.join(tmpdir(), "notion-iac-test-"))
-    const scriptPath = await writeInfraAsCodeScript(tempDir)
+    const scriptPath = await writeInfraAsCodeScript(
+      tempDir,
+      SPACE_SCRIPT_SOURCE
+    )
     const sessionStateFilePath = path.join(tempDir, "iac-session.json")
     const mockFetch: jest.MockedFn<typeof fetch> = jest.fn()
     mockInfraAsCodeRun(mockFetch)
@@ -276,17 +307,35 @@ describe("Client.infraAsCode.run", () => {
       const result = await notion.EXPERIMENTAL__infraAsCode.run({
         scriptFilePath: scriptPath,
         sessionStateFilePath,
+        spaceId: "existing-space-id",
       })
 
-      expectInfraAsCodeSubmit(mockFetch, {}, {})
+      expectInfraAsCodeSubmit(
+        mockFetch,
+        {
+          "test-space": {
+            table: "space",
+            id: "existing-space-id",
+            spaceId: "existing-space-id",
+          },
+        },
+        {},
+        EXPECTED_SPACE_INTENTS
+      )
       expectInfraAsCodePoll(mockFetch)
       expect(result).toEqual({
         ...EXPECTED_API_RESULT,
         sessionStateFilePath,
       })
       expect(JSON.parse(await readFile(sessionStateFilePath, "utf8"))).toEqual({
-        resourceIdToPointerMappings:
-          EXPECTED_API_RESULT.resourceIdToPointerMappings,
+        resourceIdToPointerMappings: {
+          "test-space": {
+            table: "space",
+            id: "existing-space-id",
+            spaceId: "existing-space-id",
+          },
+          ...EXPECTED_API_RESULT.resourceIdToPointerMappings,
+        },
         resourceIdToPropertyIdMappings:
           EXPECTED_API_RESULT.resourceIdToPropertyIdMappings,
       })
@@ -413,12 +462,20 @@ describe("Client.infraAsCode.run", () => {
 
   it("reads a session-state file for request maps", async () => {
     const tempDir = await mkdtemp(path.join(tmpdir(), "notion-iac-test-"))
-    const scriptPath = await writeInfraAsCodeScript(tempDir)
+    const scriptPath = await writeInfraAsCodeScript(
+      tempDir,
+      SPACE_SCRIPT_SOURCE
+    )
     const sessionStateFilePath = path.join(tempDir, "iac-session.json")
     const mockFetch: jest.MockedFn<typeof fetch> = jest.fn()
     mockInfraAsCodeRun(mockFetch)
     const sessionState = {
       resourceIdToPointerMappings: {
+        "test-space": {
+          table: "space",
+          id: "existing-space-id",
+          spaceId: "existing-space-id",
+        },
         "existing-page": { type: "block", id: "existing-page-id" },
       },
       resourceIdToPropertyIdMappings: {
@@ -437,20 +494,32 @@ describe("Client.infraAsCode.run", () => {
       await notion.EXPERIMENTAL__infraAsCode.run({
         scriptFilePath: scriptPath,
         sessionStateFilePath,
+        spaceId: "existing-space-id",
       })
 
       expectInfraAsCodeSubmit(
         mockFetch,
         {
+          "test-space": {
+            table: "space",
+            id: "existing-space-id",
+            spaceId: "existing-space-id",
+          },
           "existing-page": { type: "block", id: "existing-page-id" },
         },
         {
           "name-property": "title",
-        }
+        },
+        EXPECTED_SPACE_INTENTS
       )
       expectInfraAsCodePoll(mockFetch)
       expect(JSON.parse(await readFile(sessionStateFilePath, "utf8"))).toEqual({
         resourceIdToPointerMappings: {
+          "test-space": {
+            table: "space",
+            id: "existing-space-id",
+            spaceId: "existing-space-id",
+          },
           "existing-page": { type: "block", id: "existing-page-id" },
           ...EXPECTED_API_RESULT.resourceIdToPointerMappings,
         },
@@ -515,7 +584,7 @@ describe("Client.infraAsCode.run", () => {
     }
   })
 
-  it("warns and uses session state when argument space ID conflicts", async () => {
+  it("throws when argument space ID conflicts with session state", async () => {
     const tempDir = await mkdtemp(path.join(tmpdir(), "notion-iac-test-"))
     const scriptPath = await writeInfraAsCodeScript(
       tempDir,
@@ -524,7 +593,6 @@ describe("Client.infraAsCode.run", () => {
     const sessionStateFilePath = path.join(tempDir, "iac-session.json")
     const mockFetch: jest.MockedFn<typeof fetch> = jest.fn()
     mockInfraAsCodeRun(mockFetch)
-    const warn = jest.spyOn(console, "warn").mockImplementation(() => undefined)
 
     try {
       await writeFile(
@@ -543,42 +611,37 @@ describe("Client.infraAsCode.run", () => {
       )
 
       const notion = new Client({ fetch: mockFetch })
-      await notion.EXPERIMENTAL__infraAsCode.run({
-        scriptFilePath: scriptPath,
-        sessionStateFilePath,
-        spaceId: "existing-space-id",
-      })
-
-      expect(warn).toHaveBeenCalledWith(
-        'Resources have been processed using the provided sessionStateFilePath, but the provided spaceId does not match the session state mapping for resourceId "test-space". For future runs, make sure the spaceId in your session state matches your spaceId argument.'
+      await expect(
+        notion.EXPERIMENTAL__infraAsCode.run({
+          scriptFilePath: scriptPath,
+          sessionStateFilePath,
+          spaceId: "existing-space-id",
+        })
+      ).rejects.toThrow(
+        'The provided spaceId "existing-space-id" does not match the session state mapping for resourceId "test-space" (found "other-space-id").'
       )
-      expectInfraAsCodeSubmit(
-        mockFetch,
-        {
-          "test-space": {
-            table: "space",
-            id: "other-space-id",
-            spaceId: "other-space-id",
-          },
-        },
-        {},
-        EXPECTED_SPACE_INTENTS
-      )
-      expectInfraAsCodePoll(mockFetch)
+      expect(mockFetch).not.toHaveBeenCalled()
     } finally {
-      warn.mockRestore()
       await rm(tempDir, { recursive: true, force: true })
     }
   })
 
   it("reads an existing-resources wrapper file for request maps", async () => {
     const tempDir = await mkdtemp(path.join(tmpdir(), "notion-iac-test-"))
-    const scriptPath = await writeInfraAsCodeScript(tempDir)
+    const scriptPath = await writeInfraAsCodeScript(
+      tempDir,
+      SPACE_SCRIPT_SOURCE
+    )
     const sessionStateFilePath = path.join(tempDir, "iac-session.json")
     const mockFetch: jest.MockedFn<typeof fetch> = jest.fn()
     mockInfraAsCodeRun(mockFetch)
     const existingResourcesState = {
       existingResources: {
+        "test-space": {
+          table: "space",
+          id: "existing-space-id",
+          spaceId: "existing-space-id",
+        },
         "existing-page": { type: "block", id: "existing-page-id" },
       },
       existingProperties: {
@@ -597,20 +660,32 @@ describe("Client.infraAsCode.run", () => {
       await notion.EXPERIMENTAL__infraAsCode.run({
         scriptFilePath: scriptPath,
         sessionStateFilePath,
+        spaceId: "existing-space-id",
       })
 
       expectInfraAsCodeSubmit(
         mockFetch,
         {
+          "test-space": {
+            table: "space",
+            id: "existing-space-id",
+            spaceId: "existing-space-id",
+          },
           "existing-page": { type: "block", id: "existing-page-id" },
         },
         {
           "name-property": "title",
-        }
+        },
+        EXPECTED_SPACE_INTENTS
       )
       expectInfraAsCodePoll(mockFetch)
       expect(JSON.parse(await readFile(sessionStateFilePath, "utf8"))).toEqual({
         resourceIdToPointerMappings: {
+          "test-space": {
+            table: "space",
+            id: "existing-space-id",
+            spaceId: "existing-space-id",
+          },
           "existing-page": { type: "block", id: "existing-page-id" },
           ...EXPECTED_API_RESULT.resourceIdToPointerMappings,
         },
@@ -626,11 +701,19 @@ describe("Client.infraAsCode.run", () => {
 
   it("writes session state after a local logged run", async () => {
     const tempDir = await mkdtemp(path.join(tmpdir(), "notion-iac-test-"))
-    const scriptPath = await writeInfraAsCodeScript(tempDir)
+    const scriptPath = await writeInfraAsCodeScript(
+      tempDir,
+      SPACE_SCRIPT_SOURCE
+    )
     const sessionStateFilePath = path.join(tempDir, "iac-session.json")
     const mockFetch: jest.MockedFn<typeof fetch> = jest.fn()
     const sessionState = {
       resourceIdToPointerMappings: {
+        "test-space": {
+          table: "space",
+          id: "existing-space-id",
+          spaceId: "existing-space-id",
+        },
         "existing-page": { type: "block", id: "existing-page-id" },
         shared: { type: "block", id: "old-shared-id" },
       },
@@ -663,6 +746,7 @@ describe("Client.infraAsCode.run", () => {
       await notion.EXPERIMENTAL__infraAsCode.run({
         scriptFilePath: scriptPath,
         sessionStateFilePath,
+        spaceId: "existing-space-id",
       })
 
       const writtenState = JSON.parse(
@@ -670,6 +754,11 @@ describe("Client.infraAsCode.run", () => {
       )
       expect(writtenState).toEqual({
         resourceIdToPointerMappings: {
+          "test-space": {
+            table: "space",
+            id: "existing-space-id",
+            spaceId: "existing-space-id",
+          },
           "existing-page": { type: "block", id: "existing-page-id" },
           "new-page": { type: "block", id: "new-page-id" },
           shared: { type: "block", id: "new-shared-id" },
@@ -698,6 +787,7 @@ describe("Client.infraAsCode.run", () => {
         notion.EXPERIMENTAL__infraAsCode.run({
           scriptFilePath: scriptPath,
           sessionStateFilePath,
+          spaceId: "existing-space-id",
         })
       ).rejects.toMatchObject({ code: "ENOENT" })
       expect(mockFetch).not.toHaveBeenCalled()
@@ -706,7 +796,7 @@ describe("Client.infraAsCode.run", () => {
     }
   })
 
-  it("throws when no session-state file or spaceId is provided", async () => {
+  it("throws when spaceId is not provided", async () => {
     const tempDir = await mkdtemp(path.join(tmpdir(), "notion-iac-test-"))
     const scriptPath = await writeInfraAsCodeScript(tempDir)
     const mockFetch: jest.MockedFn<typeof fetch> = jest.fn()
@@ -717,10 +807,8 @@ describe("Client.infraAsCode.run", () => {
       await expect(
         notion.EXPERIMENTAL__infraAsCode.run({
           scriptFilePath: scriptPath,
-        })
-      ).rejects.toThrow(
-        "Infra as code requires either sessionStateFilePath or spaceId"
-      )
+        } as any)
+      ).rejects.toThrow("Infra as code requires spaceId")
       expect(mockFetch).not.toHaveBeenCalled()
     } finally {
       await rm(tempDir, { recursive: true, force: true })

@@ -23,19 +23,19 @@ export type InfraAsCodeRunParameters = {
    */
   scriptFilePath: string
   /**
-   * Path to the session-state file for this run.
-   *
-   * The SDK reads and writes the same file. If omitted, `spaceId` is required
-   * and the SDK writes a timestamped session-state file.
-   */
-  sessionStateFilePath?: string
-  /**
    * Workspace ID to use as the existing space for this run.
    *
    * If `sessionStateFilePath` is provided, the workspace ID must match the
    * compiled script's existing space mapping.
    */
-  spaceId?: string
+  spaceId: string
+  /**
+   * Path to the session-state file for this run.
+   *
+   * The SDK reads and writes the same file. If omitted, the SDK writes a
+   * timestamped session-state file.
+   */
+  sessionStateFilePath?: string
 }
 
 export type InfraAsCodeRunResponse = InfraAsCodeApiResult & {
@@ -56,9 +56,9 @@ export async function runInfraAsCode(
   args: InfraAsCodeRunParameters,
   request: Client["request"]
 ): Promise<InfraAsCodeRunResponse> {
-  if (!isDefined(args.sessionStateFilePath) && !isDefined(args.spaceId)) {
+  if (!isDefined(args.spaceId)) {
     throw new Error(
-      "Infra as code requires either sessionStateFilePath or spaceId. Pass either one of these flags when running the script."
+      "Infra as code requires spaceId. Pass --spaceId when running the script."
     )
   }
 
@@ -110,18 +110,9 @@ function resolveSessionStateForRun({
   intents,
 }: {
   priorState: InfraAsCodeSessionState | undefined
-  spaceId: string | undefined
+  spaceId: string
   intents: InfraAsCodeIntent[]
 }): InfraAsCodeSessionState {
-  if (!isDefined(spaceId)) {
-    if (!isDefined(priorState)) {
-      throw new Error(
-        "Infra as code requires spaceId when no session state is used"
-      )
-    }
-    return priorState
-  }
-
   const baseState = priorState ?? {
     resourceIdToPointerMappings: {},
     resourceIdToPropertyIdMappings: {},
@@ -129,9 +120,9 @@ function resolveSessionStateForRun({
   const spaceResourceId = inferSpaceResourceIdFromIntents(intents)
   const existingPointer = baseState.resourceIdToPointerMappings[spaceResourceId]
 
-  // If there is an existing space resourceId, warn if the spaceId does not match the session state mapping
+  // If session state already maps this space, require it to match spaceId.
   if (isDefined(existingPointer)) {
-    warnIfSpacePointerConflictsWithSpaceId({
+    assertSpacePointerMatchesSpaceId({
       pointer: existingPointer,
       resourceId: spaceResourceId,
       spaceId,
@@ -159,12 +150,12 @@ function buildSpacePointer(spaceId: string): Record<string, string> {
 }
 
 /**
- * Warns the user that the provided spaceId does not match the session state mapping for the
- * provided resourceId. When this function is called, we still proceed with the run, but we
- * want to educate the user that it is recommended to pass the same spaceId for future script runs
- * to avoid confusion.
+ * Verifies that a session-state space mapping targets the provided workspace.
+ *
+ * When `sessionStateFilePath` and `spaceId` are both provided, they must agree
+ * so the run cannot accidentally target two different workspaces.
  */
-function warnIfSpacePointerConflictsWithSpaceId({
+function assertSpacePointerMatchesSpaceId({
   pointer,
   resourceId,
   spaceId,
@@ -181,8 +172,8 @@ function warnIfSpacePointerConflictsWithSpaceId({
   const conflictingId = pointerIds.find(pointerId => pointerId !== spaceId)
 
   if (isDefined(conflictingId)) {
-    console.warn(
-      `Resources have been processed using the provided sessionStateFilePath, but the provided spaceId does not match the session state mapping for resourceId "${resourceId}". For future runs, make sure the spaceId in your session state matches your spaceId argument.`
+    throw new Error(
+      `The provided spaceId "${spaceId}" does not match the session state mapping for resourceId "${resourceId}" (found "${conflictingId}"). Make sure --spaceId matches the workspace in --sessionStateFilePath, or pass the correct session-state file.`
     )
   }
 }
