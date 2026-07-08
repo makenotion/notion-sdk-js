@@ -25,13 +25,15 @@ Infra as Code is experimental alpha. Use a workspace you are comfortable modifyi
 
 4. **Attach** your Personal Access Token **to the workspace** you want to update.
 
-5. **Copy your workspace ID** from Notion. In Notion, go to Settings > General, scroll to the bottom, and copy the workspace ID.
+5. **Provide your token** either by setting `NOTION_TOKEN` in your shell or by pasting it into the `NOTION_TOKEN` constant in `runInfraAsCode.ts`.
 
-6. Run the example script and replace `<YOUR_PERSONAL_ACCESS_TOKEN>` and `<YOUR_WORKSPACE_ID>`.
+6. **Copy your workspace ID** from Notion. In Notion, go to Settings > General, scroll to the bottom, and copy the workspace ID.
+
+7. **Run the example script** and replace `<YOUR_WORKSPACE_ID>`.
 
    ```
    npm run build
-   NOTION_TOKEN=<YOUR_PERSONAL_ACCESS_TOKEN> node build/src/EXPERIMENTAL__infra-as-code/runInfraAsCode.js --spaceId=<YOUR_WORKSPACE_ID> --scriptFilePath=./src/EXPERIMENTAL__infra-as-code/scripts/script_example.ts
+   node build/src/EXPERIMENTAL__infra-as-code/runInfraAsCode.js --spaceId=<YOUR_WORKSPACE_ID> --scriptFilePath=./src/EXPERIMENTAL__infra-as-code/scripts/script_example.ts
    ```
 
    This runs `script_example.ts` against your workspace. The example creates a **General** teamspace, a welcome page, a sample database, and a few sample database entries in your provided workspace.
@@ -109,6 +111,7 @@ For future runs, include the generated `--sessionStateFilePath` with the same `-
 The runner supports these flags:
 
 ```
+NOTION_TOKEN=
 --scriptFilePath=...
 --sessionStateFilePath=...
 --spaceId=...
