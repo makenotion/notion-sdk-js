@@ -1,4 +1,5 @@
-import { readFile, writeFile } from "node:fs/promises"
+import { mkdir, readFile, writeFile } from "node:fs/promises"
+import path = require("node:path")
 
 import type { InfraAsCodeApiResult } from "./api"
 
@@ -54,6 +55,7 @@ export async function writeSessionState(
     },
   }
 
+  await mkdir(path.dirname(sessionStateFilePath), { recursive: true })
   await writeFile(
     sessionStateFilePath,
     `${JSON.stringify(nextState, null, 2)}\n`,

@@ -2,8 +2,8 @@
   "resourceIdToPointerMappings": {
     "my-space": {
       "table": "space",
-      "id": "<INSERT_YOUR_WORKSPACE_ID_HERE>",
-      "spaceId": "<INSERT_YOUR_WORKSPACE_ID_HERE>"
+      "id": "<YOUR_WORKSPACE_ID>",
+      "spaceId": "<YOUR_WORKSPACE_ID>"
     }
   },
   "resourceIdToPropertyIdMappings": {}

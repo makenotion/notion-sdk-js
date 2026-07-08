@@ -1,4 +1,5 @@
 import type Client from "../../Client"
+import { isRecord, isString } from "./utils"
 
 export type InfraAsCodeApiResult = {
   object: "infra_as_code_result"
@@ -150,20 +151,12 @@ function formatTaskError(error: unknown): string {
   return JSON.stringify(error)
 }
 
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === "object" && value !== null && !Array.isArray(value)
-}
-
 function isStringRecord(value: unknown): value is Record<string, string> {
   return isRecord(value) && Object.values(value).every(isString)
 }
 
 function isNumberRecord(value: unknown): value is Record<string, number> {
   return isRecord(value) && Object.values(value).every(isNumber)
-}
-
-function isString(value: unknown): value is string {
-  return typeof value === "string"
 }
 
 function isNumber(value: unknown): value is number {

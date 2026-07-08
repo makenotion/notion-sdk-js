@@ -12,21 +12,27 @@ Instead of spending hours manually recreating the same setup across customers, t
 git clone git@github.com:makenotion/notion-sdk-js.git
 ```
 
-2. **Check out** the Infra as Code experimental branch:
+1. **Check out** the Infra as Code experimental branch:
 
 ```
 git checkout experimental-alpha-infra-as-code
 ```
 
-3. You will need a **Personal Access Token (PAT)** to run Infra as Code. See here for how to create a PAT: https://developers.notion.com/guides/get-started/personal-access-tokens
+1. You will need a **Personal Access Token (PAT)** to run Infra as Code. See here for how to create a PAT: [https://developers.notion.com/guides/get-started/personal-access-tokens](https://developers.notion.com/guides/get-started/personal-access-tokens)
+2. Make sure to **attach your PAT to the Notion workspace** you wish to modify. *Note: Infra as Code is an **experimental alpha**, so make sure to choose a workspace that you are comfortable with modifying.*
+3. Copy the **workspace ID** for the Notion workspace connected to your PAT. To find your workspace ID on Notion, go to Settings > General, scroll all the way down, and copy the workspace id. You'll need this for later!
 
-4. Make sure to **attach your PAT to the Notion workspace** you wish to modify. _Note: Infra as Code is an **experimental state**, so make sure to choose a workspace that you are comfortable with modifying._
-
-5. Copy the **workspace ID** for the Notion workspace connected to your PAT. To find your workspace ID on Notion, go to Settings > General, scroll all the way down, and copy the workspace id. You'll need this for later!
-
-Now, you should be ready to get started! Open up our example run file at `src/EXPERIMENTAL__infra-as-code/quickstart/runInfraAsCode.ts` and follow the instructions there.
+Now, you should be ready to get started! Open up our example run file at `src/EXPERIMENTAL__infra-as-code/runInfraAsCode.ts` and follow the instructions there.
 
 Alternatively, you can also run your own agent to assist you with running files and writing scripts. We have attached an `AGENTS.md` file that will help guide you through the process.
+
+## Scripts and Sessions
+
+(WIP)
+
+To write your own script and sessionState files, you can use the examples in the `scripts/` and `sessions/` directories. Make sure to replace `<YOUR_WORKSPACE_ID>` in `sessionState_example.json`. 
+
+You can also pass in scripts using the optional flags...
 
 ## How It Works
 
