@@ -31,14 +31,13 @@ const NOTION_TOKEN = ""
 
 const auth = NOTION_TOKEN || process.env["NOTION_TOKEN"]
 const notion = new Client({ auth })
-const notionLocal = new Client({ auth, baseUrl: "http://localhost:3000" })
 
 const runArgs = buildRunArgsFromCommandLineArgs(
   parseCommandLineArgs(process.argv.slice(2))
 )
 
 if (runArgs !== undefined) {
-  notionLocal.EXPERIMENTAL__infraAsCode.run(runArgs)
+  notion.EXPERIMENTAL__infraAsCode.run(runArgs)
     .then(result => printInfraAsCodeRunSuccessMessage({ result, runArgs }))
     .catch((error: Error | string) => {
       console.error(error instanceof Error ? error.message : String(error))
