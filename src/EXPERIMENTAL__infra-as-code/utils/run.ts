@@ -56,6 +56,11 @@ export async function runInfraAsCode(
   args: InfraAsCodeRunParameters,
   request: Client["request"]
 ): Promise<InfraAsCodeRunResponse> {
+  if (!isDefined(args.scriptFilePath)) {
+    throw new Error(
+      "Infra as code requires scriptFilePath. Pass the path to a local script file with --scriptFilePath."
+    )
+  }
   if (!isDefined(args.spaceId)) {
     throw new Error(
       "Infra as code requires spaceId. Pass --spaceId when running the script."

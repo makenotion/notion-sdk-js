@@ -9,6 +9,7 @@ import {
   submitInfraAsCodeRunToApi,
   type InfraAsCodeApiResult,
 } from "../src/EXPERIMENTAL__infra-as-code/utils/api"
+import { writeSessionState } from "../src/EXPERIMENTAL__infra-as-code/utils/session"
 import { buildRunArgsFromCommandLineArgs } from "../src/EXPERIMENTAL__infra-as-code/utils/utils"
 import { mockResponse } from "./test-utils"
 
@@ -281,6 +282,33 @@ describe("infra as code API helpers", () => {
       "Infra as code async task task-id did not finish after 600 polls"
     )
     expect(request).toHaveBeenCalledTimes(600)
+  })
+})
+
+describe("infra as code session-state helpers", () => {
+  it("throws a friendly error when session-state writing fails", async () => {
+    const tempDir = await mkdtemp(path.join(tmpdir(), "notion-iac-test-"))
+    const blockedDirectoryPath = path.join(tempDir, "not-a-directory")
+    const sessionStateFilePath = path.join(blockedDirectoryPath, "state.json")
+
+    try {
+      await writeFile(blockedDirectoryPath, "not a directory", "utf8")
+
+      await expect(
+        writeSessionState(
+          sessionStateFilePath,
+          {
+            resourceIdToPointerMappings: {},
+            resourceIdToPropertyIdMappings: {},
+          },
+          EXPECTED_API_RESULT
+        )
+      ).rejects.toThrow(
+        `Unable to write infra as code session state at ${sessionStateFilePath}:`
+      )
+    } finally {
+      await rm(tempDir, { recursive: true, force: true })
+    }
   })
 })
 

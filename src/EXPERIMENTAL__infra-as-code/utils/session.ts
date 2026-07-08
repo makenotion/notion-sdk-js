@@ -77,10 +77,18 @@ export async function writeSessionState(
     },
   }
 
-  await mkdir(path.dirname(sessionStateFilePath), { recursive: true })
-  await writeFile(
-    sessionStateFilePath,
-    `${JSON.stringify(nextState, null, 2)}\n`,
-    "utf8"
-  )
+  try {
+    await mkdir(path.dirname(sessionStateFilePath), { recursive: true })
+    await writeFile(
+      sessionStateFilePath,
+      `${JSON.stringify(nextState, null, 2)}\n`,
+      "utf8"
+    )
+  } catch (error) {
+    throw new Error(
+      `Unable to write infra as code session state at ${sessionStateFilePath}: ${
+        error instanceof Error ? error.message : String(error)
+      }`
+    )
+  }
 }
