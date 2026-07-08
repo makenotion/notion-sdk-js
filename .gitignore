@@ -1,6 +1,7 @@
 ### Custom
 
 /build
+/tmp
 
 /examples/**/package-lock.json
 /examples/**/.env

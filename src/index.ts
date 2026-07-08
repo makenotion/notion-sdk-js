@@ -220,6 +220,11 @@ export type {
   ViewUpdatedWebhookPayload,
 } from "./api-endpoints"
 export { default as Client } from "./Client"
+export { compileInfraAsCodeScriptToIntents } from "./EXPERIMENTAL__infra-as-code/utils/compile"
+export type {
+  InfraAsCodeRunParameters,
+  InfraAsCodeRunResponse,
+} from "./EXPERIMENTAL__infra-as-code/utils/run"
 export { LogLevel, Logger } from "./logging"
 export {
   // Error codes
