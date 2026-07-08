@@ -7,7 +7,10 @@
  * @packageDocumentation
  */
 
+import type { RichTextItemResponseCommon } from "./api-endpoints"
+
 export type {
+  ApiColor,
   AppendBlockChildrenParameters,
   AppendBlockChildrenResponse,
   AudioBlockObjectResponse,
@@ -148,6 +151,7 @@ export type {
   QuoteBlockObjectResponse,
   RelationPropertyItemObjectResponse,
   RichTextItemResponse,
+  RichTextItemResponseCommon,
   RichTextPropertyItemObjectResponse,
   RollupPropertyItemObjectResponse,
   SearchParameters,
@@ -219,6 +223,7 @@ export type {
   ViewDeletedWebhookPayload,
   ViewUpdatedWebhookPayload,
 } from "./api-endpoints"
+export type AnnotationResponse = RichTextItemResponseCommon["annotations"]
 export { default as Client } from "./Client"
 export { LogLevel, Logger } from "./logging"
 export {
