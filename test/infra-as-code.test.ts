@@ -789,7 +789,9 @@ describe("Client.infraAsCode.run", () => {
           sessionStateFilePath,
           spaceId: "existing-space-id",
         })
-      ).rejects.toMatchObject({ code: "ENOENT" })
+      ).rejects.toThrow(
+        `Infra as code session state not found: ${sessionStateFilePath}`
+      )
       expect(mockFetch).not.toHaveBeenCalled()
     } finally {
       await rm(tempDir, { recursive: true, force: true })

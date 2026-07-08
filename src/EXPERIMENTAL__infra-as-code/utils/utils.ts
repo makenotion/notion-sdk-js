@@ -19,7 +19,7 @@ export function parseCommandLineArgs(argv: string[]): CommandLineArgs {
 
   for (let index = 0; index < argv.length; index++) {
     const rawArg = argv[index]
-    if (rawArg === undefined || !rawArg.startsWith("--")) {
+    if (!isDefined(rawArg) || !rawArg.startsWith("--")) {
       throw new Error(`Expected a flag such as --scriptFilePath, got ${rawArg}`)
     }
 
@@ -36,7 +36,7 @@ export function parseCommandLineArgs(argv: string[]): CommandLineArgs {
       )
     }
 
-    if (value === undefined || value.length === 0 || value.startsWith("--")) {
+    if (!isDefined(value) || value.length === 0 || value.startsWith("--")) {
       throw new Error(`Missing value for --${name}`)
     }
 
@@ -107,7 +107,7 @@ export function printInfraAsCodeRunSuccessMessage({
 The session-state file has been saved to ${result.sessionStateFilePath}.
 
 To run new scripts against this workspace, run the following command:
-npm run build && node build/src/EXPERIMENTAL__infra-as-code/runInfraAsCode.js --spaceId=${runArgs.spaceId} --scriptFilePath=<YOUR_NEW_SCRIPT_FILE_PATH> --sessionStateFilePath=${result.sessionStateFilePath}`
+NOTION_TOKEN=<YOUR_PERSONAL_ACCESS_TOKEN> node build/src/EXPERIMENTAL__infra-as-code/runInfraAsCode.js --spaceId=${runArgs.spaceId} --scriptFilePath=<YOUR_NEW_SCRIPT_FILE_PATH> --sessionStateFilePath=${result.sessionStateFilePath}`
   )
 }
 

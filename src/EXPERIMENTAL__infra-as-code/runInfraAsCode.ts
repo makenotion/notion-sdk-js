@@ -22,6 +22,7 @@
 import Client from "../Client"
 import {
   buildRunArgsFromCommandLineArgs,
+  isDefined,
   parseCommandLineArgs,
   printInfraAsCodeRunSuccessMessage,
 } from "./utils/utils"
@@ -37,7 +38,7 @@ const runArgs = buildRunArgsFromCommandLineArgs(
   parseCommandLineArgs(process.argv.slice(2))
 )
 
-if (runArgs !== undefined) {
+if (isDefined(runArgs)) {
   notionLocal.EXPERIMENTAL__infraAsCode.run(runArgs)
     .then(result => printInfraAsCodeRunSuccessMessage({ result, runArgs }))
     .catch((error: Error | string) => {

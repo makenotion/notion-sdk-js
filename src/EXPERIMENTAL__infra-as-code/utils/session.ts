@@ -2,6 +2,7 @@ import { mkdir, readFile, writeFile } from "node:fs/promises"
 import path = require("node:path")
 
 import type { InfraAsCodeApiResult } from "./api"
+import { isFileNotFoundError } from "./utils"
 
 export type InfraAsCodeSessionState = {
   resourceIdToPointerMappings: Record<string, unknown>
@@ -22,9 +23,7 @@ type InfraAsCodeSessionStateFile = Partial<InfraAsCodeSessionState> & {
 export async function readSessionState(
   sessionStateFilePath: string
 ): Promise<InfraAsCodeSessionState> {
-  const parsed: InfraAsCodeSessionStateFile | null = JSON.parse(
-    await readFile(sessionStateFilePath, "utf8")
-  )
+  const parsed = await readSessionStateFile(sessionStateFilePath)
 
   return {
     resourceIdToPointerMappings:
@@ -33,6 +32,29 @@ export async function readSessionState(
       parsed?.resourceIdToPropertyIdMappings ??
       parsed?.existingProperties ??
       {},
+  }
+}
+
+/**
+ * Reads and parses a session-state file with user-facing error messages.
+ */
+async function readSessionStateFile(
+  sessionStateFilePath: string
+): Promise<InfraAsCodeSessionStateFile | null> {
+  try {
+    return JSON.parse(await readFile(sessionStateFilePath, "utf8"))
+  } catch (error) {
+    if (isFileNotFoundError(error)) {
+      throw new Error(
+        `Infra as code session state not found: ${sessionStateFilePath}`
+      )
+    }
+
+    throw new Error(
+      `Unable to read infra as code session state at ${sessionStateFilePath}: ${
+        error instanceof Error ? error.message : String(error)
+      }`
+    )
   }
 }
 
