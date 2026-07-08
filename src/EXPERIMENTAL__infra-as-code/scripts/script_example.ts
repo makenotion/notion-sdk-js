@@ -1,19 +1,19 @@
 /**
- * This is the infra as code script compiled by runInfraAsCode.ts.
+ * This is the infra as code script example compiled by runInfraAsCode.ts.
  *
  * The teamspace, page, database, and database entries below are new resources
  * that will be created in the workspace you have provided when running the script.
  *
  * Try changing names, page content, properties, or add more entries, then rebuild
  * and rerun the example.
- * 
+ *
  * Note: The resourceIds below are stable and will let future runs update the same resources.
  */
 
 {
-  // This script starts with a call to your workspace. The resourceId "example-space" 
+  // This script starts with a call to your workspace. The resourceId "example-space"
   // is the anchor for --spaceId. We use this to map your workspace ID to this script.
-  // All new resources below are created inside this space.
+  // The new resources below are created inside this space.
   const space = notion.space({
     resourceId: "example-space",
     // This will update your workspace name to "My Space", but you can change it to anything you want.
@@ -28,7 +28,6 @@
     icon: { type: "notion_icon", description: "home", color: "green" },
     description: "A starting point created by Infra as Code.",
   })
-
 
   // This creates a top-level page in the General teamspace with an icon, title, and content.
   generalTeamspace.addPage({

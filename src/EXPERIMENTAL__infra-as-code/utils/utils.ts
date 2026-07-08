@@ -1,3 +1,5 @@
+import { InfraAsCodeRunParameters, InfraAsCodeRunResponse } from "./run"
+
 export type CommandLineArgs = {
   scriptFilePath?: string
   sessionStateFilePath?: string
@@ -6,32 +8,6 @@ export type CommandLineArgs = {
 
 const DEFAULT_SESSION_STATE_DIRECTORY =
   "./src/EXPERIMENTAL__infra-as-code/sessions"
-
-/**
- * Returns whether a caught filesystem error means a file was not found.
- */
-export function isFileNotFoundError(error: unknown): boolean {
-  return (
-    typeof error === "object" &&
-    error !== null &&
-    "code" in error &&
-    error.code === "ENOENT"
-  )
-}
-
-/**
- * Returns whether a value is a record, excluding arrays.
- */
-export function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === "object" && value !== null && !Array.isArray(value)
-}
-
-/**
- * Returns whether a value is a string.
- */
-export function isString(value: unknown): value is string {
-  return typeof value === "string"
-}
 
 /**
  * Parses supported command-line flags for the infra as code example runner.
@@ -75,6 +51,59 @@ export function parseCommandLineArgs(argv: string[]): CommandLineArgs {
 }
 
 /**
+ * Builds runnable infra as code args from parsed CLI flags.
+ *
+ * If `--scriptFilePath` is missing, this prints a friendly command example and
+ * sets the process exit code instead of throwing a stack trace.
+ */
+export function buildRunArgsFromCommandLineArgs({
+  scriptFilePath,
+  sessionStateFilePath,
+  spaceId,
+}: CommandLineArgs): InfraAsCodeRunParameters | undefined {
+  if (!isDefined(scriptFilePath)) {
+    console.error(
+      `You have not provided a --scriptFilePath. You can try the example script with this command:
+
+npm run build
+NOTION_TOKEN=<personal-access-token> node build/src/EXPERIMENTAL__infra-as-code/runInfraAsCode.js --spaceId=<workspace-id> --scriptFilePath=./src/EXPERIMENTAL__infra-as-code/scripts/script_example.ts`
+    )
+    process.exitCode = 1
+    return undefined
+  }
+
+  return {
+    scriptFilePath,
+    sessionStateFilePath,
+    spaceId,
+  }
+}
+
+/**
+ * Prints the success message for the example command-line runner.
+ */
+export function printInfraAsCodeRunSuccessMessage({
+  result,
+  runArgs,
+}: {
+  result: InfraAsCodeRunResponse
+  runArgs: InfraAsCodeRunParameters
+}): void {
+  const workspace =
+    runArgs.spaceId === undefined
+      ? "Your workspace"
+      : `Your workspace ${runArgs.spaceId}`
+
+  console.log(
+    `✅ ${workspace} has been successfully updated with ${runArgs.scriptFilePath}.
+The session-state file has been saved to ${result.sessionStateFilePath}.
+
+To run new scripts against this workspace, run the following command:
+npm run build && node build/src/EXPERIMENTAL__infra-as-code/runInfraAsCode.js --scriptFilePath=<YOUR_NEW_SCRIPT_FILE_PATH> --sessionStateFilePath=${result.sessionStateFilePath}`
+  )
+}
+
+/**
  * Creates a session-state file path using a compact UTC timestamp.
  */
 export function createTimestampedSessionStateFilePath(
@@ -97,6 +126,32 @@ function isCommandLineArgName(name: string): name is keyof CommandLineArgs {
     name === "sessionStateFilePath" ||
     name === "spaceId"
   )
+}
+
+/**
+ * Returns whether a caught filesystem error means a file was not found.
+ */
+export function isFileNotFoundError(error: unknown): boolean {
+  return (
+    typeof error === "object" &&
+    error !== null &&
+    "code" in error &&
+    error.code === "ENOENT"
+  )
+}
+
+/**
+ * Returns whether a value is a record, excluding arrays.
+ */
+export function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value)
+}
+
+/**
+ * Returns whether a value is a string.
+ */
+export function isString(value: unknown): value is string {
+  return typeof value === "string"
 }
 
 /**

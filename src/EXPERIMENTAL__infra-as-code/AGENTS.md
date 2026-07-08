@@ -8,15 +8,16 @@ code scripts in this directory.
 ## Purpose
 
 This directory contains an experimental SDK workflow that lets a user write a
-local TypeScript script, compile it into JSON "intents", and submit those intents
-through `Client.EXPERIMENTAL__infraAsCode.run()`.
+local TypeScript script, compile it into JSON "intents", and submit those
+intents through `Client.EXPERIMENTAL__infraAsCode.run()`.
 
 Use this guide when helping a user create or edit:
 
-- a raw infra as code script, usually `scripts/script_TIMESTAMP.ts`
-- a required session-state file, usually
-  `sessions/sessionState_TIMESTAMP.json`
-- a runner file, usually `examples/runInfraAsCode.ts`
+- the user-facing runner at `runInfraAsCode.ts`
+- a raw infra as code script in `scripts/`
+- a session-state file in `sessions/`
+- the infra as code implementation helpers in `utils/`
+- user-facing docs in `README.md`
 
 The goal is to make it easy for users to generate scripts ranging from a tiny
 space update to a full workspace setup with spaces, teamspaces, pages,
@@ -24,86 +25,109 @@ databases, data sources, views, and seeded pages.
 
 ## Directory Map
 
-- `run.ts`: orchestration for `Client.EXPERIMENTAL__infraAsCode.run()`
-- `api.ts`: API submit and async task polling helpers
-- `session.ts`: reads existing resource mappings and writes run output state
-- `compile.ts`: compiles a raw TypeScript script into JSON intents
-- `runtime.ts`: stub runtime used by the compiler while collecting intents
-- `utils.ts`: small shared helpers
-- `types.ts`: generated ambient types for script authoring
-- `scripts/`: timestamped raw infra as code scripts for local runs
-- `sessions/`: timestamped session-state files for local runs
-- `examples/script.ts`: simple raw infra as code script
-- `examples/sessionState.json`: sample persisted mappings for known resources
-- `examples/runInfraAsCode.ts`: simple runner for the example script
+- `runInfraAsCode.ts`: user-facing runner for local experimentation.
+- `README.md`: user-facing setup and usage documentation.
+- `scripts/script_example.ts`: first-run sample script.
+- `sessions/sessionState_example.json`: sample persisted mappings.
+- `utils/run.ts`: orchestration for `Client.EXPERIMENTAL__infraAsCode.run()`.
+- `utils/api.ts`: API submit and async task polling helpers.
+- `utils/session.ts`: reads and writes session-state files.
+- `utils/compile.ts`: compiles a raw TypeScript script into JSON intents.
+- `utils/runtime.ts`: stub runtime used by the compiler while collecting
+  intents.
+- `utils/utils.ts`: small shared helpers such as CLI parsing and type guards.
+- `utils/types.ts`: generated ambient types for script authoring.
+- `utils/index.ts`: utility export surface.
 
 `compile.ts` is the key piece for script generation. It wraps the user's script
-with the stub runtime from `runtime.ts`, runs it in a temporary Node process, and
-reads the emitted intents back as JSON.
+with the stub runtime from `runtime.ts`, runs it in a temporary Node process,
+and reads the emitted intents back as JSON.
 
-## Current Limitations
+## Current Run Behavior
 
-`api.ts` submits compiled intents to the public infra as code API endpoint,
-polls the async task endpoint, and writes returned mappings back to the
-session-state file.
+The root runner is `src/EXPERIMENTAL__infra-as-code/runInfraAsCode.ts`.
+It creates an SDK client, parses command-line flags, and calls
+`EXPERIMENTAL__infraAsCode.run()`.
 
-Keep implementation changes minimal unless the user explicitly asks to work on
-the SDK internals.
+`NOTION_TOKEN` can be provided in either of these ways:
 
-## Runner Files
+- set `NOTION_TOKEN` in the shell
+- paste a local test token into the top-level `NOTION_TOKEN` constant
 
-Runner files are normal SDK code. They should import `Client`, create a client,
-and call `EXPERIMENTAL__infraAsCode.run()`.
+Never commit a real token. The runner intentionally keeps an editable
+top-level `NOTION_TOKEN` constant for local testing. Do not remove the
+`new Client(...)` construction used for testing unless the user explicitly
+asks.
 
-Prefer this shape:
-
-```typescript
-import { Client } from "../.."
-
-const notion = new Client({ auth: process.env["NOTION_TOKEN"] })
-
-notion.EXPERIMENTAL__infraAsCode.run({
-  scriptFilePath:
-    "./src/EXPERIMENTAL__infra-as-code/scripts/script_20260707T101500Z.ts",
-  sessionStateFilePath:
-    "./src/EXPERIMENTAL__infra-as-code/sessions/sessionState_20260707T101500Z.json",
-})
-  .then(result => console.dir(result, { depth: null }))
-  .catch(error => {
-    console.error(error instanceof Error ? error.message : String(error))
-    process.exitCode = 1
-  })
-```
-
-For local experimentation, users may paste a token into a scratch runner file.
-The important rule is to never commit real tokens. Infra as code requires a
-Personal Access Token with access to the target space:
-https://developers.notion.com/guides/get-started/personal-access-tokens
-
-Include the exact command near the top of example runner files when useful. If
-the runner reads `process.env["NOTION_TOKEN"]`, include:
+Supported command-line flags are camelCase and use a leading `--`:
 
 ```text
-npm run build
-NOTION_TOKEN=<personal-access-token> node build/src/EXPERIMENTAL__infra-as-code/examples/runInfraAsCode.js
+--scriptFilePath=./src/EXPERIMENTAL__infra-as-code/scripts/script_example.ts
+--sessionStateFilePath=./src/EXPERIMENTAL__infra-as-code/sessions/sessionState_example.json
+--spaceId=<workspace-id>
 ```
 
-If the token is already pasted into a local scratch runner file, include:
+Flags can be passed as either `--name=value` or `--name value`.
+
+`scriptFilePath` is required. If it is missing, the runner should fail with a
+friendly error that includes a runnable example command.
+
+`spaceId` is the workspace ID. When the user passes `--spaceId` without a
+session-state file, the SDK creates an initial existing-space mapping from the
+compiled script, runs the script, then writes a timestamped session-state file
+such as:
 
 ```text
-npm run build
-node build/src/EXPERIMENTAL__infra-as-code/examples/runInfraAsCode.js
+./src/EXPERIMENTAL__infra-as-code/sessions/sessionState_20260707T173844Z.json
 ```
+
+The SDK can infer the script resource ID for `spaceId` when the script has
+either:
+
+- exactly one `space` intent, such as `notion.space({ resourceId: "my-space" })`
+- no `space` intent and exactly one `teamspace.parent.resourceId`
+
+If the script has multiple possible space resource IDs, the SDK throws and asks
+the user to pass `sessionStateFilePath` instead.
+
+If both `sessionStateFilePath` and `spaceId` are provided, session state takes
+precedence. If they appear to point at different workspaces, the SDK logs an
+educational warning and continues with the mappings from the session-state file.
+
+At least one of `sessionStateFilePath` or `spaceId` is required by the SDK.
+The root runner does not provide a default script path or session-state path.
+
+On success, the runner should print a concise user-facing message and point the
+user to the written session-state file. Do not print the full
+`resourceIdToPointerMappings` result in normal runner output.
+
+## Common Commands
+
+First run against an existing workspace by workspace ID:
+
+```bash
+npm run build
+NOTION_TOKEN=<personal-access-token> node build/src/EXPERIMENTAL__infra-as-code/runInfraAsCode.js --spaceId=<workspace-id> --scriptFilePath=./src/EXPERIMENTAL__infra-as-code/scripts/script_example.ts
+```
+
+Follow-up run using a written session-state file:
+
+```bash
+npm run build
+NOTION_TOKEN=<personal-access-token> node build/src/EXPERIMENTAL__infra-as-code/runInfraAsCode.js --scriptFilePath=./src/EXPERIMENTAL__infra-as-code/scripts/script_example.ts --sessionStateFilePath=./src/EXPERIMENTAL__infra-as-code/sessions/sessionState_TIMESTAMP.json
+```
+
+When the token is already pasted into a local scratch runner file, omit the
+`NOTION_TOKEN=...` prefix.
 
 ## Raw Script Files
 
 Raw script files are compiler input, not normal SDK entry points.
 
 For local user-specific work, create a new raw script in `scripts/` instead of
-editing `examples/script.ts`. Name it with the creation timestamp:
-`script_TIMESTAMP.ts`. Use a compact UTC timestamp such as
-`20260707T101500Z`, so a created file looks like
-`scripts/script_20260707T101500Z.ts`.
+editing the sample unless the user explicitly asks to change
+`scripts/script_example.ts`. Name one-off scripts with a compact UTC timestamp,
+such as `scripts/script_20260707T101500Z.ts`.
 
 Important rules:
 
@@ -111,32 +135,25 @@ Important rules:
 - Do not create a real SDK client in raw scripts.
 - Use the global `notion` helper provided by the compiler.
 - Use stable, human-readable `resourceId` values.
-- Keep every `resourceId` unique within the script file. Reusing a resource ID
-  can cause later declarations to overwrite or target the wrong resource.
-- Only emit a resource when the run should create it or update one of its own
-  fields. If an existing mapped resource is only needed as a parent, reference
-  its `resourceId` in the child's `parent` field instead of calling its helper
-  just to get a handle. For example, call `notion.space(...)` only when changing
-  the space name, icon, or members; otherwise create child resources with
-  `parent: { type: "resourceId", resourceId: "my-space" }`.
-- Use convenience methods such as `space.addTeamspace(...)`,
-  `teamspace.addPage(...)`, and `teamspace.addDatabase(...)` only when the
-  parent resource is also intentionally being emitted by the script. For
-  existing parents that should not change, use the top-level helper with an
-  explicit `parent`.
+- Keep every `resourceId` unique within the script file.
 - Wrap top-level script content in `{ ... }` so multiple script files can be
   type-checked in the same TypeScript project without duplicate global `const`
   declarations.
-- Do not add `export {}` unless the compiler is updated to support module-style
-  scripts.
+- Do not add `export {}` unless the compiler is updated to support
+  module-style scripts.
 
-Good raw script shape:
+When a script is meant to run with `--spaceId`, include one clear workspace
+anchor:
 
 ```typescript
 {
-  const teamspace = notion.teamspace({
+  const space = notion.space({
+    resourceId: "my-space",
+    name: "My Space",
+  })
+
+  const teamspace = space.addTeamspace({
     resourceId: "general-teamspace",
-    parent: { type: "resourceId", resourceId: "my-space" },
     name: "General",
     accessLevel: "open",
   })
@@ -149,9 +166,25 @@ Good raw script shape:
 }
 ```
 
+In that example, `--spaceId=<workspace-id>` maps the real workspace to the
+script resource ID `"my-space"`. The teamspace and page are new resources. If
+the mapped `notion.space(...)` includes fields like `name` or `icon`, the run
+may update those fields on the existing workspace.
+
+Only emit a resource when the run should create it or update one of its own
+fields. If an existing mapped resource is only needed as a parent, reference its
+`resourceId` in the child's `parent` field instead of calling its helper just to
+get a handle.
+
+Use convenience methods such as `space.addTeamspace(...)`,
+`teamspace.addPage(...)`, and `teamspace.addDatabase(...)` when the parent
+resource is also intentionally being emitted by the script. For existing
+parents that should not change, use the top-level helper with an explicit
+`parent`.
+
 Use `types.ts` for public type signatures and supported argument shapes. Do not
-copy or summarize implementation comments, internal names, tag refs, backend
-storage details, provider names, or roadmap notes from generated files into
+copy or summarize implementation comments, internal names, backend storage
+details, provider names, or roadmap notes from generated files into
 user-facing output.
 
 Use the examples and exported helper signatures as the practical supported
@@ -175,16 +208,34 @@ Common helpers include:
 - `notion.status(...)`
 - `notion.multiSelect(...)`
 
+Page `content` uses Notion-flavored markdown. Useful examples include:
+
+```markdown
+# Heading
+
+<callout icon="💡">
+Helpful callout text.
+</callout>
+
+<mention-date start="2026-07-08"/>
+```
+
+Date mentions currently use explicit dates. There is no dynamic `@Today`
+shorthand in the raw markdown syntax.
+
 ## Session State Files
 
-Every run must provide `sessionStateFilePath`. Use it to tell the API which
-existing workspace/resources the script should target, and to write returned
-mappings back to the same file. Prefer this session-state file shape:
+Session-state files map script `resourceId` values to real Notion resources and
+property IDs. They let follow-up runs update the same resources instead of
+creating duplicates.
 
-For local user-specific work, create a new session-state file in `sessions/`
-instead of editing `examples/sessionState.json`. Use the same timestamp as the
-raw script where possible, such as
-`sessions/sessionState_20260707T101500Z.json`.
+A session-state file is optional when the user passes `--spaceId`. In that
+case, the SDK creates the initial space mapping and writes a timestamped
+session-state file after the run.
+
+A session-state file is required when the user does not pass `--spaceId`.
+
+Preferred session-state file shape:
 
 ```json
 {
@@ -200,21 +251,6 @@ raw script where possible, such as
   }
 }
 ```
-
-The session-state file must always include exactly one existing space mapping.
-Without a space in `resourceIdToPointerMappings` or `existingResources`, the
-public API returns a validation error.
-
-If the user asks an agent to create a script and does not provide a workspace
-ID, the agent should ask the user for the workspace ID before creating the
-session-state file.
-
-The keys in `resourceIdToPointerMappings` and
-`resourceIdToPropertyIdMappings` must match `resourceId` values in the script.
-When a script uses a `resourceId` that is present in the session-state file,
-the run targets that existing Notion resource. When a script uses a new
-`resourceId` that is not in the session-state file, the run creates a new
-resource and writes the returned mapping back to the same file.
 
 For compatibility, the SDK can also read files that use this wrapper shape:
 
@@ -234,13 +270,17 @@ For compatibility, the SDK can also read files that use this wrapper shape:
 ```
 
 After the run, the SDK writes the preferred `resourceIdTo*` session-state shape
-back to `sessionStateFilePath`.
+to `sessionStateFilePath`.
 
-Do not invent real Notion IDs. If the user wants to target existing local
-resources and has not provided IDs, ask for them or leave clear placeholders.
+The keys in `resourceIdToPointerMappings` and
+`resourceIdToPropertyIdMappings` must match `resourceId` values in the script.
+When a script uses a `resourceId` that is present in the session-state file, the
+run targets that existing Notion resource. When a script uses a new
+`resourceId` that is not in the session-state file, the run creates a new
+resource and writes the returned mapping back to the session-state file.
 
-The SDK reads this file before a run and writes the merged session state back to
-the same file after the run.
+Do not invent real Notion IDs. If the user wants to target existing resources
+and has not provided IDs, ask for them or leave clear placeholders.
 
 ## Authoring Workflow For Agents
 
@@ -248,22 +288,45 @@ When helping a user create a new infra as code example:
 
 1. Clarify the target workspace shape: spaces, teamspaces, pages, databases,
    properties, views, and seed pages.
-2. If the user has not provided a workspace ID, ask for it before creating the
-   script and session-state file.
-3. Choose stable `resourceId` values before writing the script.
-4. Generate one timestamp for the run, preferably UTC in
-   `YYYYMMDDTHHMMSSZ` format.
-5. Create a new raw script at `scripts/script_TIMESTAMP.ts` with the global
-   `notion` helper.
-6. Create a new session-state file at
-   `sessions/sessionState_TIMESTAMP.json` only for resources the user already
-   has and explicitly wants to target.
-7. Keep `examples/script.ts` and `examples/sessionState.json` as reusable
-   baseline samples unless the user explicitly asks to change them.
-8. Keep the runner small and point it at the script and mapping file.
-9. Run `npm run build` to type-check the SDK and examples.
+2. Choose stable `resourceId` values before writing the script.
+3. Use `scripts/script_example.ts` only when the user asks to update the shared
+   example. Otherwise create a timestamped script in `scripts/`.
+4. If the user already has a session-state file or existing mappings, use that
+   `sessionStateFilePath` for the run command.
+5. If no session-state file is available, ask for the workspace ID before
+   finalizing the run command. Use that ID with the `--spaceId` flow instead of
+   manually creating a session-state file.
+6. After creating the script, tell the user the exact script path and include
+   the exact command they can run from the repository root.
+7. Keep runner changes small and preserve the top-level editable constants.
+8. Run `npm run build` to type-check the SDK and raw scripts.
+9. Run `npx jest test/infra-as-code.test.ts --runInBand` when SDK behavior
+   changes.
 10. Optionally run the built example if the user asks and a suitable token/setup
     exists.
+
+When the user asks in plain English for a script, such as "Create a student
+dashboard for my semester...", the agent should create the script and finish
+with a clear handoff:
+
+```text
+I've generated the script for you at:
+src/EXPERIMENTAL__infra-as-code/scripts/script_TIMESTAMP.ts
+
+You can run it with:
+npm run build
+NOTION_TOKEN=<personal-access-token> node build/src/EXPERIMENTAL__infra-as-code/runInfraAsCode.js --scriptFilePath=src/EXPERIMENTAL__infra-as-code/scripts/script_TIMESTAMP.ts --spaceId=<workspace-id>
+```
+
+If a session-state file is already known, use it instead of `--spaceId`:
+
+```text
+npm run build
+NOTION_TOKEN=<personal-access-token> node build/src/EXPERIMENTAL__infra-as-code/runInfraAsCode.js --scriptFilePath=src/EXPERIMENTAL__infra-as-code/scripts/script_TIMESTAMP.ts --sessionStateFilePath=src/EXPERIMENTAL__infra-as-code/sessions/sessionState_TIMESTAMP.json
+```
+
+If the token is already pasted into the local runner file, omit the
+`NOTION_TOKEN=...` prefix from the command.
 
 For complex examples, prefer readable local variables over deeply nested calls.
 Use `const tasksDb = teamspace.addDatabase(...)` and then
@@ -278,7 +341,7 @@ Use `const tasksDb = teamspace.addDatabase(...)` and then
 - Keep generated or local-only resource IDs out of public examples when they
   reveal private workspace details.
 - Prefer minimal SDK changes; most user requests in this directory should only
-  need example script, mapping, or runner edits.
+  need example script, mapping, docs, or runner edits.
 
 ## Verification
 
@@ -289,12 +352,14 @@ npm run build
 npx jest test/infra-as-code.test.ts --runInBand
 ```
 
-If the user asks to run an example:
+If the user asks to run the example:
 
 ```bash
 npm run build
-NOTION_TOKEN=<personal-access-token> node build/src/EXPERIMENTAL__infra-as-code/examples/runInfraAsCode.js
+NOTION_TOKEN=<personal-access-token> node build/src/EXPERIMENTAL__infra-as-code/runInfraAsCode.js --spaceId=<workspace-id> --scriptFilePath=./src/EXPERIMENTAL__infra-as-code/scripts/script_example.ts
 ```
 
-The API path logs the compiled payload, submits it to Notion, polls the async
-task, and writes the returned mappings back to the session-state file.
+The run compiles the script, submits it to Notion, polls the async task, and
+writes returned mappings to the session-state file. Normal runner output should
+stay concise; users can open the written session-state file to inspect generated
+mappings.
