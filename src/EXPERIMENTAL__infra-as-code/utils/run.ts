@@ -118,12 +118,12 @@ function resolveSessionStateForRun({
     resourceIdToPropertyIdMappings: {},
   }
   const spaceResourceId = inferSpaceResourceIdFromIntents(intents)
-  const existingPointer = baseState.resourceIdToPointerMappings[spaceResourceId]
+  const existingSpacePointer =
+    baseState.resourceIdToPointerMappings[spaceResourceId]
 
-  // If session state already maps this space, require it to match spaceId.
-  if (isDefined(existingPointer)) {
+  if (isDefined(existingSpacePointer)) {
     assertSpacePointerMatchesSpaceId({
-      pointer: existingPointer,
+      spacePointer: existingSpacePointer,
       resourceId: spaceResourceId,
       spaceId,
     })
@@ -131,7 +131,6 @@ function resolveSessionStateForRun({
     return baseState
   }
 
-  // If there is no existing space resourceId, build the new space resourceId and add it to the session state
   return {
     resourceIdToPointerMappings: {
       ...baseState.resourceIdToPointerMappings,
@@ -150,30 +149,28 @@ function buildSpacePointer(spaceId: string): Record<string, string> {
 }
 
 /**
- * Verifies that a session-state space mapping targets the provided workspace.
+ * Verifies that the inferred session-state space mapping targets the workspace.
  *
  * When `sessionStateFilePath` and `spaceId` are both provided, they must agree
  * so the run cannot accidentally target two different workspaces.
  */
 function assertSpacePointerMatchesSpaceId({
-  pointer,
+  spacePointer,
   resourceId,
   spaceId,
 }: {
-  pointer: unknown
+  spacePointer: unknown
   resourceId: string
   spaceId: string
 }): void {
-  if (!isRecord(pointer)) {
+  if (!isRecord(spacePointer) || spacePointer["table"] !== "space") {
     return
   }
 
-  const pointerIds = [pointer["id"], pointer["spaceId"]].filter(isString)
-  const conflictingId = pointerIds.find(pointerId => pointerId !== spaceId)
-
-  if (isDefined(conflictingId)) {
+  const spacePointerId = spacePointer["id"]
+  if (isString(spacePointerId) && spacePointerId !== spaceId) {
     throw new Error(
-      `The provided spaceId "${spaceId}" does not match the session state mapping for resourceId "${resourceId}" (found "${conflictingId}"). Make sure --spaceId matches the workspace in --sessionStateFilePath, or pass the correct session-state file.`
+      `The provided spaceId "${spaceId}" does not match the session state mapping for resourceId "${resourceId}" (found "${spacePointerId}"). Make sure --spaceId matches the workspace in --sessionStateFilePath, or pass the correct session-state file.`
     )
   }
 }
@@ -203,7 +200,7 @@ function inferSpaceResourceIdFromIntents(intents: InfraAsCodeIntent[]): string {
 
   if (spaceResourceIds.size > 1) {
     throw new Error(
-      "Unable to use spaceId because the script declares multiple spaces. Pass sessionStateFilePath instead."
+      "Unable to use spaceId because the script declares multiple spaces. Keep one workspace anchor in the script."
     )
   }
 
@@ -214,12 +211,12 @@ function inferSpaceResourceIdFromIntents(intents: InfraAsCodeIntent[]): string {
 
   if (teamspaceParentResourceIds.size > 1) {
     throw new Error(
-      "Unable to use spaceId because the script declares teamspaces with multiple parent resourceIds. Pass sessionStateFilePath instead."
+      "Unable to use spaceId because the script declares teamspaces with multiple parent resourceIds. Keep one workspace anchor in the script."
     )
   }
 
   throw new Error(
-    "Unable to use spaceId because the script does not declare a space or a teamspace parent resourceId. Pass sessionStateFilePath instead."
+    "Unable to use spaceId because the script does not declare a space or a teamspace parent resourceId. Add one workspace anchor to the script."
   )
 }
 

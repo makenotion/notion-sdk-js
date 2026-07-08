@@ -90,14 +90,14 @@ either:
 - no `space` intent and exactly one `teamspace.parent.resourceId`
 
 If the script has multiple possible space resource IDs, the SDK throws and asks
-the user to pass `sessionStateFilePath` instead.
+the user to keep one clear workspace anchor in the script.
 
 If both `sessionStateFilePath` and `spaceId` are provided, the session-state
 file and `spaceId` must point at the same workspace. If they conflict, the SDK
 throws and stops the run before submitting to the API.
 
-At least one of `sessionStateFilePath` or `spaceId` is required by the SDK.
-The root runner does not provide a default script path or session-state path.
+`spaceId` is required by the SDK and root runner. The root runner does not
+provide a default script path or session-state path.
 
 On success, the runner should print a concise user-facing message and point the
 user to the written session-state file. Do not print the full
@@ -145,17 +145,14 @@ Important rules:
   module-style scripts.
 
 When a script is meant to run with `--spaceId`, include one clear workspace
-anchor:
+anchor. Prefer a parent reference when the workspace itself should not be
+updated:
 
 ```typescript
 {
-  const space = notion.space({
-    resourceId: "my-space",
-    name: "My Space",
-  })
-
-  const teamspace = space.addTeamspace({
+  const teamspace = notion.teamspace({
     resourceId: "general-teamspace",
+    parent: { type: "resourceId", resourceId: "my-space" },
     name: "General",
     accessLevel: "open",
   })
@@ -169,9 +166,9 @@ anchor:
 ```
 
 In that example, `--spaceId=<YOUR_WORKSPACE_ID>` maps the real workspace to the
-script resource ID `"my-space"`. The teamspace and page are new resources. If
-the mapped `notion.space(...)` includes fields like `name` or `icon`, the run
-may update those fields on the existing workspace.
+script resource ID `"my-space"`. The teamspace and page are new resources. If a
+script intentionally emits a mapped `notion.space(...)` with fields like `name`
+or `icon`, the run may update those fields on the existing workspace.
 
 Only emit a resource when the run should create it or update one of its own
 fields. If an existing mapped resource is only needed as a parent, reference its
@@ -235,7 +232,8 @@ A session-state file is optional when the user passes `--spaceId`. In that
 case, the SDK creates the initial space mapping and writes a timestamped
 session-state file after the run.
 
-A session-state file is required when the user does not pass `--spaceId`.
+The SDK and runner require `--spaceId`; use the generated session-state file
+with the same `--spaceId` for follow-up runs.
 
 Preferred session-state file shape:
 

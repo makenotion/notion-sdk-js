@@ -45,7 +45,7 @@ If the run succeeds, you should see a message like:
 The session-state file has been saved to ./src/EXPERIMENTAL__infra-as-code/sessions/sessionState_TIMESTAMP.json.
 
 To run new scripts against this workspace, run the following command:
-npm run build && node build/src/EXPERIMENTAL__infra-as-code/runInfraAsCode.js --scriptFilePath=<YOUR_NEW_SCRIPT_FILE_PATH> --spaceId=<YOUR_WORKSPACE_ID> --sessionStateFilePath=./src/EXPERIMENTAL__infra-as-code/sessions/sessionState_TIMESTAMP.json 
+npm run build && node build/src/EXPERIMENTAL__infra-as-code/runInfraAsCode.js --scriptFilePath=<YOUR_NEW_SCRIPT_FILE_PATH> --spaceId=<YOUR_WORKSPACE_ID> --sessionStateFilePath=./src/EXPERIMENTAL__infra-as-code/sessions/sessionState_TIMESTAMP.json
 ```
 
 The session-state file is important. It stores the mapping between names in your script and the real Notion resources that were created. Use it for future runs so Infra as Code can update the same resources instead of creating duplicates.
@@ -61,17 +61,13 @@ The agent can turn that description into an Infra as Code script you can run wit
 ## Scripts and Sessions
 
 A script file describes what you want in Notion.
-For example, this script creates or updates a workspace, creates a teamspace, and adds a page:
+For example, this script creates a teamspace and adds a page under the workspace mapped by `--spaceId`:
 
 ```typescript
 {
-  const space = notion.space({
-    resourceId: "my-space",
-    name: "My Space",
-  })
-
-  const teamspace = space.addTeamspace({
+  const teamspace = notion.teamspace({
     resourceId: "general-teamspace",
+    parent: { type: "resourceId", resourceId: "my-space" },
     name: "General",
     accessLevel: "open",
   })
@@ -140,7 +136,7 @@ At a high level:
 
 - You write a local TypeScript script using the provided global notion helper.
 - The SDK compiles that script into JSON intents.
-- The SDK combines those intents with existing mappings from spaceId or sessionStateFilePath.
+- The SDK combines those intents with the `spaceId` mapping and any existing mappings from `sessionStateFilePath`.
 - The SDK submits the run to Notion.
 - The SDK polls until the run succeeds or fails.
 - On success, the SDK writes the latest mappings to a session-state file.

@@ -120,6 +120,28 @@ describe("compileInfraAsCodeScriptToIntents", () => {
       await rm(tempDir, { recursive: true, force: true })
     }
   })
+
+  it("demonstrates the starter script workspace anchor", async () => {
+    const result = await compileInfraAsCodeScriptToIntents({
+      filePathToScript:
+        "./src/EXPERIMENTAL__infra-as-code/scripts/script_example.ts",
+    })
+
+    expect(result).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          type: "space",
+          resourceId: "example-space",
+          name: "My Space",
+        }),
+        expect.objectContaining({
+          type: "teamspace",
+          resourceId: "general-teamspace",
+          parent: { type: "resourceId", resourceId: "example-space" },
+        }),
+      ])
+    )
+  })
 })
 
 describe("infra as code API helpers", () => {
@@ -807,9 +829,10 @@ describe("Client.infraAsCode.run", () => {
     try {
       const notion = new Client({ fetch: mockFetch })
       await expect(
+        // @ts-expect-error Testing runtime validation for missing spaceId.
         notion.EXPERIMENTAL__infraAsCode.run({
           scriptFilePath: scriptPath,
-        } as any)
+        })
       ).rejects.toThrow("Infra as code requires spaceId")
       expect(mockFetch).not.toHaveBeenCalled()
     } finally {
@@ -831,7 +854,7 @@ describe("Client.infraAsCode.run", () => {
           spaceId: "existing-space-id",
         })
       ).rejects.toThrow(
-        "Unable to use spaceId because the script does not declare a space or a teamspace parent resourceId. Pass sessionStateFilePath instead."
+        "Unable to use spaceId because the script does not declare a space or a teamspace parent resourceId. Add one workspace anchor to the script."
       )
       expect(mockFetch).not.toHaveBeenCalled()
     } finally {
