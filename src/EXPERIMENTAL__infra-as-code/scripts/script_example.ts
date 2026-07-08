@@ -11,10 +11,12 @@
  */
 
 {
-  // The resourceId "example-space" is the anchor for --spaceId. We use this to map your
-  // workspace ID to this script. The new resources below are created inside this space.
+  // This script starts with a call to your workspace. The resourceId "example-space" 
+  // is the anchor for --spaceId. We use this to map your workspace ID to this script.
+  // All new resources below are created inside this space.
   const space = notion.space({
     resourceId: "example-space",
+    // This will update your workspace name to "My Space", but you can change it to anything you want.
     name: "My Space",
   })
 
