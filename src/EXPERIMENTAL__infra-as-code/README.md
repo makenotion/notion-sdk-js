@@ -12,15 +12,16 @@ Instead of spending hours manually recreating the same setup across customers, t
 git clone git@github.com:makenotion/notion-sdk-js.git
 ```
 
-1. **Check out** the Infra as Code experimental branch:
+2. **Check out** the Infra as Code experimental branch:
 
 ```
 git checkout experimental-alpha-infra-as-code
 ```
 
-1. You will need a **Personal Access Token (PAT)** to run Infra as Code. See here for how to create a PAT: [https://developers.notion.com/guides/get-started/personal-access-tokens](https://developers.notion.com/guides/get-started/personal-access-tokens)
-2. Make sure to **attach your PAT to the Notion workspace** you wish to modify. *Note: Infra as Code is an **experimental alpha**, so make sure to choose a workspace that you are comfortable with modifying.*
-3. Copy the **workspace ID** for the Notion workspace connected to your PAT. To find your workspace ID on Notion, go to Settings > General, scroll all the way down, and copy the workspace id. You'll need this for later!
+3. You will need a **Personal Access Token (PAT)** to run Infra as Code. See here for how to create a PAT: [https://developers.notion.com/guides/get-started/personal-access-tokens](https://developers.notion.com/guides/get-started/personal-access-tokens)
+
+4. Make sure to **attach your PAT to the Notion workspace** you wish to modify. *Note: Infra as Code is an **experimental alpha**, so make sure to choose a workspace that you are comfortable with modifying.*
+5. Copy the **workspace ID** for the Notion workspace connected to your PAT. To find your workspace ID on Notion, go to Settings > General, scroll all the way down, and copy the workspace id. You'll need this for later!
 
 Now, you should be ready to get started! Open up our example run file at `src/EXPERIMENTAL__infra-as-code/runInfraAsCode.ts` and follow the instructions there.
 
@@ -47,4 +48,3 @@ At a high level:
 - The SDK polls the async task endpoint until the run succeeds or fails.
 - On success, the SDK writes returned resource/property mappings back to the same session-state file.
 
-The session-state file is required. It must include at least one existing space mapping so the public API knows which workspace the script should target.
