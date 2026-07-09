@@ -17,9 +17,10 @@ Instead of manually creating the same teamspaces, pages, databases, properties, 
    git clone git@github.com:makenotion/notion-sdk-js.git
    ```
 
-2. **Check out** the Notion as Code experimental branch:
+2. Within the new repository, **check out** the Notion as Code experimental branch:
 
    ```
+   cd notion-sdk-js
    git checkout experimental-alpha-infra-as-code
    ```
 
