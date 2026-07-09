@@ -13,10 +13,12 @@
  *       --sessionStateFilePath=./src/EXPERIMENTAL__infra-as-code/sessions/sessionState_example.json
  *       --spaceId=<YOUR_WORKSPACE_ID>
  *
- * If `--spaceId` is provided without `--sessionStateFilePath`, the SDK infers
- * the script resourceId for that workspace from the compiled script.
+ * If `--sessionStateFilePath` is not passed in, the SDK uses `--spaceId` to
+ * create the initial workspace mapping and writes a timestamped session-state
+ * file.
  *
- * If `--sessionStateFilePath` is not passed in, expect that the calls in the script will create new resources.
+ * Pass that file with `--sessionStateFilePath` on future runs to update the
+ * same resources instead of creating duplicates.
  */
 
 import Client from "../Client"

@@ -69,7 +69,7 @@ A script file describes what you want in Notion.
 For example, this script creates a teamspace and adds a page under the workspace mapped by `--spaceId`:
 
 ```typescript
-// --scriptFilePath
+// node build/... --scriptFilePath=./path/to/script.ts
 const teamspace = notion.teamspace({
   resourceId: "general-teamspace",
   parent: { type: "resourceId", resourceId: "my-space" },
@@ -86,10 +86,10 @@ teamspace.addPage({
 export {}
 ```
 
-A session-state file remembers what happened after a run. It connects script resource IDs like "general-teamspace" to real Notion IDs.
+A session-state file remembers what happened after a run. It maps `resourceId` values from your script, such as `my-space` and `general-teamspace`, to real Notion IDs. In the example below, those keys match the `resourceId` values from the script above.
 
-```json
-// --sessionStateFilePath
+```jsonc
+// node build/... --sessionStateFilePath=./path/to/sessionState.json
 {
   "resourceIdToPointerMappings": {
     "my-space": {
@@ -110,6 +110,8 @@ A session-state file remembers what happened after a run. It connects script res
 You usually do not need to write this file by hand for a first run. If you pass `--spaceId`, Notion as Code creates the initial mapping and writes a timestamped session-state file for you.
 
 For future runs, include the generated `--sessionStateFilePath` with the same `--spaceId`.
+
+The included `sessions/sessionState_example.json` file is only a reference for the file shape. You can copy it if you want to seed mappings manually, but the recommended first-run flow is to let `--spaceId` generate a session-state file for you.
 
 ## Command-Line Flags
 
@@ -139,6 +141,8 @@ node build/src/EXPERIMENTAL__infra-as-code/runInfraAsCode.js --spaceId=<YOUR_WOR
 If `--spaceId` and `--sessionStateFilePath` point at different workspaces, the run stops with an error.
 
 ## How It Works
+
+You do not need to understand this section to run Notion as Code. The instructions above are enough! But we've included a short summary below for anyone curious about how the pieces fit together.
 
 At a high level:
 
