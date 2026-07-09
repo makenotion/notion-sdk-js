@@ -1,14 +1,13 @@
-
 <img alt="Notion Logo" src="https://www.notion.so/images/notion-logo-block-main.svg" width="70" />
 
-## What Is Infra As Code?
+## What Is Notion as Code?
 
-Infra as Code for Notion lets you describe a Notion workspace in a local TypeScript file, then apply that structure to a real workspace.
+Notion as Code (a.k.a. Infra as Code) lets you describe a Notion workspace in a local TypeScript file, then apply that structure to a real workspace.
 
 Instead of manually creating the same teamspaces, pages, databases, properties, and seed content over and over, you can write them once as code and run that script again when you want to create or update the workspace.
 
-> [!WARNING] 
-> Infra as Code is experimental alpha. Use a workspace you are comfortable modifying.
+> [!WARNING]
+> Notion as Code is experimental alpha. Use a workspace you are comfortable modifying.
 
 ## How To Set it Up
 
@@ -18,7 +17,7 @@ Instead of manually creating the same teamspaces, pages, databases, properties, 
    git clone git@github.com:makenotion/notion-sdk-js.git
    ```
 
-2. **Check out** the Infra as Code experimental branch:
+2. **Check out** the Notion as Code experimental branch:
 
    ```
    git checkout experimental-alpha-infra-as-code
@@ -54,7 +53,7 @@ To run new scripts against this workspace, run the following command:
 node build/src/EXPERIMENTAL__infra-as-code/runInfraAsCode.js --scriptFilePath=<YOUR_NEW_SCRIPT_FILE_PATH> --spaceId=<YOUR_WORKSPACE_ID> --sessionStateFilePath=./src/EXPERIMENTAL__infra-as-code/sessions/sessionState_TIMESTAMP.json
 ```
 
-The session-state file is important. It stores the mapping between names in your script and the real Notion resources that were created. Use it for future runs so Infra as Code can update the same resources instead of creating duplicates.
+The session-state file is important. It stores the mapping between names in your script and the real Notion resources that were created. Use it for future runs so Notion as Code can update the same resources instead of creating duplicates.
 
 **What next?** Once the example run succeeds, you can edit `scripts/script_example.ts` or create a new script in `scripts/`.
 
@@ -62,7 +61,7 @@ You can also ask your favorite agent to help generate a script. Describe the Not
 
 > Create a student dashboard for my semester. Include a General teamspace, a Courses database, an Assignments database, a weekly study plan page, deadline views grouped by course and status, and a few sample assignments.
 
-The agent can turn that description into an Infra as Code script you can run with the generated session-state file.
+The agent can turn that description into a Notion as Code script you can run with the generated session-state file.
 
 ## Scripts and Sessions
 
@@ -108,7 +107,7 @@ A session-state file remembers what happened after a run. It connects script res
 }
 ```
 
-You usually do not need to write this file by hand for a first run. If you pass `--spaceId`, Infra as Code creates the initial mapping and writes a timestamped session-state file for you.
+You usually do not need to write this file by hand for a first run. If you pass `--spaceId`, Notion as Code creates the initial mapping and writes a timestamped session-state file for you.
 
 For future runs, include the generated `--sessionStateFilePath` with the same `--spaceId`.
 
