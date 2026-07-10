@@ -107,7 +107,7 @@ export function printNotionAsCodeRunSuccessMessage({
 The session-state file has been saved to ${result.sessionStateFilePath}.
 
 To run new scripts against this workspace, run the following command:
-node build/src/EXPERIMENTAL__notion-as-code/runNotionAsCode.js --scriptFilePath=<YOUR_NEW_SCRIPT_FILE_PATH> --spaceId=${runArgs.spaceId} --sessionStateFilePath=${result.sessionStateFilePath}`
+node build/src/EXPERIMENTAL__notion-as-code/runNotionAsCode.js --scriptFilePath=${runArgs.scriptFilePath} --spaceId=${runArgs.spaceId} --sessionStateFilePath=${result.sessionStateFilePath}`
   )
 }
 
