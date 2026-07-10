@@ -5,26 +5,26 @@ import { promisify } from "node:util"
 import path = require("node:path")
 import ts = require("typescript")
 
-import { createInfraAsCodeStubRuntime } from "./runtime"
+import { createNotionAsCodeStubRuntime } from "./runtime"
 import { isFileNotFoundError } from "./utils"
 
 const execFileAsync = promisify(execFile)
 
 /**
- * Executes a user's infra as code TypeScript file and returns the intents it emits.
+ * Executes a user's Notion as Code TypeScript file and returns the intents it emits.
  *
  * The compiler wraps the script with the local runtime from `runtime.ts`,
  * converts that temporary wrapper to JavaScript, and executes it in a child
  * Node process. The child process prints the collected intents as JSON.
  */
-export async function compileInfraAsCodeScriptToIntents({
+export async function compileNotionAsCodeScriptToIntents({
   filePathToScript,
 }: {
   filePathToScript: string
-}): Promise<InfraAsCodeIntent[]> {
+}): Promise<NotionAsCodeIntent[]> {
   const scriptPath = path.resolve(filePathToScript)
   const script = await readScript(scriptPath)
-  const tempDir = await mkdtemp(path.join(tmpdir(), "notion-iac-"))
+  const tempDir = await mkdtemp(path.join(tmpdir(), "notion-as-code-"))
 
   try {
     const executableScriptPath = path.join(tempDir, "script.executable.js")
@@ -57,11 +57,11 @@ async function readScript(scriptPath: string): Promise<string> {
     return await readFile(scriptPath, "utf8")
   } catch (error) {
     if (isFileNotFoundError(error)) {
-      throw new Error(`Infra as code script not found: ${scriptPath}`)
+      throw new Error(`Notion as Code script not found: ${scriptPath}`)
     }
 
     throw new Error(
-      `Unable to read infra as code script at ${scriptPath}: ${
+      `Unable to read Notion as Code script at ${scriptPath}: ${
         error instanceof Error ? error.message : String(error)
       }`
     )
@@ -71,28 +71,28 @@ async function readScript(scriptPath: string): Promise<string> {
 /**
  * Creates the temporary program that the child Node process runs.
  *
- * `createInfraAsCodeStubRuntime` is embedded as source so the child process
+ * `createNotionAsCodeStubRuntime` is embedded as source so the child process
  * can evaluate the user's script without importing SDK internals.
  */
 function buildExecutableScriptSource(script: string): string {
   const executableScript = stripEmptyExportDeclaration(script)
 
   return `// Embed the runtime so the temporary Node process can run without SDK imports.
-const createInfraAsCodeStubRuntime = ${createInfraAsCodeStubRuntime.toString()}
+const createInfraAsCodeStubRuntime = ${createNotionAsCodeStubRuntime.toString()}
 
 // Initialize the runtime that owns the intents array. Calls to notion.* append
 // intents here while the user's script runs.
-const infraAsCodeRuntime = createInfraAsCodeStubRuntime()
+const notionAsCodeRuntime = createNotionAsCodeStubRuntime()
 
 // Put the notion helper object in scope for calls like notion.page().
-const notion = infraAsCodeRuntime.notion
+const notion = notionAsCodeRuntime.notion
 
 ;(async () => {
 ${executableScript}
 })()
   .then(() => {
     console.log(JSON.stringify({
-      intents: infraAsCodeRuntime.intents,
+      intents: notionAsCodeRuntime.intents,
     }))
   })
   .catch(error => {
@@ -138,7 +138,7 @@ function transpileExecutableScriptSource(scriptSource: string): string {
       "\n"
     )
     throw new Error(
-      `Unable to transpile infra as code script before running it with Node: ${message}`
+      `Unable to transpile Notion as Code script before running it with Node: ${message}`
     )
   }
 

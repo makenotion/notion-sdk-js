@@ -5,7 +5,7 @@
 
 ============================================================================= */
 
-// Type definitions for infra as code scripts (external SDK)
+// Type definitions for Notion as Code scripts (external SDK)
 // This file is self-contained with no external imports.
 
 declare const notionIconColors: [
@@ -102,7 +102,7 @@ type NotionIcon = {
 }
 
 /**
- * Icon type for infra as code resources.
+ * Icon type for Notion as Code resources.
  * Can be either an emoji, a Notion custom icon (resolved by exact slug match
  * or semantic search description — see `NotionIcon`), or a file reference.
  *
@@ -117,7 +117,7 @@ type NotionIcon = {
  * @example Notion custom icon by description (semantic search)
  * icon: { type: "notion_icon", description: "project management" }
  */
-type InfraAsCodeIcon = EmojiIcon | NotionIcon | FileReference
+type NotionAsCodeIcon = EmojiIcon | NotionIcon | FileReference
 
 type Parent = {
   type: "resourceId"
@@ -132,7 +132,7 @@ type Parent = {
  * For database pages, use the database's title property name.
  *
  * RESTRICTION: Pages can only be parented to resources created within the same
- * Infra as Code script. Parenting to existing records outside the script is not supported
+ * Notion as Code script. Parenting to existing records outside the script is not supported
  * for permission safety reasons.
  */
 type PageIntent = {
@@ -161,7 +161,7 @@ type PageIntent = {
   /**
    * Icon for the page. Can be an emoji or a notion_icon (resolved by exact slug match or semantic search description).
    */
-  icon?: InfraAsCodeIcon
+  icon?: NotionAsCodeIcon
   /**
    * Optional page content in Notion flavored markdown format.
    * When provided, the markdown will be parsed into blocks and added as children of the page.
@@ -213,7 +213,7 @@ type BasePropertySchemaDefinition = {
   /** Display name of the property in the database */
   name: string
   /**
-   * Unique identifier for this property within the infra as code script.
+   * Unique identifier for this property within the Notion as Code script.
    * Required for all properties to enable unambiguous references (e.g., for rollups).
    *
    * For two-way relations, use this to reference the property
@@ -833,7 +833,7 @@ type DataSourceSchema = {
   /**
    * Icon for the data source. Can be an emoji or a notion_icon (looked up via semantic search).
    */
-  icon?: InfraAsCodeIcon
+  icon?: NotionAsCodeIcon
   /**
    * Optional resource ID of a template page in this data source to use as the
    * data source default template.
@@ -855,7 +855,7 @@ type DataSourceSchema = {
 type SimpleTextToken = [string] | [string, ...unknown[]]
 
 /**
- * Simplified text value for Infra as Code property values.
+ * Simplified text value for Notion as Code property values.
  * This is the JSON-serializable subset of TextValue - an array of text tokens.
  *
  * The full TextValue type includes React.ReactNode which contains `any`,
@@ -865,9 +865,9 @@ type SimpleTextToken = [string] | [string, ...unknown[]]
 type SimpleTextValue = Array<SimpleTextToken>
 
 /**
- * Text value returned by Infra as Code text helper functions.
+ * Text value returned by Notion as Code text helper functions.
  *
- * The external Infra as Code type surface aliases TextValue to the
+ * The external Notion as Code type surface aliases TextValue to the
  * JSON-serializable text token format instead of exposing the full internal
  * shared text helper shape.
  */
@@ -1300,7 +1300,7 @@ type ViewSchema =
  * Arguments for creating a database.
  *
  * RESTRICTION: Databases can only be parented to resources created within the same
- * Infra as Code script. Parenting to existing records outside the script is not supported
+ * Notion as Code script. Parenting to existing records outside the script is not supported
  * for permission safety reasons.
  */
 type DatabaseIntent = {
@@ -1311,7 +1311,7 @@ type DatabaseIntent = {
   /**
    * Icon for the database. Can be an emoji or a notion_icon (looked up via semantic search).
    */
-  icon?: InfraAsCodeIcon
+  icon?: NotionAsCodeIcon
   /**
    * Optional cover for the database page.
    */
@@ -1332,7 +1332,7 @@ type SpaceUserMember = {
 /**
  * Arguments for creating a space.
  *
- * NOTE: Infra as Code scripts are required to create a new space - you cannot work within
+ * NOTE: Notion as Code scripts are required to create a new space - you cannot work within
  * an existing space. This restriction exists for permission safety: all operations
  * run in a freshly created space where the executing user has full ownership.
  */
@@ -1342,7 +1342,7 @@ type SpaceIntent = {
   /**
    * Icon for the space. Can be an emoji or a notion_icon (resolved by exact slug match or semantic search description).
    */
-  icon?: InfraAsCodeIcon
+  icon?: NotionAsCodeIcon
   /**
    * Additional members to add to the workspace.
    * The executing actor is always added automatically as an owner.
@@ -1361,7 +1361,7 @@ type TeamspaceAccessLevel = "default" | "open" | "closed" | "private"
  * Arguments for creating a teamspace.
  *
  * RESTRICTION: Teamspaces can only be created within spaces created in the same
- * Infra as Code script. Creating teamspaces in existing spaces is not supported for
+ * Notion as Code script. Creating teamspaces in existing spaces is not supported for
  * permission safety reasons.
  */
 type TeamspaceIntent = {
@@ -1372,7 +1372,7 @@ type TeamspaceIntent = {
   /**
    * Icon for the teamspace. Can be an emoji or a notion_icon (resolved by exact slug match or semantic search description).
    */
-  icon?: InfraAsCodeIcon
+  icon?: NotionAsCodeIcon
   description?: string
 }
 
@@ -1394,7 +1394,7 @@ type CustomAgentIntent = {
    *   resolved to a `/icons/<slug>_<color>.svg` path; exact slug matches
    *   skip the embeddings round-trip.
    *
-   * `FileReference` (the third `InfraAsCodeIcon` variant) is intentionally
+   * `FileReference` (the third `NotionAsCodeIcon` variant) is intentionally
    * NOT supported here yet.
    * [ref:custom_agent_file_uploads]
    *
@@ -1486,7 +1486,7 @@ type DataSourceHandle<P extends PropertySchemaDefinition[]> = {
     /**
      * Icon for the page. Can be an emoji or a notion_icon (resolved by exact slug match or semantic search description).
      */
-    icon?: InfraAsCodeIcon
+    icon?: NotionAsCodeIcon
     /**
      * Properties for the database page, matching the schema defined in the data source.
      * Must include values for required properties (e.g., the title property).
@@ -1576,7 +1576,7 @@ type TeamspaceHandle = {
     /**
      * Icon for the page. Can be an emoji or a notion_icon (resolved by exact slug match or semantic search description).
      */
-    icon?: InfraAsCodeIcon
+    icon?: NotionAsCodeIcon
     /**
      * Page properties including the title.
      * Use `properties.title` to set the page title.
@@ -1643,7 +1643,7 @@ type FileAttachmentIntent = {
  *
  * @generateValidator
  */
-type InfraAsCodeIntent =
+type NotionAsCodeIntent =
   | ({ type: "space" } & SpaceIntent)
   | ({ type: "teamspace" } & TeamspaceIntent)
   | ({ type: "database" } & DatabaseIntent)
@@ -1655,7 +1655,7 @@ type InfraAsCodeIntent =
 // Property value helper functions
 
 /**
- * Property types supported by infra as code scripts.
+ * Property types supported by Notion as Code scripts.
  */
 type PropertyType =
   | "title"
@@ -1733,7 +1733,7 @@ declare const notion: {
  * This includes all block types, rich text formatting, and XML elements.
  * Used for the content parameter in page creation and database page creation.
  */
-declare const INFRA_AS_CODE_MARKDOWN_SPEC = `
+declare const NOTION_AS_CODE_MARKDOWN_SPEC = `
 ### Notion-flavored Markdown
 Notion-flavored Markdown is a variant of standard Markdown with additional features to support all Block and Rich text types.
 Use tabs for indentation.

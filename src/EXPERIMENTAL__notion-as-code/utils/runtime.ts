@@ -7,23 +7,23 @@
  * them before the generated script runs.
  */
 type RuntimeNotion = typeof notion & {
-  intent(intent: InfraAsCodeIntent): void
+  intent(intent: NotionAsCodeIntent): void
 }
 type ChildPageArgs = Omit<PageIntent, "parent">
 type ChildDatabaseArgs = Omit<DatabaseIntent, "parent">
 
 /**
- * Creates the `notion` object exposed to an infra as code script.
+ * Creates the `notion` object exposed to a Notion as Code script.
  *
  * The compiler embeds this function into a generated script and runs it in a
  * child Node process. Calls such as `notion.page()` append plain intents to the
  * returned `intents` array instead of calling the Notion API directly.
  */
-export function createInfraAsCodeStubRuntime(): {
+export function createNotionAsCodeStubRuntime(): {
   notion: RuntimeNotion
-  intents: InfraAsCodeIntent[]
+  intents: NotionAsCodeIntent[]
 } {
-  const intents: InfraAsCodeIntent[] = []
+  const intents: NotionAsCodeIntent[] = []
   const notion: RuntimeNotion = {
     intent(intent) {
       intents.push(intent)

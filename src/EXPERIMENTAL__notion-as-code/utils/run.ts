@@ -1,14 +1,14 @@
 import {
-  pollInfraAsCodeTask,
-  submitInfraAsCodeRunToApi,
-  type InfraAsCodeApiResult,
+  pollNotionAsCodeTask,
+  submitNotionAsCodeRunToApi,
+  type NotionAsCodeApiResult,
 } from "./api"
 import type Client from "../../Client"
-import { compileInfraAsCodeScriptToIntents } from "./compile"
+import { compileNotionAsCodeScriptToIntents } from "./compile"
 import {
   readSessionState,
   writeSessionState,
-  type InfraAsCodeSessionState,
+  type NotionAsCodeSessionState,
 } from "./session"
 import {
   createTimestampedSessionStateFilePath,
@@ -17,9 +17,9 @@ import {
   isString,
 } from "./utils"
 
-export type InfraAsCodeRunParameters = {
+export type NotionAsCodeRunParameters = {
   /**
-   * Path to the local infra as code script to compile and run.
+   * Path to the local Notion as Code script to compile and run.
    */
   scriptFilePath: string
   /**
@@ -38,7 +38,7 @@ export type InfraAsCodeRunParameters = {
   sessionStateFilePath?: string
 }
 
-export type InfraAsCodeRunResponse = InfraAsCodeApiResult & {
+export type NotionAsCodeRunResponse = NotionAsCodeApiResult & {
   /**
    * Location of the session-state file written for this run.
    */
@@ -46,24 +46,24 @@ export type InfraAsCodeRunResponse = InfraAsCodeApiResult & {
 }
 
 /**
- * Implements `Client.EXPERIMENTAL__infraAsCode.run()`.
+ * Implements `Client.EXPERIMENTAL__notionAsCode.run()`.
  *
  * This is the SDK-facing workflow: compile the local script into intents,
  * send those intents plus current resource mappings to Notion, poll the async
  * task, then write the session-state file for the run.
  */
-export async function runInfraAsCode(
-  args: InfraAsCodeRunParameters,
+export async function runNotionAsCode(
+  args: NotionAsCodeRunParameters,
   request: Client["request"]
-): Promise<InfraAsCodeRunResponse> {
+): Promise<NotionAsCodeRunResponse> {
   if (!isDefined(args.scriptFilePath)) {
     throw new Error(
-      "Infra as code requires scriptFilePath. Pass the path to a local script file with --scriptFilePath."
+      "Notion as Code requires scriptFilePath. Pass the path to a local script file with --scriptFilePath."
     )
   }
   if (!isDefined(args.spaceId)) {
     throw new Error(
-      "Infra as code requires spaceId. Pass --spaceId when running the script."
+      "Notion as Code requires spaceId. Pass --spaceId when running the script."
     )
   }
 
@@ -74,7 +74,7 @@ export async function runInfraAsCode(
   const sessionStateFilePath =
     args.sessionStateFilePath ?? createTimestampedSessionStateFilePath()
 
-  const intents = await compileInfraAsCodeScriptToIntents({
+  const intents = await compileNotionAsCodeScriptToIntents({
     filePathToScript: args.scriptFilePath,
   })
 
@@ -86,14 +86,14 @@ export async function runInfraAsCode(
   const existingResources = resolvedState.resourceIdToPointerMappings
   const existingProperties = resolvedState.resourceIdToPropertyIdMappings
 
-  const asyncTask = await submitInfraAsCodeRunToApi({
+  const asyncTask = await submitNotionAsCodeRunToApi({
     request,
     intents,
     existingResources,
     existingProperties,
   })
 
-  const result = await pollInfraAsCodeTask({
+  const result = await pollNotionAsCodeTask({
     request,
     taskId: asyncTask.id,
   })
@@ -114,10 +114,10 @@ function resolveSessionStateForRun({
   spaceId,
   intents,
 }: {
-  priorState: InfraAsCodeSessionState | undefined
+  priorState: NotionAsCodeSessionState | undefined
   spaceId: string
-  intents: InfraAsCodeIntent[]
-}): InfraAsCodeSessionState {
+  intents: NotionAsCodeIntent[]
+}): NotionAsCodeSessionState {
   const baseState = priorState ?? {
     resourceIdToPointerMappings: {},
     resourceIdToPropertyIdMappings: {},
@@ -183,7 +183,9 @@ function assertSpacePointerMatchesSpaceId({
 /**
  * Finds the script resourceId that should point at the provided workspace ID.
  */
-function inferSpaceResourceIdFromIntents(intents: InfraAsCodeIntent[]): string {
+function inferSpaceResourceIdFromIntents(
+  intents: NotionAsCodeIntent[]
+): string {
   const spaceResourceIds = new Set<string>()
   const teamspaceParentResourceIds = new Set<string>()
 

@@ -2,7 +2,7 @@
 
 ## What Is Notion as Code?
 
-Notion as Code (a.k.a. Infra as Code) lets you describe a Notion workspace in a local TypeScript file, then apply that structure to a real workspace.
+Notion as Code lets you describe a Notion workspace in a local TypeScript file, then apply that structure to a real workspace.
 
 Instead of manually creating the same teamspaces, pages, databases, properties, and seed content over and over, you can write them once as code and run that script again when you want to create or update the workspace.
 
@@ -21,7 +21,7 @@ Instead of manually creating the same teamspaces, pages, databases, properties, 
 
    ```
    cd notion-sdk-js
-   git checkout experimental-alpha-infra-as-code
+   git checkout experimental-alpha-notion-as-code
    ```
 
 3. Create a Notion **Personal Access Token (PAT)**:
@@ -29,7 +29,7 @@ Instead of manually creating the same teamspaces, pages, databases, properties, 
 
 4. **Attach** your Personal Access Token **to the workspace** you want to update.
 
-5. **Provide your token** either by setting `NOTION_TOKEN` in your shell or by pasting it into the `NOTION_TOKEN` constant in `runInfraAsCode.ts`.
+5. **Provide your token** either by setting `NOTION_TOKEN` in your shell or by pasting it into the `NOTION_TOKEN` constant in `runNotionAsCode.ts`.
 
 6. **Copy your workspace ID** from Notion. In Notion, go to Settings > General, scroll to the bottom, and copy the workspace ID.
 
@@ -37,7 +37,7 @@ Instead of manually creating the same teamspaces, pages, databases, properties, 
 
    ```
    npm run build
-   node build/src/EXPERIMENTAL__infra-as-code/runInfraAsCode.js --spaceId=<YOUR_WORKSPACE_ID> --scriptFilePath=./src/EXPERIMENTAL__infra-as-code/scripts/script_example.ts
+   node build/src/EXPERIMENTAL__notion-as-code/runNotionAsCode.js --spaceId=<YOUR_WORKSPACE_ID> --scriptFilePath=./src/EXPERIMENTAL__notion-as-code/scripts/script_example.ts
    ```
 
    This runs `script_example.ts` against your workspace. The example creates a **General** teamspace, a welcome page, a sample database, and a few sample database entries in your provided workspace.
@@ -47,11 +47,11 @@ Instead of manually creating the same teamspaces, pages, databases, properties, 
 If the run succeeds, you should see a message like:
 
 ```
-✅ Your workspace <YOUR_WORKSPACE_ID> has been successfully updated with ./src/EXPERIMENTAL__infra-as-code/scripts/script_example.ts.
-The session-state file has been saved to ./src/EXPERIMENTAL__infra-as-code/sessions/sessionState_TIMESTAMP.json.
+✅ Your workspace <YOUR_WORKSPACE_ID> has been successfully updated with ./src/EXPERIMENTAL__notion-as-code/scripts/script_example.ts.
+The session-state file has been saved to ./src/EXPERIMENTAL__notion-as-code/sessions/sessionState_TIMESTAMP.json.
 
 To run new scripts against this workspace, run the following command:
-node build/src/EXPERIMENTAL__infra-as-code/runInfraAsCode.js --scriptFilePath=<YOUR_NEW_SCRIPT_FILE_PATH> --spaceId=<YOUR_WORKSPACE_ID> --sessionStateFilePath=./src/EXPERIMENTAL__infra-as-code/sessions/sessionState_TIMESTAMP.json
+node build/src/EXPERIMENTAL__notion-as-code/runNotionAsCode.js --scriptFilePath=<YOUR_NEW_SCRIPT_FILE_PATH> --spaceId=<YOUR_WORKSPACE_ID> --sessionStateFilePath=./src/EXPERIMENTAL__notion-as-code/sessions/sessionState_TIMESTAMP.json
 ```
 
 The session-state file is important. It stores the mapping between names in your script and the real Notion resources that were created. Use it for future runs so Notion as Code can update the same resources instead of creating duplicates.
@@ -129,14 +129,14 @@ Use `--spaceId` for a first run against a workspace:
 
 ```
 npm run build
-node build/src/EXPERIMENTAL__infra-as-code/runInfraAsCode.js --spaceId=<YOUR_WORKSPACE_ID> --scriptFilePath=./src/EXPERIMENTAL__infra-as-code/scripts/script_example.ts
+node build/src/EXPERIMENTAL__notion-as-code/runNotionAsCode.js --spaceId=<YOUR_WORKSPACE_ID> --scriptFilePath=./src/EXPERIMENTAL__notion-as-code/scripts/script_example.ts
 ```
 
 Use `--sessionStateFilePath` with the same `--spaceId` for follow-up runs:
 
 ```
 npm run build
-node build/src/EXPERIMENTAL__infra-as-code/runInfraAsCode.js --spaceId=<YOUR_WORKSPACE_ID> --scriptFilePath=./src/EXPERIMENTAL__infra-as-code/scripts/my_script.ts --sessionStateFilePath=./src/EXPERIMENTAL__infra-as-code/sessions/sessionState_TIMESTAMP.json
+node build/src/EXPERIMENTAL__notion-as-code/runNotionAsCode.js --spaceId=<YOUR_WORKSPACE_ID> --scriptFilePath=./src/EXPERIMENTAL__notion-as-code/scripts/my_script.ts --sessionStateFilePath=./src/EXPERIMENTAL__notion-as-code/sessions/sessionState_TIMESTAMP.json
 ```
 
 If `--spaceId` and `--sessionStateFilePath` point at different workspaces, the run stops with an error.
@@ -156,7 +156,7 @@ At a high level:
 
 Useful Files
 
-- `runInfraAsCode.ts`: local runner
+- `runNotionAsCode.ts`: local runner
 - `scripts/script_example.ts`: starter script
 - `sessions/`: generated session-state files
 - `utils/types.ts`: supported script types and helper shapes

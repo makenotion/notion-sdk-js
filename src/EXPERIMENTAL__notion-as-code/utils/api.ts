@@ -1,14 +1,14 @@
 import type Client from "../../Client"
 import { isRecord, isString } from "./utils"
 
-export type InfraAsCodeApiResult = {
+export type NotionAsCodeApiResult = {
   object: "infra_as_code_result"
   resourceIdToPointerMappings: Record<string, unknown>
   resourceIdToPropertyIdMappings: Record<string, string>
   createdRecordCounts: Record<string, number>
 }
 
-type InfraAsCodeAsyncTaskResponse =
+type NotionAsCodeAsyncTaskResponse =
   | {
       status: "queued" | "running" | "retrying"
       poll_after_seconds?: number
@@ -34,16 +34,16 @@ const POLL_INTERVAL_MS = 1000
 const MAX_POLL_COUNT = 600
 
 /**
- * Submits an infra as code run to Notion and returns the async task id.
+ * Submits a Notion as Code run to Notion and returns the async task id.
  */
-export async function submitInfraAsCodeRunToApi({
+export async function submitNotionAsCodeRunToApi({
   request,
   intents,
   existingResources,
   existingProperties,
 }: {
   request: Client["request"]
-  intents: InfraAsCodeIntent[]
+  intents: NotionAsCodeIntent[]
   existingResources: Record<string, unknown>
   existingProperties: Record<string, string>
 }): Promise<{ id: string }> {
@@ -59,25 +59,25 @@ export async function submitInfraAsCodeRunToApi({
 }
 
 /**
- * Polls the Notion async task endpoint until the infra as code run finishes.
+ * Polls the Notion async task endpoint until the Notion as Code run finishes.
  */
-export async function pollInfraAsCodeTask({
+export async function pollNotionAsCodeTask({
   request,
   taskId,
 }: {
   request: Client["request"]
   taskId: string
-}): Promise<InfraAsCodeApiResult> {
+}): Promise<NotionAsCodeApiResult> {
   for (let pollCount = 0; pollCount < MAX_POLL_COUNT; pollCount++) {
-    const task = await request<InfraAsCodeAsyncTaskResponse>({
+    const task = await request<NotionAsCodeAsyncTaskResponse>({
       path: `async_tasks/${taskId}`,
       method: "get",
     })
 
     if (task.status === "succeeded") {
-      if (!isInfraAsCodeApiResult(task.result)) {
+      if (!isNotionAsCodeApiResult(task.result)) {
         throw new Error(
-          `Infra as code async task ${taskId} succeeded with a malformed result`
+          `Notion as Code async task ${taskId} succeeded with a malformed result`
         )
       }
 
@@ -86,7 +86,7 @@ export async function pollInfraAsCodeTask({
 
     if (task.status === "failed") {
       throw new Error(
-        `Infra as code async task ${taskId} failed: ${formatTaskError(
+        `Notion as Code async task ${taskId} failed: ${formatTaskError(
           task.error
         )}`
       )
@@ -94,7 +94,7 @@ export async function pollInfraAsCodeTask({
 
     if (!isActiveTaskStatus(task.status)) {
       throw new Error(
-        `Infra as code async task ${taskId} returned unknown status: ${task.status}`
+        `Notion as Code async task ${taskId} returned unknown status: ${task.status}`
       )
     }
 
@@ -109,7 +109,7 @@ export async function pollInfraAsCodeTask({
   }
 
   throw new Error(
-    `Infra as code async task ${taskId} did not finish after ${MAX_POLL_COUNT} polls`
+    `Notion as Code async task ${taskId} did not finish after ${MAX_POLL_COUNT} polls`
   )
 }
 
@@ -124,9 +124,9 @@ function isActiveTaskStatus(status: string): boolean {
   return status === "queued" || status === "running" || status === "retrying"
 }
 
-function isInfraAsCodeApiResult(
+function isNotionAsCodeApiResult(
   result: unknown
-): result is InfraAsCodeApiResult {
+): result is NotionAsCodeApiResult {
   return (
     isRecord(result) &&
     result["object"] === "infra_as_code_result" &&

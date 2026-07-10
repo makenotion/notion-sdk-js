@@ -2,21 +2,20 @@
 
 <!-- cspell:ignore Dont testDontCommit YYYYMMDDTHHMMSSZ -->
 
-Guidance for agents helping users author and run experimental Notion infra as
-code scripts in this directory.
+Guidance for agents helping users author and run experimental Notion as Code scripts in this directory.
 
 ## Purpose
 
 This directory contains an experimental SDK workflow that lets a user write a
 local TypeScript script, compile it into JSON "intents", and submit those
-intents through `Client.EXPERIMENTAL__infraAsCode.run()`.
+intents through `Client.EXPERIMENTAL__notionAsCode.run()`.
 
 Use this guide when helping a user create or edit:
 
-- the user-facing runner at `runInfraAsCode.ts`
-- a raw infra as code script in `scripts/`
+- the user-facing runner at `runNotionAsCode.ts`
+- a raw Notion as Code script in `scripts/`
 - a session-state file in `sessions/`
-- the infra as code implementation helpers in `utils/`
+- the Notion as Code implementation helpers in `utils/`
 - user-facing docs in `README.md`
 
 The goal is to make it easy for users to generate scripts ranging from a tiny
@@ -25,11 +24,11 @@ databases, data sources, views, and seeded pages.
 
 ## Directory Map
 
-- `runInfraAsCode.ts`: user-facing runner for local experimentation.
+- `runNotionAsCode.ts`: user-facing runner for local experimentation.
 - `README.md`: user-facing setup and usage documentation.
 - `scripts/script_example.ts`: first-run sample script.
 - `sessions/sessionState_example.json`: sample persisted mappings.
-- `utils/run.ts`: orchestration for `Client.EXPERIMENTAL__infraAsCode.run()`.
+- `utils/run.ts`: orchestration for `Client.EXPERIMENTAL__notionAsCode.run()`.
 - `utils/api.ts`: API submit and async task polling helpers.
 - `utils/session.ts`: reads and writes session-state files.
 - `utils/compile.ts`: compiles a raw TypeScript script into JSON intents.
@@ -45,9 +44,9 @@ and reads the emitted intents back as JSON.
 
 ## Current Run Behavior
 
-The root runner is `src/EXPERIMENTAL__infra-as-code/runInfraAsCode.ts`.
+The root runner is `src/EXPERIMENTAL__notion-as-code/runNotionAsCode.ts`.
 It creates an SDK client, parses command-line flags, and calls
-`EXPERIMENTAL__infraAsCode.run()`.
+`EXPERIMENTAL__notionAsCode.run()`.
 
 `NOTION_TOKEN` can be provided in either of these ways:
 
@@ -62,8 +61,8 @@ asks.
 Supported command-line flags are camelCase and use a leading `--`:
 
 ```text
---scriptFilePath=./src/EXPERIMENTAL__infra-as-code/scripts/script_example.ts
---sessionStateFilePath=./src/EXPERIMENTAL__infra-as-code/sessions/sessionState_example.json
+--scriptFilePath=./src/EXPERIMENTAL__notion-as-code/scripts/script_example.ts
+--sessionStateFilePath=./src/EXPERIMENTAL__notion-as-code/sessions/sessionState_example.json
 --spaceId=<YOUR_WORKSPACE_ID>
 ```
 
@@ -80,7 +79,7 @@ creates an initial existing-space mapping from the compiled script, runs the
 script, then writes a timestamped session-state file such as:
 
 ```text
-./src/EXPERIMENTAL__infra-as-code/sessions/sessionState_20260707T173844Z.json
+./src/EXPERIMENTAL__notion-as-code/sessions/sessionState_20260707T173844Z.json
 ```
 
 The SDK can infer the script resource ID for `spaceId` when the script has
@@ -109,14 +108,14 @@ First run against an existing workspace by workspace ID:
 
 ```bash
 npm run build
-NOTION_TOKEN=<YOUR_PERSONAL_ACCESS_TOKEN> node build/src/EXPERIMENTAL__infra-as-code/runInfraAsCode.js --spaceId=<YOUR_WORKSPACE_ID> --scriptFilePath=./src/EXPERIMENTAL__infra-as-code/scripts/script_example.ts
+NOTION_TOKEN=<YOUR_PERSONAL_ACCESS_TOKEN> node build/src/EXPERIMENTAL__notion-as-code/runNotionAsCode.js --spaceId=<YOUR_WORKSPACE_ID> --scriptFilePath=./src/EXPERIMENTAL__notion-as-code/scripts/script_example.ts
 ```
 
 Follow-up run using a written session-state file:
 
 ```bash
 npm run build
-NOTION_TOKEN=<YOUR_PERSONAL_ACCESS_TOKEN> node build/src/EXPERIMENTAL__infra-as-code/runInfraAsCode.js --spaceId=<YOUR_WORKSPACE_ID> --scriptFilePath=./src/EXPERIMENTAL__infra-as-code/scripts/script_example.ts --sessionStateFilePath=./src/EXPERIMENTAL__infra-as-code/sessions/sessionState_TIMESTAMP.json
+NOTION_TOKEN=<YOUR_PERSONAL_ACCESS_TOKEN> node build/src/EXPERIMENTAL__notion-as-code/runNotionAsCode.js --spaceId=<YOUR_WORKSPACE_ID> --scriptFilePath=./src/EXPERIMENTAL__notion-as-code/scripts/script_example.ts --sessionStateFilePath=./src/EXPERIMENTAL__notion-as-code/sessions/sessionState_TIMESTAMP.json
 ```
 
 When the token is already pasted into a local scratch runner file, omit the
@@ -282,7 +281,7 @@ and has not provided IDs, ask for them or leave clear placeholders.
 
 ## Authoring Workflow For Agents
 
-When helping a user create a new infra as code example:
+When helping a user create a new Notion as Code example:
 
 1. Clarify the target workspace shape: spaces, teamspaces, pages, databases,
    properties, views, and seed pages.
@@ -298,7 +297,7 @@ When helping a user create a new infra as code example:
    the exact command they can run from the repository root.
 7. Keep runner changes small and preserve the top-level editable constants.
 8. Run `npm run build` to type-check the SDK and raw scripts.
-9. Run `npx jest test/infra-as-code.test.ts --runInBand` when SDK behavior
+9. Run `npx jest test/notion-as-code.test.ts --runInBand` when SDK behavior
    changes.
 10. Optionally run the built example if the user asks and a suitable token/setup
     exists.
@@ -309,18 +308,18 @@ with a clear handoff:
 
 ```text
 I've generated the script for you at:
-src/EXPERIMENTAL__infra-as-code/scripts/script_TIMESTAMP.ts
+src/EXPERIMENTAL__notion-as-code/scripts/script_TIMESTAMP.ts
 
 You can run it with:
 npm run build
-NOTION_TOKEN=<YOUR_PERSONAL_ACCESS_TOKEN> node build/src/EXPERIMENTAL__infra-as-code/runInfraAsCode.js --scriptFilePath=src/EXPERIMENTAL__infra-as-code/scripts/script_TIMESTAMP.ts --spaceId=<YOUR_WORKSPACE_ID>
+NOTION_TOKEN=<YOUR_PERSONAL_ACCESS_TOKEN> node build/src/EXPERIMENTAL__notion-as-code/runNotionAsCode.js --scriptFilePath=src/EXPERIMENTAL__notion-as-code/scripts/script_TIMESTAMP.ts --spaceId=<YOUR_WORKSPACE_ID>
 ```
 
 If a session-state file is already known, include it alongside `--spaceId`:
 
 ```text
 npm run build
-NOTION_TOKEN=<YOUR_PERSONAL_ACCESS_TOKEN> node build/src/EXPERIMENTAL__infra-as-code/runInfraAsCode.js --scriptFilePath=src/EXPERIMENTAL__infra-as-code/scripts/script_TIMESTAMP.ts --spaceId=<YOUR_WORKSPACE_ID> --sessionStateFilePath=src/EXPERIMENTAL__infra-as-code/sessions/sessionState_TIMESTAMP.json
+NOTION_TOKEN=<YOUR_PERSONAL_ACCESS_TOKEN> node build/src/EXPERIMENTAL__notion-as-code/runNotionAsCode.js --scriptFilePath=src/EXPERIMENTAL__notion-as-code/scripts/script_TIMESTAMP.ts --spaceId=<YOUR_WORKSPACE_ID> --sessionStateFilePath=src/EXPERIMENTAL__notion-as-code/sessions/sessionState_TIMESTAMP.json
 ```
 
 If the token is already pasted into the local runner file, omit the
@@ -347,14 +346,14 @@ Useful checks from the repository root:
 
 ```bash
 npm run build
-npx jest test/infra-as-code.test.ts --runInBand
+npx jest test/notion-as-code.test.ts --runInBand
 ```
 
 If the user asks to run the example:
 
 ```bash
 npm run build
-NOTION_TOKEN=<YOUR_PERSONAL_ACCESS_TOKEN> node build/src/EXPERIMENTAL__infra-as-code/runInfraAsCode.js --spaceId=<YOUR_WORKSPACE_ID> --scriptFilePath=./src/EXPERIMENTAL__infra-as-code/scripts/script_example.ts
+NOTION_TOKEN=<YOUR_PERSONAL_ACCESS_TOKEN> node build/src/EXPERIMENTAL__notion-as-code/runNotionAsCode.js --spaceId=<YOUR_WORKSPACE_ID> --scriptFilePath=./src/EXPERIMENTAL__notion-as-code/scripts/script_example.ts
 ```
 
 The run compiles the script, submits it to Notion, polls the async task, and
