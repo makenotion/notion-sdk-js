@@ -116,7 +116,7 @@ function resolveSessionStateForRun({
 }: {
   priorState: NotionAsCodeSessionState | undefined
   spaceId: string
-  intents: NotionAsCodeIntent[]
+  intents: InfraAsCodeIntent[]
 }): NotionAsCodeSessionState {
   const baseState = priorState ?? {
     resourceIdToPointerMappings: {},
@@ -183,9 +183,7 @@ function assertSpacePointerMatchesSpaceId({
 /**
  * Finds the script resourceId that should point at the provided workspace ID.
  */
-function inferSpaceResourceIdFromIntents(
-  intents: NotionAsCodeIntent[]
-): string {
+function inferSpaceResourceIdFromIntents(intents: InfraAsCodeIntent[]): string {
   const spaceResourceIds = new Set<string>()
   const teamspaceParentResourceIds = new Set<string>()
 

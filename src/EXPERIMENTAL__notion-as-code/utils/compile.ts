@@ -21,7 +21,7 @@ export async function compileNotionAsCodeScriptToIntents({
   filePathToScript,
 }: {
   filePathToScript: string
-}): Promise<NotionAsCodeIntent[]> {
+}): Promise<InfraAsCodeIntent[]> {
   const scriptPath = path.resolve(filePathToScript)
   const script = await readScript(scriptPath)
   const tempDir = await mkdtemp(path.join(tmpdir(), "notion-as-code-"))
@@ -77,8 +77,15 @@ async function readScript(scriptPath: string): Promise<string> {
 function buildExecutableScriptSource(script: string): string {
   const executableScript = stripEmptyExportDeclaration(script)
 
-  return `// Embed the runtime so the temporary Node process can run without SDK imports.
-const createInfraAsCodeStubRuntime = ${createNotionAsCodeStubRuntime.toString()}
+  return `// tsx uses esbuild to execute TypeScript directly. esbuild may rewrite
+// functions in the embedded runtime to call its __name helper, which sets a
+// function's name for debugging. Since toString() captures only the runtime
+// function body and not esbuild's surrounding module helpers, the generated
+// script defines a compatible __name helper before it evaluates the runtime.
+const __name = (target, value) => Object.defineProperty(target, "name", { value, configurable: true })
+
+// Embed the runtime so the temporary Node process can run without SDK imports.
+const createNotionAsCodeStubRuntime = ${createNotionAsCodeStubRuntime.toString()}
 
 // Initialize the runtime that owns the intents array. Calls to notion.* append
 // intents here while the user's script runs.

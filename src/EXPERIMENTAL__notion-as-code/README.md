@@ -96,15 +96,15 @@ A session-state file remembers what happened after a run. It maps `resourceId` v
     "my-space": {
       "table": "space",
       "id": "<YOUR_WORKSPACE_ID>",
-      "spaceId": "<YOUR_WORKSPACE_ID>"
+      "spaceId": "<YOUR_WORKSPACE_ID>",
     },
     "general-teamspace": {
       "table": "team",
       "id": "<teamspace-id>",
-      "spaceId": "<YOUR_WORKSPACE_ID>"
-    }
+      "spaceId": "<YOUR_WORKSPACE_ID>",
+    },
   },
-  "resourceIdToPropertyIdMappings": {}
+  "resourceIdToPropertyIdMappings": {},
 }
 ```
 

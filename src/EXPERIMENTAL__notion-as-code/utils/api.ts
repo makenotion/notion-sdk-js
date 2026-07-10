@@ -43,7 +43,7 @@ export async function submitNotionAsCodeRunToApi({
   existingProperties,
 }: {
   request: Client["request"]
-  intents: NotionAsCodeIntent[]
+  intents: InfraAsCodeIntent[]
   existingResources: Record<string, unknown>
   existingProperties: Record<string, string>
 }): Promise<{ id: string }> {

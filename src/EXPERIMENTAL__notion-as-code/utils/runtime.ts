@@ -7,7 +7,7 @@
  * them before the generated script runs.
  */
 type RuntimeNotion = typeof notion & {
-  intent(intent: NotionAsCodeIntent): void
+  intent(intent: InfraAsCodeIntent): void
 }
 type ChildPageArgs = Omit<PageIntent, "parent">
 type ChildDatabaseArgs = Omit<DatabaseIntent, "parent">
@@ -21,9 +21,9 @@ type ChildDatabaseArgs = Omit<DatabaseIntent, "parent">
  */
 export function createNotionAsCodeStubRuntime(): {
   notion: RuntimeNotion
-  intents: NotionAsCodeIntent[]
+  intents: InfraAsCodeIntent[]
 } {
-  const intents: NotionAsCodeIntent[] = []
+  const intents: InfraAsCodeIntent[] = []
   const notion: RuntimeNotion = {
     intent(intent) {
       intents.push(intent)

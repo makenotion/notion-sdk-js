@@ -160,7 +160,7 @@ describe("Notion as Code API helpers", () => {
     const existingProperties = {
       "name-property": "title",
     }
-    const intents: NotionAsCodeIntent[] = []
+    const intents: InfraAsCodeIntent[] = []
 
     const result = await submitNotionAsCodeRunToApi({
       request: request as Client["request"],
