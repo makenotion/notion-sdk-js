@@ -107,15 +107,13 @@ user to the written session-state file. Do not print the full
 First run against an existing workspace by workspace ID:
 
 ```bash
-npm run build
-NOTION_TOKEN=<YOUR_PERSONAL_ACCESS_TOKEN> node build/src/EXPERIMENTAL__notion-as-code/runNotionAsCode.js --spaceId=<YOUR_WORKSPACE_ID> --scriptFilePath=./src/EXPERIMENTAL__notion-as-code/scripts/script_example.ts
+NOTION_TOKEN=<YOUR_PERSONAL_ACCESS_TOKEN> npm run notion-as-code -- --spaceId=<YOUR_WORKSPACE_ID> --scriptFilePath=./src/EXPERIMENTAL__notion-as-code/scripts/script_example.ts
 ```
 
 Follow-up run using a written session-state file:
 
 ```bash
-npm run build
-NOTION_TOKEN=<YOUR_PERSONAL_ACCESS_TOKEN> node build/src/EXPERIMENTAL__notion-as-code/runNotionAsCode.js --spaceId=<YOUR_WORKSPACE_ID> --scriptFilePath=./src/EXPERIMENTAL__notion-as-code/scripts/script_example.ts --sessionStateFilePath=./src/EXPERIMENTAL__notion-as-code/sessions/sessionState_TIMESTAMP.json
+NOTION_TOKEN=<YOUR_PERSONAL_ACCESS_TOKEN> npm run notion-as-code -- --spaceId=<YOUR_WORKSPACE_ID> --scriptFilePath=./src/EXPERIMENTAL__notion-as-code/scripts/script_example.ts --sessionStateFilePath=./src/EXPERIMENTAL__notion-as-code/sessions/sessionState_TIMESTAMP.json
 ```
 
 When the token is already pasted into a local scratch runner file, omit the
@@ -311,15 +309,13 @@ I've generated the script for you at:
 src/EXPERIMENTAL__notion-as-code/scripts/script_TIMESTAMP.ts
 
 You can run it with:
-npm run build
-NOTION_TOKEN=<YOUR_PERSONAL_ACCESS_TOKEN> node build/src/EXPERIMENTAL__notion-as-code/runNotionAsCode.js --scriptFilePath=src/EXPERIMENTAL__notion-as-code/scripts/script_TIMESTAMP.ts --spaceId=<YOUR_WORKSPACE_ID>
+NOTION_TOKEN=<YOUR_PERSONAL_ACCESS_TOKEN> npm run notion-as-code -- --scriptFilePath=src/EXPERIMENTAL__notion-as-code/scripts/script_TIMESTAMP.ts --spaceId=<YOUR_WORKSPACE_ID>
 ```
 
 If a session-state file is already known, include it alongside `--spaceId`:
 
 ```text
-npm run build
-NOTION_TOKEN=<YOUR_PERSONAL_ACCESS_TOKEN> node build/src/EXPERIMENTAL__notion-as-code/runNotionAsCode.js --scriptFilePath=src/EXPERIMENTAL__notion-as-code/scripts/script_TIMESTAMP.ts --spaceId=<YOUR_WORKSPACE_ID> --sessionStateFilePath=src/EXPERIMENTAL__notion-as-code/sessions/sessionState_TIMESTAMP.json
+NOTION_TOKEN=<YOUR_PERSONAL_ACCESS_TOKEN> npm run notion-as-code -- --scriptFilePath=src/EXPERIMENTAL__notion-as-code/scripts/script_TIMESTAMP.ts --spaceId=<YOUR_WORKSPACE_ID> --sessionStateFilePath=src/EXPERIMENTAL__notion-as-code/sessions/sessionState_TIMESTAMP.json
 ```
 
 If the token is already pasted into the local runner file, omit the
@@ -352,8 +348,7 @@ npx jest test/notion-as-code.test.ts --runInBand
 If the user asks to run the example:
 
 ```bash
-npm run build
-NOTION_TOKEN=<YOUR_PERSONAL_ACCESS_TOKEN> node build/src/EXPERIMENTAL__notion-as-code/runNotionAsCode.js --spaceId=<YOUR_WORKSPACE_ID> --scriptFilePath=./src/EXPERIMENTAL__notion-as-code/scripts/script_example.ts
+NOTION_TOKEN=<YOUR_PERSONAL_ACCESS_TOKEN> npm run notion-as-code -- --spaceId=<YOUR_WORKSPACE_ID> --scriptFilePath=./src/EXPERIMENTAL__notion-as-code/scripts/script_example.ts
 ```
 
 The run compiles the script, submits it to Notion, polls the async task, and

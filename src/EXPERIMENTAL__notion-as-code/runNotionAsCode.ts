@@ -6,7 +6,7 @@
  * To try it out:
  * 1. Set NOTION_TOKEN in your shell, or paste your Personal Access Token into NOTION_TOKEN below.
  * 2. Run the following command from the repository root, and replace <YOUR_WORKSPACE_ID> with your workspace id.
- *       npm run build && node build/src/EXPERIMENTAL__notion-as-code/runNotionAsCode.js --spaceId=<YOUR_WORKSPACE_ID> --scriptFilePath=./src/EXPERIMENTAL__notion-as-code/scripts/script_example.ts
+ *       npm run notion-as-code -- --spaceId=<YOUR_WORKSPACE_ID> --scriptFilePath=./src/EXPERIMENTAL__notion-as-code/scripts/script_example.ts
  *
  * Supported flags use camelCase and a leading `--`:
  *       --scriptFilePath=./src/EXPERIMENTAL__notion-as-code/scripts/script_example.ts

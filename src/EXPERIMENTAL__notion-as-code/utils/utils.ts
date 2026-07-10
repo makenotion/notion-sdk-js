@@ -65,8 +65,7 @@ export function buildRunArgsFromCommandLineArgs({
     console.error(
       `You have not provided a --scriptFilePath. You can try the example script with this command:
 
-npm run build
-NOTION_TOKEN=<YOUR_PERSONAL_ACCESS_TOKEN> node build/src/EXPERIMENTAL__notion-as-code/runNotionAsCode.js --spaceId=<YOUR_WORKSPACE_ID> --scriptFilePath=./src/EXPERIMENTAL__notion-as-code/scripts/script_example.ts`
+NOTION_TOKEN=<YOUR_PERSONAL_ACCESS_TOKEN> npm run notion-as-code -- --spaceId=<YOUR_WORKSPACE_ID> --scriptFilePath=./src/EXPERIMENTAL__notion-as-code/scripts/script_example.ts`
     )
     process.exitCode = 1
     return undefined
@@ -76,8 +75,7 @@ NOTION_TOKEN=<YOUR_PERSONAL_ACCESS_TOKEN> node build/src/EXPERIMENTAL__notion-as
     console.error(
       `Make sure to attach your workspace ID with --spaceId. You can run this command:
 
-npm run build
-NOTION_TOKEN=<YOUR_PERSONAL_ACCESS_TOKEN> node build/src/EXPERIMENTAL__notion-as-code/runNotionAsCode.js --spaceId=<YOUR_WORKSPACE_ID> --scriptFilePath=${scriptFilePath}`
+NOTION_TOKEN=<YOUR_PERSONAL_ACCESS_TOKEN> npm run notion-as-code -- --spaceId=<YOUR_WORKSPACE_ID> --scriptFilePath=${scriptFilePath}`
     )
     process.exitCode = 1
     return undefined
@@ -107,7 +105,7 @@ export function printNotionAsCodeRunSuccessMessage({
 The session-state file has been saved to ${result.sessionStateFilePath}.
 
 To run new scripts against this workspace, run the following command:
-node build/src/EXPERIMENTAL__notion-as-code/runNotionAsCode.js --scriptFilePath=${runArgs.scriptFilePath} --spaceId=${runArgs.spaceId} --sessionStateFilePath=${result.sessionStateFilePath}`
+npm run notion-as-code -- --scriptFilePath=${runArgs.scriptFilePath} --spaceId=${runArgs.spaceId} --sessionStateFilePath=${result.sessionStateFilePath}`
   )
 }
 

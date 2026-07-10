@@ -73,6 +73,8 @@ async function readScript(scriptPath: string): Promise<string> {
  *
  * `createNotionAsCodeStubRuntime` is embedded as source so the child process
  * can evaluate the user's script without importing SDK internals.
+ *
+ 
  */
 function buildExecutableScriptSource(script: string): string {
   const executableScript = stripEmptyExportDeclaration(script)
