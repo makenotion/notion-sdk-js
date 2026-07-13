@@ -1,4 +1,4 @@
-import type { InfraAsCodeRunParameters, InfraAsCodeRunResponse } from "./run"
+import type { NotionAsCodeRunParameters, NotionAsCodeRunResponse } from "./run"
 
 export type CommandLineArgs = {
   scriptFilePath?: string
@@ -7,10 +7,10 @@ export type CommandLineArgs = {
 }
 
 const DEFAULT_SESSION_STATE_DIRECTORY =
-  "./src/EXPERIMENTAL__infra-as-code/sessions"
+  "./src/EXPERIMENTAL__notion-as-code/sessions"
 
 /**
- * Parses supported command-line flags for the infra as code example runner.
+ * Parses supported command-line flags for the Notion as Code example runner.
  *
  * Flags can be passed as either `--name=value` or `--name value`.
  */
@@ -51,7 +51,7 @@ export function parseCommandLineArgs(argv: string[]): CommandLineArgs {
 }
 
 /**
- * Builds runnable infra as code args from parsed CLI flags.
+ * Builds runnable Notion as Code args from parsed CLI flags.
  *
  * If required flags are missing, this prints a friendly command example and
  * sets the process exit code instead of throwing a stack trace.
@@ -65,8 +65,7 @@ export function buildRunArgsFromCommandLineArgs({
     console.error(
       `You have not provided a --scriptFilePath. You can try the example script with this command:
 
-npm run build
-NOTION_TOKEN=<YOUR_PERSONAL_ACCESS_TOKEN> node build/src/EXPERIMENTAL__infra-as-code/runInfraAsCode.js --spaceId=<YOUR_WORKSPACE_ID> --scriptFilePath=./src/EXPERIMENTAL__infra-as-code/scripts/script_example.ts`
+NOTION_TOKEN=<YOUR_PERSONAL_ACCESS_TOKEN> npm run notion-as-code -- --spaceId=<YOUR_WORKSPACE_ID> --scriptFilePath=./src/EXPERIMENTAL__notion-as-code/scripts/script_example.ts`
     )
     process.exitCode = 1
     return undefined
@@ -76,8 +75,7 @@ NOTION_TOKEN=<YOUR_PERSONAL_ACCESS_TOKEN> node build/src/EXPERIMENTAL__infra-as-
     console.error(
       `Make sure to attach your workspace ID with --spaceId. You can run this command:
 
-npm run build
-NOTION_TOKEN=<YOUR_PERSONAL_ACCESS_TOKEN> node build/src/EXPERIMENTAL__infra-as-code/runInfraAsCode.js --spaceId=<YOUR_WORKSPACE_ID> --scriptFilePath=${scriptFilePath}`
+NOTION_TOKEN=<YOUR_PERSONAL_ACCESS_TOKEN> npm run notion-as-code -- --spaceId=<YOUR_WORKSPACE_ID> --scriptFilePath=${scriptFilePath}`
     )
     process.exitCode = 1
     return undefined
@@ -93,12 +91,12 @@ NOTION_TOKEN=<YOUR_PERSONAL_ACCESS_TOKEN> node build/src/EXPERIMENTAL__infra-as-
 /**
  * Prints the success message for the example command-line runner.
  */
-export function printInfraAsCodeRunSuccessMessage({
+export function printNotionAsCodeRunSuccessMessage({
   result,
   runArgs,
 }: {
-  result: InfraAsCodeRunResponse
-  runArgs: InfraAsCodeRunParameters
+  result: NotionAsCodeRunResponse
+  runArgs: NotionAsCodeRunParameters
 }): void {
   const workspace = `Your workspace ${runArgs.spaceId}`
 
@@ -107,7 +105,7 @@ export function printInfraAsCodeRunSuccessMessage({
 The session-state file has been saved to ${result.sessionStateFilePath}.
 
 To run new scripts against this workspace, run the following command:
-node build/src/EXPERIMENTAL__infra-as-code/runInfraAsCode.js --scriptFilePath=<YOUR_NEW_SCRIPT_FILE_PATH> --spaceId=${runArgs.spaceId} --sessionStateFilePath=${result.sessionStateFilePath}`
+npm run notion-as-code -- --scriptFilePath=${runArgs.scriptFilePath} --spaceId=${runArgs.spaceId} --sessionStateFilePath=${result.sessionStateFilePath}`
   )
 }
 

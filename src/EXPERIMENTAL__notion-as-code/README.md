@@ -1,14 +1,13 @@
-
 <img alt="Notion Logo" src="https://www.notion.so/images/notion-logo-block-main.svg" width="70" />
 
-## What Is Infra As Code?
+## What Is Notion as Code?
 
-Infra as Code for Notion lets you describe a Notion workspace in a local TypeScript file, then apply that structure to a real workspace.
+Notion as Code lets you describe a Notion workspace in a local TypeScript file, then apply that structure to a real workspace.
 
 Instead of manually creating the same teamspaces, pages, databases, properties, and seed content over and over, you can write them once as code and run that script again when you want to create or update the workspace.
 
-> [!WARNING] 
-> Infra as Code is experimental alpha. Use a workspace you are comfortable modifying.
+> [!WARNING]
+> Notion as Code is experimental alpha. Use a workspace you are comfortable modifying.
 
 ## How To Set it Up
 
@@ -18,10 +17,11 @@ Instead of manually creating the same teamspaces, pages, databases, properties, 
    git clone git@github.com:makenotion/notion-sdk-js.git
    ```
 
-2. **Check out** the Infra as Code experimental branch:
+2. Within the new repository, **check out** the Notion as Code experimental branch:
 
    ```
-   git checkout experimental-alpha-infra-as-code
+   cd notion-sdk-js
+   git checkout experimental-alpha-notion-as-code
    ```
 
 3. Create a Notion **Personal Access Token (PAT)**:
@@ -29,15 +29,14 @@ Instead of manually creating the same teamspaces, pages, databases, properties, 
 
 4. **Attach** your Personal Access Token **to the workspace** you want to update.
 
-5. **Provide your token** either by setting `NOTION_TOKEN` in your shell or by pasting it into the `NOTION_TOKEN` constant in `runInfraAsCode.ts`.
+5. **Provide your token** either by setting `NOTION_TOKEN` in your shell or by pasting it into the `NOTION_TOKEN` constant in `runNotionAsCode.ts`.
 
 6. **Copy your workspace ID** from Notion. In Notion, go to Settings > General, scroll to the bottom, and copy the workspace ID.
 
 7. **Run the example script** and replace `<YOUR_WORKSPACE_ID>`.
 
    ```
-   npm run build
-   node build/src/EXPERIMENTAL__infra-as-code/runInfraAsCode.js --spaceId=<YOUR_WORKSPACE_ID> --scriptFilePath=./src/EXPERIMENTAL__infra-as-code/scripts/script_example.ts
+   npm run notion-as-code -- --spaceId=<YOUR_WORKSPACE_ID> --scriptFilePath=./src/EXPERIMENTAL__notion-as-code/scripts/script_example.ts
    ```
 
    This runs `script_example.ts` against your workspace. The example creates a **General** teamspace, a welcome page, a sample database, and a few sample database entries in your provided workspace.
@@ -47,14 +46,14 @@ Instead of manually creating the same teamspaces, pages, databases, properties, 
 If the run succeeds, you should see a message like:
 
 ```
-✅ Your workspace <YOUR_WORKSPACE_ID> has been successfully updated with ./src/EXPERIMENTAL__infra-as-code/scripts/script_example.ts.
-The session-state file has been saved to ./src/EXPERIMENTAL__infra-as-code/sessions/sessionState_TIMESTAMP.json.
+✅ Your workspace <YOUR_WORKSPACE_ID> has been successfully updated with ./src/EXPERIMENTAL__notion-as-code/scripts/script_example.ts.
+The session-state file has been saved to ./src/EXPERIMENTAL__notion-as-code/sessions/sessionState_TIMESTAMP.json.
 
 To run new scripts against this workspace, run the following command:
-node build/src/EXPERIMENTAL__infra-as-code/runInfraAsCode.js --scriptFilePath=<YOUR_NEW_SCRIPT_FILE_PATH> --spaceId=<YOUR_WORKSPACE_ID> --sessionStateFilePath=./src/EXPERIMENTAL__infra-as-code/sessions/sessionState_TIMESTAMP.json
+npm run notion-as-code -- --scriptFilePath=<YOUR_NEW_SCRIPT_FILE_PATH> --spaceId=<YOUR_WORKSPACE_ID> --sessionStateFilePath=./src/EXPERIMENTAL__notion-as-code/sessions/sessionState_TIMESTAMP.json
 ```
 
-The session-state file is important. It stores the mapping between names in your script and the real Notion resources that were created. Use it for future runs so Infra as Code can update the same resources instead of creating duplicates.
+The session-state file is important. It stores the mapping between names in your script and the real Notion resources that were created. Use it for future runs so Notion as Code can update the same resources instead of creating duplicates.
 
 **What next?** Once the example run succeeds, you can edit `scripts/script_example.ts` or create a new script in `scripts/`.
 
@@ -62,7 +61,7 @@ You can also ask your favorite agent to help generate a script. Describe the Not
 
 > Create a student dashboard for my semester. Include a General teamspace, a Courses database, an Assignments database, a weekly study plan page, deadline views grouped by course and status, and a few sample assignments.
 
-The agent can turn that description into an Infra as Code script you can run with the generated session-state file.
+The agent can turn that description into a Notion as Code script you can run with the generated session-state file.
 
 ## Scripts and Sessions
 
@@ -70,7 +69,7 @@ A script file describes what you want in Notion.
 For example, this script creates a teamspace and adds a page under the workspace mapped by `--spaceId`:
 
 ```typescript
-// --scriptFilePath
+// npm run notion-as-code -- --scriptFilePath=./path/to/script.ts
 const teamspace = notion.teamspace({
   resourceId: "general-teamspace",
   parent: { type: "resourceId", resourceId: "my-space" },
@@ -87,30 +86,32 @@ teamspace.addPage({
 export {}
 ```
 
-A session-state file remembers what happened after a run. It connects script resource IDs like "general-teamspace" to real Notion IDs.
+A session-state file remembers what happened after a run. It maps `resourceId` values from your script, such as `my-space` and `general-teamspace`, to real Notion IDs. In the example below, those keys match the `resourceId` values from the script above.
 
-```json
-// --sessionStateFilePath
+```jsonc
+// npm run notion-as-code -- --sessionStateFilePath=./path/to/sessionState.json
 {
   "resourceIdToPointerMappings": {
     "my-space": {
       "table": "space",
       "id": "<YOUR_WORKSPACE_ID>",
-      "spaceId": "<YOUR_WORKSPACE_ID>"
+      "spaceId": "<YOUR_WORKSPACE_ID>",
     },
     "general-teamspace": {
       "table": "team",
       "id": "<teamspace-id>",
-      "spaceId": "<YOUR_WORKSPACE_ID>"
-    }
+      "spaceId": "<YOUR_WORKSPACE_ID>",
+    },
   },
-  "resourceIdToPropertyIdMappings": {}
+  "resourceIdToPropertyIdMappings": {},
 }
 ```
 
-You usually do not need to write this file by hand for a first run. If you pass `--spaceId`, Infra as Code creates the initial mapping and writes a timestamped session-state file for you.
+You usually do not need to write this file by hand for a first run. If you pass `--spaceId`, Notion as Code creates the initial mapping and writes a timestamped session-state file for you.
 
 For future runs, include the generated `--sessionStateFilePath` with the same `--spaceId`.
+
+The included `sessions/sessionState_example.json` file is only a reference for the file shape. You can copy it if you want to seed mappings manually, but the recommended first-run flow is to let `--spaceId` generate a session-state file for you.
 
 ## Command-Line Flags
 
@@ -126,20 +127,20 @@ NOTION_TOKEN=
 Use `--spaceId` for a first run against a workspace:
 
 ```
-npm run build
-node build/src/EXPERIMENTAL__infra-as-code/runInfraAsCode.js --spaceId=<YOUR_WORKSPACE_ID> --scriptFilePath=./src/EXPERIMENTAL__infra-as-code/scripts/script_example.ts
+npm run notion-as-code -- --spaceId=<YOUR_WORKSPACE_ID> --scriptFilePath=./src/EXPERIMENTAL__notion-as-code/scripts/script_example.ts
 ```
 
 Use `--sessionStateFilePath` with the same `--spaceId` for follow-up runs:
 
 ```
-npm run build
-node build/src/EXPERIMENTAL__infra-as-code/runInfraAsCode.js --spaceId=<YOUR_WORKSPACE_ID> --scriptFilePath=./src/EXPERIMENTAL__infra-as-code/scripts/my_script.ts --sessionStateFilePath=./src/EXPERIMENTAL__infra-as-code/sessions/sessionState_TIMESTAMP.json
+npm run notion-as-code -- --spaceId=<YOUR_WORKSPACE_ID> --scriptFilePath=./src/EXPERIMENTAL__notion-as-code/scripts/my_script.ts --sessionStateFilePath=./src/EXPERIMENTAL__notion-as-code/sessions/sessionState_TIMESTAMP.json
 ```
 
 If `--spaceId` and `--sessionStateFilePath` point at different workspaces, the run stops with an error.
 
 ## How It Works
+
+You do not need to understand this section to run Notion as Code. The instructions above are enough! But we've included a short summary below for anyone curious about how the pieces fit together.
 
 At a high level:
 
@@ -152,7 +153,7 @@ At a high level:
 
 Useful Files
 
-- `runInfraAsCode.ts`: local runner
+- `runNotionAsCode.ts`: local runner
 - `scripts/script_example.ts`: starter script
 - `sessions/`: generated session-state files
 - `utils/types.ts`: supported script types and helper shapes

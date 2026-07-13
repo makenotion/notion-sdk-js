@@ -1733,7 +1733,7 @@ declare const notion: {
  * This includes all block types, rich text formatting, and XML elements.
  * Used for the content parameter in page creation and database page creation.
  */
-declare const INFRA_AS_CODE_MARKDOWN_SPEC = `
+declare const NOTION_AS_CODE_MARKDOWN_SPEC = `
 ### Notion-flavored Markdown
 Notion-flavored Markdown is a variant of standard Markdown with additional features to support all Block and Rich text types.
 Use tabs for indentation.

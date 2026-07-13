@@ -172,10 +172,10 @@ import {
 } from "./api-endpoints/meeting-notes"
 import type { QueryMeetingNotesParameters } from "./meeting-notes"
 import {
-  runInfraAsCode,
-  type InfraAsCodeRunParameters,
-  type InfraAsCodeRunResponse,
-} from "./EXPERIMENTAL__infra-as-code/utils/run"
+  runNotionAsCode,
+  type NotionAsCodeRunParameters,
+  type NotionAsCodeRunResponse,
+} from "./EXPERIMENTAL__notion-as-code/utils/run"
 import {
   version as PACKAGE_VERSION,
   name as PACKAGE_NAME,
@@ -667,15 +667,17 @@ export default class Client {
     },
   }
 
-  public readonly EXPERIMENTAL__infraAsCode = {
+  public readonly EXPERIMENTAL__notionAsCode = {
     /**
-     * Run an infra as code script.
+     * Run a Notion as Code script.
      *
-     * Infra as code requires a Personal Access Token:
+     * Notion as Code requires a Personal Access Token:
      * https://developers.notion.com/guides/get-started/personal-access-tokens
      */
-    run: (args: InfraAsCodeRunParameters): Promise<InfraAsCodeRunResponse> => {
-      return runInfraAsCode(args, requestArgs => this.request(requestArgs))
+    run: (
+      args: NotionAsCodeRunParameters
+    ): Promise<NotionAsCodeRunResponse> => {
+      return runNotionAsCode(args, requestArgs => this.request(requestArgs))
     },
   }
 
