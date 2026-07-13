@@ -22,6 +22,26 @@ The goal is to make it easy for users to generate scripts ranging from a tiny
 space update to a full workspace setup with spaces, teamspaces, pages,
 databases, data sources, views, and seeded pages.
 
+## Start With README.md
+
+Before creating scripts, changing docs, troubleshooting commands, or explaining
+Notion as Code to a user, read `README.md` first. Treat it as the user-facing
+source of truth for:
+
+- setup steps
+- Personal Access Token instructions
+- `--spaceId`, `--scriptFilePath`, and `--sessionStateFilePath` usage
+- first-run and follow-up-run commands
+- expected success output
+- script/session-state concepts
+- example prompts
+
+When a user asks for help running Notion as Code, prefer walking through the
+README flow before inspecting implementation details. Treat README edits as
+documentation work only when the user explicitly asks for them. For normal
+usage help, agents should be able to run or help debug every command shown in
+the README without changing it.
+
 ## Directory Map
 
 - `runNotionAsCode.ts`: user-facing runner for local experimentation.
@@ -116,8 +136,7 @@ Follow-up run using a written session-state file:
 NOTION_TOKEN=<YOUR_PERSONAL_ACCESS_TOKEN> npm run notion-as-code -- --spaceId=<YOUR_WORKSPACE_ID> --scriptFilePath=./src/EXPERIMENTAL__notion-as-code/scripts/script_example.ts --sessionStateFilePath=./src/EXPERIMENTAL__notion-as-code/sessions/sessionState_TIMESTAMP.json
 ```
 
-When the token is already pasted into a local scratch runner file, omit the
-`NOTION_TOKEN=...` prefix.
+When the token is already pasted into a local scratch runner file or the user has already exported their NOTION_TOKEN in their terminal session, omit the `NOTION_TOKEN=...` prefix.
 
 ## Raw Script Files
 
@@ -128,6 +147,11 @@ editing the sample unless the user explicitly asks to change
 `scripts/script_example.ts`. Name one-off scripts with a compact UTC timestamp,
 such as `scripts/script_20260707T101500Z.ts`.
 
+The `scripts/` directory is ignored by cspell because user prompts and generated
+workspaces often include names, foods, fictional terms, brands, and other
+domain-specific words. Do not try to make generated scripts pass cspell unless
+the user explicitly asks for that.
+
 Important rules:
 
 - Do not import `Client` in raw scripts.
@@ -135,9 +159,11 @@ Important rules:
 - Use the global `notion` helper provided by the compiler.
 - Use stable, human-readable `resourceId` values.
 - Keep every `resourceId` unique within the script file.
+- Do not configure teamspace membership in generated scripts for now. Simple
+  teamspace access levels such as `open`, `closed`, or `private` are okay.
 - Add `export {}` at the end of each raw script so TypeScript treats it as a
-  module and multiple script files can be type-checked in the same project
-  without duplicate global `const` declarations.
+  module and multiple script files can live in the same project without
+  duplicate global `const` declarations.
 
 When a script is meant to run with `--spaceId`, include one clear workspace
 anchor. Prefer a parent reference when the workspace itself should not be
@@ -281,24 +307,27 @@ and has not provided IDs, ask for them or leave clear placeholders.
 
 When helping a user create a new Notion as Code example:
 
-1. Clarify the target workspace shape: spaces, teamspaces, pages, databases,
+1. Read `README.md` first and use its commands/terms in user-facing guidance.
+2. Clarify the target workspace shape: spaces, teamspaces, pages, databases,
    properties, views, and seed pages.
-2. Choose stable `resourceId` values before writing the script.
-3. Use `scripts/script_example.ts` only when the user asks to update the shared
+3. Choose stable `resourceId` values before writing the script.
+4. Use `scripts/script_example.ts` only when the user asks to update the shared
    example. Otherwise create a timestamped script in `scripts/`.
-4. If the user already has a session-state file or existing mappings, include
+5. If the user already has a session-state file or existing mappings, include
    that `sessionStateFilePath` in the run command.
-5. If no session-state file is available, ask for the workspace ID before
+6. If no session-state file is available, ask for the workspace ID before
    finalizing the run command. Use that ID with the `--spaceId` flow instead of
    manually creating a session-state file.
-6. After creating the script, tell the user the exact script path and include
+7. After creating the script, tell the user the exact script path and include
    the exact command they can run from the repository root.
-7. Keep runner changes small and preserve the top-level editable constants.
-8. Run `npm run build` to type-check the SDK and raw scripts.
-9. Run `npx jest test/notion-as-code.test.ts --runInBand` when SDK behavior
-   changes.
-10. Optionally run the built example if the user asks and a suitable token/setup
-    exists.
+8. Keep runner changes small and preserve the top-level editable constants.
+9. Use the README command for normal Notion as Code usage; it runs the
+   TypeScript runner through `tsx`. Fill in every flag the agent knows, such as
+   `--scriptFilePath`, `--spaceId`, and `--sessionStateFilePath`, instead of
+   leaving placeholders in the final command.
+10. Only run the README command when the user explicitly asks the agent to run
+    it and a suitable token/workspace setup exists. Otherwise, after creating a
+    script, hand off the exact command for the user to run.
 
 When the user asks in plain English for a script, such as "Create a student
 dashboard for my semester...", the agent should create the script and finish
@@ -336,20 +365,23 @@ Use `const tasksDb = teamspace.addDatabase(...)` and then
 - Prefer minimal SDK changes; most user requests in this directory should only
   need example script, mapping, docs, or runner edits.
 
-## Verification
-
-Useful checks from the repository root:
-
-```bash
-npm run build
-npx jest test/notion-as-code.test.ts --runInBand
-```
+## Running And Troubleshooting
 
 If the user asks to run the example:
 
 ```bash
 NOTION_TOKEN=<YOUR_PERSONAL_ACCESS_TOKEN> npm run notion-as-code -- --spaceId=<YOUR_WORKSPACE_ID> --scriptFilePath=./src/EXPERIMENTAL__notion-as-code/scripts/script_example.ts
 ```
+
+When troubleshooting a README command, check these first:
+
+- the command is being run from the repository root
+- `NOTION_TOKEN` is set or the local runner constant has a token
+- the token is attached to the target workspace
+- `--spaceId` is present and matches the workspace being targeted
+- `--scriptFilePath` points to an existing raw script file
+- `--sessionStateFilePath`, when provided, points to the same workspace as
+  `--spaceId`
 
 The run compiles the script, submits it to Notion, polls the async task, and
 writes returned mappings to the session-state file. Normal runner output should

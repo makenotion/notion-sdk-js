@@ -1,5 +1,3 @@
-<img alt="Notion Logo" src="https://www.notion.so/images/notion-logo-block-main.svg" width="70" />
-
 ## What Is Notion as Code?
 
 Notion as Code lets you describe a Notion workspace in a local TypeScript file, then apply that structure to a real workspace.
@@ -13,44 +11,39 @@ Instead of manually creating the same teamspaces, pages, databases, properties, 
 
 1. **Clone** the notion-js-sdk repository:
 
-   ```
-   git clone git@github.com:makenotion/notion-sdk-js.git
-   ```
+```
+ git clone git@github.com:makenotion/notion-sdk-js.git
+```
 
 2. Within the new repository, **check out** the Notion as Code experimental branch:
 
-   ```
-   cd notion-sdk-js
-   git checkout experimental-alpha-notion-as-code
-   ```
+```
+ cd notion-sdk-js
+ git checkout experimental-alpha-notion-as-code
+```
 
 3. Create a Notion **Personal Access Token (PAT)**:
    [https://developers.notion.com/guides/get-started/personal-access-tokens](https://developers.notion.com/guides/get-started/personal-access-tokens)
-
 4. **Attach** your Personal Access Token **to the workspace** you want to update.
-
-5. **Provide your token** either by setting `NOTION_TOKEN` in your shell or by pasting it into the `NOTION_TOKEN` constant in `runNotionAsCode.ts`.
-
+5. **Provide your token** either by exporting `NOTION_TOKEN` in your shell or by pasting it into the `NOTION_TOKEN` constant in `runNotionAsCode.ts`.
 6. **Copy your workspace ID** from Notion. In Notion, go to Settings > General, scroll to the bottom, and copy the workspace ID.
-
 7. **Run the example script** and replace `<YOUR_WORKSPACE_ID>`.
 
-   ```
-   npm run notion-as-code -- --spaceId=<YOUR_WORKSPACE_ID> --scriptFilePath=./src/EXPERIMENTAL__notion-as-code/scripts/script_example.ts
-   ```
+```
+ npm run notion-as-code -- --spaceId=<YOUR_WORKSPACE_ID> --scriptFilePath=./src/EXPERIMENTAL__notion-as-code/scripts/script_example.ts
+```
 
-   This runs `script_example.ts` against your workspace. The example creates a **General** teamspace, a welcome page, a sample database, and a few sample database entries in your provided workspace.
+This runs `script_example.ts` against your workspace. The example creates a **General** teamspace, a welcome page, a sample database, and a few sample database entries in your provided workspace.
 
 ## Success Output
 
 If the run succeeds, you should see a message like:
 
 ```
-✅ Your workspace <YOUR_WORKSPACE_ID> has been successfully updated with ./src/EXPERIMENTAL__notion-as-code/scripts/script_example.ts.
-The session-state file has been saved to ./src/EXPERIMENTAL__notion-as-code/sessions/sessionState_TIMESTAMP.json.
+✅ Your workspace <YOUR_WORKSPACE_ID> has been successfully updated with ./src/EXPERIMENTAL__notion-as-code/scripts/script_example.ts. The session-state file has been saved to ./src/EXPERIMENTAL__notion-as-code/sessions/sessionState_TIMESTAMP.json.
 
 To run new scripts against this workspace, run the following command:
-npm run notion-as-code -- --scriptFilePath=<YOUR_NEW_SCRIPT_FILE_PATH> --spaceId=<YOUR_WORKSPACE_ID> --sessionStateFilePath=./src/EXPERIMENTAL__notion-as-code/sessions/sessionState_TIMESTAMP.json
+npm run notion-as-code -- --scriptFilePath=./src/EXPERIMENTAL__notion-as-code/scripts/script_example.ts --spaceId=<YOUR_WORKSPACE_ID> --sessionStateFilePath=./src/EXPERIMENTAL__notion-as-code/sessions/sessionState_TIMESTAMP.json
 ```
 
 The session-state file is important. It stores the mapping between names in your script and the real Notion resources that were created. Use it for future runs so Notion as Code can update the same resources instead of creating duplicates.
@@ -69,16 +62,37 @@ Some of the ✨magic✨ behind Notion as Code is how naturally it pairs with AI.
 
 Your prompt can be loose and goal-oriented, like “I need a Notion setup for planning a wedding from scratch.” It can also be very specific: “Create a workspace with W teamspaces, X databases, Y pages, relations between these databases, and calendar, board, and timeline views for tracking projects.” The examples below range from tiny vibes-based requests to detailed workspace specs:
 
-1. “Build a Notion workspace for a high school teacher managing classes and students.”
-2. “I want a system for organizing my life after moving to a new city.”
-3. “I need a workspace for launching a podcast with guests, sponsors, and episodes.”
-4. **Coffee Shop Ops**: “I’m managing a small coffee shop and want a Notion workspace to track staff shifts, supplier orders, equipment maintenance, seasonal drinks, and daily opening/closing checklists.”
-5. **University Research Lab**: “Set up a research lab workspace with a Lab Admin teamspace, a Papers database, Experiments database, Grants database, Equipment database, Lab Members database, and pages for onboarding, safety protocols, weekly lab meetings, and publication pipeline.”
-6. **Personal Life OS**: “I want a simple personal workspace to manage my week: tasks, habits, meals, workouts, books, personal projects, and notes. Keep it lightweight and easy to maintain.”
-7. **Startup Product Team**: “Create a Product teamspace with databases for roadmap items, user feedback, experiments, PRDs, launch plans, and weekly product reviews. Add pages for rituals, product principles, and current quarter priorities.”
-8. **AI-Powered Product Org**: “Build a Product HQ workspace for a 40-person startup. Create a Product teamspace with databases for Roadmap, Projects, User Feedback, Experiments, Launches, Bugs, and Research Notes. Add two-way relations between Projects and Roadmap items, Feedback and Projects, Bugs and Launches, plus rollups for total open bugs per launch and feedback count per project. Create table, board, timeline, and calendar views. Add template pages for new PRDs and launch plans. Create a Product Ops custom agent with access to the Roadmap, Projects, Feedback, and Launches databases. Add a homepage with callout blocks, linked database views, a launch calendar, and a synced block for weekly product rituals.”
-9. **Nonprofit Crisis Response Hub**: “Build a crisis response workspace for a nonprofit coordinating volunteers, donations, shelters, supply requests, and field operations. Create databases for Volunteers, Teams, Shelters, Supply Requests, Donations, Partners, Incidents, Field Reports, Tasks, and Regions. Add relations between Volunteers and Teams, Shelters and Regions, Supply Requests and Shelters, Donations and Partners, Incidents and Field Reports, and Tasks and Teams. Add rollups for open supply requests per shelter, volunteer count per team, and unresolved incidents per region. Create urgent triage board views, regional dashboards with linked database views, calendar views for volunteer shifts, and template pages for incident reports. Add warning callouts, synced blocks for emergency contact protocols, and a custom agent called ‘Response Coordinator’ with access to all operational databases and SOP pages.”
-10. **Magical University Wiki And Admin System**: “Create a whimsical but serious workspace for running a fictional magical university. Build teamspaces for Academics, Student Life, Faculty, Admissions, Facilities, and Archives. Create databases for Courses, Professors, Students, Houses, Magical Artifacts, Spells, Incidents, Dorms, Events, Research Projects, and Library Collections. Add relations between Students and Houses, Courses and Professors, Incidents and Students, Artifacts and Research Projects, Events and Dorms, and Spells and Courses. Add rollups for incident count per house, active course load per professor, and artifacts per research project. Create gallery views for artifacts, calendar views for events, board views for incidents, and linked database views on a grand ‘Headmaster Dashboard’ page. Add dramatic callout blocks, a table of contents, synced school policies block, template pages for new courses and incident reports, and a custom agent called ‘Archivist Familiar’ that can search the Archives, Courses, Spells, and Artifacts databases.”
+### Short
+
+> Build a Notion workspace for a high school teacher managing classes and students.
+
+> I want a system for organizing my life after moving to a new city.
+
+> I need a workspace for launching a podcast with guests, sponsors, and episodes.
+
+### Medium
+
+**Coffee Shop Ops**
+
+> I’m managing a small coffee shop and want a Notion workspace to track staff shifts, supplier orders, equipment maintenance, seasonal drinks, and daily opening/closing checklists.
+
+**University Research Lab**
+
+> Set up a research lab workspace with a Lab Admin teamspace, a Papers database, Experiments database, Grants database, Equipment database, Lab Members database, and pages for onboarding, safety protocols, weekly lab meetings, and publication pipeline.
+
+**Personal Life OS**
+
+> I want a simple personal workspace to manage my week: tasks, habits, meals, workouts, books, personal projects, and notes. Keep it lightweight and easy to maintain.
+
+### Long
+
+**AI-Powered Product Org**
+
+> Build a Product HQ workspace for a 40-person startup. Create a Product teamspace with databases for Roadmap, Projects, User Feedback, Experiments, Launches, Bugs, and Research Notes. Add two-way relations between Projects and Roadmap items, Feedback and Projects, Bugs and Launches, plus rollups for total open bugs per launch and feedback count per project. Create table, board, timeline, and calendar views. Add template pages for new PRDs and launch plans. Create a Product Ops custom agent with access to the Roadmap, Projects, Feedback, and Launches databases. Add a homepage with callout blocks, linked database views, a launch calendar, and a synced block for weekly product rituals.
+
+**Magical University Wiki And Admin System**
+
+> Create a whimsical but serious workspace for running a fictional magical university. Build teamspaces for Academics, Student Life, Faculty, Admissions, Facilities, and Archives. Create databases for Courses, Professors, Students, Houses, Magical Artifacts, Spells, Incidents, Dorms, Events, Research Projects, and Library Collections. Add relations between Students and Houses, Courses and Professors, Incidents and Students, Artifacts and Research Projects, Events and Dorms, and Spells and Courses. Add rollups for incident count per house, active course load per professor, and artifacts per research project. Create gallery views for artifacts, calendar views for events, board views for incidents, and linked database views on a grand ‘Headmaster Dashboard’ page. Add dramatic callout blocks, a table of contents, synced school policies block, template pages for new courses and incident reports, and a custom agent called ‘Archivist Familiar’ that can search the Archives, Courses, Spells, and Artifacts databases.
 
 ## Scripts and Sessions
 

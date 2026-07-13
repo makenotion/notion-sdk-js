@@ -37,6 +37,7 @@
     "examples/**/node_modules/**",
     "build/**",
     "src/api-endpoints.ts",
-    "src/api-endpoints/**"
+    "src/api-endpoints/**",
+    "src/EXPERIMENTAL__notion-as-code/scripts/**"
   ]
 }
