@@ -101,10 +101,6 @@ describe("Notion API helpers", () => {
       expect(mockPaginatedEndpoint).toHaveBeenCalledTimes(2)
     })
 
-    // Regression test: endpoint methods whose `start_cursor` accepts
-    // `string | null` (e.g. `dataSources.query`) must satisfy the
-    // `Args extends PaginatedArgs` constraint. This is primarily a
-    // compile-time check.
     it("Accepts client endpoint methods with nullable start_cursor", async () => {
       const mockFetch = jest.fn<
         ReturnType<typeof fetch>,
