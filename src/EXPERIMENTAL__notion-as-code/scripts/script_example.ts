@@ -4,8 +4,8 @@
  * The teamspace, page, database, and database entries below are new resources
  * that will be created in the workspace you have provided when running the script.
  *
- * Try changing names, page content, properties, or add more entries, then rebuild
- * and rerun the example.
+ * Try changing names, page content, properties, or add more entries, then rerun
+ * the example.
  *
  * Note: The resourceIds below are stable and will let future runs update the same resources.
  */

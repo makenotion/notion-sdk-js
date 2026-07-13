@@ -12,6 +12,15 @@ Official Notion SDK for JavaScript - a TypeScript client library providing type-
 - **Build System**: TypeScript compiler (tsc)
 - **Test Framework**: Jest with ts-jest
 
+## Infra as Code (Notion as Code)
+
+If the user says "infra as code", "notion as code", or asks to build or set
+up pages, databases, teamspaces, or a whole workspace layout in Notion: use
+the experimental framework in `src/EXPERIMENTAL__infra-as-code/`. Read
+`src/EXPERIMENTAL__infra-as-code/AGENTS.md` and follow its Standard User
+Flow before writing any code. Do not hand-roll `Client` API calls for
+workspace provisioning.
+
 ## Development Commands
 
 ### Building

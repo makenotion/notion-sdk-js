@@ -101,8 +101,7 @@ export function printNotionAsCodeRunSuccessMessage({
   const workspace = `Your workspace ${runArgs.spaceId}`
 
   console.log(
-    `✅ ${workspace} has been successfully updated with ${runArgs.scriptFilePath}.
-The session-state file has been saved to ${result.sessionStateFilePath}.
+    `✅ ${workspace} has been successfully updated with ${runArgs.scriptFilePath}. The session-state file has been saved to ${result.sessionStateFilePath}.
 
 To run new scripts against this workspace, run the following command:
 npm run notion-as-code -- --scriptFilePath=${runArgs.scriptFilePath} --spaceId=${runArgs.spaceId} --sessionStateFilePath=${result.sessionStateFilePath}`
