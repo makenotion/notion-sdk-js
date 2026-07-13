@@ -14,6 +14,17 @@ Never hand the user a run command with a raw workspace placeholder such as
 available from the prompt, prior chat, terminal context, or local run output,
 ask for it before showing the command.
 
+When no Notion Personal Access Token is available in the local runner, current
+shell, or visible terminal context, prefer nudging the user to export it once:
+
+```bash
+export NOTION_TOKEN=<personal-access-token>
+```
+
+Then give the normal run command without an inline token prefix. Use an inline
+`NOTION_TOKEN=secret...` prefix only when a one-off command is clearer or the
+user specifically wants that style.
+
 This directory contains an experimental SDK workflow that lets a user write a
 local TypeScript script, compile it into JSON intents, and submit those intents
 through `Client.EXPERIMENTAL__notionAsCode.run()`.
@@ -55,8 +66,8 @@ After the user provides a workspace ID:
    - If `NOTION_TOKEN` is already set in the local runner, current shell, or
      visible terminal context from the same shell session, omit the inline token
      prefix.
-   - If no token is available, include an inline token prefix so the user can
-     paste their Personal Access Token before running.
+   - If no token is available, show `export NOTION_TOKEN=<personal-access-token>`
+     first, then show the normal run command without an inline token prefix.
 3. Fill in the user's workspace ID in the command. Do not leave
    `<YOUR_WORKSPACE_ID>` in the final command once the user has provided it.
 
@@ -66,17 +77,22 @@ If a token is already available, surface this command:
 npm run notion-as-code -- --spaceId=<USER_WORKSPACE_ID> --scriptFilePath=./src/EXPERIMENTAL__notion-as-code/scripts/script_example.ts
 ```
 
-If no token is available, surface this command:
+If no token is available, first ask the user to export it:
 
 ```bash
-NOTION_TOKEN=secret... npm run notion-as-code -- --spaceId=<USER_WORKSPACE_ID> --scriptFilePath=./src/EXPERIMENTAL__notion-as-code/scripts/script_example.ts
+export NOTION_TOKEN=<personal-access-token>
+```
+
+Then surface this command:
+
+```bash
+npm run notion-as-code -- --spaceId=<USER_WORKSPACE_ID> --scriptFilePath=./src/EXPERIMENTAL__notion-as-code/scripts/script_example.ts
 ```
 
 Replace `<USER_WORKSPACE_ID>` with the exact workspace ID the user provided.
-Keep `secret...` as a visible cue that the user should paste their token there,
-unless they have provided a real token through a secure local edit or shell
-environment. Never ask the user to paste a real token into chat unless there is
-no safer path and they explicitly want that.
+Keep `<personal-access-token>` as a visible cue for the user's local shell.
+Never ask the user to paste a real token into chat unless there is no safer path
+and they explicitly want that.
 
 Only run the command yourself when the user explicitly asks you to run it and a
 suitable token/workspace setup exists. Otherwise, give the exact command for the
@@ -142,10 +158,11 @@ available, omit the inline token prefix:
 npm run notion-as-code -- --spaceId=<USER_WORKSPACE_ID> --scriptFilePath=src/EXPERIMENTAL__notion-as-code/scripts/script_TIMESTAMP.ts
 ```
 
-If no token is available, include the inline token cue:
+If no token is available, include the export step first:
 
 ```text
-NOTION_TOKEN=secret... npm run notion-as-code -- --spaceId=<USER_WORKSPACE_ID> --scriptFilePath=src/EXPERIMENTAL__notion-as-code/scripts/script_TIMESTAMP.ts
+export NOTION_TOKEN=<personal-access-token>
+npm run notion-as-code -- --spaceId=<USER_WORKSPACE_ID> --scriptFilePath=src/EXPERIMENTAL__notion-as-code/scripts/script_TIMESTAMP.ts
 ```
 
 Replace `<USER_WORKSPACE_ID>` with the exact workspace ID the user provided.
@@ -225,10 +242,11 @@ inline token prefix:
 npm run notion-as-code -- --spaceId=<USER_WORKSPACE_ID> --scriptFilePath=<SCRIPT_FILE_PATH> --sessionStateFilePath=<SESSION_STATE_FILE_PATH>
 ```
 
-If no token is available, include the inline token cue:
+If no token is available, include the export step first:
 
 ```text
-NOTION_TOKEN=secret... npm run notion-as-code -- --spaceId=<USER_WORKSPACE_ID> --scriptFilePath=<SCRIPT_FILE_PATH> --sessionStateFilePath=<SESSION_STATE_FILE_PATH>
+export NOTION_TOKEN=<personal-access-token>
+npm run notion-as-code -- --spaceId=<USER_WORKSPACE_ID> --scriptFilePath=<SCRIPT_FILE_PATH> --sessionStateFilePath=<SESSION_STATE_FILE_PATH>
 ```
 
 Replace `<USER_WORKSPACE_ID>`, `<SCRIPT_FILE_PATH>`, and
@@ -276,7 +294,8 @@ npm run notion-as-code -- --spaceId=<USER_WORKSPACE_ID> --scriptFilePath=<EDITED
 If no token is available locally, use:
 
 ```text
-NOTION_TOKEN=secret... npm run notion-as-code -- --spaceId=<USER_WORKSPACE_ID> --scriptFilePath=<EDITED_SCRIPT_FILE_PATH> --sessionStateFilePath=<SESSION_STATE_FILE_PATH>
+export NOTION_TOKEN=<personal-access-token>
+npm run notion-as-code -- --spaceId=<USER_WORKSPACE_ID> --scriptFilePath=<EDITED_SCRIPT_FILE_PATH> --sessionStateFilePath=<SESSION_STATE_FILE_PATH>
 ```
 
 Replace every placeholder with exact values before showing the command. If any
@@ -401,7 +420,8 @@ npm run notion-as-code -- --spaceId=<YOUR_WORKSPACE_ID> --scriptFilePath=./src/E
 First run when no local token is set:
 
 ```bash
-NOTION_TOKEN=secret... npm run notion-as-code -- --spaceId=<YOUR_WORKSPACE_ID> --scriptFilePath=./src/EXPERIMENTAL__notion-as-code/scripts/script_example.ts
+export NOTION_TOKEN=<personal-access-token>
+npm run notion-as-code -- --spaceId=<YOUR_WORKSPACE_ID> --scriptFilePath=./src/EXPERIMENTAL__notion-as-code/scripts/script_example.ts
 ```
 
 Follow-up run using a written session-state file:
@@ -410,8 +430,8 @@ Follow-up run using a written session-state file:
 npm run notion-as-code -- --spaceId=<YOUR_WORKSPACE_ID> --scriptFilePath=./src/EXPERIMENTAL__notion-as-code/scripts/script_example.ts --sessionStateFilePath=./src/EXPERIMENTAL__notion-as-code/sessions/sessionState_TIMESTAMP.json
 ```
 
-If no local token is set for a follow-up run, add the same inline
-`NOTION_TOKEN=secret...` prefix.
+If no local token is set for a follow-up run, show the
+`export NOTION_TOKEN=<personal-access-token>` step before the run command.
 
 ## Raw Script Files
 
@@ -577,8 +597,8 @@ When helping a user create a new Notion as Code script:
    - If the user did not provide it, ask `What is your workspace ID?`
    - Do not ask for it again after the user has already supplied it.
    - Do not show a run command until the workspace ID is known.
-3. Check token availability before choosing whether the final command needs an
-   inline `NOTION_TOKEN=secret...` prefix.
+3. Check token availability before choosing whether the final handoff needs an
+   `export NOTION_TOKEN=<personal-access-token>` setup step.
 4. Clarify the target workspace shape when needed: spaces, teamspaces, pages,
    properties, views, and seed pages.
 5. Check `utils/types.ts` when deciding which Notion as Code resource,
@@ -606,18 +626,21 @@ I've generated the script for you at:
 src/EXPERIMENTAL__notion-as-code/scripts/script_TIMESTAMP.ts
 
 You can run it with:
-NOTION_TOKEN=secret... npm run notion-as-code -- --spaceId=<USER_WORKSPACE_ID> --scriptFilePath=src/EXPERIMENTAL__notion-as-code/scripts/script_TIMESTAMP.ts
+export NOTION_TOKEN=<personal-access-token>
+npm run notion-as-code -- --spaceId=<USER_WORKSPACE_ID> --scriptFilePath=src/EXPERIMENTAL__notion-as-code/scripts/script_TIMESTAMP.ts
 ```
 
 If a session-state file is already known, include it alongside `--spaceId`:
 
 ```text
-NOTION_TOKEN=secret... npm run notion-as-code -- --spaceId=<USER_WORKSPACE_ID> --scriptFilePath=src/EXPERIMENTAL__notion-as-code/scripts/script_TIMESTAMP.ts --sessionStateFilePath=src/EXPERIMENTAL__notion-as-code/sessions/sessionState_TIMESTAMP.json
+export NOTION_TOKEN=<personal-access-token>
+npm run notion-as-code -- --spaceId=<USER_WORKSPACE_ID> --scriptFilePath=src/EXPERIMENTAL__notion-as-code/scripts/script_TIMESTAMP.ts --sessionStateFilePath=src/EXPERIMENTAL__notion-as-code/sessions/sessionState_TIMESTAMP.json
 ```
 
 If the token is already pasted into the local runner file, present in the
 current shell, or clearly exported in visible terminal context from the same
-shell session, omit the `NOTION_TOKEN=secret...` prefix from the command.
+shell session, omit the `export NOTION_TOKEN=<personal-access-token>` setup
+step.
 
 For complex examples, prefer readable local variables over deeply nested calls.
 Use `const tasksDb = teamspace.addDatabase(...)` and then
