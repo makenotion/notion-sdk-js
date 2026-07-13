@@ -12,14 +12,14 @@ Instead of manually creating the same teamspaces, pages, databases, properties, 
 1. **Clone** the notion-js-sdk repository:
 
 ```
- git clone git@github.com:makenotion/notion-sdk-js.git
+git clone git@github.com:makenotion/notion-sdk-js.git
 ```
 
 2. Within the new repository, **check out** the Notion as Code experimental branch:
 
 ```
- cd notion-sdk-js
- git checkout experimental-alpha-notion-as-code
+cd notion-sdk-js
+git checkout experimental-alpha-notion-as-code
 ```
 
 3. Create a Notion **Personal Access Token (PAT)**:
@@ -30,7 +30,7 @@ Instead of manually creating the same teamspaces, pages, databases, properties, 
 7. **Run the example script** and replace `<YOUR_WORKSPACE_ID>`.
 
 ```
- npm run notion-as-code -- --spaceId=<YOUR_WORKSPACE_ID> --scriptFilePath=./src/EXPERIMENTAL__notion-as-code/scripts/script_example.ts
+npm run notion-as-code -- --spaceId=<YOUR_WORKSPACE_ID> --scriptFilePath=./src/EXPERIMENTAL__notion-as-code/scripts/script_example.ts
 ```
 
 This runs `script_example.ts` against your workspace. The example creates a **General** teamspace, a welcome page, a sample database, and a few sample database entries in your provided workspace.
@@ -40,7 +40,8 @@ This runs `script_example.ts` against your workspace. The example creates a **Ge
 If the run succeeds, you should see a message like:
 
 ```
-✅ Your workspace <YOUR_WORKSPACE_ID> has been successfully updated with ./src/EXPERIMENTAL__notion-as-code/scripts/script_example.ts. The session-state file has been saved to ./src/EXPERIMENTAL__notion-as-code/sessions/sessionState_TIMESTAMP.json.
+✅ Your workspace <YOUR_WORKSPACE_ID> has been successfully updated with ./src/EXPERIMENTAL__notion-as-code/scripts/script_example.ts.
+The session-state file has been saved to ./src/EXPERIMENTAL__notion-as-code/sessions/sessionState_TIMESTAMP.json.
 
 To run new scripts against this workspace, run the following command:
 npm run notion-as-code -- --scriptFilePath=./src/EXPERIMENTAL__notion-as-code/scripts/script_example.ts --spaceId=<YOUR_WORKSPACE_ID> --sessionStateFilePath=./src/EXPERIMENTAL__notion-as-code/sessions/sessionState_TIMESTAMP.json
