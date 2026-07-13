@@ -28,7 +28,7 @@ import {
 import type Client from "./Client"
 
 type PaginatedArgs = {
-  start_cursor?: string
+  start_cursor?: string | null
 }
 
 type PaginatedList<T> = {
