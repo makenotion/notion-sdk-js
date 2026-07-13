@@ -346,7 +346,7 @@ type UpdateDataSourcePathParameters = {
 type UpdateDataSourceBodyParameters = {
   // Title of data source as it appears in Notion.
   title?: Array<RichTextItemRequest>
-  // Page icon.
+  // Data source icon.
   icon?: PageIconRequest | null
   // The property schema of the data source. The keys are property names or IDs, and the
   // values are property configuration objects. Properties set to null will be removed.
@@ -511,8 +511,8 @@ type UpdateDataSourceBodyParameters = {
       }
     | null
   >
-  // Whether the database should be moved to or from the trash. If not provided, the trash
-  // status will not be updated.
+  // Whether the data source should be moved to or from the trash. If not provided, the
+  // trash status will not be updated.
   in_trash?: boolean
   /** @deprecated Use `in_trash` instead. */
   archived?: boolean
