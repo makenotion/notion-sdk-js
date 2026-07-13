@@ -100,6 +100,41 @@ describe("Notion API helpers", () => {
       expect(results).toEqual([1, 2, 3, 4, 5])
       expect(mockPaginatedEndpoint).toHaveBeenCalledTimes(2)
     })
+
+    // Regression test: endpoint methods whose `start_cursor` accepts
+    // `string | null` (e.g. `dataSources.query`) must satisfy the
+    // `Args extends PaginatedArgs` constraint. This is primarily a
+    // compile-time check.
+    it("Accepts client endpoint methods with nullable start_cursor", async () => {
+      const mockFetch = jest.fn<
+        ReturnType<typeof fetch>,
+        Parameters<typeof fetch>
+      >()
+      const client = new Client({ auth: "test-token", fetch: mockFetch })
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        status: 200,
+        headers: new Headers(),
+        text: () =>
+          Promise.resolve(
+            JSON.stringify({
+              object: "list",
+              type: "page_or_data_source",
+              page_or_data_source: {},
+              results: [],
+              has_more: false,
+              next_cursor: null,
+            })
+          ),
+      } as Response)
+
+      const results = await collectPaginatedAPI(client.dataSources.query, {
+        data_source_id: "data-source-123",
+      })
+
+      expect(results).toEqual([])
+      expect(mockFetch).toHaveBeenCalledTimes(1)
+    })
   })
 
   describe("Data source template helpers", () => {

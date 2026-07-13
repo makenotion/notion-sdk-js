@@ -28,7 +28,11 @@ import {
 import type Client from "./Client"
 
 type PaginatedArgs = {
-  start_cursor?: string
+  // `null` is accepted alongside `string` because request parameter types
+  // (e.g. `QueryDataSourceParameters`) allow piping `next_cursor` (which can
+  // be `null`) back as `start_cursor`. Without it, those endpoint methods no
+  // longer satisfy the `Args extends PaginatedArgs` constraint.
+  start_cursor?: string | null
 }
 
 type PaginatedList<T> = {
