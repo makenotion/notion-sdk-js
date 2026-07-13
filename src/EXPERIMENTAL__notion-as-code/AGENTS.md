@@ -25,6 +25,10 @@ Then give the normal run command without an inline token prefix. Use an inline
 `NOTION_TOKEN=secret...` prefix only when a one-off command is clearer or the
 user specifically wants that style.
 
+When the user asks where to get their token, direct them to the Notion Personal
+Access Token guide:
+https://developers.notion.com/guides/get-started/personal-access-tokens
+
 This directory contains an experimental SDK workflow that lets a user write a
 local TypeScript script, compile it into JSON intents, and submit those intents
 through `Client.EXPERIMENTAL__notionAsCode.run()`.
