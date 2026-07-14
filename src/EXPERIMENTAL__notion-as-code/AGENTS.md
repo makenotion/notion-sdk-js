@@ -457,7 +457,15 @@ Important rules:
 - Do not create a real SDK client in raw scripts.
 - Use the global `notion` helper provided by the compiler.
 - Use stable, human-readable `resourceId` values.
-- Keep every `resourceId` unique within the script file.
+- Keep every `resourceId` unique within the script file, including database
+  property `resourceId` values.
+- Give every teamspace, page, database, and custom agent an appropriate `icon`
+  when the supported type allows it. Use the `icon` property; do not prepend
+  emoji or icon text to names, titles, or database titles.
+- Add a small amount of useful seed data when it helps the user understand how
+  to use the workspace. Avoid filler data that obscures the structure.
+- When modifying an existing script, preserve working resources and stable
+  `resourceId` values. Change only what is needed for the user's request.
 - Do not configure teamspace membership in generated scripts for now. Simple
   teamspace access levels such as `open`, `closed`, or `private` are okay.
 - Add `export {}` at the end of each raw script so TypeScript treats it as a
@@ -516,6 +524,7 @@ Common helpers include:
 - `notion.teamspace(...)`
 - `notion.page(...)`
 - `notion.database(...)`
+- `notion.customAgent(...)`
 - `space.addTeamspace(...)`
 - `teamspace.addPage(...)`
 - `teamspace.addDatabase(...)`
@@ -526,10 +535,41 @@ Common helpers include:
 - `notion.select(...)`
 - `notion.status(...)`
 - `notion.multiSelect(...)`
+- `notion.relation(...)`
 
 Page `content` uses Notion-flavored markdown. Date mentions currently use
 explicit dates; there is no dynamic `@Today` shorthand in the raw markdown
 syntax.
+
+Useful content patterns:
+
+- Use `<mention-page url="{{page-resource-id}}" />`,
+  `<mention-database url="{{database-resource-id}}" />`, or
+  `<mention-data-source url="{{data-source-resource-id}}" />` for inline links
+  to resources.
+- Use `<database data-source-url="{{view-or-data-source-resource-id}}" inline="true">Title</database>`
+  to embed a linked database view in page content. If a view should exist only
+  for a linked database block and not as a main database tab, check `types.ts`
+  for the supported `ephemeral` view option.
+- To place a real child page at a specific spot in page content, create the
+  child page with a `parent` pointing at the containing page's `resourceId`,
+  then reference it once with `<page url="{{child-resource-id}}">Title</page>`.
+  Use `<mention-page>` instead when the goal is only to link to a page without
+  moving or placing it as a child.
+- For database relations, pass page resource IDs, not page handles. For example,
+  use `notion.relation([projectPage.resourceId])`.
+
+Custom agents can be created with `notion.customAgent(...)` when supported by
+`types.ts`. Keep custom agent resources generic and user-facing:
+
+- Use a stable `resourceId`, clear `name`, optional `icon`, and concise
+  markdown `instructions`.
+- `sharedResources` should reference page or database `resourceId` values that
+  are created earlier in the same script or mapped through session state.
+- `model` accepts a curated set of model identifiers:
+  `"ambrosia-tart-high"` for Opus 4.8 High, `"opal-quince-medium"` for GPT 5.5
+  Medium, and `"almond-croissant-low"` for Sonnet 4.6 Low. Omit `model` to use
+  the workspace default model.
 
 ## Session State Files
 
