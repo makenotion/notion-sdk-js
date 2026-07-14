@@ -19,18 +19,8 @@ type SearchBodyParameters = {
   start_cursor?: string | null
   page_size?: number
   filter?:
-    | {
-        property: "object"
-        value: "page" | "data_source"
-        in_trash?: boolean
-        /** @deprecated Use `in_trash` instead. */
-        archived?: boolean
-      }
-    | {
-        in_trash: boolean
-        /** @deprecated Use `in_trash` instead. Present for backwards compatibility with API versions prior to 2026-03-11. */
-        archived: boolean
-      }
+    | { property: "object"; value: "page" | "data_source"; in_trash?: boolean }
+    | { in_trash: boolean }
 }
 
 export type SearchParameters = SearchBodyParameters
