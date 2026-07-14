@@ -22,6 +22,7 @@
  */
 
 import Client from "../Client"
+import chalk = require("chalk")
 import {
   buildRunArgsFromCommandLineArgs,
   isDefined,
@@ -43,7 +44,9 @@ if (isDefined(runArgs)) {
   notion.EXPERIMENTAL__notionAsCode.run(runArgs)
     .then(result => printNotionAsCodeRunSuccessMessage({ result, runArgs }))
     .catch((error: Error | string) => {
-      console.error(error instanceof Error ? error.message : String(error))
+      console.error(
+        chalk.red(error instanceof Error ? error.message : String(error))
+      )
       process.exitCode = 1
     })
 }

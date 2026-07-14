@@ -1,3 +1,5 @@
+import chalk = require("chalk")
+
 import type { NotionAsCodeRunParameters, NotionAsCodeRunResponse } from "./run"
 
 export type CommandLineArgs = {
@@ -63,9 +65,9 @@ export function buildRunArgsFromCommandLineArgs({
 }: CommandLineArgs) {
   if (!isDefined(scriptFilePath)) {
     console.error(
-      `You have not provided a --scriptFilePath. You can try the example script with this command:
+      chalk.red(`You have not provided a --scriptFilePath. You can try the example script with this command:
 
-NOTION_TOKEN=<YOUR_PERSONAL_ACCESS_TOKEN> npm run notion-as-code -- --spaceId=<YOUR_WORKSPACE_ID> --scriptFilePath=./src/EXPERIMENTAL__notion-as-code/scripts/script_example.ts`
+npm run notion-as-code -- --spaceId=<YOUR_WORKSPACE_ID> --scriptFilePath=./src/EXPERIMENTAL__notion-as-code/scripts/script_example.ts`)
     )
     process.exitCode = 1
     return undefined
@@ -73,9 +75,9 @@ NOTION_TOKEN=<YOUR_PERSONAL_ACCESS_TOKEN> npm run notion-as-code -- --spaceId=<Y
 
   if (!isDefined(spaceId)) {
     console.error(
-      `Make sure to attach your workspace ID with --spaceId. You can run this command:
+      chalk.red(`Make sure to attach your workspace ID with --spaceId. You can run this command:
 
-NOTION_TOKEN=<YOUR_PERSONAL_ACCESS_TOKEN> npm run notion-as-code -- --spaceId=<YOUR_WORKSPACE_ID> --scriptFilePath=${scriptFilePath}`
+npm run notion-as-code -- --spaceId=<YOUR_WORKSPACE_ID> --scriptFilePath=${scriptFilePath}`)
     )
     process.exitCode = 1
     return undefined
@@ -99,13 +101,15 @@ export function printNotionAsCodeRunSuccessMessage({
   runArgs: NotionAsCodeRunParameters
 }): void {
   const workspace = `Your workspace ${runArgs.spaceId}`
-
-  console.log(
-    `✅ ${workspace} has been successfully updated with ${runArgs.scriptFilePath}. The session-state file has been saved to ${result.sessionStateFilePath}.
-
-To run new scripts against this workspace, run the following command:
+  const successMessage = chalk.green(
+    `✅ ${workspace} has been successfully updated with ${runArgs.scriptFilePath}. The session-state file has been saved to ${result.sessionStateFilePath}`
+  )
+  const nextStepsMessage = chalk.blue(
+    `To run new scripts against this workspace, run the following command:
 npm run notion-as-code -- --scriptFilePath=${runArgs.scriptFilePath} --spaceId=${runArgs.spaceId} --sessionStateFilePath=${result.sessionStateFilePath}`
   )
+
+  console.log(`${successMessage}\n\n${nextStepsMessage}`)
 }
 
 /**
