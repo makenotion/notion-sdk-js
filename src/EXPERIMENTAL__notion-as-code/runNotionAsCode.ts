@@ -27,6 +27,7 @@ import {
   buildRunArgsFromCommandLineArgs,
   isDefined,
   parseCommandLineArgs,
+  printMissingSessionStateWarning,
   printNotionAsCodeRunSuccessMessage,
 } from "./utils/utils"
 
@@ -41,6 +42,10 @@ const runArgs = buildRunArgsFromCommandLineArgs(
 )
 
 if (isDefined(runArgs)) {
+  if (!isDefined(runArgs.sessionStateFilePath)) {
+    printMissingSessionStateWarning()
+  }
+
   notion.EXPERIMENTAL__notionAsCode.run(runArgs)
     .then(result => printNotionAsCodeRunSuccessMessage({ result, runArgs }))
     .catch((error: Error | string) => {

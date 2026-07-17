@@ -113,6 +113,16 @@ npm run notion-as-code -- --scriptFilePath=${runArgs.scriptFilePath} --spaceId=$
 }
 
 /**
+ * Warns that omitting a previously generated session state may duplicate work.
+ */
+export function printMissingSessionStateWarning(): void {
+  console.warn(
+    chalk.yellow(`⚠️ No session-state file was provided. This is expected for a first run.
+If this script was previously deployed, running it without --sessionStateFilePath may create duplicate resources.\n`)
+  )
+}
+
+/**
  * Creates a session-state file path using a compact UTC timestamp.
  */
 export function createTimestampedSessionStateFilePath(

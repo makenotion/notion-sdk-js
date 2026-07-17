@@ -168,6 +168,8 @@ Use `--sessionStateFilePath` with the same `--spaceId` for follow-up runs:
 npm run notion-as-code -- --spaceId=<YOUR_WORKSPACE_ID> --scriptFilePath=./src/EXPERIMENTAL__notion-as-code/scripts/my_script.ts --sessionStateFilePath=./src/EXPERIMENTAL__notion-as-code/sessions/sessionState_TIMESTAMP.json
 ```
 
+If you omit `--sessionStateFilePath`, the runner warns that this is expected for a first run but may create duplicate resources if the script was previously deployed. The warning does not stop the run.
+
 If `--spaceId` and `--sessionStateFilePath` point at different workspaces, the run stops with an error.
 
 ## How It Works
