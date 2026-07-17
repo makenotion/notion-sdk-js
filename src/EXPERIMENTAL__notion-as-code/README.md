@@ -19,7 +19,7 @@ git clone git@github.com:makenotion/notion-sdk-js.git
 
 ```
 cd notion-sdk-js
-git checkout experimental-alpha-notion-as-code
+git checkout EXPERIMENTAL__notion-as-code
 ```
 
 3. Create a Notion **Personal Access Token (PAT)**:
