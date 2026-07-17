@@ -131,7 +131,7 @@ describe("compileNotionAsCodeScriptToIntents", () => {
     }
   })
 
-  it("demonstrates the starter script workspace anchor", async () => {
+  it("uses a teamspace parent as the starter script workspace anchor", async () => {
     const result = await compileNotionAsCodeScriptToIntents({
       filePathToScript:
         "./src/EXPERIMENTAL__notion-as-code/scripts/script_example.ts",
@@ -139,11 +139,6 @@ describe("compileNotionAsCodeScriptToIntents", () => {
 
     expect(result).toEqual(
       expect.arrayContaining([
-        expect.objectContaining({
-          type: "space",
-          resourceId: "example-space",
-          name: "My Space",
-        }),
         expect.objectContaining({
           type: "teamspace",
           resourceId: "general-teamspace",
