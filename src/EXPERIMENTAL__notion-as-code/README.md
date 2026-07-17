@@ -11,23 +11,29 @@ Instead of manually creating the same teamspaces, pages, databases, properties, 
 
 1. **Clone** the notion-js-sdk repository:
 
-```
+```bash
 git clone git@github.com:makenotion/notion-sdk-js.git
 ```
 
 2. Within the new repository, **check out** the Notion as Code experimental branch:
 
-```
+```bash
 cd notion-sdk-js
 git checkout EXPERIMENTAL__notion-as-code
 ```
 
-3. Create a Notion **Personal Access Token (PAT)**:
+3. **Install** dependencies:
+
+```bash
+npm install
+```
+
+4. Create a Notion **Personal Access Token (PAT)**:
    [https://developers.notion.com/guides/get-started/personal-access-tokens](https://developers.notion.com/guides/get-started/personal-access-tokens)
-4. **Attach** your Personal Access Token **to the workspace** you want to update.
-5. **Provide your token** either by exporting `NOTION_TOKEN` in your shell or by pasting it into the `NOTION_TOKEN` constant in `runNotionAsCode.ts`.
-6. **Copy your workspace ID** from Notion. In Notion, go to Settings > General, scroll to the bottom, and copy the workspace ID.
-7. **Run the example script** and replace `<YOUR_WORKSPACE_ID>`.
+5. **Attach** your Personal Access Token **to the workspace** you want to update.
+6. **Provide your token** either by exporting `NOTION_TOKEN` in your shell or by pasting it into the `NOTION_TOKEN` constant in `runNotionAsCode.ts`.
+7. **Copy your workspace ID** from Notion. In Notion, go to Settings > General, scroll to the bottom, and copy the workspace ID.
+8. **Run the example script** and replace `<YOUR_WORKSPACE_ID>`.
 
 ```
 npm run notion-as-code -- --spaceId=<YOUR_WORKSPACE_ID> --scriptFilePath=./src/EXPERIMENTAL__notion-as-code/scripts/script_example.ts

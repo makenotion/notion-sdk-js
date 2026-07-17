@@ -10,18 +10,18 @@
  * Note: The resourceIds below are stable and will let future runs update the same resources.
  */
 
-// This script starts with a call to your workspace. The resourceId "example-space"
-// is the anchor for --spaceId. We use this to map your workspace ID to this script.
-// The new resources below are created inside this space.
-const space = notion.space({
+// The "example-space" resourceId anchors this script to the workspace provided
+// with --spaceId. The runner maps that resourceId to the workspace on first run.
+const spaceParent = {
+  type: "resourceId",
   resourceId: "example-space",
-  // This will update your workspace name to "My Space", but you can change it to anything you want.
-  name: "My Space",
-})
+} as const
 
-// addTeamspace(...) parents this new General teamspace to the space above.
-const generalTeamspace = space.addTeamspace({
+// This creates the new General teamspace inside that mapped workspace.
+const generalTeamspace = notion.teamspace({
   resourceId: "general-teamspace",
+  // Set this teamspace's parent to the workspace referenced by spaceParent.
+  parent: spaceParent,
   name: "General",
   accessLevel: "open",
   icon: { type: "notion_icon", description: "home", color: "lightgray" },
