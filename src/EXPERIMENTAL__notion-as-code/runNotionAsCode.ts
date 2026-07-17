@@ -25,6 +25,7 @@ import Client from "../Client"
 import chalk = require("chalk")
 import {
   buildRunArgsFromCommandLineArgs,
+  confirmRunWithoutSessionState,
   isDefined,
   parseCommandLineArgs,
   printMissingSessionStateWarning,
@@ -37,21 +38,31 @@ const NOTION_TOKEN = ""
 const auth = NOTION_TOKEN || process.env["NOTION_TOKEN"]
 const notion = new Client({ auth })
 
-const runArgs = buildRunArgsFromCommandLineArgs(
-  parseCommandLineArgs(process.argv.slice(2))
-)
+async function main(): Promise<void> {
+  const runArgs = buildRunArgsFromCommandLineArgs(
+    parseCommandLineArgs(process.argv.slice(2))
+  )
 
-if (isDefined(runArgs)) {
-  if (!isDefined(runArgs.sessionStateFilePath)) {
-    printMissingSessionStateWarning()
+  if (!isDefined(runArgs)) {
+    return
   }
 
-  notion.EXPERIMENTAL__notionAsCode.run(runArgs)
-    .then(result => printNotionAsCodeRunSuccessMessage({ result, runArgs }))
-    .catch((error: Error | string) => {
-      console.error(
-        chalk.red(error instanceof Error ? error.message : String(error))
-      )
-      process.exitCode = 1
-    })
+  if (!isDefined(runArgs.sessionStateFilePath)) {
+    printMissingSessionStateWarning()
+
+    if (!(await confirmRunWithoutSessionState())) {
+      console.log(chalk.yellow("Run canceled."))
+      return
+    }
+  }
+
+  const result = await notion.EXPERIMENTAL__notionAsCode.run(runArgs)
+  printNotionAsCodeRunSuccessMessage({ result, runArgs })
 }
+
+main().catch((error: Error | string) => {
+  console.error(
+    chalk.red(error instanceof Error ? error.message : String(error))
+  )
+  process.exitCode = 1
+})

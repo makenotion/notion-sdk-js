@@ -10,7 +10,10 @@ import {
   type NotionAsCodeApiResult,
 } from "../src/EXPERIMENTAL__notion-as-code/utils/api"
 import { writeSessionState } from "../src/EXPERIMENTAL__notion-as-code/utils/session"
-import { buildRunArgsFromCommandLineArgs } from "../src/EXPERIMENTAL__notion-as-code/utils/utils"
+import {
+  buildRunArgsFromCommandLineArgs,
+  confirmRunWithoutSessionState,
+} from "../src/EXPERIMENTAL__notion-as-code/utils/utils"
 import { mockResponse } from "./test-utils"
 
 const TEST_SCRIPT_SOURCE = `
@@ -319,6 +322,23 @@ describe("Notion as Code session-state helpers", () => {
 })
 
 describe("Notion as Code command-line helpers", () => {
+  it.each([
+    ["y", true],
+    ["YES", true],
+    ["n", false],
+    ["", false],
+  ])(
+    "interprets session-state confirmation %p as %p",
+    async (answer, expected) => {
+      const askForConfirmation = jest.fn().mockResolvedValue(answer)
+
+      await expect(
+        confirmRunWithoutSessionState(askForConfirmation)
+      ).resolves.toBe(expected)
+      expect(askForConfirmation).toHaveBeenCalledWith("Continue? (y/N) ")
+    }
+  )
+
   it("prints a friendly error when spaceId is missing", () => {
     const error = jest
       .spyOn(console, "error")

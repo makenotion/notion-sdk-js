@@ -1,3 +1,5 @@
+import { createInterface } from "node:readline/promises"
+
 import chalk = require("chalk")
 
 import type { NotionAsCodeRunParameters, NotionAsCodeRunResponse } from "./run"
@@ -120,6 +122,35 @@ export function printMissingSessionStateWarning(): void {
     chalk.yellow(`⚠️ No session-state file was provided. This is expected for a first run.
 If this script was previously deployed, running it without --sessionStateFilePath may create duplicate resources.\n`)
   )
+}
+
+/**
+ * Confirms whether a run without session state should continue.
+ */
+export async function confirmRunWithoutSessionState(
+  askForConfirmation: (
+    prompt: string
+  ) => Promise<string> = askUserForConfirmation
+): Promise<boolean> {
+  const answer = await askForConfirmation("Continue? (y/N) ")
+  return ["y", "yes"].includes(answer.trim().toLowerCase())
+}
+
+async function askUserForConfirmation(prompt: string): Promise<string> {
+  if (!process.stdin.isTTY || !process.stdout.isTTY) {
+    return ""
+  }
+
+  const readline = createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  })
+
+  try {
+    return await readline.question(chalk.yellow(prompt))
+  } finally {
+    readline.close()
+  }
 }
 
 /**
