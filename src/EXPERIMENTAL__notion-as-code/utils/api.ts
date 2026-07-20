@@ -1,4 +1,5 @@
 import type Client from "../../Client"
+import { APIErrorCode, APIResponseError } from "../../errors"
 import { isRecord, isString } from "./utils"
 
 export type NotionAsCodeApiResult = {
@@ -47,15 +48,19 @@ export async function submitNotionAsCodeRunToApi({
   existingResources: Record<string, unknown>
   existingProperties: Record<string, string>
 }): Promise<{ id: string }> {
-  return request<{ id: string }>({
-    path: "infra_as_code",
-    method: "post",
-    body: {
-      intents,
-      existingResources,
-      existingProperties,
-    },
-  })
+  try {
+    return await request<{ id: string }>({
+      path: "infra_as_code",
+      method: "post",
+      body: {
+        intents,
+        existingResources,
+        existingProperties,
+      },
+    })
+  } catch (error) {
+    throw mapNotionAsCodeApiError(error)
+  }
 }
 
 /**
@@ -120,10 +125,16 @@ function sleep(ms: number): Promise<void> {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
 
+/**
+ * Returns whether a task status means the async task should be polled again.
+ */
 function isActiveTaskStatus(status: string): boolean {
   return status === "queued" || status === "running" || status === "retrying"
 }
 
+/**
+ * Validates the shape of a successful Notion as Code API result payload.
+ */
 function isNotionAsCodeApiResult(
   result: unknown
 ): result is NotionAsCodeApiResult {
@@ -136,12 +147,16 @@ function isNotionAsCodeApiResult(
   )
 }
 
+/**
+ * Formats a task error into a concise user-facing string.
+ */
 function formatTaskError(error: unknown): string {
   if (isRecord(error)) {
     const code = typeof error["code"] === "string" ? error["code"] : undefined
     const message =
       typeof error["message"] === "string" ? error["message"] : undefined
-    const publicDetails = [code, message].filter(Boolean).join(": ")
+    const publicMessage = formatNotionAsCodeApiMessage({ code, message })
+    const publicDetails = [code, publicMessage].filter(Boolean).join(": ")
 
     if (publicDetails.length > 0) {
       return publicDetails
@@ -149,6 +164,52 @@ function formatTaskError(error: unknown): string {
   }
 
   return JSON.stringify(error)
+}
+
+/**
+ * Rewrites supported API response errors into clearer Notion as Code messages,
+ * including a more actionable explanation for PAT/workspace-access validation
+ * failures.
+ */
+function mapNotionAsCodeApiError(error: unknown): Error {
+  if (!APIResponseError.isAPIResponseError(error)) {
+    return error instanceof Error ? error : new Error(String(error))
+  }
+
+  const message = formatNotionAsCodeApiMessage({
+    code: error.code,
+    message: error.message,
+  })
+
+  if (message === error.message) {
+    return error
+  }
+
+  return new Error(message)
+}
+
+/**
+ * Formats a Notion as Code API error message, including a more actionable
+ * explanation for PAT/workspace-access validation failures.
+ */
+function formatNotionAsCodeApiMessage({
+  code,
+  message,
+}: {
+  code?: string
+  message?: string
+}): string | undefined {
+  if (
+    code === APIErrorCode.ValidationError &&
+    isString(message) &&
+    /^Existing resource ".*" does not belong to this workspace\.$/u.test(
+      message
+    )
+  ) {
+    return `${message} This usually means the Personal Access Token used for this run is not attached to the workspace passed via --spaceId, or that --spaceId points to a different workspace. Attach the token to that workspace and confirm the workspace ID before retrying.`
+  }
+
+  return message
 }
 
 function isStringRecord(value: unknown): value is Record<string, string> {

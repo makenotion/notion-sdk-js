@@ -4,6 +4,7 @@ import path = require("node:path")
 
 import { Client, compileNotionAsCodeScriptToIntents } from "../src"
 import type { RequestParameters } from "../src/Client"
+import { APIErrorCode, APIResponseError } from "../src/errors"
 import {
   pollNotionAsCodeTask,
   submitNotionAsCodeRunToApi,
@@ -179,6 +180,36 @@ describe("Notion as Code API helpers", () => {
     })
   })
 
+  it("rewrites workspace-access submit errors with a PAT hint", async () => {
+    const request = jest.fn().mockRejectedValue(
+      new APIResponseError({
+        code: APIErrorCode.ValidationError,
+        status: 400,
+        message:
+          'Existing resource "test-space" does not belong to this workspace.',
+        headers: new Headers(),
+        rawBodyText: JSON.stringify({
+          code: APIErrorCode.ValidationError,
+          message:
+            'Existing resource "test-space" does not belong to this workspace.',
+        }),
+        additional_data: undefined,
+        request_id: "request-id",
+      })
+    )
+
+    await expect(
+      submitNotionAsCodeRunToApi({
+        request: request as Client["request"],
+        intents: [],
+        existingResources: {},
+        existingProperties: {},
+      })
+    ).rejects.toThrow(
+      'Existing resource "test-space" does not belong to this workspace. This usually means the Personal Access Token used for this run is not attached to the workspace passed via --spaceId, or that --spaceId points to a different workspace. Attach the token to that workspace and confirm the workspace ID before retrying.'
+    )
+  })
+
   it("returns the Notion as Code result on immediate task success", async () => {
     const request = mockClientRequest({
       status: "succeeded",
@@ -234,6 +265,26 @@ describe("Notion as Code API helpers", () => {
       })
     ).rejects.toThrow(
       "Notion as Code async task task-id failed: validation_error: The script is invalid."
+    )
+  })
+
+  it("rewrites workspace-access task errors with a PAT hint", async () => {
+    const request = mockClientRequest({
+      status: "failed",
+      error: {
+        code: "validation_error",
+        message:
+          'Existing resource "test-space" does not belong to this workspace.',
+      },
+    })
+
+    await expect(
+      pollNotionAsCodeTask({
+        request: request as Client["request"],
+        taskId: "task-id",
+      })
+    ).rejects.toThrow(
+      'Notion as Code async task task-id failed: validation_error: Existing resource "test-space" does not belong to this workspace. This usually means the Personal Access Token used for this run is not attached to the workspace passed via --spaceId, or that --spaceId points to a different workspace. Attach the token to that workspace and confirm the workspace ID before retrying.'
     )
   })
 
