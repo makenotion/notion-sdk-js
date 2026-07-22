@@ -81,6 +81,25 @@ notion.teamspace({
 export {}
 `
 
+const VIEWS_ONLY_DATABASE_SCRIPT_SOURCE = `
+notion.database({
+  resourceId: "views-only-database",
+  parent: {
+    type: "resourceId",
+    resourceId: "test-page",
+  },
+  views: [
+    {
+      resourceId: "linked-table-view",
+      type: "table",
+      dataSourceResourceId: "external-data-source",
+    },
+  ],
+})
+
+export {}
+`
+
 const EXPECTED_TEAMSPACE_INTENTS = [
   {
     type: "teamspace",
@@ -154,6 +173,41 @@ describe("compileNotionAsCodeScriptToIntents", () => {
 
       expect(result).toEqual([
         expect.objectContaining({ content: "Show \\*literal\\*" }),
+      ])
+    } finally {
+      await rm(tempDir, { recursive: true, force: true })
+    }
+  })
+
+  it("normalizes omitted database data sources to an empty array", async () => {
+    const tempDir = await mkdtemp(path.join(tmpdir(), "notion-as-code-test-"))
+    const scriptPath = await writeNotionAsCodeScript(
+      tempDir,
+      VIEWS_ONLY_DATABASE_SCRIPT_SOURCE
+    )
+
+    try {
+      const result = await compileNotionAsCodeScriptToIntents({
+        filePathToScript: scriptPath,
+      })
+
+      expect(result).toEqual([
+        {
+          type: "database",
+          resourceId: "views-only-database",
+          parent: {
+            type: "resourceId",
+            resourceId: "test-page",
+          },
+          views: [
+            {
+              resourceId: "linked-table-view",
+              type: "table",
+              dataSourceResourceId: "external-data-source",
+            },
+          ],
+          dataSources: [],
+        },
       ])
     } finally {
       await rm(tempDir, { recursive: true, force: true })
