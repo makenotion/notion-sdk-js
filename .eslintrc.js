@@ -32,11 +32,6 @@ module.exports = {
       files: ["src/EXPERIMENTAL__notion-as-code/**/types.ts"],
       rules: {
         "@typescript-eslint/no-unused-vars": "off",
-      },
-    },
-    {
-      files: ["src/EXPERIMENTAL__notion-as-code/utils/types.ts"],
-      rules: {
         // This generated ambient-types file embeds source-facing Markdown in a
         // template literal. Preserve intentional Markdown escapes as written.
         "no-useless-escape": "off",
