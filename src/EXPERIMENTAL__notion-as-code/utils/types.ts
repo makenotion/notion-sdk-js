@@ -173,7 +173,7 @@ type PageIntent = {
    * (a real child subpage at a chosen position, rather than appended at the
    * end), create that page with its `parent` set to THIS page's resourceId,
    * then reference it in this content with a
-   * `<page url="{{that-resource-id}}">Title</page>` tag. The tag controls only
+   * `<page url="{{that-resource-id}}"></page>` tag. The tag controls only
    * the placement; the child page's `parent` is the source of truth for
    * containment. The referenced page must be created in the same script and may
    * be referenced at most once per content body.
@@ -183,9 +183,17 @@ type PageIntent = {
    * block (ideal for multi-column hub layouts). When nested, the child page is
    * re-parented into that container while remaining a real page.
    *
+   * INLINE DATABASES: Position an in-script child database with
+   * `<database url="{{that-resource-id}}"></database>`. Set its `parent` to
+   * this page's resourceId. Add `inline="true"` to render it inline; omit
+   * `inline` to render it as a full page.
+   *
+   * Use `url` for a real child database (full-page or inline) and
+   * `data-source-url` for a linked database view. Never combine them.
+   *
    * @example
    * // Hub page that lists a real child subpage under a heading:
-   * content: '# Team\n<page url="{{getting-started}}">Getting Started</page>'
+   * content: '# Team\n<page url="{{getting-started}}"></page>'
    * // ...elsewhere in the same script:
    * notion.page({
    *   resourceId: "getting-started",
@@ -204,6 +212,13 @@ type PageIntent = {
    * Optional cover image for the page.
    */
   cover?: PageCoverReference
+  /**
+   * Whether the page renders full width (no side margins).
+   *
+   * Omitted leaves the Notion default (not full width). An explicit
+   * `false` clears full width on reruns against existing pages.
+   */
+  fullWidth?: boolean
 }
 
 /**
@@ -528,12 +543,13 @@ type FormulaPropertySchemaDefinition = BasePropertySchemaDefinition & {
  * Aggregation types for rollup properties.
  *
  * Available aggregations depend on the target property type:
- * - All types: count_values, unique, empty, not_empty, percent_empty, percent_not_empty, show_unique
+ * - All types: count, count_values, unique, empty, not_empty, percent_empty, percent_not_empty, show_unique
  * - Numbers: sum, average, median, min, max, range
  * - Dates: earliest_date, latest_date, date_range
  */
 type RollupAggregationType =
   // Default/property aggregations (available for all types)
+  | "count"
   | "count_values"
   | "unique"
   | "empty"
@@ -654,7 +670,7 @@ type RollupPropertySchemaDefinition = BasePropertySchemaDefinition & {
    * Available aggregations depend on targetPropertyType:
    * - Numbers: sum, average, median, min, max, range
    * - Dates: earliest_date, latest_date, date_range
-   * - All types: count_values, unique, empty, not_empty, percent_empty, percent_not_empty, show_unique
+   * - All types: count, count_values, unique, empty, not_empty, percent_empty, percent_not_empty, show_unique
    */
   aggregation?: RollupAggregationType
 }
@@ -970,13 +986,20 @@ type PropertiesInputForSchema<P extends PropertySchemaDefinition[]> = {
     | undefined
 }
 
-type ViewType = "table" | "board" | "calendar" | "list" | "gallery" | "timeline"
+type ViewType =
+  | "table"
+  | "board"
+  | "calendar"
+  | "list"
+  | "gallery"
+  | "feed"
+  | "timeline"
 
 type PropertyVisibility = "show" | "hide" | "hide_if_empty"
 
 /**
- * Format for a single visible column entry in a view (table / board / list /
- * gallery / timeline).
+ * Format for a single visible property entry in a view (table / board / list /
+ * gallery / feed / timeline).
  *
  * `property` must be the `resourceId` of a property in the view's data
  * source, matching the same convention used by board `groupBy.property`,
@@ -1179,8 +1202,8 @@ type PropertyViewFilterSchema =
 /**
  * Base view schema shared by all view types.
  *
- * IMPORTANT: dataSourceResourceId is REQUIRED for all views.
- * This must match the resourceId of one of the database's data sources.
+ * IMPORTANT: dataSourceResourceId is REQUIRED for all views. It must match the
+ * resourceId of a data source created in this script.
  *
  * @example
  * // When creating a database with a data source
@@ -1195,12 +1218,24 @@ type PropertyViewFilterSchema =
  *   type: "table",
  *   dataSourceResourceId: "my-datasource"  // REQUIRED: matches data source above
  * })
+ *
+ * @example
+ * // A linked database can reference a data source from another database
+ * const linkedDatabase = await notion.database({
+ *   resourceId: "linked-database",
+ *   parent: { type: "resourceId", resourceId: "project-page" },
+ *   views: [{
+ *     resourceId: "linked-table-view",
+ *     type: "table",
+ *     dataSourceResourceId: "my-datasource"  // REQUIRED: created elsewhere in this script
+ *   }]
+ * })
  */
 type BaseViewSchema = {
   resourceId: ResourceId
   name?: string
   type: ViewType
-  /** REQUIRED: Must match an existing data source's resourceId */
+  /** REQUIRED: Must match a data source's resourceId created in this script. */
   dataSourceResourceId: ResourceId
   /**
    * Optional resource ID of a template page in this view's data source to use as
@@ -1211,9 +1246,9 @@ type BaseViewSchema = {
    */
   defaultTemplate?: ResourceId
   /**
-   * Optional: create this view to be used as a linked views referenced by
+   * Optional: create this view to be used as a linked view referenced by
    * `<database>` tags in page content markdown. Does not attach the view to the
-   * database block's.
+   * database block's main view tabs.
    */
   ephemeral?: boolean
   sorts?: Array<PropertyViewSortSchema>
@@ -1267,6 +1302,13 @@ type GalleryViewSchema = BaseViewSchema & {
   coverAspect?: CoverAspectFormat
 }
 
+type FeedViewSchema = BaseViewSchema & {
+  type: "feed"
+  properties?: Array<PropertyFormat>
+  wrap?: boolean
+  showAuthorByline?: boolean
+}
+
 type TimelineViewSchema = BaseViewSchema & {
   type: "timeline"
   properties?: Array<PropertyFormat>
@@ -1294,6 +1336,7 @@ type ViewSchema =
   | CalendarViewSchema
   | ListViewSchema
   | GalleryViewSchema
+  | FeedViewSchema
   | TimelineViewSchema
 
 /**
@@ -1512,6 +1555,10 @@ type DataSourceHandle<P extends PropertySchemaDefinition[]> = {
      * references are also accepted.
      */
     cover?: PageCoverReference
+    /**
+     * Whether the page renders full width (no side margins).
+     */
+    fullWidth?: boolean
   }): PageHandle
 }
 
@@ -1525,15 +1572,18 @@ type DatabaseHandle<
   }[],
 > = {
   resourceId: ResourceId
-  dataSources: Record<ResourceId, DataSourceHandle<PropertySchemaDefinition[]>>
-  /** Get a data source handle by id with schema-aware typing */
-  getDataSource: <K extends DS[number]>(
-    id: K["resourceId"]
-  ) => DataSourceHandle<K["properties"]>
-  /**
-   * Record view intent.
-   * Views require a dataSourceResourceId that matches one of the database's data sources.
-   */
+  dataSources: {
+    [DataSource in DS[number] as DataSource["resourceId"]]: DataSourceHandle<
+      DataSource["properties"]
+    >
+  }
+  /** Get a data source handle by ID with schema-aware typing. */
+  getDataSource: <DataSourceResourceId extends DS[number]["resourceId"]>(
+    id: DataSourceResourceId
+  ) => DataSourceHandle<
+    Extract<DS[number], { resourceId: DataSourceResourceId }>["properties"]
+  >
+  /** Records a view that references a data source created in this script. */
   addView: (view: ViewSchema) => void
 }
 
@@ -1598,6 +1648,10 @@ type TeamspaceHandle = {
      * references are also accepted.
      */
     cover?: PageCoverReference
+    /**
+     * Whether the page renders full width (no side margins).
+     */
+    fullWidth?: boolean
   }): PageHandle
 }
 
@@ -1684,18 +1738,21 @@ declare const notion: {
   page: (args: PageIntent) => PageHandle
 
   /**
-   * Creates a new database with a custom schema and returns a typed
-   * DatabaseHandle for data source access and views.
-   * Databases contain structured data with properties and views.
+   * Creates a database and returns a typed DatabaseHandle for data source access
+   * and views.
+   *
+   * Omit `dataSources` for a linked (i.e. views-only) database. Declare at
+   * least one non-ephemeral view in `views`; those views may reference data
+   * sources created elsewhere in the script.
    */
   database: <
     DS extends Array<{
       resourceId: ResourceId
       name: string
       properties: Array<PropertySchemaDefinition>
-    }>,
+    }> = [],
   >(
-    args: Omit<DatabaseIntent, "dataSources"> & { dataSources: DS }
+    args: Omit<DatabaseIntent, "dataSources"> & { dataSources?: DS }
   ) => DatabaseHandle<DS>
 
   /**
@@ -1733,12 +1790,12 @@ declare const notion: {
  * This includes all block types, rich text formatting, and XML elements.
  * Used for the content parameter in page creation and database page creation.
  */
-declare const NOTION_AS_CODE_MARKDOWN_SPEC = `
+declare const INFRA_AS_CODE_MARKDOWN_SPEC = `
 ### Notion-flavored Markdown
 Notion-flavored Markdown is a variant of standard Markdown with additional features to support all Block and Rich text types.
 Use tabs for indentation.
-Use backslashes to escape characters. For example, \\* will render as * and not as a bold delimiter.
-These are the characters that should be escaped: \\ * ~ \` $ [ ] < > { } | ^
+Use backslashes to escape characters. For example, \* will render as * and not as a bold delimiter.
+These are the characters that should be escaped: \ * ~ \` $ [ ] < > { } | ^
 Block types:
 Markdown blocks use a {color="Color"} attribute list to set a block color.
 Text:
@@ -1853,8 +1910,8 @@ $$
 \`\`\`language
 Code
 \`\`\`
-Note: Set the language if known (e.g. mermaid). Do NOT escape special characters inside code blocks. Code block content is literal - write it exactly as it should appear. For example, write \`const arr = [1, 2, 3]\` NOT \`const arr = \\[1, 2, 3\\]\`. Backslash escaping rules only apply outside of code blocks.
-Mermaid diagrams: Use \`\`\`mermaid as the language. Enclose node text in double quotes when it contains special characters like parentheses, e.g. \`A["Notion (App + API)"]\`. Use \`<br>\` for line breaks inside node labels, not \\n. Do not use \\( or \\) inside Mermaid — instead just wrap the whole label in double quotes.
+Note: Set the language if known (e.g. mermaid). Do NOT escape special characters inside code blocks. Code block content is literal - write it exactly as it should appear. For example, write \`const arr = [1, 2, 3]\` NOT \`const arr = \[1, 2, 3\]\`. Backslash escaping rules only apply outside of code blocks.
+Mermaid diagrams: Use \`\`\`mermaid as the language. Enclose node text in double quotes when it contains special characters like parentheses, e.g. \`A["Notion (App + API)"]\`. Use \`<br>\` for line breaks inside node labels, not \n. Do not use \( or \) inside Mermaid — instead just wrap the whole label in double quotes.
 XML blocks use the 'color' attribute to set a block color.
 Mentions:
 Users, pages, databases, data sources, agents, dates, and datetimes can be mentioned:
@@ -1907,13 +1964,14 @@ Callouts can contain multiple blocks and nested children, not just inline rich t
 For any formatting inside of callout blocks, use Notion-flavored Markdown, not HTML. For instance, bold text in a callout should be wrapped in **, not <strong>.
 Columns:
 <columns>
-	<column>
+	<column ratio?="50">
 		Children
 	</column>
-	<column>
+	<column ratio?="50">
 		Children
 	</column>
 </columns>
+- ratio: Optional column width as a percentage of the full width, e.g. 50 for half. Omit it to use the default even split when creating columns. When updating existing columns, set every ratio explicitly.
 Custom emoji:
 :emoji_name:
 Page:
@@ -1932,6 +1990,11 @@ Audio:
 <audio src="{{URL}}" color?="Color">Caption</audio>
 File:
 <file src="{{URL}}" color?="Color">Caption</file>
+Embed (renders an HTML attachment file inline in a sandboxed iframe):
+<embed src="{{URL}}" color?="Color">Caption</embed>
+"HTML", "HTML block", "HTML artifact", and "HTML embed" all mean an HTML attachment rendered with <embed>. Never create one as a code block or file block.
+Always use <embed> for HTML attachment files
+For files created by the MCP create-attachment tool, use its returned file-upload:// source as the src value. The source is resolved and attached when create-pages or update-page saves the block. Keep the returned file upload ID if you need to retrieve the text later with download-attachment.
 Image:
 ![Caption](URL) {color?="Color"}
 PDF:

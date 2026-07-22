@@ -132,6 +132,34 @@ describe("compileNotionAsCodeScriptToIntents", () => {
     }
   })
 
+  it("preserves Markdown backslash escapes from TypeScript strings", async () => {
+    const tempDir = await mkdtemp(path.join(tmpdir(), "notion-as-code-test-"))
+    const scriptPath = await writeNotionAsCodeScript(
+      tempDir,
+      [
+        "notion.page({",
+        '  resourceId: "test-page",',
+        '  parent: { type: "resourceId", resourceId: "test-teamspace" },',
+        "  content: `Show \\\\*literal\\\\*`,",
+        "})",
+        "",
+        "export {}",
+      ].join("\n")
+    )
+
+    try {
+      const result = await compileNotionAsCodeScriptToIntents({
+        filePathToScript: scriptPath,
+      })
+
+      expect(result).toEqual([
+        expect.objectContaining({ content: "Show \\*literal\\*" }),
+      ])
+    } finally {
+      await rm(tempDir, { recursive: true, force: true })
+    }
+  })
+
   it("uses a teamspace parent as the starter script workspace anchor", async () => {
     const result = await compileNotionAsCodeScriptToIntents({
       filePathToScript:

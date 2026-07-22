@@ -151,6 +151,20 @@ For future runs, include the generated `--sessionStateFilePath` with the same `-
 
 The included `sessions/sessionState_example.json` file is only a reference for the file shape. You can copy it if you want to seed mappings manually, but the recommended first-run flow is to let `--spaceId` generate a session-state file for you.
 
+**Escaping Markdown In TypeScript Strings**
+
+Page content is written inside TypeScript strings. When Notion needs to
+receive a Markdown backslash escape, escape the backslash for TypeScript:
+
+```typescript
+content: `Show \\*literal asterisks\\*`
+```
+
+This sends `Show \*literal asterisks\*` to Notion.
+
+Do not use `String.raw` indiscriminately. It also preserves backslashes used
+to escape template-literal backticks and sequences such as `\n`.
+
 ## Command-Line Flags
 
 The runner supports these flags:

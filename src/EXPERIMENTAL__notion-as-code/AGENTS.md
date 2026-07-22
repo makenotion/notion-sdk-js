@@ -541,6 +541,18 @@ Page `content` uses Notion-flavored markdown. Date mentions currently use
 explicit dates; there is no dynamic `@Today` shorthand in the raw markdown
 syntax.
 
+Page content is written inside TypeScript strings. When Notion needs to
+receive a Markdown backslash escape, escape the backslash for TypeScript:
+
+```typescript
+content: `Show \\*literal asterisks\\*`
+```
+
+This sends `Show \*literal asterisks\*` to Notion.
+
+Do not use `String.raw` indiscriminately. It also preserves backslashes used
+to escape template-literal backticks and sequences such as `\n`.
+
 Useful content patterns:
 
 - Use `<mention-page url="{{page-resource-id}}" />`,
