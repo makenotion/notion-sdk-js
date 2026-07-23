@@ -172,6 +172,11 @@ import {
 } from "./api-endpoints/meeting-notes"
 import type { QueryMeetingNotesParameters } from "./meeting-notes"
 import {
+  runNotionAsCode,
+  type NotionAsCodeRunParameters,
+  type NotionAsCodeRunResponse,
+} from "./EXPERIMENTAL__notion-as-code/utils/run"
+import {
   version as PACKAGE_VERSION,
   name as PACKAGE_NAME,
 } from "../package.json"
@@ -659,6 +664,20 @@ export default class Client {
         body: pick(args, getAsyncTask.bodyParams),
         auth: args?.auth,
       })
+    },
+  }
+
+  public readonly EXPERIMENTAL__notionAsCode = {
+    /**
+     * Run a Notion as Code script.
+     *
+     * Notion as Code requires a Personal Access Token:
+     * https://developers.notion.com/guides/get-started/personal-access-tokens
+     */
+    run: (
+      args: NotionAsCodeRunParameters
+    ): Promise<NotionAsCodeRunResponse> => {
+      return runNotionAsCode(args, requestArgs => this.request(requestArgs))
     },
   }
 

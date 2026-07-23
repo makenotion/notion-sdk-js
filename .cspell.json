@@ -16,7 +16,15 @@
     "is_toggleable",
     "typecheck",
     "retryable",
-    "HMAC"
+    "HMAC",
+    "teamspace",
+    "teamspaces",
+    "lightgray",
+    "turbopuffer",
+    "rollups",
+    "daterange",
+    "datetimes",
+    "toggleable"
   ],
   // flagWords - list of words to be always considered incorrect
   // This is useful for offensive words and common spelling errors.
@@ -29,6 +37,7 @@
     "examples/**/node_modules/**",
     "build/**",
     "src/api-endpoints.ts",
-    "src/api-endpoints/**"
+    "src/api-endpoints/**",
+    "src/EXPERIMENTAL__notion-as-code/scripts/**"
   ]
 }

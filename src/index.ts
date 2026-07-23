@@ -225,6 +225,11 @@ export type {
 } from "./api-endpoints"
 export type AnnotationResponse = RichTextItemResponseCommon["annotations"]
 export { default as Client } from "./Client"
+export { compileNotionAsCodeScriptToIntents } from "./EXPERIMENTAL__notion-as-code/utils/compile"
+export type {
+  NotionAsCodeRunParameters,
+  NotionAsCodeRunResponse,
+} from "./EXPERIMENTAL__notion-as-code/utils/run"
 export { LogLevel, Logger } from "./logging"
 export {
   // Error codes

@@ -25,6 +25,7 @@
     "prepare": "husky && npm run build",
     "prepublishOnly": "npm run checkLoggedIn && npm run lint && npm run test",
     "build": "tsc",
+    "notion-as-code": "tsx src/EXPERIMENTAL__notion-as-code/runNotionAsCode.ts",
     "prettier": "prettier --write .",
     "lint": "prettier --check . && eslint . --ext .ts && cspell '**/*' ",
     "test": "jest ./test",
@@ -47,6 +48,7 @@
     "@types/jest": "29.5.14",
     "@typescript-eslint/eslint-plugin": "7.18.0",
     "@typescript-eslint/parser": "7.18.0",
+    "chalk": "^4.1.2",
     "cspell": "8.17.1",
     "eslint": "8.57.1",
     "husky": "^9.1.7",
@@ -55,6 +57,7 @@
     "markdown-link-check": "3.13.7",
     "prettier": "3.3.3",
     "ts-jest": "29.2.5",
+    "tsx": "^4.23.0",
     "typescript": "5.9.2"
   }
 }
