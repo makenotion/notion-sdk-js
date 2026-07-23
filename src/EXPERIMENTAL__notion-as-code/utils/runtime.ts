@@ -11,6 +11,9 @@ type RuntimeNotion = typeof notion & {
 }
 type ChildPageArgs = Omit<PageIntent, "parent">
 type ChildDatabaseArgs = Omit<DatabaseIntent, "parent">
+type RuntimeDataSourceHandles<
+  Args extends { dataSources?: DataSourceSchema[] },
+> = DatabaseHandle<NonNullable<Args["dataSources"]>>["dataSources"]
 
 /**
  * Creates the `notion` object exposed to a Notion as Code script.
@@ -59,16 +62,18 @@ export function createNotionAsCodeStubRuntime(): {
     },
 
     database: args => {
+      const dataSourceInputs = args.dataSources || []
       notion.intent({
         type: "database",
         ...args,
+        dataSources: dataSourceInputs,
       })
 
       const dataSources: Record<
         ResourceId,
         DataSourceHandle<PropertySchemaDefinition[]>
       > = {}
-      for (const ds of args.dataSources || []) {
+      for (const ds of dataSourceInputs) {
         const dataSourceResourceId = ds.resourceId
         dataSources[ds.resourceId] = {
           resourceId: dataSourceResourceId,
@@ -84,9 +89,13 @@ export function createNotionAsCodeStubRuntime(): {
         }
       }
 
+      const typedDataSources = dataSources as RuntimeDataSourceHandles<
+        typeof args
+      >
+
       return {
         resourceId: args.resourceId,
-        dataSources,
+        dataSources: typedDataSources,
         getDataSource: id => {
           const dataSource = dataSources[id]
           if (dataSource === undefined) {
