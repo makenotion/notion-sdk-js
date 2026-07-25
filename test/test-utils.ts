@@ -77,6 +77,27 @@ export function mockResponse(
 }
 
 /**
+ * Creates a mock Response with a verbatim body and configurable headers.
+ */
+export function mockRawResponse(args: {
+  status: number
+  body: string
+  headers?: Record<string, string>
+}): Response {
+  const headers = new Headers()
+  for (const [name, value] of Object.entries(args.headers ?? {})) {
+    headers.set(name, value)
+  }
+
+  return {
+    ok: args.status >= 200 && args.status < 300,
+    text: () => Promise.resolve(args.body),
+    headers,
+    status: args.status,
+  } as Response
+}
+
+/**
  * Sets up mockFetch to return a sequence of responses.
  * Example: setupMockSequence(mockFetch, ["rate_limited", "success"])
  */

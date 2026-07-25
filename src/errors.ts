@@ -178,6 +178,41 @@ export function validateRequestPath(path: string): void {
   }
 }
 
+/**
+ * Reads a header by name from a `SupportedResponse["headers"]`, which is typed
+ * as `unknown` because the SDK supports any `fetch` implementation. Handles
+ * both a standard `Headers` object and a plain record. Header names are
+ * case-insensitive per RFC 9110, so plain records are matched case-insensitively.
+ */
+export function getResponseHeader(
+  headers: unknown,
+  name: string
+): string | undefined {
+  if (!isObject(headers)) {
+    return undefined
+  }
+
+  const get = headers["get"]
+  if (typeof get === "function") {
+    const value: unknown = get.call(headers, name)
+    return typeof value === "string" ? value : undefined
+  }
+
+  const lowerName = name.toLowerCase()
+  for (const [key, value] of Object.entries(headers)) {
+    if (key.toLowerCase() !== lowerName) {
+      continue
+    }
+    if (typeof value === "string") {
+      return value
+    }
+    if (Array.isArray(value) && typeof value[0] === "string") {
+      return value[0]
+    }
+  }
+  return undefined
+}
+
 type HTTPResponseErrorCode = ClientErrorCode.ResponseError | APIErrorCode
 
 type AdditionalData = Record<string, string | string[]>
@@ -192,6 +227,10 @@ class HTTPResponseError<
   readonly body: string
   readonly additional_data: AdditionalData | undefined
   readonly request_id: string | undefined
+  /**
+   * Value of the `cf-ray` response header, when present.
+   */
+  readonly ray_id: string | undefined
 
   constructor(args: {
     code: Code
@@ -210,7 +249,9 @@ class HTTPResponseError<
     this.headers = headers
     this.body = rawBodyText
     this.additional_data = additional_data
-    this.request_id = request_id
+    this.request_id =
+      request_id ?? getResponseHeader(headers, "x-notion-request-id")
+    this.ray_id = getResponseHeader(headers, "cf-ray")
   }
 }
 
@@ -259,14 +300,21 @@ export class UnknownHTTPResponseError extends HTTPResponseError<ClientErrorCode.
     headers: SupportedResponse["headers"]
     rawBodyText: string
   }) {
+    const ray_id = getResponseHeader(args.headers, "cf-ray")
+    const request_id = getResponseHeader(args.headers, "x-notion-request-id")
     super({
       ...args,
       code: ClientErrorCode.ResponseError,
       message:
         args.message ??
-        `Request to Notion API failed with status: ${args.status}`,
+        buildUnknownResponseMessage({
+          status: args.status,
+          contentType: getResponseHeader(args.headers, "content-type"),
+          ray_id,
+          request_id,
+        }),
       additional_data: undefined,
-      request_id: undefined,
+      request_id,
     })
   }
 
@@ -330,6 +378,37 @@ export function buildRequestError(
     status: response.status,
     rawBodyText: bodyText,
   })
+}
+
+/**
+ * Builds the default message for an unrecognized HTTP response.
+ *
+ * A response with a Cloudflare Ray ID but no Notion request ID was answered
+ * before it reached the API. The message surfaces the Ray ID rather than
+ * leaving callers to infer it from an HTML body.
+ */
+function buildUnknownResponseMessage(args: {
+  status: number
+  contentType: string | undefined
+  ray_id: string | undefined
+  request_id: string | undefined
+}): string {
+  const { status, contentType, ray_id, request_id } = args
+  const base = `Request to Notion API failed with status: ${status}`
+  if (ray_id === undefined || request_id !== undefined) {
+    return base
+  }
+  const contentTypeNote =
+    contentType !== undefined ? ` (content-type: ${contentType})` : ""
+  const blockedRequestNote =
+    status === 403
+      ? " This may mean the request was blocked by a network security rule."
+      : ""
+  return (
+    `${base}. The response was returned by Notion's edge proxy before reaching ` +
+    `the Notion API${contentTypeNote}.${blockedRequestNote} Cloudflare Ray ID: ` +
+    `${ray_id}. Include this ID when contacting Notion support.`
+  )
 }
 
 function parseAPIErrorResponseBody(body: string):

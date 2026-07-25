@@ -1,7 +1,14 @@
 import assert = require("assert")
-import { APIResponseError, Client, InvalidPathParameterError } from "../src"
+import {
+  APIResponseError,
+  Client,
+  InvalidPathParameterError,
+  UnknownHTTPResponseError,
+  isHTTPResponseError,
+} from "../src"
 import {
   TEST_BLOCK_ID,
+  mockRawResponse,
   mockResponse,
   setupMockSequence,
   createMockFetch,
@@ -492,6 +499,169 @@ describe("Notion SDK Client", () => {
         expect(error.message).toContain("blocks/../databases/xyz")
         expect(error.message).toContain("..")
       }
+    })
+  })
+
+  describe("response diagnostics", () => {
+    const BLOCK_PAGE_HTML =
+      "<!DOCTYPE html><html><head><title>Access denied</title></head>" +
+      "<body>Cloudflare Ray ID: 9a1b2c3d4e5f6789</body></html>"
+
+    let mockFetch: jest.MockedFn<typeof fetch>
+    let notion: Client
+
+    beforeEach(() => {
+      mockFetch = jest.fn()
+      notion = new Client({ fetch: mockFetch, retry: false })
+    })
+
+    async function getResponseError(request: () => Promise<unknown>) {
+      try {
+        await request()
+      } catch (error) {
+        assert(isHTTPResponseError(error))
+        return error
+      }
+      return assert.fail("Expected error to be thrown")
+    }
+
+    it("surfaces edge metadata for an HTML block page", async () => {
+      mockFetch.mockResolvedValue(
+        mockRawResponse({
+          status: 403,
+          body: BLOCK_PAGE_HTML,
+          headers: {
+            "content-type": "text/html; charset=UTF-8",
+            "cf-ray": "9a1b2c3d4e5f6789-SJC",
+          },
+        })
+      )
+
+      const error = await getResponseError(() =>
+        notion.comments.list({ block_id: TEST_BLOCK_ID })
+      )
+
+      assert(error instanceof UnknownHTTPResponseError)
+      expect(error.status).toEqual(403)
+      expect(error.ray_id).toEqual("9a1b2c3d4e5f6789-SJC")
+      expect(error.message).toContain(
+        "was returned by Notion's edge proxy before reaching the Notion API (content-type: text/html; charset=UTF-8)"
+      )
+      expect(error.message).toContain(
+        "may mean the request was blocked by a network security rule"
+      )
+      expect(error.message).toContain("Cloudflare Ray ID: 9a1b2c3d4e5f6789-SJC")
+      // The raw page stays available for debugging but is not the message.
+      expect(error.body).toEqual(BLOCK_PAGE_HTML)
+    })
+
+    it("does not attribute an origin response to the edge proxy", async () => {
+      mockFetch.mockResolvedValue(
+        mockRawResponse({
+          status: 401,
+          body: JSON.stringify({
+            error: "invalid_client",
+            request_id: "origin-body-request-id",
+          }),
+          headers: {
+            "content-type": "application/json; charset=utf-8",
+            "cf-ray": "9a1b2c3d4e5f6789-SJC",
+            "x-notion-request-id": "origin-header-request-id",
+          },
+        })
+      )
+
+      const error = await getResponseError(() =>
+        notion.oauth.token({
+          client_id: "client_id",
+          client_secret: "invalid_secret",
+          grant_type: "authorization_code",
+          code: "code",
+          redirect_uri: "https://example.com/callback",
+        })
+      )
+
+      assert(error instanceof UnknownHTTPResponseError)
+      expect(error.request_id).toEqual("origin-header-request-id")
+      expect(error.ray_id).toEqual("9a1b2c3d4e5f6789-SJC")
+      expect(error.message).toEqual(
+        "Request to Notion API failed with status: 401"
+      )
+    })
+
+    it("keeps the generic message without edge metadata", async () => {
+      mockFetch.mockResolvedValue(
+        mockRawResponse({
+          status: 502,
+          body: "upstream unavailable",
+          headers: { "content-type": "text/plain" },
+        })
+      )
+
+      const error = await getResponseError(() =>
+        notion.comments.list({ block_id: TEST_BLOCK_ID })
+      )
+
+      assert(error instanceof UnknownHTTPResponseError)
+      expect(error.request_id).toBeUndefined()
+      expect(error.ray_id).toBeUndefined()
+      expect(error.message).toEqual(
+        "Request to Notion API failed with status: 502"
+      )
+    })
+
+    it("does not attribute an edge-generated server error to a security rule", async () => {
+      mockFetch.mockResolvedValue(
+        mockRawResponse({
+          status: 522,
+          body: BLOCK_PAGE_HTML,
+          headers: {
+            "content-type": "text/html; charset=UTF-8",
+            "cf-ray": "9a1b2c3d4e5f6789-SJC",
+          },
+        })
+      )
+
+      const error = await getResponseError(() =>
+        notion.comments.list({ block_id: TEST_BLOCK_ID })
+      )
+
+      assert(error instanceof UnknownHTTPResponseError)
+      expect(error.message).toContain(
+        "was returned by Notion's edge proxy before reaching the Notion API"
+      )
+      expect(error.message).not.toContain("network security rule")
+    })
+
+    it("prefers a Notion error body and exposes response metadata", async () => {
+      mockFetch.mockResolvedValue(
+        mockRawResponse({
+          status: 403,
+          body: JSON.stringify({
+            object: "error",
+            status: 403,
+            code: "restricted_resource",
+            message: "Insufficient permissions for this endpoint.",
+          }),
+          headers: {
+            "content-type": "application/json",
+            "cf-ray": "9a1b2c3d4e5f6789-SJC",
+            "x-notion-request-id": "origin-header-request-id",
+          },
+        })
+      )
+
+      const error = await getResponseError(() =>
+        notion.comments.list({ block_id: TEST_BLOCK_ID })
+      )
+
+      assert(error instanceof APIResponseError)
+      expect(error.code).toEqual("restricted_resource")
+      expect(error.message).toEqual(
+        "Insufficient permissions for this endpoint."
+      )
+      expect(error.request_id).toEqual("origin-header-request-id")
+      expect(error.ray_id).toEqual("9a1b2c3d4e5f6789-SJC")
     })
   })
 
