@@ -77,8 +77,7 @@ export function mockResponse(
 }
 
 /**
- * Creates a mock Response with a verbatim body and headers, for responses the
- * Notion API did not generate (e.g. an edge proxy's HTML block page).
+ * Creates a mock Response with a verbatim body and configurable headers.
  */
 export function mockRawResponse(args: {
   status: number
