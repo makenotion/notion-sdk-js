@@ -9,6 +9,7 @@ import {
   APIErrorCode,
   APIResponseError,
   buildRequestError,
+  getResponseHeader,
   isHTTPResponseError,
   isNotionClientError,
   type NotionClientError,
@@ -598,24 +599,7 @@ export default class Client {
    * Returns the delay in milliseconds, or undefined if not present or invalid.
    */
   private parseRetryAfterHeader(headers: unknown): number | undefined {
-    if (!headers) {
-      return undefined
-    }
-
-    let retryAfterValue: string | null = null
-
-    // Handle Headers object (standard fetch API)
-    if (typeof headers === "object" && "get" in headers) {
-      const headersObj = headers as { get: (name: string) => string | null }
-      retryAfterValue = headersObj.get("retry-after")
-    }
-    // Handle plain object
-    else if (typeof headers === "object") {
-      const headersRecord = headers as Record<string, string>
-      retryAfterValue =
-        headersRecord["retry-after"] ?? headersRecord["Retry-After"] ?? null
-    }
-
+    const retryAfterValue = getResponseHeader(headers, "retry-after")
     if (!retryAfterValue) {
       return undefined
     }
