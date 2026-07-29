@@ -168,6 +168,9 @@ import {
   getAsyncTask,
 } from "./api-endpoints"
 import {
+  type CreateMeetingNoteParameters,
+  type CreateMeetingNoteResponse,
+  createMeetingNote,
   type QueryMeetingNotesResponse,
   queryMeetingNotes,
 } from "./api-endpoints/meeting-notes"
@@ -729,6 +732,21 @@ export default class Client {
     },
 
     meetingNotes: {
+      /**
+       * Create a meeting note
+       */
+      create: (
+        args: WithAuth<CreateMeetingNoteParameters>
+      ): Promise<CreateMeetingNoteResponse> => {
+        return this.request<CreateMeetingNoteResponse>({
+          path: createMeetingNote.path(),
+          method: createMeetingNote.method,
+          query: pick(args, createMeetingNote.queryParams),
+          body: pick(args, createMeetingNote.bodyParams),
+          auth: args?.auth,
+        })
+      },
+
       /**
        * Query meeting notes
        */

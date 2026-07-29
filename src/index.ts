@@ -276,7 +276,11 @@ export type {
 } from "./helpers"
 export { verifyWebhookSignature, signWebhookPayload } from "./webhooks"
 export type { VerifyWebhookSignatureArgs } from "./webhooks"
-export type { QueryMeetingNotesResponse } from "./api-endpoints/meeting-notes"
+export type {
+  CreateMeetingNoteParameters,
+  CreateMeetingNoteResponse,
+  QueryMeetingNotesResponse,
+} from "./api-endpoints/meeting-notes"
 export type {
   QueryMeetingNotesParameters,
   MeetingNotesCombinatorFilter,
