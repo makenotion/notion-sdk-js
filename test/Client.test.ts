@@ -122,6 +122,53 @@ describe("Notion SDK Client", () => {
       expect(formData["file"].size).toEqual(4)
     })
 
+    it("calls create meeting note API", async () => {
+      await notion.blocks.meetingNotes.create({
+        source: {
+          type: "file_upload",
+          file_upload_id: "a02fc1d3-db8b-45c5-a222-27595b15aea7",
+        },
+        parent: {
+          type: "page_id",
+          page_id: "c02fc1d3-db8b-45c5-a222-27595b15aea7",
+        },
+        title: "Weekly sync",
+        language: "en",
+        options: {
+          kickoff_summary: true,
+        },
+      })
+
+      expect(mockFetch).toHaveBeenCalledWith(
+        "https://api.notion.com/v1/blocks/meeting_notes",
+        expect.objectContaining({
+          method: "POST",
+          headers: expect.objectContaining({
+            "Notion-Version": "2025-09-03",
+            "user-agent": expect.stringContaining("notionhq-client"),
+            "content-type": "application/json",
+          }),
+        })
+      )
+
+      const requestBody = getFirstRequestBody()
+      expect(requestBody).toEqual({
+        source: {
+          type: "file_upload",
+          file_upload_id: "a02fc1d3-db8b-45c5-a222-27595b15aea7",
+        },
+        parent: {
+          type: "page_id",
+          page_id: "c02fc1d3-db8b-45c5-a222-27595b15aea7",
+        },
+        title: "Weekly sync",
+        language: "en",
+        options: {
+          kickoff_summary: true,
+        },
+      })
+    })
+
     it("calls query meeting notes API without filter", async () => {
       await notion.blocks.meetingNotes.query({})
 
