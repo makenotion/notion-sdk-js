@@ -9,27 +9,6 @@ import type {
 } from "./common"
 
 type CreateMeetingNoteBodyParameters = {
-  // Audio or video source for the meeting note.
-  source:
-    | {
-        // Always "file_upload".
-        type: "file_upload"
-        // ID of a completed public API file upload.
-        file_upload_id: IdRequest
-      }
-    | {
-        // Always "block".
-        type: "block"
-        // ID of an existing audio, video, or file block.
-        block_id: IdRequest
-      }
-  // Parent page for the new meeting note. Required when source.type is file_upload.
-  parent?: {
-    // Always "page_id".
-    type: "page_id"
-    // Page ID where the meeting note should be created. Required for file_upload sources.
-    page_id: IdRequest
-  }
   // Title for the meeting note.
   title?: string
   // Language hint for transcription. Defaults to automatic detection.
@@ -62,7 +41,35 @@ type CreateMeetingNoteBodyParameters = {
     // Whether to start summary generation after transcription.
     kickoff_summary?: boolean
   }
-}
+} & (
+  | {
+      // Audio or video source for the meeting note.
+      source: {
+        // Always "file_upload".
+        type: "file_upload"
+        // ID of a completed public API file upload.
+        file_upload_id: IdRequest
+      }
+      // Parent page for the new meeting note.
+      parent: {
+        // Always "page_id".
+        type: "page_id"
+        // Page ID where the meeting note should be created. Required for file_upload sources.
+        page_id: IdRequest
+      }
+    }
+  | {
+      // Audio or video source for the meeting note.
+      source: {
+        // Always "block".
+        type: "block"
+        // ID of an existing audio, video, or file block.
+        block_id: IdRequest
+      }
+      // Not accepted for block sources.
+      parent?: never
+    }
+)
 
 export type CreateMeetingNoteParameters = CreateMeetingNoteBodyParameters
 
@@ -141,7 +148,7 @@ export const createMeetingNote = {
   method: "post",
   pathParams: [],
   queryParams: [],
-  bodyParams: ["source", "parent", "title", "language", "options"],
+  bodyParams: ["title", "language", "options", "source", "parent"],
 
   path: (): string => `blocks/meeting_notes`,
 } as const
