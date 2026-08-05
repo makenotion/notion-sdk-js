@@ -99,6 +99,7 @@ type FormulaPropertyResponse =
   | DateFormulaPropertyResponse
   | NumberFormulaPropertyResponse
   | BooleanFormulaPropertyResponse
+  | UnsupportedFormulaPropertyResponse
 
 export type LastEditedByPropertyItemObjectResponse = {
   type: "last_edited_by"
@@ -301,6 +302,11 @@ export type UniqueIdPropertyItemObjectResponse = {
   unique_id: { prefix: string | null; number: number | null }
   object: "property_item"
   id: string
+}
+
+type UnsupportedFormulaPropertyResponse = {
+  type: "unsupported"
+  unsupported: EmptyObject
 }
 
 export type UrlPropertyItemObjectResponse = {

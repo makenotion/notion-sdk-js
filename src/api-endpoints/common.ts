@@ -2773,6 +2773,7 @@ type PartialRollupValueResponse = PartialRollupValueResponseCommon &
     | NumberPartialRollupValueResponse
     | DatePartialRollupValueResponse
     | ArrayPartialRollupValueResponse
+    | UnsupportedPartialRollupValueResponse
   )
 
 type SimplePropertyValueResponse =
@@ -2945,6 +2946,12 @@ type UniqueIdSimplePropertyValueResponse = {
   unique_id: UniqueIdPropertyValueResponse
 }
 
+type UnsupportedPartialRollupValueResponse = {
+  // Always `unsupported`
+  type: "unsupported"
+  unsupported: EmptyObject
+}
+
 type UrlSimplePropertyValueResponse = {
   // Always `url`
   type: "url"
@@ -2962,6 +2969,7 @@ type FormulaPropertyValueResponse =
   | DateFormulaPropertyValueResponse
   | NumberFormulaPropertyValueResponse
   | StringFormulaPropertyValueResponse
+  | UnsupportedFormulaPropertyValueResponse
 
 export type InternalOrExternalFileWithNameResponse =
   InternalOrExternalFileWithNameResponseCommon &
@@ -3052,6 +3060,12 @@ type StringFormulaPropertyValueResponse = {
   // Always `string`
   type: "string"
   string: string | null
+}
+
+type UnsupportedFormulaPropertyValueResponse = {
+  // Always `unsupported`
+  type: "unsupported"
+  unsupported: EmptyObject
 }
 
 type VerificationPropertyResponse = {
