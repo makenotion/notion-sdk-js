@@ -36,119 +36,31 @@ export type GetAsyncTaskResponse =
       created_time: string
       operation: { surface: "rest" | "mcp"; name: string }
       status: "failed"
-      error:
+      error: {
+        object: "error"
+        message: string
+        additional_data?: Record<string, string | Array<string>>
+      } & (
         | {
-            object: "error"
             status: 400
-            code: "invalid_json"
-            message: string
-            additional_data?: Record<string, string | Array<string>>
+            code:
+              | "invalid_json"
+              | "invalid_request_url"
+              | "invalid_request"
+              | "missing_version"
+              | "invalid_beta"
+              | "validation_error"
           }
-        | {
-            object: "error"
-            status: 400
-            code: "invalid_request_url"
-            message: string
-            additional_data?: Record<string, string | Array<string>>
-          }
-        | {
-            object: "error"
-            status: 400
-            code: "invalid_request"
-            message: string
-            additional_data?: Record<string, string | Array<string>>
-          }
-        | {
-            object: "error"
-            status: 400
-            code: "missing_version"
-            message: string
-            additional_data?: Record<string, string | Array<string>>
-          }
-        | {
-            object: "error"
-            status: 400
-            code: "invalid_beta"
-            message: string
-            additional_data?: Record<string, string | Array<string>>
-          }
-        | {
-            object: "error"
-            status: 400
-            code: "validation_error"
-            message: string
-            additional_data?: Record<string, string | Array<string>>
-          }
-        | {
-            object: "error"
-            status: 401
-            code: "unauthorized"
-            message: string
-            additional_data?: Record<string, string | Array<string>>
-          }
-        | {
-            object: "error"
-            status: 403
-            code: "restricted_resource"
-            message: string
-            additional_data?: Record<string, string | Array<string>>
-          }
-        | {
-            object: "error"
-            status: 404
-            code: "object_not_found"
-            message: string
-            additional_data?: Record<string, string | Array<string>>
-          }
-        | {
-            object: "error"
-            status: 429
-            code: "rate_limited"
-            message: string
-            additional_data?: Record<string, string | Array<string>>
-          }
-        | {
-            object: "error"
-            status: 529
-            code: "service_overload"
-            message: string
-            additional_data?: Record<string, string | Array<string>>
-          }
-        | {
-            object: "error"
-            status: 500
-            code: "internal_server_error"
-            message: string
-            additional_data?: Record<string, string | Array<string>>
-          }
-        | {
-            object: "error"
-            status: 503
-            code: "service_unavailable"
-            message: string
-            additional_data?: Record<string, string | Array<string>>
-          }
-        | {
-            object: "error"
-            status: 504
-            code: "gateway_timeout"
-            message: string
-            additional_data?: Record<string, string | Array<string>>
-          }
-        | {
-            object: "error"
-            status: 409
-            code: "conflict_error"
-            message: string
-            additional_data?: Record<string, string | Array<string>>
-          }
-        | {
-            object: "error"
-            status: 409
-            code: "row_limit_exceeded"
-            message: string
-            additional_data?: Record<string, string | Array<string>>
-          }
+        | { status: 401; code: "unauthorized" }
+        | { status: 403; code: "restricted_resource" }
+        | { status: 404; code: "object_not_found" }
+        | { status: 429; code: "rate_limited" }
+        | { status: 529; code: "service_overload" }
+        | { status: 500; code: "internal_server_error" }
+        | { status: 503; code: "service_unavailable" }
+        | { status: 504; code: "gateway_timeout" }
+        | { status: 409; code: "conflict_error" | "row_limit_exceeded" }
+      )
     }
 
 /**
