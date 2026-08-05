@@ -68,6 +68,13 @@ export type GetAsyncTaskResponse =
         | {
             object: "error"
             status: 400
+            code: "invalid_beta"
+            message: string
+            additional_data?: Record<string, string | Array<string>>
+          }
+        | {
+            object: "error"
+            status: 400
             code: "validation_error"
             message: string
             additional_data?: Record<string, string | Array<string>>
