@@ -1,0 +1,10 @@
+{
+  "resourceIdToPointerMappings": {
+    "example-space": {
+      "table": "space",
+      "id": "<YOUR_WORKSPACE_ID>",
+      "spaceId": "<YOUR_WORKSPACE_ID>"
+    }
+  },
+  "resourceIdToPropertyIdMappings": {}
+}
