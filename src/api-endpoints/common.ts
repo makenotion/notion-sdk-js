@@ -1556,6 +1556,16 @@ type UniqueIdPropertyConfigurationRequest = {
   unique_id: { prefix?: string | null }
 }
 
+type UpdateEmbedContentWithFileUploadAndCaptionRequest = {
+  file_upload: FileUploadIdRequest
+  type?: "file_upload"
+  caption?: Array<RichTextItemRequest>
+}
+
+export type UpdateEmbedContentWithUrlOrFileUploadAndCaptionRequest =
+  | UpdateMediaContentWithUrlAndCaptionRequest
+  | UpdateEmbedContentWithFileUploadAndCaptionRequest
+
 export type UpdateMediaContentWithFileAndCaptionRequest = {
   caption?: Array<RichTextItemRequest>
   external?: ExternalFileRequest
@@ -1755,7 +1765,7 @@ type WorkspaceParentForBlockBasedObjectResponse = {
 
 export type BlockObjectRequest =
   | {
-      embed: MediaContentWithUrlAndCaptionRequest
+      embed: EmbedContentWithUrlOrFileUploadAndCaptionRequest
       type?: "embed"
       object?: "block"
     }
@@ -2042,7 +2052,7 @@ export type PageObjectResponse = {
 
 type BlockObjectWithSingleLevelOfChildrenRequest =
   | {
-      embed: MediaContentWithUrlAndCaptionRequest
+      embed: EmbedContentWithUrlOrFileUploadAndCaptionRequest
       type?: "embed"
       object?: "block"
     }
@@ -2225,6 +2235,10 @@ type CustomEmojiPageIconRequest = {
     url?: string
   }
 }
+
+type EmbedContentWithUrlOrFileUploadAndCaptionRequest =
+  | MediaContentWithUrlAndCaptionRequest
+  | MediaContentWithFileUploadAndCaptionRequest
 
 type EmojiPageIconRequest = {
   // Always `emoji`
@@ -2518,7 +2532,7 @@ type AnnotationRequest = {
 
 export type BlockObjectRequestWithoutChildren =
   | {
-      embed: MediaContentWithUrlAndCaptionRequest
+      embed: EmbedContentWithUrlOrFileUploadAndCaptionRequest
       type?: "embed"
       object?: "block"
     }
@@ -2680,6 +2694,12 @@ type HeaderContentWithSingleLevelOfChildrenRequest = {
   color?: ApiColor
   is_toggleable?: boolean
   children?: Array<BlockObjectRequestWithoutChildren>
+}
+
+type MediaContentWithFileUploadAndCaptionRequest = {
+  file_upload: FileUploadIdRequest
+  type?: "file_upload"
+  caption?: Array<RichTextItemRequest>
 }
 
 type ParagraphWithSingleLevelOfChildrenRequest = {
