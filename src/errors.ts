@@ -8,6 +8,8 @@ import { Assert } from "./type-utils"
 export enum APIErrorCode {
   Unauthorized = "unauthorized",
   RestrictedResource = "restricted_resource",
+  WorkspaceCreditsExhausted = "workspace_credits_exhausted",
+  AgentCreditLimitReached = "agent_credit_limit_reached",
   ObjectNotFound = "object_not_found",
   RateLimited = "rate_limited",
   InvalidJSON = "invalid_json",
@@ -260,6 +262,8 @@ const httpResponseErrorCodes: { [C in HTTPResponseErrorCode]: true } = {
   [ClientErrorCode.ResponseError]: true,
   [APIErrorCode.Unauthorized]: true,
   [APIErrorCode.RestrictedResource]: true,
+  [APIErrorCode.WorkspaceCreditsExhausted]: true,
+  [APIErrorCode.AgentCreditLimitReached]: true,
   [APIErrorCode.ObjectNotFound]: true,
   [APIErrorCode.RateLimited]: true,
   [APIErrorCode.InvalidJSON]: true,
@@ -332,6 +336,8 @@ export class UnknownHTTPResponseError extends HTTPResponseError<ClientErrorCode.
 const apiErrorCodes: { [C in APIErrorCode]: true } = {
   [APIErrorCode.Unauthorized]: true,
   [APIErrorCode.RestrictedResource]: true,
+  [APIErrorCode.WorkspaceCreditsExhausted]: true,
+  [APIErrorCode.AgentCreditLimitReached]: true,
   [APIErrorCode.ObjectNotFound]: true,
   [APIErrorCode.RateLimited]: true,
   [APIErrorCode.InvalidJSON]: true,
