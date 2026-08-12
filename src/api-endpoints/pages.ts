@@ -323,6 +323,10 @@ export type VerificationPropertyItemObjectResponse = {
   id: string
 }
 
+type CreatePageQueryParameters = {
+  filter_properties?: Array<string>
+}
+
 type CreatePageBodyParameters = {
   parent?:
     | { page_id: IdRequest; type?: "page_id" }
@@ -440,7 +444,8 @@ type CreatePageBodyParameters = {
   position?: PagePositionSchema
 }
 
-export type CreatePageParameters = CreatePageBodyParameters
+export type CreatePageParameters = CreatePageQueryParameters &
+  CreatePageBodyParameters
 
 export type CreatePageResponse = PageObjectResponse | PartialPageObjectResponse
 
@@ -450,7 +455,7 @@ export type CreatePageResponse = PageObjectResponse | PartialPageObjectResponse
 export const createPage = {
   method: "post",
   pathParams: [],
-  queryParams: [],
+  queryParams: ["filter_properties"],
   bodyParams: [
     "parent",
     "properties",
@@ -496,6 +501,10 @@ export const getPage = {
 
 type UpdatePagePathParameters = {
   page_id: IdRequest
+}
+
+type UpdatePageQueryParameters = {
+  filter_properties?: Array<string>
 }
 
 type UpdatePageBodyParameters = {
@@ -613,6 +622,7 @@ type UpdatePageBodyParameters = {
 }
 
 export type UpdatePageParameters = UpdatePagePathParameters &
+  UpdatePageQueryParameters &
   UpdatePageBodyParameters
 
 export type UpdatePageResponse = PageObjectResponse | PartialPageObjectResponse
@@ -623,7 +633,7 @@ export type UpdatePageResponse = PageObjectResponse | PartialPageObjectResponse
 export const updatePage = {
   method: "patch",
   pathParams: ["page_id"],
-  queryParams: [],
+  queryParams: ["filter_properties"],
   bodyParams: [
     "archived",
     "properties",
