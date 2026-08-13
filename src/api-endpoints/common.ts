@@ -1141,7 +1141,9 @@ export type PropertyFilter =
   | { unique_id: NumberPropertyFilter; property: string; type?: "unique_id" }
   | { rollup: RollupPropertyFilter; property: string; type?: "rollup" }
   | {
-      verification: VerificationPropertyStatusFilter
+      verification:
+        | VerificationPropertyStatusFilter
+        | VerificationPropertyDoesNotEqualFilter
       property: string
       type?: "verification"
     }
@@ -1619,6 +1621,10 @@ type VerificationPropertyConfigurationRequest = {
   // Always `verification`
   type?: "verification"
   verification: EmptyObject
+}
+
+type VerificationPropertyDoesNotEqualFilter = {
+  does_not_equal: "verified" | "expired" | "none"
 }
 
 type VerificationPropertyStatusFilter = {
