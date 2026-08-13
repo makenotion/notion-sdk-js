@@ -6,9 +6,98 @@ import {
   iterateDataSourceTemplates,
   iteratePaginatedAPI,
 } from "../src/helpers"
-import { Client } from "../src"
+import {
+  Client,
+  DatabaseObjectResponse,
+  DataSourceObjectResponse,
+  isFullDatabase,
+  isFullDataSource,
+  PartialDatabaseObjectResponse,
+  PartialDataSourceObjectResponse,
+} from "../src"
 
 describe("Notion API helpers", () => {
+  describe("full object type guards", () => {
+    const dataSource = (): DataSourceObjectResponse => ({
+      object: "data_source",
+      id: "data-source-id",
+      title: [],
+      description: [],
+      parent: { type: "database_id", database_id: "database-id" },
+      database_parent: { type: "page_id", page_id: "page-id" },
+      is_inline: false,
+      in_trash: false,
+      archived: false,
+      created_time: "2026-08-13T00:00:00.000Z",
+      last_edited_time: "2026-08-13T00:00:00.000Z",
+      created_by: { object: "user", id: "user-id" },
+      last_edited_by: { object: "user", id: "user-id" },
+      properties: {},
+      icon: null,
+      cover: null,
+      url: "https://www.notion.so/data-source-id",
+      public_url: null,
+    })
+
+    const database = (): DatabaseObjectResponse => ({
+      object: "database",
+      id: "database-id",
+      title: [],
+      description: [],
+      parent: { type: "page_id", page_id: "page-id" },
+      is_inline: false,
+      in_trash: false,
+      archived: false,
+      is_locked: false,
+      created_time: "2026-08-13T00:00:00.000Z",
+      last_edited_time: "2026-08-13T00:00:00.000Z",
+      data_sources: [],
+      icon: null,
+      cover: null,
+      url: "https://www.notion.so/database-id",
+      public_url: null,
+    })
+
+    const getDataSourceTitle = (
+      response: DataSourceObjectResponse | PartialDataSourceObjectResponse
+    ): DataSourceObjectResponse["title"] | undefined => {
+      return isFullDataSource(response) ? response.title : undefined
+    }
+
+    const getDatabaseTitle = (
+      response: DatabaseObjectResponse | PartialDatabaseObjectResponse
+    ): DatabaseObjectResponse["title"] | undefined => {
+      return isFullDatabase(response) ? response.title : undefined
+    }
+
+    it("distinguishes partial and full data sources", () => {
+      const partialDataSource: PartialDataSourceObjectResponse = {
+        object: "data_source",
+        id: "partial-data-source-id",
+        properties: {},
+      }
+      const fullDataSource = dataSource()
+
+      expect(isFullDataSource(partialDataSource)).toBe(false)
+      expect(isFullDataSource(fullDataSource)).toBe(true)
+      expect(getDataSourceTitle(partialDataSource)).toBeUndefined()
+      expect(getDataSourceTitle(fullDataSource)).toEqual([])
+    })
+
+    it("distinguishes partial and full databases", () => {
+      const partialDatabase: PartialDatabaseObjectResponse = {
+        object: "database",
+        id: "partial-database-id",
+      }
+      const fullDatabase = database()
+
+      expect(isFullDatabase(partialDatabase)).toBe(false)
+      expect(isFullDatabase(fullDatabase)).toBe(true)
+      expect(getDatabaseTitle(partialDatabase)).toBeUndefined()
+      expect(getDatabaseTitle(fullDatabase)).toEqual([])
+    })
+  })
+
   describe(iteratePaginatedAPI, () => {
     const mockPaginatedEndpoint = jest.fn<
       Promise<{
@@ -346,6 +435,7 @@ describe("Notion API helpers", () => {
       return {
         object: "data_source",
         id,
+        title: [],
         created_time: createdTime,
       }
     }
