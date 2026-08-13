@@ -2,11 +2,27 @@ import {
   collectAllDataSourceRows,
   collectDataSourceTemplates,
   collectPaginatedAPI,
+  isFullBlock,
+  isFullDatabase,
+  isFullDataSource,
+  isFullPage,
+  isFullPageOrDataSource,
   iterateAllDataSourceRows,
   iterateDataSourceTemplates,
   iteratePaginatedAPI,
 } from "../src/helpers"
 import { Client } from "../src"
+import type {
+  BlockObjectResponse,
+  DatabaseObjectResponse,
+  DataSourceObjectResponse,
+  PageObjectResponse,
+  PartialBlockObjectResponse,
+  PartialDatabaseObjectResponse,
+  PartialDataSourceObjectResponse,
+  PartialPageObjectResponse,
+  PartialUserObjectResponse,
+} from "../src"
 
 describe("Notion API helpers", () => {
   describe(iteratePaginatedAPI, () => {
@@ -346,6 +362,7 @@ describe("Notion API helpers", () => {
       return {
         object: "data_source",
         id,
+        title: [],
         created_time: createdTime,
       }
     }
@@ -571,6 +588,158 @@ describe("Notion API helpers", () => {
 
         expect(rows.map(r => r.id)).toEqual(["r1", "r2"])
         expect(mockFetch).toHaveBeenCalledTimes(2)
+      })
+    })
+  })
+
+  describe("Full object type guards", () => {
+    const user: PartialUserObjectResponse = { object: "user", id: "user-id" }
+    const timestamp = "2025-01-01T00:00:00.000Z"
+
+    const fullDataSource: DataSourceObjectResponse = {
+      object: "data_source",
+      id: "data-source-id",
+      title: [],
+      description: [],
+      parent: { type: "database_id", database_id: "database-id" },
+      database_parent: { type: "page_id", page_id: "page-id" },
+      is_inline: false,
+      in_trash: false,
+      archived: false,
+      created_time: timestamp,
+      last_edited_time: timestamp,
+      created_by: user,
+      last_edited_by: user,
+      properties: {},
+      icon: null,
+      cover: null,
+      url: "https://www.notion.so/data-source-id",
+      public_url: null,
+    }
+
+    const partialDataSource: PartialDataSourceObjectResponse = {
+      object: "data_source",
+      id: "data-source-id",
+      properties: {},
+    }
+
+    const fullDatabase: DatabaseObjectResponse = {
+      object: "database",
+      id: "database-id",
+      title: [],
+      description: [],
+      parent: { type: "page_id", page_id: "page-id" },
+      is_inline: false,
+      in_trash: false,
+      archived: false,
+      is_locked: false,
+      created_time: timestamp,
+      last_edited_time: timestamp,
+      data_sources: [{ id: "data-source-id", name: "Data source" }],
+      icon: null,
+      cover: null,
+      url: "https://www.notion.so/database-id",
+      public_url: null,
+    }
+
+    const partialDatabase: PartialDatabaseObjectResponse = {
+      object: "database",
+      id: "database-id",
+    }
+
+    const fullPage: PageObjectResponse = {
+      object: "page",
+      id: "page-id",
+      created_time: timestamp,
+      last_edited_time: timestamp,
+      in_trash: false,
+      archived: false,
+      is_archived: false,
+      is_locked: false,
+      url: "https://www.notion.so/page-id",
+      public_url: null,
+      parent: { type: "page_id", page_id: "parent-page-id" },
+      properties: {},
+      icon: null,
+      cover: null,
+      created_by: user,
+      last_edited_by: user,
+    }
+
+    const partialPage: PartialPageObjectResponse = {
+      object: "page",
+      id: "page-id",
+    }
+
+    const fullBlock: BlockObjectResponse = {
+      object: "block",
+      id: "block-id",
+      type: "paragraph",
+      paragraph: { rich_text: [], color: "default", icon: null },
+      parent: { type: "page_id", page_id: "page-id" },
+      created_time: timestamp,
+      last_edited_time: timestamp,
+      created_by: user,
+      last_edited_by: user,
+      has_children: false,
+      in_trash: false,
+      archived: false,
+    }
+
+    const partialBlock: PartialBlockObjectResponse = {
+      object: "block",
+      id: "block-id",
+    }
+
+    describe(isFullDataSource, () => {
+      it("Returns true for a full data source", () => {
+        expect(isFullDataSource(fullDataSource)).toBe(true)
+      })
+
+      it("Returns false for a partial data source", () => {
+        expect(isFullDataSource(partialDataSource)).toBe(false)
+      })
+    })
+
+    describe(isFullDatabase, () => {
+      it("Returns true for a full database", () => {
+        expect(isFullDatabase(fullDatabase)).toBe(true)
+      })
+
+      it("Returns false for a partial database", () => {
+        expect(isFullDatabase(partialDatabase)).toBe(false)
+      })
+    })
+
+    describe(isFullPage, () => {
+      it("Returns true for a full page", () => {
+        expect(isFullPage(fullPage)).toBe(true)
+      })
+
+      it("Returns false for a partial page", () => {
+        expect(isFullPage(partialPage)).toBe(false)
+      })
+    })
+
+    describe(isFullBlock, () => {
+      it("Returns true for a full block", () => {
+        expect(isFullBlock(fullBlock)).toBe(true)
+      })
+
+      it("Returns false for a partial block", () => {
+        expect(isFullBlock(partialBlock)).toBe(false)
+      })
+    })
+
+    describe(isFullPageOrDataSource, () => {
+      it("Returns true for a full page and a full data source", () => {
+        expect(isFullPageOrDataSource(fullPage)).toBe(true)
+        expect(isFullPageOrDataSource(fullDataSource)).toBe(true)
+      })
+
+      it("Returns false for a partial page and a partial data source", () => {
+        expect(isFullPageOrDataSource(partialPage)).toBe(false)
+        expect(isFullPageOrDataSource(partialDataSource)).toBe(false)
       })
     })
   })
