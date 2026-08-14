@@ -166,6 +166,24 @@ import {
   type GetAsyncTaskParameters,
   type GetAsyncTaskResponse,
   getAsyncTask,
+  type AgentBatchParameters,
+  type AgentBatchResponse,
+  agentBatch,
+  type RetrieveSessionParameters,
+  type RetrieveSessionResponse,
+  retrieveSession,
+  type UpdateSessionParameters,
+  type UpdateSessionResponse,
+  updateSession,
+  type CancelSessionParameters,
+  type CancelSessionResponse,
+  cancelSession,
+  type QuerySessionsParameters,
+  type QuerySessionsResponse,
+  querySessions,
+  type QuerySessionEventsParameters,
+  type QuerySessionEventsResponse,
+  querySessionEvents,
 } from "./api-endpoints"
 import {
   type CreateMeetingNoteParameters,
@@ -630,6 +648,106 @@ export default class Client {
   /*
    * Notion API endpoints
    */
+
+  public readonly agents = {
+    /**
+     * Apply many agent operations
+     */
+    batch: (
+      args: WithAuth<AgentBatchParameters>
+    ): Promise<AgentBatchResponse> => {
+      this.warnUnknownParams(args, agentBatch)
+      return this.request<AgentBatchResponse>({
+        path: agentBatch.path(),
+        method: agentBatch.method,
+        query: pick(args, agentBatch.queryParams),
+        body: pick(args, agentBatch.bodyParams),
+        auth: args?.auth,
+      })
+    },
+  }
+
+  public readonly sessions = {
+    /**
+     * Retrieve a session
+     */
+    retrieve: (
+      args: WithAuth<RetrieveSessionParameters>
+    ): Promise<RetrieveSessionResponse> => {
+      this.warnUnknownParams(args, retrieveSession)
+      return this.request<RetrieveSessionResponse>({
+        path: retrieveSession.path(args),
+        method: retrieveSession.method,
+        query: pick(args, retrieveSession.queryParams),
+        body: pick(args, retrieveSession.bodyParams),
+        auth: args?.auth,
+      })
+    },
+
+    /**
+     * Update a session
+     */
+    update: (
+      args: WithAuth<UpdateSessionParameters>
+    ): Promise<UpdateSessionResponse> => {
+      this.warnUnknownParams(args, updateSession)
+      return this.request<UpdateSessionResponse>({
+        path: updateSession.path(),
+        method: updateSession.method,
+        query: pick(args, updateSession.queryParams),
+        body: pick(args, updateSession.bodyParams),
+        auth: args?.auth,
+      })
+    },
+
+    /**
+     * Cancel a session
+     */
+    cancel: (
+      args: WithAuth<CancelSessionParameters>
+    ): Promise<CancelSessionResponse> => {
+      this.warnUnknownParams(args, cancelSession)
+      return this.request<CancelSessionResponse>({
+        path: cancelSession.path(args),
+        method: cancelSession.method,
+        query: pick(args, cancelSession.queryParams),
+        body: pick(args, cancelSession.bodyParams),
+        auth: args?.auth,
+      })
+    },
+
+    /**
+     * Query sessions
+     */
+    query: (
+      args: WithAuth<QuerySessionsParameters>
+    ): Promise<QuerySessionsResponse> => {
+      this.warnUnknownParams(args, querySessions)
+      return this.request<QuerySessionsResponse>({
+        path: querySessions.path(),
+        method: querySessions.method,
+        query: pick(args, querySessions.queryParams),
+        body: pick(args, querySessions.bodyParams),
+        auth: args?.auth,
+      })
+    },
+
+    /**
+     * Query session events
+     */
+    queryEvents: (
+      args: WithAuth<QuerySessionEventsParameters>
+    ): Promise<QuerySessionEventsResponse> => {
+      this.warnUnknownParams(args, querySessionEvents)
+      return this.request<QuerySessionEventsResponse>({
+        path: querySessionEvents.path(args),
+        method: querySessionEvents.method,
+        query: pick(args, querySessionEvents.queryParams),
+        body: pick(args, querySessionEvents.bodyParams),
+        auth: args?.auth,
+      })
+    },
+  }
 
   public readonly asyncTasks = {
     /**

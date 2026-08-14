@@ -406,6 +406,135 @@ describe("Notion SDK Client", () => {
     })
   })
 
+  describe("agent endpoints", () => {
+    let mockFetch: jest.MockedFn<typeof fetch>
+    let notion: Client
+
+    beforeEach(() => {
+      mockFetch = jest.fn()
+      mockFetch.mockResolvedValue({
+        ok: true,
+        text: () => Promise.resolve("{}"),
+        headers: new Headers(),
+        status: 200,
+      } as Response)
+
+      notion = new Client({ fetch: mockFetch })
+    })
+
+    it("calls agents.batch with correct URL, method and body", async () => {
+      await notion.agents.batch({
+        operations: [
+          {
+            action: "update_status",
+            agent_id: "notion_ai",
+            fields: { status: "disabled" },
+          },
+        ],
+      })
+
+      expect(mockFetch).toHaveBeenCalledWith(
+        expect.stringContaining("/v1/agents/batch"),
+        expect.objectContaining({
+          method: "POST",
+          body: JSON.stringify({
+            operations: [
+              {
+                action: "update_status",
+                agent_id: "notion_ai",
+                fields: { status: "disabled" },
+              },
+            ],
+          }),
+        })
+      )
+    })
+  })
+
+  describe("session endpoints", () => {
+    const sessionId = "11111111-1111-1111-1111-111111111111"
+    let mockFetch: jest.MockedFn<typeof fetch>
+    let notion: Client
+
+    beforeEach(() => {
+      mockFetch = jest.fn()
+      mockFetch.mockResolvedValue({
+        ok: true,
+        text: () => Promise.resolve("{}"),
+        headers: new Headers(),
+        status: 200,
+      } as Response)
+
+      notion = new Client({ fetch: mockFetch })
+    })
+
+    it("calls sessions.retrieve with correct URL and method", async () => {
+      await notion.sessions.retrieve({ session_id: sessionId })
+
+      expect(mockFetch).toHaveBeenCalledWith(
+        expect.stringContaining(`/v1/sessions/${sessionId}`),
+        expect.objectContaining({ method: "GET" })
+      )
+    })
+
+    it("calls sessions.update with correct URL and body", async () => {
+      await notion.sessions.update({
+        session_id: sessionId,
+        message: "hello",
+      })
+
+      expect(mockFetch).toHaveBeenCalledWith(
+        expect.stringContaining("/v1/sessions"),
+        expect.objectContaining({
+          method: "POST",
+          body: JSON.stringify({ message: "hello", session_id: sessionId }),
+        })
+      )
+    })
+
+    it("calls sessions.cancel with correct URL and body", async () => {
+      await notion.sessions.cancel({
+        session_id: sessionId,
+        event_id: "event-1",
+      })
+
+      expect(mockFetch).toHaveBeenCalledWith(
+        expect.stringContaining(`/v1/sessions/${sessionId}/cancel`),
+        expect.objectContaining({
+          method: "POST",
+          body: JSON.stringify({ event_id: "event-1" }),
+        })
+      )
+    })
+
+    it("calls sessions.query with correct URL and body", async () => {
+      await notion.sessions.query({ query: "standup", page_size: 10 })
+
+      expect(mockFetch).toHaveBeenCalledWith(
+        expect.stringContaining("/v1/sessions/query"),
+        expect.objectContaining({
+          method: "POST",
+          body: JSON.stringify({ query: "standup", page_size: 10 }),
+        })
+      )
+    })
+
+    it("calls sessions.queryEvents with correct URL and body", async () => {
+      await notion.sessions.queryEvents({
+        session_id: sessionId,
+        page_size: 25,
+      })
+
+      expect(mockFetch).toHaveBeenCalledWith(
+        expect.stringContaining(`/v1/sessions/${sessionId}/events/query`),
+        expect.objectContaining({
+          method: "POST",
+          body: JSON.stringify({ page_size: 25 }),
+        })
+      )
+    })
+  })
+
   describe("path traversal prevention", () => {
     let mockFetch: jest.MockedFn<typeof fetch>
     let notion: Client
