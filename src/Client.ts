@@ -175,6 +175,9 @@ import {
   type UpdateSessionParameters,
   type UpdateSessionResponse,
   updateSession,
+  type UpdateSessionStreamParameters,
+  type UpdateSessionStreamResponse,
+  updateSessionStream,
   type CancelSessionParameters,
   type CancelSessionResponse,
   cancelSession,
@@ -330,6 +333,88 @@ export default class Client {
       headers,
       body: bodyAsJsonString ?? formData,
     })
+  }
+
+  /**
+   * Opens an SSE response and yields each parsed event as it arrives.
+   */
+  private async *streamRequest<ResponseBody>(
+    args: RequestParameters,
+    parseEvent: (frame: SseFrame) => ResponseBody
+  ): AsyncIterable<ResponseBody> {
+    const { path, method, query, body, auth } = args
+
+    validateRequestPath(path)
+
+    this.log(LogLevel.INFO, "stream request start", { method, path })
+
+    const url = this.buildRequestUrl(path, query)
+    const bodyAsJsonString = this.serializeBody(body)
+    const headers = this.buildRequestHeaders(
+      args.headers,
+      auth,
+      bodyAsJsonString
+    )
+    const response = await RequestTimeoutError.rejectAfterTimeout(
+      this.#fetch(url.toString(), {
+        method: method.toUpperCase(),
+        headers,
+        body: bodyAsJsonString,
+        agent: this.#agent,
+      }),
+      this.#timeoutMs
+    )
+
+    if (!response.ok) {
+      throw buildRequestError(response, await response.text())
+    }
+
+    this.log(LogLevel.INFO, "stream request opened", { method, path })
+
+    if (response.body === undefined || response.body === null) {
+      for (const frame of takeSseFrames({
+        content: await response.text(),
+        complete: true,
+      }).frames) {
+        yield parseEvent(frame)
+      }
+      return
+    }
+
+    const reader = response.body.getReader()
+    const decoder = new TextDecoder()
+    let remaining = ""
+    let complete = false
+    try {
+      while (!complete) {
+        const { done, value } = await reader.read()
+        if (done) {
+          complete = true
+          continue
+        }
+        if (value === undefined) {
+          throw new Error("SSE response body ended without a data chunk.")
+        }
+
+        const frames = takeSseFrames({
+          content: `${remaining}${decoder.decode(value, { stream: true })}`,
+          complete: false,
+        })
+        remaining = frames.remaining
+        for (const frame of frames.frames) {
+          yield parseEvent(frame)
+        }
+      }
+
+      for (const frame of takeSseFrames({
+        content: `${remaining}${decoder.decode()}`,
+        complete: true,
+      }).frames) {
+        yield parseEvent(frame)
+      }
+    } finally {
+      reader.releaseLock()
+    }
   }
 
   /**
@@ -698,6 +783,26 @@ export default class Client {
         body: pick(args, updateSession.bodyParams),
         auth: args?.auth,
       })
+    },
+
+    /**
+     * Open a session stream
+     */
+    stream: (
+      args: WithAuth<UpdateSessionStreamParameters>
+    ): AsyncIterable<UpdateSessionStreamResponse> => {
+      this.warnUnknownParams(args, updateSessionStream)
+      return this.streamRequest(
+        {
+          path: updateSessionStream.path(),
+          method: updateSessionStream.method,
+          query: pick(args, updateSessionStream.queryParams),
+          body: pick(args, updateSessionStream.bodyParams),
+          headers: updateSessionStream.headers,
+          auth: args?.auth,
+        },
+        parseSessionStreamEvent
+      )
     },
 
     /**
@@ -1642,6 +1747,96 @@ export default class Client {
     }
     return headers
   }
+}
+
+type SseFrame = {
+  eventName: string
+  data: string
+}
+
+const sessionStreamEventTypes = new Set<string>([
+  "session.snapshot",
+  "event.provisional",
+  "event.committed",
+  "stream.timeout",
+  "stream.end",
+  "stream.error",
+])
+
+function takeSseFrames(args: { content: string; complete: boolean }): {
+  frames: SseFrame[]
+  remaining: string
+} {
+  const frames: SseFrame[] = []
+  let remaining = args.content.replace(/\r\n/g, "\n")
+
+  let boundary = remaining.indexOf("\n\n")
+  while (boundary !== -1) {
+    const frame = parseSseFrame(remaining.slice(0, boundary))
+    if (frame !== undefined) {
+      frames.push(frame)
+    }
+    remaining = remaining.slice(boundary + 2)
+    boundary = remaining.indexOf("\n\n")
+  }
+
+  if (args.complete && remaining !== "") {
+    const frame = parseSseFrame(remaining)
+    if (frame !== undefined) {
+      frames.push(frame)
+    }
+    remaining = ""
+  }
+
+  return { frames, remaining }
+}
+
+function parseSseFrame(content: string): SseFrame | undefined {
+  let eventName: string | undefined
+  const dataLines: string[] = []
+
+  for (const line of content.split("\n")) {
+    if (line.startsWith(":")) {
+      continue
+    }
+
+    const colonIndex = line.indexOf(":")
+    if (colonIndex === -1) {
+      continue
+    }
+
+    const field = line.slice(0, colonIndex)
+    const valueStart =
+      line.charAt(colonIndex + 1) === " " ? colonIndex + 2 : colonIndex + 1
+    const value = line.slice(valueStart)
+    if (field === "event") {
+      eventName = value
+    } else if (field === "data") {
+      dataLines.push(value)
+    }
+  }
+
+  if (dataLines.length === 0) {
+    return undefined
+  }
+  if (eventName === undefined) {
+    throw new Error("Session stream event is missing its SSE event name.")
+  }
+
+  return { eventName, data: dataLines.join("\n") }
+}
+
+function parseSessionStreamEvent(frame: SseFrame): UpdateSessionStreamResponse {
+  const event: UpdateSessionStreamResponse = JSON.parse(frame.data)
+  if (
+    typeof event !== "object" ||
+    event === null ||
+    !sessionStreamEventTypes.has(event.type) ||
+    event.type !== frame.eventName
+  ) {
+    throw new Error("Session stream event does not match its SSE event name.")
+  }
+  return event
 }
 
 /*

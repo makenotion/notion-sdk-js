@@ -8,6 +8,167 @@ import type {
   PageIconResponse,
 } from "./common"
 
+/**
+ * Parameters for opening a session stream.
+ */
+export type UpdateSessionStreamParameters =
+  | {
+      message: string
+      agent_id?: string | "notion_ai" | "33333333-3333-3333-3333-333333333333"
+      session_id?: string
+      attachments?: Array<{
+        file_upload: {
+          id: string
+        }
+        /**
+         * Always `file_upload`
+         */
+        type?: "file_upload"
+        name?: string
+      }>
+      metadata?: Record<string, string>
+      prompt_context?: string
+    }
+  | {
+      session_id: string
+      actions: Array<{
+        action_id: string
+        /**
+         * One of: `approve`, `reject`
+         */
+        option_id: "approve" | "reject"
+      }>
+      metadata?: Record<string, string>
+    }
+  | {
+      session_id: string
+      continue_from: string
+    }
+
+/**
+ * An event emitted by a session stream.
+ */
+export type UpdateSessionStreamResponse =
+  | {
+      /**
+       * Always `session.snapshot`
+       */
+      type: "session.snapshot"
+      session: {
+        /**
+         * Always `session`
+         */
+        object: "session"
+        id: string
+        agent_id: string
+        title: string
+        /**
+         * One of: `queued`, `in_progress`, `requires_action`, `completed`, `failed`, `canceled`, `terminated`
+         */
+        status:
+          | "queued"
+          | "in_progress"
+          | "requires_action"
+          | "completed"
+          | "failed"
+          | "canceled"
+          | "terminated"
+        created_at: string
+        updated_at: string
+        required_actions?: Array<{
+          action_id: string
+          title: string
+          options: Array<{
+            /**
+             * One of: `approve`, `reject`
+             */
+            id: "approve" | "reject"
+            label: string
+          }>
+        }>
+        error?: {
+          code: string
+          message: string
+          retryable: boolean
+        }
+      }
+    }
+  | {
+      /**
+       * Always `event.provisional`
+       */
+      type: "event.provisional"
+      event: unknown
+    }
+  | {
+      /**
+       * Always `event.committed`
+       */
+      type: "event.committed"
+      event: unknown
+    }
+  | {
+      /**
+       * Always `stream.timeout`
+       */
+      type: "stream.timeout"
+      session_id: string
+      message: string
+    }
+  | {
+      /**
+       * Always `stream.end`
+       */
+      type: "stream.end"
+      session_id: string
+      /**
+       * One of: `requires_action`, `completed`, `failed`, `canceled`, `terminated`
+       */
+      status:
+        | "requires_action"
+        | "completed"
+        | "failed"
+        | "canceled"
+        | "terminated"
+      last_sequence: number
+    }
+  | {
+      /**
+       * Always `stream.error`
+       */
+      type: "stream.error"
+      error: {
+        code: string
+        message: string
+        /**
+         * One of: `true`, `false`
+         */
+        retryable: true | false
+      }
+      session_id?: string
+    }
+
+/**
+ * Open a session stream.
+ */
+export const updateSessionStream = {
+  method: "post",
+  pathParams: [],
+  queryParams: [],
+  bodyParams: [
+    "message",
+    "agent_id",
+    "session_id",
+    "attachments",
+    "metadata",
+    "prompt_context",
+    "actions",
+    "continue_from",
+  ],
+  headers: { Accept: "text/event-stream" },
+  path: (): string => `sessions`,
+} as const
+
 type AgentBatchBodyParameters = {
   // The operations to apply, at least one and at most 100. Operations are applied in the
   // order given, and the batch is not atomic: each operation succeeds or fails on its own,

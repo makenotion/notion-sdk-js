@@ -10,7 +10,15 @@ export type SupportedRequestInit = {
   method?: string
 }
 
+export type SupportedResponseBody = {
+  getReader: () => {
+    read: () => Promise<{ done: boolean; value?: Uint8Array }>
+    releaseLock: () => void
+  }
+}
+
 export type SupportedResponse = {
+  body?: SupportedResponseBody | null
   ok: boolean
   text: () => Promise<string>
   headers: unknown

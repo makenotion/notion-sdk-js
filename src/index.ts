@@ -194,6 +194,8 @@ export type {
   UpdatePageResponse,
   UpdateSessionParameters,
   UpdateSessionResponse,
+  UpdateSessionStreamParameters,
+  UpdateSessionStreamResponse,
   UpdateViewParameters,
   UpdateViewResponse,
   UrlPropertyItemObjectResponse,

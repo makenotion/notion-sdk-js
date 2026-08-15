@@ -492,6 +492,44 @@ describe("Notion SDK Client", () => {
       )
     })
 
+    it("streams session events as SSE frames arrive", async () => {
+      const encoder = new TextEncoder()
+      const responseBody = new ReadableStream<Uint8Array>({
+        start(controller) {
+          controller.enqueue(
+            encoder.encode(
+              'event: stream.error\ndata: {"type":"stream.error","error":{"code":"agent_error","message":"Retry later","retryable":false}}\n\n'
+            )
+          )
+          controller.enqueue(
+            encoder.encode(
+              'event: stream.end\ndata: {"type":"stream.end","session_id":"11111111-1111-1111-1111-111111111111","status":"completed","last_sequence":2}\n\n'
+            )
+          )
+          controller.close()
+        },
+      })
+      mockFetch.mockResolvedValue(new Response(responseBody))
+
+      const eventTypes: string[] = []
+      for await (const event of notion.sessions.stream({ message: "hello" })) {
+        eventTypes.push(event.type)
+      }
+
+      expect(eventTypes).toEqual(["stream.error", "stream.end"])
+      expect(mockFetch).toHaveBeenCalledWith(
+        expect.stringContaining("/v1/sessions"),
+        expect.objectContaining({
+          method: "POST",
+          headers: expect.objectContaining({
+            Accept: "text/event-stream",
+            "content-type": "application/json",
+          }),
+          body: JSON.stringify({ message: "hello" }),
+        })
+      )
+    })
+
     it("calls sessions.cancel with correct URL and body", async () => {
       await notion.sessions.cancel({
         session_id: sessionId,
