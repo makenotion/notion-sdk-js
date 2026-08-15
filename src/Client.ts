@@ -262,6 +262,7 @@ type FileParam = {
 }
 
 const START_CURSOR_PARAM_NAME = "start_cursor"
+const AGENT_API_VERSION = "2026-03-11"
 
 export type RequestParameters = {
   path: string
@@ -270,6 +271,7 @@ export type RequestParameters = {
   body?: Record<string, unknown>
   formDataParams?: Record<string, string | FileParam>
   headers?: Record<string, string>
+  notionVersion?: string
   /**
    * To authenticate using public API token, `auth` should be passed as a
    * string. If you are trying to complete OAuth, then `auth` should be an object
@@ -337,7 +339,8 @@ export default class Client {
   public async request<ResponseBody extends object>(
     args: RequestParameters
   ): Promise<ResponseBody> {
-    const { path, method, query, body, formDataParams, auth } = args
+    const { path, method, query, body, formDataParams, auth, notionVersion } =
+      args
 
     validateRequestPath(path)
 
@@ -348,7 +351,8 @@ export default class Client {
     const headers = this.buildRequestHeaders(
       args.headers,
       auth,
-      bodyAsJsonString
+      bodyAsJsonString,
+      notionVersion
     )
     const formData = this.buildFormData(formDataParams, headers)
 
@@ -371,7 +375,7 @@ export default class Client {
     args: RequestParameters,
     parseEvent: (frame: SseFrame) => ResponseBody
   ): AsyncIterable<ResponseBody> {
-    const { path, method, query, body, auth } = args
+    const { path, method, query, body, auth, notionVersion } = args
 
     validateRequestPath(path)
 
@@ -382,7 +386,8 @@ export default class Client {
     const headers = this.buildRequestHeaders(
       args.headers,
       auth,
-      bodyAsJsonString
+      bodyAsJsonString,
+      notionVersion
     )
     const response = await this.executeWithRetry<SupportedResponse>(
       {
@@ -502,14 +507,15 @@ export default class Client {
   private buildRequestHeaders(
     customHeaders: Record<string, string> | undefined,
     auth: RequestParameters["auth"],
-    bodyAsJsonString: string | undefined
+    bodyAsJsonString: string | undefined,
+    notionVersion: string | undefined
   ): Record<string, string> {
     const authorizationHeader = this.buildAuthHeader(auth)
 
     const headers: Record<string, string> = {
       ...customHeaders,
       ...authorizationHeader,
-      "Notion-Version": this.#notionVersion,
+      "Notion-Version": notionVersion ?? this.#notionVersion,
       "user-agent": this.#userAgent,
     }
 
@@ -781,6 +787,28 @@ export default class Client {
     return new Promise(resolve => setTimeout(resolve, ms))
   }
 
+  private requestAgentApi<ResponseBody extends object>(
+    args: RequestParameters
+  ): Promise<ResponseBody> {
+    return this.request<ResponseBody>({
+      ...args,
+      notionVersion: AGENT_API_VERSION,
+    })
+  }
+
+  private streamAgentApi<ResponseBody>(
+    args: RequestParameters,
+    parseEvent: (frame: SseFrame) => ResponseBody
+  ): AsyncIterable<ResponseBody> {
+    return this.streamRequest(
+      {
+        ...args,
+        notionVersion: AGENT_API_VERSION,
+      },
+      parseEvent
+    )
+  }
+
   /*
    * Notion API endpoints
    */
@@ -793,7 +821,7 @@ export default class Client {
       args: WithAuth<GetAgentParameters>
     ): Promise<GetAgentResponse> => {
       this.warnUnknownParams(args, getAgent)
-      return this.request<GetAgentResponse>({
+      return this.requestAgentApi<GetAgentResponse>({
         path: getAgent.path(args),
         method: getAgent.method,
         query: pick(args, getAgent.queryParams),
@@ -809,7 +837,7 @@ export default class Client {
       args: WithAuth<QueryAgentsParameters>
     ): Promise<QueryAgentsResponse> => {
       this.warnUnknownParams(args, queryAgents)
-      return this.request<QueryAgentsResponse>({
+      return this.requestAgentApi<QueryAgentsResponse>({
         path: queryAgents.path(),
         method: queryAgents.method,
         query: pick(args, queryAgents.queryParams),
@@ -825,7 +853,7 @@ export default class Client {
       args: WithAuth<GetInsightsParameters>
     ): Promise<GetInsightsResponse> => {
       this.warnUnknownParams(args, getInsights)
-      return this.request<GetInsightsResponse>({
+      return this.requestAgentApi<GetInsightsResponse>({
         path: getInsights.path(args),
         method: getInsights.method,
         query: pick(args, getInsights.queryParams),
@@ -841,7 +869,7 @@ export default class Client {
       args: WithAuth<UpdateAgentCreditLimitParameters>
     ): Promise<UpdateAgentCreditLimitResponse> => {
       this.warnUnknownParams(args, updateAgentCreditLimit)
-      return this.request<UpdateAgentCreditLimitResponse>({
+      return this.requestAgentApi<UpdateAgentCreditLimitResponse>({
         path: updateAgentCreditLimit.path(args),
         method: updateAgentCreditLimit.method,
         query: pick(args, updateAgentCreditLimit.queryParams),
@@ -857,7 +885,7 @@ export default class Client {
       args: WithAuth<UpdateAgentStatusParameters>
     ): Promise<UpdateAgentStatusResponse> => {
       this.warnUnknownParams(args, updateAgentStatus)
-      return this.request<UpdateAgentStatusResponse>({
+      return this.requestAgentApi<UpdateAgentStatusResponse>({
         path: updateAgentStatus.path(args),
         method: updateAgentStatus.method,
         query: pick(args, updateAgentStatus.queryParams),
@@ -873,7 +901,7 @@ export default class Client {
       args: WithAuth<DeleteAgentParameters>
     ): Promise<DeleteAgentResponse> => {
       this.warnUnknownParams(args, deleteAgent)
-      return this.request<DeleteAgentResponse>({
+      return this.requestAgentApi<DeleteAgentResponse>({
         path: deleteAgent.path(args),
         method: deleteAgent.method,
         query: pick(args, deleteAgent.queryParams),
@@ -889,7 +917,7 @@ export default class Client {
       args: WithAuth<AgentBatchParameters>
     ): Promise<AgentBatchResponse> => {
       this.warnUnknownParams(args, agentBatch)
-      return this.request<AgentBatchResponse>({
+      return this.requestAgentApi<AgentBatchResponse>({
         path: agentBatch.path(),
         method: agentBatch.method,
         query: pick(args, agentBatch.queryParams),
@@ -907,7 +935,7 @@ export default class Client {
       args: WithAuth<RetrieveSessionParameters>
     ): Promise<RetrieveSessionResponse> => {
       this.warnUnknownParams(args, retrieveSession)
-      return this.request<RetrieveSessionResponse>({
+      return this.requestAgentApi<RetrieveSessionResponse>({
         path: retrieveSession.path(args),
         method: retrieveSession.method,
         query: pick(args, retrieveSession.queryParams),
@@ -923,7 +951,7 @@ export default class Client {
       args: WithAuth<UpdateSessionParameters>
     ): Promise<UpdateSessionResponse> => {
       this.warnUnknownParams(args, updateSession)
-      return this.request<UpdateSessionResponse>({
+      return this.requestAgentApi<UpdateSessionResponse>({
         path: updateSession.path(),
         method: updateSession.method,
         query: pick(args, updateSession.queryParams),
@@ -939,7 +967,7 @@ export default class Client {
       args: WithAuth<UpdateSessionStreamParameters>
     ): AsyncIterable<UpdateSessionStreamResponse> => {
       this.warnUnknownParams(args, updateSessionStream)
-      return this.streamRequest(
+      return this.streamAgentApi(
         {
           path: updateSessionStream.path(),
           method: updateSessionStream.method,
@@ -959,7 +987,7 @@ export default class Client {
       args: WithAuth<CancelSessionParameters>
     ): Promise<CancelSessionResponse> => {
       this.warnUnknownParams(args, cancelSession)
-      return this.request<CancelSessionResponse>({
+      return this.requestAgentApi<CancelSessionResponse>({
         path: cancelSession.path(args),
         method: cancelSession.method,
         query: pick(args, cancelSession.queryParams),
@@ -975,7 +1003,7 @@ export default class Client {
       args: WithAuth<QuerySessionsParameters>
     ): Promise<QuerySessionsResponse> => {
       this.warnUnknownParams(args, querySessions)
-      return this.request<QuerySessionsResponse>({
+      return this.requestAgentApi<QuerySessionsResponse>({
         path: querySessions.path(),
         method: querySessions.method,
         query: pick(args, querySessions.queryParams),
@@ -991,7 +1019,7 @@ export default class Client {
       args: WithAuth<QuerySessionEventsParameters>
     ): Promise<QuerySessionEventsResponse> => {
       this.warnUnknownParams(args, querySessionEvents)
-      return this.request<QuerySessionEventsResponse>({
+      return this.requestAgentApi<QuerySessionEventsResponse>({
         path: querySessionEvents.path(args),
         method: querySessionEvents.method,
         query: pick(args, querySessionEvents.queryParams),
