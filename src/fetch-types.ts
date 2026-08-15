@@ -12,6 +12,7 @@ export type SupportedRequestInit = {
 
 export type SupportedResponseBody = {
   getReader: () => {
+    cancel?: () => Promise<void>
     read: () => Promise<{ done: boolean; value?: Uint8Array }>
     releaseLock: () => void
   }

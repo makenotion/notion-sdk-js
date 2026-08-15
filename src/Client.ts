@@ -200,7 +200,7 @@ import {
   version as PACKAGE_VERSION,
   name as PACKAGE_NAME,
 } from "../package.json"
-import type { SupportedFetch } from "./fetch-types"
+import type { SupportedFetch, SupportedResponse } from "./fetch-types"
 
 export type RetryOptions = {
   /**
@@ -265,6 +265,14 @@ export type RequestParameters = {
       }
 }
 
+type ExecutableRequest = {
+  url: URL
+  method: Method
+  path: string
+  headers: Record<string, string>
+  body: string | FormData | undefined
+}
+
 export default class Client {
   #auth?: string
   #logLevel: LogLevel
@@ -326,13 +334,16 @@ export default class Client {
     )
     const formData = this.buildFormData(formDataParams, headers)
 
-    return this.executeWithRetry<ResponseBody>({
-      url,
-      method,
-      path,
-      headers,
-      body: bodyAsJsonString ?? formData,
-    })
+    return this.executeWithRetry<ResponseBody>(
+      {
+        url,
+        method,
+        path,
+        headers,
+        body: bodyAsJsonString ?? formData,
+      },
+      request => this.executeSingleRequest<ResponseBody>(request)
+    )
   }
 
   /**
@@ -355,19 +366,16 @@ export default class Client {
       auth,
       bodyAsJsonString
     )
-    const response = await RequestTimeoutError.rejectAfterTimeout(
-      this.#fetch(url.toString(), {
-        method: method.toUpperCase(),
+    const response = await this.executeWithRetry<SupportedResponse>(
+      {
+        url,
+        method,
+        path,
         headers,
         body: bodyAsJsonString,
-        agent: this.#agent,
-      }),
-      this.#timeoutMs
+      },
+      request => this.executeSingleStreamRequest(request)
     )
-
-    if (!response.ok) {
-      throw buildRequestError(response, await response.text())
-    }
 
     this.log(LogLevel.INFO, "stream request opened", { method, path })
 
@@ -413,7 +421,13 @@ export default class Client {
         yield parseEvent(frame)
       }
     } finally {
-      reader.releaseLock()
+      try {
+        if (!complete) {
+          await reader.cancel?.()
+        }
+      } finally {
+        reader.releaseLock()
+      }
     }
   }
 
@@ -535,19 +549,16 @@ export default class Client {
   /**
    * Executes the request with retry logic.
    */
-  private async executeWithRetry<ResponseBody extends object>(args: {
-    url: URL
-    method: Method
-    path: string
-    headers: Record<string, string>
-    body: string | FormData | undefined
-  }): Promise<ResponseBody> {
+  private async executeWithRetry<ResponseBody extends object>(
+    args: ExecutableRequest,
+    execute: (request: ExecutableRequest) => Promise<ResponseBody>
+  ): Promise<ResponseBody> {
     const { url, method, path, headers, body } = args
     let attempt = 0
     // eslint-disable-next-line no-constant-condition
     while (true) {
       try {
-        return await this.executeSingleRequest<ResponseBody>({
+        return await execute({
           url,
           method,
           path,
@@ -582,13 +593,9 @@ export default class Client {
   /**
    * Executes a single HTTP request (no retry).
    */
-  private async executeSingleRequest<ResponseBody extends object>(args: {
-    url: URL
-    method: Method
-    path: string
-    headers: Record<string, string>
-    body: string | FormData | undefined
-  }): Promise<ResponseBody> {
+  private async executeSingleRequest<ResponseBody extends object>(
+    args: ExecutableRequest
+  ): Promise<ResponseBody> {
     const { url, method, path, headers, body } = args
     const response = await RequestTimeoutError.rejectAfterTimeout(
       this.#fetch(url.toString(), {
@@ -612,6 +619,32 @@ export default class Client {
       ...this.extractRequestId(responseJson),
     })
     return responseJson
+  }
+
+  /**
+   * Opens an SSE response without consuming its body. Retry orchestration is
+   * shared with JSON requests so only the initial, retryable HTTP failures are
+   * retried; once a stream has opened, its events are never replayed.
+   */
+  private async executeSingleStreamRequest(
+    args: ExecutableRequest
+  ): Promise<SupportedResponse> {
+    const { url, method, body } = args
+    const response = await RequestTimeoutError.rejectAfterTimeout(
+      this.#fetch(url.toString(), {
+        method: method.toUpperCase(),
+        headers: args.headers,
+        body,
+        agent: this.#agent,
+      }),
+      this.#timeoutMs
+    )
+
+    if (!response.ok) {
+      throw buildRequestError(response, await response.text())
+    }
+
+    return response
   }
 
   /**

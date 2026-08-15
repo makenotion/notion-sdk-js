@@ -13,6 +13,7 @@ import {
   setupMockSequence,
   createMockFetch,
 } from "./test-utils"
+import type { SupportedFetch } from "../src/fetch-types"
 
 describe("Notion SDK Client", () => {
   it("Constructs without throwing", () => {
@@ -530,6 +531,63 @@ describe("Notion SDK Client", () => {
       )
     })
 
+    it("supports text-only fetch implementations for session streams", async () => {
+      const textOnlyFetch: jest.MockedFunction<SupportedFetch> = jest.fn()
+      textOnlyFetch.mockResolvedValue({
+        ok: true,
+        text: () =>
+          Promise.resolve(
+            'event: stream.end\ndata: {"type":"stream.end","session_id":"11111111-1111-1111-1111-111111111111","status":"completed","last_sequence":2}\n\n'
+          ),
+        headers: new Headers(),
+        status: 200,
+      })
+      const textOnlyClient = new Client({ fetch: textOnlyFetch })
+
+      const eventTypes: string[] = []
+      for await (const event of textOnlyClient.sessions.stream({
+        message: "hello",
+      })) {
+        eventTypes.push(event.type)
+      }
+
+      expect(eventTypes).toEqual(["stream.end"])
+    })
+
+    it("cancels an open session stream when the consumer stops early", async () => {
+      const encoder = new TextEncoder()
+      const cancel = jest.fn().mockResolvedValue(undefined)
+      const reader = {
+        cancel,
+        read: jest.fn().mockResolvedValue({
+          done: false,
+          value: encoder.encode(
+            'event: stream.end\ndata: {"type":"stream.end","session_id":"11111111-1111-1111-1111-111111111111","status":"completed","last_sequence":2}\n\n'
+          ),
+        }),
+        releaseLock: jest.fn(),
+      }
+      const streamingFetch: jest.MockedFunction<SupportedFetch> = jest.fn()
+      streamingFetch.mockResolvedValue({
+        ok: true,
+        text: () => Promise.resolve(""),
+        headers: new Headers(),
+        status: 200,
+        body: { getReader: () => reader },
+      })
+      const streamingClient = new Client({ fetch: streamingFetch })
+
+      for await (const event of streamingClient.sessions.stream({
+        message: "hello",
+      })) {
+        expect(event.type).toBe("stream.end")
+        break
+      }
+
+      expect(cancel).toHaveBeenCalledTimes(1)
+      expect(reader.releaseLock).toHaveBeenCalledTimes(1)
+    })
+
     it("calls sessions.cancel with correct URL and body", async () => {
       await notion.sessions.cancel({
         session_id: sessionId,
@@ -918,6 +976,33 @@ describe("Notion SDK Client", () => {
       await jest.advanceTimersByTimeAsync(5000)
       await promise
 
+      expect(mockFetch).toHaveBeenCalledTimes(2)
+    })
+
+    it("retries opening a session stream on rate limit", async () => {
+      mockFetch.mockResolvedValueOnce(
+        mockResponse("rate_limited", { retryAfter: "1" })
+      )
+      mockFetch.mockResolvedValueOnce(
+        new Response(
+          'event: stream.end\ndata: {"type":"stream.end","session_id":"11111111-1111-1111-1111-111111111111","status":"completed","last_sequence":2}\n\n'
+        )
+      )
+      const notion = new Client({ fetch: mockFetch, retry: { maxRetries: 1 } })
+
+      const eventTypes: string[] = []
+      const stream = (async () => {
+        for await (const event of notion.sessions.stream({
+          message: "hello",
+        })) {
+          eventTypes.push(event.type)
+        }
+      })()
+
+      await jest.advanceTimersByTimeAsync(1000)
+      await stream
+
+      expect(eventTypes).toEqual(["stream.end"])
       expect(mockFetch).toHaveBeenCalledTimes(2)
     })
 
