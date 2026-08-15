@@ -6,6 +6,7 @@ import {
   UnknownHTTPResponseError,
   isHTTPResponseError,
 } from "../src"
+import type { UpdateSessionStreamResponse } from "../src"
 import {
   TEST_BLOCK_ID,
   mockRawResponse,
@@ -615,6 +616,39 @@ describe("Notion SDK Client", () => {
           body: JSON.stringify({ message: "hello" }),
         })
       )
+    })
+
+    it("types streamed tool lifecycle events without tool payloads", async () => {
+      mockFetch.mockResolvedValue(
+        new Response(
+          'event: event.provisional\ndata: {"type":"event.provisional","event":{"object":"session_event","id":"tool-1:use","session_id":"11111111-1111-1111-1111-111111111111","created_at":"2026-08-15T03:36:28.649Z","type":"agent.tool_use","tool_name":"callFunction"}}\n\n'
+        )
+      )
+
+      const events: UpdateSessionStreamResponse[] = []
+      for await (const event of notion.sessions.stream({ message: "hello" })) {
+        events.push(event)
+      }
+
+      expect(events).toHaveLength(1)
+      const event = events[0]
+      if (event?.type !== "event.provisional") {
+        throw new Error("Expected a provisional session event")
+      }
+      if (event.event.type !== "agent.tool_use") {
+        throw new Error("Expected a provisional tool-use event")
+      }
+      const toolName: string = event.event.tool_name
+      expect(event.event).toEqual({
+        object: "session_event",
+        id: "tool-1:use",
+        session_id: sessionId,
+        created_at: "2026-08-15T03:36:28.649Z",
+        type: "agent.tool_use",
+        tool_name: toolName,
+      })
+      expect(event.event).not.toHaveProperty("input")
+      expect(event.event).not.toHaveProperty("output")
     })
 
     it("supports text-only fetch implementations for session streams", async () => {
