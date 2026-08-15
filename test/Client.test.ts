@@ -482,7 +482,7 @@ describe("Notion SDK Client", () => {
 
     it("exposes the complete documented custom-agent REST surface", () => {
       expect(Object.keys(notion.agents).sort()).toEqual(
-        documentedAgentClientMethods.sort()
+        [...documentedAgentClientMethods].sort()
       )
     })
 
