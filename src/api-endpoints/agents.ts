@@ -491,7 +491,7 @@ type ChatWithAgentPathParameters = {
 
 type ChatWithAgentQueryParameters = {
   // Whether to include verbose agent output (thinking, raw tool names, tool calls, and
-  // tool results). Defaults to true.
+  // tool results). Defaults to false.
   verbose?: boolean
 }
 
@@ -1687,7 +1687,7 @@ type ListThreadMessagesPathParameters = {
 
 type ListThreadMessagesQueryParameters = {
   // Whether to include verbose agent output (thinking, raw tool names, tool calls, and
-  // tool results). Defaults to true.
+  // tool results). Defaults to false.
   verbose?: boolean
   // Filter messages by role (user or agent).
   role?: "user" | "agent"
