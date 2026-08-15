@@ -651,6 +651,50 @@ describe("Notion SDK Client", () => {
       expect(event.event).not.toHaveProperty("output")
     })
 
+    it("types streamed user messages and session status metadata", async () => {
+      mockFetch.mockResolvedValue(
+        new Response(
+          'event: event.committed\ndata: {"type":"event.committed","event":{"object":"session_event","id":"event-1","session_id":"11111111-1111-1111-1111-111111111111","sequence":1,"created_at":"2026-08-15T03:36:28.649Z","type":"user.message","content":[{"type":"text","text":"hello"},{"type":"file","file_id":"22222222-2222-2222-2222-222222222222"}],"metadata":{"source":"test"}}}\n\n' +
+            'event: event.committed\ndata: {"type":"event.committed","event":{"object":"session_event","id":"event-2","session_id":"11111111-1111-1111-1111-111111111111","sequence":2,"created_at":"2026-08-15T03:36:29.649Z","type":"session.status","status":"completed","usage":{"input_tokens":10,"output_tokens":20,"total_tokens":30},"artifacts":[{"type":"page","url":"https://notion.so/page","title":"Plan"}]}}\n\n'
+        )
+      )
+
+      const events: UpdateSessionStreamResponse[] = []
+      for await (const event of notion.sessions.stream({ message: "hello" })) {
+        events.push(event)
+      }
+
+      expect(events).toHaveLength(2)
+      const userMessage = events[0]
+      if (userMessage?.type !== "event.committed") {
+        throw new Error("Expected a committed session event")
+      }
+      if (userMessage.event.type !== "user.message") {
+        throw new Error("Expected a committed user-message event")
+      }
+      expect(userMessage.event.content).toEqual([
+        { type: "text", text: "hello" },
+        { type: "file", file_id: "22222222-2222-2222-2222-222222222222" },
+      ])
+      expect(userMessage.event.metadata).toEqual({ source: "test" })
+
+      const status = events[1]
+      if (status?.type !== "event.committed") {
+        throw new Error("Expected a committed session event")
+      }
+      if (status.event.type !== "session.status") {
+        throw new Error("Expected a committed session-status event")
+      }
+      expect(status.event.usage).toEqual({
+        input_tokens: 10,
+        output_tokens: 20,
+        total_tokens: 30,
+      })
+      expect(status.event.artifacts).toEqual([
+        { type: "page", url: "https://notion.so/page", title: "Plan" },
+      ])
+    })
+
     it("supports text-only fetch implementations for session streams", async () => {
       const textOnlyFetch: jest.MockedFunction<SupportedFetch> = jest.fn()
       textOnlyFetch.mockResolvedValue({
