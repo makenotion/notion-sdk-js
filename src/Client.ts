@@ -169,6 +169,18 @@ import {
   type AgentBatchParameters,
   type AgentBatchResponse,
   agentBatch,
+  type DeleteAgentParameters,
+  type DeleteAgentResponse,
+  deleteAgent,
+  type GetAgentParameters,
+  type GetAgentResponse,
+  getAgent,
+  type GetInsightsParameters,
+  type GetInsightsResponse,
+  getInsights,
+  type QueryAgentsParameters,
+  type QueryAgentsResponse,
+  queryAgents,
   type RetrieveSessionParameters,
   type RetrieveSessionResponse,
   retrieveSession,
@@ -187,6 +199,12 @@ import {
   type QuerySessionEventsParameters,
   type QuerySessionEventsResponse,
   querySessionEvents,
+  type UpdateAgentCreditLimitParameters,
+  type UpdateAgentCreditLimitResponse,
+  updateAgentCreditLimit,
+  type UpdateAgentStatusParameters,
+  type UpdateAgentStatusResponse,
+  updateAgentStatus,
 } from "./api-endpoints"
 import {
   type CreateMeetingNoteParameters,
@@ -768,6 +786,102 @@ export default class Client {
    */
 
   public readonly agents = {
+    /**
+     * Retrieve an agent
+     */
+    retrieve: (
+      args: WithAuth<GetAgentParameters>
+    ): Promise<GetAgentResponse> => {
+      this.warnUnknownParams(args, getAgent)
+      return this.request<GetAgentResponse>({
+        path: getAgent.path(args),
+        method: getAgent.method,
+        query: pick(args, getAgent.queryParams),
+        body: pick(args, getAgent.bodyParams),
+        auth: args?.auth,
+      })
+    },
+
+    /**
+     * Query agents
+     */
+    query: (
+      args: WithAuth<QueryAgentsParameters>
+    ): Promise<QueryAgentsResponse> => {
+      this.warnUnknownParams(args, queryAgents)
+      return this.request<QueryAgentsResponse>({
+        path: queryAgents.path(),
+        method: queryAgents.method,
+        query: pick(args, queryAgents.queryParams),
+        body: pick(args, queryAgents.bodyParams),
+        auth: args?.auth,
+      })
+    },
+
+    /**
+     * Retrieve agent insights
+     */
+    retrieveInsights: (
+      args: WithAuth<GetInsightsParameters>
+    ): Promise<GetInsightsResponse> => {
+      this.warnUnknownParams(args, getInsights)
+      return this.request<GetInsightsResponse>({
+        path: getInsights.path(args),
+        method: getInsights.method,
+        query: pick(args, getInsights.queryParams),
+        body: pick(args, getInsights.bodyParams),
+        auth: args?.auth,
+      })
+    },
+
+    /**
+     * Update an agent's credit limit
+     */
+    updateCreditLimit: (
+      args: WithAuth<UpdateAgentCreditLimitParameters>
+    ): Promise<UpdateAgentCreditLimitResponse> => {
+      this.warnUnknownParams(args, updateAgentCreditLimit)
+      return this.request<UpdateAgentCreditLimitResponse>({
+        path: updateAgentCreditLimit.path(args),
+        method: updateAgentCreditLimit.method,
+        query: pick(args, updateAgentCreditLimit.queryParams),
+        body: pick(args, updateAgentCreditLimit.bodyParams),
+        auth: args?.auth,
+      })
+    },
+
+    /**
+     * Update an agent's status
+     */
+    updateStatus: (
+      args: WithAuth<UpdateAgentStatusParameters>
+    ): Promise<UpdateAgentStatusResponse> => {
+      this.warnUnknownParams(args, updateAgentStatus)
+      return this.request<UpdateAgentStatusResponse>({
+        path: updateAgentStatus.path(args),
+        method: updateAgentStatus.method,
+        query: pick(args, updateAgentStatus.queryParams),
+        body: pick(args, updateAgentStatus.bodyParams),
+        auth: args?.auth,
+      })
+    },
+
+    /**
+     * Delete an agent
+     */
+    delete: (
+      args: WithAuth<DeleteAgentParameters>
+    ): Promise<DeleteAgentResponse> => {
+      this.warnUnknownParams(args, deleteAgent)
+      return this.request<DeleteAgentResponse>({
+        path: deleteAgent.path(args),
+        method: deleteAgent.method,
+        query: pick(args, deleteAgent.queryParams),
+        body: pick(args, deleteAgent.bodyParams),
+        auth: args?.auth,
+      })
+    },
+
     /**
      * Apply many agent operations
      */

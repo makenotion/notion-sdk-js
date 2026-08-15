@@ -48,6 +48,114 @@ export type UpdateSessionStreamParameters =
 /**
  * An event emitted by a session stream.
  */
+type SessionStreamEventBase = {
+  /**
+   * Always `session_event`
+   */
+  object: "session_event"
+  id: string
+  session_id: string
+  sequence: number
+  created_at: string
+}
+
+type SessionStreamTextContent = {
+  /**
+   * Always `text`
+   */
+  type: "text"
+  text: string
+}
+
+type SessionStreamRequiredAction = {
+  action_id: string
+  title: string
+  options: Array<{
+    /**
+     * One of: `approve`, `reject`
+     */
+    id: "approve" | "reject"
+    label: string
+  }>
+}
+
+type SessionStreamError = {
+  code: string
+  message: string
+  retryable: boolean
+}
+
+type SessionStreamCommittedEvent =
+  | (SessionStreamEventBase & {
+      /**
+       * Always `agent.message`
+       */
+      type: "agent.message"
+      content: Array<SessionStreamTextContent>
+    })
+  | (SessionStreamEventBase & {
+      /**
+       * Always `agent.tool_use`
+       */
+      type: "agent.tool_use"
+      tool_name: string
+    })
+  | (SessionStreamEventBase & {
+      /**
+       * Always `agent.tool_result`
+       */
+      type: "agent.tool_result"
+      tool_use_id: string
+      tool_name: string
+      is_error: boolean
+    })
+  | (SessionStreamEventBase & {
+      /**
+       * Always `session.status`
+       */
+      type: "session.status"
+      status:
+        | "queued"
+        | "in_progress"
+        | "requires_action"
+        | "completed"
+        | "failed"
+        | "canceled"
+        | "terminated"
+      required_actions?: Array<SessionStreamRequiredAction>
+      error?: SessionStreamError
+    })
+
+type SessionStreamProvisionalEvent =
+  | {
+      /**
+       * Always `session_event`
+       */
+      object: "session_event"
+      id: string
+      session_id: string
+      created_at: string
+      /**
+       * Always `agent.message`
+       */
+      type: "agent.message"
+      content: Array<SessionStreamTextContent>
+    }
+  | {
+      /**
+       * Always `session_event`
+       */
+      object: "session_event"
+      id: string
+      session_id: string
+      created_at: string
+      /**
+       * Always `agent.tool_use`
+       */
+      type: "agent.tool_use"
+      tool_name: string
+    }
+
 export type UpdateSessionStreamResponse =
   | {
       /**
@@ -98,14 +206,14 @@ export type UpdateSessionStreamResponse =
        * Always `event.provisional`
        */
       type: "event.provisional"
-      event: unknown
+      event: SessionStreamProvisionalEvent
     }
   | {
       /**
        * Always `event.committed`
        */
       type: "event.committed"
-      event: unknown
+      event: SessionStreamCommittedEvent
     }
   | {
       /**

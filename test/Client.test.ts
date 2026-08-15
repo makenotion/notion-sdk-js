@@ -6,6 +6,7 @@ import {
   UnknownHTTPResponseError,
   isHTTPResponseError,
 } from "../src"
+import type { UpdateSessionStreamResponse } from "../src"
 import {
   TEST_BLOCK_ID,
   mockRawResponse,
@@ -14,6 +15,16 @@ import {
   createMockFetch,
 } from "./test-utils"
 import type { SupportedFetch } from "../src/fetch-types"
+
+const documentedAgentClientMethods = [
+  "batch",
+  "delete",
+  "query",
+  "retrieve",
+  "retrieveInsights",
+  "updateCreditLimit",
+  "updateStatus",
+]
 
 describe("Notion SDK Client", () => {
   it("Constructs without throwing", () => {
@@ -452,6 +463,82 @@ describe("Notion SDK Client", () => {
     })
   })
 
+  describe("agent client surface", () => {
+    const agentId = "11111111-1111-1111-1111-111111111111"
+    let mockFetch: jest.MockedFunction<SupportedFetch>
+    let notion: Client
+
+    beforeEach(() => {
+      mockFetch = jest.fn()
+      mockFetch.mockResolvedValue({
+        ok: true,
+        text: () => Promise.resolve("{}"),
+        headers: new Headers(),
+        status: 200,
+      })
+
+      notion = new Client({ fetch: mockFetch })
+    })
+
+    it("exposes the complete documented custom-agent REST surface", () => {
+      expect(Object.keys(notion.agents).sort()).toEqual(
+        [...documentedAgentClientMethods].sort()
+      )
+    })
+
+    it("calls agent discovery and governance endpoints", async () => {
+      await notion.agents.retrieve({ agent_id: agentId })
+      await notion.agents.query({})
+      await notion.agents.retrieveInsights({ agent_id: agentId })
+      await notion.agents.updateCreditLimit({
+        agent_id: agentId,
+        credit_limit: 1000,
+      })
+      await notion.agents.updateStatus({
+        agent_id: agentId,
+        status: "disabled",
+      })
+      await notion.agents.delete({ agent_id: agentId })
+
+      expect(mockFetch).toHaveBeenNthCalledWith(
+        1,
+        expect.stringContaining(`/v1/agents/${agentId}`),
+        expect.objectContaining({ method: "GET" })
+      )
+      expect(mockFetch).toHaveBeenNthCalledWith(
+        2,
+        expect.stringContaining("/v1/agents/query"),
+        expect.objectContaining({ method: "POST" })
+      )
+      expect(mockFetch).toHaveBeenNthCalledWith(
+        3,
+        expect.stringContaining(`/v1/agents/${agentId}/insights`),
+        expect.objectContaining({ method: "GET" })
+      )
+      expect(mockFetch).toHaveBeenNthCalledWith(
+        4,
+        expect.stringContaining(`/v1/agents/${agentId}/credit_limit`),
+        expect.objectContaining({
+          method: "PATCH",
+          body: JSON.stringify({ credit_limit: 1000 }),
+        })
+      )
+      expect(mockFetch).toHaveBeenNthCalledWith(
+        5,
+        expect.stringContaining(`/v1/agents/${agentId}/status`),
+        expect.objectContaining({
+          method: "PATCH",
+          body: JSON.stringify({ status: "disabled" }),
+        })
+      )
+      expect(mockFetch).toHaveBeenNthCalledWith(
+        6,
+        expect.stringContaining(`/v1/agents/${agentId}`),
+        expect.objectContaining({ method: "DELETE" })
+      )
+    })
+  })
+
   describe("session endpoints", () => {
     const sessionId = "11111111-1111-1111-1111-111111111111"
     let mockFetch: jest.MockedFn<typeof fetch>
@@ -529,6 +616,39 @@ describe("Notion SDK Client", () => {
           body: JSON.stringify({ message: "hello" }),
         })
       )
+    })
+
+    it("types streamed tool lifecycle events without tool payloads", async () => {
+      mockFetch.mockResolvedValue(
+        new Response(
+          'event: event.provisional\ndata: {"type":"event.provisional","event":{"object":"session_event","id":"tool-1:use","session_id":"11111111-1111-1111-1111-111111111111","created_at":"2026-08-15T03:36:28.649Z","type":"agent.tool_use","tool_name":"callFunction"}}\n\n'
+        )
+      )
+
+      const events: UpdateSessionStreamResponse[] = []
+      for await (const event of notion.sessions.stream({ message: "hello" })) {
+        events.push(event)
+      }
+
+      expect(events).toHaveLength(1)
+      const event = events[0]
+      if (event?.type !== "event.provisional") {
+        throw new Error("Expected a provisional session event")
+      }
+      if (event.event.type !== "agent.tool_use") {
+        throw new Error("Expected a provisional tool-use event")
+      }
+      const toolName: string = event.event.tool_name
+      expect(event.event).toEqual({
+        object: "session_event",
+        id: "tool-1:use",
+        session_id: sessionId,
+        created_at: "2026-08-15T03:36:28.649Z",
+        type: "agent.tool_use",
+        tool_name: toolName,
+      })
+      expect(event.event).not.toHaveProperty("input")
+      expect(event.event).not.toHaveProperty("output")
     })
 
     it("supports text-only fetch implementations for session streams", async () => {
