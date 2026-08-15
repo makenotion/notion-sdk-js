@@ -15,6 +15,16 @@ import {
 } from "./test-utils"
 import type { SupportedFetch } from "../src/fetch-types"
 
+const documentedAgentClientMethods = [
+  "batch",
+  "delete",
+  "query",
+  "retrieve",
+  "retrieveInsights",
+  "updateCreditLimit",
+  "updateStatus",
+]
+
 describe("Notion SDK Client", () => {
   it("Constructs without throwing", () => {
     new Client({ auth: "foo" })
@@ -448,6 +458,82 @@ describe("Notion SDK Client", () => {
             ],
           }),
         })
+      )
+    })
+  })
+
+  describe("agent client surface", () => {
+    const agentId = "11111111-1111-1111-1111-111111111111"
+    let mockFetch: jest.MockedFunction<SupportedFetch>
+    let notion: Client
+
+    beforeEach(() => {
+      mockFetch = jest.fn()
+      mockFetch.mockResolvedValue({
+        ok: true,
+        text: () => Promise.resolve("{}"),
+        headers: new Headers(),
+        status: 200,
+      })
+
+      notion = new Client({ fetch: mockFetch })
+    })
+
+    it("exposes the complete documented custom-agent REST surface", () => {
+      expect(Object.keys(notion.agents).sort()).toEqual(
+        documentedAgentClientMethods.sort()
+      )
+    })
+
+    it("calls agent discovery and governance endpoints", async () => {
+      await notion.agents.retrieve({ agent_id: agentId })
+      await notion.agents.query({})
+      await notion.agents.retrieveInsights({ agent_id: agentId })
+      await notion.agents.updateCreditLimit({
+        agent_id: agentId,
+        credit_limit: 1000,
+      })
+      await notion.agents.updateStatus({
+        agent_id: agentId,
+        status: "disabled",
+      })
+      await notion.agents.delete({ agent_id: agentId })
+
+      expect(mockFetch).toHaveBeenNthCalledWith(
+        1,
+        expect.stringContaining(`/v1/agents/${agentId}`),
+        expect.objectContaining({ method: "GET" })
+      )
+      expect(mockFetch).toHaveBeenNthCalledWith(
+        2,
+        expect.stringContaining("/v1/agents/query"),
+        expect.objectContaining({ method: "POST" })
+      )
+      expect(mockFetch).toHaveBeenNthCalledWith(
+        3,
+        expect.stringContaining(`/v1/agents/${agentId}/insights`),
+        expect.objectContaining({ method: "GET" })
+      )
+      expect(mockFetch).toHaveBeenNthCalledWith(
+        4,
+        expect.stringContaining(`/v1/agents/${agentId}/credit_limit`),
+        expect.objectContaining({
+          method: "PATCH",
+          body: JSON.stringify({ credit_limit: 1000 }),
+        })
+      )
+      expect(mockFetch).toHaveBeenNthCalledWith(
+        5,
+        expect.stringContaining(`/v1/agents/${agentId}/status`),
+        expect.objectContaining({
+          method: "PATCH",
+          body: JSON.stringify({ status: "disabled" }),
+        })
+      )
+      expect(mockFetch).toHaveBeenNthCalledWith(
+        6,
+        expect.stringContaining(`/v1/agents/${agentId}`),
+        expect.objectContaining({ method: "DELETE" })
       )
     })
   })
