@@ -166,6 +166,27 @@ import {
   type GetAsyncTaskParameters,
   type GetAsyncTaskResponse,
   getAsyncTask,
+  type AgentBatchParameters,
+  type AgentBatchResponse,
+  agentBatch,
+  type RetrieveSessionParameters,
+  type RetrieveSessionResponse,
+  retrieveSession,
+  type UpdateSessionParameters,
+  type UpdateSessionResponse,
+  updateSession,
+  type UpdateSessionStreamParameters,
+  type UpdateSessionStreamResponse,
+  updateSessionStream,
+  type CancelSessionParameters,
+  type CancelSessionResponse,
+  cancelSession,
+  type QuerySessionsParameters,
+  type QuerySessionsResponse,
+  querySessions,
+  type QuerySessionEventsParameters,
+  type QuerySessionEventsResponse,
+  querySessionEvents,
 } from "./api-endpoints"
 import {
   type CreateMeetingNoteParameters,
@@ -179,7 +200,7 @@ import {
   version as PACKAGE_VERSION,
   name as PACKAGE_NAME,
 } from "../package.json"
-import type { SupportedFetch } from "./fetch-types"
+import type { SupportedFetch, SupportedResponse } from "./fetch-types"
 
 export type RetryOptions = {
   /**
@@ -244,6 +265,14 @@ export type RequestParameters = {
       }
 }
 
+type ExecutableRequest = {
+  url: URL
+  method: Method
+  path: string
+  headers: Record<string, string>
+  body: string | FormData | undefined
+}
+
 export default class Client {
   #auth?: string
   #logLevel: LogLevel
@@ -305,13 +334,101 @@ export default class Client {
     )
     const formData = this.buildFormData(formDataParams, headers)
 
-    return this.executeWithRetry<ResponseBody>({
-      url,
-      method,
-      path,
-      headers,
-      body: bodyAsJsonString ?? formData,
-    })
+    return this.executeWithRetry<ResponseBody>(
+      {
+        url,
+        method,
+        path,
+        headers,
+        body: bodyAsJsonString ?? formData,
+      },
+      request => this.executeSingleRequest<ResponseBody>(request)
+    )
+  }
+
+  /**
+   * Opens an SSE response and yields each parsed event as it arrives.
+   */
+  private async *streamRequest<ResponseBody>(
+    args: RequestParameters,
+    parseEvent: (frame: SseFrame) => ResponseBody
+  ): AsyncIterable<ResponseBody> {
+    const { path, method, query, body, auth } = args
+
+    validateRequestPath(path)
+
+    this.log(LogLevel.INFO, "stream request start", { method, path })
+
+    const url = this.buildRequestUrl(path, query)
+    const bodyAsJsonString = this.serializeBody(body)
+    const headers = this.buildRequestHeaders(
+      args.headers,
+      auth,
+      bodyAsJsonString
+    )
+    const response = await this.executeWithRetry<SupportedResponse>(
+      {
+        url,
+        method,
+        path,
+        headers,
+        body: bodyAsJsonString,
+      },
+      request => this.executeSingleStreamRequest(request)
+    )
+
+    this.log(LogLevel.INFO, "stream request opened", { method, path })
+
+    if (response.body === undefined || response.body === null) {
+      for (const frame of takeSseFrames({
+        content: await response.text(),
+        complete: true,
+      }).frames) {
+        yield parseEvent(frame)
+      }
+      return
+    }
+
+    const reader = response.body.getReader()
+    const decoder = new TextDecoder()
+    let remaining = ""
+    let complete = false
+    try {
+      while (!complete) {
+        const { done, value } = await reader.read()
+        if (done) {
+          complete = true
+          continue
+        }
+        if (value === undefined) {
+          throw new Error("SSE response body ended without a data chunk.")
+        }
+
+        const frames = takeSseFrames({
+          content: `${remaining}${decoder.decode(value, { stream: true })}`,
+          complete: false,
+        })
+        remaining = frames.remaining
+        for (const frame of frames.frames) {
+          yield parseEvent(frame)
+        }
+      }
+
+      for (const frame of takeSseFrames({
+        content: `${remaining}${decoder.decode()}`,
+        complete: true,
+      }).frames) {
+        yield parseEvent(frame)
+      }
+    } finally {
+      try {
+        if (!complete) {
+          await reader.cancel?.()
+        }
+      } finally {
+        reader.releaseLock()
+      }
+    }
   }
 
   /**
@@ -432,19 +549,16 @@ export default class Client {
   /**
    * Executes the request with retry logic.
    */
-  private async executeWithRetry<ResponseBody extends object>(args: {
-    url: URL
-    method: Method
-    path: string
-    headers: Record<string, string>
-    body: string | FormData | undefined
-  }): Promise<ResponseBody> {
+  private async executeWithRetry<ResponseBody extends object>(
+    args: ExecutableRequest,
+    execute: (request: ExecutableRequest) => Promise<ResponseBody>
+  ): Promise<ResponseBody> {
     const { url, method, path, headers, body } = args
     let attempt = 0
     // eslint-disable-next-line no-constant-condition
     while (true) {
       try {
-        return await this.executeSingleRequest<ResponseBody>({
+        return await execute({
           url,
           method,
           path,
@@ -479,13 +593,9 @@ export default class Client {
   /**
    * Executes a single HTTP request (no retry).
    */
-  private async executeSingleRequest<ResponseBody extends object>(args: {
-    url: URL
-    method: Method
-    path: string
-    headers: Record<string, string>
-    body: string | FormData | undefined
-  }): Promise<ResponseBody> {
+  private async executeSingleRequest<ResponseBody extends object>(
+    args: ExecutableRequest
+  ): Promise<ResponseBody> {
     const { url, method, path, headers, body } = args
     const response = await RequestTimeoutError.rejectAfterTimeout(
       this.#fetch(url.toString(), {
@@ -509,6 +619,32 @@ export default class Client {
       ...this.extractRequestId(responseJson),
     })
     return responseJson
+  }
+
+  /**
+   * Opens an SSE response without consuming its body. Retry orchestration is
+   * shared with JSON requests so only the initial, retryable HTTP failures are
+   * retried; once a stream has opened, its events are never replayed.
+   */
+  private async executeSingleStreamRequest(
+    args: ExecutableRequest
+  ): Promise<SupportedResponse> {
+    const { url, method, body } = args
+    const response = await RequestTimeoutError.rejectAfterTimeout(
+      this.#fetch(url.toString(), {
+        method: method.toUpperCase(),
+        headers: args.headers,
+        body,
+        agent: this.#agent,
+      }),
+      this.#timeoutMs
+    )
+
+    if (!response.ok) {
+      throw buildRequestError(response, await response.text())
+    }
+
+    return response
   }
 
   /**
@@ -630,6 +766,126 @@ export default class Client {
   /*
    * Notion API endpoints
    */
+
+  public readonly agents = {
+    /**
+     * Apply many agent operations
+     */
+    batch: (
+      args: WithAuth<AgentBatchParameters>
+    ): Promise<AgentBatchResponse> => {
+      this.warnUnknownParams(args, agentBatch)
+      return this.request<AgentBatchResponse>({
+        path: agentBatch.path(),
+        method: agentBatch.method,
+        query: pick(args, agentBatch.queryParams),
+        body: pick(args, agentBatch.bodyParams),
+        auth: args?.auth,
+      })
+    },
+  }
+
+  public readonly sessions = {
+    /**
+     * Retrieve a session
+     */
+    retrieve: (
+      args: WithAuth<RetrieveSessionParameters>
+    ): Promise<RetrieveSessionResponse> => {
+      this.warnUnknownParams(args, retrieveSession)
+      return this.request<RetrieveSessionResponse>({
+        path: retrieveSession.path(args),
+        method: retrieveSession.method,
+        query: pick(args, retrieveSession.queryParams),
+        body: pick(args, retrieveSession.bodyParams),
+        auth: args?.auth,
+      })
+    },
+
+    /**
+     * Update a session
+     */
+    update: (
+      args: WithAuth<UpdateSessionParameters>
+    ): Promise<UpdateSessionResponse> => {
+      this.warnUnknownParams(args, updateSession)
+      return this.request<UpdateSessionResponse>({
+        path: updateSession.path(),
+        method: updateSession.method,
+        query: pick(args, updateSession.queryParams),
+        body: pick(args, updateSession.bodyParams),
+        auth: args?.auth,
+      })
+    },
+
+    /**
+     * Open a session stream
+     */
+    stream: (
+      args: WithAuth<UpdateSessionStreamParameters>
+    ): AsyncIterable<UpdateSessionStreamResponse> => {
+      this.warnUnknownParams(args, updateSessionStream)
+      return this.streamRequest(
+        {
+          path: updateSessionStream.path(),
+          method: updateSessionStream.method,
+          query: pick(args, updateSessionStream.queryParams),
+          body: pick(args, updateSessionStream.bodyParams),
+          headers: updateSessionStream.headers,
+          auth: args?.auth,
+        },
+        parseSessionStreamEvent
+      )
+    },
+
+    /**
+     * Cancel a session
+     */
+    cancel: (
+      args: WithAuth<CancelSessionParameters>
+    ): Promise<CancelSessionResponse> => {
+      this.warnUnknownParams(args, cancelSession)
+      return this.request<CancelSessionResponse>({
+        path: cancelSession.path(args),
+        method: cancelSession.method,
+        query: pick(args, cancelSession.queryParams),
+        body: pick(args, cancelSession.bodyParams),
+        auth: args?.auth,
+      })
+    },
+
+    /**
+     * Query sessions
+     */
+    query: (
+      args: WithAuth<QuerySessionsParameters>
+    ): Promise<QuerySessionsResponse> => {
+      this.warnUnknownParams(args, querySessions)
+      return this.request<QuerySessionsResponse>({
+        path: querySessions.path(),
+        method: querySessions.method,
+        query: pick(args, querySessions.queryParams),
+        body: pick(args, querySessions.bodyParams),
+        auth: args?.auth,
+      })
+    },
+
+    /**
+     * Query session events
+     */
+    queryEvents: (
+      args: WithAuth<QuerySessionEventsParameters>
+    ): Promise<QuerySessionEventsResponse> => {
+      this.warnUnknownParams(args, querySessionEvents)
+      return this.request<QuerySessionEventsResponse>({
+        path: querySessionEvents.path(args),
+        method: querySessionEvents.method,
+        query: pick(args, querySessionEvents.queryParams),
+        body: pick(args, querySessionEvents.bodyParams),
+        auth: args?.auth,
+      })
+    },
+  }
 
   public readonly asyncTasks = {
     /**
@@ -1524,6 +1780,96 @@ export default class Client {
     }
     return headers
   }
+}
+
+type SseFrame = {
+  eventName: string
+  data: string
+}
+
+const sessionStreamEventTypes = new Set<string>([
+  "session.snapshot",
+  "event.provisional",
+  "event.committed",
+  "stream.timeout",
+  "stream.end",
+  "stream.error",
+])
+
+function takeSseFrames(args: { content: string; complete: boolean }): {
+  frames: SseFrame[]
+  remaining: string
+} {
+  const frames: SseFrame[] = []
+  let remaining = args.content.replace(/\r\n/g, "\n")
+
+  let boundary = remaining.indexOf("\n\n")
+  while (boundary !== -1) {
+    const frame = parseSseFrame(remaining.slice(0, boundary))
+    if (frame !== undefined) {
+      frames.push(frame)
+    }
+    remaining = remaining.slice(boundary + 2)
+    boundary = remaining.indexOf("\n\n")
+  }
+
+  if (args.complete && remaining !== "") {
+    const frame = parseSseFrame(remaining)
+    if (frame !== undefined) {
+      frames.push(frame)
+    }
+    remaining = ""
+  }
+
+  return { frames, remaining }
+}
+
+function parseSseFrame(content: string): SseFrame | undefined {
+  let eventName: string | undefined
+  const dataLines: string[] = []
+
+  for (const line of content.split("\n")) {
+    if (line.startsWith(":")) {
+      continue
+    }
+
+    const colonIndex = line.indexOf(":")
+    if (colonIndex === -1) {
+      continue
+    }
+
+    const field = line.slice(0, colonIndex)
+    const valueStart =
+      line.charAt(colonIndex + 1) === " " ? colonIndex + 2 : colonIndex + 1
+    const value = line.slice(valueStart)
+    if (field === "event") {
+      eventName = value
+    } else if (field === "data") {
+      dataLines.push(value)
+    }
+  }
+
+  if (dataLines.length === 0) {
+    return undefined
+  }
+  if (eventName === undefined) {
+    throw new Error("Session stream event is missing its SSE event name.")
+  }
+
+  return { eventName, data: dataLines.join("\n") }
+}
+
+function parseSessionStreamEvent(frame: SseFrame): UpdateSessionStreamResponse {
+  const event: UpdateSessionStreamResponse = JSON.parse(frame.data)
+  if (
+    typeof event !== "object" ||
+    event === null ||
+    !sessionStreamEventTypes.has(event.type) ||
+    event.type !== frame.eventName
+  ) {
+    throw new Error("Session stream event does not match its SSE event name.")
+  }
+  return event
 }
 
 /*
