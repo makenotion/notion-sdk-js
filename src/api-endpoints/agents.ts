@@ -67,6 +67,18 @@ type SessionStreamTextContent = {
   text: string
 }
 
+type SessionStreamFileContent = {
+  /**
+   * Always `file`
+   */
+  type: "file"
+  file_id: string
+}
+
+type SessionStreamContentBlock =
+  | SessionStreamTextContent
+  | SessionStreamFileContent
+
 type SessionStreamRequiredAction = {
   action_id: string
   title: string
@@ -85,7 +97,39 @@ type SessionStreamError = {
   retryable: boolean
 }
 
+type SessionStreamUsage = {
+  input_tokens?: number
+  output_tokens?: number
+  total_tokens: number
+}
+
+type SessionStreamArtifact =
+  | {
+      /**
+       * Always `page`
+       */
+      type: "page"
+      url: string
+      title: string
+    }
+  | {
+      /**
+       * Always `html_artifact`
+       */
+      type: "html_artifact"
+      url: string
+      page_url: string
+    }
+
 type SessionStreamCommittedEvent =
+  | (SessionStreamEventBase & {
+      /**
+       * Always `user.message`
+       */
+      type: "user.message"
+      content: Array<SessionStreamContentBlock>
+      metadata?: Record<string, string>
+    })
   | (SessionStreamEventBase & {
       /**
        * Always `agent.message`
@@ -124,6 +168,8 @@ type SessionStreamCommittedEvent =
         | "terminated"
       required_actions?: Array<SessionStreamRequiredAction>
       error?: SessionStreamError
+      usage?: SessionStreamUsage
+      artifacts?: Array<SessionStreamArtifact>
     })
 
 type SessionStreamProvisionalEvent =
