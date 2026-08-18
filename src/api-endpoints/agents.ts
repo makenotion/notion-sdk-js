@@ -710,7 +710,7 @@ export type GetAgentParameters = GetAgentPathParameters &
 export type GetAgentResponse = {
   // Always `agent`
   object: "agent"
-  id: IdResponse
+  id: IdResponse | "notion_ai"
   // What kind of agent this is: "notion_ai" is the personal agent; "custom_agent" is a
   // standalone agent you chat with; "autofill_custom_agent" fills a database property;
   // "external" runs through an external provider.
@@ -1286,7 +1286,7 @@ export type ListAgentsResponse = {
   results: Array<{
     // Always `agent`
     object: "agent"
-    id: IdResponse
+    id: IdResponse | "notion_ai"
     // Agent kind: the Notion AI personal agent, a custom agent, a database autofill custom
     // agent, or an external agent.
     agent_type:
@@ -2713,8 +2713,8 @@ export type QueryAgentsResponse = {
     | {
         // Always `agent`
         object: "agent"
-        // Always `33333333-3333-3333-3333-333333333333`
-        id: "33333333-3333-3333-3333-333333333333"
+        // Always `notion_ai`
+        id: "notion_ai"
         // Always `notion_ai`
         agent_type: "notion_ai"
         // Always `Notion Agent`
