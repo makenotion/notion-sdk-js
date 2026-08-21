@@ -517,6 +517,10 @@ const notion = new Client({
 })
 ```
 
+The `agents` and `sessions` client APIs always send `2026-03-11`, including
+streaming session requests. Other APIs continue to use the client-wide default
+unless you set `notionVersion` explicitly.
+
 Key changes in `2026-03-11`:
 
 - **Block positioning**: The `after` parameter on `appendBlockChildren` is replaced by `position`, which supports `after_block`, `start`, and `end`.

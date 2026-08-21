@@ -449,6 +449,9 @@ describe("Notion SDK Client", () => {
         expect.stringContaining("/v1/agents/batch"),
         expect.objectContaining({
           method: "POST",
+          headers: expect.objectContaining({
+            "Notion-Version": "2026-03-11",
+          }),
           body: JSON.stringify({
             operations: [
               {
@@ -611,6 +614,7 @@ describe("Notion SDK Client", () => {
           method: "POST",
           headers: expect.objectContaining({
             Accept: "text/event-stream",
+            "Notion-Version": "2026-03-11",
             "content-type": "application/json",
           }),
           body: JSON.stringify({ message: "hello" }),
