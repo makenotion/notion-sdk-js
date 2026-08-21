@@ -591,7 +591,7 @@ describe("Notion SDK Client", () => {
           )
           controller.enqueue(
             encoder.encode(
-              'event: stream.end\ndata: {"type":"stream.end","session_id":"11111111-1111-1111-1111-111111111111","status":"completed","last_sequence":2}\n\n'
+              'event: stream.end\ndata: {"type":"stream.end","session_id":"11111111-1111-1111-1111-111111111111","status":"completed"}\n\n'
             )
           )
           controller.close()
@@ -701,7 +701,7 @@ describe("Notion SDK Client", () => {
         ok: true,
         text: () =>
           Promise.resolve(
-            'event: stream.end\ndata: {"type":"stream.end","session_id":"11111111-1111-1111-1111-111111111111","status":"completed","last_sequence":2}\n\n'
+            'event: stream.end\ndata: {"type":"stream.end","session_id":"11111111-1111-1111-1111-111111111111","status":"completed"}\n\n'
           ),
         headers: new Headers(),
         status: 200,
@@ -726,7 +726,7 @@ describe("Notion SDK Client", () => {
         read: jest.fn().mockResolvedValue({
           done: false,
           value: encoder.encode(
-            'event: stream.end\ndata: {"type":"stream.end","session_id":"11111111-1111-1111-1111-111111111111","status":"completed","last_sequence":2}\n\n'
+            'event: stream.end\ndata: {"type":"stream.end","session_id":"11111111-1111-1111-1111-111111111111","status":"completed"}\n\n'
           ),
         }),
         releaseLock: jest.fn(),
@@ -1149,7 +1149,7 @@ describe("Notion SDK Client", () => {
       )
       mockFetch.mockResolvedValueOnce(
         new Response(
-          'event: stream.end\ndata: {"type":"stream.end","session_id":"11111111-1111-1111-1111-111111111111","status":"completed","last_sequence":2}\n\n'
+          'event: stream.end\ndata: {"type":"stream.end","session_id":"11111111-1111-1111-1111-111111111111","status":"completed"}\n\n'
         )
       )
       const notion = new Client({ fetch: mockFetch, retry: { maxRetries: 1 } })
