@@ -462,8 +462,8 @@ type ChatWithAgentPathParameters = {
 }
 
 type ChatWithAgentQueryParameters = {
-  // Whether to include verbose agent output (thinking, raw tool names, tool calls, and
-  // tool results). Defaults to true.
+  // Whether to include agent thinking and structured message content parts. Defaults to
+  // false.
   verbose?: boolean
 }
 
@@ -1658,8 +1658,8 @@ type ListThreadMessagesPathParameters = {
 }
 
 type ListThreadMessagesQueryParameters = {
-  // Whether to include verbose agent output (thinking, raw tool names, tool calls, and
-  // tool results). Defaults to true.
+  // Whether to include agent thinking and structured message content parts. Defaults to
+  // false.
   verbose?: boolean
   // Filter messages by role (user or agent).
   role?: "user" | "agent"
@@ -1716,7 +1716,6 @@ export type ListThreadMessagesResponse = {
           type: "tool_call"
           tool_call_id: string | null
           tool_name: string
-          input: string
           results?: Array<{
             id: IdResponse
             agent_step_id: IdResponse | null
@@ -1724,9 +1723,6 @@ export type ListThreadMessagesResponse = {
             tool_name: string
             tool_type: string
             state: string
-            input: Record<string, never> | null
-            output: Record<string, never> | null
-            error: string | null
             started_at: number
             finished_at: number | null
             duration_ms: number | null
@@ -4375,7 +4371,7 @@ type QueryThreadMessagesPathParameters = {
 }
 
 type QueryThreadMessagesBodyParameters = {
-  // Whether to include thinking, raw tool names, tool calls, and tool results. Defaults to
+  // Whether to include agent thinking and structured message content parts. Defaults to
   // false.
   verbose?: boolean
   // Opaque continuation cursor from the previous page.
@@ -4430,7 +4426,6 @@ export type QueryThreadMessagesResponse = {
           type: "tool_call"
           tool_call_id: string | null
           tool_name: string
-          input: string
           results?: Array<{
             id: IdResponse
             agent_step_id: IdResponse | null
@@ -4438,9 +4433,6 @@ export type QueryThreadMessagesResponse = {
             tool_name: string
             tool_type: string
             state: string
-            input: Record<string, never> | null
-            output: Record<string, never> | null
-            error: string | null
             started_at: number
             finished_at: number | null
             duration_ms: number | null
