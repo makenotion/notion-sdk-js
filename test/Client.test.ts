@@ -22,6 +22,7 @@ const documentedAgentClientMethods = [
   "query",
   "retrieve",
   "retrieveInsights",
+  "update",
   "updateCreditLimit",
   "updateStatus",
 ]
@@ -535,6 +536,28 @@ describe("Notion SDK Client", () => {
         6,
         expect.stringContaining(`/v1/agents/${agentId}`),
         expect.objectContaining({ method: "DELETE" })
+      )
+    })
+
+    it("calls agents.update with only the supplied writable fields", async () => {
+      await notion.agents.update({ agent_id: agentId, name: "Renamed" })
+      await notion.agents.update({ agent_id: agentId, is_favorited: true })
+
+      expect(mockFetch).toHaveBeenNthCalledWith(
+        1,
+        expect.stringContaining(`/v1/agents/${agentId}`),
+        expect.objectContaining({
+          method: "PATCH",
+          body: JSON.stringify({ name: "Renamed" }),
+        })
+      )
+      expect(mockFetch).toHaveBeenNthCalledWith(
+        2,
+        expect.stringContaining(`/v1/agents/${agentId}`),
+        expect.objectContaining({
+          method: "PATCH",
+          body: JSON.stringify({ is_favorited: true }),
+        })
       )
     })
   })

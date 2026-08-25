@@ -16,6 +16,7 @@
     "is_toggleable",
     "typecheck",
     "retryable",
+    "favorited",
     "HMAC"
   ],
   // flagWords - list of words to be always considered incorrect
