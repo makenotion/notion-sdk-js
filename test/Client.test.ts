@@ -22,6 +22,7 @@ const documentedAgentClientMethods = [
   "query",
   "retrieve",
   "retrieveInsights",
+  "update",
   "updateCreditLimit",
   "updateStatus",
 ]
@@ -535,6 +536,40 @@ describe("Notion SDK Client", () => {
         6,
         expect.stringContaining(`/v1/agents/${agentId}`),
         expect.objectContaining({ method: "DELETE" })
+      )
+    })
+
+    it("calls the agent update endpoint with a pinned model", async () => {
+      await notion.agents.update({
+        agent_id: agentId,
+        name: "Renamed agent",
+        model: { mode: "pinned", id: "claude-sonnet-5" },
+      })
+
+      expect(mockFetch).toHaveBeenCalledWith(
+        expect.stringContaining(`/v1/agents/${agentId}`),
+        expect.objectContaining({
+          method: "PATCH",
+          body: JSON.stringify({
+            name: "Renamed agent",
+            model: { mode: "pinned", id: "claude-sonnet-5" },
+          }),
+        })
+      )
+    })
+
+    it("calls the agent update endpoint with automatic model selection", async () => {
+      await notion.agents.update({
+        agent_id: agentId,
+        model: { mode: "auto" },
+      })
+
+      expect(mockFetch).toHaveBeenCalledWith(
+        expect.stringContaining(`/v1/agents/${agentId}`),
+        expect.objectContaining({
+          method: "PATCH",
+          body: JSON.stringify({ model: { mode: "auto" } }),
+        })
       )
     })
   })
