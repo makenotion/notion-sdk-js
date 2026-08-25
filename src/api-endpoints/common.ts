@@ -2163,6 +2163,16 @@ type BlockObjectWithSingleLevelOfChildrenRequest =
       object?: "block"
     }
   | {
+      column_list: ColumnListRequestWithoutGrandchildren
+      type?: "column_list"
+      object?: "block"
+    }
+  | {
+      column: ColumnRequestWithoutGrandchildren
+      type?: "column"
+      object?: "block"
+    }
+  | {
       to_do: {
         rich_text: Array<RichTextItemRequest>
         color?: ApiColor
@@ -2211,6 +2221,23 @@ type ColumnWithChildrenRequest = {
   // Ratio between 0 and 1 of the width of this column relative to all columns in the list.
   // If not provided, uses an equal width.
   width_ratio?: number
+}
+
+type ColumnListRequestWithoutGrandchildren = {
+  children: Array<ColumnBlockRequestWithoutGrandchildren>
+}
+
+type ColumnRequestWithoutGrandchildren = {
+  children: Array<BlockObjectRequestWithoutChildren>
+  // Ratio between 0 and 1 of the width of this column relative to all columns in the list.
+  // If not provided, uses an equal width.
+  width_ratio?: number
+}
+
+type ColumnBlockRequestWithoutGrandchildren = {
+  column: ColumnRequestWithoutGrandchildren
+  type?: "column"
+  object?: "block"
 }
 
 export type ContentWithExpressionRequest = { expression: string }
