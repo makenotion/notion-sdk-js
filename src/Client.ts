@@ -175,6 +175,9 @@ import {
   type GetAgentParameters,
   type GetAgentResponse,
   getAgent,
+  type UpdateAgentParameters,
+  type UpdateAgentResponse,
+  updateAgent,
   type GetInsightsParameters,
   type GetInsightsResponse,
   getInsights,
@@ -798,6 +801,22 @@ export default class Client {
         method: getAgent.method,
         query: pick(args, getAgent.queryParams),
         body: pick(args, getAgent.bodyParams),
+        auth: args?.auth,
+      })
+    },
+
+    /**
+     * Update an agent
+     */
+    update: (
+      args: WithAuth<UpdateAgentParameters>
+    ): Promise<UpdateAgentResponse> => {
+      this.warnUnknownParams(args, updateAgent)
+      return this.request<UpdateAgentResponse>({
+        path: updateAgent.path(args),
+        method: updateAgent.method,
+        query: pick(args, updateAgent.queryParams),
+        body: pick(args, updateAgent.bodyParams),
         auth: args?.auth,
       })
     },

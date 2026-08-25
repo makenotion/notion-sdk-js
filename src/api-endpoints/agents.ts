@@ -1070,6 +1070,428 @@ export const getAgent = {
   path: (p: GetAgentPathParameters): string => `agents/${p.agent_id}`,
 } as const
 
+type UpdateAgentPathParameters = {
+  // The agent ID (a UUID), or `notion_ai` for the personal agent. Endpoint-specific
+  // restrictions still apply.
+  agent_id: IdRequest | "notion_ai" | "33333333-3333-3333-3333-333333333333"
+}
+
+type UpdateAgentBodyParameters = {
+  // The agent's display name.
+  name?: string
+  // Whether this agent is in the personal access token owner's favorites. This field can
+  // only be updated with a personal access token.
+  is_favorited?: boolean
+  // The model selection. Use auto to let Notion choose, or pinned with an available public
+  // model ID.
+  model?:
+    | {
+        // Let Notion select the model for each run.
+        mode: "auto"
+      }
+    | {
+        // Always `pinned`
+        mode: "pinned"
+        // A public model ID, such as `claude-sonnet-5`. It must currently be available to the
+        // caller in this workspace.
+        id: string
+      }
+}
+
+export type UpdateAgentParameters = UpdateAgentPathParameters &
+  UpdateAgentBodyParameters
+
+export type UpdateAgentResponse = {
+  // Always `agent`
+  object: "agent"
+  id: IdResponse
+  // What kind of agent this is: "notion_ai" is the personal agent; "custom_agent" is a
+  // standalone agent you chat with; "autofill_custom_agent" fills a database property;
+  // "external" runs through an external provider.
+  agent_type:
+    | "notion_ai"
+    | "custom_agent"
+    | "autofill_custom_agent"
+    | "external"
+  name: string
+  description: string | null
+  instructions_page_id: IdResponse | null
+  icon:
+    | PageIconResponse
+    | {
+        // Type of icon. In this case, a custom agent avatar.
+        type: "custom_agent_avatar"
+        // The static and animated URLs for the agent avatar.
+        custom_agent_avatar: {
+          // The URL of the static custom agent avatar.
+          static_url: string
+          // The URL of the animated custom agent avatar.
+          animated_url: string
+        }
+      }
+    | null
+  // The model the agent runs on: auto (Notion selects) or a pinned model.
+  model:
+    | {
+        // Always `auto`
+        mode: "auto"
+      }
+    | {
+        // Always `pinned`
+        mode: "pinned"
+        // The public model this agent maps to (e.g. "claude-sonnet-5"), or null for a
+        // pre-release / early-access model.
+        id: string | null
+      }
+  // Integrations the agent is connected to (Notion, Slack, Discord, MCP servers, and other
+  // connectors), each with an account and per-target permissions.
+  connections: Array<
+    | {
+        // Always `notion`
+        type: "notion"
+        name: string
+        account: null
+        permissions: Array<{
+          target:
+            | {
+                // Always `page`
+                type: "page"
+                id: string
+              }
+            | {
+                // Always `database_property`
+                type: "database_property"
+                data_source_id: string
+                property_id: string
+              }
+            | {
+                // Always `agent`
+                type: "agent"
+                id: string
+              }
+            | {
+                // Always `workspace`
+                type: "workspace"
+              }
+            | {
+                // Always `owner_private_pages`
+                type: "owner_private_pages"
+              }
+            | {
+                // Always `web_search`
+                type: "web_search"
+                // Domains web search is restricted to, or null when unrestricted.
+                allowed_domains: Array<string> | null
+              }
+            | {
+                // Always `notion_help_docs_search`
+                type: "notion_help_docs_search"
+              }
+          // Content roles ("reader" | "comment_only" | "read_and_write" | "editor") for scoped
+          // targets, or search verbs ("allow" | "disallow") for the search targets.
+          scopes: Array<string>
+        }>
+      }
+    | {
+        // Always `slack`
+        type: "slack"
+        name: string
+        // The linked Slack workspace, null when none is linked, or "hidden" when the caller
+        // lacks edit access to the agent.
+        account:
+          | {
+              // Always `slack_workspace`
+              type: "slack_workspace"
+              team_id: string
+            }
+          | "hidden"
+          | null
+        permissions: Array<{
+          target:
+            | {
+                // Always `slack_channel`
+                type: "slack_channel"
+                id: string
+              }
+            | {
+                // Always `slack_all_public_channels`
+                type: "slack_all_public_channels"
+              }
+            | {
+                // Always `slack_all_channels`
+                type: "slack_all_channels"
+              }
+          // Slack verbs granted on this target ("read" | "write" | "reply_in_thread" | "react").
+          scopes: Array<string>
+        }>
+      }
+    | {
+        // Always `discord`
+        type: "discord"
+        name: string
+        // The linked Discord server, null when none is linked, or "hidden" when the caller lacks
+        // edit access to the agent.
+        account:
+          | {
+              // Always `discord_server`
+              type: "discord_server"
+              id: string
+            }
+          | "hidden"
+          | null
+        permissions: Array<{
+          target:
+            | {
+                // Always `discord_channel`
+                type: "discord_channel"
+                id: string
+              }
+            | {
+                // Always `discord_all_channels`
+                type: "discord_all_channels"
+              }
+          // Discord verbs granted on this target ("read" | "write" | "reply_in_thread" | "react").
+          scopes: Array<string>
+        }>
+      }
+    | {
+        // Always `mcp_server`
+        type: "mcp_server"
+        name: string
+        // The MCP server host, null when none is linked, or "hidden" when the caller lacks edit
+        // access to the agent.
+        account:
+          | {
+              // Always `mcp_server`
+              type: "mcp_server"
+              // The MCP server host (never the full URL, which can carry credentials or private path
+              // components).
+              server_host: string
+            }
+          | "hidden"
+          | null
+        // The tools the agent may call, null when all tools are enabled (including any the
+        // server adds later), or "hidden" when the caller lacks edit access to the agent.
+        enabled_tools:
+          | Array<{ name: string; title: string | null }>
+          | "hidden"
+          | null
+        // Whether read / write tool calls run without a confirmation step.
+        run_tools_automatically: {
+          // Whether read tool calls run without a confirmation step.
+          read: boolean
+          // Whether write tool calls run without a confirmation step.
+          write: boolean
+        }
+      }
+    | {
+        // Always `custom_mcp_server`
+        type: "custom_mcp_server"
+        name: string
+        // The MCP server host, null when none is linked, or "hidden" when the caller lacks edit
+        // access to the agent.
+        account:
+          | {
+              // Always `mcp_server`
+              type: "mcp_server"
+              // The MCP server host (never the full URL, which can carry credentials or private path
+              // components).
+              server_host: string
+            }
+          | "hidden"
+          | null
+        // The tools the agent may call, null when all tools are enabled (including any the
+        // server adds later), or "hidden" when the caller lacks edit access to the agent.
+        enabled_tools:
+          | Array<{ name: string; title: string | null }>
+          | "hidden"
+          | null
+        // Whether read / write tool calls run without a confirmation step.
+        run_tools_automatically: {
+          // Whether read tool calls run without a confirmation step.
+          read: boolean
+          // Whether write tool calls run without a confirmation step.
+          write: boolean
+        }
+      }
+    | {
+        // The connector's machine name (e.g. "github", "google_drive").
+        type:
+          | "asana"
+          | "box"
+          | "browser"
+          | "calendar"
+          | "computer"
+          | "confluence"
+          | "cursor"
+          | "files"
+          | "fs"
+          | "github"
+          | "gmail"
+          | "google_calendar"
+          | "google_drive"
+          | "google_drive_oauth"
+          | "gtm"
+          | "helpdocs"
+          | "images"
+          | "jira"
+          | "linear"
+          | "mail"
+          | "marketplace"
+          | "memory"
+          | "microsoft_teams"
+          | "outlook"
+          | "salesforce"
+          | "search"
+          | "security"
+          | "sharepoint"
+          | "skills"
+          | "system"
+          | "test"
+          | "web"
+          | "webhooks"
+          | "worker"
+          | "workers"
+        name: string
+        // The provider-side account identifier, null when none is linked, or "hidden" when the
+        // caller lacks edit access to the agent.
+        account: string | null
+        permissions: Array<{
+          target: { type: string; id: string }
+          // The scopes granted on this target.
+          scopes: Array<string>
+        }>
+      }
+  >
+  // "active" when the agent can run; "disabled" when it is paused (see pause_reason);
+  // "deleted" when it has been removed.
+  status: "active" | "disabled" | "deleted"
+  // Why the agent is paused when status is "disabled" (e.g. "credit_limit",
+  // "disabled_from_workspace_settings"); null when active.
+  pause_reason:
+    | "run_limit"
+    | "credit_limit"
+    | "runaway_credit_usage"
+    | "workspace_credit_limit"
+    | "failure_limit"
+    | "mark_session_failed_autopause"
+    | "disabled_from_workspace_settings"
+    | "disabled_from_api"
+    | "disabled_from_agent_settings"
+    | "disabled_due_to_no_members_with_access"
+    | "disabled_due_to_lack_of_editors"
+    | "disabled_by_notion"
+    | "internal_error"
+    | "needs_user_review"
+    | "tool_unavailable"
+    | null
+  created_by: {
+    // Always `user`
+    object: "user"
+    // Always `user`
+    type: "user"
+    // The ID of the user that created this agent.
+    id: IdResponse
+  } | null
+  version: {
+    // The ID of the published artifact.
+    id: IdResponse
+    // The version number.
+    number: number
+    // The ISO 8601 timestamp when this version was published.
+    published_at: string
+  } | null
+  agent_version: {
+    // The ID of the published artifact.
+    id: IdResponse
+    // The version number.
+    number: number
+    // The ISO 8601 timestamp when this version was published.
+    published_at: string
+  } | null
+  // Whether the draft has edits not yet in the published version, or "hidden" when the
+  // caller lacks edit access to the agent.
+  has_unpublished_changes: boolean | "hidden"
+  // ISO 8601 timestamp of the agent's most recent run, null if it has never run, or
+  // "hidden" when the caller lacks edit access to the agent.
+  last_run_time: string | "hidden" | null
+  // ISO 8601 timestamp of the agent's most recent run, null if it has never run, or
+  // "hidden" when the caller lacks edit access to the agent.
+  last_run_at: string | "hidden" | null
+  // The per-agent credit limit that applies to this agent, null when uncapped, or "hidden"
+  // when the caller lacks full access to the agent. This is the effective limit computed
+  // at runtime, folding in both the agent's own limit and any workspace-admin default.
+  credit_limit: number | "hidden" | null
+  // The agent's configured triggers, each with a machine type, an enabled flag, and (for
+  // recurrence triggers) a structured schedule.
+  triggers: Array<{
+    // Machine trigger type (e.g. "notion.agent.mentioned", "recurrence",
+    // "slack.reaction.added").
+    type: string
+    // Whether this trigger is currently enabled.
+    enabled: boolean
+    // Structured recurrence cadence. Present only for recurrence triggers.
+    schedule?: {
+      // Base cadence unit ("hour" | "day" | "week" | "month" | "year").
+      frequency: string
+      // Multiplier on the frequency (e.g. every 2 weeks).
+      interval: number
+      // Days of the week the schedule runs (e.g. "monday"). Present for weekly cadences and
+      // monthly weekday restrictions.
+      weekdays?: Array<string>
+      // Days of the month the schedule runs. Present for monthly monthday restrictions.
+      monthdays?: Array<number>
+      // Week-of-month ordinals for a monthly weekday restriction (e.g. [2, 3] for the 2nd and
+      // 3rd occurrence); -1 means the last week.
+      week_numbers?: Array<number>
+      // Hour of day (0–23) the schedule runs.
+      hour?: number
+      // Minute of the hour (0–59) the schedule runs.
+      minute?: number
+      // IANA timezone (e.g. "America/New_York").
+      timezone?: string
+      // ISO 8601 timestamp the schedule starts from.
+      start_date?: string
+      // When the schedule stops, when it is bounded.
+      end?:
+        | {
+            // Always `date`
+            type: "date"
+            // ISO 8601 timestamp when the schedule stops.
+            end_at: string
+          }
+        | {
+            // Always `count`
+            type: "count"
+            // Number of occurrences after which the schedule stops.
+            occurrences: number
+          }
+    }
+    // Remaining per-type trigger configuration (e.g. watched channel ids, reaction config),
+    // keys in snake_case. Present only when the trigger carries such state.
+    config?: Record<string, Record<string, never>>
+  }>
+  // Date and time when this agent was created.
+  created_time?: string
+  // Date and time when this agent was last edited.
+  last_edited_time?: string
+  // The agent's inline instructions when verbose=true, or null when its instructions are
+  // stored on a page.
+  instructions?: string | null
+}
+
+/**
+ * Update agent
+ */
+export const updateAgent = {
+  method: "patch",
+  pathParams: ["agent_id"],
+  queryParams: [],
+  bodyParams: ["name", "is_favorited", "model"],
+
+  path: (p: UpdateAgentPathParameters): string => `agents/${p.agent_id}`,
+} as const
+
 type DeleteExternalAgentStubVaultPathParameters = {
   // The ID of the agent backing this external agent session.
   agent_id: IdRequest | "33333333-3333-3333-3333-333333333333"
