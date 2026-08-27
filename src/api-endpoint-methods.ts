@@ -4,7 +4,17 @@ import type { RequestParameters } from "./Client"
 import * as endpoints from "./api-endpoints"
 import { pick, type EndpointDefinition } from "./utils"
 
+type WithoutIndexSignatures<P> = P extends unknown
+  ? {
+      [K in keyof P as string extends K
+        ? never
+        : number extends K
+          ? never
+          : K]: P[K]
+    }
+  : never
 type WithAuth<P> = P & { auth?: string }
+type OptionalWithAuth<P> = WithoutIndexSignatures<P> & { auth?: string }
 type EndpointClient = Pick<Client, "request"> & {
   warnUnknownParams(
     args: Record<string, unknown>,
@@ -38,17 +48,17 @@ export function createEndpointMethods(client: EndpointClient) {
   }
   function optionalMethod<P extends Record<string, unknown>, R extends object>(
     definition: EndpointDefinition & {
-      path: (args: Partial<WithAuth<P>>) => string
+      path: () => string
       method: RequestParameters["method"]
       headers?: Record<string, string>
     },
-    query: (args: Partial<WithAuth<P>>) => RequestParameters["query"]
-  ): (args?: WithAuth<P>) => Promise<R> {
+    query: (args: Partial<OptionalWithAuth<P>>) => RequestParameters["query"]
+  ): (args?: OptionalWithAuth<P>) => Promise<R> {
     return args => {
-      const requestArgs: Partial<WithAuth<P>> = args ?? {}
+      const requestArgs: Partial<OptionalWithAuth<P>> = args ?? {}
       client.warnUnknownParams(requestArgs, definition)
       return client.request<R>({
-        path: definition.path(requestArgs),
+        path: definition.path(),
         method: definition.method,
         query: query(requestArgs),
         body: pick<Record<string, unknown>, string>(

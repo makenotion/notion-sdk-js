@@ -55,6 +55,22 @@ describe("Notion SDK Client", () => {
       )
     })
 
+    it("accepts a per-call auth override on methods without params", async () => {
+      const notion = new Client({ auth: "client-token", fetch: mockFetch })
+
+      await notion.users.me({ auth: "per-call-token" })
+
+      expect(mockFetch).toHaveBeenCalledWith(
+        expect.stringContaining("/v1/users/me"),
+        expect.objectContaining({
+          method: "GET",
+          headers: expect.objectContaining({
+            authorization: "Bearer per-call-token",
+          }),
+        })
+      )
+    })
+
     it("warns once about unknown params and drops them from the body", async () => {
       const logger: jest.MockedFn<Logger> = jest.fn()
       const notion = new Client({ fetch: mockFetch, logger })
