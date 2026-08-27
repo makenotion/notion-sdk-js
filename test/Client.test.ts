@@ -77,6 +77,29 @@ describe("Notion SDK Client", () => {
     )
   })
 
+  it("keeps auth overrides optional on generated methods without parameters", async () => {
+    const client = new Client({ fetch: createMockFetch() })
+    const request = jest.spyOn(client, "request")
+
+    await client.users.me()
+    await client.users.me({ auth: "override-token" })
+
+    expect(request).toHaveBeenNthCalledWith(1, {
+      path: "users/me",
+      method: "get",
+      query: {},
+      body: {},
+      auth: undefined,
+    })
+    expect(request).toHaveBeenNthCalledWith(2, {
+      path: "users/me",
+      method: "get",
+      query: {},
+      body: {},
+      auth: "override-token",
+    })
+  })
+
   describe("request param building", () => {
     let mockFetch: jest.MockedFn<typeof fetch>
     let notion: Client

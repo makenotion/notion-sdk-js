@@ -4,7 +4,17 @@ import type { RequestParameters } from "./Client"
 import * as endpoints from "./api-endpoints"
 import { pick, type EndpointDefinition } from "./utils"
 
+type WithoutIndexSignatures<P> = P extends unknown
+  ? {
+      [K in keyof P as string extends K
+        ? never
+        : number extends K
+          ? never
+          : K]: P[K]
+    }
+  : never
 type WithAuth<P> = P & { auth?: string }
+type OptionalWithAuth<P> = WithoutIndexSignatures<P> & { auth?: string }
 type EndpointClient = Pick<Client, "request"> & {
   warnUnknownParams(
     args: Record<string, unknown>,
@@ -36,41 +46,63 @@ export function createEndpointMethods(client: EndpointClient) {
       })
     }
   }
+  function optionalMethod<P extends Record<string, unknown>, R extends object>(
+    definition: EndpointDefinition & {
+      path: () => string
+      method: RequestParameters["method"]
+      headers?: Record<string, string>
+    },
+    query: (args: Partial<OptionalWithAuth<P>>) => RequestParameters["query"]
+  ): (args?: OptionalWithAuth<P>) => Promise<R> {
+    return args => {
+      const requestArgs: Partial<OptionalWithAuth<P>> = args ?? {}
+      client.warnUnknownParams(requestArgs, definition)
+      return client.request<R>({
+        path: definition.path(),
+        method: definition.method,
+        query: query(requestArgs),
+        body: pick<Record<string, unknown>, string>(
+          requestArgs,
+          definition.bodyParams
+        ),
+        ...(definition.headers ? { headers: definition.headers } : {}),
+        auth: requestArgs.auth,
+      })
+    }
+  }
   return {
     users: {
       /** Retrieve your token's bot user */
-      me: method<endpoints.GetSelfParameters, endpoints.GetSelfResponse>(
-        endpoints.getSelf,
-        args => pick(args, endpoints.getSelf.queryParams)
-      ),
-
+      me: optionalMethod<
+        endpoints.GetSelfParameters,
+        endpoints.GetSelfResponse
+      >(endpoints.getSelf, args => pick(args, endpoints.getSelf.queryParams)),
       /** Retrieve a user */
       retrieve: method<endpoints.GetUserParameters, endpoints.GetUserResponse>(
         endpoints.getUser,
         args => pick(args, endpoints.getUser.queryParams)
       ),
-
       /** List all users */
-      list: method<endpoints.ListUsersParameters, endpoints.ListUsersResponse>(
-        endpoints.listUsers,
-        args => pick(args, endpoints.listUsers.queryParams)
+      list: optionalMethod<
+        endpoints.ListUsersParameters,
+        endpoints.ListUsersResponse
+      >(endpoints.listUsers, args =>
+        pick(args, endpoints.listUsers.queryParams)
       ),
     },
     pages: {
       /** Create a page */
-      create: method<
+      create: optionalMethod<
         endpoints.CreatePageParameters,
         endpoints.CreatePageResponse
       >(endpoints.createPage, args =>
         pick(args, endpoints.createPage.queryParams)
       ),
-
       /** Retrieve a page */
       retrieve: method<endpoints.GetPageParameters, endpoints.GetPageResponse>(
         endpoints.getPage,
         args => pick(args, endpoints.getPage.queryParams)
       ),
-
       /** Update page */
       update: method<
         endpoints.UpdatePageParameters,
@@ -78,13 +110,11 @@ export function createEndpointMethods(client: EndpointClient) {
       >(endpoints.updatePage, args =>
         pick(args, endpoints.updatePage.queryParams)
       ),
-
       /** Move a page */
       move: method<endpoints.MovePageParameters, endpoints.MovePageResponse>(
         endpoints.movePage,
         args => pick(args, endpoints.movePage.queryParams)
       ),
-
       properties: {
         /** Retrieve a page property item */
         retrieve: method<
@@ -110,7 +140,6 @@ export function createEndpointMethods(client: EndpointClient) {
         endpoints.GetBlockParameters,
         endpoints.GetBlockResponse
       >(endpoints.getBlock, args => pick(args, endpoints.getBlock.queryParams)),
-
       /** Update a block */
       update: method<
         endpoints.UpdateBlockParameters,
@@ -118,7 +147,6 @@ export function createEndpointMethods(client: EndpointClient) {
       >(endpoints.updateBlock, args =>
         pick(args, endpoints.updateBlock.queryParams)
       ),
-
       /** Delete a block */
       delete: method<
         endpoints.DeleteBlockParameters,
@@ -126,7 +154,6 @@ export function createEndpointMethods(client: EndpointClient) {
       >(endpoints.deleteBlock, args =>
         pick(args, endpoints.deleteBlock.queryParams)
       ),
-
       children: {
         /** Retrieve block children */
         list: method<
@@ -135,7 +162,6 @@ export function createEndpointMethods(client: EndpointClient) {
         >(endpoints.listBlockChildren, args =>
           pick(args, endpoints.listBlockChildren.queryParams)
         ),
-
         /** Append block children */
         append: method<
           endpoints.AppendBlockChildrenParameters,
@@ -162,7 +188,6 @@ export function createEndpointMethods(client: EndpointClient) {
       >(endpoints.getDataSource, args =>
         pick(args, endpoints.getDataSource.queryParams)
       ),
-
       /** Update a data source */
       update: method<
         endpoints.UpdateDataSourceParameters,
@@ -170,7 +195,6 @@ export function createEndpointMethods(client: EndpointClient) {
       >(endpoints.updateDataSource, args =>
         pick(args, endpoints.updateDataSource.queryParams)
       ),
-
       /** Query a data source */
       query: method<
         endpoints.QueryDataSourceParameters,
@@ -178,7 +202,6 @@ export function createEndpointMethods(client: EndpointClient) {
       >(endpoints.queryDataSource, args =>
         pick(args, endpoints.queryDataSource.queryParams)
       ),
-
       /** Create a data source */
       create: method<
         endpoints.CreateDataSourceParameters,
@@ -186,7 +209,6 @@ export function createEndpointMethods(client: EndpointClient) {
       >(endpoints.createDataSource, args =>
         pick(args, endpoints.createDataSource.queryParams)
       ),
-
       /** List templates in a data source */
       listTemplates: method<
         endpoints.ListDataSourceTemplatesParameters,
@@ -203,7 +225,6 @@ export function createEndpointMethods(client: EndpointClient) {
       >(endpoints.getDatabase, args =>
         pick(args, endpoints.getDatabase.queryParams)
       ),
-
       /** Update a database */
       update: method<
         endpoints.UpdateDatabaseParameters,
@@ -211,7 +232,6 @@ export function createEndpointMethods(client: EndpointClient) {
       >(endpoints.updateDatabase, args =>
         pick(args, endpoints.updateDatabase.queryParams)
       ),
-
       /** Create a database */
       create: method<
         endpoints.CreateDatabaseParameters,
@@ -221,11 +241,10 @@ export function createEndpointMethods(client: EndpointClient) {
       ),
     },
     /** Search by title */
-    search: method<endpoints.SearchParameters, endpoints.SearchResponse>(
-      endpoints.search,
-      args => pick(args, endpoints.search.queryParams)
-    ),
-
+    search: optionalMethod<
+      endpoints.SearchParameters,
+      endpoints.SearchResponse
+    >(endpoints.search, args => pick(args, endpoints.search.queryParams)),
     comments: {
       /** Create a comment */
       create: method<
@@ -234,7 +253,6 @@ export function createEndpointMethods(client: EndpointClient) {
       >(endpoints.createComment, args =>
         pick(args, endpoints.createComment.queryParams)
       ),
-
       /** List comments */
       list: method<
         endpoints.ListCommentsParameters,
@@ -242,7 +260,6 @@ export function createEndpointMethods(client: EndpointClient) {
       >(endpoints.listComments, args =>
         pick(args, endpoints.listComments.queryParams)
       ),
-
       /** Retrieve a comment */
       retrieve: method<
         endpoints.GetCommentParameters,
@@ -250,7 +267,6 @@ export function createEndpointMethods(client: EndpointClient) {
       >(endpoints.getComment, args =>
         pick(args, endpoints.getComment.queryParams)
       ),
-
       /** Update a comment */
       update: method<
         endpoints.UpdateCommentParameters,
@@ -258,7 +274,6 @@ export function createEndpointMethods(client: EndpointClient) {
       >(endpoints.updateComment, args =>
         pick(args, endpoints.updateComment.queryParams)
       ),
-
       /** Delete a comment */
       delete: method<
         endpoints.DeleteCommentParameters,
@@ -269,7 +284,7 @@ export function createEndpointMethods(client: EndpointClient) {
     },
     fileUploads: {
       /** Create a file upload */
-      create: method<
+      create: optionalMethod<
         endpoints.CreateFileUploadParameters,
         endpoints.CreateFileUploadResponse
       >(endpoints.createFileUpload, args =>
@@ -278,19 +293,17 @@ export function createEndpointMethods(client: EndpointClient) {
     },
     views: {
       /** List views */
-      list: method<
+      list: optionalMethod<
         endpoints.ListDatabaseViewsParameters,
         endpoints.ListDatabaseViewsResponse
       >(endpoints.listDatabaseViews, args =>
         pick(args, endpoints.listDatabaseViews.queryParams)
       ),
-
       /** Retrieve a view */
       retrieve: method<endpoints.GetViewParameters, endpoints.GetViewResponse>(
         endpoints.getView,
         args => pick(args, endpoints.getView.queryParams)
       ),
-
       /** Delete a view */
       delete: method<
         endpoints.DeleteViewParameters,
@@ -298,7 +311,6 @@ export function createEndpointMethods(client: EndpointClient) {
       >(endpoints.deleteView, args =>
         pick(args, endpoints.deleteView.queryParams)
       ),
-
       queries: {
         /** Get view query results */
         results: method<
@@ -307,7 +319,6 @@ export function createEndpointMethods(client: EndpointClient) {
         >(endpoints.getViewQueryResults, args =>
           pick(args, endpoints.getViewQueryResults.queryParams)
         ),
-
         /** Delete a view query */
         delete: method<
           endpoints.DeleteViewQueryParameters,
@@ -319,19 +330,17 @@ export function createEndpointMethods(client: EndpointClient) {
     },
     agents: {
       /** Query agents */
-      query: method<
+      query: optionalMethod<
         endpoints.QueryAgentsParameters,
         endpoints.QueryAgentsResponse
       >(endpoints.queryAgents, args =>
         pick(args, endpoints.queryAgents.queryParams)
       ),
-
       /** Get agent */
       retrieve: method<
         endpoints.GetAgentParameters,
         endpoints.GetAgentResponse
       >(endpoints.getAgent, args => pick(args, endpoints.getAgent.queryParams)),
-
       /** Delete agent */
       delete: method<
         endpoints.DeleteAgentParameters,
@@ -339,7 +348,6 @@ export function createEndpointMethods(client: EndpointClient) {
       >(endpoints.deleteAgent, args =>
         pick(args, endpoints.deleteAgent.queryParams)
       ),
-
       /** Get agent insights */
       retrieveInsights: method<
         endpoints.GetInsightsParameters,
@@ -347,7 +355,6 @@ export function createEndpointMethods(client: EndpointClient) {
       >(endpoints.getInsights, args =>
         pick(args, endpoints.getInsights.queryParams)
       ),
-
       /** Update agent status */
       updateStatus: method<
         endpoints.UpdateAgentStatusParameters,
@@ -355,7 +362,6 @@ export function createEndpointMethods(client: EndpointClient) {
       >(endpoints.updateAgentStatus, args =>
         pick(args, endpoints.updateAgentStatus.queryParams)
       ),
-
       /** Update agent credit limit */
       updateCreditLimit: method<
         endpoints.UpdateAgentCreditLimitParameters,
@@ -363,7 +369,6 @@ export function createEndpointMethods(client: EndpointClient) {
       >(endpoints.updateAgentCreditLimit, args =>
         pick(args, endpoints.updateAgentCreditLimit.queryParams)
       ),
-
       /** Apply many agent operations */
       batch: method<
         endpoints.AgentBatchParameters,
@@ -380,7 +385,6 @@ export function createEndpointMethods(client: EndpointClient) {
       >(endpoints.updateSession, args =>
         pick(args, endpoints.updateSession.queryParams)
       ),
-
       /** Retrieve a session */
       retrieve: method<
         endpoints.RetrieveSessionParameters,
@@ -388,15 +392,13 @@ export function createEndpointMethods(client: EndpointClient) {
       >(endpoints.retrieveSession, args =>
         pick(args, endpoints.retrieveSession.queryParams)
       ),
-
       /** Query sessions */
-      query: method<
+      query: optionalMethod<
         endpoints.QuerySessionsParameters,
         endpoints.QuerySessionsResponse
       >(endpoints.querySessions, args =>
         pick(args, endpoints.querySessions.queryParams)
       ),
-
       /** Query session events */
       queryEvents: method<
         endpoints.QuerySessionEventsParameters,
@@ -404,7 +406,6 @@ export function createEndpointMethods(client: EndpointClient) {
       >(endpoints.querySessionEvents, args =>
         pick(args, endpoints.querySessionEvents.queryParams)
       ),
-
       /** Cancel a session */
       cancel: method<
         endpoints.CancelSessionParameters,
