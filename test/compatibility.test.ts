@@ -75,6 +75,15 @@ describe("package compatibility check", () => {
     ).toContain("Removed value export: Client")
   })
 
+  it("checks generic class constructors without creating invalid declarations", () => {
+    expect(
+      compare(
+        "export declare class Client<T extends string> { constructor(value?: T) }",
+        "export declare class Client<T extends string> { constructor(value: T) }"
+      )
+    ).toContain("Incompatible export: typeof Client")
+  })
+
   it.each([
     ["5.26.0", "5.26.0", false],
     ["5.26.0", "5.26.1", false],

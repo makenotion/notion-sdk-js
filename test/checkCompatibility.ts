@@ -58,7 +58,11 @@ export function checkCompatibility(before: string, after: string): string[] {
   const afterDeclaration = declarations.get(after)
   if (!beforeDeclaration || !afterDeclaration)
     throw new Error("Could not emit package declarations")
-  const options = { ...sourceProgram.getCompilerOptions(), noEmit: true }
+  const options = {
+    ...sourceProgram.getCompilerOptions(),
+    noEmit: true,
+    skipLibCheck: false,
+  }
   const host = ts.createCompilerHost(options)
   const readSource = host.getSourceFile
   const fileExists = host.fileExists
@@ -83,6 +87,11 @@ export function checkCompatibility(before: string, after: string): string[] {
     options,
     host
   )
+  const declarationErrors = ts.getPreEmitDiagnostics(program)
+  if (declarationErrors.length)
+    return declarationErrors.map(diagnostic =>
+      ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n")
+    )
   const checker = program.getTypeChecker()
 
   function exportsAt(path: string) {
@@ -173,7 +182,7 @@ function publicMembers(declaration: ts.ClassDeclaration): ts.ClassElement[] {
   const signatures = (constructors.length ? constructors : [undefined]).map(
     constructor =>
       ts.factory.createFunctionTypeNode(
-        undefined,
+        declaration.typeParameters,
         constructor?.parameters ?? [],
         ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword)
       )
