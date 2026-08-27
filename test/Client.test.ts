@@ -6,7 +6,7 @@ import {
   UnknownHTTPResponseError,
   isHTTPResponseError,
 } from "../src"
-import type { UpdateSessionStreamResponse } from "../src"
+import type { Logger, UpdateSessionStreamResponse } from "../src"
 import {
   TEST_BLOCK_ID,
   mockRawResponse,
@@ -29,6 +29,50 @@ const documentedAgentClientMethods = [
 describe("Notion SDK Client", () => {
   it("Constructs without throwing", () => {
     new Client({ auth: "foo" })
+  })
+
+  describe("generated endpoint methods", () => {
+    let mockFetch: jest.MockedFn<typeof fetch>
+
+    beforeEach(() => {
+      mockFetch = createMockFetch()
+    })
+
+    it("keeps a detached method reference bound to its own client", async () => {
+      const notion = new Client({ auth: "client-token", fetch: mockFetch })
+      const retrieve = notion.blocks.retrieve
+
+      await retrieve({ block_id: TEST_BLOCK_ID, auth: "per-call-token" })
+
+      expect(mockFetch).toHaveBeenCalledWith(
+        expect.stringContaining(`/v1/blocks/${TEST_BLOCK_ID}`),
+        expect.objectContaining({
+          method: "GET",
+          headers: expect.objectContaining({
+            authorization: "Bearer per-call-token",
+          }),
+        })
+      )
+    })
+
+    it("warns once about unknown params and drops them from the body", async () => {
+      const logger: jest.MockedFn<Logger> = jest.fn()
+      const notion = new Client({ fetch: mockFetch, logger })
+      const argsWithUnknownParam = { query: "todo", not_a_param: true }
+
+      await notion.search(argsWithUnknownParam)
+
+      const warnings = logger.mock.calls.filter(
+        ([, message]) => message === "unknown parameters were ignored"
+      )
+      expect(warnings).toHaveLength(1)
+      expect(warnings[0]?.[2]).toMatchObject({
+        unknownParams: ["not_a_param"],
+      })
+      expect(JSON.parse(String(mockFetch.mock.calls[0]?.[1]?.body))).toEqual({
+        query: "todo",
+      })
+    })
   })
 
   describe("request param building", () => {

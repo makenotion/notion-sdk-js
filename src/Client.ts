@@ -25,81 +25,12 @@ import {
   DEFAULT_MAX_RETRY_DELAY_MS,
 } from "./constants"
 import {
-  type GetBlockParameters,
-  type GetBlockResponse,
-  getBlock,
-  type UpdateBlockParameters,
-  type UpdateBlockResponse,
-  updateBlock,
-  type DeleteBlockParameters,
-  type DeleteBlockResponse,
-  deleteBlock,
-  type AppendBlockChildrenParameters,
-  type AppendBlockChildrenResponse,
-  appendBlockChildren,
-  type ListBlockChildrenParameters,
-  type ListBlockChildrenResponse,
-  listBlockChildren,
-  type QueryDataSourceParameters,
-  type QueryDataSourceResponse,
-  queryDataSource,
-  type CreateDataSourceParameters,
-  type CreateDataSourceResponse,
-  createDataSource,
-  type UpdateDataSourceParameters,
-  type UpdateDataSourceResponse,
-  updateDataSource,
-  type GetDataSourceParameters,
-  type GetDataSourceResponse,
-  getDataSource,
-  type CreatePageParameters,
-  type CreatePageResponse,
-  createPage,
-  type GetPageParameters,
-  type GetPageResponse,
-  getPage,
-  type UpdatePageParameters,
-  type UpdatePageResponse,
-  updatePage,
-  type MovePageParameters,
-  type MovePageResponse,
-  movePage,
   type GetPageMarkdownParameters,
   type GetPageMarkdownResponse,
   getPageMarkdown,
   type UpdatePageMarkdownParameters,
   type UpdatePageMarkdownResponse,
   updatePageMarkdown,
-  type GetUserParameters,
-  type GetUserResponse,
-  getUser,
-  type ListUsersParameters,
-  type ListUsersResponse,
-  listUsers,
-  type SearchParameters,
-  type SearchResponse,
-  search,
-  type GetSelfParameters,
-  type GetSelfResponse,
-  getSelf,
-  type GetPagePropertyParameters,
-  type GetPagePropertyResponse,
-  getPageProperty,
-  type CreateCommentParameters,
-  type CreateCommentResponse,
-  createComment,
-  type ListCommentsParameters,
-  type ListCommentsResponse,
-  listComments,
-  type GetCommentParameters,
-  type GetCommentResponse,
-  getComment,
-  type UpdateCommentParameters,
-  type UpdateCommentResponse,
-  updateComment,
-  type DeleteCommentParameters,
-  type DeleteCommentResponse,
-  deleteComment,
   type OauthTokenResponse,
   type OauthTokenParameters,
   oauthToken,
@@ -109,9 +40,6 @@ import {
   type OauthRevokeResponse,
   type OauthRevokeParameters,
   oauthRevoke,
-  type CreateFileUploadParameters,
-  type CreateFileUploadResponse,
-  createFileUpload,
   type GetFileUploadResponse,
   type GetFileUploadParameters,
   getFileUpload,
@@ -124,96 +52,28 @@ import {
   type ListFileUploadsParameters,
   type ListFileUploadsResponse,
   listFileUploads,
-  GetDatabaseParameters,
-  GetDatabaseResponse,
-  getDatabase,
-  CreateDatabaseResponse,
-  CreateDatabaseParameters,
-  createDatabase,
-  UpdateDatabaseParameters,
-  UpdateDatabaseResponse,
-  updateDatabase,
-  listDataSourceTemplates,
-  ListDataSourceTemplatesResponse,
-  ListDataSourceTemplatesParameters,
-  type ListDatabaseViewsParameters,
-  type ListDatabaseViewsResponse,
-  listDatabaseViews,
   type CreateViewParameters,
   type CreateViewResponse,
   createView,
-  type GetViewParameters,
-  type GetViewResponse,
-  getView,
   type UpdateViewParameters,
   type UpdateViewResponse,
   updateView,
-  type DeleteViewParameters,
-  type DeleteViewResponse,
-  deleteView,
   type CreateViewQueryParameters,
   type CreateViewQueryResponse,
   createViewQuery,
-  type GetViewQueryResultsParameters,
-  type GetViewQueryResultsResponse,
-  getViewQueryResults,
-  type DeleteViewQueryParameters,
-  type DeleteViewQueryResponse,
-  deleteViewQuery,
   type ListCustomEmojisParameters,
   type ListCustomEmojisResponse,
   listCustomEmojis,
-  type GetAsyncTaskParameters,
-  type GetAsyncTaskResponse,
-  getAsyncTask,
-  type AgentBatchParameters,
-  type AgentBatchResponse,
-  agentBatch,
-  type DeleteAgentParameters,
-  type DeleteAgentResponse,
-  deleteAgent,
-  type GetAgentParameters,
-  type GetAgentResponse,
-  getAgent,
-  type GetInsightsParameters,
-  type GetInsightsResponse,
-  getInsights,
-  type QueryAgentsParameters,
-  type QueryAgentsResponse,
-  queryAgents,
-  type RetrieveSessionParameters,
-  type RetrieveSessionResponse,
-  retrieveSession,
-  type UpdateSessionParameters,
-  type UpdateSessionResponse,
-  updateSession,
   type UpdateSessionStreamParameters,
   type UpdateSessionStreamResponse,
   updateSessionStream,
-  type CancelSessionParameters,
-  type CancelSessionResponse,
-  cancelSession,
-  type QuerySessionsParameters,
-  type QuerySessionsResponse,
-  querySessions,
-  type QuerySessionEventsParameters,
-  type QuerySessionEventsResponse,
-  querySessionEvents,
-  type UpdateAgentCreditLimitParameters,
-  type UpdateAgentCreditLimitResponse,
-  updateAgentCreditLimit,
-  type UpdateAgentStatusParameters,
-  type UpdateAgentStatusResponse,
-  updateAgentStatus,
 } from "./api-endpoints"
 import {
-  type CreateMeetingNoteParameters,
-  type CreateMeetingNoteResponse,
-  createMeetingNote,
   type QueryMeetingNotesResponse,
   queryMeetingNotes,
 } from "./api-endpoints/meeting-notes"
 import type { QueryMeetingNotesParameters } from "./meeting-notes"
+import { createEndpointMethods } from "./api-endpoint-methods"
 import {
   version as PACKAGE_VERSION,
   name as PACKAGE_NAME,
@@ -781,6 +641,17 @@ export default class Client {
     return new Promise(resolve => setTimeout(resolve, ms))
   }
 
+  /**
+   * Generated wrappers for every endpoint the public API generator covers.
+   * Transport, auth, retries, timeouts, and logging stay on this client.
+   */
+  #endpointMethods = createEndpointMethods({
+    request: <ResponseBody extends object>(args: RequestParameters) =>
+      this.request<ResponseBody>(args),
+    warnUnknownParams: (args, endpoint) =>
+      this.warnUnknownParams(args, endpoint),
+  })
+
   /*
    * Notion API endpoints
    */
@@ -789,148 +660,49 @@ export default class Client {
     /**
      * Retrieve an agent
      */
-    retrieve: (
-      args: WithAuth<GetAgentParameters>
-    ): Promise<GetAgentResponse> => {
-      this.warnUnknownParams(args, getAgent)
-      return this.request<GetAgentResponse>({
-        path: getAgent.path(args),
-        method: getAgent.method,
-        query: pick(args, getAgent.queryParams),
-        body: pick(args, getAgent.bodyParams),
-        auth: args?.auth,
-      })
-    },
+    retrieve: this.#endpointMethods.agents.retrieve,
 
     /**
      * Query agents
      */
-    query: (
-      args: WithAuth<QueryAgentsParameters>
-    ): Promise<QueryAgentsResponse> => {
-      this.warnUnknownParams(args, queryAgents)
-      return this.request<QueryAgentsResponse>({
-        path: queryAgents.path(),
-        method: queryAgents.method,
-        query: pick(args, queryAgents.queryParams),
-        body: pick(args, queryAgents.bodyParams),
-        auth: args?.auth,
-      })
-    },
+    query: this.#endpointMethods.agents.query,
 
     /**
      * Retrieve agent insights
      */
-    retrieveInsights: (
-      args: WithAuth<GetInsightsParameters>
-    ): Promise<GetInsightsResponse> => {
-      this.warnUnknownParams(args, getInsights)
-      return this.request<GetInsightsResponse>({
-        path: getInsights.path(args),
-        method: getInsights.method,
-        query: pick(args, getInsights.queryParams),
-        body: pick(args, getInsights.bodyParams),
-        auth: args?.auth,
-      })
-    },
+    retrieveInsights: this.#endpointMethods.agents.retrieveInsights,
 
     /**
      * Update an agent's credit limit
      */
-    updateCreditLimit: (
-      args: WithAuth<UpdateAgentCreditLimitParameters>
-    ): Promise<UpdateAgentCreditLimitResponse> => {
-      this.warnUnknownParams(args, updateAgentCreditLimit)
-      return this.request<UpdateAgentCreditLimitResponse>({
-        path: updateAgentCreditLimit.path(args),
-        method: updateAgentCreditLimit.method,
-        query: pick(args, updateAgentCreditLimit.queryParams),
-        body: pick(args, updateAgentCreditLimit.bodyParams),
-        auth: args?.auth,
-      })
-    },
+    updateCreditLimit: this.#endpointMethods.agents.updateCreditLimit,
 
     /**
      * Update an agent's status
      */
-    updateStatus: (
-      args: WithAuth<UpdateAgentStatusParameters>
-    ): Promise<UpdateAgentStatusResponse> => {
-      this.warnUnknownParams(args, updateAgentStatus)
-      return this.request<UpdateAgentStatusResponse>({
-        path: updateAgentStatus.path(args),
-        method: updateAgentStatus.method,
-        query: pick(args, updateAgentStatus.queryParams),
-        body: pick(args, updateAgentStatus.bodyParams),
-        auth: args?.auth,
-      })
-    },
+    updateStatus: this.#endpointMethods.agents.updateStatus,
 
     /**
      * Delete an agent
      */
-    delete: (
-      args: WithAuth<DeleteAgentParameters>
-    ): Promise<DeleteAgentResponse> => {
-      this.warnUnknownParams(args, deleteAgent)
-      return this.request<DeleteAgentResponse>({
-        path: deleteAgent.path(args),
-        method: deleteAgent.method,
-        query: pick(args, deleteAgent.queryParams),
-        body: pick(args, deleteAgent.bodyParams),
-        auth: args?.auth,
-      })
-    },
+    delete: this.#endpointMethods.agents.delete,
 
     /**
      * Apply many agent operations
      */
-    batch: (
-      args: WithAuth<AgentBatchParameters>
-    ): Promise<AgentBatchResponse> => {
-      this.warnUnknownParams(args, agentBatch)
-      return this.request<AgentBatchResponse>({
-        path: agentBatch.path(),
-        method: agentBatch.method,
-        query: pick(args, agentBatch.queryParams),
-        body: pick(args, agentBatch.bodyParams),
-        auth: args?.auth,
-      })
-    },
+    batch: this.#endpointMethods.agents.batch,
   }
 
   public readonly sessions = {
     /**
      * Retrieve a session
      */
-    retrieve: (
-      args: WithAuth<RetrieveSessionParameters>
-    ): Promise<RetrieveSessionResponse> => {
-      this.warnUnknownParams(args, retrieveSession)
-      return this.request<RetrieveSessionResponse>({
-        path: retrieveSession.path(args),
-        method: retrieveSession.method,
-        query: pick(args, retrieveSession.queryParams),
-        body: pick(args, retrieveSession.bodyParams),
-        auth: args?.auth,
-      })
-    },
+    retrieve: this.#endpointMethods.sessions.retrieve,
 
     /**
      * Update a session
      */
-    update: (
-      args: WithAuth<UpdateSessionParameters>
-    ): Promise<UpdateSessionResponse> => {
-      this.warnUnknownParams(args, updateSession)
-      return this.request<UpdateSessionResponse>({
-        path: updateSession.path(),
-        method: updateSession.method,
-        query: pick(args, updateSession.queryParams),
-        body: pick(args, updateSession.bodyParams),
-        auth: args?.auth,
-      })
-    },
+    update: this.#endpointMethods.sessions.update,
 
     /**
      * Open a session stream
@@ -955,168 +727,59 @@ export default class Client {
     /**
      * Cancel a session
      */
-    cancel: (
-      args: WithAuth<CancelSessionParameters>
-    ): Promise<CancelSessionResponse> => {
-      this.warnUnknownParams(args, cancelSession)
-      return this.request<CancelSessionResponse>({
-        path: cancelSession.path(args),
-        method: cancelSession.method,
-        query: pick(args, cancelSession.queryParams),
-        body: pick(args, cancelSession.bodyParams),
-        auth: args?.auth,
-      })
-    },
+    cancel: this.#endpointMethods.sessions.cancel,
 
     /**
      * Query sessions
      */
-    query: (
-      args: WithAuth<QuerySessionsParameters>
-    ): Promise<QuerySessionsResponse> => {
-      this.warnUnknownParams(args, querySessions)
-      return this.request<QuerySessionsResponse>({
-        path: querySessions.path(),
-        method: querySessions.method,
-        query: pick(args, querySessions.queryParams),
-        body: pick(args, querySessions.bodyParams),
-        auth: args?.auth,
-      })
-    },
+    query: this.#endpointMethods.sessions.query,
 
     /**
      * Query session events
      */
-    queryEvents: (
-      args: WithAuth<QuerySessionEventsParameters>
-    ): Promise<QuerySessionEventsResponse> => {
-      this.warnUnknownParams(args, querySessionEvents)
-      return this.request<QuerySessionEventsResponse>({
-        path: querySessionEvents.path(args),
-        method: querySessionEvents.method,
-        query: pick(args, querySessionEvents.queryParams),
-        body: pick(args, querySessionEvents.bodyParams),
-        auth: args?.auth,
-      })
-    },
+    queryEvents: this.#endpointMethods.sessions.queryEvents,
   }
 
   public readonly asyncTasks = {
     /**
      * Retrieve an async task
      */
-    retrieve: (
-      args: WithAuth<GetAsyncTaskParameters>
-    ): Promise<GetAsyncTaskResponse> => {
-      this.warnUnknownParams(args, getAsyncTask)
-      return this.request<GetAsyncTaskResponse>({
-        path: getAsyncTask.path(args),
-        method: getAsyncTask.method,
-        query: pick(args, getAsyncTask.queryParams),
-        body: pick(args, getAsyncTask.bodyParams),
-        auth: args?.auth,
-      })
-    },
+    retrieve: this.#endpointMethods.asyncTasks.retrieve,
   }
 
   public readonly blocks = {
     /**
      * Retrieve block
      */
-    retrieve: (
-      args: WithAuth<GetBlockParameters>
-    ): Promise<GetBlockResponse> => {
-      this.warnUnknownParams(args, getBlock)
-      return this.request<GetBlockResponse>({
-        path: getBlock.path(args),
-        method: getBlock.method,
-        query: pick(args, getBlock.queryParams),
-        body: pick(args, getBlock.bodyParams),
-        auth: args?.auth,
-      })
-    },
+    retrieve: this.#endpointMethods.blocks.retrieve,
 
     /**
      * Update block
      */
-    update: (
-      args: WithAuth<UpdateBlockParameters>
-    ): Promise<UpdateBlockResponse> => {
-      this.warnUnknownParams(args, updateBlock)
-      return this.request<UpdateBlockResponse>({
-        path: updateBlock.path(args),
-        method: updateBlock.method,
-        query: pick(args, updateBlock.queryParams),
-        body: pick(args, updateBlock.bodyParams),
-        auth: args?.auth,
-      })
-    },
+    update: this.#endpointMethods.blocks.update,
 
     /**
      * Delete block
      */
-    delete: (
-      args: WithAuth<DeleteBlockParameters>
-    ): Promise<DeleteBlockResponse> => {
-      this.warnUnknownParams(args, deleteBlock)
-      return this.request<DeleteBlockResponse>({
-        path: deleteBlock.path(args),
-        method: deleteBlock.method,
-        query: pick(args, deleteBlock.queryParams),
-        body: pick(args, deleteBlock.bodyParams),
-        auth: args?.auth,
-      })
-    },
+    delete: this.#endpointMethods.blocks.delete,
+
     children: {
       /**
        * Append block children
        */
-      append: (
-        args: WithAuth<AppendBlockChildrenParameters>
-      ): Promise<AppendBlockChildrenResponse> => {
-        this.warnUnknownParams(args, appendBlockChildren)
-        return this.request<AppendBlockChildrenResponse>({
-          path: appendBlockChildren.path(args),
-          method: appendBlockChildren.method,
-          query: pick(args, appendBlockChildren.queryParams),
-          body: pick(args, appendBlockChildren.bodyParams),
-          auth: args?.auth,
-        })
-      },
+      append: this.#endpointMethods.blocks.children.append,
 
       /**
        * Retrieve block children
        */
-      list: (
-        args: WithAuth<ListBlockChildrenParameters>
-      ): Promise<ListBlockChildrenResponse> => {
-        this.warnUnknownParams(args, listBlockChildren)
-        return this.request<ListBlockChildrenResponse>({
-          path: listBlockChildren.path(args),
-          method: listBlockChildren.method,
-          query: pick(args, listBlockChildren.queryParams),
-          body: pick(args, listBlockChildren.bodyParams),
-          auth: args?.auth,
-        })
-      },
+      list: this.#endpointMethods.blocks.children.list,
     },
 
     meetingNotes: {
       /**
        * Create a meeting note
        */
-      create: (
-        args: WithAuth<CreateMeetingNoteParameters>
-      ): Promise<CreateMeetingNoteResponse> => {
-        this.warnUnknownParams(args, createMeetingNote)
-        return this.request<CreateMeetingNoteResponse>({
-          path: createMeetingNote.path(),
-          method: createMeetingNote.method,
-          query: pick(args, createMeetingNote.queryParams),
-          body: pick(args, createMeetingNote.bodyParams),
-          auth: args?.auth,
-        })
-      },
+      create: this.#endpointMethods.blocks.meetingNotes.create,
 
       /**
        * Query meeting notes
@@ -1139,194 +802,66 @@ export default class Client {
     /**
      * Retrieve a database
      */
-    retrieve: (
-      args: WithAuth<GetDatabaseParameters>
-    ): Promise<GetDatabaseResponse> => {
-      this.warnUnknownParams(args, getDatabase)
-      return this.request<GetDatabaseResponse>({
-        path: getDatabase.path(args),
-        method: getDatabase.method,
-        query: pick(args, getDatabase.queryParams),
-        body: pick(args, getDatabase.bodyParams),
-        auth: args?.auth,
-      })
-    },
+    retrieve: this.#endpointMethods.databases.retrieve,
 
     /**
      * Create a database
      */
-    create: (
-      args: WithAuth<CreateDatabaseParameters>
-    ): Promise<CreateDatabaseResponse> => {
-      this.warnUnknownParams(args, createDatabase)
-      return this.request<CreateDatabaseResponse>({
-        path: createDatabase.path(),
-        method: createDatabase.method,
-        query: pick(args, createDatabase.queryParams),
-        body: pick(args, createDatabase.bodyParams),
-        auth: args?.auth,
-      })
-    },
+    create: this.#endpointMethods.databases.create,
 
     /**
      * Update a database
      */
-    update: (
-      args: WithAuth<UpdateDatabaseParameters>
-    ): Promise<UpdateDatabaseResponse> => {
-      this.warnUnknownParams(args, updateDatabase)
-      return this.request<UpdateDatabaseResponse>({
-        path: updateDatabase.path(args),
-        method: updateDatabase.method,
-        query: pick(args, updateDatabase.queryParams),
-        body: pick(args, updateDatabase.bodyParams),
-        auth: args?.auth,
-      })
-    },
+    update: this.#endpointMethods.databases.update,
   }
 
   public readonly dataSources = {
     /**
      * Retrieve a data source
      */
-    retrieve: (
-      args: WithAuth<GetDataSourceParameters>
-    ): Promise<GetDataSourceResponse> => {
-      this.warnUnknownParams(args, getDataSource)
-      return this.request<GetDataSourceResponse>({
-        path: getDataSource.path(args),
-        method: getDataSource.method,
-        query: pick(args, getDataSource.queryParams),
-        body: pick(args, getDataSource.bodyParams),
-        auth: args?.auth,
-      })
-    },
+    retrieve: this.#endpointMethods.dataSources.retrieve,
 
     /**
      * Query a data source
      */
-    query: (
-      args: WithAuth<QueryDataSourceParameters>
-    ): Promise<QueryDataSourceResponse> => {
-      this.warnUnknownParams(args, queryDataSource)
-      return this.request<QueryDataSourceResponse>({
-        path: queryDataSource.path(args),
-        method: queryDataSource.method,
-        query: pick(args, queryDataSource.queryParams),
-        body: pick(args, queryDataSource.bodyParams),
-        auth: args?.auth,
-      })
-    },
+    query: this.#endpointMethods.dataSources.query,
 
     /**
      * Create a data source
      */
-    create: (
-      args: WithAuth<CreateDataSourceParameters>
-    ): Promise<CreateDataSourceResponse> => {
-      this.warnUnknownParams(args, createDataSource)
-      return this.request<CreateDataSourceResponse>({
-        path: createDataSource.path(),
-        method: createDataSource.method,
-        query: pick(args, createDataSource.queryParams),
-        body: pick(args, createDataSource.bodyParams),
-        auth: args?.auth,
-      })
-    },
+    create: this.#endpointMethods.dataSources.create,
 
     /**
      * Update a data source
      */
-    update: (
-      args: WithAuth<UpdateDataSourceParameters>
-    ): Promise<UpdateDataSourceResponse> => {
-      this.warnUnknownParams(args, updateDataSource)
-      return this.request<UpdateDataSourceResponse>({
-        path: updateDataSource.path(args),
-        method: updateDataSource.method,
-        query: pick(args, updateDataSource.queryParams),
-        body: pick(args, updateDataSource.bodyParams),
-        auth: args?.auth,
-      })
-    },
+    update: this.#endpointMethods.dataSources.update,
 
     /**
      * List page templates that are available for a data source
      */
-    listTemplates: (
-      args: WithAuth<ListDataSourceTemplatesParameters>
-    ): Promise<ListDataSourceTemplatesResponse> => {
-      this.warnUnknownParams(args, listDataSourceTemplates)
-      return this.request<ListDataSourceTemplatesResponse>({
-        path: listDataSourceTemplates.path(args),
-        method: listDataSourceTemplates.method,
-        query: pick(args, listDataSourceTemplates.queryParams),
-        body: pick(args, listDataSourceTemplates.bodyParams),
-        auth: args?.auth,
-      })
-    },
+    listTemplates: this.#endpointMethods.dataSources.listTemplates,
   }
 
   public readonly pages = {
     /**
      * Create a page
      */
-    create: (
-      args: WithAuth<CreatePageParameters>
-    ): Promise<CreatePageResponse> => {
-      this.warnUnknownParams(args, createPage)
-      return this.request<CreatePageResponse>({
-        path: createPage.path(),
-        method: createPage.method,
-        query: pick(args, createPage.queryParams),
-        body: pick(args, createPage.bodyParams),
-        auth: args?.auth,
-      })
-    },
+    create: this.#endpointMethods.pages.create,
 
     /**
      * Retrieve a page
      */
-    retrieve: (args: WithAuth<GetPageParameters>): Promise<GetPageResponse> => {
-      this.warnUnknownParams(args, getPage)
-      return this.request<GetPageResponse>({
-        path: getPage.path(args),
-        method: getPage.method,
-        query: pick(args, getPage.queryParams),
-        body: pick(args, getPage.bodyParams),
-        auth: args?.auth,
-      })
-    },
+    retrieve: this.#endpointMethods.pages.retrieve,
 
     /**
      * Update page properties
      */
-    update: (
-      args: WithAuth<UpdatePageParameters>
-    ): Promise<UpdatePageResponse> => {
-      this.warnUnknownParams(args, updatePage)
-      return this.request<UpdatePageResponse>({
-        path: updatePage.path(args),
-        method: updatePage.method,
-        query: pick(args, updatePage.queryParams),
-        body: pick(args, updatePage.bodyParams),
-        auth: args?.auth,
-      })
-    },
+    update: this.#endpointMethods.pages.update,
 
     /**
      * Move a page
      */
-    move: (args: WithAuth<MovePageParameters>): Promise<MovePageResponse> => {
-      this.warnUnknownParams(args, movePage)
-      return this.request<MovePageResponse>({
-        path: movePage.path(args),
-        method: movePage.method,
-        query: pick(args, movePage.queryParams),
-        body: pick(args, movePage.bodyParams),
-        auth: args?.auth,
-      })
-    },
+    move: this.#endpointMethods.pages.move,
 
     /**
      * Retrieve a page as markdown
@@ -1361,18 +896,7 @@ export default class Client {
       /**
        * Retrieve page property
        */
-      retrieve: (
-        args: WithAuth<GetPagePropertyParameters>
-      ): Promise<GetPagePropertyResponse> => {
-        this.warnUnknownParams(args, getPageProperty)
-        return this.request<GetPagePropertyResponse>({
-          path: getPageProperty.path(args),
-          method: getPageProperty.method,
-          query: pick(args, getPageProperty.queryParams),
-          body: pick(args, getPageProperty.bodyParams),
-          auth: args?.auth,
-        })
-      },
+      retrieve: this.#endpointMethods.pages.properties.retrieve,
     },
   }
 
@@ -1380,44 +904,17 @@ export default class Client {
     /**
      * Retrieve a user
      */
-    retrieve: (args: WithAuth<GetUserParameters>): Promise<GetUserResponse> => {
-      this.warnUnknownParams(args, getUser)
-      return this.request<GetUserResponse>({
-        path: getUser.path(args),
-        method: getUser.method,
-        query: pick(args, getUser.queryParams),
-        body: pick(args, getUser.bodyParams),
-        auth: args?.auth,
-      })
-    },
+    retrieve: this.#endpointMethods.users.retrieve,
 
     /**
      * List all users
      */
-    list: (args: WithAuth<ListUsersParameters>): Promise<ListUsersResponse> => {
-      this.warnUnknownParams(args, listUsers)
-      return this.request<ListUsersResponse>({
-        path: listUsers.path(),
-        method: listUsers.method,
-        query: pick(args, listUsers.queryParams),
-        body: pick(args, listUsers.bodyParams),
-        auth: args?.auth,
-      })
-    },
+    list: this.#endpointMethods.users.list,
 
     /**
      * Get details about bot
      */
-    me: (args: WithAuth<GetSelfParameters>): Promise<GetSelfResponse> => {
-      this.warnUnknownParams(args, getSelf)
-      return this.request<GetSelfResponse>({
-        path: getSelf.path(),
-        method: getSelf.method,
-        query: pick(args, getSelf.queryParams),
-        body: pick(args, getSelf.bodyParams),
-        auth: args?.auth,
-      })
-    },
+    me: this.#endpointMethods.users.me,
   }
 
   public readonly customEmojis = {
@@ -1442,100 +939,34 @@ export default class Client {
     /**
      * Create a comment
      */
-    create: (
-      args: WithAuth<CreateCommentParameters>
-    ): Promise<CreateCommentResponse> => {
-      this.warnUnknownParams(args, createComment)
-      return this.request<CreateCommentResponse>({
-        path: createComment.path(),
-        method: createComment.method,
-        query: pick(args, createComment.queryParams),
-        body: pick(args, createComment.bodyParams),
-        auth: args?.auth,
-      })
-    },
+    create: this.#endpointMethods.comments.create,
 
     /**
      * List comments
      */
-    list: (
-      args: WithAuth<ListCommentsParameters>
-    ): Promise<ListCommentsResponse> => {
-      this.warnUnknownParams(args, listComments)
-      return this.request<ListCommentsResponse>({
-        path: listComments.path(),
-        method: listComments.method,
-        query: pick(args, listComments.queryParams),
-        body: pick(args, listComments.bodyParams),
-        auth: args?.auth,
-      })
-    },
+    list: this.#endpointMethods.comments.list,
 
     /**
      * Retrieve a comment
      */
-    retrieve: (
-      args: WithAuth<GetCommentParameters>
-    ): Promise<GetCommentResponse> => {
-      this.warnUnknownParams(args, getComment)
-      return this.request<GetCommentResponse>({
-        path: getComment.path(args),
-        method: getComment.method,
-        query: pick(args, getComment.queryParams),
-        body: pick(args, getComment.bodyParams),
-        auth: args?.auth,
-      })
-    },
+    retrieve: this.#endpointMethods.comments.retrieve,
 
     /**
      * Update a comment
      */
-    update: (
-      args: WithAuth<UpdateCommentParameters>
-    ): Promise<UpdateCommentResponse> => {
-      this.warnUnknownParams(args, updateComment)
-      return this.request<UpdateCommentResponse>({
-        path: updateComment.path(args),
-        method: updateComment.method,
-        query: pick(args, updateComment.queryParams),
-        body: pick(args, updateComment.bodyParams),
-        auth: args?.auth,
-      })
-    },
+    update: this.#endpointMethods.comments.update,
 
     /**
      * Delete a comment
      */
-    delete: (
-      args: WithAuth<DeleteCommentParameters>
-    ): Promise<DeleteCommentResponse> => {
-      this.warnUnknownParams(args, deleteComment)
-      return this.request<DeleteCommentResponse>({
-        path: deleteComment.path(args),
-        method: deleteComment.method,
-        query: pick(args, deleteComment.queryParams),
-        body: pick(args, deleteComment.bodyParams),
-        auth: args?.auth,
-      })
-    },
+    delete: this.#endpointMethods.comments.delete,
   }
 
   public readonly fileUploads = {
     /**
      * Create a file upload
      */
-    create: (
-      args: WithAuth<CreateFileUploadParameters>
-    ): Promise<CreateFileUploadResponse> => {
-      this.warnUnknownParams(args, createFileUpload)
-      return this.request<CreateFileUploadResponse>({
-        path: createFileUpload.path(),
-        method: createFileUpload.method,
-        query: pick(args, createFileUpload.queryParams),
-        body: pick(args, createFileUpload.bodyParams),
-        auth: args?.auth,
-      })
-    },
+    create: this.#endpointMethods.fileUploads.create,
 
     /**
      * Retrieve a file upload
@@ -1642,16 +1073,7 @@ export default class Client {
     /**
      * Retrieve a view
      */
-    retrieve: (args: WithAuth<GetViewParameters>): Promise<GetViewResponse> => {
-      this.warnUnknownParams(args, getView)
-      return this.request<GetViewResponse>({
-        path: getView.path(args),
-        method: getView.method,
-        query: pick(args, getView.queryParams),
-        body: pick(args, getView.bodyParams),
-        auth: args?.auth,
-      })
-    },
+    retrieve: this.#endpointMethods.views.retrieve,
 
     /**
      * Update a view
@@ -1677,34 +1099,12 @@ export default class Client {
     /**
      * Delete a view
      */
-    delete: (
-      args: WithAuth<DeleteViewParameters>
-    ): Promise<DeleteViewResponse> => {
-      this.warnUnknownParams(args, deleteView)
-      return this.request<DeleteViewResponse>({
-        path: deleteView.path(args),
-        method: deleteView.method,
-        query: pick(args, deleteView.queryParams),
-        body: pick(args, deleteView.bodyParams),
-        auth: args?.auth,
-      })
-    },
+    delete: this.#endpointMethods.views.delete,
 
     /**
      * List views for a database
      */
-    list: (
-      args: WithAuth<ListDatabaseViewsParameters>
-    ): Promise<ListDatabaseViewsResponse> => {
-      this.warnUnknownParams(args, listDatabaseViews)
-      return this.request<ListDatabaseViewsResponse>({
-        path: listDatabaseViews.path(),
-        method: listDatabaseViews.method,
-        query: pick(args, listDatabaseViews.queryParams),
-        body: pick(args, listDatabaseViews.bodyParams),
-        auth: args?.auth,
-      })
-    },
+    list: this.#endpointMethods.views.list,
 
     queries: {
       /**
@@ -1725,52 +1125,19 @@ export default class Client {
       /**
        * Get view query results
        */
-      results: (
-        args: WithAuth<GetViewQueryResultsParameters>
-      ): Promise<GetViewQueryResultsResponse> => {
-        this.warnUnknownParams(args, getViewQueryResults)
-        return this.request<GetViewQueryResultsResponse>({
-          path: getViewQueryResults.path(args),
-          method: getViewQueryResults.method,
-          query: pick(args, getViewQueryResults.queryParams),
-          body: pick(args, getViewQueryResults.bodyParams),
-          auth: args?.auth,
-        })
-      },
+      results: this.#endpointMethods.views.queries.results,
 
       /**
        * Delete a view query
        */
-      delete: (
-        args: WithAuth<DeleteViewQueryParameters>
-      ): Promise<DeleteViewQueryResponse> => {
-        this.warnUnknownParams(args, deleteViewQuery)
-        return this.request<DeleteViewQueryResponse>({
-          path: deleteViewQuery.path(args),
-          method: deleteViewQuery.method,
-          query: pick(args, deleteViewQuery.queryParams),
-          body: pick(args, deleteViewQuery.bodyParams),
-          auth: args?.auth,
-        })
-      },
+      delete: this.#endpointMethods.views.queries.delete,
     },
   }
 
   /**
    * Search
    */
-  public search = (
-    args: WithAuth<SearchParameters>
-  ): Promise<SearchResponse> => {
-    this.warnUnknownParams(args, search)
-    return this.request<SearchResponse>({
-      path: search.path(),
-      method: search.method,
-      query: pick(args, search.queryParams),
-      body: pick(args, search.bodyParams),
-      auth: args?.auth,
-    })
-  }
+  public search = this.#endpointMethods.search
 
   public readonly oauth = {
     /**
