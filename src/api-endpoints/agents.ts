@@ -253,6 +253,7 @@ export type UpdateSessionStreamResponse =
        */
       type: "event.provisional"
       event: SessionStreamProvisionalEvent
+      logical_key?: string
     }
   | {
       /**
@@ -260,6 +261,7 @@ export type UpdateSessionStreamResponse =
        */
       type: "event.committed"
       event: SessionStreamCommittedEvent
+      logical_key?: string
     }
   | {
       /**
