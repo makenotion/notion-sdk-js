@@ -40,3 +40,14 @@ jobs:
       - run: npm run build
       - run: npm run lint
       - run: npm test
+      - name: Check out the previous public contract
+        if: github.event_name == 'pull_request' && matrix.node-version == '22.x'
+        # v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+          path: .compat-baseline
+          persist-credentials: false
+      - name: Check public API compatibility
+        if: github.event_name == 'pull_request' && matrix.node-version == '22.x'
+        run: node build/test/checkCompatibility.js .compat-baseline/src/index.ts
