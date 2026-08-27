@@ -92,7 +92,7 @@ export function createEndpointMethods(client: EndpointClient) {
     },
     pages: {
       /** Create a page */
-      create: optionalMethod<
+      create: method<
         endpoints.CreatePageParameters,
         endpoints.CreatePageResponse
       >(endpoints.createPage, args =>
