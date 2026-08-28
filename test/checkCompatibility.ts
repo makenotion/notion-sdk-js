@@ -4,7 +4,11 @@ import { dirname, resolve } from "path"
 
 // Private fields have different identities in separate checkouts. Compare the
 // emitted public declarations so implementation changes do not fail this check.
-export function checkCompatibility(before: string, after: string): string[] {
+export function checkCompatibility(
+  before: string,
+  after: string,
+  includeProtected: boolean = false
+): string[] {
   const sourceProgram = ts.createProgram([before, after], {
     strict: true,
     declaration: true,
@@ -16,18 +20,19 @@ export function checkCompatibility(before: string, after: string): string[] {
     resolveJsonModule: true,
     typeRoots: [resolve("node_modules/@types")],
   })
-  const failures = ts
-    .getPreEmitDiagnostics(sourceProgram)
-    .map(diagnostic =>
-      ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n")
-    )
-  if (failures.length) return failures
+  const failures = diagnosticMessages(sourceProgram)
+  if (failures.length) {
+    return failures
+  }
   const files = new Map<string, string>()
   const declarations = new Map<string, string>()
+  let hasProtectedMembers = false
   sourceProgram.emit(
     undefined,
     (fileName, content, _byteOrderMark, _onError, sources) => {
-      if (!fileName.endsWith(".d.ts")) return
+      if (!fileName.endsWith(".d.ts")) {
+        return
+      }
       const source = ts.createSourceFile(
         fileName,
         content,
@@ -44,20 +49,30 @@ export function checkCompatibility(before: string, after: string): string[] {
                 statement.name,
                 statement.typeParameters,
                 statement.heritageClauses,
-                publicMembers(statement)
+                publicMembers(statement, includeProtected)
               )
             : statement
         )
       )
+      hasProtectedMembers ||= source.statements.some(
+        statement =>
+          ts.isClassDeclaration(statement) &&
+          statement.members.some(
+            member =>
+              ts.getCombinedModifierFlags(member) & ts.ModifierFlags.Protected
+          )
+      )
       files.set(fileName, ts.createPrinter().printFile(publicSource))
-      for (const input of sources ?? [])
+      for (const input of sources ?? []) {
         declarations.set(input.fileName, fileName)
+      }
     }
   )
   const beforeDeclaration = declarations.get(before)
   const afterDeclaration = declarations.get(after)
-  if (!beforeDeclaration || !afterDeclaration)
+  if (!beforeDeclaration || !afterDeclaration) {
     throw new Error("Could not emit package declarations")
+  }
   const options = {
     ...sourceProgram.getCompilerOptions(),
     noEmit: true,
@@ -87,17 +102,19 @@ export function checkCompatibility(before: string, after: string): string[] {
     options,
     host
   )
-  const declarationErrors = ts.getPreEmitDiagnostics(program)
-  if (declarationErrors.length)
-    return declarationErrors.map(diagnostic =>
-      ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n")
-    )
+  const declarationErrors = diagnosticMessages(program)
+  if (declarationErrors.length) {
+    return declarationErrors
+  }
   const checker = program.getTypeChecker()
+  const compared = new Map<ts.Type, Map<ts.Type, boolean>>()
 
-  function exportsAt(path: string) {
+  function exportsAt(path: string): Map<string, ts.Symbol> {
     const file = program.getSourceFile(path)
     const symbol = file && checker.getSymbolAtLocation(file)
-    if (!symbol) throw new Error(`Cannot read package exports: ${path}`)
+    if (!symbol) {
+      throw new Error(`Cannot read package exports: ${path}`)
+    }
     return new Map(
       checker.getExportsOfModule(symbol).map(symbol => [symbol.name, symbol])
     )
@@ -129,10 +146,18 @@ export function checkCompatibility(before: string, after: string): string[] {
         failures.push(`Removed value export: ${name}`)
         continue
       }
-      compatible(`typeof ${name}`, valueType(newSymbol), valueType(oldSymbol))
+      compatible(
+        `typeof ${name}`,
+        checker.getTypeOfSymbol(newSymbol),
+        checker.getTypeOfSymbol(oldSymbol)
+      )
     }
   }
-  return failures
+  // Check subclass access separately so protected declarations from different
+  // checkouts do not fail TypeScript's class-identity rules.
+  return !failures.length && hasProtectedMembers && !includeProtected
+    ? checkCompatibility(before, after, true)
+    : failures
 
   function resolveAlias(symbol: ts.Symbol): ts.Symbol {
     return symbol.flags & ts.SymbolFlags.Alias
@@ -140,21 +165,111 @@ export function checkCompatibility(before: string, after: string): string[] {
       : symbol
   }
 
-  function valueType(symbol: ts.Symbol): ts.Type {
-    const declaration = symbol.valueDeclaration ?? symbol.declarations?.[0]
-    if (!declaration) throw new Error(`Missing declaration: ${symbol.name}`)
-    return checker.getTypeOfSymbolAtLocation(symbol, declaration)
-  }
-
   function compatible(
     name: string,
     currentType: ts.Type,
     previousType: ts.Type
-  ) {
-    if (!checker.isTypeAssignableTo(currentType, previousType)) {
+  ): void {
+    if (
+      !checker.isTypeAssignableTo(currentType, previousType) ||
+      !retainsProperties(currentType, previousType)
+    ) {
       failures.push(`Incompatible export: ${name}`)
     }
   }
+
+  // Assignability alone allows optional properties to disappear. Follow the
+  // readable surface, including nested results, without revisiting cycles.
+  function retainsProperties(current: ts.Type, previous: ts.Type): boolean {
+    current = checker.getNonNullableType(current)
+    previous = checker.getNonNullableType(previous)
+    if (current === previous) {
+      return true
+    }
+    const cached = compared.get(previous)?.get(current)
+    if (cached !== undefined) {
+      return cached
+    }
+    const results = compared.get(previous) ?? new Map<ts.Type, boolean>()
+    compared.set(previous, results)
+    results.set(current, true)
+    const result = compareProperties(current, previous)
+    results.set(current, result)
+    return result
+  }
+
+  function compareProperties(current: ts.Type, previous: ts.Type): boolean {
+    if (previous.isUnion() || current.isUnion()) {
+      const oldTypes = previous.isUnion() ? previous.types : [previous]
+      const newTypes = current.isUnion() ? current.types : [current]
+      return oldTypes.every(oldType =>
+        newTypes.some(newType => retainsProperties(newType, oldType))
+      )
+    }
+    // Match discriminated union members without comparing unrelated generic
+    // parameter identities from the two declarations.
+    if (previous.flags & ts.TypeFlags.Literal) {
+      return checker.isTypeAssignableTo(current, previous)
+    }
+    if (!(previous.flags & (ts.TypeFlags.Object | ts.TypeFlags.Intersection))) {
+      return true
+    }
+    const oldResult = checker.getAwaitedType(previous)
+    const newResult = checker.getAwaitedType(current)
+    if (oldResult && oldResult !== previous) {
+      return Boolean(newResult && retainsProperties(newResult, oldResult))
+    }
+    for (const kind of [ts.IndexKind.Number, ts.IndexKind.String]) {
+      const oldIndex = checker.getIndexTypeOfType(previous, kind)
+      const newIndex = checker.getIndexTypeOfType(current, kind)
+      if (oldIndex && (!newIndex || !retainsProperties(newIndex, oldIndex))) {
+        return false
+      }
+    }
+    if (checker.isArrayType(previous) || checker.isTupleType(previous)) {
+      return true
+    }
+    for (const kind of [ts.SignatureKind.Call, ts.SignatureKind.Construct]) {
+      const newSignatures = checker.getSignaturesOfType(current, kind)
+      if (
+        !checker
+          .getSignaturesOfType(previous, kind)
+          .every(oldSignature =>
+            newSignatures.some(newSignature =>
+              retainsProperties(
+                checker.getReturnTypeOfSignature(newSignature),
+                checker.getReturnTypeOfSignature(oldSignature)
+              )
+            )
+          )
+      ) {
+        return false
+      }
+    }
+    const newProperties = new Map(
+      checker
+        .getPropertiesOfType(current)
+        .map(property => [property.escapedName, property])
+    )
+    return checker.getPropertiesOfType(previous).every(oldProperty => {
+      const newProperty = newProperties.get(oldProperty.escapedName)
+      return Boolean(
+        newProperty &&
+          retainsProperties(
+            checker.getTypeOfSymbol(newProperty),
+            checker.getTypeOfSymbol(oldProperty)
+          )
+      )
+    })
+  }
+}
+
+function diagnosticMessages(program: ts.Program): string[] {
+  return ts
+    .getPreEmitDiagnostics(program)
+    .map(diagnostic =>
+      ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n")
+    )
 }
 
 export function allowsContractChanges(before: string, after: string): boolean {
@@ -168,15 +283,78 @@ export function allowsContractChanges(before: string, after: string): boolean {
 
 function releaseVersion(version: string): { major: number; minor: number } {
   const match = /^(\d+)\.(\d+)\.\d+(?:-[\w.-]+)?(?:\+[\w.-]+)?$/.exec(version)
-  if (!match) throw new Error(`Invalid package version: ${version}`)
+  if (!match) {
+    throw new Error(`Invalid package version: ${version}`)
+  }
   return { major: Number(match[1]), minor: Number(match[2]) }
 }
 
-function publicMembers(declaration: ts.ClassDeclaration): ts.ClassElement[] {
-  const members = declaration.members.filter(member => !isPrivateMember(member))
+function publicMembers(
+  declaration: ts.ClassDeclaration,
+  includeProtected: boolean
+): ts.ClassElement[] {
+  const visible = declaration.members
+    .filter(member => {
+      if (ts.isConstructorDeclaration(member)) {
+        return true
+      }
+      const flags = ts.getCombinedModifierFlags(member)
+      return (
+        !(member.name && ts.isPrivateIdentifier(member.name)) &&
+        !(flags & ts.ModifierFlags.Private) &&
+        (includeProtected || !(flags & ts.ModifierFlags.Protected))
+      )
+    })
+    .map(member =>
+      !ts.isConstructorDeclaration(member) && ts.canHaveModifiers(member)
+        ? ts.factory.replaceModifiers(
+            member,
+            ts
+              .getModifiers(member)
+              ?.filter(
+                modifier => modifier.kind !== ts.SyntaxKind.ProtectedKeyword
+              )
+          )
+        : member
+    )
+  // Function properties enforce strict input checks; method syntax does not.
+  // An intersection preserves every overload instead of keeping only the last.
+  const methods = new Set<string>()
+  const members = visible.flatMap(member => {
+    if (!ts.isMethodDeclaration(member)) {
+      return [member]
+    }
+    const key = (method: ts.MethodDeclaration): string =>
+      `${ts.getCombinedModifierFlags(method) & ts.ModifierFlags.Static}:${method.name.getText()}`
+    if (methods.has(key(member))) {
+      return []
+    }
+    methods.add(key(member))
+    const signatures = visible
+      .filter(ts.isMethodDeclaration)
+      .filter(method => key(method) === key(member))
+      .map(method =>
+        ts.factory.createFunctionTypeNode(
+          method.typeParameters,
+          method.parameters,
+          method.type ??
+            ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword)
+        )
+      )
+    return [
+      ts.factory.createPropertyDeclaration(
+        member.modifiers,
+        member.name,
+        member.questionToken,
+        ts.factory.createIntersectionTypeNode(signatures),
+        undefined
+      ),
+    ]
+  })
   const constructors = members.filter(ts.isConstructorDeclaration)
-  if (!constructors.length && declaration.heritageClauses?.length)
+  if (!constructors.length && declaration.heritageClauses?.length) {
     return members
+  }
   // TypeScript compares constructor parameters loosely. A function property
   // also checks that callers can still pass the old constructor arguments.
   const signatures = (constructors.length ? constructors : [undefined]).map(
@@ -199,28 +377,13 @@ function publicMembers(declaration: ts.ClassDeclaration): ts.ClassElement[] {
   ]
 }
 
-function isPrivateMember(member: ts.ClassElement): boolean {
-  return (
-    Boolean(member.name && ts.isPrivateIdentifier(member.name)) ||
-    Boolean(
-      ts.canHaveModifiers(member) &&
-        ts
-          .getModifiers(member)
-          ?.some(
-            modifier =>
-              modifier.kind === ts.SyntaxKind.PrivateKeyword ||
-              modifier.kind === ts.SyntaxKind.ProtectedKeyword
-          )
-    )
-  )
-}
-
-if (process.argv[1]?.endsWith("/checkCompatibility.js")) {
+if (require.main === module) {
   const before = process.argv[2]
-  if (!before)
+  if (!before) {
     throw new Error(
       "Usage: node build/test/checkCompatibility.js <baseline/src/index.ts>"
     )
+  }
   const after = resolve("src/index.ts")
   const failures = allowsContractChanges(
     packageVersion(before),
@@ -233,7 +396,7 @@ if (process.argv[1]?.endsWith("/checkCompatibility.js")) {
     process.exitCode = 1
   } else {
     console.log(
-      "Public API check passed or a minor/major release allows contract changes."
+      "SDK compatibility check passed or a minor/major release allows contract changes."
     )
   }
 }
@@ -247,7 +410,8 @@ function packageVersion(entry: string): string {
     manifest === null ||
     !("version" in manifest) ||
     typeof manifest.version !== "string"
-  )
+  ) {
     throw new Error(`Missing package version for ${entry}`)
+  }
   return manifest.version
 }

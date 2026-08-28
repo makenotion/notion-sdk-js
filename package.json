@@ -26,8 +26,9 @@
     "prepublishOnly": "npm run checkLoggedIn && npm run lint && npm run test",
     "build": "tsc",
     "prettier": "prettier --write .",
-    "lint": "prettier --check . && eslint . --ext .ts && cspell '**/*' ",
+    "lint": "prettier --check . && eslint . --ext .ts,.js && cspell '**/*'",
     "test": "jest ./test",
+    "check:compatibility": "node build/test/checkCompatibility.js",
     "check-links": "git ls-files | grep md$ | xargs -n 1 markdown-link-check",
     "prebuild": "npm run clean",
     "clean": "rm -rf ./build",
@@ -35,7 +36,7 @@
   },
   "lint-staged": {
     "*.{ts,js,json,md}": "prettier --write",
-    "*.ts": "eslint --fix"
+    "*.{ts,js}": "eslint --fix"
   },
   "author": "",
   "license": "MIT",

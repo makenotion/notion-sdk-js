@@ -1,30 +1,29 @@
 ---
 name: Bug report
-about: Create a report to help us improve
-title: ''
-labels: ''
-assignees: ''
-
+about: Report a problem with the JavaScript SDK
+title: ""
+labels: ""
+assignees: ""
 ---
 
-Report bugs here only for the Node JavaScript library.
+Report SDK bugs here. For Notion API support or feature requests, email developers@makenotion.com.
 
-If you're having problems using Notion's API, or have any other feedback about the API including feature requests for the JavaScript library, please email support at developers@makenotion.com.
+## Bug
 
-**Describe the bug**
-A clear and concise description of what the bug is.
+Describe what went wrong.
 
-**To Reproduce**
-Node version:
-Notion JS library version:
+## Steps to reproduce
 
-Steps to reproduce the behavior:
+Node.js version:
 
-**Expected behavior**
-A clear and concise description of what you expected to happen.
+SDK version:
 
-**Screenshots**
-Please include any screenshots that help explain your problem.
+Include the code or steps needed to reproduce the problem. Remove tokens and private data.
 
-**Additional context**
-Add any other context about the problem here.
+## Expected behavior
+
+Describe what you expected to happen.
+
+## Other details
+
+Add logs or screenshots that help explain the problem.

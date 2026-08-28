@@ -7,7 +7,7 @@ describe("package compatibility check", () => {
   const directory = mkdtempSync(join(tmpdir(), "notion-sdk-compatibility-"))
   afterAll(() => rmSync(directory, { recursive: true }))
 
-  function compare(before: string, after: string) {
+  function compare(before: string, after: string): string[] {
     const oldFile = join(directory, "before.ts")
     const newFile = join(directory, "after.ts")
     writeFileSync(oldFile, before)
@@ -18,13 +18,13 @@ describe("package compatibility check", () => {
   it("allows additive exports and private implementation changes", () => {
     expect(
       compare(
-        "export declare class Client { private old; pages: { retrieve(id: string): number } }",
-        "export declare class Client { private next; pages: { retrieve(id: string): number } }; export type Added = string"
+        "export declare class Client { private old: unknown; pages: { retrieve(id: string): number } }",
+        "export declare class Client { private next: unknown; pages: { retrieve(id: string): number } }; export type Added = string"
       )
     ).toEqual([])
   })
 
-  it.each([
+  it.each<[string, string, string]>([
     ["export type Page = string", "export {}", "Removed export: Page"],
     [
       "export type Page = string",
@@ -63,8 +63,8 @@ describe("package compatibility check", () => {
   it("compares helpers that accept a client without private-field identity", () => {
     expect(
       compare(
-        "export declare class Client { private old; request: (id: string) => number }; export declare function collect(client: Client): number[]",
-        "export declare class Client { private next; request: (id: string) => number }; export declare function collect(client: Client): number[]"
+        "export declare class Client { private old: unknown; request: (id: string) => number }; export declare function collect(client: Client): number[]",
+        "export declare class Client { private next: unknown; request: (id: string) => number }; export declare function collect(client: Client): number[]"
       )
     ).toEqual([])
   })
@@ -84,7 +84,114 @@ describe("package compatibility check", () => {
     ).toContain("Incompatible export: typeof Client")
   })
 
-  it.each([
+  it.each<[string, string, string]>([
+    [
+      "optional response field",
+      "export type Response = { results: string[]; request_status?: string }",
+      "export type Response = { results: string[] }",
+    ],
+    [
+      "nested optional response field",
+      "export declare class Client { search(): Promise<{ results: { id: string; status?: string }[] }> }",
+      "export declare class Client { search(): Promise<{ results: { id: string }[] }> }",
+    ],
+    [
+      "optional field on a union member",
+      'export type Response = { kind: "page"; status?: string } | { kind: "block"; status?: string }',
+      'export type Response = { kind: "page" } | { kind: "block"; status?: string }',
+    ],
+    [
+      "narrowed class method",
+      "export declare class Client { request(id: string): number }",
+      'export declare class Client { request(id: "only"): number }',
+    ],
+    [
+      "narrowed generic class method",
+      "export declare class Client { request<T>(id: string): Promise<T> }",
+      'export declare class Client { request<T>(id: "only"): Promise<T> }',
+    ],
+    [
+      "removed method overload",
+      "export declare class Client { request(id: string): number; request(id: number): string }",
+      "export declare class Client { request(id: string): number }",
+    ],
+    ...["private", "protected"].map<[string, string, string]>(visibility => [
+      `${visibility} constructor`,
+      "export declare class Client { constructor(options?: string) }",
+      `export declare class Client { ${visibility} constructor(options?: string) }`,
+    ]),
+    [
+      "removed protected member",
+      "export declare class Client { protected status?: string }",
+      "export declare class Client {}",
+    ],
+    [
+      "narrowed protected method",
+      "export declare class Client { protected request(id: string): number }",
+      'export declare class Client { protected request(id: "only"): number }',
+    ],
+    [
+      "narrowed static method",
+      "export declare class Client { static request(id: string): number }",
+      'export declare class Client { static request(id: "only"): number }',
+    ],
+    [
+      "optional field in an intersection",
+      "export type Response = { id: string } & { status?: string }",
+      "export type Response = { id: string }",
+    ],
+    [
+      "public member made protected",
+      "export declare class Client { status?: string }",
+      "export declare class Client { protected status?: string }",
+    ],
+  ])("rejects %s", (_description, before, after) => {
+    expect(compare(before, after)).toEqual(
+      expect.arrayContaining([expect.stringMatching(/^Incompatible export:/)])
+    )
+  })
+
+  it.each<[string, string, string]>([
+    [
+      "added optional response field",
+      "export type Response = { results: string[] }",
+      "export type Response = { results: string[]; status?: string }",
+    ],
+    [
+      "wider method inputs",
+      'export declare class Client { request(id: "only"): number }',
+      "export declare class Client { request(id: string): number }",
+    ],
+    [
+      "unchanged overloads",
+      "export declare class Client { request(id: string): number; request(id: number): string }",
+      "export declare class Client { request(id: string): number; request(id: number): string }",
+    ],
+    [
+      "unchanged protected members",
+      "export declare class Client { protected status?: string; protected request(id: string): number }",
+      "export declare class Client { protected status?: string; protected request(id: string): number }",
+    ],
+    [
+      "protected member made public",
+      "export declare class Client { protected status?: string }",
+      "export declare class Client { status?: string }",
+    ],
+    [
+      "recursive response types",
+      "export type Response = { next?: Response }",
+      "export type Response = { next?: Response; status?: string }",
+    ],
+    [
+      "generic async iterators and symbol keys",
+      "export declare function iterate<T>(): AsyncIterableIterator<T>",
+      "export declare function iterate<T>(): AsyncIterableIterator<T>",
+    ],
+  ])("allows %s", (_description, before, after) => {
+    expect(compare(before, after)).toEqual([])
+  })
+
+  it.each<[string, string, boolean]>([
     ["5.26.0", "5.26.0", false],
     ["5.26.0", "5.26.1", false],
     ["5.26.0", "5.27.0", true],

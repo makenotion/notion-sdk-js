@@ -1070,7 +1070,9 @@ export default class Client {
     args: Record<string, unknown>,
     endpoint: EndpointDefinition
   ): void {
-    if (!args || typeof args !== "object") return
+    if (!args || typeof args !== "object") {
+      return
+    }
 
     const unknownKeys = getUnknownParams(args, endpoint)
     if (unknownKeys.length > 0) {
