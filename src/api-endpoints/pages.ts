@@ -333,100 +333,97 @@ type CreatePageBodyParameters = {
     | { database_id: IdRequest; type?: "database_id" }
     | { data_source_id: IdRequest; type?: "data_source_id" }
     | { workspace: true; type?: "workspace" }
-  properties?: {
-    [key: string]:
-      | { title: Array<RichTextItemRequest>; type?: "title" }
-      | { rich_text: Array<RichTextItemRequest>; type?: "rich_text" }
-      | { number: number | null; type?: "number" }
-      | { url: TextRequest | null; type?: "url" }
-      | {
-          select:
-            | {
-                id: StringRequest
-                name?: TextRequest
-                color?: SelectColor
-                description?: TextRequest | null
-              }
-            | {
-                name: TextRequest
-                id?: StringRequest
-                color?: SelectColor
-                description?: TextRequest | null
-              }
-            | null
-          type?: "select"
-        }
-      | {
-          multi_select: Array<
-            | {
-                id: StringRequest
-                name?: TextRequest
-                color?: SelectColor
-                description?: TextRequest | null
-              }
-            | {
-                name: TextRequest
-                id?: StringRequest
-                color?: SelectColor
-                description?: TextRequest | null
-              }
-          >
-          type?: "multi_select"
-        }
-      | {
-          people: Array<PartialUserObjectRequest | GroupObjectRequest>
-          type?: "people"
-        }
-      | { email: StringRequest | null; type?: "email" }
-      | { phone_number: StringRequest | null; type?: "phone_number" }
-      | { date: DateRequest | null; type?: "date" }
-      | { checkbox: boolean; type?: "checkbox" }
-      | {
-          relation: Array<RelationItemPropertyValueResponse>
-          type?: "relation"
-        }
-      | {
-          files: Array<
-            | InternalOrExternalFileWithNameRequest
-            | FileUploadWithOptionalNameRequest
-          >
-          type?: "files"
-        }
-      | {
-          status:
-            | {
-                id: StringRequest
-                name?: TextRequest
-                color?: SelectColor
-                description?: TextRequest | null
-              }
-            | {
-                name: TextRequest
-                id?: StringRequest
-                color?: SelectColor
-                description?: TextRequest | null
-              }
-            | null
-          type?: "status"
-        }
-      | {
-          place: {
-            lat: number
-            lon: number
-            name?: string | null
-            address?: string | null
-            aws_place_id?: string | null
-            google_place_id?: string | null
-          } | null
-          type?: "place"
-        }
-      | {
-          verification:
-            | { state: "verified"; date?: DateRequest }
-            | { state: "unverified" }
-          type?: "verification"
-        }
-  }
+  properties?: Record<
+    string,
+    | { title: Array<RichTextItemRequest>; type?: "title" }
+    | { rich_text: Array<RichTextItemRequest>; type?: "rich_text" }
+    | { number: number | null; type?: "number" }
+    | { url: TextRequest | null; type?: "url" }
+    | {
+        select:
+          | {
+              id: StringRequest
+              name?: TextRequest
+              color?: SelectColor
+              description?: TextRequest | null
+            }
+          | {
+              name: TextRequest
+              id?: StringRequest
+              color?: SelectColor
+              description?: TextRequest | null
+            }
+          | null
+        type?: "select"
+      }
+    | {
+        multi_select: Array<
+          | {
+              id: StringRequest
+              name?: TextRequest
+              color?: SelectColor
+              description?: TextRequest | null
+            }
+          | {
+              name: TextRequest
+              id?: StringRequest
+              color?: SelectColor
+              description?: TextRequest | null
+            }
+        >
+        type?: "multi_select"
+      }
+    | {
+        people: Array<PartialUserObjectRequest | GroupObjectRequest>
+        type?: "people"
+      }
+    | { email: StringRequest | null; type?: "email" }
+    | { phone_number: StringRequest | null; type?: "phone_number" }
+    | { date: DateRequest | null; type?: "date" }
+    | { checkbox: boolean; type?: "checkbox" }
+    | { relation: Array<RelationItemPropertyValueResponse>; type?: "relation" }
+    | {
+        files: Array<
+          | InternalOrExternalFileWithNameRequest
+          | FileUploadWithOptionalNameRequest
+        >
+        type?: "files"
+      }
+    | {
+        status:
+          | {
+              id: StringRequest
+              name?: TextRequest
+              color?: SelectColor
+              description?: TextRequest | null
+            }
+          | {
+              name: TextRequest
+              id?: StringRequest
+              color?: SelectColor
+              description?: TextRequest | null
+            }
+          | null
+        type?: "status"
+      }
+    | {
+        place: {
+          lat: number
+          lon: number
+          name?: string | null
+          address?: string | null
+          aws_place_id?: string | null
+          google_place_id?: string | null
+        } | null
+        type?: "place"
+      }
+    | {
+        verification:
+          | { state: "verified"; date?: DateRequest }
+          | { state: "unverified" }
+        type?: "verification"
+      }
+  >
   icon?: PageIconRequest | null
   cover?: PageCoverRequest | null
   content?: Array<BlockObjectRequest>
@@ -511,100 +508,97 @@ type UpdatePageQueryParameters = {
 }
 
 type UpdatePageBodyParameters = {
-  properties?: {
-    [key: string]:
-      | { title: Array<RichTextItemRequest>; type?: "title" }
-      | { rich_text: Array<RichTextItemRequest>; type?: "rich_text" }
-      | { number: number | null; type?: "number" }
-      | { url: TextRequest | null; type?: "url" }
-      | {
-          select:
-            | {
-                id: StringRequest
-                name?: TextRequest
-                color?: SelectColor
-                description?: TextRequest | null
-              }
-            | {
-                name: TextRequest
-                id?: StringRequest
-                color?: SelectColor
-                description?: TextRequest | null
-              }
-            | null
-          type?: "select"
-        }
-      | {
-          multi_select: Array<
-            | {
-                id: StringRequest
-                name?: TextRequest
-                color?: SelectColor
-                description?: TextRequest | null
-              }
-            | {
-                name: TextRequest
-                id?: StringRequest
-                color?: SelectColor
-                description?: TextRequest | null
-              }
-          >
-          type?: "multi_select"
-        }
-      | {
-          people: Array<PartialUserObjectRequest | GroupObjectRequest>
-          type?: "people"
-        }
-      | { email: StringRequest | null; type?: "email" }
-      | { phone_number: StringRequest | null; type?: "phone_number" }
-      | { date: DateRequest | null; type?: "date" }
-      | { checkbox: boolean; type?: "checkbox" }
-      | {
-          relation: Array<RelationItemPropertyValueResponse>
-          type?: "relation"
-        }
-      | {
-          files: Array<
-            | InternalOrExternalFileWithNameRequest
-            | FileUploadWithOptionalNameRequest
-          >
-          type?: "files"
-        }
-      | {
-          status:
-            | {
-                id: StringRequest
-                name?: TextRequest
-                color?: SelectColor
-                description?: TextRequest | null
-              }
-            | {
-                name: TextRequest
-                id?: StringRequest
-                color?: SelectColor
-                description?: TextRequest | null
-              }
-            | null
-          type?: "status"
-        }
-      | {
-          place: {
-            lat: number
-            lon: number
-            name?: string | null
-            address?: string | null
-            aws_place_id?: string | null
-            google_place_id?: string | null
-          } | null
-          type?: "place"
-        }
-      | {
-          verification:
-            | { state: "verified"; date?: DateRequest }
-            | { state: "unverified" }
-          type?: "verification"
-        }
-  }
+  properties?: Record<
+    string,
+    | { title: Array<RichTextItemRequest>; type?: "title" }
+    | { rich_text: Array<RichTextItemRequest>; type?: "rich_text" }
+    | { number: number | null; type?: "number" }
+    | { url: TextRequest | null; type?: "url" }
+    | {
+        select:
+          | {
+              id: StringRequest
+              name?: TextRequest
+              color?: SelectColor
+              description?: TextRequest | null
+            }
+          | {
+              name: TextRequest
+              id?: StringRequest
+              color?: SelectColor
+              description?: TextRequest | null
+            }
+          | null
+        type?: "select"
+      }
+    | {
+        multi_select: Array<
+          | {
+              id: StringRequest
+              name?: TextRequest
+              color?: SelectColor
+              description?: TextRequest | null
+            }
+          | {
+              name: TextRequest
+              id?: StringRequest
+              color?: SelectColor
+              description?: TextRequest | null
+            }
+        >
+        type?: "multi_select"
+      }
+    | {
+        people: Array<PartialUserObjectRequest | GroupObjectRequest>
+        type?: "people"
+      }
+    | { email: StringRequest | null; type?: "email" }
+    | { phone_number: StringRequest | null; type?: "phone_number" }
+    | { date: DateRequest | null; type?: "date" }
+    | { checkbox: boolean; type?: "checkbox" }
+    | { relation: Array<RelationItemPropertyValueResponse>; type?: "relation" }
+    | {
+        files: Array<
+          | InternalOrExternalFileWithNameRequest
+          | FileUploadWithOptionalNameRequest
+        >
+        type?: "files"
+      }
+    | {
+        status:
+          | {
+              id: StringRequest
+              name?: TextRequest
+              color?: SelectColor
+              description?: TextRequest | null
+            }
+          | {
+              name: TextRequest
+              id?: StringRequest
+              color?: SelectColor
+              description?: TextRequest | null
+            }
+          | null
+        type?: "status"
+      }
+    | {
+        place: {
+          lat: number
+          lon: number
+          name?: string | null
+          address?: string | null
+          aws_place_id?: string | null
+          google_place_id?: string | null
+        } | null
+        type?: "place"
+      }
+    | {
+        verification:
+          | { state: "verified"; date?: DateRequest }
+          | { state: "unverified" }
+        type?: "verification"
+      }
+  >
   icon?: PageIconRequest | null
   cover?: PageCoverRequest | null
   // Whether the page should be locked from editing in the Notion app UI. If not provided,

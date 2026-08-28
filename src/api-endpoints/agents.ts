@@ -513,7 +513,7 @@ type ChatWithAgentBodyParameters = {
   }>
   // Optional caller-provided string metadata persisted with the user message. user_id is
   // used for lifecycle correlation and does not change authorization.
-  metadata?: { [key: string]: string }
+  metadata?: Record<string, string>
   // Additional caller-provided context for the agent to consider while responding.
   prompt_context?: string
   /** @deprecated */
@@ -1075,7 +1075,7 @@ export type GetAgentResponse = {
     }
     // Remaining per-type trigger configuration (e.g. watched channel ids, reaction config),
     // keys in snake_case. Present only when the trigger carries such state.
-    config?: { [key: string]: Record<string, never> }
+    config?: Record<string, Record<string, never>>
   }>
   // Date and time when this agent was created.
   created_time?: string
@@ -1659,7 +1659,7 @@ export type ListExternalAgentStubSessionEventsResponse = {
           code: string
           message: string
           retryable: boolean
-          additional_data?: { [key: string]: string | Array<string> }
+          additional_data?: Record<string, string | Array<string>>
         }
       }
   >
@@ -1881,7 +1881,7 @@ type SendThreadMessageBodyParameters = {
   }>
   // Optional caller-provided string metadata persisted with the user message. user_id is
   // used for lifecycle correlation and does not change authorization.
-  metadata?: { [key: string]: string }
+  metadata?: Record<string, string>
   // Additional caller-provided context for the agent to consider while responding.
   prompt_context?: string
 }
@@ -2704,7 +2704,7 @@ export type QueryAgentsResponse = {
           }
           // Remaining per-type trigger configuration (e.g. watched channel ids, reaction config),
           // keys in snake_case. Present only when the trigger carries such state.
-          config?: { [key: string]: Record<string, never> }
+          config?: Record<string, Record<string, never>>
         }>
         // The agent's inline instructions when verbose=true, or null when its instructions are
         // stored on a page.
@@ -3018,7 +3018,7 @@ export type QueryAgentsResponse = {
           }
           // Remaining per-type trigger configuration (e.g. watched channel ids, reaction config),
           // keys in snake_case. Present only when the trigger carries such state.
-          config?: { [key: string]: Record<string, never> }
+          config?: Record<string, Record<string, never>>
         }>
       }
   >
@@ -3763,7 +3763,7 @@ export type QuerySessionEventsResponse = {
           // One of: `user`, `bot`
           type: "user" | "bot"
         } | null
-        metadata: { [key: string]: string } | null
+        metadata: Record<string, string> | null
       }
     | {
         // Always `session_event`
@@ -5060,7 +5060,7 @@ type UpdateSessionBodyParameters =
         type?: "file_upload"
         name?: string
       }>
-      metadata?: { [key: string]: string }
+      metadata?: Record<string, string>
       prompt_context?: string
     }
   | {
@@ -5070,7 +5070,7 @@ type UpdateSessionBodyParameters =
         // One of: `approve`, `reject`
         option_id: "approve" | "reject"
       }>
-      metadata?: { [key: string]: string }
+      metadata?: Record<string, string>
     }
   | { session_id: IdRequest; continue_from: string }
 
