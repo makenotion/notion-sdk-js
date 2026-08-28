@@ -1,8 +1,8 @@
 # Notion SDK for JavaScript
 
-<img alt="Notion Logo" src="https://www.notion.so/images/notion-logo-block-main.svg" width="70" />
+<img alt="Notion logo" src="https://mcp.notion.com/notion-logo-block-sticker.svg" width="70" />
 
-**A simple and easy to use client for the [Notion API](https://developers.notion.com).**
+A JavaScript and TypeScript client for the [Notion API](https://developers.notion.com). This reference covers the SDK's methods, options, and helpers.
 
 ![Build status](https://github.com/makenotion/notion-sdk-js/actions/workflows/ci.yml/badge.svg)
 [![npm version](https://badge.fury.io/js/%40notionhq%2Fclient.svg)](https://www.npmjs.com/package/@notionhq/client)
@@ -18,14 +18,13 @@ npm install @notionhq/client
 ## Usage
 
 > [!NOTE]
-> Use Notion's [Getting Started Guide](https://developers.notion.com/docs/getting-started) to get set up to use Notion's API.
+> For setup steps, see Notion's [getting started guide](https://developers.notion.com/docs/getting-started).
 
-Import and initialize a client using an **integration token** or an OAuth **access token**.
+`Client` accepts an integration token or an OAuth access token.
 
 ```js
 const { Client } = require("@notionhq/client")
 
-// Initializing a client
 const notion = new Client({
   auth: process.env.NOTION_TOKEN,
 })
@@ -36,17 +35,14 @@ Make a request to any Notion API endpoint.
 ```js
 ;(async () => {
   const listUsersResponse = await notion.users.list({})
+  console.log(listUsersResponse)
 })()
 ```
 
 > [!NOTE]
 > See the complete list of endpoints in the [API reference](https://developers.notion.com/reference).
 
-Each method returns a `Promise` that resolves the response.
-
-```js
-console.log(listUsersResponse)
-```
+Request methods return a `Promise` with the response. For example:
 
 ```ts
 {
@@ -83,12 +79,14 @@ const myPage = await notion.dataSources.query({
 
 ### Handling errors
 
-If the API returns an unsuccessful response, the returned `Promise` rejects with a `APIResponseError`.
-
-The error contains properties from the response, and the most helpful is `code`. You can compare `code` to the values in the `APIErrorCode` object to avoid misspelling error codes.
+Notion API errors reject the request with an `APIResponseError`. The `code` property identifies the error. `APIErrorCode` contains the known server error codes.
 
 ```js
-const { Client, APIErrorCode } = require("@notionhq/client")
+const {
+  Client,
+  APIErrorCode,
+  isNotionClientError,
+} = require("@notionhq/client")
 
 try {
   const notion = new Client({ auth: process.env.NOTION_TOKEN })
@@ -102,10 +100,11 @@ try {
     },
   })
 } catch (error) {
-  if (error.code === APIErrorCode.ObjectNotFound) {
-    //
-    // For example: handle by asking the user to select a different data source
-    //
+  if (
+    isNotionClientError(error) &&
+    error.code === APIErrorCode.ObjectNotFound
+  ) {
+    // Ask the user to select a different data source.
   } else {
     // Other error handling code
     console.error(error)
@@ -115,9 +114,7 @@ try {
 
 ### Logging
 
-The client emits useful information to a logger. By default, it only emits warnings and errors.
-
-If you're debugging an application, and would like the client to log response bodies, set the `logLevel` option to `LogLevel.DEBUG`.
+The default logger writes warnings and errors to the console. `LogLevel.DEBUG` also logs response bodies.
 
 ```js
 const { Client, LogLevel } = require("@notionhq/client")
@@ -128,11 +125,11 @@ const notion = new Client({
 })
 ```
 
-You may also set a custom `logger` to emit logs to a destination other than `stdout`. A custom logger is a function which is called with 3 parameters: `logLevel`, `message`, and `extraInfo`. The custom logger should not return a value.
+A custom `logger` receives `logLevel`, `message`, and `extraInfo`. It should return no value.
 
 ### Client options
 
-The `Client` supports the following options on initialization. These options are all keys in the single constructor parameter.
+The `Client` constructor accepts one options object.
 
 | Option      | Default value               | Type           | Description                                                                                                                                                         |
 | ----------- | --------------------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -146,24 +143,18 @@ The `Client` supports the following options on initialization. These options are
 
 ### Automatic retries
 
-The client automatically retries requests that fail due to rate limiting or transient server errors. By default, it will retry up to 2 times using exponential back-off with jitter.
+The client retries failed requests up to 2 times by default. Delays increase with each retry and include a random offset.
 
-**Retryable errors:**
+Retried errors:
 
 - `rate_limited` (HTTP 429) - Too many requests; retried for all HTTP methods
 - `service_overload` (HTTP 529) - Service overloaded; retried for all HTTP methods
 - `internal_server_error` (HTTP 500) - Server error; retried only for GET and DELETE
 - `service_unavailable` (HTTP 503) - Service temporarily unavailable; retried only for GET and DELETE
 
-Server errors (500, 503) are only retried for idempotent HTTP methods (GET, DELETE) to avoid duplicate side effects. Rate limits (429) and service overloads (529) are retried for all methods since the server explicitly asks clients to retry.
+For server errors, only GET and DELETE are retried to avoid repeating writes. The client uses the `Retry-After` header when present. It accepts a delay in seconds or an HTTP date.
 
-**Retry behavior:**
-
-- Uses exponential back-off: delays increase with each retry attempt
-- Respects the `Retry-After` header when present (both delta-seconds and HTTP-date formats)
-- Adds random jitter to prevent thundering herd problems
-
-**Configuration:**
+Retry options:
 
 ```js
 const notion = new Client({
@@ -187,7 +178,7 @@ const notion = new Client({
 
 ### Constants
 
-The SDK exports named constants for all default values used by the client, as well as useful Notion-specific values. You can import them directly:
+The SDK exports these defaults and Notion-specific values:
 
 ```js
 const {
@@ -200,7 +191,7 @@ const {
 } = require("@notionhq/client")
 ```
 
-`MIN_VIEW_COLUMN_WIDTH` is the minimum width (in pixels) that a table column can have in the Notion UI. Set a property's `width` to this value when creating or updating a view to make a column appear collapsed -- useful for checkbox or status-as-checkbox columns:
+`MIN_VIEW_COLUMN_WIDTH` is the minimum table column width in pixels. A column at this width appears collapsed. For example:
 
 ```js
 await notion.views.create({
@@ -223,19 +214,22 @@ await notion.views.create({
 
 ### TypeScript
 
-This package contains type definitions for all request parameters and responses,
-as well as some useful sub-objects from those entities.
+The package includes types for request parameters, responses, and their fields.
 
-Because errors in TypeScript start with type `any` or `unknown`, you should use
-the `isNotionClientError` type guard to handle them in a type-safe way. Each
-`NotionClientError` type is uniquely identified by its `error.code`. Codes in
-the `APIErrorCode` enum are returned from the server. Codes in the
-`ClientErrorCode` enum are produced on the client.
+With strict TypeScript, caught errors have type `unknown`. `isNotionClientError`
+narrows the error to a known SDK error type. `APIErrorCode` identifies server
+errors; `ClientErrorCode` identifies errors raised by the client.
 
 ```ts
+import {
+  APIErrorCode,
+  ClientErrorCode,
+  isNotionClientError,
+} from "@notionhq/client"
+
 try {
   const response = await notion.dataSources.query({
-    /* ... */
+    data_source_id: dataSourceId,
   })
 } catch (error: unknown) {
   if (isNotionClientError(error)) {
@@ -250,10 +244,8 @@ try {
       case APIErrorCode.Unauthorized:
         // ...
         break
-      // ...
       default:
-        // you could even take advantage of exhaustiveness checking
-        assertNever(error.code)
+        console.error(error)
     }
   }
 }
@@ -261,8 +253,8 @@ try {
 
 #### Type guards
 
-There are several [type guards](https://www.typescriptlang.org/docs/handbook/advanced-types.html#type-guards-and-differentiating-types)
-provided to distinguish between full and partial API responses.
+These [type guards](https://www.typescriptlang.org/docs/handbook/advanced-types.html#type-guards-and-differentiating-types)
+distinguish full API responses from partial responses.
 
 | Type guard function      | Purpose                                                                                  |
 | ------------------------ | ---------------------------------------------------------------------------------------- |
@@ -273,7 +265,7 @@ provided to distinguish between full and partial API responses.
 | `isFullUser`             | Determine whether an object is a full `UserObjectResponse`                               |
 | `isFullComment`          | Determine whether an object is a full `CommentObjectResponse`                            |
 
-Here is an example of using a type guard:
+Example:
 
 ```typescript
 const fullOrPartialPages = await notion.dataSources.query({
@@ -293,26 +285,25 @@ for (const page of fullOrPartialPages.results) {
 
 ### Utility functions
 
-This package also exports a few utility functions that are helpful for dealing with
-any of our paginated APIs.
+These helpers read results across multiple pages.
 
 #### `iteratePaginatedAPI(listFn, firstPageArgs)`
 
-This utility turns any paginated API into an async iterator.
+Returns an async iterator that reads each page of results as needed.
 
-**Parameters:**
+Parameters:
 
 - `listFn`: Any function on the Notion client that represents a paginated API (i.e. accepts
   `start_cursor`.) Example: `notion.blocks.children.list`.
 - `firstPageArgs`: Arguments that should be passed to the API on the first and subsequent calls
   to the API, for example a `block_id`.
 
-**Returns:**
+Returns:
 
 An [async iterator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#the_async_iterator_and_async_iterable_protocols)
 over results from the API.
 
-**Example:**
+Example:
 
 ```javascript
 for await (const block of iteratePaginatedAPI(notion.blocks.children.list, {
@@ -324,24 +315,21 @@ for await (const block of iteratePaginatedAPI(notion.blocks.children.list, {
 
 #### `collectPaginatedAPI(listFn, firstPageArgs)`
 
-This utility accepts the same arguments as `iteratePaginatedAPI`, but collects
-the results into an in-memory array.
+Accepts the same arguments as `iteratePaginatedAPI` and returns all results in
+one array. The results must fit in memory.
 
-Before using this utility, check that the data you are dealing with is
-small enough to fit in memory.
-
-**Parameters:**
+Parameters:
 
 - `listFn`: Any function on the Notion client that represents a paginated API (i.e. accepts
   `start_cursor`.) Example: `notion.blocks.children.list`.
 - `firstPageArgs`: Arguments that should be passed to the API on the first and subsequent calls
   to the API, for example a `block_id`.
 
-**Returns:**
+Returns:
 
 An array with results from the API.
 
-**Example:**
+Example:
 
 ```javascript
 const blocks = await collectPaginatedAPI(notion.blocks.children.list, {
@@ -352,23 +340,14 @@ const blocks = await collectPaginatedAPI(notion.blocks.children.list, {
 
 #### `iterateAllDataSourceRows(client, args)`
 
-A single data source query (one filter and sort) returns at most a fixed number
-of rows, 10,000 by default. Once that limit is reached, `has_more` becomes
-`false` and the response carries `request_status.type === "incomplete"`. Plain
-pagination such as `iteratePaginatedAPI` stops there and silently misses the rest
-of a larger data source.
+Reads rows beyond the limit for a single data source query, which is 10,000 by
+default. At that limit, `has_more` is `false` and `request_status.type` is
+`"incomplete"`; ordinary pagination stops.
 
-This utility reads every row anyway. It partitions the data source into
-`created_time` windows: it sorts by `created_time` ascending, and whenever a
-window hits the limit it starts a fresh query from the last row's timestamp.
-Each fresh query has a different filter, so it gets its own result budget. Rows
-that share a boundary timestamp are de-duplicated by id, so every row is yielded
-exactly once.
+This helper sorts by `created_time` and starts a new query from the last row's
+timestamp each time it reaches the limit. It removes duplicate rows by ID.
 
-`created_time` is used because it never changes. `last_edited_time` would shift
-rows between windows as they are edited, causing gaps or duplicates.
-
-**Parameters:**
+Parameters:
 
 - `client`: A Notion client instance.
 - `args`: The same arguments as `dataSources.query`, minus the fields the helper
@@ -376,17 +355,17 @@ rows between windows as they are edited, causing gaps or duplicates.
   `created_time` ascending to partition). `data_source_id` is required. Any
   `filter` you pass is combined with the window bound using `and`.
 
-**Returns:**
+Returns:
 
 An async iterator over every row in the data source.
 
-**Throws:**
+Throws:
 
 If a single `created_time` value holds more rows than the limit, the window
 cannot be narrowed by time alone. Pass a `filter` in that case so each window
 stays under the limit.
 
-**Example:**
+Example:
 
 ```javascript
 for await (const row of iterateAllDataSourceRows(notion, {
@@ -398,23 +377,20 @@ for await (const row of iterateAllDataSourceRows(notion, {
 
 #### `collectAllDataSourceRows(client, args)`
 
-This utility accepts the same arguments as `iterateAllDataSourceRows`, but
-collects the results into an in-memory array.
+Accepts the same arguments as `iterateAllDataSourceRows` and returns all results
+in one array. The full data source must fit in memory. For larger data sources,
+`iterateAllDataSourceRows` reads rows as a stream.
 
-Before using this utility, check that the full data source fits in memory. For
-very large data sources, prefer `iterateAllDataSourceRows` and process rows as
-they stream.
-
-**Parameters:**
+Parameters:
 
 - `client`: A Notion client instance.
 - `args`: The same arguments as `iterateAllDataSourceRows`.
 
-**Returns:**
+Returns:
 
 An array with every row in the data source.
 
-**Example:**
+Example:
 
 ```javascript
 const rows = await collectAllDataSourceRows(notion, {
@@ -425,7 +401,7 @@ const rows = await collectAllDataSourceRows(notion, {
 
 ### Custom requests
 
-To make requests directly to a Notion API endpoint instead of using the pre-built families of methods, call the `request()` method. For example:
+`request()` calls a Notion API endpoint directly. For example:
 
 ```ts
 // POST /v1/comments
@@ -442,51 +418,57 @@ const response = await notion.request({
 console.log(JSON.stringify(response, null, 2))
 ```
 
-The `notion.request<ResponseBody>({...})` method is generic; `ResponseBody` represents the expected type of response object Notion returns for the endpoint you're calling (we don't validate this at runtime; you can pass anything!)
+`notion.request<ResponseBody>({...})` uses `ResponseBody` as the expected response type. It does not validate that type at runtime.
 
 > [!TIP]
-> Usually, making custom requests with `notion.request()` isn't necessary, but can be helpful in some cases, e.g. when upgrading your [Notion API version](https://developers.notion.com/reference/versioning) incrementally before upgrading your SDK version. For example, if there's a new or renamed endpoint in the new API version that isn't yet available to call via a dedicated method on `Client`.
->
-> In the above example, the simpler approach is to use `await notion.comments.create()`.
+> Prefer a named SDK method when one exists, such as `notion.comments.create()` for this example. `request()` can call endpoints that the SDK does not yet cover.
 
-Another customization you can make is to pass your own `fetch` function to the `Client` constructor. This might be helpful for some execution environments where the default, built-in `fetch` isn't suitable.
+The `Client` constructor also accepts a custom `fetch` function.
 
 ### Verifying webhook signatures
 
-If your integration receives [Notion webhook deliveries](https://developers.notion.com/reference/webhooks), use `verifyWebhookSignature` to confirm each request was sent by Notion and was not tampered with in transit. Notion signs every delivery with HMAC-SHA256 over the raw request body using the subscription's verification token, and places the result in the `X-Notion-Signature` header as `sha256=<hex>`.
+`verifyWebhookSignature` checks the signature on a [Notion webhook event](https://developers.notion.com/reference/webhooks). It uses the raw request body, the subscription's verification token, and the `X-Notion-Signature` header. The header contains an HMAC-SHA256 signature in the form `sha256=<hex>`.
 
 ```ts
 import { verifyWebhookSignature } from "@notionhq/client"
 
-// Express example. The body must be read as the raw text/bytes that
-// arrived over the wire — JSON-parsed and re-serialized bodies will not
-// verify, because re-serialization changes whitespace and key order.
+const verificationToken = process.env.NOTION_WEBHOOK_VERIFICATION_TOKEN
+if (!verificationToken) {
+  throw new Error("Missing webhook verification token")
+}
+
+// Express example. Use the raw body: parsing and re-serializing JSON
+// can change its bytes and invalidate the signature.
 app.post(
   "/notion-webhook",
   express.text({ type: "application/json" }),
   async (req, res) => {
+    const body: unknown = req.body
+    if (typeof body !== "string") {
+      return res.status(400).send("expected a raw text body")
+    }
     const ok = await verifyWebhookSignature({
-      body: req.body,
+      body,
       signature: req.header("x-notion-signature"),
-      verificationToken: process.env.NOTION_WEBHOOK_VERIFICATION_TOKEN!,
+      verificationToken,
     })
     if (!ok) {
       return res.status(401).send("invalid signature")
     }
 
-    const event = JSON.parse(req.body)
-    // …handle the event
+    const event: unknown = JSON.parse(body)
+    // Validate the event's shape before using its fields.
     res.status(200).send("ok")
   }
 )
 ```
 
-The same helper handles the initial verification handshake that Notion sends when you first register a webhook URL — the handshake body (`{ "verification_token": "..." }`) is signed with the same token, so a single code path covers both cases.
+Subscription setup is separate from event validation. The [webhook setup guide](https://developers.notion.com/reference/webhooks#step-2-verifying-the-subscription) covers receiving and saving the initial verification token.
 
-`signWebhookPayload({ body, verificationToken })` produces the same `sha256=<hex>` header value, which is useful for unit-testing your webhook handler without standing up a real subscription.
+`signWebhookPayload({ body, verificationToken })` creates a signature for tests without a live subscription.
 
 > [!NOTE]
-> Both helpers are async. They prefer the Web Crypto API (`globalThis.crypto.subtle`) when present and transparently fall back to `node:crypto` on older Node.js 18 builds, so they run unchanged on Node.js, Bun, Deno, Vercel Edge Functions, Cloudflare Workers, and modern browsers.
+> Both helpers are async. They use `globalThis.crypto.subtle` when available and fall back to the Web Crypto API in `node:crypto` on Node.js.
 
 ## Examples
 
@@ -499,9 +481,7 @@ This package supports the following minimum versions:
 - Runtime: `node >= 18`
 - Type definitions (optional): `typescript >= 5.9`
 
-Earlier versions may still work, but we encourage people building new applications to upgrade to the current stable.
-
-In some cases, due to backwards-incompatible changes across [Notion API versions](https://developers.notion.com/reference/versioning), more recent versions of this SDK don't work well with older API versions:
+Older versions are not supported. SDK releases also have minimum recommended [Notion API versions](https://developers.notion.com/reference/versioning):
 
 | Version of JS/TS SDK | Minimum recommended API version |
 | -------------------- | ------------------------------- |
@@ -519,24 +499,24 @@ const notion = new Client({
 
 Key changes in `2026-03-11`:
 
-- **Block positioning**: The `after` parameter on `appendBlockChildren` is replaced by `position`, which supports `after_block`, `start`, and `end`.
-- **Trash status**: The `archived` field is replaced by `in_trash` on pages, blocks, databases, and data sources.
-- **Block type rename**: The `transcription` block type is renamed to `meeting_notes`.
+- The `position` parameter replaces `after` on `appendBlockChildren`. It supports `after_block`, `start`, and `end`.
+- The `in_trash` field replaces `archived` on pages, blocks, databases, and data sources.
+- The `meeting_notes` block type replaces `transcription`.
 
-Both the old and new field names are available in the SDK's TypeScript types for a smooth migration. Fields from the older version are marked `@deprecated`.
+The SDK's TypeScript types include both sets of field names. Older names are marked `@deprecated`.
 
-In these cases, we recommend upgrading your Notion API version header using the `Client()` constructor across all of your requests before upgrading to a newer version of the SDK.
+The `notionVersion` constructor option sets the API version header for requests.
 
 ## Contributing
 
-While we value open-source contributions to this SDK, most of the client code is generated programmatically from the Notion API specification. Additions made directly to `src/api-endpoints.ts` or other generated code would be overwritten upon the next release.
+Follow [the contribution guide](CONTRIBUTING.md) to build, test, and check SDK compatibility before opening a pull request.
 
-If you'd like to contribute a feature or fix to the SDK's core functionality, we suggest opening an issue first to discuss it with us. This helps ensure your effort aligns with how the SDK is maintained.
+Endpoint code is generated from a schema in Notion's internal repo. Outside contributors cannot run that generator. Ask a maintainer for generated-code changes; direct edits will be overwritten. Open an issue to discuss changes to the SDK's core behavior first.
 
-However, contributions to documentation (including this README), examples, and bug reports are always welcome and greatly appreciated!
+Docs, examples, and bug reports are welcome.
 
 ## Getting help
 
-If you want to submit a feature request for Notion's API, or are experiencing any issues with the API platform, please email us at `developers@makenotion.com`.
+For API support, SDK problems, or feature requests, email `developers@makenotion.com`.
 
-To report issues with the SDK, it is possible to [submit an issue](https://github.com/makenotion/notion-sdk-js/issues) to this repo. However, we don't monitor these issues very closely. We recommend you reach out to us at `developers@makenotion.com` instead.
+You can also [open an SDK issue](https://github.com/makenotion/notion-sdk-js/issues), but we do not monitor issues as closely as email.

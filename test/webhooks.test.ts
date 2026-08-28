@@ -221,7 +221,9 @@ describe("verifyWebhookSignature: fallback to node:crypto", () => {
       // eslint-disable-next-line @typescript-eslint/no-var-requires
       verify = require("../src/webhooks").verifyWebhookSignature
     })
-    if (!verify) throw new Error("module did not load")
+    if (!verify) {
+      throw new Error("module did not load")
+    }
 
     const body = JSON.stringify({ id: "evt_fallback" })
     const signature = nodeSign(body, VERIFICATION_TOKEN)
