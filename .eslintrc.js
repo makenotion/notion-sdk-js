@@ -14,6 +14,7 @@ module.exports = {
     commonjs: true,
   },
   rules: {
+    curly: ["error", "all"],
     "@typescript-eslint/no-unused-vars": [
       "error",
       {
@@ -27,4 +28,14 @@ module.exports = {
     ],
     "no-mixed-spaces-and-tabs": ["error", "smart-tabs"],
   },
+  overrides: [
+    {
+      files: [
+        "src/api-endpoints.ts",
+        "src/api-endpoints/**/*.ts",
+        "src/api-endpoint-methods.ts",
+      ],
+      rules: { curly: "off" },
+    },
+  ],
 }
