@@ -764,6 +764,33 @@ describe("Notion SDK Client", () => {
       ])
     })
 
+    it("types the logical key shared by provisional and committed events", async () => {
+      mockFetch.mockResolvedValue(
+        new Response(
+          'event: event.provisional\ndata: {"type":"event.provisional","logical_key":"agent-message","event":{"object":"session_event","id":"agent-message","session_id":"11111111-1111-1111-1111-111111111111","created_at":"2026-08-15T03:36:28.649Z","type":"agent.message","content":[{"type":"text","text":"partial"}]}}\n\n' +
+            'event: event.committed\ndata: {"type":"event.committed","logical_key":"agent-message","event":{"object":"session_event","id":"event-1","session_id":"11111111-1111-1111-1111-111111111111","sequence":1,"created_at":"2026-08-15T03:36:29.649Z","type":"agent.message","content":[{"type":"text","text":"partial answer"}]}}\n\n'
+        )
+      )
+
+      const events: UpdateSessionStreamResponse[] = []
+      for await (const event of notion.sessions.stream({ message: "hello" })) {
+        events.push(event)
+      }
+
+      expect(events).toHaveLength(2)
+      const provisional = events[0]
+      if (provisional?.type !== "event.provisional") {
+        throw new Error("Expected a provisional session event")
+      }
+      const committed = events[1]
+      if (committed?.type !== "event.committed") {
+        throw new Error("Expected a committed session event")
+      }
+      const logicalKey: string | undefined = provisional.logical_key
+      expect(logicalKey).toBe("agent-message")
+      expect(committed.logical_key).toBe(logicalKey)
+    })
+
     it("supports text-only fetch implementations for session streams", async () => {
       const textOnlyFetch: jest.MockedFunction<SupportedFetch> = jest.fn()
       textOnlyFetch.mockResolvedValue({
