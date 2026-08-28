@@ -357,7 +357,7 @@ export type CreateViewRequest = {
   // are filter conditions (same shape as a property filter but without the property
   // field). Each quick filter appears as a clickable pill above the view, independent of
   // the advanced filter.
-  quick_filters?: Record<string, QuickFilterConditionRequest>
+  quick_filters?: { [key: string]: QuickFilterConditionRequest }
   // Create a new linked database block on a page and add the view to it. Mutually
   // exclusive with database_id and view_id.
   create_database?: CreateDatabaseForViewRequest
@@ -720,7 +720,7 @@ export type IdResponse = string
 
 export type InitialDataSourceRequest = {
   // Property schema for the initial data source, if you'd like to create one.
-  properties?: Record<string, PropertyConfigurationRequest>
+  properties?: { [key: string]: PropertyConfigurationRequest }
 }
 
 type InternalFileRequest = { url: string; expiry_time?: string }
@@ -1589,7 +1589,7 @@ export type UpdateViewRequest = {
   // a filter condition to add/update that quick filter. Set a key to null to remove it.
   // Pass null for the entire field to clear all quick filters. Unmentioned quick filters
   // are preserved.
-  quick_filters?: Record<string, QuickFilterConditionRequest | null> | null
+  quick_filters?: { [key: string]: QuickFilterConditionRequest | null } | null
   // View presentation configuration. The type field must match the view type. Individual
   // nullable fields within the configuration can be set to null to clear them.
   configuration?: ViewConfigRequest
@@ -2035,7 +2035,7 @@ export type PageObjectResponse = {
   // Information about the page's parent.
   parent: ParentForBlockBasedObjectResponse
   // Property values of this page.
-  properties: Record<string, PagePropertyValueWithIdResponse>
+  properties: { [key: string]: PagePropertyValueWithIdResponse }
   // Page icon.
   icon: PageIconResponse | null
   // Page cover image.

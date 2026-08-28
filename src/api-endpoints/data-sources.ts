@@ -75,7 +75,7 @@ export type DataSourceObjectResponse = {
   // The user who last edited the data source.
   last_edited_by: PartialUserObjectResponse
   // The properties schema of the data source.
-  properties: Record<string, DatabasePropertyConfigResponse>
+  properties: { [key: string]: DatabasePropertyConfigResponse }
   // The icon of the data source.
   icon: PageIconResponse | null
   // The cover of the data source.
@@ -203,7 +203,7 @@ export type PartialDataSourceObjectResponse = {
   // The ID of the data source.
   id: IdResponse
   // The properties schema of the data source.
-  properties: Record<string, DatabasePropertyConfigResponse>
+  properties: { [key: string]: DatabasePropertyConfigResponse }
 }
 
 type PeopleDatabasePropertyConfigResponse = {
@@ -350,167 +350,170 @@ type UpdateDataSourceBodyParameters = {
   icon?: PageIconRequest | null
   // The property schema of the data source. The keys are property names or IDs, and the
   // values are property configuration objects. Properties set to null will be removed.
-  properties?: Record<
-    string,
-    | ({
-        // The name of the property.
-        name?: string
-        // The description of the property.
-        description?: PropertyDescriptionRequest | null
-      } & (
-        | {
-            // Always `number`
-            type?: "number"
-            number: { format?: NumberFormat }
-          }
-        | {
-            // Always `formula`
-            type?: "formula"
-            formula: { expression?: string }
-          }
-        | {
-            // Always `select`
-            type?: "select"
-            select: {
-              options?: Array<
-                { color?: SelectColor; description?: string | null } & (
-                  | { name: string; id?: string }
-                  | { id: string; name?: string }
-                )
-              >
+  properties?: {
+    [key: string]:
+      | ({
+          // The name of the property.
+          name?: string
+          // The description of the property.
+          description?: PropertyDescriptionRequest | null
+        } & (
+          | {
+              // Always `number`
+              type?: "number"
+              number: { format?: NumberFormat }
             }
-          }
-        | {
-            // Always `multi_select`
-            type?: "multi_select"
-            multi_select: {
-              options?: Array<
-                { color?: SelectColor; description?: string | null } & (
-                  | { name: string; id?: string }
-                  | { id: string; name?: string }
-                )
-              >
+          | {
+              // Always `formula`
+              type?: "formula"
+              formula: { expression?: string }
             }
-          }
-        | {
-            // Always `status`
-            type?: "status"
-            status: StatusPropertyConfigUpdateRequest
-          }
-        | {
-            // Always `relation`
-            type?: "relation"
-            relation: { data_source_id: IdRequest } & (
-              | {
-                  // Always `single_property`
-                  type?: "single_property"
-                  single_property: EmptyObject
-                }
-              | {
-                  // Always `dual_property`
-                  type?: "dual_property"
-                  dual_property: {
-                    synced_property_id?: string
-                    synced_property_name?: string
+          | {
+              // Always `select`
+              type?: "select"
+              select: {
+                options?: Array<
+                  { color?: SelectColor; description?: string | null } & (
+                    | { name: string; id?: string }
+                    | { id: string; name?: string }
+                  )
+                >
+              }
+            }
+          | {
+              // Always `multi_select`
+              type?: "multi_select"
+              multi_select: {
+                options?: Array<
+                  { color?: SelectColor; description?: string | null } & (
+                    | { name: string; id?: string }
+                    | { id: string; name?: string }
+                  )
+                >
+              }
+            }
+          | {
+              // Always `status`
+              type?: "status"
+              status: StatusPropertyConfigUpdateRequest
+            }
+          | {
+              // Always `relation`
+              type?: "relation"
+              relation: { data_source_id: IdRequest } & (
+                | {
+                    // Always `single_property`
+                    type?: "single_property"
+                    single_property: EmptyObject
                   }
-                }
-            )
-          }
-        | {
-            // Always `rollup`
-            type?: "rollup"
-            rollup: {
-              // The function to use for the rollup, e.g. count, count_values, percent_not_empty, max.
-              function: RollupFunction
-            } & (
-              | { relation_property_name: string; rollup_property_name: string }
-              | { relation_property_id: string; rollup_property_name: string }
-              | { relation_property_name: string; rollup_property_id: string }
-              | { relation_property_id: string; rollup_property_id: string }
-            )
-          }
-        | {
-            // Always `unique_id`
-            type?: "unique_id"
-            unique_id: { prefix?: string | null }
-          }
-        | {
-            // Always `title`
-            type?: "title"
-            title: EmptyObject
-          }
-        | {
-            // Always `rich_text`
-            type?: "rich_text"
-            rich_text: EmptyObject
-          }
-        | {
-            // Always `url`
-            type?: "url"
-            url: EmptyObject
-          }
-        | {
-            // Always `people`
-            type?: "people"
-            people: EmptyObject
-          }
-        | {
-            // Always `files`
-            type?: "files"
-            files: EmptyObject
-          }
-        | {
-            // Always `email`
-            type?: "email"
-            email: EmptyObject
-          }
-        | {
-            // Always `phone_number`
-            type?: "phone_number"
-            phone_number: EmptyObject
-          }
-        | {
-            // Always `date`
-            type?: "date"
-            date: EmptyObject
-          }
-        | {
-            // Always `checkbox`
-            type?: "checkbox"
-            checkbox: EmptyObject
-          }
-        | {
-            // Always `created_by`
-            type?: "created_by"
-            created_by: EmptyObject
-          }
-        | {
-            // Always `created_time`
-            type?: "created_time"
-            created_time: EmptyObject
-          }
-        | {
-            // Always `last_edited_by`
-            type?: "last_edited_by"
-            last_edited_by: EmptyObject
-          }
-        | {
-            // Always `last_edited_time`
-            type?: "last_edited_time"
-            last_edited_time: EmptyObject
-          }
-        | {
-            // Always `place`
-            type?: "place"
-            place: EmptyObject
-          }
-      ))
-    | {
-        // The new name of the property.
-        name: string
-      }
-    | null
-  >
+                | {
+                    // Always `dual_property`
+                    type?: "dual_property"
+                    dual_property: {
+                      synced_property_id?: string
+                      synced_property_name?: string
+                    }
+                  }
+              )
+            }
+          | {
+              // Always `rollup`
+              type?: "rollup"
+              rollup: {
+                // The function to use for the rollup, e.g. count, count_values, percent_not_empty, max.
+                function: RollupFunction
+              } & (
+                | {
+                    relation_property_name: string
+                    rollup_property_name: string
+                  }
+                | { relation_property_id: string; rollup_property_name: string }
+                | { relation_property_name: string; rollup_property_id: string }
+                | { relation_property_id: string; rollup_property_id: string }
+              )
+            }
+          | {
+              // Always `unique_id`
+              type?: "unique_id"
+              unique_id: { prefix?: string | null }
+            }
+          | {
+              // Always `title`
+              type?: "title"
+              title: EmptyObject
+            }
+          | {
+              // Always `rich_text`
+              type?: "rich_text"
+              rich_text: EmptyObject
+            }
+          | {
+              // Always `url`
+              type?: "url"
+              url: EmptyObject
+            }
+          | {
+              // Always `people`
+              type?: "people"
+              people: EmptyObject
+            }
+          | {
+              // Always `files`
+              type?: "files"
+              files: EmptyObject
+            }
+          | {
+              // Always `email`
+              type?: "email"
+              email: EmptyObject
+            }
+          | {
+              // Always `phone_number`
+              type?: "phone_number"
+              phone_number: EmptyObject
+            }
+          | {
+              // Always `date`
+              type?: "date"
+              date: EmptyObject
+            }
+          | {
+              // Always `checkbox`
+              type?: "checkbox"
+              checkbox: EmptyObject
+            }
+          | {
+              // Always `created_by`
+              type?: "created_by"
+              created_by: EmptyObject
+            }
+          | {
+              // Always `created_time`
+              type?: "created_time"
+              created_time: EmptyObject
+            }
+          | {
+              // Always `last_edited_by`
+              type?: "last_edited_by"
+              last_edited_by: EmptyObject
+            }
+          | {
+              // Always `last_edited_time`
+              type?: "last_edited_time"
+              last_edited_time: EmptyObject
+            }
+          | {
+              // Always `place`
+              type?: "place"
+              place: EmptyObject
+            }
+        ))
+      | {
+          // The new name of the property.
+          name: string
+        }
+      | null
+  }
   // Whether the data source should be moved to or from the trash. If not provided, the
   // trash status will not be updated.
   in_trash?: boolean
@@ -620,7 +623,7 @@ type CreateDataSourceBodyParameters = {
   // An object specifying the parent of the new data source to be created.
   parent: ParentOfDataSourceRequest
   // Property schema of data source.
-  properties: Record<string, PropertyConfigurationRequest>
+  properties: { [key: string]: PropertyConfigurationRequest }
   // Title of data source as it appears in Notion.
   title?: Array<RichTextItemRequest>
   // Page icon.

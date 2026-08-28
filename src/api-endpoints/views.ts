@@ -268,7 +268,7 @@ export type DataSourceViewObjectResponse = {
   // Quick filters pinned to the view's filter bar. Keys are property IDs. Values are
   // filter conditions (same shape as a property filter without the property field). Null
   // when no quick filters are set.
-  quick_filters?: Record<string, QuickFilterConditionResponse> | null
+  quick_filters?: { [key: string]: QuickFilterConditionResponse } | null
   // View presentation configuration.
   configuration?: ViewConfigResponse | null
   // For dashboard widget views, the ID of the parent dashboard view. Only present when

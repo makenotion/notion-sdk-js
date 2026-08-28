@@ -27,7 +27,7 @@ export type GetAsyncTaskResponse =
       created_time: string
       operation: { surface: "rest" | "mcp"; name: string }
       status: "succeeded"
-      result: Record<string, PublicApiAsyncTaskStatusResultJsonValue>
+      result: { [key: string]: PublicApiAsyncTaskStatusResultJsonValue }
     }
   | {
       object: "async_task"
@@ -39,7 +39,7 @@ export type GetAsyncTaskResponse =
       error: {
         object: "error"
         message: string
-        additional_data?: Record<string, string | Array<string>>
+        additional_data?: { [key: string]: string | Array<string> }
       } & (
         | {
             status: 400

@@ -48,160 +48,6 @@ export type UpdateSessionStreamParameters =
 /**
  * An event emitted by a session stream.
  */
-type SessionStreamEventBase = {
-  /**
-   * Always `session_event`
-   */
-  object: "session_event"
-  id: string
-  session_id: string
-  sequence: number
-  created_at: string
-}
-
-type SessionStreamTextContent = {
-  /**
-   * Always `text`
-   */
-  type: "text"
-  text: string
-}
-
-type SessionStreamFileContent = {
-  /**
-   * Always `file`
-   */
-  type: "file"
-  file_id: string
-}
-
-type SessionStreamContentBlock =
-  | SessionStreamTextContent
-  | SessionStreamFileContent
-
-type SessionStreamRequiredAction = {
-  action_id: string
-  title: string
-  options: Array<{
-    /**
-     * One of: `approve`, `reject`
-     */
-    id: "approve" | "reject"
-    label: string
-  }>
-}
-
-type SessionStreamError = {
-  code: string
-  message: string
-  retryable: boolean
-}
-
-type SessionStreamUsage = {
-  input_tokens?: number
-  output_tokens?: number
-  total_tokens: number
-}
-
-type SessionStreamArtifact =
-  | {
-      /**
-       * Always `page`
-       */
-      type: "page"
-      url: string
-      title: string
-    }
-  | {
-      /**
-       * Always `html_artifact`
-       */
-      type: "html_artifact"
-      url: string
-      page_url: string
-    }
-
-type SessionStreamCommittedEvent =
-  | (SessionStreamEventBase & {
-      /**
-       * Always `user.message`
-       */
-      type: "user.message"
-      content: Array<SessionStreamContentBlock>
-      metadata?: Record<string, string>
-    })
-  | (SessionStreamEventBase & {
-      /**
-       * Always `agent.message`
-       */
-      type: "agent.message"
-      content: Array<SessionStreamTextContent>
-    })
-  | (SessionStreamEventBase & {
-      /**
-       * Always `agent.tool_use`
-       */
-      type: "agent.tool_use"
-      tool_name: string
-    })
-  | (SessionStreamEventBase & {
-      /**
-       * Always `agent.tool_result`
-       */
-      type: "agent.tool_result"
-      tool_use_id: string
-      tool_name: string
-      is_error: boolean
-    })
-  | (SessionStreamEventBase & {
-      /**
-       * Always `session.status`
-       */
-      type: "session.status"
-      status:
-        | "queued"
-        | "in_progress"
-        | "requires_action"
-        | "completed"
-        | "failed"
-        | "canceled"
-        | "terminated"
-      required_actions?: Array<SessionStreamRequiredAction>
-      error?: SessionStreamError
-      usage?: SessionStreamUsage
-      artifacts?: Array<SessionStreamArtifact>
-    })
-
-type SessionStreamProvisionalEvent =
-  | {
-      /**
-       * Always `session_event`
-       */
-      object: "session_event"
-      id: string
-      session_id: string
-      created_at: string
-      /**
-       * Always `agent.message`
-       */
-      type: "agent.message"
-      content: Array<SessionStreamTextContent>
-    }
-  | {
-      /**
-       * Always `session_event`
-       */
-      object: "session_event"
-      id: string
-      session_id: string
-      created_at: string
-      /**
-       * Always `agent.tool_use`
-       */
-      type: "agent.tool_use"
-      tool_name: string
-    }
-
 export type UpdateSessionStreamResponse =
   | {
       /**
@@ -252,14 +98,196 @@ export type UpdateSessionStreamResponse =
        * Always `event.provisional`
        */
       type: "event.provisional"
-      event: SessionStreamProvisionalEvent
+      event:
+        | {
+            /**
+             * Always `session_event`
+             */
+            object: "session_event"
+            id: string
+            session_id: string
+            created_at: string
+            /**
+             * Always `agent.message`
+             */
+            type: "agent.message"
+            content: Array<{
+              /**
+               * Always `text`
+               */
+              type: "text"
+              text: string
+            }>
+          }
+        | {
+            /**
+             * Always `session_event`
+             */
+            object: "session_event"
+            id: string
+            session_id: string
+            created_at: string
+            /**
+             * Always `agent.tool_use`
+             */
+            type: "agent.tool_use"
+            tool_name: string
+          }
     }
   | {
       /**
        * Always `event.committed`
        */
       type: "event.committed"
-      event: SessionStreamCommittedEvent
+      event:
+        | {
+            /**
+             * Always `session_event`
+             */
+            object: "session_event"
+            id: string
+            session_id: string
+            sequence: number
+            created_at: string
+            /**
+             * Always `user.message`
+             */
+            type: "user.message"
+            content: Array<
+              | {
+                  /**
+                   * Always `text`
+                   */
+                  type: "text"
+                  text: string
+                }
+              | {
+                  /**
+                   * Always `file`
+                   */
+                  type: "file"
+                  file_id: string
+                }
+            >
+            metadata?: Record<string, string>
+          }
+        | {
+            /**
+             * Always `session_event`
+             */
+            object: "session_event"
+            id: string
+            session_id: string
+            sequence: number
+            created_at: string
+            /**
+             * Always `agent.message`
+             */
+            type: "agent.message"
+            content: Array<{
+              /**
+               * Always `text`
+               */
+              type: "text"
+              text: string
+            }>
+          }
+        | {
+            /**
+             * Always `session_event`
+             */
+            object: "session_event"
+            id: string
+            session_id: string
+            sequence: number
+            created_at: string
+            /**
+             * Always `agent.tool_use`
+             */
+            type: "agent.tool_use"
+            tool_name: string
+          }
+        | {
+            /**
+             * Always `session_event`
+             */
+            object: "session_event"
+            id: string
+            session_id: string
+            sequence: number
+            created_at: string
+            /**
+             * Always `agent.tool_result`
+             */
+            type: "agent.tool_result"
+            tool_use_id: string
+            tool_name: string
+            is_error: boolean
+          }
+        | {
+            /**
+             * Always `session_event`
+             */
+            object: "session_event"
+            id: string
+            session_id: string
+            sequence: number
+            created_at: string
+            /**
+             * Always `session.status`
+             */
+            type: "session.status"
+            /**
+             * One of: `queued`, `in_progress`, `requires_action`, `completed`, `failed`, `canceled`, `terminated`
+             */
+            status:
+              | "queued"
+              | "in_progress"
+              | "requires_action"
+              | "completed"
+              | "failed"
+              | "canceled"
+              | "terminated"
+            required_actions?: Array<{
+              action_id: string
+              title: string
+              options: Array<{
+                /**
+                 * One of: `approve`, `reject`
+                 */
+                id: "approve" | "reject"
+                label: string
+              }>
+            }>
+            error?: {
+              code: string
+              message: string
+              retryable: boolean
+            }
+            usage?: {
+              total_tokens: number
+              input_tokens?: number
+              output_tokens?: number
+            }
+            artifacts?: Array<
+              | {
+                  /**
+                   * Always `page`
+                   */
+                  type: "page"
+                  url: string
+                  title: string
+                }
+              | {
+                  /**
+                   * Always `html_artifact`
+                   */
+                  type: "html_artifact"
+                  url: string
+                  page_url: string
+                }
+            >
+          }
     }
   | {
       /**
@@ -485,7 +513,7 @@ type ChatWithAgentBodyParameters = {
   }>
   // Optional caller-provided string metadata persisted with the user message. user_id is
   // used for lifecycle correlation and does not change authorization.
-  metadata?: Record<string, string>
+  metadata?: { [key: string]: string }
   // Additional caller-provided context for the agent to consider while responding.
   prompt_context?: string
   /** @deprecated */
@@ -1047,7 +1075,7 @@ export type GetAgentResponse = {
     }
     // Remaining per-type trigger configuration (e.g. watched channel ids, reaction config),
     // keys in snake_case. Present only when the trigger carries such state.
-    config?: Record<string, Record<string, never>>
+    config?: { [key: string]: Record<string, never> }
   }>
   // Date and time when this agent was created.
   created_time?: string
@@ -1631,7 +1659,7 @@ export type ListExternalAgentStubSessionEventsResponse = {
           code: string
           message: string
           retryable: boolean
-          additional_data?: Record<string, string | Array<string>>
+          additional_data?: { [key: string]: string | Array<string> }
         }
       }
   >
@@ -1853,7 +1881,7 @@ type SendThreadMessageBodyParameters = {
   }>
   // Optional caller-provided string metadata persisted with the user message. user_id is
   // used for lifecycle correlation and does not change authorization.
-  metadata?: Record<string, string>
+  metadata?: { [key: string]: string }
   // Additional caller-provided context for the agent to consider while responding.
   prompt_context?: string
 }
@@ -2676,7 +2704,7 @@ export type QueryAgentsResponse = {
           }
           // Remaining per-type trigger configuration (e.g. watched channel ids, reaction config),
           // keys in snake_case. Present only when the trigger carries such state.
-          config?: Record<string, Record<string, never>>
+          config?: { [key: string]: Record<string, never> }
         }>
         // The agent's inline instructions when verbose=true, or null when its instructions are
         // stored on a page.
@@ -2990,7 +3018,7 @@ export type QueryAgentsResponse = {
           }
           // Remaining per-type trigger configuration (e.g. watched channel ids, reaction config),
           // keys in snake_case. Present only when the trigger carries such state.
-          config?: Record<string, Record<string, never>>
+          config?: { [key: string]: Record<string, never> }
         }>
       }
   >
@@ -3735,7 +3763,7 @@ export type QuerySessionEventsResponse = {
           // One of: `user`, `bot`
           type: "user" | "bot"
         } | null
-        metadata: Record<string, string> | null
+        metadata: { [key: string]: string } | null
       }
     | {
         // Always `session_event`
@@ -5032,7 +5060,7 @@ type UpdateSessionBodyParameters =
         type?: "file_upload"
         name?: string
       }>
-      metadata?: Record<string, string>
+      metadata?: { [key: string]: string }
       prompt_context?: string
     }
   | {
@@ -5042,7 +5070,7 @@ type UpdateSessionBodyParameters =
         // One of: `approve`, `reject`
         option_id: "approve" | "reject"
       }>
-      metadata?: Record<string, string>
+      metadata?: { [key: string]: string }
     }
   | { session_id: IdRequest; continue_from: string }
 
