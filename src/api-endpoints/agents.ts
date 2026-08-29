@@ -1925,7 +1925,7 @@ type ListThreadsQueryParameters = {
   // Filter threads by title (case-insensitive substring match).
   title?: string
   // Filter threads by status.
-  status?: "pending" | "requires_action" | "completed" | "failed"
+  status?: "pending" | "requires_action" | "completed" | "failed" | "canceled"
   // Filter threads by agent activity state. Defaults to `all`.
   activity?: "all" | "pending" | "in_progress" | "failed" | "success"
   // Filter threads by one or more creator IDs. Use "me" for the API bot and user
