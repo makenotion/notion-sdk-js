@@ -312,7 +312,6 @@ export type UpdateSessionStreamResponse =
         | "failed"
         | "canceled"
         | "terminated"
-      last_sequence: number
     }
   | {
       /**
