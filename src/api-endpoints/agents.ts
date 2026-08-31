@@ -1925,7 +1925,7 @@ type ListThreadsQueryParameters = {
   // Filter threads by title (case-insensitive substring match).
   title?: string
   // Filter threads by status.
-  status?: "pending" | "requires_action" | "completed" | "failed"
+  status?: "pending" | "requires_action" | "completed" | "failed" | "canceled"
   // Filter threads by agent activity state. Defaults to `all`.
   activity?: "all" | "pending" | "in_progress" | "failed" | "success"
   // Filter threads by one or more creator IDs. Use "me" for the API bot and user
@@ -1958,8 +1958,8 @@ export type ListThreadsResponse = {
     object: "thread"
     id: IdResponse
     title: string
-    // One of: `pending`, `requires_action`, `completed`, `failed`
-    status: "pending" | "requires_action" | "completed" | "failed"
+    // One of: `pending`, `requires_action`, `completed`, `canceled`, `failed`
+    status: "pending" | "requires_action" | "completed" | "canceled" | "failed"
     // Date and time when this thread was created.
     created_time: string
     // Date and time when this thread was last updated.
@@ -4626,8 +4626,8 @@ export type QueryThreadsResponse = {
     object: "thread"
     id: IdResponse
     title: string
-    // One of: `pending`, `requires_action`, `completed`, `failed`
-    status: "pending" | "requires_action" | "completed" | "failed"
+    // One of: `pending`, `requires_action`, `completed`, `canceled`, `failed`
+    status: "pending" | "requires_action" | "completed" | "canceled" | "failed"
     // Date and time when this thread was created.
     created_time: string
     // Date and time when this thread was last updated.
