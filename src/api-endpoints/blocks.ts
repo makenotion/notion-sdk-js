@@ -22,6 +22,7 @@ import type {
   RichTextItemRequest,
   RichTextItemResponse,
   TextRequest,
+  UpdateEmbedContentWithUrlOrFileUploadAndCaptionRequest,
   UpdateMediaContentWithFileAndCaptionRequest,
   UpdateMediaContentWithFileNameAndCaptionRequest,
   UpdateMediaContentWithUrlAndCaptionRequest,
@@ -824,7 +825,7 @@ type UpdateBlockPathParameters = {
 
 type UpdateBlockBodyParameters =
   | {
-      embed: UpdateMediaContentWithUrlAndCaptionRequest
+      embed: UpdateEmbedContentWithUrlOrFileUploadAndCaptionRequest
       type?: "embed"
       in_trash?: boolean
       /** @deprecated Use `in_trash` instead. */
