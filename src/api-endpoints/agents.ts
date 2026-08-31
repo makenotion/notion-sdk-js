@@ -1077,6 +1077,9 @@ export type GetAgentResponse = {
     // keys in snake_case. Present only when the trigger carries such state.
     config?: Record<string, Record<string, never>>
   }>
+  // Whether this agent is in the caller's personal favorites, or null when the caller has
+  // no personal favorites scope.
+  is_favorited: boolean | null
   // Date and time when this agent was created.
   created_time?: string
   // Date and time when this agent was last edited.
