@@ -35,6 +35,19 @@ export type DatabaseObjectResponse = {
   parent: ParentOfDatabaseResponse
   // Whether the database is inline.
   is_inline: boolean
+  // The type of typed database, such as `tasks`, `projects`, or `skills`, or `null` for a
+  // regular database. Create a database accepts `tasks`, `projects`, and `skills`.
+  database_type:
+    | "tasks"
+    | "projects"
+    | "sprints"
+    | "docs"
+    | "wiki"
+    | "meetings"
+    | "meeting_notes"
+    | "skills"
+    | "github_prs"
+    | null
   // Whether the database is in the trash.
   in_trash: boolean
   /** @deprecated Use `in_trash` instead. Present for backwards compatibility with API versions prior to 2026-03-11. */
@@ -191,6 +204,10 @@ type CreateDatabaseBodyParameters = {
   is_inline?: boolean
   // Initial data source configuration for the database.
   initial_data_source?: InitialDataSourceRequest
+  // Create a typed database with Notion's canonical schema. One of `tasks`, `projects`, or
+  // `skills`. Cannot be combined with `initial_data_source`. When `title` is omitted, the
+  // database is named after the type.
+  database_type?: "tasks" | "projects" | "skills"
   // The icon for the database.
   icon?: PageIconRequest
   // The cover image for the database.
@@ -216,6 +233,7 @@ export const createDatabase = {
     "description",
     "is_inline",
     "initial_data_source",
+    "database_type",
     "icon",
     "cover",
   ],

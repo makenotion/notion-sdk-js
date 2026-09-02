@@ -62,6 +62,19 @@ export type DataSourceObjectResponse = {
   database_parent: ParentOfDatabaseResponse
   // Whether the data source is inline.
   is_inline: boolean
+  // The type of typed database this data source belongs to, or `null` for a regular data
+  // source.
+  database_type:
+    | "tasks"
+    | "projects"
+    | "sprints"
+    | "docs"
+    | "wiki"
+    | "meetings"
+    | "meeting_notes"
+    | "skills"
+    | "github_prs"
+    | null
   // Whether the data source is in the trash.
   in_trash: boolean
   /** @deprecated Use `in_trash` instead. Present for backwards compatibility with API versions prior to 2026-03-11. */
