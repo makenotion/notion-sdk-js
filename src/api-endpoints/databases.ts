@@ -35,6 +35,19 @@ export type DatabaseObjectResponse = {
   parent: ParentOfDatabaseResponse
   // Whether the database is inline.
   is_inline: boolean
+  // The type of typed database, such as `tasks`, `projects`, or `skills`, or `null` for a
+  // regular database. Create a database accepts `tasks`, `projects`, and `skills`.
+  database_type:
+    | "tasks"
+    | "projects"
+    | "sprints"
+    | "docs"
+    | "wiki"
+    | "meetings"
+    | "meeting_notes"
+    | "skills"
+    | "github_prs"
+    | null
   // Whether the database is in the trash.
   in_trash: boolean
   /** @deprecated Use `in_trash` instead. Present for backwards compatibility with API versions prior to 2026-03-11. */
