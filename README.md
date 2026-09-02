@@ -146,9 +146,9 @@ The `Client` constructor accepts one options object.
 
 The Notion API sends CORS headers, so browser code can call `api.notion.com` directly. The client works in modern browsers with the built-in `fetch`.
 
-A token in a web page isn't a secret. Anyone who can load the page can read it and act as your integration.
+A token in a web page isn't a secret. Anyone who can load the page can read it and act as your connection.
 
-- For an app other people use, keep the token on a server. Use a public integration with OAuth, exchange the authorization code on your server, and send the page only the data it needs.
+- For an app other people use, keep the token on a server. Create a [public connection](https://developers.notion.com/guides/get-started/public-connections), which uses OAuth. Exchange the authorization code on your server, and send the page only the data it needs.
 - For a personal tool or a local page that only you can open, using a token directly is your own risk to accept.
 
 The client logs a warning when you construct it with `auth` inside a browser page. Pass `dangerouslyAllowBrowser: true` to confirm you understand the risk and silence the warning.
