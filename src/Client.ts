@@ -652,6 +652,8 @@ export default class Client {
 
   public readonly agents = this.#endpointMethods.agents
 
+  public readonly memories = this.#endpointMethods.memories
+
   public readonly sessions = {
     /**
      * Retrieve a session

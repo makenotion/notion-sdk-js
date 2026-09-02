@@ -38,6 +38,7 @@ export type OauthTokenResponse = {
       }
     | { type: "workspace"; workspace: true }
   duplicated_template_id: string | null
+  disabled_tool_names?: Array<string>
   request_id?: string
 }
 

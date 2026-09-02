@@ -27,6 +27,18 @@ const documentedAgentClientMethods = [
   "updateStatus",
 ]
 
+const documentedMemoryClientMethods = [
+  "archive",
+  "bootstrap",
+  "create",
+  "discover",
+  "getContext",
+  "list",
+  "retrieve",
+  "search",
+  "update",
+]
+
 describe("Notion SDK Client", () => {
   it("Constructs without throwing", () => {
     new Client({ auth: "foo" })
@@ -605,6 +617,163 @@ describe("Notion SDK Client", () => {
         expect.stringContaining(`/v1/agents/${agentId}`),
         expect.objectContaining({ method: "DELETE" })
       )
+    })
+  })
+
+  describe("memory client surface", () => {
+    const storeId = "8cc1f6c8-904e-4cd7-bfc2-13ce9815329d"
+    const memoryId = "b84756f5-6ca2-49b3-8860-e2e7c4ad3370"
+    let mockFetch: jest.MockedFunction<SupportedFetch>
+    let notion: Client
+
+    beforeEach(() => {
+      mockFetch = jest.fn()
+      mockFetch.mockResolvedValue({
+        ok: true,
+        text: () => Promise.resolve("{}"),
+        headers: new Headers(),
+        status: 200,
+      })
+
+      notion = new Client({ fetch: mockFetch })
+    })
+
+    it("exposes the complete documented memories REST surface", () => {
+      expect(Object.keys(notion.memories).sort()).toEqual(
+        [...documentedMemoryClientMethods].sort()
+      )
+    })
+
+    it("calls memory store endpoints", async () => {
+      await notion.memories.discover({ type: "personal" })
+      await notion.memories.bootstrap({ type: "personal" })
+      await notion.memories.getContext({
+        store_id: storeId,
+        store_type: "personal",
+        max_tokens: 1000,
+      })
+
+      expect(mockFetch).toHaveBeenNthCalledWith(
+        1,
+        expect.stringContaining("/v1/memory_stores/personal"),
+        expect.objectContaining({ method: "GET" })
+      )
+      expect(mockFetch).toHaveBeenNthCalledWith(
+        2,
+        expect.stringContaining("/v1/memory_stores"),
+        expect.objectContaining({
+          method: "POST",
+          body: JSON.stringify({ type: "personal" }),
+        })
+      )
+      expect(mockFetch).toHaveBeenNthCalledWith(
+        3,
+        expect.stringContaining(`/v1/memory_stores/${storeId}/context`),
+        expect.objectContaining({ method: "GET" })
+      )
+    })
+
+    it("calls memory endpoints", async () => {
+      await notion.memories.list({
+        store_id: storeId,
+        store_type: "personal",
+        page_size: 25,
+      })
+      await notion.memories.search({
+        store_id: storeId,
+        store_type: "personal",
+        query: "writing style",
+      })
+      await notion.memories.retrieve({
+        memory_id: memoryId,
+        store_id: storeId,
+        store_type: "personal",
+      })
+      await notion.memories.create({
+        store_id: storeId,
+        store_type: "personal",
+        idempotency_key: "profile-writing-style",
+        title: "Writing style",
+        category: "Preference",
+        content: "Use short sentences.",
+      })
+      await notion.memories.update({
+        memory_id: memoryId,
+        store_id: storeId,
+        store_type: "personal",
+        content_version: "latest-content-version",
+        content: "Use short sentences and plain words.",
+      })
+      await notion.memories.archive({
+        memory_id: memoryId,
+        store_id: storeId,
+        store_type: "personal",
+        content_version: "latest-content-version",
+      })
+
+      expect(mockFetch).toHaveBeenNthCalledWith(
+        1,
+        expect.stringContaining("/v1/memories?"),
+        expect.objectContaining({ method: "GET" })
+      )
+      expect(mockFetch).toHaveBeenNthCalledWith(
+        2,
+        expect.stringContaining("/v1/memories/search"),
+        expect.objectContaining({ method: "GET" })
+      )
+      expect(mockFetch).toHaveBeenNthCalledWith(
+        3,
+        expect.stringContaining(`/v1/memories/${memoryId}`),
+        expect.objectContaining({ method: "GET" })
+      )
+      expect(mockFetch).toHaveBeenNthCalledWith(
+        4,
+        expect.stringContaining("/v1/memories"),
+        expect.objectContaining({
+          method: "POST",
+          body: JSON.stringify({
+            store_type: "personal",
+            store_id: storeId,
+            idempotency_key: "profile-writing-style",
+            title: "Writing style",
+            category: "Preference",
+            content: "Use short sentences.",
+          }),
+        })
+      )
+      expect(mockFetch).toHaveBeenNthCalledWith(
+        5,
+        expect.stringContaining(`/v1/memories/${memoryId}`),
+        expect.objectContaining({
+          method: "PATCH",
+          body: JSON.stringify({
+            store_id: storeId,
+            store_type: "personal",
+            content_version: "latest-content-version",
+            content: "Use short sentences and plain words.",
+          }),
+        })
+      )
+      expect(mockFetch).toHaveBeenNthCalledWith(
+        6,
+        expect.stringContaining(`/v1/memories/${memoryId}`),
+        expect.objectContaining({ method: "DELETE" })
+      )
+    })
+
+    it("sends memory read filters as query parameters", async () => {
+      await notion.memories.archive({
+        memory_id: memoryId,
+        store_id: storeId,
+        store_type: "personal",
+        content_version: "latest-content-version",
+      })
+
+      const [url] = mockFetch.mock.calls[0] as [string]
+      const { searchParams } = new URL(url)
+      expect(searchParams.get("store_id")).toBe(storeId)
+      expect(searchParams.get("store_type")).toBe("personal")
+      expect(searchParams.get("content_version")).toBe("latest-content-version")
     })
   })
 

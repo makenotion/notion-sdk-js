@@ -377,6 +377,71 @@ export function createEndpointMethods(client: EndpointClient) {
         pick(args, endpoints.agentBatch.queryParams)
       ),
     },
+    memories: {
+      /** Discover a memory store */
+      discover: method<
+        endpoints.DiscoverMemoryStoreParameters,
+        endpoints.DiscoverMemoryStoreResponse
+      >(endpoints.discoverMemoryStore, args =>
+        pick(args, endpoints.discoverMemoryStore.queryParams)
+      ),
+      /** Bootstrap a personal memory store */
+      bootstrap: method<
+        endpoints.BootstrapMemoryStoreParameters,
+        endpoints.BootstrapMemoryStoreResponse
+      >(endpoints.bootstrapMemoryStore, args =>
+        pick(args, endpoints.bootstrapMemoryStore.queryParams)
+      ),
+      /** Retrieve memory context */
+      getContext: method<
+        endpoints.GetMemoryContextParameters,
+        endpoints.GetMemoryContextResponse
+      >(endpoints.getMemoryContext, args =>
+        pick(args, endpoints.getMemoryContext.queryParams)
+      ),
+      /** List memories */
+      list: method<
+        endpoints.ListMemoriesParameters,
+        endpoints.ListMemoriesResponse
+      >(endpoints.listMemories, args =>
+        pick(args, endpoints.listMemories.queryParams)
+      ),
+      /** Create a memory */
+      create: method<
+        endpoints.CreateMemoryParameters,
+        endpoints.CreateMemoryResponse
+      >(endpoints.createMemory, args =>
+        pick(args, endpoints.createMemory.queryParams)
+      ),
+      /** Search memories */
+      search: method<
+        endpoints.SearchMemoriesParameters,
+        endpoints.SearchMemoriesResponse
+      >(endpoints.searchMemories, args =>
+        pick(args, endpoints.searchMemories.queryParams)
+      ),
+      /** Retrieve a memory */
+      retrieve: method<
+        endpoints.GetMemoryParameters,
+        endpoints.GetMemoryResponse
+      >(endpoints.getMemory, args =>
+        pick(args, endpoints.getMemory.queryParams)
+      ),
+      /** Update a memory */
+      update: method<
+        endpoints.UpdateMemoryParameters,
+        endpoints.UpdateMemoryResponse
+      >(endpoints.updateMemory, args =>
+        pick(args, endpoints.updateMemory.queryParams)
+      ),
+      /** Archive a memory */
+      archive: method<
+        endpoints.ArchiveMemoryParameters,
+        endpoints.ArchiveMemoryResponse
+      >(endpoints.archiveMemory, args =>
+        pick(args, endpoints.archiveMemory.queryParams)
+      ),
+    },
     sessions: {
       /** Update a session */
       update: method<
