@@ -160,7 +160,7 @@ const notion = new Client({
 })
 ```
 
-A token passed per request through `auth` carries the same risk. The `agent` option is ignored in browsers. OAuth token endpoints under `/v1/oauth/` don't send CORS headers, so exchange authorization codes on a server.
+A token passed per request through `auth` triggers the same warning once per client. Web workers and service workers count as a browser too, because every visitor downloads their script. Test runners that emulate a browser, such as jsdom, also trigger the warning. In tests, pass `dangerouslyAllowBrowser: true` or set `logLevel` to `LogLevel.ERROR`. The `agent` option is ignored in browsers. OAuth token endpoints under `/v1/oauth/` don't send CORS headers, so exchange authorization codes on a server.
 
 ### Automatic retries
 
