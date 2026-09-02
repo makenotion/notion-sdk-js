@@ -117,7 +117,7 @@ export type ClientOptions = {
   /**
    * Confirms that you mean to hold a Notion token inside a browser page, and
    * silences the warning the client logs in that case. Anyone who can load the
-   * page can read the token and act as your integration, so only set this for
+   * page can read the token and act as your connection, so only set this for
    * pages that nobody else can open.
    */
   dangerouslyAllowBrowser?: boolean
@@ -132,7 +132,7 @@ const START_CURSOR_PARAM_NAME = "start_cursor"
 
 const BROWSER_TOKEN_WARNING =
   "This client holds a Notion token inside a browser page. Anyone who can " +
-  "load the page can read the token and act as your integration. Only do " +
+  "load the page can read the token and act as your connection. Only do " +
   "this for pages that nobody else can open. Pass " +
   "`dangerouslyAllowBrowser: true` to confirm and silence this warning. See " +
   "https://developers.notion.com/guides/get-started/handling-api-keys#calling-the-api-from-a-browser"
