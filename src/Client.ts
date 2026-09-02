@@ -114,6 +114,13 @@ export type ClientOptions = {
    * Set to false to disable retries entirely.
    */
   retry?: RetryOptions | false
+  /**
+   * Confirms that you mean to hold a Notion token inside a browser page, and
+   * silences the warning the client logs in that case. Anyone who can load the
+   * page can read the token and act as your integration, so only set this for
+   * pages that nobody else can open.
+   */
+  dangerouslyAllowBrowser?: boolean
 }
 
 type FileParam = {
@@ -122,6 +129,23 @@ type FileParam = {
 }
 
 const START_CURSOR_PARAM_NAME = "start_cursor"
+
+const BROWSER_TOKEN_WARNING =
+  "This client holds a Notion token inside a browser page. Anyone who can " +
+  "load the page can read the token and act as your integration. Only do " +
+  "this for pages that nobody else can open. Pass " +
+  "`dangerouslyAllowBrowser: true` to confirm and silence this warning. See " +
+  "https://developers.notion.com/guides/get-started/handling-api-keys#calling-the-api-from-a-browser"
+
+/**
+ * True only inside a browser page. Node, Bun, Deno, edge runtimes, and web
+ * workers have no `window.document`, and those are the places a token can
+ * live safely.
+ */
+function isBrowserEnvironment(): boolean {
+  const maybeWindow = (globalThis as { window?: { document?: unknown } }).window
+  return maybeWindow !== undefined && maybeWindow.document !== undefined
+}
 
 export type RequestParameters = {
   path: string
@@ -193,6 +217,14 @@ export default class Client {
         options?.retry?.initialRetryDelayMs ?? DEFAULT_INITIAL_RETRY_DELAY_MS
       this.#maxRetryDelayMs =
         options?.retry?.maxRetryDelayMs ?? DEFAULT_MAX_RETRY_DELAY_MS
+    }
+
+    if (
+      options?.auth !== undefined &&
+      !options.dangerouslyAllowBrowser &&
+      isBrowserEnvironment()
+    ) {
+      this.log(LogLevel.WARN, BROWSER_TOKEN_WARNING, {})
     }
   }
 

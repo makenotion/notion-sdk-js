@@ -32,6 +32,58 @@ describe("Notion SDK Client", () => {
     new Client({ auth: "foo" })
   })
 
+  describe("browser token warning", () => {
+    const globalWithWindow = globalThis as { window?: unknown }
+
+    afterEach(() => {
+      delete globalWithWindow.window
+    })
+
+    it("warns once when constructed with a token inside a browser page", () => {
+      globalWithWindow.window = { document: {} }
+      const logger = jest.fn()
+
+      new Client({ auth: "ntn_test_token", logger })
+
+      expect(logger).toHaveBeenCalledTimes(1)
+      expect(logger).toHaveBeenCalledWith(
+        LogLevel.WARN,
+        expect.stringContaining("dangerouslyAllowBrowser"),
+        {}
+      )
+    })
+
+    it("stays quiet when dangerouslyAllowBrowser is set", () => {
+      globalWithWindow.window = { document: {} }
+      const logger = jest.fn()
+
+      new Client({
+        auth: "ntn_test_token",
+        logger,
+        dangerouslyAllowBrowser: true,
+      })
+
+      expect(logger).not.toHaveBeenCalled()
+    })
+
+    it("stays quiet in a browser page without a token", () => {
+      globalWithWindow.window = { document: {} }
+      const logger = jest.fn()
+
+      new Client({ logger, baseUrl: "https://proxy.example.com" })
+
+      expect(logger).not.toHaveBeenCalled()
+    })
+
+    it("stays quiet outside a browser page", () => {
+      const logger = jest.fn()
+
+      new Client({ auth: "ntn_test_token", logger })
+
+      expect(logger).not.toHaveBeenCalled()
+    })
+  })
+
   it("keeps detached generated methods bound to the current request implementation", async () => {
     const mockFetch = createMockFetch()
     const client = new Client({ auth: "default-token", fetch: mockFetch })
