@@ -138,13 +138,18 @@ const BROWSER_TOKEN_WARNING =
   "https://developers.notion.com/guides/get-started/handling-api-keys#calling-the-api-from-a-browser"
 
 /**
- * True only inside a browser page. Node, Bun, Deno, edge runtimes, and web
- * workers have no `window.document`, and those are the places a token can
- * live safely.
+ * True inside a browser page, web worker, or service worker: the places where
+ * every visitor downloads the script, so a token in it is public. Node, Bun,
+ * Deno, and edge runtimes have neither `window.document` nor
+ * `WorkerGlobalScope`. Test runners that emulate a browser, such as jsdom,
+ * also count as a browser here.
  */
 function isBrowserEnvironment(): boolean {
   const maybeWindow = (globalThis as { window?: { document?: unknown } }).window
-  return maybeWindow !== undefined && maybeWindow.document !== undefined
+  if (maybeWindow !== undefined && maybeWindow.document !== undefined) {
+    return true
+  }
+  return "WorkerGlobalScope" in globalThis
 }
 
 export type RequestParameters = {
@@ -193,6 +198,8 @@ export default class Client {
   #maxRetries: number
   #initialRetryDelayMs: number
   #maxRetryDelayMs: number
+  #dangerouslyAllowBrowser: boolean
+  #warnedBrowserToken = false
 
   static readonly defaultNotionVersion = "2025-09-03"
 
@@ -219,12 +226,9 @@ export default class Client {
         options?.retry?.maxRetryDelayMs ?? DEFAULT_MAX_RETRY_DELAY_MS
     }
 
-    if (
-      options?.auth !== undefined &&
-      !options.dangerouslyAllowBrowser &&
-      isBrowserEnvironment()
-    ) {
-      this.log(LogLevel.WARN, BROWSER_TOKEN_WARNING, {})
+    this.#dangerouslyAllowBrowser = options?.dangerouslyAllowBrowser ?? false
+    if (options?.auth !== undefined) {
+      this.warnIfTokenInBrowser()
     }
   }
 
@@ -423,6 +427,9 @@ export default class Client {
   private buildAuthHeader(
     auth: RequestParameters["auth"]
   ): Record<string, string> {
+    if (auth !== undefined) {
+      this.warnIfTokenInBrowser()
+    }
     if (typeof auth === "object") {
       const unencodedCredential = `${auth.client_id}:${auth.client_secret}`
       const encodedCredential =
@@ -1145,6 +1152,22 @@ export default class Client {
    * @param auth API key or access token
    * @returns headers key-value object
    */
+  /**
+   * Warns once per client when a token or client secret is used inside a
+   * browser. Covers both the constructor `auth` and per-request `auth`, since
+   * a page that asks the visitor to type a token usually uses the latter.
+   */
+  private warnIfTokenInBrowser(): void {
+    if (this.#dangerouslyAllowBrowser || this.#warnedBrowserToken) {
+      return
+    }
+    if (!isBrowserEnvironment()) {
+      return
+    }
+    this.#warnedBrowserToken = true
+    this.log(LogLevel.WARN, BROWSER_TOKEN_WARNING, {})
+  }
+
   private authAsHeaders(auth?: string): Record<string, string> {
     const headers: Record<string, string> = {}
     const authHeaderValue = auth ?? this.#auth

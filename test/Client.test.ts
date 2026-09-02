@@ -82,6 +82,48 @@ describe("Notion SDK Client", () => {
 
       expect(logger).not.toHaveBeenCalled()
     })
+
+    it("warns once for per-request tokens in a browser page", async () => {
+      globalWithWindow.window = { document: {} }
+      const logger = jest.fn()
+      const client = new Client({ logger, fetch: createMockFetch() })
+
+      await client.users.me({ auth: "ntn_test_token" })
+      await client.users.me({ auth: "ntn_test_token" })
+
+      const warnings = logger.mock.calls.filter(
+        ([level, message]) =>
+          level === LogLevel.WARN &&
+          typeof message === "string" &&
+          message.includes("dangerouslyAllowBrowser")
+      )
+      expect(warnings).toHaveLength(1)
+    })
+
+    it("warns inside a web worker scope", () => {
+      const globalWithWorkerScope = globalThis as {
+        WorkerGlobalScope?: unknown
+      }
+      globalWithWorkerScope.WorkerGlobalScope = class {}
+      const logger = jest.fn()
+
+      try {
+        new Client({ auth: "ntn_test_token", logger })
+      } finally {
+        delete globalWithWorkerScope.WorkerGlobalScope
+      }
+
+      expect(logger).toHaveBeenCalledTimes(1)
+    })
+
+    it("is silenced by logLevel ERROR", () => {
+      globalWithWindow.window = { document: {} }
+      const logger = jest.fn()
+
+      new Client({ auth: "ntn_test_token", logger, logLevel: LogLevel.ERROR })
+
+      expect(logger).not.toHaveBeenCalled()
+    })
   })
 
   it("keeps detached generated methods bound to the current request implementation", async () => {
