@@ -191,6 +191,10 @@ type CreateDatabaseBodyParameters = {
   is_inline?: boolean
   // Initial data source configuration for the database.
   initial_data_source?: InitialDataSourceRequest
+  // Create a typed database with Notion's canonical schema. One of `tasks`, `projects`, or
+  // `skills`. Cannot be combined with `initial_data_source`. When `title` is omitted, the
+  // database is named after the type.
+  database_type?: "tasks" | "projects" | "skills"
   // The icon for the database.
   icon?: PageIconRequest
   // The cover image for the database.
@@ -216,6 +220,7 @@ export const createDatabase = {
     "description",
     "is_inline",
     "initial_data_source",
+    "database_type",
     "icon",
     "cover",
   ],
