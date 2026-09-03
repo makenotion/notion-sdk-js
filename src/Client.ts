@@ -114,6 +114,13 @@ export type ClientOptions = {
    * Set to false to disable retries entirely.
    */
   retry?: RetryOptions | false
+  /**
+   * Confirms that you mean to hold a Notion token inside a browser page, and
+   * silences the warning the client logs in that case. Anyone who can load the
+   * page can read the token and act as your connection, so only set this for
+   * pages that nobody else can open.
+   */
+  dangerouslyAllowBrowser?: boolean
 }
 
 type FileParam = {
@@ -122,6 +129,28 @@ type FileParam = {
 }
 
 const START_CURSOR_PARAM_NAME = "start_cursor"
+
+const BROWSER_TOKEN_WARNING =
+  "This client holds a Notion token inside a browser page. Anyone who can " +
+  "load the page can read the token and act as your connection. Only do " +
+  "this for pages that nobody else can open. Pass " +
+  "`dangerouslyAllowBrowser: true` to confirm and silence this warning. See " +
+  "https://developers.notion.com/guides/get-started/handling-api-keys#calling-the-api-from-a-browser"
+
+/**
+ * True inside a browser page, web worker, or service worker: the places where
+ * every visitor downloads the script, so a token in it is public. Node, Bun,
+ * Deno, and edge runtimes have neither `window.document` nor
+ * `WorkerGlobalScope`. Test runners that emulate a browser, such as jsdom,
+ * also count as a browser here.
+ */
+function isBrowserEnvironment(): boolean {
+  const maybeWindow = (globalThis as { window?: { document?: unknown } }).window
+  if (maybeWindow !== undefined && maybeWindow.document !== undefined) {
+    return true
+  }
+  return "WorkerGlobalScope" in globalThis
+}
 
 export type RequestParameters = {
   path: string
@@ -169,6 +198,8 @@ export default class Client {
   #maxRetries: number
   #initialRetryDelayMs: number
   #maxRetryDelayMs: number
+  #dangerouslyAllowBrowser: boolean
+  #warnedBrowserToken = false
 
   static readonly defaultNotionVersion = "2025-09-03"
 
@@ -193,6 +224,11 @@ export default class Client {
         options?.retry?.initialRetryDelayMs ?? DEFAULT_INITIAL_RETRY_DELAY_MS
       this.#maxRetryDelayMs =
         options?.retry?.maxRetryDelayMs ?? DEFAULT_MAX_RETRY_DELAY_MS
+    }
+
+    this.#dangerouslyAllowBrowser = options?.dangerouslyAllowBrowser ?? false
+    if (options?.auth !== undefined) {
+      this.warnIfTokenInBrowser()
     }
   }
 
@@ -391,6 +427,9 @@ export default class Client {
   private buildAuthHeader(
     auth: RequestParameters["auth"]
   ): Record<string, string> {
+    if (auth !== undefined) {
+      this.warnIfTokenInBrowser()
+    }
     if (typeof auth === "object") {
       const unencodedCredential = `${auth.client_id}:${auth.client_secret}`
       const encodedCredential =
@@ -1113,6 +1152,22 @@ export default class Client {
    * @param auth API key or access token
    * @returns headers key-value object
    */
+  /**
+   * Warns once per client when a token or client secret is used inside a
+   * browser. Covers both the constructor `auth` and per-request `auth`, since
+   * a page that asks the visitor to type a token usually uses the latter.
+   */
+  private warnIfTokenInBrowser(): void {
+    if (this.#dangerouslyAllowBrowser || this.#warnedBrowserToken) {
+      return
+    }
+    if (!isBrowserEnvironment()) {
+      return
+    }
+    this.#warnedBrowserToken = true
+    this.log(LogLevel.WARN, BROWSER_TOKEN_WARNING, {})
+  }
+
   private authAsHeaders(auth?: string): Record<string, string> {
     const headers: Record<string, string> = {}
     const authHeaderValue = auth ?? this.#auth

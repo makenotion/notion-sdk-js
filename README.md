@@ -131,15 +131,36 @@ A custom `logger` receives `logLevel`, `message`, and `extraInfo`. It should ret
 
 The `Client` constructor accepts one options object.
 
-| Option      | Default value               | Type           | Description                                                                                                                                                         |
-| ----------- | --------------------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `auth`      | `undefined`                 | `string`       | Bearer token for authentication. If left undefined, the `auth` parameter should be set on each request.                                                             |
-| `logLevel`  | `LogLevel.WARN`             | `LogLevel`     | Verbosity of logs the instance will produce. By default, logs are written to `stdout`.                                                                              |
-| `timeoutMs` | `DEFAULT_TIMEOUT_MS`        | `number`       | Number of milliseconds to wait before emitting a `RequestTimeoutError`                                                                                              |
-| `baseUrl`   | `DEFAULT_BASE_URL`          | `string`       | The root URL for sending API requests. This can be changed to test with a mock server.                                                                              |
-| `logger`    | Log to console              | `Logger`       | A custom logging function. This function is only called when the client emits a log that is equal or greater severity than `logLevel`.                              |
-| `agent`     | Default node agent          | `http.Agent`   | Used to control creation of TCP sockets. A common use is to proxy requests with [`https-proxy-agent`](https://github.com/TooTallNate/node-https-proxy-agent)        |
-| `retry`     | See [constants](#constants) | `RetryOptions` | Configuration for automatic retries on rate limits (429), service overloads (529), and server errors (500, 503). See [Automatic retries](#automatic-retries) below. |
+| Option                    | Default value               | Type           | Description                                                                                                                                                         |
+| ------------------------- | --------------------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `auth`                    | `undefined`                 | `string`       | Bearer token for authentication. If left undefined, the `auth` parameter should be set on each request.                                                             |
+| `logLevel`                | `LogLevel.WARN`             | `LogLevel`     | Verbosity of logs the instance will produce. By default, logs are written to `stdout`.                                                                              |
+| `timeoutMs`               | `DEFAULT_TIMEOUT_MS`        | `number`       | Number of milliseconds to wait before emitting a `RequestTimeoutError`                                                                                              |
+| `baseUrl`                 | `DEFAULT_BASE_URL`          | `string`       | The root URL for sending API requests. This can be changed to test with a mock server.                                                                              |
+| `logger`                  | Log to console              | `Logger`       | A custom logging function. This function is only called when the client emits a log that is equal or greater severity than `logLevel`.                              |
+| `agent`                   | Default node agent          | `http.Agent`   | Used to control creation of TCP sockets. A common use is to proxy requests with [`https-proxy-agent`](https://github.com/TooTallNate/node-https-proxy-agent)        |
+| `retry`                   | See [constants](#constants) | `RetryOptions` | Configuration for automatic retries on rate limits (429), service overloads (529), and server errors (500, 503). See [Automatic retries](#automatic-retries) below. |
+| `dangerouslyAllowBrowser` | `false`                     | `boolean`      | Confirms you mean to hold a token inside a browser page and silences the warning the client logs in that case. See [Browser usage](#browser-usage) below.           |
+
+### Browser usage
+
+The Notion API sends CORS headers, so browser code can call `api.notion.com` directly. The client works in modern browsers with the built-in `fetch`.
+
+A token in a web page isn't a secret. Anyone who can load the page can read it and act as your connection.
+
+- For an app other people use, keep the token on a server. Create a [public connection](https://developers.notion.com/guides/get-started/public-connections), which uses OAuth. Exchange the authorization code on your server, and send the page only the data it needs.
+- For a personal tool or a local page that only you can open, using a token directly is your own risk to accept.
+
+The client logs a warning when you construct it with `auth` inside a browser page. Pass `dangerouslyAllowBrowser: true` to confirm you understand the risk and silence the warning.
+
+```js
+const notion = new Client({
+  auth: tokenTypedIntoYourOwnPage,
+  dangerouslyAllowBrowser: true,
+})
+```
+
+A token passed per request through `auth` triggers the same warning once per client. Web workers and service workers count as a browser too, because every visitor downloads their script. Test runners that emulate a browser, such as jsdom, also trigger the warning. In tests, pass `dangerouslyAllowBrowser: true` or set `logLevel` to `LogLevel.ERROR`. The `agent` option is ignored in browsers. OAuth token endpoints under `/v1/oauth/` don't send CORS headers, so exchange authorization codes on a server.
 
 ### Automatic retries
 

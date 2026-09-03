@@ -32,6 +32,100 @@ describe("Notion SDK Client", () => {
     new Client({ auth: "foo" })
   })
 
+  describe("browser token warning", () => {
+    const globalWithWindow = globalThis as { window?: unknown }
+
+    afterEach(() => {
+      delete globalWithWindow.window
+    })
+
+    it("warns once when constructed with a token inside a browser page", () => {
+      globalWithWindow.window = { document: {} }
+      const logger = jest.fn()
+
+      new Client({ auth: "ntn_test_token", logger })
+
+      expect(logger).toHaveBeenCalledTimes(1)
+      expect(logger).toHaveBeenCalledWith(
+        LogLevel.WARN,
+        expect.stringContaining("dangerouslyAllowBrowser"),
+        {}
+      )
+    })
+
+    it("stays quiet when dangerouslyAllowBrowser is set", () => {
+      globalWithWindow.window = { document: {} }
+      const logger = jest.fn()
+
+      new Client({
+        auth: "ntn_test_token",
+        logger,
+        dangerouslyAllowBrowser: true,
+      })
+
+      expect(logger).not.toHaveBeenCalled()
+    })
+
+    it("stays quiet in a browser page without a token", () => {
+      globalWithWindow.window = { document: {} }
+      const logger = jest.fn()
+
+      new Client({ logger, baseUrl: "https://proxy.example.com" })
+
+      expect(logger).not.toHaveBeenCalled()
+    })
+
+    it("stays quiet outside a browser page", () => {
+      const logger = jest.fn()
+
+      new Client({ auth: "ntn_test_token", logger })
+
+      expect(logger).not.toHaveBeenCalled()
+    })
+
+    it("warns once for per-request tokens in a browser page", async () => {
+      globalWithWindow.window = { document: {} }
+      const logger = jest.fn()
+      const client = new Client({ logger, fetch: createMockFetch() })
+
+      await client.users.me({ auth: "ntn_test_token" })
+      await client.users.me({ auth: "ntn_test_token" })
+
+      const warnings = logger.mock.calls.filter(
+        ([level, message]) =>
+          level === LogLevel.WARN &&
+          typeof message === "string" &&
+          message.includes("dangerouslyAllowBrowser")
+      )
+      expect(warnings).toHaveLength(1)
+    })
+
+    it("warns inside a web worker scope", () => {
+      const globalWithWorkerScope = globalThis as {
+        WorkerGlobalScope?: unknown
+      }
+      globalWithWorkerScope.WorkerGlobalScope = class {}
+      const logger = jest.fn()
+
+      try {
+        new Client({ auth: "ntn_test_token", logger })
+      } finally {
+        delete globalWithWorkerScope.WorkerGlobalScope
+      }
+
+      expect(logger).toHaveBeenCalledTimes(1)
+    })
+
+    it("is silenced by logLevel ERROR", () => {
+      globalWithWindow.window = { document: {} }
+      const logger = jest.fn()
+
+      new Client({ auth: "ntn_test_token", logger, logLevel: LogLevel.ERROR })
+
+      expect(logger).not.toHaveBeenCalled()
+    })
+  })
+
   it("keeps detached generated methods bound to the current request implementation", async () => {
     const mockFetch = createMockFetch()
     const client = new Client({ auth: "default-token", fetch: mockFetch })
