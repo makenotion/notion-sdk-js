@@ -253,7 +253,7 @@ export type RelationPropertyItemObjectResponse = {
 
 export type RichTextPropertyItemObjectResponse = {
   type: "rich_text"
-  rich_text: RichTextItemResponse
+  rich_text: Array<RichTextItemResponse>
   object: "property_item"
   id: string
 }
@@ -292,7 +292,7 @@ type StringFormulaPropertyResponse = { type: "string"; string: string | null }
 
 export type TitlePropertyItemObjectResponse = {
   type: "title"
-  title: RichTextItemResponse
+  title: Array<RichTextItemResponse>
   object: "property_item"
   id: string
 }
