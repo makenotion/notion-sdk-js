@@ -74,7 +74,8 @@ type CreateFileUploadBodyParameters = {
   filename?: string
   // The MIME type. It must match the uploaded file and any filename extension.
   content_type?: string
-  // The number of parts in a multi_part upload. Required only for multi_part uploads.
+  // The number of parts in a multi_part upload. Required only for multi_part uploads. This
+  // must match the number of uploaded parts and the final part_number sent.
   number_of_parts?: number
   // A public HTTPS URL to import. Required only for external_url uploads.
   external_url?: string
