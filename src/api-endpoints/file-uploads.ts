@@ -66,23 +66,17 @@ export type FileUploadObjectResponse = {
 }
 
 type CreateFileUploadBodyParameters = {
-  // How the file is being sent. Use `multi_part` for files larger than 20MB. Use
-  // `external_url` for files that are temporarily hosted publicly elsewhere. Default is
-  // `single_part`.
+  // How the file is sent. Defaults to single_part. Use multi_part for files larger than 20
+  // MiB or external_url for a temporary public HTTPS URL.
   mode?: "single_part" | "multi_part" | "external_url"
-  // Name of the file to be created. Required when `mode` is `multi_part`. Otherwise
-  // optional, and used to override the filename. Must include an extension, or have one
-  // inferred from the `content_type` parameter.
+  // The filename. Required for multi_part and external_url uploads. Include an extension
+  // or provide content_type so one can be inferred.
   filename?: string
-  // MIME type of the file to be created. Recommended when sending the file in multiple
-  // parts. Must match the content type of the file that's sent, and the extension of the
-  // `filename` parameter if any.
+  // The MIME type. It must match the uploaded file and any filename extension.
   content_type?: string
-  // When `mode` is `multi_part`, the number of parts you are uploading. This must match
-  // the number of parts as well as the final `part_number` you send.
+  // The number of parts in a multi_part upload. Required only for multi_part uploads.
   number_of_parts?: number
-  // When `mode` is `external_url`, provide the HTTPS URL of a publicly accessible file to
-  // import into your workspace.
+  // A public HTTPS URL to import. Required only for external_url uploads.
   external_url?: string
 }
 
