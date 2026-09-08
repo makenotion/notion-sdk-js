@@ -690,7 +690,9 @@ export const movePage = {
 } as const
 
 type GetPagePropertyPathParameters = {
+  // The ID of the page containing the property.
   page_id: IdRequest
+  // The ID or name of the property to retrieve.
   property_id: string
 }
 

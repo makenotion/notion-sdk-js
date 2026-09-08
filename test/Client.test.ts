@@ -3,6 +3,7 @@ import {
   APIResponseError,
   Client,
   InvalidPathParameterError,
+  LogLevel,
   UnknownHTTPResponseError,
   isHTTPResponseError,
 } from "../src"
@@ -29,6 +30,74 @@ const documentedAgentClientMethods = [
 describe("Notion SDK Client", () => {
   it("Constructs without throwing", () => {
     new Client({ auth: "foo" })
+  })
+
+  it("keeps detached generated methods bound to the current request implementation", async () => {
+    const mockFetch = createMockFetch()
+    const client = new Client({ auth: "default-token", fetch: mockFetch })
+    const retrieve = client.blocks.retrieve
+    const request = jest.spyOn(client, "request")
+
+    await retrieve({ block_id: TEST_BLOCK_ID, auth: "override-token" })
+
+    expect(request).toHaveBeenCalledWith({
+      path: `blocks/${TEST_BLOCK_ID}`,
+      method: "get",
+      query: {},
+      body: {},
+      auth: "override-token",
+    })
+    expect(mockFetch).toHaveBeenCalledWith(
+      `https://api.notion.com/v1/blocks/${TEST_BLOCK_ID}`,
+      expect.objectContaining({
+        headers: expect.objectContaining({
+          authorization: "Bearer override-token",
+        }),
+      })
+    )
+  })
+
+  it("warns once and omits unknown parameters in generated methods", async () => {
+    const mockFetch = createMockFetch()
+    const logger = jest.fn()
+    const client = new Client({ fetch: mockFetch, logger })
+    const args = { query: "Release notes", typo: "ignored" }
+
+    await client.search(args)
+
+    expect(logger).toHaveBeenCalledTimes(1)
+    expect(logger).toHaveBeenCalledWith(
+      LogLevel.WARN,
+      "unknown parameters were ignored",
+      expect.objectContaining({ unknownParams: ["typo"] })
+    )
+    expect(mockFetch).toHaveBeenCalledWith(
+      "https://api.notion.com/v1/search",
+      expect.objectContaining({ body: JSON.stringify({ query: args.query }) })
+    )
+  })
+
+  it("keeps auth overrides optional on generated methods without parameters", async () => {
+    const client = new Client({ fetch: createMockFetch() })
+    const request = jest.spyOn(client, "request")
+
+    await client.users.me()
+    await client.users.me({ auth: "override-token" })
+
+    expect(request).toHaveBeenNthCalledWith(1, {
+      path: "users/me",
+      method: "get",
+      query: {},
+      body: {},
+      auth: undefined,
+    })
+    expect(request).toHaveBeenNthCalledWith(2, {
+      path: "users/me",
+      method: "get",
+      query: {},
+      body: {},
+      auth: "override-token",
+    })
   })
 
   describe("request param building", () => {

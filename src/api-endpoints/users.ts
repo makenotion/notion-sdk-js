@@ -20,6 +20,7 @@ export const getSelf = {
 } as const
 
 type GetUserPathParameters = {
+  // The ID of the user or bot to retrieve.
   user_id: IdRequest
 }
 
