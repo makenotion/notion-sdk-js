@@ -192,8 +192,6 @@ export type {
   UnsupportedBlockObjectResponse,
   UpdateBlockParameters,
   UpdateBlockResponse,
-  UpdateAgentParameters,
-  UpdateAgentResponse,
   UpdateAgentCreditLimitParameters,
   UpdateAgentCreditLimitResponse,
   UpdateAgentStatusParameters,

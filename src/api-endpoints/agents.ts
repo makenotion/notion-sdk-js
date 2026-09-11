@@ -1107,63 +1107,30 @@ type UpdateAgentPathParameters = {
   agent_id: IdRequest | "notion_ai" | "33333333-3333-3333-3333-333333333333"
 }
 
-type UpdateAgentBodyParameters =
-  | {
-      // The agent's display name.
-      name: string
-      // Whether this agent is in the personal access token owner's favorites. This field can
-      // only be updated with a personal access token.
-      is_favorited?: boolean
-      // The draft model selection. Use auto to let Notion choose, or pinned with an available
-      // public model ID.
-      model?:
-        | {
-            // Let Notion select the model for each run.
-            mode: "auto"
-          }
-        | {
-            // Use the selected model for each run after publishing the agent.
-            mode: "pinned"
-            // A public model ID, such as `claude-sonnet-5`. It must currently be available to the
-            // caller in this workspace.
-            id: string
-          }
-    }
-  | {
-      // Whether this agent is in the personal access token owner's favorites. This field can
-      // only be updated with a personal access token.
-      is_favorited: boolean
-      // The draft model selection. Use auto to let Notion choose, or pinned with an available
-      // public model ID.
-      model?:
-        | {
-            // Let Notion select the model for each run.
-            mode: "auto"
-          }
-        | {
-            // Use the selected model for each run after publishing the agent.
-            mode: "pinned"
-            // A public model ID, such as `claude-sonnet-5`. It must currently be available to the
-            // caller in this workspace.
-            id: string
-          }
-    }
-  | {
-      // The draft model selection. Use auto to let Notion choose, or pinned with an available
-      // public model ID.
-      model:
-        | {
-            // Let Notion select the model for each run.
-            mode: "auto"
-          }
-        | {
-            // Use the selected model for each run after publishing the agent.
-            mode: "pinned"
-            // A public model ID, such as `claude-sonnet-5`. It must currently be available to the
-            // caller in this workspace.
-            id: string
-          }
-    }
+type UpdateAgentBodyParameters = {
+  // Enable or disable the agent. Only editor-origin disables can be cleared.
+  status?: "active" | "disabled"
+  // The per-agent credit limit as a non-negative integer, or null to clear it.
+  credit_limit?: number | null
+  // The agent's display name.
+  name?: string
+  // Whether the personal-access-token owner has this agent in their favorites.
+  is_favorited?: boolean
+  // The model selection. Use auto to let Notion choose, or pinned with an available public
+  // model ID.
+  model?:
+    | {
+        // Let Notion select the model for each run.
+        mode: "auto"
+      }
+    | {
+        // Use the selected model for each run after publishing the agent.
+        mode: "pinned"
+        // A public model ID, such as `claude-sonnet-5`. It must currently be available to the
+        // caller in this workspace.
+        id: string
+      }
+}
 
 export type UpdateAgentParameters = UpdateAgentPathParameters &
   UpdateAgentBodyParameters
@@ -1557,7 +1524,7 @@ export const updateAgent = {
   method: "patch",
   pathParams: ["agent_id"],
   queryParams: [],
-  bodyParams: ["name", "is_favorited", "model"],
+  bodyParams: ["status", "credit_limit", "name", "is_favorited", "model"],
 
   path: (p: UpdateAgentPathParameters): string => `agents/${p.agent_id}`,
 } as const
