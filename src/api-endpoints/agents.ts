@@ -6,7 +6,16 @@ import type {
   IdRequest,
   IdResponse,
   PageIconResponse,
+  SessionRequiredInput_0,
 } from "./common"
+
+export type UpdateSessionStreamResponseComponent0 =
+  | null
+  | boolean
+  | number
+  | string
+  | Array<UpdateSessionStreamResponseComponent0>
+  | { [key: string]: UpdateSessionStreamResponseComponent0 }
 
 /**
  * Parameters for opening a session stream.
@@ -31,13 +40,21 @@ export type UpdateSessionStreamParameters =
     }
   | {
       session_id: string
-      actions: Array<{
-        action_id: string
-        /**
-         * One of: `approve`, `reject`
-         */
-        option_id: "approve" | "reject"
-      }>
+      actions: Array<
+        | {
+            action_id: string
+            /**
+             * One of: `approve`, `reject`
+             */
+            option_id: "approve" | "reject"
+          }
+        | {
+            type: "input"
+            action_id: string
+            request_sequence: number
+            input_responses: Record<string, unknown>
+          }
+      >
       metadata?: Record<string, string>
     }
   | {
@@ -75,17 +92,46 @@ export type UpdateSessionStreamResponse =
           | "terminated"
         created_at: string
         updated_at: string
-        required_actions?: Array<{
-          action_id: string
-          title: string
-          options: Array<{
-            /**
-             * One of: `approve`, `reject`
-             */
-            id: "approve" | "reject"
-            label: string
-          }>
-        }>
+        required_actions?: Array<
+          | {
+              action_id: string
+              title: string
+              options: Array<{
+                /**
+                 * One of: `approve`, `reject`
+                 */
+                id: "approve" | "reject"
+                label: string
+              }>
+            }
+          | {
+              type: "input"
+              action_id: string
+              title: string
+              request_sequence: number
+              input_requests: Record<
+                string,
+                {
+                  method: "elicitation/create"
+                  params: {
+                    mode: "url"
+                    message: string
+                    elicitationId: string
+                    url: string
+                    _meta?: Record<
+                      string,
+                      | null
+                      | boolean
+                      | number
+                      | string
+                      | Array<UpdateSessionStreamResponseComponent0>
+                      | Record<string, UpdateSessionStreamResponseComponent0>
+                    >
+                  }
+                }
+              >
+            }
+        >
         error?: {
           code: string
           message: string
@@ -248,17 +294,49 @@ export type UpdateSessionStreamResponse =
               | "failed"
               | "canceled"
               | "terminated"
-            required_actions?: Array<{
-              action_id: string
-              title: string
-              options: Array<{
-                /**
-                 * One of: `approve`, `reject`
-                 */
-                id: "approve" | "reject"
-                label: string
-              }>
-            }>
+            required_actions?: Array<
+              | {
+                  action_id: string
+                  title: string
+                  options: Array<{
+                    /**
+                     * One of: `approve`, `reject`
+                     */
+                    id: "approve" | "reject"
+                    label: string
+                  }>
+                }
+              | {
+                  type: "input"
+                  action_id: string
+                  title: string
+                  request_sequence: number
+                  input_requests: Record<
+                    string,
+                    {
+                      method: "elicitation/create"
+                      params: {
+                        mode: "url"
+                        message: string
+                        elicitationId: string
+                        url: string
+                        _meta?: Record<
+                          string,
+                          | null
+                          | boolean
+                          | number
+                          | string
+                          | Array<UpdateSessionStreamResponseComponent0>
+                          | Record<
+                              string,
+                              UpdateSessionStreamResponseComponent0
+                            >
+                        >
+                      }
+                    }
+                  >
+                }
+            >
             error?: {
               code: string
               message: string
@@ -457,15 +535,44 @@ export type CancelSessionResponse = {
     | "terminated"
   created_at: string
   updated_at: string
-  required_actions?: Array<{
-    action_id: string
-    title: string
-    options: Array<{
-      // One of: `approve`, `reject`
-      id: "approve" | "reject"
-      label: string
-    }>
-  }>
+  required_actions?: Array<
+    | {
+        action_id: string
+        title: string
+        options: Array<{
+          // One of: `approve`, `reject`
+          id: "approve" | "reject"
+          label: string
+        }>
+      }
+    | {
+        type: "input"
+        action_id: string
+        title: string
+        request_sequence: number
+        input_requests: Record<
+          string,
+          {
+            method: "elicitation/create"
+            params: {
+              mode: "url"
+              message: string
+              elicitationId: string
+              url: string
+              _meta?: Record<
+                string,
+                | null
+                | boolean
+                | number
+                | string
+                | Array<SessionRequiredInput_0>
+                | Record<string, SessionRequiredInput_0>
+              >
+            }
+          }
+        >
+      }
+  >
   error?: { code: string; message: string; retryable: boolean }
 }
 
@@ -3851,15 +3958,44 @@ export type QuerySessionEventsResponse = {
           | "failed"
           | "canceled"
           | "terminated"
-        required_actions?: Array<{
-          action_id: string
-          title: string
-          options: Array<{
-            // One of: `approve`, `reject`
-            id: "approve" | "reject"
-            label: string
-          }>
-        }>
+        required_actions?: Array<
+          | {
+              action_id: string
+              title: string
+              options: Array<{
+                // One of: `approve`, `reject`
+                id: "approve" | "reject"
+                label: string
+              }>
+            }
+          | {
+              type: "input"
+              action_id: string
+              title: string
+              request_sequence: number
+              input_requests: Record<
+                string,
+                {
+                  method: "elicitation/create"
+                  params: {
+                    mode: "url"
+                    message: string
+                    elicitationId: string
+                    url: string
+                    _meta?: Record<
+                      string,
+                      | null
+                      | boolean
+                      | number
+                      | string
+                      | Array<SessionRequiredInput_0>
+                      | Record<string, SessionRequiredInput_0>
+                    >
+                  }
+                }
+              >
+            }
+        >
         error?: { code: string; message: string; retryable: boolean }
       }
   >
@@ -4811,15 +4947,44 @@ export type RetrieveSessionResponse = {
         type: "pinned"
         ids: Array<string | null>
       }
-  required_actions?: Array<{
-    action_id: string
-    title: string
-    options: Array<{
-      // One of: `approve`, `reject`
-      id: "approve" | "reject"
-      label: string
-    }>
-  }>
+  required_actions?: Array<
+    | {
+        action_id: string
+        title: string
+        options: Array<{
+          // One of: `approve`, `reject`
+          id: "approve" | "reject"
+          label: string
+        }>
+      }
+    | {
+        type: "input"
+        action_id: string
+        title: string
+        request_sequence: number
+        input_requests: Record<
+          string,
+          {
+            method: "elicitation/create"
+            params: {
+              mode: "url"
+              message: string
+              elicitationId: string
+              url: string
+              _meta?: Record<
+                string,
+                | null
+                | boolean
+                | number
+                | string
+                | Array<SessionRequiredInput_0>
+                | Record<string, SessionRequiredInput_0>
+              >
+            }
+          }
+        >
+      }
+  >
   error?: { code: string; message: string; retryable: boolean }
   trigger_type?: string
   type_labels?: Array<string> | null
@@ -5065,11 +5230,19 @@ type UpdateSessionBodyParameters =
     }
   | {
       session_id: IdRequest
-      actions: Array<{
-        action_id: IdRequest
-        // One of: `approve`, `reject`
-        option_id: "approve" | "reject"
-      }>
+      actions: Array<
+        | {
+            action_id: IdRequest
+            // One of: `approve`, `reject`
+            option_id: "approve" | "reject"
+          }
+        | {
+            type: "input"
+            action_id: string
+            request_sequence: number
+            input_responses: Record<string, Record<string, never>>
+          }
+      >
       metadata?: Record<string, string>
     }
   | { session_id: IdRequest; continue_from: string }
@@ -5094,15 +5267,44 @@ export type UpdateSessionResponse = {
     | "terminated"
   created_at: string
   updated_at: string
-  required_actions?: Array<{
-    action_id: string
-    title: string
-    options: Array<{
-      // One of: `approve`, `reject`
-      id: "approve" | "reject"
-      label: string
-    }>
-  }>
+  required_actions?: Array<
+    | {
+        action_id: string
+        title: string
+        options: Array<{
+          // One of: `approve`, `reject`
+          id: "approve" | "reject"
+          label: string
+        }>
+      }
+    | {
+        type: "input"
+        action_id: string
+        title: string
+        request_sequence: number
+        input_requests: Record<
+          string,
+          {
+            method: "elicitation/create"
+            params: {
+              mode: "url"
+              message: string
+              elicitationId: string
+              url: string
+              _meta?: Record<
+                string,
+                | null
+                | boolean
+                | number
+                | string
+                | Array<SessionRequiredInput_0>
+                | Record<string, SessionRequiredInput_0>
+              >
+            }
+          }
+        >
+      }
+  >
   error?: { code: string; message: string; retryable: boolean }
 }
 
@@ -5125,4 +5327,50 @@ export const updateSession = {
   ],
 
   path: (): string => `sessions`,
+} as const
+
+type SubmitSessionBrowserUserInputPathParameters = {
+  // The ID of the session to cancel.
+  session_id: IdRequest
+}
+
+type SubmitSessionBrowserUserInputBodyParameters = {
+  interaction_id: string
+  request_sequence: number
+  input_request_key: string
+  action:
+    | { type: "submit"; values: Array<string>; remember_credentials?: false }
+    | { type: "alternate"; alternate_action_id: string }
+    | { type: "unavailable" }
+}
+
+export type SubmitSessionBrowserUserInputParameters =
+  SubmitSessionBrowserUserInputPathParameters &
+    SubmitSessionBrowserUserInputBodyParameters
+
+export type SubmitSessionBrowserUserInputResponse = {
+  result:
+    | "submitted"
+    | "alternate-action"
+    | "dismissed"
+    | "uncertain"
+    | "unavailable"
+}
+
+/**
+ * Submit private input to a personal session's browser
+ */
+export const submitSessionBrowserUserInput = {
+  method: "post",
+  pathParams: ["session_id"],
+  queryParams: [],
+  bodyParams: [
+    "interaction_id",
+    "request_sequence",
+    "input_request_key",
+    "action",
+  ],
+
+  path: (p: SubmitSessionBrowserUserInputPathParameters): string =>
+    `sessions/${p.session_id}/browser/user_input`,
 } as const
