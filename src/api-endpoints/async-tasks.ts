@@ -52,7 +52,10 @@ export type GetAsyncTaskResponse =
               | "validation_error"
           }
         | { status: 401; code: "unauthorized" }
-        | { status: 403; code: "restricted_resource" }
+        | {
+            status: 403
+            code: "restricted_resource" | "member_credit_limit_reached"
+          }
         | { status: 404; code: "object_not_found" }
         | { status: 429; code: "rate_limited" }
         | { status: 529; code: "service_overload" }
