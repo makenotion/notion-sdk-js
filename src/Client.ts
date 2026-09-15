@@ -1,5 +1,6 @@
 import type { Agent } from "node:http"
 import { createEndpointMethods } from "./api-endpoint-methods"
+import type { GetPluginDirectoryParameters } from "./api-endpoints"
 import {
   type Logger,
   LogLevel,
@@ -649,6 +650,18 @@ export default class Client {
   /*
    * Notion API endpoints
    */
+
+  public readonly plugins = {
+    list: this.#endpointMethods.plugins.list,
+    // Plugin IDs can be tag IDs containing URL delimiters, not just UUIDs.
+    retrieve: (args: WithAuth<GetPluginDirectoryParameters>) =>
+      this.#endpointMethods.plugins.retrieve({
+        ...args,
+        id: encodeURIComponent(args.id),
+      }),
+  }
+
+  public readonly skills = this.#endpointMethods.skills
 
   public readonly agents = this.#endpointMethods.agents
 
