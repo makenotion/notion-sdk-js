@@ -653,10 +653,10 @@ export default class Client {
 
   public readonly plugins = {
     list: this.#endpointMethods.plugins.list,
-    // Plugin IDs can be tag IDs containing URL delimiters, not just UUIDs.
     retrieve: (args: WithAuth<GetPluginDirectoryParameters>) =>
       this.#endpointMethods.plugins.retrieve({
         ...args,
+        // Plugin IDs can be tag IDs containing URL delimiters, not just UUIDs.
         id: encodeURIComponent(args.id),
       }),
   }

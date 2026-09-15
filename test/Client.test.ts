@@ -170,7 +170,7 @@ describe("Notion SDK Client", () => {
       )
     })
 
-    it("retrieves a skill archive URL without downloading the archive", async () => {
+    it("retrieves a skill archive URL", async () => {
       const mockFetch = createMockFetch()
       const response = {
         id: TEST_BLOCK_ID,
