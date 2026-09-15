@@ -2717,8 +2717,7 @@ export type QueryAgentsResponse = {
         id: "33333333-3333-3333-3333-333333333333"
         // Always `notion_ai`
         agent_type: "notion_ai"
-        // Always `Notion Agent`
-        name: "Notion Agent"
+        name: string
         description: null
         instructions_page_id: null
         icon:
