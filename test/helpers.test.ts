@@ -206,9 +206,12 @@ describe("Notion API helpers", () => {
           name: string
           is_default: boolean
         }> = []
-        for await (const template of iterateDataSourceTemplates(client, {
-          data_source_id: "data-source-123",
-        })) {
+        for await (const template of iterateDataSourceTemplates(
+          { dataSources: client.dataSources },
+          {
+            data_source_id: "data-source-123",
+          }
+        )) {
           templates.push(template)
         }
 
@@ -272,9 +275,12 @@ describe("Notion API helpers", () => {
               ),
           } as Response)
 
-        const templates = await collectDataSourceTemplates(client, {
-          data_source_id: "data-source-456",
-        })
+        const templates = await collectDataSourceTemplates(
+          { dataSources: client.dataSources },
+          {
+            data_source_id: "data-source-456",
+          }
+        )
 
         expect(templates).toEqual([
           { id: "template-1", name: "Template 1", is_default: true },
@@ -408,9 +414,12 @@ describe("Notion API helpers", () => {
         )
 
         const ids: string[] = []
-        for await (const row of iterateAllDataSourceRows(client, {
-          data_source_id: "ds-1",
-        })) {
+        for await (const row of iterateAllDataSourceRows(
+          { dataSources: client.dataSources },
+          {
+            data_source_id: "ds-1",
+          }
+        )) {
           ids.push(row.id)
         }
 
@@ -562,7 +571,10 @@ describe("Notion API helpers", () => {
           )
 
         await expect(
-          collectAllDataSourceRows(client, { data_source_id: "ds-1" })
+          collectAllDataSourceRows(
+            { dataSources: client.dataSources },
+            { data_source_id: "ds-1" }
+          )
         ).rejects.toThrow("cannot make progress")
       })
     })

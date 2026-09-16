@@ -126,7 +126,7 @@ type ListDataSourceTemplatesArgs = PaginatedArgs & {
  * @param args Arguments including the data_source_id and optional start_cursor.
  */
 export async function* iterateDataSourceTemplates(
-  client: Client,
+  client: Pick<Client, "dataSources">,
   args: ListDataSourceTemplatesArgs
 ): AsyncIterableIterator<DataSourceTemplate> {
   let nextCursor: string | null | undefined = args.start_cursor
@@ -157,7 +157,7 @@ export async function* iterateDataSourceTemplates(
  * @param args Arguments including the data_source_id and optional start_cursor.
  */
 export async function collectDataSourceTemplates(
-  client: Client,
+  client: Pick<Client, "dataSources">,
   args: ListDataSourceTemplatesArgs
 ): Promise<DataSourceTemplate[]> {
   const results: DataSourceTemplate[] = []
@@ -235,7 +235,7 @@ export type FullDataSourceQueryArgs = Omit<
  *   helper; `filter` is combined with the created_time window bound.
  */
 export async function* iterateAllDataSourceRows(
-  client: Client,
+  client: Pick<Client, "dataSources">,
   args: FullDataSourceQueryArgs
 ): AsyncIterableIterator<DataSourceRow> {
   const seenRowIds = new Set<string>()
@@ -309,7 +309,7 @@ export async function* iterateAllDataSourceRows(
  * @param args Query arguments. See {@link iterateAllDataSourceRows}.
  */
 export async function collectAllDataSourceRows(
-  client: Client,
+  client: Pick<Client, "dataSources">,
   args: FullDataSourceQueryArgs
 ): Promise<DataSourceRow[]> {
   const rows: DataSourceRow[] = []

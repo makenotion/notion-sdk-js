@@ -100,6 +100,121 @@ describe("Notion SDK Client", () => {
     })
   })
 
+  describe("Agent Skills", () => {
+    it("lists plugins with cursor pagination and supports omitted arguments", async () => {
+      const mockFetch = createMockFetch()
+      const response = {
+        object: "list",
+        results: [
+          {
+            id: "engineering",
+            name: "Engineering",
+            description: "Team skills",
+            version_id: "version-1",
+          },
+        ],
+        next_cursor: "next-cursor",
+        has_more: true,
+        type: "plugin",
+      }
+      mockFetch.mockResolvedValue(mockResponse("success", { body: response }))
+      const client = new Client({
+        auth: "ntn_test",
+        notionVersion: "2026-03-11",
+        fetch: mockFetch,
+      })
+      const list = client.plugins.list
+
+      const result = await list({ page_size: 10, start_cursor: "cursor+/=" })
+      expect(result).toEqual(response)
+      const call = mockFetch.mock.calls[0]
+      assert(call)
+      const url = new URL(call[0].toString())
+      expect(url.pathname).toBe("/v1/ai/plugins")
+      expect(url.searchParams.get("page_size")).toBe("10")
+      expect(url.searchParams.get("start_cursor")).toBe("cursor+/=")
+      await list()
+      expect(mockFetch).toHaveBeenLastCalledWith(
+        "https://api.notion.com/v1/ai/plugins",
+        expect.anything()
+      )
+    })
+
+    it("retrieves a plugin archive URL with an encoded tag ID and per-call auth", async () => {
+      const mockFetch = createMockFetch()
+      const id = "tag/a?b#c%"
+      const response = {
+        id,
+        version_id: "version-1",
+        url: "https://example.com/plugin.tar.gz",
+      }
+      mockFetch.mockResolvedValue(mockResponse("success", { body: response }))
+      const client = new Client({
+        auth: "ntn_default",
+        notionVersion: "2026-03-11",
+        fetch: mockFetch,
+      })
+      const retrieve = client.plugins.retrieve
+
+      expect(await retrieve({ id, auth: "ntn_override" })).toEqual(response)
+      expect(mockFetch).toHaveBeenCalledTimes(1)
+      expect(mockFetch).toHaveBeenCalledWith(
+        "https://api.notion.com/v1/ai/plugins/tag%2Fa%3Fb%23c%25",
+        expect.objectContaining({
+          method: "GET",
+          headers: expect.objectContaining({
+            authorization: "Bearer ntn_override",
+            "Notion-Version": "2026-03-11",
+          }),
+        })
+      )
+    })
+
+    it("retrieves a skill archive URL", async () => {
+      const mockFetch = createMockFetch()
+      const response = {
+        id: TEST_BLOCK_ID,
+        version_id: "version-1",
+        url: "https://example.com/skill.tar.gz",
+      }
+      mockFetch.mockResolvedValue(mockResponse("success", { body: response }))
+      const client = new Client({
+        auth: "ntn_test",
+        notionVersion: "2026-03-11",
+        fetch: mockFetch,
+      })
+      const retrieve = client.skills.retrieve
+
+      expect(await retrieve({ id: TEST_BLOCK_ID })).toEqual(response)
+      expect(mockFetch).toHaveBeenCalledTimes(1)
+      expect(mockFetch).toHaveBeenCalledWith(
+        `https://api.notion.com/v1/ai/skills/${TEST_BLOCK_ID}`,
+        expect.objectContaining({
+          method: "GET",
+          headers: expect.objectContaining({ "Notion-Version": "2026-03-11" }),
+        })
+      )
+    })
+
+    it("preserves standard API errors for a denied skill request", async () => {
+      const mockFetch = createMockFetch()
+      mockFetch.mockResolvedValue(
+        mockRawResponse({
+          status: 403,
+          body: JSON.stringify({
+            object: "error",
+            code: "restricted_resource",
+            message: "Read content capability required",
+          }),
+        })
+      )
+      const client = new Client({ fetch: mockFetch })
+      await expect(
+        client.skills.retrieve({ id: TEST_BLOCK_ID })
+      ).rejects.toMatchObject({ status: 403, code: "restricted_resource" })
+    })
+  })
+
   describe("request param building", () => {
     let mockFetch: jest.MockedFn<typeof fetch>
     let notion: Client
