@@ -10,6 +10,12 @@
 import type { RichTextItemResponseCommon } from "./api-endpoints"
 
 export type {
+  GetPluginDirectoryParameters,
+  GetPluginDirectoryResponse,
+  GetSkillDirectoryParameters,
+  GetSkillDirectoryResponse,
+  ListSkillsPluginsParameters,
+  ListSkillsPluginsResponse,
   AgentBatchParameters,
   AgentBatchResponse,
   ApiColor,

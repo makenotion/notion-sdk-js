@@ -377,6 +377,31 @@ export function createEndpointMethods(client: EndpointClient) {
         pick(args, endpoints.agentBatch.queryParams)
       ),
     },
+    plugins: {
+      /** List skills plugins */
+      list: optionalMethod<
+        endpoints.ListSkillsPluginsParameters,
+        endpoints.ListSkillsPluginsResponse
+      >(endpoints.listSkillsPlugins, args =>
+        pick(args, endpoints.listSkillsPlugins.queryParams)
+      ),
+      /** Get a plugin directory */
+      retrieve: method<
+        endpoints.GetPluginDirectoryParameters,
+        endpoints.GetPluginDirectoryResponse
+      >(endpoints.getPluginDirectory, args =>
+        pick(args, endpoints.getPluginDirectory.queryParams)
+      ),
+    },
+    skills: {
+      /** Get a skill directory */
+      retrieve: method<
+        endpoints.GetSkillDirectoryParameters,
+        endpoints.GetSkillDirectoryResponse
+      >(endpoints.getSkillDirectory, args =>
+        pick(args, endpoints.getSkillDirectory.queryParams)
+      ),
+    },
     sessions: {
       /** Update a session */
       update: method<
