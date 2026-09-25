@@ -269,6 +269,7 @@ export {
   UnknownHTTPResponseError,
   RequestTimeoutError,
   InvalidPathParameterError,
+  BrowserTokenNotAllowedError,
   // Error helpers
   isNotionClientError,
   isHTTPResponseError,

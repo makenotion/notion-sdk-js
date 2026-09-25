@@ -10,6 +10,7 @@ import {
 import {
   APIErrorCode,
   APIResponseError,
+  BrowserTokenNotAllowedError,
   buildRequestError,
   getResponseHeader,
   isHTTPResponseError,
@@ -115,6 +116,13 @@ export type ClientOptions = {
    * Set to false to disable retries entirely.
    */
   retry?: RetryOptions | false
+  /**
+   * Allows the client to use a Notion token inside a browser page or worker.
+   * Without it, using a token there throws `BrowserTokenNotAllowedError`.
+   * Anyone who can load the page can read the token and act as your
+   * connection, so only set this for pages that nobody else can open.
+   */
+  dangerouslyAllowBrowser?: boolean
 }
 
 type FileParam = {
@@ -123,6 +131,21 @@ type FileParam = {
 }
 
 const START_CURSOR_PARAM_NAME = "start_cursor"
+
+/**
+ * True inside a browser page, web worker, or service worker: the places where
+ * every visitor downloads the script, so a token in it is public. Node, Bun,
+ * Deno, and edge runtimes have neither `window.document` nor
+ * `WorkerGlobalScope`. Test runners that emulate a browser, such as jsdom,
+ * also count as a browser here.
+ */
+function isBrowserEnvironment(): boolean {
+  const maybeWindow = (globalThis as { window?: { document?: unknown } }).window
+  if (maybeWindow !== undefined && maybeWindow.document !== undefined) {
+    return true
+  }
+  return "WorkerGlobalScope" in globalThis
+}
 
 export type RequestParameters = {
   path: string
@@ -170,6 +193,7 @@ export default class Client {
   #maxRetries: number
   #initialRetryDelayMs: number
   #maxRetryDelayMs: number
+  #dangerouslyAllowBrowser: boolean
 
   static readonly defaultNotionVersion = "2025-09-03"
 
@@ -194,6 +218,11 @@ export default class Client {
         options?.retry?.initialRetryDelayMs ?? DEFAULT_INITIAL_RETRY_DELAY_MS
       this.#maxRetryDelayMs =
         options?.retry?.maxRetryDelayMs ?? DEFAULT_MAX_RETRY_DELAY_MS
+    }
+
+    this.#dangerouslyAllowBrowser = options?.dangerouslyAllowBrowser ?? false
+    if (options?.auth !== undefined) {
+      this.assertTokenAllowedHere()
     }
   }
 
@@ -376,7 +405,12 @@ export default class Client {
       ...customHeaders,
       ...authorizationHeader,
       "Notion-Version": this.#notionVersion,
-      "user-agent": this.#userAgent,
+    }
+
+    // Firefox and Safari send a custom user-agent, which the API's CORS
+    // preflight does not allow, so every browser request would fail.
+    if (!isBrowserEnvironment()) {
+      headers["user-agent"] = this.#userAgent
     }
 
     if (bodyAsJsonString !== undefined) {
@@ -392,6 +426,9 @@ export default class Client {
   private buildAuthHeader(
     auth: RequestParameters["auth"]
   ): Record<string, string> {
+    if (auth !== undefined) {
+      this.assertTokenAllowedHere()
+    }
     if (typeof auth === "object") {
       const unencodedCredential = `${auth.client_id}:${auth.client_secret}`
       const encodedCredential =
@@ -1115,6 +1152,20 @@ export default class Client {
     if (logLevelSeverity(level) >= logLevelSeverity(this.#logLevel)) {
       this.#logger(level, message, extraInfo)
     }
+  }
+
+  /**
+   * Blocks a token or client secret inside a browser unless the caller opted
+   * in. Covers both the constructor `auth` and per-request `auth`, since a
+   * page that asks the visitor to type a token usually uses the latter. A
+   * client without a token stays usable, for example behind a proxy that
+   * adds the token on a server.
+   */
+  private assertTokenAllowedHere(): void {
+    if (this.#dangerouslyAllowBrowser || !isBrowserEnvironment()) {
+      return
+    }
+    throw new BrowserTokenNotAllowedError()
   }
 
   /**
