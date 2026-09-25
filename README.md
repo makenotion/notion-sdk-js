@@ -140,7 +140,7 @@ The `Client` constructor accepts one options object.
 | `logger`                  | Log to console              | `Logger`       | A custom logging function. This function is only called when the client emits a log that is equal or greater severity than `logLevel`.                              |
 | `agent`                   | Default node agent          | `http.Agent`   | Used to control creation of TCP sockets. A common use is to proxy requests with [`https-proxy-agent`](https://github.com/TooTallNate/node-https-proxy-agent)        |
 | `retry`                   | See [constants](#constants) | `RetryOptions` | Configuration for automatic retries on rate limits (429), service overloads (529), and server errors (500, 503). See [Automatic retries](#automatic-retries) below. |
-| `dangerouslyAllowBrowser` | `false`                     | `boolean`      | Confirms you mean to hold a token inside a browser page and silences the warning the client logs in that case. See [Browser usage](#browser-usage) below.           |
+| `dangerouslyAllowBrowser` | `false`                     | `boolean`      | Allows a token inside a browser page or worker. Without it, the client throws `BrowserTokenNotAllowedError` there. See [Browser usage](#browser-usage) below.       |
 
 ### Browser usage
 
@@ -151,7 +151,7 @@ A token in a web page isn't a secret. Anyone who can load the page can read it a
 - For an app other people use, keep the token on a server. Create a [public connection](https://developers.notion.com/guides/get-started/public-connections), which uses OAuth. Exchange the authorization code on your server, and send the page only the data it needs.
 - For a personal tool or a local page that only you can open, using a token directly is your own risk to accept.
 
-The client logs a warning when you construct it with `auth` inside a browser page. Pass `dangerouslyAllowBrowser: true` to confirm you understand the risk and silence the warning.
+The client blocks tokens in a browser by default. Constructing it with `auth` inside a browser page throws `BrowserTokenNotAllowedError`. Pass `dangerouslyAllowBrowser: true` to confirm you understand the risk.
 
 ```js
 const notion = new Client({
@@ -160,7 +160,7 @@ const notion = new Client({
 })
 ```
 
-A token passed per request through `auth` triggers the same warning once per client. Web workers and service workers count as a browser too, because every visitor downloads their script. Test runners that emulate a browser, such as jsdom, also trigger the warning. In tests, pass `dangerouslyAllowBrowser: true` or set `logLevel` to `LogLevel.ERROR`. The `agent` option is ignored in browsers. OAuth token endpoints under `/v1/oauth/` don't send CORS headers, so exchange authorization codes on a server.
+A token passed per request through `auth` is blocked the same way: the request rejects with `BrowserTokenNotAllowedError` before anything is sent. A client without a token still works in a browser, for example with a `baseUrl` that points at your own server, which adds the token. Web workers and service workers count as a browser too, because every visitor downloads their script. Test runners that emulate a browser, such as jsdom, count as well, so pass `dangerouslyAllowBrowser: true` in those tests. The `agent` option is ignored in browsers. OAuth token endpoints under `/v1/oauth/` don't send CORS headers, so exchange authorization codes on a server.
 
 ### Automatic retries
 

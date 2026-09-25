@@ -149,6 +149,28 @@ export class InvalidPathParameterError extends NotionClientErrorBase<ClientError
 }
 
 /**
+ * Error thrown when the client would send a token or client secret from a
+ * browser page or worker without `dangerouslyAllowBrowser: true`. Anyone who
+ * can load the page can read the token, so this is blocked by default.
+ *
+ * This is a setup error, not an API error, so it is not a `NotionClientError`.
+ */
+export class BrowserTokenNotAllowedError extends Error {
+  readonly name = "BrowserTokenNotAllowedError"
+
+  constructor(
+    message = "It looks like you're running in a browser. Using a Notion " +
+      "token here is blocked by default: anyone who can load the page can " +
+      "read the token and act as your connection. Keep the token on a " +
+      "server instead. If only you can open this page and you accept the " +
+      "risk, pass `dangerouslyAllowBrowser: true` to the Client. See " +
+      "https://developers.notion.com/guides/get-started/handling-api-keys#calling-the-api-from-a-browser"
+  ) {
+    super(message)
+  }
+}
+
+/**
  * Validates that a request path does not contain path traversal sequences.
  * Throws InvalidPathParameterError if the path contains ".." segments,
  * including URL-encoded variants like %2e%2e.

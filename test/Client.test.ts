@@ -1,6 +1,7 @@
 import assert = require("assert")
 import {
   APIResponseError,
+  BrowserTokenNotAllowedError,
   Client,
   InvalidPathParameterError,
   LogLevel,
@@ -32,97 +33,101 @@ describe("Notion SDK Client", () => {
     new Client({ auth: "foo" })
   })
 
-  describe("browser token warning", () => {
+  describe("browser token guard", () => {
     const globalWithWindow = globalThis as { window?: unknown }
 
     afterEach(() => {
       delete globalWithWindow.window
     })
 
-    it("warns once when constructed with a token inside a browser page", () => {
+    it("throws when constructed with a token inside a browser page", () => {
       globalWithWindow.window = { document: {} }
-      const logger = jest.fn()
 
-      new Client({ auth: "ntn_test_token", logger })
-
-      expect(logger).toHaveBeenCalledTimes(1)
-      expect(logger).toHaveBeenCalledWith(
-        LogLevel.WARN,
-        expect.stringContaining("dangerouslyAllowBrowser"),
-        {}
+      expect(() => new Client({ auth: "ntn_test_token" })).toThrow(
+        BrowserTokenNotAllowedError
       )
     })
 
-    it("stays quiet when dangerouslyAllowBrowser is set", () => {
+    it("explains how to opt in", () => {
       globalWithWindow.window = { document: {} }
-      const logger = jest.fn()
 
-      new Client({
+      expect(() => new Client({ auth: "ntn_test_token" })).toThrow(
+        /dangerouslyAllowBrowser: true/
+      )
+    })
+
+    it("allows a token in a browser page when dangerouslyAllowBrowser is set", async () => {
+      globalWithWindow.window = { document: {} }
+      const mockFetch = createMockFetch()
+      const client = new Client({
         auth: "ntn_test_token",
-        logger,
+        fetch: mockFetch,
         dangerouslyAllowBrowser: true,
       })
 
-      expect(logger).not.toHaveBeenCalled()
+      await client.users.me({})
+
+      expect(mockFetch).toHaveBeenCalledTimes(1)
     })
 
-    it("stays quiet in a browser page without a token", () => {
+    it("allows a client without a token in a browser page", async () => {
       globalWithWindow.window = { document: {} }
-      const logger = jest.fn()
+      const mockFetch = createMockFetch()
+      const client = new Client({
+        baseUrl: "https://proxy.example.com",
+        fetch: mockFetch,
+      })
 
-      new Client({ logger, baseUrl: "https://proxy.example.com" })
+      await client.users.me({})
 
-      expect(logger).not.toHaveBeenCalled()
+      expect(mockFetch).toHaveBeenCalledTimes(1)
     })
 
-    it("stays quiet outside a browser page", () => {
-      const logger = jest.fn()
-
-      new Client({ auth: "ntn_test_token", logger })
-
-      expect(logger).not.toHaveBeenCalled()
+    it("allows a token outside a browser page", () => {
+      expect(() => new Client({ auth: "ntn_test_token" })).not.toThrow()
     })
 
-    it("warns once for per-request tokens in a browser page", async () => {
+    it("rejects per-request tokens in a browser page before sending", async () => {
       globalWithWindow.window = { document: {} }
-      const logger = jest.fn()
-      const client = new Client({ logger, fetch: createMockFetch() })
+      const mockFetch = createMockFetch()
+      const client = new Client({ fetch: mockFetch })
 
-      await client.users.me({ auth: "ntn_test_token" })
-      await client.users.me({ auth: "ntn_test_token" })
-
-      const warnings = logger.mock.calls.filter(
-        ([level, message]) =>
-          level === LogLevel.WARN &&
-          typeof message === "string" &&
-          message.includes("dangerouslyAllowBrowser")
+      await expect(client.users.me({ auth: "ntn_test_token" })).rejects.toThrow(
+        BrowserTokenNotAllowedError
       )
-      expect(warnings).toHaveLength(1)
+      expect(mockFetch).not.toHaveBeenCalled()
     })
 
-    it("warns inside a web worker scope", () => {
+    it("rejects OAuth client credentials in a browser page", async () => {
+      globalWithWindow.window = { document: {} }
+      const mockFetch = createMockFetch()
+      const client = new Client({ fetch: mockFetch })
+
+      await expect(
+        client.oauth.token({
+          client_id: "client_id",
+          client_secret: "client_secret",
+          grant_type: "authorization_code",
+          code: "code",
+          redirect_uri: "https://example.com/callback",
+        })
+      ).rejects.toThrow(BrowserTokenNotAllowedError)
+      expect(mockFetch).not.toHaveBeenCalled()
+    })
+
+    it("throws inside a web worker scope", () => {
       const globalWithWorkerScope = globalThis as {
         WorkerGlobalScope?: unknown
       }
       globalWithWorkerScope.WorkerGlobalScope = class {}
-      const logger = jest.fn()
 
       try {
-        new Client({ auth: "ntn_test_token", logger })
+        expect(() => new Client({ auth: "ntn_test_token" })).toThrow(
+          BrowserTokenNotAllowedError
+        )
       } finally {
         delete globalWithWorkerScope.WorkerGlobalScope
       }
-
-      expect(logger).toHaveBeenCalledTimes(1)
-    })
-
-    it("is silenced by logLevel ERROR", () => {
-      globalWithWindow.window = { document: {} }
-      const logger = jest.fn()
-
-      new Client({ auth: "ntn_test_token", logger, logLevel: LogLevel.ERROR })
-
-      expect(logger).not.toHaveBeenCalled()
     })
   })
 

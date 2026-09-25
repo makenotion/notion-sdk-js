@@ -10,6 +10,7 @@ import {
 import {
   APIErrorCode,
   APIResponseError,
+  BrowserTokenNotAllowedError,
   buildRequestError,
   getResponseHeader,
   isHTTPResponseError,
@@ -116,10 +117,10 @@ export type ClientOptions = {
    */
   retry?: RetryOptions | false
   /**
-   * Confirms that you mean to hold a Notion token inside a browser page, and
-   * silences the warning the client logs in that case. Anyone who can load the
-   * page can read the token and act as your connection, so only set this for
-   * pages that nobody else can open.
+   * Allows the client to use a Notion token inside a browser page or worker.
+   * Without it, using a token there throws `BrowserTokenNotAllowedError`.
+   * Anyone who can load the page can read the token and act as your
+   * connection, so only set this for pages that nobody else can open.
    */
   dangerouslyAllowBrowser?: boolean
 }
@@ -130,13 +131,6 @@ type FileParam = {
 }
 
 const START_CURSOR_PARAM_NAME = "start_cursor"
-
-const BROWSER_TOKEN_WARNING =
-  "This client holds a Notion token inside a browser page. Anyone who can " +
-  "load the page can read the token and act as your connection. Only do " +
-  "this for pages that nobody else can open. Pass " +
-  "`dangerouslyAllowBrowser: true` to confirm and silence this warning. See " +
-  "https://developers.notion.com/guides/get-started/handling-api-keys#calling-the-api-from-a-browser"
 
 /**
  * True inside a browser page, web worker, or service worker: the places where
@@ -200,7 +194,6 @@ export default class Client {
   #initialRetryDelayMs: number
   #maxRetryDelayMs: number
   #dangerouslyAllowBrowser: boolean
-  #warnedBrowserToken = false
 
   static readonly defaultNotionVersion = "2025-09-03"
 
@@ -229,7 +222,7 @@ export default class Client {
 
     this.#dangerouslyAllowBrowser = options?.dangerouslyAllowBrowser ?? false
     if (options?.auth !== undefined) {
-      this.warnIfTokenInBrowser()
+      this.assertTokenAllowedHere()
     }
   }
 
@@ -429,7 +422,7 @@ export default class Client {
     auth: RequestParameters["auth"]
   ): Record<string, string> {
     if (auth !== undefined) {
-      this.warnIfTokenInBrowser()
+      this.assertTokenAllowedHere()
     }
     if (typeof auth === "object") {
       const unencodedCredential = `${auth.client_id}:${auth.client_secret}`
@@ -1157,19 +1150,17 @@ export default class Client {
   }
 
   /**
-   * Warns once per client when a token or client secret is used inside a
-   * browser. Covers both the constructor `auth` and per-request `auth`, since
-   * a page that asks the visitor to type a token usually uses the latter.
+   * Blocks a token or client secret inside a browser unless the caller opted
+   * in. Covers both the constructor `auth` and per-request `auth`, since a
+   * page that asks the visitor to type a token usually uses the latter. A
+   * client without a token stays usable, for example behind a proxy that
+   * adds the token on a server.
    */
-  private warnIfTokenInBrowser(): void {
-    if (this.#dangerouslyAllowBrowser || this.#warnedBrowserToken) {
+  private assertTokenAllowedHere(): void {
+    if (this.#dangerouslyAllowBrowser || !isBrowserEnvironment()) {
       return
     }
-    if (!isBrowserEnvironment()) {
-      return
-    }
-    this.#warnedBrowserToken = true
-    this.log(LogLevel.WARN, BROWSER_TOKEN_WARNING, {})
+    throw new BrowserTokenNotAllowedError()
   }
 
   /**
