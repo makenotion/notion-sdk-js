@@ -1157,15 +1157,6 @@ export default class Client {
   }
 
   /**
-   * Transforms an API key or access token into a headers object suitable for an HTTP request.
-   *
-   * This method uses the instance's value as the default when the input is undefined. If neither are defined, it returns
-   * an empty object
-   *
-   * @param auth API key or access token
-   * @returns headers key-value object
-   */
-  /**
    * Warns once per client when a token or client secret is used inside a
    * browser. Covers both the constructor `auth` and per-request `auth`, since
    * a page that asks the visitor to type a token usually uses the latter.
@@ -1181,6 +1172,15 @@ export default class Client {
     this.log(LogLevel.WARN, BROWSER_TOKEN_WARNING, {})
   }
 
+  /**
+   * Transforms an API key or access token into a headers object suitable for an HTTP request.
+   *
+   * This method uses the instance's value as the default when the input is undefined. If neither are defined, it returns
+   * an empty object
+   *
+   * @param auth API key or access token
+   * @returns headers key-value object
+   */
   private authAsHeaders(auth?: string): Record<string, string> {
     const headers: Record<string, string> = {}
     const authHeaderValue = auth ?? this.#auth
