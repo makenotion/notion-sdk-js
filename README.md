@@ -160,7 +160,7 @@ const notion = new Client({
 })
 ```
 
-A token passed per request through `auth` is blocked the same way: the request rejects with `BrowserTokenNotAllowedError` before anything is sent. A client without a token still works in a browser, for example with a `baseUrl` that points at your own server, which adds the token. Web workers and service workers count as a browser too, because every visitor downloads their script. Test runners that emulate a browser, such as jsdom, count as well, so pass `dangerouslyAllowBrowser: true` in those tests. The `agent` option is ignored in browsers. OAuth token endpoints under `/v1/oauth/` don't send CORS headers, so exchange authorization codes on a server.
+A token passed per request through `auth` is blocked the same way: the request rejects with `BrowserTokenNotAllowedError` before anything is sent. A client without a token still works in a browser, for example with a `baseUrl` that points at your own server, which adds the token. Web workers and service workers count as a browser too, because every visitor downloads their script. Test runners that emulate a browser, such as jsdom, count as well, so pass `dangerouslyAllowBrowser: true` in those tests. The `agent` option is ignored in browsers, and the client doesn't send its `user-agent` header there, because the API's CORS rules don't allow it. OAuth token endpoints under `/v1/oauth/` don't send CORS headers, so exchange authorization codes on a server.
 
 ### Automatic retries
 

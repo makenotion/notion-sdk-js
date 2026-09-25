@@ -115,6 +115,22 @@ describe("Notion SDK Client", () => {
       expect(mockFetch).not.toHaveBeenCalled()
     })
 
+    it("omits the user-agent header in a browser page", async () => {
+      globalWithWindow.window = { document: {} }
+      const mockFetch = createMockFetch()
+      const client = new Client({
+        auth: "ntn_test_token",
+        fetch: mockFetch,
+        dangerouslyAllowBrowser: true,
+      })
+
+      await client.users.me({})
+
+      const headers = mockFetch.mock.calls[0]?.[1]?.headers
+      expect(headers).toHaveProperty("authorization")
+      expect(headers).not.toHaveProperty("user-agent")
+    })
+
     it("throws inside a web worker scope", () => {
       const globalWithWorkerScope = globalThis as {
         WorkerGlobalScope?: unknown

@@ -405,7 +405,12 @@ export default class Client {
       ...customHeaders,
       ...authorizationHeader,
       "Notion-Version": this.#notionVersion,
-      "user-agent": this.#userAgent,
+    }
+
+    // Firefox and Safari send a custom user-agent, which the API's CORS
+    // preflight does not allow, so every browser request would fail.
+    if (!isBrowserEnvironment()) {
+      headers["user-agent"] = this.#userAgent
     }
 
     if (bodyAsJsonString !== undefined) {
