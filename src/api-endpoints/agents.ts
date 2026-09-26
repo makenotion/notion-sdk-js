@@ -3886,6 +3886,7 @@ type QuerySessionsBodyParameters = {
   // A session property filter, or an and/or compound filter nested up to two levels deep.
   filter?:
     | {
+        // Filter sessions by id.
         property: "id"
         // An exact string comparison.
         string: {
@@ -3894,6 +3895,7 @@ type QuerySessionsBodyParameters = {
         }
       }
     | {
+        // Filter sessions by agent_id.
         property: "agent_id"
         // An exact string comparison.
         string: {
@@ -3902,6 +3904,7 @@ type QuerySessionsBodyParameters = {
         }
       }
     | {
+        // Filter sessions by status.
         property: "status"
         // A session status comparison.
         status: {
@@ -3945,6 +3948,7 @@ type QuerySessionsBodyParameters = {
         // Return sessions that match every child filter.
         and: Array<
           | {
+              // Filter sessions by id.
               property: "id"
               // An exact string comparison.
               string: {
@@ -3953,6 +3957,7 @@ type QuerySessionsBodyParameters = {
               }
             }
           | {
+              // Filter sessions by agent_id.
               property: "agent_id"
               // An exact string comparison.
               string: {
@@ -3961,6 +3966,7 @@ type QuerySessionsBodyParameters = {
               }
             }
           | {
+              // Filter sessions by status.
               property: "status"
               // A session status comparison.
               status: {
@@ -4004,6 +4010,7 @@ type QuerySessionsBodyParameters = {
               // Return sessions that match every child filter.
               and: Array<
                 | {
+                    // Filter sessions by id.
                     property: "id"
                     // An exact string comparison.
                     string: {
@@ -4012,6 +4019,7 @@ type QuerySessionsBodyParameters = {
                     }
                   }
                 | {
+                    // Filter sessions by agent_id.
                     property: "agent_id"
                     // An exact string comparison.
                     string: {
@@ -4020,6 +4028,7 @@ type QuerySessionsBodyParameters = {
                     }
                   }
                 | {
+                    // Filter sessions by status.
                     property: "status"
                     // A session status comparison.
                     status: {
@@ -4065,6 +4074,7 @@ type QuerySessionsBodyParameters = {
               // Return sessions that match any child filter.
               or: Array<
                 | {
+                    // Filter sessions by id.
                     property: "id"
                     // An exact string comparison.
                     string: {
@@ -4073,6 +4083,7 @@ type QuerySessionsBodyParameters = {
                     }
                   }
                 | {
+                    // Filter sessions by agent_id.
                     property: "agent_id"
                     // An exact string comparison.
                     string: {
@@ -4081,6 +4092,7 @@ type QuerySessionsBodyParameters = {
                     }
                   }
                 | {
+                    // Filter sessions by status.
                     property: "status"
                     // A session status comparison.
                     status: {
@@ -4128,6 +4140,7 @@ type QuerySessionsBodyParameters = {
         // Return sessions that match any child filter.
         or: Array<
           | {
+              // Filter sessions by id.
               property: "id"
               // An exact string comparison.
               string: {
@@ -4136,6 +4149,7 @@ type QuerySessionsBodyParameters = {
               }
             }
           | {
+              // Filter sessions by agent_id.
               property: "agent_id"
               // An exact string comparison.
               string: {
@@ -4144,6 +4158,7 @@ type QuerySessionsBodyParameters = {
               }
             }
           | {
+              // Filter sessions by status.
               property: "status"
               // A session status comparison.
               status: {
@@ -4187,6 +4202,7 @@ type QuerySessionsBodyParameters = {
               // Return sessions that match every child filter.
               and: Array<
                 | {
+                    // Filter sessions by id.
                     property: "id"
                     // An exact string comparison.
                     string: {
@@ -4195,6 +4211,7 @@ type QuerySessionsBodyParameters = {
                     }
                   }
                 | {
+                    // Filter sessions by agent_id.
                     property: "agent_id"
                     // An exact string comparison.
                     string: {
@@ -4203,6 +4220,7 @@ type QuerySessionsBodyParameters = {
                     }
                   }
                 | {
+                    // Filter sessions by status.
                     property: "status"
                     // A session status comparison.
                     status: {
@@ -4248,6 +4266,7 @@ type QuerySessionsBodyParameters = {
               // Return sessions that match any child filter.
               or: Array<
                 | {
+                    // Filter sessions by id.
                     property: "id"
                     // An exact string comparison.
                     string: {
@@ -4256,6 +4275,7 @@ type QuerySessionsBodyParameters = {
                     }
                   }
                 | {
+                    // Filter sessions by agent_id.
                     property: "agent_id"
                     // An exact string comparison.
                     string: {
@@ -4264,6 +4284,7 @@ type QuerySessionsBodyParameters = {
                     }
                   }
                 | {
+                    // Filter sessions by status.
                     property: "status"
                     // A session status comparison.
                     status: {
