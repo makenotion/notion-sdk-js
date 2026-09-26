@@ -1,6 +1,14 @@
 // cspell:disable-file
 // Note: This is a generated file. DO NOT EDIT!
 
+export type SessionRequiredInput_0 =
+  | null
+  | boolean
+  | number
+  | string
+  | Array<SessionRequiredInput_0>
+  | { [key: string]: SessionRequiredInput_0 }
+
 type AgentIdParentForBlockBasedObjectResponse = {
   // The parent type.
   type: "agent_id"
