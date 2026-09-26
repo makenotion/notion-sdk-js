@@ -4328,6 +4328,8 @@ export type QuerySessionsResponse = {
   // Always `session`
   type: "session"
   session: Record<string, never>
+  // Sessions found in this bounded scan. Access filtering can leave this array empty while
+  // has_more is true.
   results: Array<{
     // Always `session`
     object: "session"
@@ -4381,7 +4383,9 @@ export type QuerySessionsResponse = {
     runs_completed?: number | null
     message_count?: number | null
   }>
+  // Whether more session candidates remain after this bounded scan.
   has_more: boolean
+  // Pass this cursor as start_cursor when has_more is true, even when results is empty.
   next_cursor: string | null
 }
 
