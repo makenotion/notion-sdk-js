@@ -1202,10 +1202,10 @@ export type GetInsightsParameters = GetInsightsPathParameters &
 export type GetInsightsResponse = {
   // Always `agent_insights`
   object: "agent_insights"
-  id: IdResponse
+  id: IdResponse | "notion_ai"
   name: string
-  // One of: `custom_agent`, `autofill_custom_agent`
-  agent_type: "custom_agent" | "autofill_custom_agent"
+  // One of: `notion_ai`, `custom_agent`, `autofill_custom_agent`
+  agent_type: "notion_ai" | "custom_agent" | "autofill_custom_agent"
   // One of: `active`, `disabled`, `deleted`
   status: "active" | "disabled" | "deleted"
   pause_reason:
