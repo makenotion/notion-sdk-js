@@ -35,7 +35,7 @@ npm run check:compatibility -- "$compat_dir/baseline/src/index.ts"
 
 Keep the baseline outside this repo so lint and tests do not scan it. For a pull request that targets another branch, use that branch instead of `main`.
 
-If the check reports a removed or incompatible export, restore the old contract and add a regression test. If the change is intentional, get review for the contract and release version change. See [the compatibility rules](AGENTS.md#compatibility-rules).
+If the check reports a removed or incompatible export, restore the old contract and add a regression test. If the change is intentional, ask a reviewer to add the `contract-change` label, and cut the next release as a minor release. See [the compatibility rules](AGENTS.md#compatibility-rules).
 
 Remove the temporary checkout when done:
 

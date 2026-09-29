@@ -28,6 +28,8 @@ jobs:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          # The contract check needs the last release tag.
+          fetch-depth: 0
 
       # v5.0.0
       - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
@@ -50,6 +52,16 @@ jobs:
 
       - name: Update package-lock.json
         run: npm install
+
+      # Pull requests may merge planned contract changes before a release.
+      # This keeps them out of a patch release.
+      - name: Check SDK compatibility with the last release
+        run: |
+          LAST_RELEASE=$(git describe --tags --abbrev=0 --match 'v[0-9]*')
+          echo "Comparing with ${LAST_RELEASE}"
+          npm run build
+          git worktree add --detach "$RUNNER_TEMP/compat-baseline" "$LAST_RELEASE"
+          npm run check:compatibility -- "$RUNNER_TEMP/compat-baseline/src/index.ts"
 
       - name: Create branch and commit changes
         run: |

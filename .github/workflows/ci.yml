@@ -8,6 +8,7 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+    types: [opened, synchronize, reopened, labeled, unlabeled]
   workflow_dispatch:
     inputs:
       ref:
@@ -50,4 +51,7 @@ jobs:
           persist-credentials: false
       - name: Check SDK compatibility
         if: github.event_name == 'pull_request' && matrix.node-version == '22.x'
+        # A reviewed contract change can merge before its minor release. The
+        # step still reports it, and Increment Version blocks a patch release.
+        continue-on-error: ${{ contains(github.event.pull_request.labels.*.name, 'contract-change') }}
         run: npm run check:compatibility -- .compat-baseline/src/index.ts
