@@ -46,4 +46,6 @@ The check compares TypeScript declarations reachable from `src/index.ts`, the pa
 
 An unchanged version or a patch release must pass. A higher minor or major version skips the check to allow a planned contract change. Do not bump the version just to bypass a failed check; the release change needs review.
 
+A planned contract change, such as a response type that now matches the API, can merge before its release. A reviewer adds the `contract-change` label to the pull request, and the check still reports the change without failing CI. The Increment Version workflow compares the new version with the last release tag, so the next release must be a minor or major release.
+
 This is a conservative guard, not proof that every TypeScript use stays compatible. It does not check runtime behavior or deep imports outside the package entry point. Keep regression tests for the consumer code affected by a change.
