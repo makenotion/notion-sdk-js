@@ -87,19 +87,23 @@ export type FilesPropertyItemObjectResponse = {
   id: string
 }
 
-export type FormulaPropertyItemObjectResponse = {
+type FormulaValue = string | DateResponse | number | boolean
+
+type FormulaPropertyResponse<T extends FormulaValue = FormulaValue> =
+  | (T extends string ? StringFormulaPropertyResponse : never)
+  | (T extends DateResponse ? DateFormulaPropertyResponse : never)
+  | (T extends number ? NumberFormulaPropertyResponse : never)
+  | (T extends boolean ? BooleanFormulaPropertyResponse : never)
+  | UnsupportedFormulaPropertyResponse
+
+export type FormulaPropertyItemObjectResponse<
+  T extends FormulaValue = FormulaValue,
+> = {
   type: "formula"
-  formula: FormulaPropertyResponse
+  formula: FormulaPropertyResponse<T>
   object: "property_item"
   id: string
 }
-
-type FormulaPropertyResponse =
-  | StringFormulaPropertyResponse
-  | DateFormulaPropertyResponse
-  | NumberFormulaPropertyResponse
-  | BooleanFormulaPropertyResponse
-  | UnsupportedFormulaPropertyResponse
 
 export type LastEditedByPropertyItemObjectResponse = {
   type: "last_edited_by"
