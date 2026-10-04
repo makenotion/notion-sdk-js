@@ -131,19 +131,55 @@ describe("Notion SDK Client", () => {
       expect(headers).not.toHaveProperty("user-agent")
     })
 
-    it("throws inside a web worker scope", () => {
-      const globalWithWorkerScope = globalThis as {
-        WorkerGlobalScope?: unknown
-      }
-      globalWithWorkerScope.WorkerGlobalScope = class {}
+    describe("worker scopes", () => {
+      const workerGlobals = [
+        "WorkerGlobalScope",
+        "ServiceWorkerGlobalScope",
+        "importScripts",
+        "WebSocketPair",
+      ] as const
+      const globalWithWorkerScope = globalThis as Partial<
+        Record<(typeof workerGlobals)[number], unknown>
+      >
 
-      try {
+      afterEach(() => {
+        for (const name of workerGlobals) {
+          delete globalWithWorkerScope[name]
+        }
+      })
+
+      async function sentHeaders() {
+        const mockFetch = createMockFetch()
+        const client = new Client({ auth: "ntn_test_token", fetch: mockFetch })
+        await client.users.me({})
+        return mockFetch.mock.calls[0]?.[1]?.headers
+      }
+
+      it("throws inside a browser worker", () => {
+        globalWithWorkerScope.WorkerGlobalScope = class {}
+        globalWithWorkerScope.importScripts = () => undefined
+
         expect(() => new Client({ auth: "ntn_test_token" })).toThrow(
           BrowserTokenNotAllowedError
         )
-      } finally {
-        delete globalWithWorkerScope.WorkerGlobalScope
-      }
+      })
+
+      it("allows a token and sends the user-agent in a Deno worker thread", async () => {
+        globalWithWorkerScope.WorkerGlobalScope = class {}
+
+        expect(await sentHeaders()).toHaveProperty("user-agent")
+      })
+
+      it("allows a token and sends the user-agent in Cloudflare Workers on any compatibility date", async () => {
+        globalWithWorkerScope.WorkerGlobalScope = class {}
+        globalWithWorkerScope.ServiceWorkerGlobalScope = class {}
+        globalWithWorkerScope.WebSocketPair = class {}
+        expect(await sentHeaders()).toHaveProperty("user-agent")
+
+        // Compatibility dates before 2024-03-04 also define importScripts.
+        globalWithWorkerScope.importScripts = () => undefined
+        expect(await sentHeaders()).toHaveProperty("user-agent")
+      })
     })
   })
 

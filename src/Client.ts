@@ -134,17 +134,28 @@ const START_CURSOR_PARAM_NAME = "start_cursor"
 
 /**
  * True inside a browser page, web worker, or service worker: the places where
- * every visitor downloads the script, so a token in it is public. Node, Bun,
- * Deno, and edge runtimes have neither `window.document` nor
- * `WorkerGlobalScope`. Test runners that emulate a browser, such as jsdom,
- * also count as a browser here.
+ * every visitor downloads the script, so a token in it is public. Test runners
+ * that emulate a browser, such as jsdom, also count as a browser here.
+ *
+ * `WorkerGlobalScope` alone does not mean a browser worker, because some
+ * server runtimes define it too. Every browser worker also has an
+ * `importScripts` function, which Deno worker threads lack. Cloudflare Workers
+ * have `importScripts` on compatibility dates before 2024-03-04, so they are
+ * excluded by `WebSocketPair`, a global that only Cloudflare defines.
  */
 function isBrowserEnvironment(): boolean {
-  const maybeWindow = (globalThis as { window?: { document?: unknown } }).window
-  if (maybeWindow !== undefined && maybeWindow.document !== undefined) {
+  const browserGlobals = globalThis as {
+    window?: { document?: unknown }
+    importScripts?: unknown
+  }
+  if (browserGlobals.window?.document !== undefined) {
     return true
   }
-  return "WorkerGlobalScope" in globalThis
+  return (
+    "WorkerGlobalScope" in globalThis &&
+    typeof browserGlobals.importScripts === "function" &&
+    !("WebSocketPair" in globalThis)
+  )
 }
 
 export type RequestParameters = {
@@ -407,8 +418,8 @@ export default class Client {
       "Notion-Version": this.#notionVersion,
     }
 
-    // Firefox and Safari send a custom user-agent, which the API's CORS
-    // preflight does not allow, so every browser request would fail.
+    // Firefox and Safari send a custom user-agent, so the CORS preflight asks
+    // for it, and a proxy set as `baseUrl` may not allow it.
     if (!isBrowserEnvironment()) {
       headers["user-agent"] = this.#userAgent
     }
