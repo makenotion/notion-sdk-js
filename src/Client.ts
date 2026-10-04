@@ -137,24 +137,27 @@ const START_CURSOR_PARAM_NAME = "start_cursor"
  * every visitor downloads the script, so a token in it is public. Test runners
  * that emulate a browser, such as jsdom, also count as a browser here.
  *
- * `WorkerGlobalScope` alone does not mean a browser worker, because some
- * server runtimes define it too. Every browser worker also has an
- * `importScripts` function, which Deno worker threads lack. Cloudflare Workers
- * have `importScripts` on compatibility dates before 2024-03-04, so they are
- * excluded by `WebSocketPair`, a global that only Cloudflare defines.
+ * A browser worker's global object is an instance of `WorkerGlobalScope` and
+ * has an `importScripts` function. Some server runtimes match one but not
+ * both: the global object in Cloudflare Workers is not an instance of
+ * `WorkerGlobalScope`, and Deno worker threads lack `importScripts`. Both
+ * checks look for browser traits, so a global that a polyfill or other
+ * library adds can only make this check stricter, never turn it off.
  */
 function isBrowserEnvironment(): boolean {
   const browserGlobals = globalThis as {
     window?: { document?: unknown }
+    WorkerGlobalScope?: unknown
     importScripts?: unknown
   }
   if (browserGlobals.window?.document !== undefined) {
     return true
   }
+  const workerGlobalScope = browserGlobals.WorkerGlobalScope
   return (
-    "WorkerGlobalScope" in globalThis &&
-    typeof browserGlobals.importScripts === "function" &&
-    !("WebSocketPair" in globalThis)
+    typeof workerGlobalScope === "function" &&
+    globalThis instanceof workerGlobalScope &&
+    typeof browserGlobals.importScripts === "function"
   )
 }
 

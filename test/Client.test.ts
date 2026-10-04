@@ -132,20 +132,26 @@ describe("Notion SDK Client", () => {
     })
 
     describe("worker scopes", () => {
-      const workerGlobals = [
-        "WorkerGlobalScope",
-        "ServiceWorkerGlobalScope",
-        "importScripts",
-        "WebSocketPair",
-      ] as const
-      const globalWithWorkerScope = globalThis as Partial<
-        Record<(typeof workerGlobals)[number], unknown>
-      >
+      const globalWithWorkerScope = globalThis as {
+        WorkerGlobalScope?: unknown
+        importScripts?: unknown
+        WebSocketPair?: unknown
+      }
+
+      // Stands in for the WorkerGlobalScope class. `isGlobalInstance` says
+      // whether the global object counts as an instance of it.
+      function defineWorkerGlobalScope(isGlobalInstance: boolean) {
+        globalWithWorkerScope.WorkerGlobalScope = class {
+          static [Symbol.hasInstance](value: unknown) {
+            return isGlobalInstance && value === globalThis
+          }
+        }
+      }
 
       afterEach(() => {
-        for (const name of workerGlobals) {
-          delete globalWithWorkerScope[name]
-        }
+        delete globalWithWorkerScope.WorkerGlobalScope
+        delete globalWithWorkerScope.importScripts
+        delete globalWithWorkerScope.WebSocketPair
       })
 
       async function sentHeaders() {
@@ -155,29 +161,30 @@ describe("Notion SDK Client", () => {
         return mockFetch.mock.calls[0]?.[1]?.headers
       }
 
-      it("throws inside a browser worker", () => {
-        globalWithWorkerScope.WorkerGlobalScope = class {}
+      it("throws inside a browser worker, even when a library adds server-runtime globals", () => {
+        defineWorkerGlobalScope(true)
         globalWithWorkerScope.importScripts = () => undefined
+        expect(() => new Client({ auth: "ntn_test_token" })).toThrow(
+          BrowserTokenNotAllowedError
+        )
 
+        globalWithWorkerScope.WebSocketPair = class {}
         expect(() => new Client({ auth: "ntn_test_token" })).toThrow(
           BrowserTokenNotAllowedError
         )
       })
 
       it("allows a token and sends the user-agent in a Deno worker thread", async () => {
-        globalWithWorkerScope.WorkerGlobalScope = class {}
+        defineWorkerGlobalScope(true)
 
         expect(await sentHeaders()).toHaveProperty("user-agent")
       })
 
-      it("allows a token and sends the user-agent in Cloudflare Workers on any compatibility date", async () => {
-        globalWithWorkerScope.WorkerGlobalScope = class {}
-        globalWithWorkerScope.ServiceWorkerGlobalScope = class {}
-        globalWithWorkerScope.WebSocketPair = class {}
-        expect(await sentHeaders()).toHaveProperty("user-agent")
-
-        // Compatibility dates before 2024-03-04 also define importScripts.
+      // Compatibility dates before 2024-03-04 define importScripts.
+      it("allows a token and sends the user-agent in Cloudflare Workers with importScripts", async () => {
+        defineWorkerGlobalScope(false)
         globalWithWorkerScope.importScripts = () => undefined
+
         expect(await sentHeaders()).toHaveProperty("user-agent")
       })
     })
