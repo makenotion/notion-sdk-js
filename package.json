@@ -24,7 +24,7 @@
   "scripts": {
     "prepare": "husky && npm run build",
     "prepublishOnly": "npm run checkLoggedIn && npm run lint && npm run test",
-    "build": "tsc",
+    "build": "node init && tsc",
     "prettier": "prettier --write .",
     "lint": "prettier --check . && eslint . --ext .ts,.js && cspell '**/*'",
     "test": "jest ./test",
