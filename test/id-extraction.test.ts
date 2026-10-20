@@ -32,6 +32,14 @@ describe("ID Extraction Utilities", () => {
       expect(result).toBe("abc123de-f456-7890-1234-5678901234ab") // DB ID, not view ID
     })
 
+    it("should prioritize an untitled path ID over a peeked page ID", () => {
+      // Database links often have no title slug. Opening a row in side peek
+      // adds `p=<page id>` to the query string.
+      const url =
+        "https://www.notion.so/myworkspace/abc123def456789012345678901234ab?v=def456789012345678901234abcdef12&p=123456781234123412341234567890ab&pm=s"
+      expect(extractNotionId(url)).toBe("abc123de-f456-7890-1234-5678901234ab")
+    })
+
     it("should use query parameters when no path ID available", () => {
       const url = "https://notion.so/share?p=abc123def456789012345678901234ab"
       const result = extractNotionId(url)
