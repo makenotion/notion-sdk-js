@@ -279,6 +279,9 @@ type StatusDatabasePropertyConfigResponse = {
   // Always `status`
   type: "status"
   status: {
+    // The name of the configured default status option, or null when no default is
+    // configured. Read-only.
+    default_option: string | null
     // The options for the status property.
     options: Array<StatusPropertyResponse>
     // The groups for the status property.
