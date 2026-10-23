@@ -515,10 +515,13 @@ export function extractNotionId(urlOrId: string): string | null {
     return formatUuid(queryMatch[1])
   }
 
-  // Last resort: any 32-char hex string in the URL
-  const anyMatch = trimmed.match(/([0-9a-f]{32})/i)
+  // Last resort: any hyphenated UUID or 32-char hex string in the URL
+  const anyMatch = trimmed.match(
+    /([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}|[0-9a-f]{32})/i
+  )
   if (anyMatch && anyMatch[1]) {
-    return formatUuid(anyMatch[1])
+    const matched = anyMatch[1].toLowerCase()
+    return matched.includes("-") ? matched : formatUuid(matched)
   }
 
   return null
