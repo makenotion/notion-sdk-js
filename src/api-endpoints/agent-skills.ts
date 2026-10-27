@@ -96,3 +96,38 @@ export const getSkillDirectory = {
 
   path: (p: GetSkillDirectoryPathParameters): string => `ai/skills/${p.id}`,
 } as const
+
+type UploadSkillPathParameters = {
+  // Target page in a Skills database. Create a new page first to import a new skill.
+  id: IdRequest
+}
+
+type UploadSkillFormDataParameters = {
+  file: { filename?: string; data: string | Blob }
+}
+
+export type UploadSkillParameters = UploadSkillPathParameters &
+  UploadSkillFormDataParameters
+
+export type UploadSkillResponse = {
+  // Import committed.
+  status: "completed"
+  // Updated skill page.
+  page_id: string
+  // Content version of the uploaded skill. Matches `version_id` from GET
+  // /v1/ai/skills/{id} until the skill changes.
+  version_id: string
+}
+
+/**
+ * Upload a skill
+ */
+export const uploadSkill = {
+  method: "post",
+  pathParams: ["id"],
+  queryParams: [],
+  bodyParams: [],
+
+  formDataParams: ["file"],
+  path: (p: UploadSkillPathParameters): string => `ai/skills/${p.id}/upload`,
+} as const

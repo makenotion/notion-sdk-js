@@ -162,6 +162,7 @@ export const sendFileUpload = {
   pathParams: ["file_upload_id"],
   queryParams: [],
   bodyParams: [],
+
   formDataParams: ["file", "part_number"],
   path: (p: SendFileUploadPathParameters): string =>
     `file_uploads/${p.file_upload_id}/send`,

@@ -503,7 +503,8 @@ type PropertySortResponse = {
 
 /**
  * A property filter condition. Same shape as a property filter but without the
- * "property" field. For example: { "select": { "equals": "High" } }.
+ * "property" field. For example: { "select": { "equals": "High" } }. An empty object
+ * means the quick filter has no criteria yet.
  */
 type QuickFilterConditionResponse = Record<string, never>
 

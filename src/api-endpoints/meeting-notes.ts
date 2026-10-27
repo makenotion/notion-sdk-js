@@ -4,6 +4,7 @@
 import type {
   IdRequest,
   IdResponse,
+  MeetingNotesPropertyFilter,
   PartialUserObjectResponse,
   RichTextItemResponse,
 } from "./common"
@@ -89,6 +90,8 @@ export type CreateMeetingNoteResponse =
       type: "meeting_notes"
       // Meeting note content fields.
       meeting_notes: {
+        // Whether this is a full-page meeting note.
+        is_full_page: boolean
         // Title of the meeting note as rich text.
         title?: Array<RichTextItemResponse>
         // Current processing status of the meeting note transcription.
@@ -114,6 +117,8 @@ export type CreateMeetingNoteResponse =
           start_time: string
           // ISO-8601 end time of the calendar event.
           end_time: string
+          // ID of the calendar event, as returned by the calendar tools.
+          event_id?: string
           // List of attendee user IDs.
           attendees?: Array<IdResponse>
         }
@@ -162,145 +167,13 @@ type QueryMeetingNotesBodyParameters = {
     operator: "and" | "or"
     // Nested filters; each may be a combinator (and/or) or property filter.
     filters?: Array<
+      | MeetingNotesPropertyFilter
       | {
-          // Operator for nested combinator filters.
+          // Whether every child must match, or any of them.
           operator: "and" | "or"
-          // Nested filters for combinator filters.
-          filters: Array<
-            | {
-                // Property name.
-                property: string
-                filter: {
-                  // Operator.
-                  operator: string
-                  // Value for the operator.
-                  value?:
-                    | {
-                        type: "relative" | "exact"
-                        value:
-                          | string
-                          | {
-                              type: "date" | "datetime"
-                              start_date: string
-                              start_time?: string
-                              time_zone?: string
-                            }
-                      }
-                    | {
-                        type: "relative" | "exact"
-                        value:
-                          | string
-                          | {
-                              type: "daterange"
-                              start_date: string
-                              end_date?: string
-                            }
-                        direction?: "past" | "future"
-                        unit?: "day" | "week" | "month" | "year"
-                        count?: number
-                      }
-                    | {
-                        type: "exact"
-                        // The text value to filter on.
-                        value: string
-                      }
-                    | Array<{
-                        type: "exact"
-                        value: { table: "notion_user"; id: string }
-                      }>
-                }
-              }
-            | {
-                // Operator for nested combinator filters.
-                operator: "and" | "or"
-                filters: Array<{
-                  // Property name.
-                  property: string
-                  filter: {
-                    // Operator.
-                    operator: string
-                    // Value for the operator.
-                    value?:
-                      | {
-                          type: "relative" | "exact"
-                          value:
-                            | string
-                            | {
-                                type: "date" | "datetime"
-                                start_date: string
-                                start_time?: string
-                                time_zone?: string
-                              }
-                        }
-                      | {
-                          type: "relative" | "exact"
-                          value:
-                            | string
-                            | {
-                                type: "daterange"
-                                start_date: string
-                                end_date?: string
-                              }
-                          direction?: "past" | "future"
-                          unit?: "day" | "week" | "month" | "year"
-                          count?: number
-                        }
-                      | {
-                          type: "exact"
-                          // The text value to filter on.
-                          value: string
-                        }
-                      | Array<{
-                          type: "exact"
-                          value: { table: "notion_user"; id: string }
-                        }>
-                  }
-                }>
-              }
-          >
-        }
-      | {
-          // Property name.
-          property: string
-          filter: {
-            // Operator.
-            operator: string
-            // Value for the operator.
-            value?:
-              | {
-                  type: "relative" | "exact"
-                  value:
-                    | string
-                    | {
-                        type: "date" | "datetime"
-                        start_date: string
-                        start_time?: string
-                        time_zone?: string
-                      }
-                }
-              | {
-                  type: "relative" | "exact"
-                  value:
-                    | string
-                    | {
-                        type: "daterange"
-                        start_date: string
-                        end_date?: string
-                      }
-                  direction?: "past" | "future"
-                  unit?: "day" | "week" | "month" | "year"
-                  count?: number
-                }
-              | {
-                  type: "exact"
-                  // The text value to filter on.
-                  value: string
-                }
-              | Array<{
-                  type: "exact"
-                  value: { table: "notion_user"; id: string }
-                }>
-          }
+          // The conditions in this group. A group with no conditions matches nothing, so send at
+          // least one.
+          filters: Array<MeetingNotesPropertyFilter>
         }
     >
   }
@@ -325,7 +198,7 @@ type QueryMeetingNotesBodyParameters = {
 export type QueryMeetingNotesParameters = QueryMeetingNotesBodyParameters
 
 export type QueryMeetingNotesResponse = {
-  // Meeting note transcription block objects.
+  // Meeting note block objects.
   results: Array<{
     // Always "block".
     object: "block"
@@ -335,6 +208,8 @@ export type QueryMeetingNotesResponse = {
     type: "meeting_notes"
     // Meeting note content fields.
     meeting_notes: {
+      // Whether this is a full-page meeting note.
+      is_full_page: boolean
       // Title of the meeting note as rich text.
       title?: Array<RichTextItemResponse>
       // Current processing status of the meeting note transcription.
@@ -342,6 +217,7 @@ export type QueryMeetingNotesResponse = {
         | "transcription_not_started"
         | "transcription_paused"
         | "transcription_in_progress"
+        | "transcription_failed"
         | "summary_in_progress"
         | "notes_ready"
       // Block IDs for each tab (summary, notes, transcript).
@@ -359,6 +235,8 @@ export type QueryMeetingNotesResponse = {
         start_time: string
         // ISO-8601 end time of the calendar event.
         end_time: string
+        // ID of the calendar event, as returned by the calendar tools.
+        event_id?: string
         // List of attendee user IDs.
         attendees?: Array<IdResponse>
       }

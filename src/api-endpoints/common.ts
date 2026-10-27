@@ -98,6 +98,8 @@ type BotInfoResponse = {
               person: {
                 // The email of the person.
                 email?: string
+                // Whether the person's email is verified.
+                email_verified?: boolean
               }
             }
           | PartialUserObjectResponse
@@ -329,6 +331,9 @@ type CreateDatabaseForViewRequest = {
     // block.
     block_id: IdRequest
   }
+  // Whether to show the data source title above the new linked database's views. Defaults
+  // to true.
+  show_data_source_title?: boolean
 }
 
 export type CreateViewQueryRequest = {
@@ -809,6 +814,170 @@ type MapViewConfigRequest = {
   properties?: Array<ViewPropertyConfigRequest> | null
 }
 
+export type MeetingNotesPropertyFilter = {
+  // Which meeting-note property to filter on. Prefer the short names; the schema URI form
+  // is accepted for compatibility.
+  property:
+    | "title"
+    | "attendees"
+    | "created_time"
+    | "created_by"
+    | "last_edited_time"
+    | "last_edited_by"
+    | "notion://meeting_notes/attendees"
+  // The comparison to apply. Use the arm matching the property's type.
+  filter:
+    | {
+        // How to compare the text.
+        operator:
+          | "string_is"
+          | "string_is_not"
+          | "string_contains"
+          | "string_does_not_contain"
+          | "string_starts_with"
+          | "string_ends_with"
+        // The text to compare against.
+        value: {
+          // Always `exact`
+          type: "exact"
+          // The literal text the operator compares against.
+          value: string
+        }
+      }
+    | {
+        // Whether the property must contain the people listed.
+        operator: "person_contains" | "person_does_not_contain"
+        // The people to compare against.
+        value: Array<
+          | {
+              // Always `exact`
+              type: "exact"
+              // Pointer to the Notion user to match.
+              value: {
+                // Always `notion_user`
+                table: "notion_user"
+                // The user's ID, as a UUID or the `user://<uuid>` form returned by user search.
+                id: string
+              }
+            }
+          | {
+              // Always `relative`
+              type: "relative"
+              // Always `me`
+              value: "me"
+            }
+        >
+      }
+    | {
+        // How to compare the date.
+        operator:
+          | "date_is"
+          | "date_is_before"
+          | "date_is_after"
+          | "date_is_on_or_before"
+          | "date_is_on_or_after"
+        // The date to compare against.
+        value:
+          | {
+              // Always `relative`
+              type: "relative"
+              // One of: `today`, `tomorrow`, `yesterday`, `one_week_ago`, `one_week_from_now`,
+              // `one_month_ago`, `one_month_from_now`
+              value:
+                | "today"
+                | "tomorrow"
+                | "yesterday"
+                | "one_week_ago"
+                | "one_week_from_now"
+                | "one_month_ago"
+                | "one_month_from_now"
+            }
+          | {
+              // Always `exact`
+              type: "exact"
+              // Use the is_empty operator to match an unset date.
+              value:
+                | {
+                    // Always `date`
+                    type: "date"
+                    // The calendar date as an ISO 8601 date string.
+                    start_date: string
+                  }
+                | {
+                    // Always `datetime`
+                    type: "datetime"
+                    // The calendar date as an ISO 8601 date string.
+                    start_date: string
+                    // The time of day in 24-hour HH:MM format.
+                    start_time: string
+                    // The IANA time zone name the time is interpreted in.
+                    time_zone: string
+                  }
+            }
+        // Compare against the end of a date range rather than its start.
+        use_end?: boolean
+      }
+    | {
+        // How to compare the date against the range.
+        operator: "date_is_within" | "date_is_relative_to"
+        // The range to compare against.
+        value:
+          | {
+              // Always `relative`
+              type: "relative"
+              // Always `custom`
+              value: "custom"
+              // Whether the window runs backwards or forwards from now.
+              direction: "past" | "future"
+              // One of: `year`, `month`, `week`, `day`
+              unit: "year" | "month" | "week" | "day"
+              // How many units wide the window is.
+              count: number
+            }
+          | {
+              // Always `relative`
+              type: "relative"
+              // Always `surrounding`
+              value: "surrounding"
+              // One of: `year`, `month`, `week`, `day`
+              unit: "year" | "month" | "week" | "day"
+            }
+          | {
+              // Always `relative`
+              type: "relative"
+              // One of: `this_week`, `the_past_week`, `the_past_month`, `the_past_year`,
+              // `the_next_week`, `the_next_month`, `the_next_year`
+              value:
+                | "this_week"
+                | "the_past_week"
+                | "the_past_month"
+                | "the_past_year"
+                | "the_next_week"
+                | "the_next_month"
+                | "the_next_year"
+            }
+          | {
+              // Always `exact`
+              type: "exact"
+              // Use the is_empty operator to match an unset date.
+              value: {
+                // Always `daterange`
+                type: "daterange"
+                // Inclusive start of the range as an ISO 8601 date string, if any.
+                start_date?: string
+                // Inclusive end of the range as an ISO 8601 date string, if any.
+                end_date?: string
+              }
+            }
+        // Compare against the end of a date range rather than its start.
+        use_end?: boolean
+      }
+    | {
+        // Whether the property must be empty or set.
+        operator: "is_empty" | "is_not_empty"
+      }
+}
+
 export type MentionRichTextItemResponse = {
   // Always `mention`
   type: "mention"
@@ -975,19 +1144,37 @@ export type PageMarkdownResponse = {
   object: "page_markdown"
   // The ID of the page or block.
   id: IdResponse
-  // The page content rendered as enhanced Markdown.
+  // The page content as Markdown, in the syntax set by `markdown_version`: enhanced
+  // markdown (`v1`, the default) or Notion-flavored Markdown (`v2`).
   markdown: string
   // Whether the content was truncated due to exceeding the record count limit.
   truncated: boolean
   // Block IDs that could not be loaded (appeared as <unknown> tags in the markdown). Pass
   // these IDs back to this endpoint to fetch their content separately.
   unknown_block_ids: Array<IdResponse>
+  // Content warnings from a synchronous update. Returned only when there is at least one
+  // warning.
+  warnings?: Array<{
+    // The warning category, for example `unsupported_tag` or `no_match`.
+    code: string
+    // What the request changed, ignored, or could not match.
+    message: string
+  }>
 }
 
 export type PagePositionSchema =
   | { type: "after_block"; after_block: { id: IdRequest } }
   | { type: "page_start" }
   | { type: "page_end" }
+
+/**
+ * Controls the notifications Notion sends people about this change. Set mode to "silent"
+ * to skip page update notifications, @mention notifications, and notifications to people
+ * added to a Person property, or "default" to use the standard behavior. Database
+ * automations, reminders, and connection webhooks still work as usual. Page history, page
+ * activity, and workspace audit logs still record the change.
+ */
+export type PageWriteNotificationsSchema = { mode: "default" | "silent" }
 
 export type ParentForBlockBasedObjectResponse =
   | DatabaseParentResponse
@@ -1048,6 +1235,8 @@ export type PersonUserObjectResponse = {
   person: {
     // The email of the person.
     email?: string
+    // Whether the person's email is verified.
+    email_verified?: boolean
   }
 }
 
@@ -1163,7 +1352,8 @@ export type PublicApiAsyncTaskStatusResultJsonValue =
 /**
  * A property filter condition. Same shape as a property filter but without the
  * "property" field (the hashmap key identifies the property). For example: { "select": {
- * "equals": "High" } }.
+ * "equals": "High" } }. Pass an empty object to add the property to the filter bar
+ * without criteria.
  */
 type QuickFilterConditionRequest = Record<string, never>
 
@@ -1338,6 +1528,93 @@ type SelectPropertyFilter =
   | { does_not_equal: StringOrStringArray }
   | ExistencePropertyFilter
 
+export type SessionAgentIdFilter = {
+  // Filter sessions by agent_id.
+  property: "agent_id"
+  // An exact string comparison.
+  string: {
+    // Return sessions with this exact value.
+    equals: string
+  }
+}
+
+export type SessionIdFilter = {
+  // Filter sessions by id.
+  property: "id"
+  // An exact string comparison.
+  string: {
+    // Return sessions with this exact value.
+    equals: string
+  }
+}
+
+export type SessionNestedFilter =
+  | SessionIdFilter
+  | SessionAgentIdFilter
+  | SessionStatusFilter
+  | SessionTimestampFilter
+  | {
+      // Return sessions that match every child filter.
+      and: Array<
+        | SessionIdFilter
+        | SessionAgentIdFilter
+        | SessionStatusFilter
+        | SessionTimestampFilter
+      >
+    }
+  | {
+      // Return sessions that match any child filter.
+      or: Array<
+        | SessionIdFilter
+        | SessionAgentIdFilter
+        | SessionStatusFilter
+        | SessionTimestampFilter
+      >
+    }
+
+export type SessionStatusFilter = {
+  // Filter sessions by status.
+  property: "status"
+  // A session status comparison.
+  status: {
+    // Return sessions with this status.
+    equals?:
+      | "queued"
+      | "in_progress"
+      | "requires_action"
+      | "completed"
+      | "failed"
+      | "canceled"
+      | "terminated"
+    // Return sessions with any of these statuses.
+    in?: Array<
+      | "queued"
+      | "in_progress"
+      | "requires_action"
+      | "completed"
+      | "failed"
+      | "canceled"
+      | "terminated"
+    >
+  }
+}
+
+export type SessionTimestampFilter = {
+  // The session timestamp to compare.
+  property: "created_at" | "updated_at"
+  // A timestamp range.
+  timestamp: {
+    // Return sessions before this time.
+    before?: string
+    // Return sessions after this time.
+    after?: string
+    // Return sessions at or before this time.
+    on_or_before?: string
+    // Return sessions at or after this time.
+    on_or_after?: string
+  }
+}
+
 /**
  * One of: `ascending`, `descending`
  */
@@ -1357,23 +1634,43 @@ type StatusGroupByConfigRequest = {
   hide_empty_groups?: boolean
 }
 
+type StatusGroupNames = StringRequest | Array<StringRequest>
+
+/**
+ * One of: `To-do`, `In progress`, `Complete`
+ */
+type StatusOptionGroup = "To-do" | "In progress" | "Complete"
+
+type StatusOptionRequest = {
+  name: string
+  color?: SelectColor
+  description?: string | null
+  group?: StatusOptionGroup
+}
+
+type StatusOptionRequestArray = Array<StatusOptionRequest>
+
+type StatusOptionUpdateRequest = StatusOptionUpdateRequestCommon &
+  ({ name: string; id?: string } | { id: string; name?: string })
+
+type StatusOptionUpdateRequestArray = Array<StatusOptionUpdateRequest>
+
+type StatusOptionUpdateRequestCommon = {
+  color?: SelectColor
+  description?: string | null
+  group?: StatusOptionGroup
+}
+
 type StatusPropertyConfigRequest = {
   // The initial status options. If not provided, defaults are created.
-  options?: Array<{
-    name: string
-    color?: SelectColor
-    description?: string | null
-  }>
+  options?: StatusOptionRequestArray
 }
 
 export type StatusPropertyConfigUpdateRequest = {
-  // Status options to add or update. New options are assigned to the To-do group.
-  options?: Array<
-    { color?: SelectColor; description?: string | null } & (
-      | { name: string; id?: string }
-      | { id: string; name?: string }
-    )
-  >
+  // Status options to add or update. Use group to assign an option to To-do, In progress,
+  // or Complete. Existing options keep their current group when group is omitted; new
+  // options use To-do when present, or the first existing group otherwise.
+  options?: StatusOptionUpdateRequestArray
 }
 
 type StatusPropertyConfigurationRequest = {
@@ -1382,10 +1679,17 @@ type StatusPropertyConfigurationRequest = {
   status: StatusPropertyConfigRequest
 }
 
-type StatusPropertyFilter =
+type StatusPropertyFilter = StatusValueFilter | ExistencePropertyFilter
+
+/**
+ * The group operators match status groups instead of options. They require the
+ * `Notion-Beta: status-group-filters-2026-10-06` header.
+ */
+type StatusValueFilter =
   | { equals: StringOrStringArray }
   | { does_not_equal: StringOrStringArray }
-  | ExistencePropertyFilter
+  | { group_equals: StatusGroupNames }
+  | { group_does_not_equal: StatusGroupNames }
 
 type StringOrStringArray = string | Array<string>
 
@@ -1556,6 +1860,11 @@ type UniqueIdPropertyConfigurationRequest = {
   // Always `unique_id`
   type?: "unique_id"
   unique_id: { prefix?: string | null }
+}
+
+export type UpdateEmbedFileUploadRequest = {
+  file_upload: FileUploadIdRequest
+  caption?: Array<RichTextItemRequest>
 }
 
 export type UpdateMediaContentWithFileAndCaptionRequest = {
@@ -1761,7 +2070,7 @@ type WorkspaceParentForBlockBasedObjectResponse = {
 
 export type BlockObjectRequest =
   | {
-      embed: MediaContentWithUrlAndCaptionRequest
+      embed: MediaContentWithUrlAndCaptionRequest | EmbedFileUploadRequest
       type?: "embed"
       object?: "block"
     }
@@ -2048,7 +2357,7 @@ export type PageObjectResponse = {
 
 type BlockObjectWithSingleLevelOfChildrenRequest =
   | {
-      embed: MediaContentWithUrlAndCaptionRequest
+      embed: MediaContentWithUrlAndCaptionRequest | EmbedFileUploadRequest
       type?: "embed"
       object?: "block"
     }
@@ -2230,6 +2539,12 @@ type CustomEmojiPageIconRequest = {
     // The URL of the custom emoji.
     url?: string
   }
+}
+
+type EmbedFileUploadRequest = {
+  file_upload: FileUploadIdRequest
+  type?: "file_upload"
+  caption?: Array<RichTextItemRequest>
 }
 
 type EmojiPageIconRequest = {
@@ -2524,7 +2839,7 @@ type AnnotationRequest = {
 
 export type BlockObjectRequestWithoutChildren =
   | {
-      embed: MediaContentWithUrlAndCaptionRequest
+      embed: MediaContentWithUrlAndCaptionRequest | EmbedFileUploadRequest
       type?: "embed"
       object?: "block"
     }

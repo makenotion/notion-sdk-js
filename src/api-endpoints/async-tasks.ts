@@ -50,16 +50,28 @@ export type GetAsyncTaskResponse =
               | "missing_version"
               | "invalid_beta"
               | "validation_error"
+              | "invalid_credit_limit"
           }
         | { status: 401; code: "unauthorized" }
-        | { status: 403; code: "restricted_resource" }
-        | { status: 404; code: "object_not_found" }
+        | {
+            status: 403
+            code:
+              | "restricted_resource"
+              | "status_change_not_allowed"
+              | "workspace_credits_exhausted"
+              | "agent_credit_limit_reached"
+          }
+        | { status: 404; code: "object_not_found" | "directory_not_found" }
         | { status: 429; code: "rate_limited" }
         | { status: 529; code: "service_overload" }
         | { status: 500; code: "internal_server_error" }
         | { status: 503; code: "service_unavailable" }
         | { status: 504; code: "gateway_timeout" }
-        | { status: 409; code: "conflict_error" | "row_limit_exceeded" }
+        | {
+            status: 409
+            code: "conflict_error" | "idempotency_key_reused" | "agent_deleted"
+          }
+        | { status: 406; code: "row_limit_exceeded" }
       )
     }
 
