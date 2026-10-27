@@ -32,6 +32,18 @@ describe("ID Extraction Utilities", () => {
       expect(result).toBe("abc123de-f456-7890-1234-5678901234ab") // DB ID, not view ID
     })
 
+    it("should prioritize a bare path ID over a peeked page ID", () => {
+      const db = "abc123def456789012345678901234ab"
+      const view = "def456789012345678901234abcdef12"
+      const page = "123456781234123412341234567890ab"
+      const expected = "abc123de-f456-7890-1234-5678901234ab"
+      for (const path of [`Tasks-${db}`, db]) {
+        const url = `https://www.notion.so/myworkspace/${path}?v=${view}&p=${page}&pm=s`
+        expect(extractNotionId(url)).toBe(expected)
+        expect(extractDatabaseId(url)).toBe(expected)
+      }
+    })
+
     it("should use query parameters when no path ID available", () => {
       const url = "https://notion.so/share?p=abc123def456789012345678901234ab"
       const result = extractNotionId(url)
