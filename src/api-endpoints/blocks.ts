@@ -17,11 +17,13 @@ import type {
   LanguageRequest,
   PageIconRequest,
   PageIconResponse,
+  PageWriteNotificationsSchema,
   ParentForBlockBasedObjectResponse,
   PartialUserObjectResponse,
   RichTextItemRequest,
   RichTextItemResponse,
   TextRequest,
+  UpdateEmbedFileUploadRequest,
   UpdateMediaContentWithFileAndCaptionRequest,
   UpdateMediaContentWithFileNameAndCaptionRequest,
   UpdateMediaContentWithUrlAndCaptionRequest,
@@ -31,6 +33,7 @@ type ApiTranscriptionStatus =
   | "transcription_not_started"
   | "transcription_paused"
   | "transcription_in_progress"
+  | "transcription_failed"
   | "summary_in_progress"
   | "notes_ready"
 
@@ -741,6 +744,7 @@ export type ToggleBlockObjectResponse = {
 }
 
 type TranscriptionBlockResponse = {
+  is_full_page: boolean
   title?: Array<RichTextItemResponse>
   status?: ApiTranscriptionStatus
   children?: TranscriptionChildrenResponse
@@ -751,6 +755,7 @@ type TranscriptionBlockResponse = {
 type TranscriptionCalendarEventResponse = {
   start_time: string
   end_time: string
+  event_id?: string
   attendees?: Array<IdRequest>
 }
 
@@ -824,7 +829,9 @@ type UpdateBlockPathParameters = {
 
 type UpdateBlockBodyParameters =
   | {
-      embed: UpdateMediaContentWithUrlAndCaptionRequest
+      embed:
+        | UpdateMediaContentWithUrlAndCaptionRequest
+        | UpdateEmbedFileUploadRequest
       type?: "embed"
       in_trash?: boolean
       /** @deprecated Use `in_trash` instead. */
@@ -1178,6 +1185,7 @@ type AppendBlockChildrenBodyParameters = {
   /** @deprecated Use `position` instead. */
   after?: IdRequest
   position?: ContentPositionSchema
+  notifications?: PageWriteNotificationsSchema
 }
 
 export type AppendBlockChildrenParameters = AppendBlockChildrenPathParameters &
@@ -1199,7 +1207,7 @@ export const appendBlockChildren = {
   method: "patch",
   pathParams: ["block_id"],
   queryParams: [],
-  bodyParams: ["after", "children", "position"],
+  bodyParams: ["after", "children", "position", "notifications"],
 
   path: (p: AppendBlockChildrenPathParameters): string =>
     `blocks/${p.block_id}/children`,

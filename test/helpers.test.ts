@@ -647,6 +647,7 @@ describe("Notion API helpers", () => {
       in_trash: false,
       archived: false,
       is_locked: false,
+      show_data_source_title: true,
       created_time: timestamp,
       last_edited_time: timestamp,
       data_sources: [{ id: "data-source-id", name: "Data source" }],

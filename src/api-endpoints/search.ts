@@ -11,6 +11,14 @@ import type {
   PartialDataSourceObjectResponse,
 } from "./data-sources"
 
+type SearchQueryParameters = {
+  // Property names or IDs to include in each page's `properties` object. Other properties
+  // are left out. Repeat the parameter to pass more than one value, for example
+  // `filter_properties=title&filter_properties=Status`. Pages that aren't in a data source
+  // always return only `title`. Search skips names or IDs that don't exist on a page.
+  filter_properties?: Array<string>
+}
+
 type SearchBodyParameters = {
   sort?:
     | { timestamp: "last_edited_time"; direction: "ascending" | "descending" }
@@ -23,7 +31,7 @@ type SearchBodyParameters = {
     | { in_trash: boolean }
 }
 
-export type SearchParameters = SearchBodyParameters
+export type SearchParameters = SearchQueryParameters & SearchBodyParameters
 
 export type SearchResponse = {
   type: "page_or_data_source"
@@ -49,7 +57,7 @@ export type SearchResponse = {
 export const search = {
   method: "post",
   pathParams: [],
-  queryParams: [],
+  queryParams: ["filter_properties"],
   bodyParams: ["sort", "query", "start_cursor", "page_size", "filter"],
 
   path: (): string => `search`,

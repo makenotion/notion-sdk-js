@@ -143,6 +143,9 @@ type DatabasePropertyRelationConfigResponse =
 type DatabasePropertyRelationConfigResponseCommon = {
   database_id: IdResponse
   data_source_id: IdResponse
+  // The maximum number of pages each page can relate to, or null when there is no limit.
+  // Read-only.
+  limit: number | null
 }
 
 type DateDatabasePropertyConfigResponse = {
@@ -562,6 +565,10 @@ type QueryDataSourcePathParameters = {
 }
 
 type QueryDataSourceQueryParameters = {
+  // Property names or IDs to include in each page's `properties` object. Other properties
+  // are left out. Repeat the parameter to pass more than one value, for example
+  // `filter_properties=title&filter_properties=Status`. Pages that aren't in a data source
+  // always return only `title`.
   filter_properties?: Array<string>
 }
 
@@ -580,6 +587,10 @@ type QueryDataSourceBodyParameters = {
     | TimestampFilter
   start_cursor?: string | null
   page_size?: number
+  // Whether to return archived pages. When omitted or false, returns non-archived pages.
+  // When true, returns archived pages.
+  is_archived?: boolean
+  /** @deprecated Use `is_archived` instead. */
   in_trash?: boolean
   /** @deprecated Use `in_trash` instead. */
   archived?: boolean
@@ -619,12 +630,13 @@ export const queryDataSource = {
   pathParams: ["data_source_id"],
   queryParams: ["filter_properties"],
   bodyParams: [
+    "in_trash",
     "archived",
     "sorts",
     "filter",
     "start_cursor",
     "page_size",
-    "in_trash",
+    "is_archived",
     "result_type",
   ],
 

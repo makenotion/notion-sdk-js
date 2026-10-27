@@ -54,6 +54,10 @@ export type DatabaseObjectResponse = {
   archived: boolean
   // Whether the database is locked from editing in the Notion app UI.
   is_locked: boolean
+  // Whether the data source title is shown above the database's views, matching the Show
+  // data source title toggle in the Notion app. Full-page databases with one data source
+  // don't show this title even when this is `true`.
+  show_data_source_title: boolean
   // The time when the database was created.
   created_time: string
   // The time when the database was last edited.
@@ -147,6 +151,10 @@ type UpdateDatabaseBodyParameters = {
   // Whether the database should be locked from editing in the Notion app UI. If not
   // provided, the locked state will not be updated.
   is_locked?: boolean
+  // Whether to show the data source title above the database's views. Matches the Show
+  // data source title toggle in the Notion app. If not provided, the setting will not be
+  // updated.
+  show_data_source_title?: boolean
 }
 
 export type UpdateDatabaseParameters = UpdateDatabasePathParameters &
@@ -172,6 +180,7 @@ export const updateDatabase = {
     "cover",
     "in_trash",
     "is_locked",
+    "show_data_source_title",
   ],
 
   path: (p: UpdateDatabasePathParameters): string =>
@@ -212,6 +221,10 @@ type CreateDatabaseBodyParameters = {
   icon?: PageIconRequest
   // The cover image for the database.
   cover?: PageCoverRequest
+  // Whether to show the data source title above the database's views. Matches the Show
+  // data source title toggle in the Notion app. Defaults to true. Full-page databases with
+  // one data source don't show this title.
+  show_data_source_title?: boolean
 }
 
 export type CreateDatabaseParameters = CreateDatabaseBodyParameters
@@ -236,6 +249,7 @@ export const createDatabase = {
     "database_type",
     "icon",
     "cover",
+    "show_data_source_title",
   ],
 
   path: (): string => `databases`,

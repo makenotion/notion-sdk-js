@@ -65,6 +65,8 @@ export type CommentCreatedWebhookPayload = BaseWebhookPayload & {
     parent: WebhookExternalBlock
     // The ID of the page containing the comment.
     page_id: IdResponse
+    // The ID of the discussion containing the comment.
+    discussion_id: IdResponse
   }
 }
 
@@ -79,6 +81,8 @@ export type CommentDeletedWebhookPayload = BaseWebhookPayload & {
     parent: WebhookExternalBlock
     // The ID of the page containing the comment.
     page_id: IdResponse
+    // The ID of the discussion containing the comment.
+    discussion_id: IdResponse
   }
 }
 
@@ -93,6 +97,8 @@ export type CommentUpdatedWebhookPayload = BaseWebhookPayload & {
     parent: WebhookExternalBlock
     // The ID of the page containing the comment.
     page_id: IdResponse
+    // The ID of the discussion containing the comment.
+    discussion_id: IdResponse
   }
 }
 

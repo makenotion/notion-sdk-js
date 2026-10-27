@@ -28,7 +28,7 @@ export type OauthTokenResponse = {
         user:
           | {
               type: "person"
-              person: { email: string }
+              person: { email: string; email_verified?: boolean }
               name: string | null
               avatar_url: string | null
               id: IdRequest

@@ -16,6 +16,7 @@ import type {
   PageMarkdownResponse,
   PageObjectResponse,
   PagePositionSchema,
+  PageWriteNotificationsSchema,
   PartialPageObjectResponse,
   PartialUserObjectRequest,
   PartialUserObjectResponse,
@@ -324,6 +325,10 @@ export type VerificationPropertyItemObjectResponse = {
 }
 
 type CreatePageQueryParameters = {
+  // Property names or IDs to include in each page's `properties` object. Other properties
+  // are left out. Repeat the parameter to pass more than one value, for example
+  // `filter_properties=title&filter_properties=Status`. Pages that aren't in a data source
+  // always return only `title`.
   filter_properties?: Array<string>
 }
 
@@ -428,11 +433,17 @@ type CreatePageBodyParameters = {
   cover?: PageCoverRequest | null
   content?: Array<BlockObjectRequest>
   children?: Array<BlockObjectRequest>
-  // Page content as Notion-flavored Markdown. Mutually exclusive with content/children.
+  // Page content as Markdown, in the syntax set by `markdown_version`: enhanced markdown
+  // (`v1`, the default) or Notion-flavored Markdown (`v2`). Mutually exclusive with
+  // content/children.
   markdown?: string
   // Set to true to receive an async_task response for markdown page creation. Only
   // supported when markdown is provided.
   allow_async?: boolean
+  // The Markdown syntax to use. `v1` (the default) is enhanced markdown. `v2` is
+  // [Notion-flavored Markdown](/guides/data-apis/notion-flavored-markdown), an opt-in
+  // preview.
+  markdown_version?: "v1" | "v2"
   template?:
     | { type: "none" }
     | { type: "default"; timezone?: TemplateTimezone }
@@ -442,6 +453,7 @@ type CreatePageBodyParameters = {
         timezone?: TemplateTimezone
       }
   position?: PagePositionSchema
+  notifications?: PageWriteNotificationsSchema
 }
 
 export type CreatePageParameters = CreatePageQueryParameters &
@@ -465,8 +477,10 @@ export const createPage = {
     "children",
     "markdown",
     "allow_async",
+    "markdown_version",
     "template",
     "position",
+    "notifications",
   ],
 
   path: (): string => `pages`,
@@ -478,8 +492,10 @@ type GetPagePathParameters = {
 }
 
 type GetPageQueryParameters = {
-  // Supply a list of property IDs to filter properties in the response. Note that if a
-  // page doesn't have a property, it won't be included in the filtered response.
+  // Property names or IDs to include in each page's `properties` object. Other properties
+  // are left out. Repeat the parameter to pass more than one value, for example
+  // `filter_properties=title&filter_properties=Status`. Pages that aren't in a data source
+  // always return only `title`.
   filter_properties?: Array<string>
 }
 
@@ -504,6 +520,10 @@ type UpdatePagePathParameters = {
 }
 
 type UpdatePageQueryParameters = {
+  // Property names or IDs to include in each page's `properties` object. Other properties
+  // are left out. Repeat the parameter to pass more than one value, for example
+  // `filter_properties=title&filter_properties=Status`. Pages that aren't in a data source
+  // always return only `title`.
   filter_properties?: Array<string>
 }
 
@@ -615,6 +635,7 @@ type UpdatePageBodyParameters = {
   // template content replaces the existing content. When used without a template, simply
   // clears the page content.
   erase_content?: boolean
+  notifications?: PageWriteNotificationsSchema
   in_trash?: boolean
   /** @deprecated Use `in_trash` instead. */
   archived?: boolean
@@ -642,6 +663,7 @@ export const updatePage = {
     "is_locked",
     "template",
     "erase_content",
+    "notifications",
     "in_trash",
     "is_archived",
   ],
@@ -732,6 +754,10 @@ type GetPageMarkdownQueryParameters = {
   // transcripts are included; when false, a placeholder with the meeting note URL is shown
   // instead.
   include_transcript?: boolean
+  // The Markdown syntax to use. `v1` (the default) is enhanced markdown. `v2` is
+  // [Notion-flavored Markdown](/guides/data-apis/notion-flavored-markdown), an opt-in
+  // preview.
+  markdown_version?: "v1" | "v2"
 }
 
 export type GetPageMarkdownParameters = GetPageMarkdownPathParameters &
@@ -745,7 +771,7 @@ export type GetPageMarkdownResponse = PageMarkdownResponse
 export const getPageMarkdown = {
   method: "get",
   pathParams: ["page_id"],
-  queryParams: ["include_transcript"],
+  queryParams: ["include_transcript", "markdown_version"],
   bodyParams: [],
 
   path: (p: GetPageMarkdownPathParameters): string =>
@@ -762,13 +788,18 @@ type UpdatePageMarkdownBodyParameters = {
   // accepted for background execution. If omitted or false, the endpoint keeps the
   // existing synchronous response shape.
   allow_async?: boolean
+  // The Markdown syntax to use. `v1` (the default) is enhanced markdown. `v2` is
+  // [Notion-flavored Markdown](/guides/data-apis/notion-flavored-markdown), an opt-in
+  // preview.
+  markdown_version?: "v1" | "v2"
 } & (
   | {
       // Always `insert_content`
       type: "insert_content"
       // Insert new content into the page.
       insert_content: {
-        // The enhanced markdown content to insert into the page.
+        // The Markdown content to insert into the page, in the syntax set by `markdown_version`:
+        // enhanced markdown (`v1`, the default) or Notion-flavored Markdown (`v2`).
         content: string
         // Selection of existing content to insert after, using the ellipsis format ("start
         // text...end text"). Omit to append at the end of the page.
@@ -791,7 +822,9 @@ type UpdatePageMarkdownBodyParameters = {
       type: "replace_content_range"
       // Replace a range of content in the page.
       replace_content_range: {
-        // The new enhanced markdown content to replace the matched range.
+        // The new Markdown content to replace the matched range, in the syntax set by
+        // `markdown_version`: enhanced markdown (`v1`, the default) or Notion-flavored Markdown
+        // (`v2`).
         content: string
         // Selection of existing content to replace, using the ellipsis format ("start text...end
         // text").
@@ -807,7 +840,9 @@ type UpdatePageMarkdownBodyParameters = {
       // Update specific content using search-and-replace operations.
       update_content: {
         // An array of search-and-replace operations, each with old_str (content to find) and
-        // new_str (replacement content).
+        // new_str (replacement content). Operations that match are applied, and each one that
+        // matches nothing is reported in "warnings". The call fails only when no operation that
+        // changes content matches.
         content_updates: Array<{
           // The existing content string to find and replace. Must exactly match the page content.
           old_str: string
@@ -827,7 +862,9 @@ type UpdatePageMarkdownBodyParameters = {
       type: "replace_content"
       // Replace the entire page content with new markdown.
       replace_content: {
-        // The new enhanced markdown content to replace the entire page content.
+        // The new Markdown content to replace the entire page content, in the syntax set by
+        // `markdown_version`: enhanced markdown (`v1`, the default) or Notion-flavored Markdown
+        // (`v2`).
         new_str: string
         // Set to true to allow the operation to delete child pages or databases. Defaults to
         // false.
@@ -850,6 +887,7 @@ export const updatePageMarkdown = {
   queryParams: [],
   bodyParams: [
     "allow_async",
+    "markdown_version",
     "type",
     "insert_content",
     "replace_content_range",

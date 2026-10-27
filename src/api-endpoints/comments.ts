@@ -41,6 +41,12 @@ export type CommentObjectResponse = {
     type: "custom" | "user" | "integration"
     resolved_name: string | null
   }
+  // Whether this comment's original content was deleted.
+  original_content_deleted: boolean
+  // Whether any file attachments on this comment are still uploading. Pending files are
+  // not listed in `attachments` yet. A `comment.updated` webhook is sent when each upload
+  // finishes.
+  has_pending_attachments: boolean
   // Any file attachments associated with the comment.
   attachments?: Array<{
     // One of: `audio`, `image`, `pdf`, `productivity`, `video`
@@ -92,6 +98,10 @@ type CreateCommentBodyParameters = {
           name: string
         }
       }
+  // The Markdown syntax to use. `v1` (the default) is enhanced markdown. `v2` is
+  // [Notion-flavored Markdown](/guides/data-apis/notion-flavored-markdown), an opt-in
+  // preview.
+  markdown_version?: "v1" | "v2"
 } & (
   | {
       // The parent of the comment. This can be a page or a block.
@@ -171,6 +181,7 @@ export const createComment = {
   bodyParams: [
     "attachments",
     "display_name",
+    "markdown_version",
     "parent",
     "rich_text",
     "markdown",
@@ -244,7 +255,12 @@ type UpdateCommentPathParameters = {
   comment_id: IdRequest
 }
 
-type UpdateCommentBodyParameters =
+type UpdateCommentBodyParameters = {
+  // The Markdown syntax to use. `v1` (the default) is enhanced markdown. `v2` is
+  // [Notion-flavored Markdown](/guides/data-apis/notion-flavored-markdown), an opt-in
+  // preview.
+  markdown_version?: "v1" | "v2"
+} & (
   | {
       // An array of rich text objects that represent the updated content of the comment.
       rich_text: Array<RichTextItemRequest>
@@ -257,6 +273,7 @@ type UpdateCommentBodyParameters =
       // comments.
       markdown: string
     }
+)
 
 export type UpdateCommentParameters = UpdateCommentPathParameters &
   UpdateCommentBodyParameters
@@ -272,7 +289,7 @@ export const updateComment = {
   method: "patch",
   pathParams: ["comment_id"],
   queryParams: [],
-  bodyParams: ["rich_text", "markdown"],
+  bodyParams: ["markdown_version", "rich_text", "markdown"],
 
   path: (p: UpdateCommentPathParameters): string => `comments/${p.comment_id}`,
 } as const

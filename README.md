@@ -441,6 +441,27 @@ console.log(JSON.stringify(response, null, 2))
 
 `notion.request<ResponseBody>({...})` uses `ResponseBody` as the expected response type. It does not validate that type at runtime.
 
+Use `formDataParams` for endpoints that take a file. For example, to upload a skill archive to a page in a Skills database:
+
+```ts
+import { readFile } from "fs/promises"
+import type { UploadSkillResponse } from "@notionhq/client"
+
+// POST /v1/ai/skills/:id/upload
+const response = await notion.request<UploadSkillResponse>({
+  path: `ai/skills/${skillPageId}/upload`,
+  method: "post",
+  formDataParams: {
+    file: {
+      filename: "skill.tar.gz",
+      data: new Blob([await readFile("./skill.tar.gz")], {
+        type: "application/gzip",
+      }),
+    },
+  },
+})
+```
+
 > [!TIP]
 > Prefer a named SDK method when one exists, such as `notion.comments.create()` for this example. `request()` can call endpoints that the SDK does not yet cover.
 
