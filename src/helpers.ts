@@ -502,7 +502,8 @@ export function extractNotionId(urlOrId: string): string | null {
 
   // Extract from URL - prioritize path over query parameters
   // This prevents extracting view IDs when database IDs are in the path
-  const pathMatch = trimmed.match(/\/[^/?#]*-([0-9a-f]{32})(?:[/?#]|$)/i)
+  // The title slug is optional: Notion also copies links with a bare ID path.
+  const pathMatch = trimmed.match(/\/(?:[^/?#]*-)?([0-9a-f]{32})(?:[/?#]|$)/i)
   if (pathMatch && pathMatch[1]) {
     return formatUuid(pathMatch[1])
   }
