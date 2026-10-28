@@ -53,6 +53,9 @@ export type CommentObjectResponse = {
     category: "audio" | "image" | "pdf" | "productivity" | "video"
     file: InternalFileResponse
   }>
+  // The ID of the database property the comment is on, for comments on a page property.
+  // Matches the property's `id` in the page object. Omitted for other comments.
+  property_id?: string
 }
 
 type CommentParentResponse =

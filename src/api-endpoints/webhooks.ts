@@ -67,6 +67,9 @@ export type CommentCreatedWebhookPayload = BaseWebhookPayload & {
     page_id: IdResponse
     // The ID of the discussion containing the comment.
     discussion_id: IdResponse
+    // The ID of the database property the comment is on, for comments on a page property.
+    // Matches the property's `id` in the page object. Omitted for other comments.
+    property_id?: string
   }
 }
 
@@ -83,6 +86,9 @@ export type CommentDeletedWebhookPayload = BaseWebhookPayload & {
     page_id: IdResponse
     // The ID of the discussion containing the comment.
     discussion_id: IdResponse
+    // The ID of the database property the comment is on, for comments on a page property.
+    // Matches the property's `id` in the page object. Omitted for other comments.
+    property_id?: string
   }
 }
 
@@ -99,6 +105,9 @@ export type CommentUpdatedWebhookPayload = BaseWebhookPayload & {
     page_id: IdResponse
     // The ID of the discussion containing the comment.
     discussion_id: IdResponse
+    // The ID of the database property the comment is on, for comments on a page property.
+    // Matches the property's `id` in the page object. Omitted for other comments.
+    property_id?: string
   }
 }
 
