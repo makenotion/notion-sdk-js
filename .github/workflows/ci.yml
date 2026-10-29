@@ -42,15 +42,6 @@ jobs:
       # Drop this step after Node 22 support ends and all selected Node versions bundle npm >=11.10.
       - name: Use npm with release-age support
         run: npm install -g npm@11.21.1
-      # Cache only after upgrading npm; Node 22's bundled npm fails the devEngines check.
-      - name: Cache npm downloads
-        # v6.1.0
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-${{ runner.arch }}-npm-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-${{ runner.arch }}-npm-
       - run: npm ci
       - run: npm run build
       - run: npm run lint
