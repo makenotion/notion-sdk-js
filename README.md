@@ -236,28 +236,6 @@ await notion.views.create({
 ### TypeScript
 
 The package includes types for request parameters, responses, and their fields.
-Import these types from `@notionhq/client`:
-
-```ts
-import type {
-  QueryDataSourceFilter,
-  QueryDataSourceSort,
-  RichTextItemRequest,
-} from "@notionhq/client"
-
-const title: RichTextItemRequest = { text: { content: "Example" } }
-const filter: QueryDataSourceFilter = {
-  property: "Status",
-  status: { equals: "In progress" },
-}
-const sort: QueryDataSourceSort = {
-  property: "Name",
-  direction: "ascending",
-}
-```
-
-`QueryDataSourceFilter` includes compound `and` and `or` groups.
-`QueryDataSourceSort` describes one item in the `sorts` array.
 
 With strict TypeScript, caught errors have type `unknown`. `isNotionClientError`
 narrows the error to a known SDK error type. `APIErrorCode` identifies server
