@@ -38,6 +38,8 @@ jobs:
           package-manager-cache: false
           registry-url: "https://registry.npmjs.org"
 
+      # Node 22 bundles npm 10; the cooldown requires npm >=11.10.
+      # Drop this step after Node 22 support ends and all selected Node versions bundle npm >=11.10.
       - name: Use npm with release-age support
         run: npm install -g npm@11.21.1
 
