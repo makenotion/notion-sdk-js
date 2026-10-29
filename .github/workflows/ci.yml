@@ -27,26 +27,27 @@ jobs:
     permissions: {}
 
     steps:
-      # v6.0.2
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+      # v7.0.1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           ref: ${{ github.event.inputs.ref || github.ref }}
           persist-credentials: false
       - name: Use Node.js ${{ matrix.node-version }}
-        # v5.0.0
-        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
+        # v7.1.0
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
         with:
           node-version: ${{ matrix.node-version }}
+          package-manager-cache: false
       - name: Use npm with release-age support
-        run: npm install -g npm@11.11.1
+        run: npm install -g npm@11.21.1
       - run: npm ci
       - run: npm run build
       - run: npm run lint
       - run: npm test
       - name: Check out the previous SDK contract
         if: github.event_name == 'pull_request' && matrix.node-version == '22.x'
-        # v6.0.2
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        # v7.0.1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           ref: ${{ github.event.pull_request.base.sha }}
           path: .compat-baseline
