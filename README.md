@@ -510,7 +510,7 @@ Subscription setup is separate from event validation. The [webhook setup guide](
 `signWebhookPayload({ body, verificationToken })` creates a signature for tests without a live subscription.
 
 > [!NOTE]
-> Both helpers are async. They use `globalThis.crypto.subtle` when available and fall back to the Web Crypto API in `node:crypto` on Node.js.
+> Both helpers are async and use `globalThis.crypto.subtle`.
 
 ## Examples
 
