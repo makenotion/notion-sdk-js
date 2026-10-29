@@ -7,7 +7,10 @@
  * @packageDocumentation
  */
 
-import type { RichTextItemResponseCommon } from "./api-endpoints"
+import type {
+  QueryDataSourceParameters,
+  RichTextItemResponseCommon,
+} from "./api-endpoints"
 
 export type {
   GetPluginDirectoryParameters,
@@ -65,6 +68,8 @@ export type {
   DataSourceObjectResponse,
   DataSourceViewObjectResponse,
   DatePropertyItemObjectResponse,
+  DateRequest,
+  DateResponse,
   DeleteAgentParameters,
   DeleteAgentResponse,
   DeleteBlockParameters,
@@ -148,6 +153,8 @@ export type {
   OauthRevokeResponse,
   OauthTokenParameters,
   OauthTokenResponse,
+  PageIconRequest,
+  PageIconResponse,
   PageMarkdownResponse,
   PageObjectResponse,
   PageWriteNotificationsSchema,
@@ -163,6 +170,8 @@ export type {
   PeoplePropertyItemObjectResponse,
   PersonUserObjectResponse,
   PhoneNumberPropertyItemObjectResponse,
+  PropertyConfigurationRequest,
+  PropertyFilter,
   PropertyItemListResponse,
   PropertyItemObjectResponse,
   PublicApiAsyncTaskStatusResultJsonValue,
@@ -178,6 +187,7 @@ export type {
   RelationPropertyItemObjectResponse,
   RetrieveSessionParameters,
   RetrieveSessionResponse,
+  RichTextItemRequest,
   RichTextItemResponse,
   RichTextItemResponseCommon,
   RichTextPropertyItemObjectResponse,
@@ -199,6 +209,7 @@ export type {
   TableRowBlockObjectResponse,
   TemplateBlockObjectResponse,
   TextRichTextItemResponse,
+  TimestampFilter,
   TitlePropertyItemObjectResponse,
   ToDoBlockObjectResponse,
   ToggleBlockObjectResponse,
@@ -265,6 +276,17 @@ export type {
   ViewUpdatedWebhookPayload,
 } from "./api-endpoints"
 export type AnnotationResponse = RichTextItemResponseCommon["annotations"]
+
+/** A data source query filter, including compound `and` and `or` groups. */
+export type QueryDataSourceFilter = NonNullable<
+  QueryDataSourceParameters["filter"]
+>
+
+/** One sort in a data source query's `sorts` array. */
+export type QueryDataSourceSort = NonNullable<
+  QueryDataSourceParameters["sorts"]
+>[number]
+
 export { default as Client } from "./Client"
 export { LogLevel, type Logger } from "./logging"
 export {
@@ -283,7 +305,7 @@ export {
   isNotionClientError,
   isHTTPResponseError,
 } from "./errors"
-export type { RetryOptions } from "./Client"
+export type { ClientOptions, RetryOptions } from "./Client"
 export {
   DEFAULT_BASE_URL,
   DEFAULT_TIMEOUT_MS,
