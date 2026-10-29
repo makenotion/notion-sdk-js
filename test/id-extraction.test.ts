@@ -7,6 +7,21 @@ import {
 
 describe("ID Extraction Utilities", () => {
   describe("extractNotionId", () => {
+    it("should extract a hyphenated UUID from a URL path", () => {
+      const urls = [
+        "https://www.notion.so/12345678-1234-1234-1234-123456789abc",
+        "https://www.notion.so/12345678-1234-1234-1234-123456789abc?v=1",
+        "https://notion.so/workspace/Title-12345678-1234-1234-1234-123456789ABC",
+        "https://notion.so/workspace/12345678-1234-1234-1234-123456789abc?pvs=4",
+      ]
+
+      for (const url of urls) {
+        expect(extractNotionId(url)).toBe(
+          "12345678-1234-1234-1234-123456789abc"
+        )
+      }
+    })
+
     it("should extract ID from standard Notion URLs", () => {
       const examples = [
         {
