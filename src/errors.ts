@@ -464,8 +464,7 @@ function parseAPIErrorResponseBody(body: string):
   }
 
   const additional_data = parsed["additional_data"] as
-    | AdditionalData
-    | undefined
+    AdditionalData | undefined
   const request_id = parsed["request_id"] as string | undefined
 
   return {

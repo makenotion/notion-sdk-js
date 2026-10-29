@@ -210,8 +210,7 @@ type NumberDatabasePropertyConfigResponse = {
  * externally synced data sources, can be another data source (`data_source_id`).
  */
 type ParentOfDataSourceResponse =
-  | DatabaseParentResponse
-  | DataSourceParentResponse
+  DatabaseParentResponse | DataSourceParentResponse
 
 export type PartialDataSourceObjectResponse = {
   // The data source object type name.
@@ -341,8 +340,7 @@ type GetDataSourcePathParameters = {
 export type GetDataSourceParameters = GetDataSourcePathParameters
 
 export type GetDataSourceResponse =
-  | PartialDataSourceObjectResponse
-  | DataSourceObjectResponse
+  PartialDataSourceObjectResponse | DataSourceObjectResponse
 
 /**
  * Retrieve a data source
@@ -393,8 +391,7 @@ type UpdateDataSourceBodyParameters = {
             select: {
               options?: Array<
                 { color?: SelectColor; description?: string | null } & (
-                  | { name: string; id?: string }
-                  | { id: string; name?: string }
+                  { name: string; id?: string } | { id: string; name?: string }
                 )
               >
             }
@@ -405,8 +402,7 @@ type UpdateDataSourceBodyParameters = {
             multi_select: {
               options?: Array<
                 { color?: SelectColor; description?: string | null } & (
-                  | { name: string; id?: string }
-                  | { id: string; name?: string }
+                  { name: string; id?: string } | { id: string; name?: string }
                 )
               >
             }
@@ -544,8 +540,7 @@ export type UpdateDataSourceParameters = UpdateDataSourcePathParameters &
   UpdateDataSourceBodyParameters
 
 export type UpdateDataSourceResponse =
-  | PartialDataSourceObjectResponse
-  | DataSourceObjectResponse
+  PartialDataSourceObjectResponse | DataSourceObjectResponse
 
 /**
  * Update a data source
@@ -658,8 +653,7 @@ type CreateDataSourceBodyParameters = {
 export type CreateDataSourceParameters = CreateDataSourceBodyParameters
 
 export type CreateDataSourceResponse =
-  | PartialDataSourceObjectResponse
-  | DataSourceObjectResponse
+  PartialDataSourceObjectResponse | DataSourceObjectResponse
 
 /**
  * Create a data source

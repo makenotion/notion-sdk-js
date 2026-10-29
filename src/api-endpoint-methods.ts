@@ -6,11 +6,9 @@ import { pick, type EndpointDefinition } from "./utils"
 
 type WithoutIndexSignatures<P> = P extends unknown
   ? {
-      [K in keyof P as string extends K
-        ? never
-        : number extends K
-          ? never
-          : K]: P[K]
+      [
+        K in keyof P as string extends K ? never : number extends K ? never : K
+      ]: P[K]
     }
   : never
 type WithAuth<P> = P & { auth?: string }

@@ -89,8 +89,7 @@ type GetDatabasePathParameters = {
 export type GetDatabaseParameters = GetDatabasePathParameters
 
 export type GetDatabaseResponse =
-  | PartialDatabaseObjectResponse
-  | DatabaseObjectResponse
+  PartialDatabaseObjectResponse | DatabaseObjectResponse
 
 /**
  * Retrieve a database
@@ -161,8 +160,7 @@ export type UpdateDatabaseParameters = UpdateDatabasePathParameters &
   UpdateDatabaseBodyParameters
 
 export type UpdateDatabaseResponse =
-  | PartialDatabaseObjectResponse
-  | DatabaseObjectResponse
+  PartialDatabaseObjectResponse | DatabaseObjectResponse
 
 /**
  * Update a database
@@ -230,8 +228,7 @@ type CreateDatabaseBodyParameters = {
 export type CreateDatabaseParameters = CreateDatabaseBodyParameters
 
 export type CreateDatabaseResponse =
-  | PartialDatabaseObjectResponse
-  | DatabaseObjectResponse
+  PartialDatabaseObjectResponse | DatabaseObjectResponse
 
 /**
  * Create a database

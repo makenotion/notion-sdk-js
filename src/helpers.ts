@@ -179,9 +179,7 @@ type DataSourceRow = QueryDataSourceResponse["results"][number]
  * merge the results.
  */
 export type FullDataSourceQueryFilter =
-  | PropertyFilter
-  | TimestampFilter
-  | { and: GroupFilterOperatorArray }
+  PropertyFilter | TimestampFilter | { and: GroupFilterOperatorArray }
 
 /**
  * Arguments for the full-query helpers. The same as `dataSources.query`, minus

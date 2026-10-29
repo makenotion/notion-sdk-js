@@ -1071,8 +1071,7 @@ export type UpdateBlockParameters = UpdateBlockPathParameters &
   UpdateBlockBodyParameters
 
 export type UpdateBlockResponse =
-  | PartialBlockObjectResponse
-  | BlockObjectResponse
+  PartialBlockObjectResponse | BlockObjectResponse
 
 /**
  * Update a block
@@ -1127,8 +1126,7 @@ type DeleteBlockPathParameters = {
 export type DeleteBlockParameters = DeleteBlockPathParameters
 
 export type DeleteBlockResponse =
-  | PartialBlockObjectResponse
-  | BlockObjectResponse
+  PartialBlockObjectResponse | BlockObjectResponse
 
 /**
  * Delete a block

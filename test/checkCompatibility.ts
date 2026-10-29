@@ -255,10 +255,10 @@ export function checkCompatibility(
       const newProperty = newProperties.get(oldProperty.escapedName)
       return Boolean(
         newProperty &&
-          retainsProperties(
-            checker.getTypeOfSymbol(newProperty),
-            checker.getTypeOfSymbol(oldProperty)
-          )
+        retainsProperties(
+          checker.getTypeOfSymbol(newProperty),
+          checker.getTypeOfSymbol(oldProperty)
+        )
       )
     })
   }

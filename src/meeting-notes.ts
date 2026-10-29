@@ -158,8 +158,7 @@ export type MeetingNotesPropertyFilter = {
 }[keyof MeetingNotesPropertyFilterByProperty]
 
 export type MeetingNotesFilterNode =
-  | MeetingNotesCombinatorFilter
-  | MeetingNotesPropertyFilter
+  MeetingNotesCombinatorFilter | MeetingNotesPropertyFilter
 
 export type MeetingNotesCombinatorFilter = {
   operator: "and" | "or"

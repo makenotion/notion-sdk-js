@@ -580,12 +580,7 @@ type FormViewConfigRequest = {
   // Permission level granted to the submitter on the created page after form submission.
   // Pass null to clear.
   submission_permissions?:
-    | "none"
-    | "comment_only"
-    | "reader"
-    | "read_and_write"
-    | "editor"
-    | null
+    "none" | "comment_only" | "reader" | "read_and_write" | "editor" | null
 }
 
 type FormulaCheckboxSubGroupByRequest = {
@@ -1118,12 +1113,10 @@ type NumberPropertyFilter =
   | ExistencePropertyFilter
 
 export type PageCoverRequest =
-  | FileUploadPageCoverRequest
-  | ExternalPageCoverRequest
+  FileUploadPageCoverRequest | ExternalPageCoverRequest
 
 export type PageCoverResponse =
-  | FilePageCoverResponse
-  | ExternalPageCoverResponse
+  FilePageCoverResponse | ExternalPageCoverResponse
 
 export type PageIconResponse =
   | EmojiPageIconResponse
@@ -1841,8 +1834,7 @@ type TimestampCreatedTimeFilter = {
 }
 
 export type TimestampFilter =
-  | TimestampCreatedTimeFilter
-  | TimestampLastEditedTimeFilter
+  TimestampCreatedTimeFilter | TimestampLastEditedTimeFilter
 
 type TimestampLastEditedTimeFilter = {
   last_edited_time: DatePropertyFilter
@@ -3039,8 +3031,7 @@ type PartialRollupPropertyResponse = {
 }
 
 type SimpleOrArrayPropertyValueResponse =
-  | SimplePropertyValueResponse
-  | ArrayBasedPropertyValueResponse
+  SimplePropertyValueResponse | ArrayBasedPropertyValueResponse
 
 export type ContentWithRichTextAndColorRequest = {
   rich_text: Array<RichTextItemRequest>
@@ -3334,8 +3325,7 @@ type UniqueIdPropertyValueResponse = {
 }
 
 export type VerificationPropertyValueResponse =
-  | VerificationPropertyUnverifiedResponse
-  | VerificationPropertyResponse
+  VerificationPropertyUnverifiedResponse | VerificationPropertyResponse
 
 type BooleanFormulaPropertyValueResponse = {
   // Always `boolean`

@@ -312,11 +312,7 @@ export type UpdateSessionStreamResponse =
        * One of: `requires_action`, `completed`, `failed`, `canceled`, `terminated`
        */
       status:
-        | "requires_action"
-        | "completed"
-        | "failed"
-        | "canceled"
-        | "terminated"
+        "requires_action" | "completed" | "failed" | "canceled" | "terminated"
     }
   | {
       /**
@@ -411,9 +407,7 @@ type QueryAgentsBodyParameters = {
                     property: "agent_type"
                     string: {
                       equals:
-                        | "notion_ai"
-                        | "custom_agent"
-                        | "autofill_custom_agent"
+                        "notion_ai" | "custom_agent" | "autofill_custom_agent"
                     }
                   }
                 | { property: "created_by"; people: { contains: string } }
@@ -445,9 +439,7 @@ type QueryAgentsBodyParameters = {
                     property: "agent_type"
                     string: {
                       equals:
-                        | "notion_ai"
-                        | "custom_agent"
-                        | "autofill_custom_agent"
+                        "notion_ai" | "custom_agent" | "autofill_custom_agent"
                     }
                   }
                 | { property: "created_by"; people: { contains: string } }
@@ -507,9 +499,7 @@ type QueryAgentsBodyParameters = {
                     property: "agent_type"
                     string: {
                       equals:
-                        | "notion_ai"
-                        | "custom_agent"
-                        | "autofill_custom_agent"
+                        "notion_ai" | "custom_agent" | "autofill_custom_agent"
                     }
                   }
                 | { property: "created_by"; people: { contains: string } }
@@ -541,9 +531,7 @@ type QueryAgentsBodyParameters = {
                     property: "agent_type"
                     string: {
                       equals:
-                        | "notion_ai"
-                        | "custom_agent"
-                        | "autofill_custom_agent"
+                        "notion_ai" | "custom_agent" | "autofill_custom_agent"
                     }
                   }
                 | { property: "created_by"; people: { contains: string } }
@@ -762,9 +750,7 @@ export type QueryAgentsResponse = {
               // The tools the agent may call, null when all tools are enabled (including any the
               // server adds later), or "hidden" when the caller lacks edit access to the agent.
               enabled_tools:
-                | Array<{ name: string; title: string | null }>
-                | "hidden"
-                | null
+                Array<{ name: string; title: string | null }> | "hidden" | null
               // Whether read / write tool calls run without a confirmation step.
               run_tools_automatically: {
                 // Whether read tool calls run without a confirmation step.
@@ -792,9 +778,7 @@ export type QueryAgentsResponse = {
               // The tools the agent may call, null when all tools are enabled (including any the
               // server adds later), or "hidden" when the caller lacks edit access to the agent.
               enabled_tools:
-                | Array<{ name: string; title: string | null }>
-                | "hidden"
-                | null
+                Array<{ name: string; title: string | null }> | "hidden" | null
               // Whether read / write tool calls run without a confirmation step.
               run_tools_automatically: {
                 // Whether read tool calls run without a confirmation step.
@@ -1120,9 +1104,7 @@ export type QueryAgentsResponse = {
               // The tools the agent may call, null when all tools are enabled (including any the
               // server adds later), or "hidden" when the caller lacks edit access to the agent.
               enabled_tools:
-                | Array<{ name: string; title: string | null }>
-                | "hidden"
-                | null
+                Array<{ name: string; title: string | null }> | "hidden" | null
               // Whether read / write tool calls run without a confirmation step.
               run_tools_automatically: {
                 // Whether read tool calls run without a confirmation step.
@@ -1150,9 +1132,7 @@ export type QueryAgentsResponse = {
               // The tools the agent may call, null when all tools are enabled (including any the
               // server adds later), or "hidden" when the caller lacks edit access to the agent.
               enabled_tools:
-                | Array<{ name: string; title: string | null }>
-                | "hidden"
-                | null
+                Array<{ name: string; title: string | null }> | "hidden" | null
               // Whether read / write tool calls run without a confirmation step.
               run_tools_automatically: {
                 // Whether read tool calls run without a confirmation step.
@@ -1317,10 +1297,7 @@ export type GetAgentResponse = {
   // standalone agent you chat with; "autofill_custom_agent" fills a database property;
   // "external" runs through an external provider.
   agent_type:
-    | "notion_ai"
-    | "custom_agent"
-    | "autofill_custom_agent"
-    | "external"
+    "notion_ai" | "custom_agent" | "autofill_custom_agent" | "external"
   name: string
   description: string | null
   instructions_page_id: IdResponse | null
@@ -1481,9 +1458,7 @@ export type GetAgentResponse = {
         // The tools the agent may call, null when all tools are enabled (including any the
         // server adds later), or "hidden" when the caller lacks edit access to the agent.
         enabled_tools:
-          | Array<{ name: string; title: string | null }>
-          | "hidden"
-          | null
+          Array<{ name: string; title: string | null }> | "hidden" | null
         // Whether read / write tool calls run without a confirmation step.
         run_tools_automatically: {
           // Whether read tool calls run without a confirmation step.
@@ -1511,9 +1486,7 @@ export type GetAgentResponse = {
         // The tools the agent may call, null when all tools are enabled (including any the
         // server adds later), or "hidden" when the caller lacks edit access to the agent.
         enabled_tools:
-          | Array<{ name: string; title: string | null }>
-          | "hidden"
-          | null
+          Array<{ name: string; title: string | null }> | "hidden" | null
         // Whether read / write tool calls run without a confirmation step.
         run_tools_automatically: {
           // Whether read tool calls run without a confirmation step.
@@ -1915,9 +1888,7 @@ type AgentBatchBodyParameters = {
         // The agent ID (a UUID), or `notion_ai` for the personal agent. Endpoint-specific
         // restrictions still apply.
         agent_id:
-          | IdRequest
-          | "notion_ai"
-          | "33333333-3333-3333-3333-333333333333"
+          IdRequest | "notion_ai" | "33333333-3333-3333-3333-333333333333"
         // The status to apply to this agent.
         fields: {
           // "active" to re-enable an agent disabled through this API, or "disabled" to turn it
@@ -1932,9 +1903,7 @@ type AgentBatchBodyParameters = {
         // The agent ID (a UUID), or `notion_ai` for the personal agent. Endpoint-specific
         // restrictions still apply.
         agent_id:
-          | IdRequest
-          | "notion_ai"
-          | "33333333-3333-3333-3333-333333333333"
+          IdRequest | "notion_ai" | "33333333-3333-3333-3333-333333333333"
         // The credit limit to apply to this agent.
         fields: {
           // The per-agent credit limit as a non-negative integer, or null to clear the limit.
@@ -1947,9 +1916,7 @@ type AgentBatchBodyParameters = {
         // The agent ID (a UUID), or `notion_ai` for the personal agent. Endpoint-specific
         // restrictions still apply.
         agent_id:
-          | IdRequest
-          | "notion_ai"
-          | "33333333-3333-3333-3333-333333333333"
+          IdRequest | "notion_ai" | "33333333-3333-3333-3333-333333333333"
       }
   >
 }
@@ -1982,9 +1949,7 @@ type UpdateSessionBodyParameters =
   | {
       message: string
       agent_id?:
-        | IdRequest
-        | "notion_ai"
-        | "33333333-3333-3333-3333-333333333333"
+        IdRequest | "notion_ai" | "33333333-3333-3333-3333-333333333333"
       session_id?: IdRequest
       attachments?: Array<{
         file_upload: { id: string }
@@ -3044,11 +3009,7 @@ export type QuerySessionEventsResponse = {
         type: "session.status"
         // One of: `requires_action`, `completed`, `failed`, `canceled`, `terminated`
         status:
-          | "requires_action"
-          | "completed"
-          | "failed"
-          | "canceled"
-          | "terminated"
+          "requires_action" | "completed" | "failed" | "canceled" | "terminated"
         required_actions?: Array<{
           action_id: string
           title: string
@@ -3437,10 +3398,7 @@ export type ListAgentsResponse = {
     // Agent kind: the Notion AI personal agent, a custom agent, a database autofill custom
     // agent, or an external agent.
     agent_type:
-      | "notion_ai"
-      | "custom_agent"
-      | "autofill_custom_agent"
-      | "external"
+      "notion_ai" | "custom_agent" | "autofill_custom_agent" | "external"
     name: string
     description: string | null
     instructions_page_id: IdResponse | null
@@ -3617,9 +3575,7 @@ export type ListAgentsResponse = {
           // The tools the agent may call, null when all tools are enabled (including any the
           // server adds later), or "hidden" when the caller lacks edit access to the agent.
           enabled_tools:
-            | Array<{ name: string; title: string | null }>
-            | "hidden"
-            | null
+            Array<{ name: string; title: string | null }> | "hidden" | null
           // Whether read / write tool calls run without a confirmation step.
           run_tools_automatically: {
             // Whether read tool calls run without a confirmation step.
@@ -3647,9 +3603,7 @@ export type ListAgentsResponse = {
           // The tools the agent may call, null when all tools are enabled (including any the
           // server adds later), or "hidden" when the caller lacks edit access to the agent.
           enabled_tools:
-            | Array<{ name: string; title: string | null }>
-            | "hidden"
-            | null
+            Array<{ name: string; title: string | null }> | "hidden" | null
           // Whether read / write tool calls run without a confirmation step.
           run_tools_automatically: {
             // Whether read tool calls run without a confirmation step.
