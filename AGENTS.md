@@ -1,6 +1,6 @@
 # Repo guidance
 
-This is the `@notionhq/client` SDK. It supports Node.js 22 and later. Builds use TypeScript 7.0.2; lint, tests, and the compatibility check use the TypeScript 6.0.2 compiler API. This file is the shared reference for coding agents.
+This is the `@notionhq/client` SDK. It supports Node.js 22 and later. Builds, lint, tests, and the compatibility check use TypeScript 6.0.3. This file is the shared reference for coding agents.
 
 ## Source files
 
