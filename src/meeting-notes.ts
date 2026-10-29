@@ -11,47 +11,35 @@ export const meetingNotesFilterableProperties = [
   "attendees",
 ] as const
 
-const meetingNotesTextFilterOperators = [
-  "string_is",
-  "string_is_not",
-  "string_contains",
-  "string_does_not_contain",
-  "string_starts_with",
-  "string_ends_with",
-  "is_empty",
-  "is_not_empty",
-] as const
-
-const meetingNotesDateFilterOperators = [
-  "date_is",
-  "date_is_before",
-  "date_is_after",
-  "date_is_on_or_before",
-  "date_is_on_or_after",
-  "date_is_within",
-  "date_is_relative_to",
-  "is_empty",
-  "is_not_empty",
-] as const
-
-const meetingNotesPersonFilterOperators = [
-  "person_contains",
-  "person_does_not_contain",
-  "is_empty",
-  "is_not_empty",
-] as const
-
 export type MeetingNotesPropertyName =
   (typeof meetingNotesFilterableProperties)[number]
 
 type MeetingNotesTextFilterOperator =
-  (typeof meetingNotesTextFilterOperators)[number]
+  | "string_is"
+  | "string_is_not"
+  | "string_contains"
+  | "string_does_not_contain"
+  | "string_starts_with"
+  | "string_ends_with"
+  | "is_empty"
+  | "is_not_empty"
 
 type MeetingNotesDateFilterOperator =
-  (typeof meetingNotesDateFilterOperators)[number]
+  | "date_is"
+  | "date_is_before"
+  | "date_is_after"
+  | "date_is_on_or_before"
+  | "date_is_on_or_after"
+  | "date_is_within"
+  | "date_is_relative_to"
+  | "is_empty"
+  | "is_not_empty"
 
 type MeetingNotesPersonFilterOperator =
-  (typeof meetingNotesPersonFilterOperators)[number]
+  | "person_contains"
+  | "person_does_not_contain"
+  | "is_empty"
+  | "is_not_empty"
 
 type MeetingNotesNoValueFilter<TOperator extends string> = {
   operator: TOperator

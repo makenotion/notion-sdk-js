@@ -82,7 +82,7 @@ async function computeHmacSha256Hex(
   key: string,
   body: string | Uint8Array
 ): Promise<string> {
-  const subtle = await getSubtle()
+  const sign = await getHmacSigner()
 
   const encoder = new TextEncoder()
   const keyBytes = encoder.encode(key)
@@ -92,42 +92,54 @@ async function computeHmacSha256Hex(
   const bodyBytes =
     typeof body === "string" ? encoder.encode(body) : Uint8Array.from(body)
 
-  const cryptoKey = await subtle.importKey(
-    "raw",
-    keyBytes,
-    { name: "HMAC", hash: "SHA-256" },
-    false,
-    ["sign"]
-  )
-  const signatureBuffer = await subtle.sign("HMAC", cryptoKey, bodyBytes)
+  const signatureBuffer = await sign(keyBytes, bodyBytes)
   return bytesToHex(new Uint8Array(signatureBuffer))
 }
 
-let cachedSubtle: SubtleCrypto | undefined
+type HmacSigner = (
+  key: Uint8Array<ArrayBuffer>,
+  body: Uint8Array<ArrayBuffer>
+) => Promise<ArrayBuffer>
 
-async function getSubtle(): Promise<SubtleCrypto> {
-  if (cachedSubtle) {
-    return cachedSubtle
+type HmacCryptoProvider<TKey> = {
+  importKey(
+    format: "raw",
+    keyData: Uint8Array<ArrayBuffer>,
+    algorithm: { name: "HMAC"; hash: "SHA-256" },
+    extractable: false,
+    keyUsages: ["sign"]
+  ): Promise<TKey>
+  sign(
+    algorithm: "HMAC",
+    key: TKey,
+    data: Uint8Array<ArrayBuffer>
+  ): Promise<ArrayBuffer>
+}
+
+let cachedHmacSigner: HmacSigner | undefined
+
+async function getHmacSigner(): Promise<HmacSigner> {
+  if (cachedHmacSigner) {
+    return cachedHmacSigner
   }
 
   const fromGlobal = (globalThis as { crypto?: { subtle?: SubtleCrypto } })
     .crypto?.subtle
   if (fromGlobal) {
-    cachedSubtle = fromGlobal
-    return cachedSubtle
+    const sign = createHmacSigner(fromGlobal)
+    cachedHmacSigner = sign
+    return sign
   }
 
   // Load Node's fallback only when needed so browser callers can use the
   // global API without loading a Node module.
   try {
-    /* eslint-disable @typescript-eslint/no-var-requires */
-    const nodeCrypto = require("crypto") as {
-      webcrypto?: { subtle?: SubtleCrypto }
-    }
-    /* eslint-enable @typescript-eslint/no-var-requires */
-    if (nodeCrypto.webcrypto?.subtle) {
-      cachedSubtle = nodeCrypto.webcrypto.subtle
-      return cachedSubtle
+    const nodeCrypto = await import("crypto")
+    const subtle = nodeCrypto.webcrypto?.subtle
+    if (subtle) {
+      const sign = createHmacSigner(subtle)
+      cachedHmacSigner = sign
+      return sign
     }
   } catch {
     // node:crypto unavailable (e.g. a browser bundle that stubbed it).
@@ -139,6 +151,19 @@ async function getSubtle(): Promise<SubtleCrypto> {
       "(globalThis.crypto.subtle or node:crypto.webcrypto). Upgrade to " +
       "a runtime that provides one of them."
   )
+}
+
+function createHmacSigner<TKey>(subtle: HmacCryptoProvider<TKey>): HmacSigner {
+  return async (key, body) => {
+    const cryptoKey = await subtle.importKey(
+      "raw",
+      key,
+      { name: "HMAC", hash: "SHA-256" },
+      false,
+      ["sign"]
+    )
+    return subtle.sign("HMAC", cryptoKey, body)
+  }
 }
 
 function bytesToHex(bytes: Uint8Array): string {

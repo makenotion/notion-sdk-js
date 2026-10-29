@@ -204,7 +204,7 @@ describe("verifyWebhookSignature: fallback to node:crypto", () => {
   // Exercises the path used on Node.js 18.0–18.18, where `globalThis.crypto`
   // is not enabled by default. We can't downgrade the test runner, so we
   // simulate the missing global and re-import the module fresh so its
-  // `cachedSubtle` is empty.
+  // cached signer is empty.
   const originalGlobalCrypto = (globalThis as { crypto?: unknown }).crypto
 
   afterEach(() => {
@@ -217,9 +217,8 @@ describe("verifyWebhookSignature: fallback to node:crypto", () => {
     delete (globalThis as { crypto?: unknown }).crypto
 
     let verify: typeof verifyWebhookSignature | undefined
-    jest.isolateModules(() => {
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      verify = require("../src/webhooks").verifyWebhookSignature
+    await jest.isolateModulesAsync(async () => {
+      verify = (await import("../src/webhooks")).verifyWebhookSignature
     })
     if (!verify) {
       throw new Error("module did not load")

@@ -1,6 +1,6 @@
 # Repo guidance
 
-This is the `@notionhq/client` SDK. It supports Node.js 18 and later and uses TypeScript 5.9.2. This file is the shared reference for coding agents.
+This is the `@notionhq/client` SDK. It supports Node.js 18 and later and uses TypeScript 5.9.3. This file is the shared reference for coding agents.
 
 ## Source files
 
