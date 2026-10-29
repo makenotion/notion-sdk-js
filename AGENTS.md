@@ -38,7 +38,7 @@ Run commands from the repo root. [Contributing](CONTRIBUTING.md) covers the work
 | `npx jest test/compatibility.test.ts --runInBand`        | Run only the compatibility tests.                                                   |
 | `npm run check:compatibility -- <baseline>/src/index.ts` | Compare package exports and types with a separate checkout. Requires a build first. |
 
-CI runs build, lint, and tests on Node.js 18, 19, 20, and 22. Pull requests also run the compatibility check on Node.js 22 against the base commit.
+Use Node.js 24 for development. CI runs build, lint, and tests on Node.js 18, 20, 22, 24, and 26. Pull requests also run the compatibility check on Node.js 22 against the base commit.
 
 ## Compatibility rules
 
