@@ -37,6 +37,9 @@ jobs:
           node-version: "22.23.4"
           registry-url: "https://registry.npmjs.org"
 
+      - name: Use npm with release-age support
+        run: npm install -g npm@11.11.1
+
       - name: Configure Git
         run: |
           git config --global user.name "github-actions[bot]"

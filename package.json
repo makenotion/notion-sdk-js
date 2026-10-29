@@ -5,6 +5,12 @@
   "engines": {
     "node": ">=18"
   },
+  "devEngines": {
+    "packageManager": {
+      "name": "npm",
+      "version": ">=11.10.0"
+    }
+  },
   "homepage": "https://developers.notion.com/docs/getting-started",
   "bugs": {
     "url": "https://github.com/makenotion/notion-sdk-js/issues"

@@ -1,6 +1,6 @@
 # Check an SDK change
 
-Use this guide to test a change before opening a pull request. You need Node.js 18 or later and Git.
+Use this guide to test a change before opening a pull request. You need Node.js 24, npm 11.10 or later, and Git.
 
 ## Install and test
 
@@ -9,6 +9,8 @@ From the repo root, install the locked dependencies:
 ```sh
 npm ci
 ```
+
+Dependency updates wait until a release is at least 24 hours old.
 
 Make your change and add tests for it. If it needs changes to generated endpoint files, ask a maintainer. The schema and generator are internal to Notion. See [the source file rules](AGENTS.md#source-files).
 
