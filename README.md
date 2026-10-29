@@ -520,7 +520,7 @@ For sample code and example projects, see [notion-cookbook](https://github.com/m
 
 This package supports the following minimum versions:
 
-- Runtime: `node >= 18`
+- Runtime: `node >= 22`
 - Type definitions (optional): `typescript >= 5.9`
 
 Older versions are not supported. SDK releases also have minimum recommended [Notion API versions](https://developers.notion.com/reference/versioning):

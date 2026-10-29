@@ -3,7 +3,7 @@
   "version": "5.29.0",
   "description": "A simple and easy to use client for the Notion API",
   "engines": {
-    "node": ">=18"
+    "node": ">=22"
   },
   "homepage": "https://developers.notion.com/docs/getting-started",
   "bugs": {

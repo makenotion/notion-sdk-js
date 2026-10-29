@@ -1,6 +1,6 @@
 # Check an SDK change
 
-Use this guide to test a change before opening a pull request. You need Node.js 18 or later and Git.
+Use this guide to test a change before opening a pull request. You need Node.js 24 and Git.
 
 ## Install and test
 
