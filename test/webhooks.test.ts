@@ -1,5 +1,6 @@
 import { createHmac } from "crypto"
 import { verifyWebhookSignature, signWebhookPayload } from "../src/webhooks"
+import type * as WebhookModule from "../src/webhooks.js"
 
 const VERIFICATION_TOKEN = "secret_abc123_verification_token"
 const ALTERNATE_TOKEN = "secret_different_token_xyz"
@@ -217,8 +218,11 @@ describe("verifyWebhookSignature: fallback to node:crypto", () => {
     delete (globalThis as { crypto?: unknown }).crypto
 
     let verify: typeof verifyWebhookSignature | undefined
-    await jest.isolateModulesAsync(async () => {
-      verify = (await import("../src/webhooks")).verifyWebhookSignature
+    jest.isolateModules(() => {
+      verify =
+        jest.requireActual<typeof WebhookModule>(
+          "../src/webhooks.js"
+        ).verifyWebhookSignature
     })
     if (!verify) {
       throw new Error("module did not load")

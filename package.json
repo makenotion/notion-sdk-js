@@ -27,7 +27,7 @@
     "build": "tsc",
     "prettier": "prettier --write .",
     "lint": "prettier --check . && eslint . --ext .ts,.js && cspell '**/*'",
-    "test": "jest ./test",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js ./test",
     "check:compatibility": "node build/test/checkCompatibility.js",
     "check-links": "git ls-files | grep md$ | xargs -n 1 markdown-link-check",
     "prebuild": "npm run clean",
@@ -45,17 +45,20 @@
     "build/src/**"
   ],
   "devDependencies": {
-    "@types/jest": "29.5.14",
+    "@eslint/js": "10.0.1",
+    "@typescript/native": "npm:typescript@7.0.2",
+    "@types/jest": "30.0.0",
     "@typescript-eslint/eslint-plugin": "8.72.1",
     "@typescript-eslint/parser": "8.72.1",
     "cspell": "8.17.1",
-    "eslint": "8.57.1",
+    "eslint": "10.13.0",
+    "globals": "17.13.0",
     "husky": "^9.1.7",
-    "jest": "29.7.0",
-    "lint-staged": "^16.4.0",
+    "jest": "30.5.2",
+    "lint-staged": "^17.6.0",
     "markdown-link-check": "3.13.7",
     "prettier": "3.3.3",
     "ts-jest": "29.4.15",
-    "typescript": "5.9.3"
+    "typescript": "npm:@typescript/typescript6@6.0.2"
   }
 }

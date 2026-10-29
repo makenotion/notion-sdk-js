@@ -16,8 +16,10 @@ export function checkCompatibility(
     outDir: "/__notion_sdk_contracts__",
     skipLibCheck: true,
     target: ts.ScriptTarget.ES2019,
-    module: ts.ModuleKind.CommonJS,
+    module: ts.ModuleKind.Node16,
+    moduleResolution: ts.ModuleResolutionKind.Node16,
     resolveJsonModule: true,
+    types: ["node"],
     typeRoots: [resolve("node_modules/@types")],
   })
   const failures = diagnosticMessages(sourceProgram)
