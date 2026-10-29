@@ -37,7 +37,7 @@ jobs:
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
         with:
           node-version: ${{ matrix.node-version }}
-          package-manager-cache: false
+          cache: npm
       - name: Use npm with release-age support
         run: npm install -g npm@11.21.1
       - run: npm ci
