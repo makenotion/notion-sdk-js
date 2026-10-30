@@ -44,6 +44,7 @@ jobs:
         run: npm install -g npm@11.21.1
       - run: npm ci
       - run: npm run build
+      - run: npm run check:package
       - run: npm run lint
       - run: npm test
       - name: Check out the previous SDK contract
