@@ -22,6 +22,18 @@ npm run lint
 npm test
 ```
 
+## Check documentation links
+
+Install [Lychee](https://github.com/lycheeverse/lychee#installation). On macOS, run `brew install lychee`.
+
+From the repository root, run:
+
+```sh
+npm run check-links
+```
+
+You need Lychee only for this command. The check covers links and heading anchors in tracked Markdown files. It skips email verification.
+
 ## Check SDK compatibility
 
 Check that the exports, method inputs, and response types available from `@notionhq/client` still work.
