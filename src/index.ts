@@ -288,14 +288,14 @@ export type QueryDataSourceSort = NonNullable<
 >[number]
 
 export { default as Client } from "./Client"
-export { LogLevel, Logger } from "./logging"
+export { LogLevel, type Logger } from "./logging"
 export {
   // Error codes
-  NotionErrorCode,
+  type NotionErrorCode,
   APIErrorCode,
   ClientErrorCode,
   // Error types
-  NotionClientError,
+  type NotionClientError,
   APIResponseError,
   UnknownHTTPResponseError,
   RequestTimeoutError,

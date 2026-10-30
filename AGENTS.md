@@ -1,6 +1,6 @@
 # Repo guidance
 
-This is the `@notionhq/client` SDK. It supports Node.js 22 and later and uses TypeScript 5.9.2. This file is the shared reference for coding agents.
+This is the `@notionhq/client` SDK. It supports Node.js 22 and later. Builds, lint, tests, and the compatibility check use TypeScript 6.0.3. This file is the shared reference for coding agents.
 
 ## Source files
 
@@ -38,7 +38,7 @@ Run commands from the repo root. [Contributing](CONTRIBUTING.md) covers the work
 | `npx jest test/compatibility.test.ts --runInBand`        | Run only the compatibility tests.                                                   |
 | `npm run check:compatibility -- <baseline>/src/index.ts` | Compare package exports and types with a separate checkout. Requires a build first. |
 
-Use Node.js 24 for development. CI tests Node.js 22, 24, and 26.
+Use Node.js 24 and npm 11.10 or later for development. CI tests Node.js 22, 24, and 26. Dependency updates wait until a release is at least 24 hours old.
 
 ## Compatibility rules
 

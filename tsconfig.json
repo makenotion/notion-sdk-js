@@ -1,12 +1,12 @@
 {
   "compilerOptions": {
     /* Visit https://aka.ms/tsconfig.json to read more about this file */
-    // Recommended Node options have been incorporated from https://github.com/tsconfig/bases/blob/master/bases/node14.json
-
-    // Node LTS Fermium (14.x) has mostly complete support for ES2019 (as reported by https://node.green/)
     "target": "ES2019",
-    "module": "commonjs",
-    // "esModuleInterop": true,
+    "module": "Node16",
+    "moduleResolution": "Node16",
+    "types": ["node", "jest"],
+    "rootDir": ".",
+    "isolatedModules": true,
 
     // Overrides default in order to remove "dom" because this package shouldn't assume the presence of browser APIs
     "lib": ["ES2019"],

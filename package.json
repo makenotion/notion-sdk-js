@@ -5,6 +5,12 @@
   "engines": {
     "node": ">=22"
   },
+  "devEngines": {
+    "packageManager": {
+      "name": "npm",
+      "version": ">=11.10.0"
+    }
+  },
   "homepage": "https://developers.notion.com/docs/getting-started",
   "bugs": {
     "url": "https://github.com/makenotion/notion-sdk-js/issues"
@@ -45,17 +51,19 @@
     "build/src/**"
   ],
   "devDependencies": {
-    "@types/jest": "29.5.14",
-    "@typescript-eslint/eslint-plugin": "7.18.0",
-    "@typescript-eslint/parser": "7.18.0",
+    "@eslint/js": "10.0.1",
+    "@types/jest": "30.0.0",
+    "@typescript-eslint/eslint-plugin": "8.72.1",
+    "@typescript-eslint/parser": "8.72.1",
     "cspell": "10.4.0",
-    "eslint": "8.57.1",
-    "husky": "^9.1.7",
-    "jest": "29.7.0",
-    "lint-staged": "^16.2.6",
+    "eslint": "10.13.0",
+    "globals": "17.13.0",
+    "husky": "9.1.7",
+    "jest": "30.5.2",
+    "lint-staged": "17.6.0",
     "markdown-link-check": "3.15.0",
     "prettier": "3.9.10",
-    "ts-jest": "29.2.5",
-    "typescript": "5.9.2"
+    "ts-jest": "29.4.15",
+    "typescript": "6.0.3"
   }
 }

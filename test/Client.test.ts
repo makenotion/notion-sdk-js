@@ -1,4 +1,4 @@
-import assert = require("assert")
+import { strict as assert } from "assert"
 import {
   APIResponseError,
   BrowserTokenNotAllowedError,
@@ -385,7 +385,7 @@ describe("Notion SDK Client", () => {
     function getFirstRequestBody() {
       const firstCall = mockFetch.mock.calls[0]
       const firstCallParams = firstCall?.[1]
-      return JSON.parse(String(firstCallParams?.body) ?? "{}")
+      return JSON.parse(String(firstCallParams?.body))
     }
 
     it("calls revoke API with basic auth", async () => {
@@ -463,10 +463,11 @@ describe("Notion SDK Client", () => {
       const firstCall = mockFetch.mock.calls[0]
       const firstCallParams = firstCall?.[1]
 
-      expect(firstCallParams?.headers).not.toContain("content-type")
-      expect(firstCallParams?.headers).not.toContain("Content-Type")
+      const headers = new Headers(firstCallParams?.headers)
+      expect(headers.has("content-type")).toBe(false)
 
-      const body = firstCallParams?.body as FormData
+      const body = firstCallParams?.body
+      assert(body instanceof FormData)
       const formData = Object.fromEntries(body.entries())
 
       expect(formData["part_number"]).toEqual("2")
@@ -695,9 +696,7 @@ describe("Notion SDK Client", () => {
         expect.objectContaining({ method: "PATCH" })
       )
 
-      const body = JSON.parse(
-        String(mockFetch.mock.calls[0]?.[1]?.body) ?? "{}"
-      )
+      const body = JSON.parse(String(mockFetch.mock.calls[0]?.[1]?.body))
       expect(body).toMatchObject({
         type: "insert_content",
         insert_content: {
@@ -719,9 +718,7 @@ describe("Notion SDK Client", () => {
         },
       })
 
-      const body = JSON.parse(
-        String(mockFetch.mock.calls[0]?.[1]?.body) ?? "{}"
-      )
+      const body = JSON.parse(String(mockFetch.mock.calls[0]?.[1]?.body))
       expect(body).toMatchObject({
         type: "replace_content_range",
         replace_content_range: {
@@ -1852,7 +1849,7 @@ describe("Notion SDK Client", () => {
     function getFirstRequestBody() {
       const firstCall = mockFetch.mock.calls[0]
       const firstCallParams = firstCall?.[1]
-      return JSON.parse(String(firstCallParams?.body) ?? "{}")
+      return JSON.parse(String(firstCallParams?.body))
     }
 
     it("handles empty query parameters", async () => {
