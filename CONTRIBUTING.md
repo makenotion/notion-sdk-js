@@ -49,3 +49,5 @@ rmdir "$compat_dir"
 ## Open the pull request
 
 Describe the change and record the checks you ran. Wait for CI to pass on the final commit before merging.
+
+To release a new version, follow [Publish a release](PUBLISHING.md).
