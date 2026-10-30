@@ -60,3 +60,23 @@ jobs:
         # step still reports it, and Increment Version blocks a patch release.
         continue-on-error: ${{ contains(github.event.pull_request.labels.*.name, 'contract-change') }}
         run: npm run check:compatibility -- .compat-baseline/src/index.ts
+
+  check-links:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions: {}
+
+    steps:
+      # v7.0.1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.event.inputs.ref || github.ref }}
+          persist-credentials: false
+      - name: List tracked Markdown files
+        run: git ls-files '*.md' > "$RUNNER_TEMP/lychee-inputs.txt"
+      - name: Check local documentation links
+        # v2.9.0
+        uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8
+        with:
+          lycheeVersion: v0.24.2
+          args: --offline --no-progress --include-fragments=anchor-only --files-from ${{ runner.temp }}/lychee-inputs.txt

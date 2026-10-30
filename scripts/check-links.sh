@@ -7,4 +7,4 @@ if ! command -v lychee > /dev/null 2>&1; then
   exit 1
 fi
 
-git ls-files -z '*.md' | xargs -0 lychee --no-progress --include-fragments=anchor-only
+git ls-files -z '*.md' | xargs -0 lychee --no-progress --include-fragments=anchor-only "$@"

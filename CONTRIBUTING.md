@@ -60,6 +60,12 @@ Once installed, run the check from the repository root:
 npm run check-links
 ```
 
+CI uses offline mode to check local files and heading anchors without contacting external websites. To run that mode locally:
+
+```sh
+npm run check-links -- --offline
+```
+
 ## Open the pull request
 
 Describe the change and record the checks you ran. Wait for CI to pass on the final commit before merging.
