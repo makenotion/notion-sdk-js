@@ -17,7 +17,7 @@ jobs:
     container:
       # v1.183.0
       image: returntocorp/semgrep@sha256:2e45517a85e13a9cca14a2a00df6bb48affd66b8ebfae1b0991cd57578362fb0
-    timeout-minutes: 15
+    timeout-minutes: 10
     steps:
       # v7.0.1
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
