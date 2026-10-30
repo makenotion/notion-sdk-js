@@ -59,8 +59,7 @@ export type CommentObjectResponse = {
 }
 
 type CommentParentResponse =
-  | PageIdCommentParentResponse
-  | BlockIdCommentParentResponse
+  PageIdCommentParentResponse | BlockIdCommentParentResponse
 
 type PageIdCommentParentResponse = {
   // Always `page_id`
@@ -171,8 +170,7 @@ type CreateCommentBodyParameters = {
 export type CreateCommentParameters = CreateCommentBodyParameters
 
 export type CreateCommentResponse =
-  | PartialCommentObjectResponse
-  | CommentObjectResponse
+  PartialCommentObjectResponse | CommentObjectResponse
 
 /**
  * Create a comment
@@ -238,8 +236,7 @@ type GetCommentPathParameters = {
 export type GetCommentParameters = GetCommentPathParameters
 
 export type GetCommentResponse =
-  | PartialCommentObjectResponse
-  | CommentObjectResponse
+  PartialCommentObjectResponse | CommentObjectResponse
 
 /**
  * Retrieve a comment
@@ -282,8 +279,7 @@ export type UpdateCommentParameters = UpdateCommentPathParameters &
   UpdateCommentBodyParameters
 
 export type UpdateCommentResponse =
-  | PartialCommentObjectResponse
-  | CommentObjectResponse
+  PartialCommentObjectResponse | CommentObjectResponse
 
 /**
  * Update a comment
@@ -305,8 +301,7 @@ type DeleteCommentPathParameters = {
 export type DeleteCommentParameters = DeleteCommentPathParameters
 
 export type DeleteCommentResponse =
-  | PartialCommentObjectResponse
-  | CommentObjectResponse
+  PartialCommentObjectResponse | CommentObjectResponse
 
 /**
  * Delete a comment

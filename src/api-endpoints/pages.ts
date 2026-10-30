@@ -424,8 +424,7 @@ type CreatePageBodyParameters = {
       }
     | {
         verification:
-          | { state: "verified"; date?: DateRequest }
-          | { state: "unverified" }
+          { state: "verified"; date?: DateRequest } | { state: "unverified" }
         type?: "verification"
       }
   >
@@ -614,8 +613,7 @@ type UpdatePageBodyParameters = {
       }
     | {
         verification:
-          | { state: "verified"; date?: DateRequest }
-          | { state: "unverified" }
+          { state: "verified"; date?: DateRequest } | { state: "unverified" }
         type?: "verification"
       }
   >
@@ -727,8 +725,7 @@ export type GetPagePropertyParameters = GetPagePropertyPathParameters &
   GetPagePropertyQueryParameters
 
 export type GetPagePropertyResponse =
-  | PropertyItemObjectResponse
-  | PropertyItemListResponse
+  PropertyItemObjectResponse | PropertyItemListResponse
 
 /**
  * Retrieve a page property item

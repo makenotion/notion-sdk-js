@@ -121,11 +121,7 @@ type ChartViewConfigResponse = {
   value?: ChartAggregationResponse
   // Sort order for chart data.
   sort?:
-    | "manual"
-    | "x_ascending"
-    | "x_descending"
-    | "y_ascending"
-    | "y_descending"
+    "manual" | "x_ascending" | "x_descending" | "y_ascending" | "y_descending"
   // Color theme for the chart.
   color_theme?:
     | "gray"
@@ -311,11 +307,7 @@ type FormViewConfigResponse = {
   anonymous_submissions?: boolean
   // Permission level granted to the submitter on the created page after form submission.
   submission_permissions?:
-    | "none"
-    | "comment_only"
-    | "reader"
-    | "read_and_write"
-    | "editor"
+    "none" | "comment_only" | "reader" | "read_and_write" | "editor"
 }
 
 type FormulaCheckboxSubGroupByResponse = {
@@ -853,8 +845,7 @@ type CreateViewBodyParameters = CreateViewRequest
 export type CreateViewParameters = CreateViewBodyParameters
 
 export type CreateViewResponse =
-  | PartialDataSourceViewObjectResponse
-  | DataSourceViewObjectResponse
+  PartialDataSourceViewObjectResponse | DataSourceViewObjectResponse
 
 /**
  * Create a view
@@ -876,8 +867,7 @@ type GetViewPathParameters = {
 export type GetViewParameters = GetViewPathParameters
 
 export type GetViewResponse =
-  | PartialDataSourceViewObjectResponse
-  | DataSourceViewObjectResponse
+  PartialDataSourceViewObjectResponse | DataSourceViewObjectResponse
 
 /**
  * Retrieve a view
@@ -902,8 +892,7 @@ export type UpdateViewParameters = UpdateViewPathParameters &
   UpdateViewBodyParameters
 
 export type UpdateViewResponse =
-  | PartialDataSourceViewObjectResponse
-  | DataSourceViewObjectResponse
+  PartialDataSourceViewObjectResponse | DataSourceViewObjectResponse
 
 /**
  * Update a view

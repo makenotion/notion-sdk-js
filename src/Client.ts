@@ -1295,7 +1295,6 @@ function parseSessionStreamEvent(frame: SseFrame): UpdateSessionStreamResponse {
  */
 type Method = "get" | "post" | "patch" | "delete"
 type QueryParams =
-  | Record<string, string | number | boolean | string[] | null>
-  | URLSearchParams
+  Record<string, string | number | boolean | string[] | null> | URLSearchParams
 
 type WithAuth<P> = P & { auth?: string }

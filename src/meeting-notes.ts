@@ -36,10 +36,7 @@ type MeetingNotesDateFilterOperator =
   | "is_not_empty"
 
 type MeetingNotesPersonFilterOperator =
-  | "person_contains"
-  | "person_does_not_contain"
-  | "is_empty"
-  | "is_not_empty"
+  "person_contains" | "person_does_not_contain" | "is_empty" | "is_not_empty"
 
 type MeetingNotesNoValueFilter<TOperator extends string> = {
   operator: TOperator
@@ -146,8 +143,7 @@ export type MeetingNotesPropertyFilter = {
 }[keyof MeetingNotesPropertyFilterByProperty]
 
 export type MeetingNotesFilterNode =
-  | MeetingNotesCombinatorFilter
-  | MeetingNotesPropertyFilter
+  MeetingNotesCombinatorFilter | MeetingNotesPropertyFilter
 
 export type MeetingNotesCombinatorFilter = {
   operator: "and" | "or"
