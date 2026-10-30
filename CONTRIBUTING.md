@@ -22,18 +22,6 @@ npm run lint
 npm test
 ```
 
-## Check documentation links
-
-Install [Lychee](https://github.com/lycheeverse/lychee#installation). On macOS, run `brew install lychee`.
-
-From the repository root, run:
-
-```sh
-npm run check-links
-```
-
-You need Lychee only for this command. The check covers links and heading anchors in tracked Markdown files. It skips email verification.
-
 ## Check SDK compatibility
 
 Check that the exports, method inputs, and response types available from `@notionhq/client` still work.
@@ -56,6 +44,20 @@ Remove the temporary checkout when done:
 ```sh
 git worktree remove "$compat_dir/baseline"
 rmdir "$compat_dir"
+```
+
+## Check documentation links
+
+[Lychee](https://github.com/lycheeverse/lychee#installation) checks links and heading anchors in tracked Markdown files. To install it on macOS, run:
+
+```sh
+brew install lychee
+```
+
+Once installed, run the check from the repository root:
+
+```sh
+npm run check-links
 ```
 
 ## Open the pull request
