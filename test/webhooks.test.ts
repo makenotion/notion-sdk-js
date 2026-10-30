@@ -1,6 +1,5 @@
 import { createHmac } from "crypto"
 import { verifyWebhookSignature, signWebhookPayload } from "../src/webhooks"
-import type * as WebhookModule from "../src/webhooks.js"
 
 const VERIFICATION_TOKEN = "secret_abc123_verification_token"
 const ALTERNATE_TOKEN = "secret_different_token_xyz"
@@ -29,6 +28,20 @@ describe("verifyWebhookSignature", () => {
     const bodyString = JSON.stringify({ id: "evt_1", type: "page.created" })
     const body = new TextEncoder().encode(bodyString)
     const signature = nodeSign(bodyString, VERIFICATION_TOKEN)
+
+    await expect(
+      verifyWebhookSignature({
+        body,
+        signature,
+        verificationToken: VERIFICATION_TOKEN,
+      })
+    ).resolves.toBe(true)
+  })
+
+  it("verifies only the bytes in a binary body view", async () => {
+    const bytes = Uint8Array.of(0x00, 0xff, 0x80, 0x41, 0x00)
+    const body = bytes.subarray(1, 4)
+    const signature = nodeSign(body, VERIFICATION_TOKEN)
 
     await expect(
       verifyWebhookSignature({
@@ -199,40 +212,16 @@ describe("signWebhookPayload", () => {
     })
     expect(actual).toBe(expected)
   })
-})
 
-describe("verifyWebhookSignature: fallback to node:crypto", () => {
-  // Exercises the path used on Node.js 18.0–18.18, where `globalThis.crypto`
-  // is not enabled by default. We can't downgrade the test runner, so we
-  // simulate the missing global and re-import the module fresh so its
-  // cached signer is empty.
-  const originalGlobalCrypto = (globalThis as { crypto?: unknown }).crypto
-
-  afterEach(() => {
-    const g = globalThis as { crypto?: unknown }
-    g.crypto = originalGlobalCrypto
-    jest.resetModules()
-  })
-
-  it("verifies a real signature using node:crypto webcrypto when globalThis.crypto is missing", async () => {
-    delete (globalThis as { crypto?: unknown }).crypto
-
-    let verify: typeof verifyWebhookSignature | undefined
-    jest.isolateModules(() => {
-      verify =
-        jest.requireActual<typeof WebhookModule>(
-          "../src/webhooks.js"
-        ).verifyWebhookSignature
+  it("signs only the bytes in a binary body view", async () => {
+    const bytes = Uint8Array.of(0x00, 0xff, 0x80, 0x41, 0x00)
+    const body = bytes.subarray(1, 4)
+    const expected = nodeSign(body, VERIFICATION_TOKEN)
+    const actual = await signWebhookPayload({
+      body,
+      verificationToken: VERIFICATION_TOKEN,
     })
-    if (!verify) {
-      throw new Error("module did not load")
-    }
 
-    const body = JSON.stringify({ id: "evt_fallback" })
-    const signature = nodeSign(body, VERIFICATION_TOKEN)
-
-    await expect(
-      verify({ body, signature, verificationToken: VERIFICATION_TOKEN })
-    ).resolves.toBe(true)
+    expect(actual).toBe(expected)
   })
 })

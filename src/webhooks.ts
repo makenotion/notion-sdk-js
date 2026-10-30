@@ -6,8 +6,7 @@
  * Pass the raw body as received. Parsing and re-serializing JSON can change
  * its bytes and invalidate the signature.
  *
- * The helpers use `globalThis.crypto.subtle` when available, then fall
- * back to the Web Crypto API in Node's crypto module.
+ * The helpers use the global Web Crypto API provided by Node.js 22 and later.
  */
 
 const SIGNATURE_PREFIX = "sha256="
@@ -61,8 +60,13 @@ export async function verifyWebhookSignature(
     return false
   }
 
-  const computedHex = await computeHmacSha256Hex(verificationToken, body)
-  return timingSafeEqualHex(providedHex, computedHex)
+  const key = await importHmacKey(verificationToken, "verify")
+  return globalThis.crypto.subtle.verify(
+    "HMAC",
+    key,
+    hexToBytes(providedHex),
+    bodyToBytes(body)
+  )
 }
 
 /**
@@ -74,96 +78,33 @@ export async function signWebhookPayload(args: {
   body: string | Uint8Array
   verificationToken: string
 }): Promise<string> {
-  const hex = await computeHmacSha256Hex(args.verificationToken, args.body)
-  return `${SIGNATURE_PREFIX}${hex}`
+  const key = await importHmacKey(args.verificationToken, "sign")
+  const signature = await globalThis.crypto.subtle.sign(
+    "HMAC",
+    key,
+    bodyToBytes(args.body)
+  )
+  return `${SIGNATURE_PREFIX}${bytesToHex(new Uint8Array(signature))}`
 }
 
-async function computeHmacSha256Hex(
-  key: string,
-  body: string | Uint8Array
-): Promise<string> {
-  const sign = await getHmacSigner()
-
-  const encoder = new TextEncoder()
-  const keyBytes = encoder.encode(key)
-  // Copy any Uint8Array input into a fresh ArrayBuffer-backed view so
-  // subtle.sign (which forbids SharedArrayBuffer-backed views) is
-  // satisfied regardless of where the caller's buffer came from.
-  const bodyBytes =
-    typeof body === "string" ? encoder.encode(body) : Uint8Array.from(body)
-
-  const signatureBuffer = await sign(keyBytes, bodyBytes)
-  return bytesToHex(new Uint8Array(signatureBuffer))
-}
-
-type HmacSigner = (
-  key: Uint8Array<ArrayBuffer>,
-  body: Uint8Array<ArrayBuffer>
-) => Promise<ArrayBuffer>
-
-type HmacCryptoProvider<TKey> = {
-  importKey(
-    format: "raw",
-    keyData: Uint8Array<ArrayBuffer>,
-    algorithm: { name: "HMAC"; hash: "SHA-256" },
-    extractable: false,
-    keyUsages: ["sign"]
-  ): Promise<TKey>
-  sign(
-    algorithm: "HMAC",
-    key: TKey,
-    data: Uint8Array<ArrayBuffer>
-  ): Promise<ArrayBuffer>
-}
-
-let cachedHmacSigner: HmacSigner | undefined
-
-async function getHmacSigner(): Promise<HmacSigner> {
-  if (cachedHmacSigner) {
-    return cachedHmacSigner
-  }
-
-  const fromGlobal = (globalThis as { crypto?: { subtle?: SubtleCrypto } })
-    .crypto?.subtle
-  if (fromGlobal) {
-    const sign = createHmacSigner(fromGlobal)
-    cachedHmacSigner = sign
-    return sign
-  }
-
-  // Load Node's fallback only when needed so browser callers can use the
-  // global API without loading a Node module.
-  try {
-    const nodeCrypto = await import("crypto")
-    const subtle = nodeCrypto.webcrypto?.subtle
-    if (subtle) {
-      const sign = createHmacSigner(subtle)
-      cachedHmacSigner = sign
-      return sign
-    }
-  } catch {
-    // node:crypto unavailable (e.g. a browser bundle that stubbed it).
-    // Fall through to the error below.
-  }
-
-  throw new Error(
-    "verifyWebhookSignature requires Web Crypto support " +
-      "(globalThis.crypto.subtle or node:crypto.webcrypto). Upgrade to " +
-      "a runtime that provides one of them."
+async function importHmacKey(
+  token: string,
+  usage: "sign" | "verify"
+): Promise<CryptoKey> {
+  return globalThis.crypto.subtle.importKey(
+    "raw",
+    new TextEncoder().encode(token),
+    { name: "HMAC", hash: "SHA-256" },
+    false,
+    [usage]
   )
 }
 
-function createHmacSigner<TKey>(subtle: HmacCryptoProvider<TKey>): HmacSigner {
-  return async (key, body) => {
-    const cryptoKey = await subtle.importKey(
-      "raw",
-      key,
-      { name: "HMAC", hash: "SHA-256" },
-      false,
-      ["sign"]
-    )
-    return subtle.sign("HMAC", cryptoKey, body)
-  }
+function bodyToBytes(body: string | Uint8Array): Uint8Array<ArrayBuffer> {
+  // Web Crypto requires ArrayBuffer-backed views; binary inputs may use SharedArrayBuffer.
+  return typeof body === "string"
+    ? new TextEncoder().encode(body)
+    : Uint8Array.from(body)
 }
 
 function bytesToHex(bytes: Uint8Array): string {
@@ -174,16 +115,10 @@ function bytesToHex(bytes: Uint8Array): string {
   return hex
 }
 
-// Constant-time string comparison. The inputs are already known to be
-// the same length (callers enforce SHA256_HEX_LENGTH), so this purely
-// avoids early-exit on the first differing character.
-function timingSafeEqualHex(a: string, b: string): boolean {
-  if (a.length !== b.length) {
-    return false
+function hexToBytes(hex: string): Uint8Array<ArrayBuffer> {
+  const bytes = new Uint8Array(hex.length / 2)
+  for (let i = 0; i < bytes.length; i++) {
+    bytes[i] = Number.parseInt(hex.slice(i * 2, i * 2 + 2), 16)
   }
-  let diff = 0
-  for (let i = 0; i < a.length; i++) {
-    diff |= a.charCodeAt(i) ^ b.charCodeAt(i)
-  }
-  return diff === 0
+  return bytes
 }

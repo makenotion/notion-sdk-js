@@ -15,12 +15,12 @@ jobs:
       contents: read
 
     container:
-      # v1.155.0
-      image: returntocorp/semgrep@sha256:3dab091ee3247fce7e4ed3df9f92b3bd72692c083295f53cec3f135b86404db1
+      # v1.183.0
+      image: returntocorp/semgrep@sha256:2e45517a85e13a9cca14a2a00df6bb48affd66b8ebfae1b0991cd57578362fb0
     timeout-minutes: 480
     steps:
-      # v6.0.2
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+      # v7.0.1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
       - run: semgrep ci
