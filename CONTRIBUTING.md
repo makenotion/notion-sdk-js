@@ -46,6 +46,26 @@ git worktree remove "$compat_dir/baseline"
 rmdir "$compat_dir"
 ```
 
+## Check documentation links
+
+[Lychee](https://github.com/lycheeverse/lychee#installation) checks links and heading anchors in tracked Markdown files. To install it on macOS, run:
+
+```sh
+brew install lychee
+```
+
+Once installed, run the check from the repository root:
+
+```sh
+npm run check-links
+```
+
+CI uses offline mode to check local files and heading anchors without contacting external websites. To run that mode locally:
+
+```sh
+npm run check-links -- --offline
+```
+
 ## Open the pull request
 
 Describe the change and record the checks you ran. Wait for CI to pass on the final commit before merging.
