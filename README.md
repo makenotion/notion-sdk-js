@@ -77,6 +77,22 @@ const myPage = await notion.dataSources.query({
 })
 ```
 
+### Per-request beta flags
+
+Pass `betas` to a typed endpoint to opt that call into one or more API betas. The SDK sends the flags in one comma-separated `Notion-Beta` header. Omitting `betas` or passing an empty array sends no beta header.
+
+```js
+await notion.dataSources.query({
+  data_source_id: dataSourceId,
+  betas: ["status-group-filters-2026-10-06"],
+  filter: { property: "Status", status: { group_equals: "In progress" } },
+})
+```
+
+This query matches every status option in the “In progress” group. [Status group filters beta](https://developers.notion.com/reference/filter-data-source-entries#status-group-filters-beta)
+
+TypeScript suggests the current flags known to this SDK. You can also pass a newer flag by its full name and revision date. The API checks whether each flag is valid. [Beta versions](https://developers.notion.com/reference/versioning#beta-versions)
+
 ### Handling errors
 
 Notion API errors reject the request with an `APIResponseError`. The `code` property identifies the error. `APIErrorCode` contains the known server error codes.
