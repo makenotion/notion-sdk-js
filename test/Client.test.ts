@@ -215,6 +215,51 @@ describe("Notion SDK Client", () => {
     )
   })
 
+  it("sends status group filters with the beta header on just that query", async () => {
+    const mockFetch = createMockFetch()
+    const logger = jest.fn()
+    const notion = new Client({ fetch: mockFetch, logger })
+    const filter = {
+      property: "Status",
+      status: { group_equals: "In progress" },
+    }
+
+    await notion.dataSources.query({
+      data_source_id: "tasks",
+      filter,
+      betas: ["status-group-filters-2026-10-06"],
+    })
+    await notion.dataSources.query({ data_source_id: "tasks" })
+
+    expect(mockFetch).toHaveBeenNthCalledWith(
+      1,
+      "https://api.notion.com/v1/data_sources/tasks/query",
+      expect.objectContaining({
+        body: JSON.stringify({ filter }),
+        headers: expect.objectContaining({
+          "Notion-Beta": "status-group-filters-2026-10-06",
+        }),
+      })
+    )
+    expect(
+      new Headers(mockFetch.mock.calls[1]?.[1]?.headers).has("Notion-Beta")
+    ).toBe(false)
+    expect(logger).not.toHaveBeenCalled()
+  })
+
+  it("sends multiple beta flags on a method with optional arguments", async () => {
+    const mockFetch = createMockFetch()
+    const notion = new Client({ fetch: mockFetch })
+
+    await notion.users.me({ betas: ["first-beta", "second-beta"] })
+    await notion.users.me({ betas: [] })
+
+    const betaHeaders = mockFetch.mock.calls.map(([, init]) =>
+      new Headers(init?.headers).get("Notion-Beta")
+    )
+    expect(betaHeaders).toEqual(["first-beta, second-beta", null])
+  })
+
   it("warns once and omits unknown parameters in generated methods", async () => {
     const mockFetch = createMockFetch()
     const logger = jest.fn()
@@ -390,6 +435,7 @@ describe("Notion SDK Client", () => {
 
     it("calls revoke API with basic auth", async () => {
       await notion.oauth.revoke({
+        betas: ["oauth-beta"],
         client_id: "client_id",
         client_secret: "client_secret",
         token: "token",
@@ -402,6 +448,7 @@ describe("Notion SDK Client", () => {
           headers: expect.objectContaining({
             "Notion-Version": "2025-09-03",
             "user-agent": expect.stringContaining("notionhq-client"),
+            "Notion-Beta": "oauth-beta",
             authorization: `Basic ${Buffer.from(
               "client_id:client_secret"
             ).toString("base64")}`,
@@ -441,6 +488,7 @@ describe("Notion SDK Client", () => {
       const fileUploadId = "62af0fc3-efaa-4c48-bf2a-7d6ce510fa59"
 
       await notion.fileUploads.send({
+        betas: ["upload-beta"],
         file_upload_id: fileUploadId,
         file: {
           filename: "test.txt",
@@ -464,6 +512,7 @@ describe("Notion SDK Client", () => {
       const firstCallParams = firstCall?.[1]
 
       const headers = new Headers(firstCallParams?.headers)
+      expect(headers.get("Notion-Beta")).toBe("upload-beta")
       expect(headers.has("content-type")).toBe(false)
 
       const body = firstCallParams?.body
@@ -939,7 +988,10 @@ describe("Notion SDK Client", () => {
       mockFetch.mockResolvedValue(new Response(responseBody))
 
       const eventTypes: string[] = []
-      for await (const event of notion.sessions.stream({ message: "hello" })) {
+      for await (const event of notion.sessions.stream({
+        message: "hello",
+        betas: ["stream-beta"],
+      })) {
         eventTypes.push(event.type)
       }
 
@@ -950,6 +1002,7 @@ describe("Notion SDK Client", () => {
           method: "POST",
           headers: expect.objectContaining({
             Accept: "text/event-stream",
+            "Notion-Beta": "stream-beta",
             "content-type": "application/json",
           }),
           body: JSON.stringify({ message: "hello" }),

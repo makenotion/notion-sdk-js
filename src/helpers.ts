@@ -6,6 +6,7 @@ import {
   DataSourceViewObjectResponse,
   EquationRichTextItemResponse,
   GroupFilterOperatorArray,
+  ListDataSourceTemplatesParameters,
   ListDataSourceTemplatesResponse,
   MentionRichTextItemResponse,
   PageObjectResponse,
@@ -26,6 +27,7 @@ import {
   UserObjectResponse,
 } from "./api-endpoints"
 import type Client from "./Client"
+import type { EndpointRequestOptions } from "./utils"
 
 type PaginatedArgs = {
   start_cursor?: string | null
@@ -103,11 +105,8 @@ export async function collectPaginatedAPI<Args extends PaginatedArgs, Item>(
 
 type DataSourceTemplate = ListDataSourceTemplatesResponse["templates"][number]
 
-type ListDataSourceTemplatesArgs = PaginatedArgs & {
-  data_source_id: string
-  name?: string
-  page_size?: number
-}
+type ListDataSourceTemplatesArgs = ListDataSourceTemplatesParameters &
+  EndpointRequestOptions
 
 /**
  * Returns an async iterator over data source templates.
@@ -190,9 +189,10 @@ export type FullDataSourceQueryFilter =
 export type FullDataSourceQueryArgs = Omit<
   QueryDataSourceParameters,
   "start_cursor" | "sorts" | "filter"
-> & {
-  filter?: FullDataSourceQueryFilter
-}
+> &
+  EndpointRequestOptions & {
+    filter?: FullDataSourceQueryFilter
+  }
 
 /**
  * Iterate over every row of a data source, including rows past the per-query

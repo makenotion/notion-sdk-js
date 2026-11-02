@@ -306,6 +306,7 @@ export {
   isHTTPResponseError,
 } from "./errors"
 export type { ClientOptions, RetryOptions } from "./Client"
+export type { EndpointRequestOptions } from "./utils"
 export {
   DEFAULT_BASE_URL,
   DEFAULT_TIMEOUT_MS,

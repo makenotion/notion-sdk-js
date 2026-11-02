@@ -2,7 +2,12 @@
 import type Client from "./Client"
 import type { RequestParameters } from "./Client"
 import * as endpoints from "./api-endpoints"
-import { pick, type EndpointDefinition } from "./utils"
+import {
+  getEndpointRequestOptions,
+  pick,
+  type EndpointDefinition,
+  type EndpointRequestOptions,
+} from "./utils"
 
 type WithoutIndexSignatures<P> = P extends unknown
   ? {
@@ -11,8 +16,7 @@ type WithoutIndexSignatures<P> = P extends unknown
       ]: P[K]
     }
   : never
-type WithAuth<P> = P & { auth?: string }
-type OptionalWithAuth<P> = WithoutIndexSignatures<P> & { auth?: string }
+type OptionalArgs<P> = WithoutIndexSignatures<P> & EndpointRequestOptions
 type EndpointClient = Pick<Client, "request"> & {
   warnUnknownParams(
     args: Record<string, unknown>,
@@ -27,8 +31,8 @@ export function createEndpointMethods(client: EndpointClient) {
       method: RequestParameters["method"]
       headers?: Record<string, string>
     },
-    query: (args: WithAuth<P>) => RequestParameters["query"]
-  ): (args: WithAuth<P>) => Promise<R> {
+    query: (args: P & EndpointRequestOptions) => RequestParameters["query"]
+  ): (args: P & EndpointRequestOptions) => Promise<R> {
     return args => {
       client.warnUnknownParams(args, definition)
       return client.request<R>({
@@ -39,8 +43,7 @@ export function createEndpointMethods(client: EndpointClient) {
           args,
           definition.bodyParams
         ),
-        ...(definition.headers ? { headers: definition.headers } : {}),
-        auth: args?.auth,
+        ...getEndpointRequestOptions(args, definition.headers),
       })
     }
   }
@@ -50,10 +53,10 @@ export function createEndpointMethods(client: EndpointClient) {
       method: RequestParameters["method"]
       headers?: Record<string, string>
     },
-    query: (args: Partial<OptionalWithAuth<P>>) => RequestParameters["query"]
-  ): (args?: OptionalWithAuth<P>) => Promise<R> {
+    query: (args: Partial<OptionalArgs<P>>) => RequestParameters["query"]
+  ): (args?: OptionalArgs<P>) => Promise<R> {
     return args => {
-      const requestArgs: Partial<OptionalWithAuth<P>> = args ?? {}
+      const requestArgs: Partial<OptionalArgs<P>> = args ?? {}
       client.warnUnknownParams(requestArgs, definition)
       return client.request<R>({
         path: definition.path(),
@@ -63,8 +66,7 @@ export function createEndpointMethods(client: EndpointClient) {
           requestArgs,
           definition.bodyParams
         ),
-        ...(definition.headers ? { headers: definition.headers } : {}),
-        auth: requestArgs.auth,
+        ...getEndpointRequestOptions(requestArgs, definition.headers),
       })
     }
   }
