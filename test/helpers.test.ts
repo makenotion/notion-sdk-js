@@ -596,10 +596,18 @@ describe("Notion API helpers", () => {
 
         const rows = await collectAllDataSourceRows(client, {
           data_source_id: "ds-1",
+          betas: ["status-group-filters-2026-10-06"],
         })
 
         expect(rows.map(r => r.id)).toEqual(["r1", "r2"])
-        expect(mockFetch).toHaveBeenCalledTimes(2)
+        expect(
+          mockFetch.mock.calls.map(([, init]) =>
+            new Headers(init?.headers).get("Notion-Beta")
+          )
+        ).toEqual([
+          "status-group-filters-2026-10-06",
+          "status-group-filters-2026-10-06",
+        ])
       })
     })
   })
