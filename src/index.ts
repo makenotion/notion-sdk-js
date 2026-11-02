@@ -307,6 +307,7 @@ export {
 } from "./errors"
 export type { ClientOptions, RetryOptions } from "./Client"
 export type { EndpointRequestOptions } from "./utils"
+export type { NotionBeta } from "./api-endpoint-methods"
 export {
   DEFAULT_BASE_URL,
   DEFAULT_TIMEOUT_MS,

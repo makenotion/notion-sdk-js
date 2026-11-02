@@ -9,6 +9,12 @@ import {
   type EndpointRequestOptions,
 } from "./utils"
 
+/** A dated Notion API beta flag. */
+export type NotionBeta =
+  | "notion-as-code-2026-07-31"
+  | "status-group-filters-2026-10-06"
+  | (string & Record<never, never>)
+
 type WithoutIndexSignatures<P> = P extends unknown
   ? {
       [

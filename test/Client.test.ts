@@ -251,13 +251,18 @@ describe("Notion SDK Client", () => {
     const mockFetch = createMockFetch()
     const notion = new Client({ fetch: mockFetch })
 
-    await notion.users.me({ betas: ["first-beta", "second-beta"] })
+    await notion.users.me({
+      betas: ["notion-as-code-2026-07-31", "status-group-filters-2026-10-06"],
+    })
     await notion.users.me({ betas: [] })
 
     const betaHeaders = mockFetch.mock.calls.map(([, init]) =>
       new Headers(init?.headers).get("Notion-Beta")
     )
-    expect(betaHeaders).toEqual(["first-beta, second-beta", null])
+    expect(betaHeaders).toEqual([
+      "notion-as-code-2026-07-31, status-group-filters-2026-10-06",
+      null,
+    ])
   })
 
   it("warns once and omits unknown parameters in generated methods", async () => {
@@ -435,7 +440,7 @@ describe("Notion SDK Client", () => {
 
     it("calls revoke API with basic auth", async () => {
       await notion.oauth.revoke({
-        betas: ["oauth-beta"],
+        betas: ["example-2026-11-01"],
         client_id: "client_id",
         client_secret: "client_secret",
         token: "token",
@@ -448,7 +453,7 @@ describe("Notion SDK Client", () => {
           headers: expect.objectContaining({
             "Notion-Version": "2025-09-03",
             "user-agent": expect.stringContaining("notionhq-client"),
-            "Notion-Beta": "oauth-beta",
+            "Notion-Beta": "example-2026-11-01",
             authorization: `Basic ${Buffer.from(
               "client_id:client_secret"
             ).toString("base64")}`,
@@ -488,7 +493,7 @@ describe("Notion SDK Client", () => {
       const fileUploadId = "62af0fc3-efaa-4c48-bf2a-7d6ce510fa59"
 
       await notion.fileUploads.send({
-        betas: ["upload-beta"],
+        betas: ["example-2026-11-01"],
         file_upload_id: fileUploadId,
         file: {
           filename: "test.txt",
@@ -512,7 +517,7 @@ describe("Notion SDK Client", () => {
       const firstCallParams = firstCall?.[1]
 
       const headers = new Headers(firstCallParams?.headers)
-      expect(headers.get("Notion-Beta")).toBe("upload-beta")
+      expect(headers.get("Notion-Beta")).toBe("example-2026-11-01")
       expect(headers.has("content-type")).toBe(false)
 
       const body = firstCallParams?.body
@@ -990,7 +995,7 @@ describe("Notion SDK Client", () => {
       const eventTypes: string[] = []
       for await (const event of notion.sessions.stream({
         message: "hello",
-        betas: ["stream-beta"],
+        betas: ["example-2026-11-01"],
       })) {
         eventTypes.push(event.type)
       }
@@ -1002,7 +1007,7 @@ describe("Notion SDK Client", () => {
           method: "POST",
           headers: expect.objectContaining({
             Accept: "text/event-stream",
-            "Notion-Beta": "stream-beta",
+            "Notion-Beta": "example-2026-11-01",
             "content-type": "application/json",
           }),
           body: JSON.stringify({ message: "hello" }),
