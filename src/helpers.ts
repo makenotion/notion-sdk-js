@@ -54,7 +54,7 @@ type PaginatedList<T> = {
  * @param listFn A bound function on the Notion client that represents a conforming paginated
  *   API. Example: `notion.blocks.children.list`.
  * @param firstPageArgs Arguments that should be passed to the API on the first and subsequent
- *   calls to the API. Any necessary `next_cursor` will be automatically populated by
+ *   calls to the API. Any necessary `start_cursor` will be automatically populated by
  *   this function. Example: `{ block_id: "<my block id>" }`
  */
 export async function* iteratePaginatedAPI<Args extends PaginatedArgs, Item>(
@@ -87,7 +87,7 @@ export async function* iteratePaginatedAPI<Args extends PaginatedArgs, Item>(
  * @param listFn A bound function on the Notion client that represents a conforming paginated
  *   API. Example: `notion.blocks.children.list`.
  * @param firstPageArgs Arguments that should be passed to the API on the first and subsequent
- *   calls to the API. Any necessary `next_cursor` will be automatically populated by
+ *   calls to the API. Any necessary `start_cursor` will be automatically populated by
  *   this function. Example: `{ block_id: "<my block id>" }`
  */
 export async function collectPaginatedAPI<Args extends PaginatedArgs, Item>(
