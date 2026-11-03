@@ -1137,8 +1137,9 @@ export type PageMarkdownResponse = {
   object: "page_markdown"
   // The ID of the page or block.
   id: IdResponse
-  // The page content as Markdown, in the syntax set by `markdown_version`: enhanced
-  // markdown (`v1`, the default) or Notion-flavored Markdown (`v2`).
+  // The page content as Markdown, in the syntax set by `markdown_version`: Notion-flavored
+  // Markdown (`v2`, recommended) or enhanced markdown (`v1`, deprecated, the default on
+  // current Notion-Versions).
   markdown: string
   // Whether the content was truncated due to exceeding the record count limit.
   truncated: boolean

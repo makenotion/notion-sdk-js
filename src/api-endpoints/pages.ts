@@ -432,16 +432,17 @@ type CreatePageBodyParameters = {
   cover?: PageCoverRequest | null
   content?: Array<BlockObjectRequest>
   children?: Array<BlockObjectRequest>
-  // Page content as Markdown, in the syntax set by `markdown_version`: enhanced markdown
-  // (`v1`, the default) or Notion-flavored Markdown (`v2`). Mutually exclusive with
-  // content/children.
+  // Page content as Markdown, in the syntax set by `markdown_version`: Notion-flavored
+  // Markdown (`v2`, recommended) or enhanced markdown (`v1`, deprecated, the default on
+  // current Notion-Versions). Mutually exclusive with content/children.
   markdown?: string
   // Set to true to receive an async_task response for markdown page creation. Only
   // supported when markdown is provided.
   allow_async?: boolean
-  // The Markdown syntax to use. `v1` (the default) is enhanced markdown. `v2` is
-  // [Notion-flavored Markdown](/guides/data-apis/notion-flavored-markdown), an opt-in
-  // preview.
+  // The Markdown syntax to use. `v2` is [Notion-flavored
+  // Markdown](/guides/data-apis/notion-flavored-markdown) and is recommended. `v1` is
+  // enhanced markdown. It's deprecated. It's the default on current Notion-Versions. The
+  // next Notion-Version rejects `v1` with a `400` `validation_error`.
   markdown_version?: "v1" | "v2"
   template?:
     | { type: "none" }
@@ -751,9 +752,10 @@ type GetPageMarkdownQueryParameters = {
   // transcripts are included; when false, a placeholder with the meeting note URL is shown
   // instead.
   include_transcript?: boolean
-  // The Markdown syntax to use. `v1` (the default) is enhanced markdown. `v2` is
-  // [Notion-flavored Markdown](/guides/data-apis/notion-flavored-markdown), an opt-in
-  // preview.
+  // The Markdown syntax to use. `v2` is [Notion-flavored
+  // Markdown](/guides/data-apis/notion-flavored-markdown) and is recommended. `v1` is
+  // enhanced markdown. It's deprecated. It's the default on current Notion-Versions. The
+  // next Notion-Version rejects `v1` with a `400` `validation_error`.
   markdown_version?: "v1" | "v2"
 }
 
@@ -785,9 +787,10 @@ type UpdatePageMarkdownBodyParameters = {
   // accepted for background execution. If omitted or false, the endpoint keeps the
   // existing synchronous response shape.
   allow_async?: boolean
-  // The Markdown syntax to use. `v1` (the default) is enhanced markdown. `v2` is
-  // [Notion-flavored Markdown](/guides/data-apis/notion-flavored-markdown), an opt-in
-  // preview.
+  // The Markdown syntax to use. `v2` is [Notion-flavored
+  // Markdown](/guides/data-apis/notion-flavored-markdown) and is recommended. `v1` is
+  // enhanced markdown. It's deprecated. It's the default on current Notion-Versions. The
+  // next Notion-Version rejects `v1` with a `400` `validation_error`.
   markdown_version?: "v1" | "v2"
 } & (
   | {
@@ -796,7 +799,8 @@ type UpdatePageMarkdownBodyParameters = {
       // Insert new content into the page.
       insert_content: {
         // The Markdown content to insert into the page, in the syntax set by `markdown_version`:
-        // enhanced markdown (`v1`, the default) or Notion-flavored Markdown (`v2`).
+        // Notion-flavored Markdown (`v2`, recommended) or enhanced markdown (`v1`, deprecated,
+        // the default on current Notion-Versions).
         content: string
         // Selection of existing content to insert after, using the ellipsis format ("start
         // text...end text"). Omit to append at the end of the page.
@@ -820,8 +824,8 @@ type UpdatePageMarkdownBodyParameters = {
       // Replace a range of content in the page.
       replace_content_range: {
         // The new Markdown content to replace the matched range, in the syntax set by
-        // `markdown_version`: enhanced markdown (`v1`, the default) or Notion-flavored Markdown
-        // (`v2`).
+        // `markdown_version`: Notion-flavored Markdown (`v2`, recommended) or enhanced markdown
+        // (`v1`, deprecated, the default on current Notion-Versions).
         content: string
         // Selection of existing content to replace, using the ellipsis format ("start text...end
         // text").
@@ -860,8 +864,8 @@ type UpdatePageMarkdownBodyParameters = {
       // Replace the entire page content with new markdown.
       replace_content: {
         // The new Markdown content to replace the entire page content, in the syntax set by
-        // `markdown_version`: enhanced markdown (`v1`, the default) or Notion-flavored Markdown
-        // (`v2`).
+        // `markdown_version`: Notion-flavored Markdown (`v2`, recommended) or enhanced markdown
+        // (`v1`, deprecated, the default on current Notion-Versions).
         new_str: string
         // Set to true to allow the operation to delete child pages or databases. Defaults to
         // false.
