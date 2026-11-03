@@ -8,7 +8,7 @@ import {
   UnknownHTTPResponseError,
   isHTTPResponseError,
 } from "../src"
-import type { UpdateSessionStreamResponse } from "../src"
+import type { CreateViewParameters, UpdateSessionStreamResponse } from "../src"
 import {
   TEST_BLOCK_ID,
   mockRawResponse,
@@ -213,6 +213,25 @@ describe("Notion SDK Client", () => {
         }),
       })
     )
+  })
+
+  it("sends typed filters and sorts when creating a view", async () => {
+    const mockFetch = createMockFetch()
+    const client = new Client({ fetch: mockFetch })
+    const body = {
+      data_source_id: TEST_BLOCK_ID,
+      name: "Applications",
+      type: "gallery",
+      filter: { property: "Status", status: { is_not_empty: true } },
+      quick_filters: { Priority: { select: { equals: "High" } }, Owner: {} },
+      sorts: [{ property: "Name", direction: "ascending" }],
+    } satisfies CreateViewParameters
+
+    await client.views.create(body)
+
+    const [url, options] = mockFetch.mock.calls[0] ?? []
+    expect(url).toBe("https://api.notion.com/v1/views")
+    expect(JSON.parse(String(options?.body))).toEqual(body)
   })
 
   it("sends status group filters with the beta header on just that query", async () => {
