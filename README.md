@@ -79,7 +79,9 @@ const myPage = await notion.dataSources.query({
 
 ### Markdown versions
 
-Enhanced Markdown (`v1`) is deprecated. Pass `markdown_version: "v2"` when reading or writing Markdown with the SDK. On current API versions, omitting the parameter selects `v1`. [Migrate to Notion-flavored Markdown](https://developers.notion.com/guides/data-apis/migrate-to-notion-flavored-markdown)
+Enhanced Markdown (`v1`) is deprecated. API versions through `2026-03-11` still default to `v1`. The next API version will default to `v2` and reject requests that specify `v1`. Notion plans to retire `v1` on older API versions about three months after that release.
+
+Set `markdown_version: "v2"` on Markdown reads and writes now to test your integration before you upgrade. [Migrate to Notion-flavored Markdown](https://developers.notion.com/guides/data-apis/migrate-to-notion-flavored-markdown)
 
 ```js
 const { markdown } = await notion.pages.retrieveMarkdown({
