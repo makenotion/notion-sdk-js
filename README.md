@@ -77,6 +77,17 @@ const myPage = await notion.dataSources.query({
 })
 ```
 
+### Markdown versions
+
+Enhanced Markdown (`v1`) is deprecated. Pass `markdown_version: "v2"` when reading or writing Markdown with the SDK. On current API versions, omitting the parameter selects `v1`. [Migrate to Notion-flavored Markdown](https://developers.notion.com/guides/data-apis/migrate-to-notion-flavored-markdown)
+
+```js
+const { markdown } = await notion.pages.retrieveMarkdown({
+  page_id: pageId,
+  markdown_version: "v2",
+})
+```
+
 ### Per-request beta flags
 
 Pass `betas` to a typed endpoint to opt that call into one or more API betas. The SDK sends the flags in one comma-separated `Notion-Beta` header. Omitting `betas` or passing an empty array sends no beta header.
