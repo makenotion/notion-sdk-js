@@ -537,17 +537,22 @@ export default class Client {
     args: ExecutableRequest
   ): Promise<ResponseBody> {
     const { url, method, path, headers, body } = args
-    const response = await RequestTimeoutError.rejectAfterTimeout(
-      this.#fetch(url.toString(), {
-        method: method.toUpperCase(),
-        headers,
-        body,
-        agent: this.#agent,
-      }),
-      this.#timeoutMs
-    )
+    // The timeout also covers reading the body. Otherwise a response whose
+    // body stalls after the headers arrive would never settle.
+    const { response, responseText } =
+      await RequestTimeoutError.rejectAfterTimeout(
+        this.#fetch(url.toString(), {
+          method: method.toUpperCase(),
+          headers,
+          body,
+          agent: this.#agent,
+        }).then(async response => ({
+          response,
+          responseText: await response.text(),
+        })),
+        this.#timeoutMs
+      )
 
-    const responseText = await response.text()
     if (!response.ok) {
       throw buildRequestError(response, responseText)
     }
