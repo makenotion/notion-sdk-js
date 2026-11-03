@@ -5,7 +5,6 @@ import type {
   DataSourceParentResponse,
   DatabaseParentResponse,
   EmptyObject,
-  GroupFilterOperatorArray,
   IdRequest,
   IdResponse,
   NumberFormat,
@@ -19,13 +18,13 @@ import type {
   PartialUserObjectResponse,
   PropertyConfigurationRequest,
   PropertyDescriptionRequest,
-  PropertyFilter,
   RichTextItemRequest,
   RichTextItemResponse,
   RollupFunction,
   SelectColor,
   StatusPropertyConfigUpdateRequest,
-  TimestampFilter,
+  ViewFilterRequest,
+  ViewSortRequest,
 } from "./common"
 
 type CheckboxDatabasePropertyConfigResponse = {
@@ -568,18 +567,8 @@ type QueryDataSourceQueryParameters = {
 }
 
 type QueryDataSourceBodyParameters = {
-  sorts?: Array<
-    | { property: string; direction: "ascending" | "descending" }
-    | {
-        timestamp: "created_time" | "last_edited_time"
-        direction: "ascending" | "descending"
-      }
-  >
-  filter?:
-    | { or: GroupFilterOperatorArray }
-    | { and: GroupFilterOperatorArray }
-    | PropertyFilter
-    | TimestampFilter
+  sorts?: Array<ViewSortRequest>
+  filter?: ViewFilterRequest
   start_cursor?: string | null
   page_size?: number
   // Whether to return archived pages. When omitted or false, returns non-archived pages.

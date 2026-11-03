@@ -355,8 +355,10 @@ export type CreateViewRequest = {
   // database_id and create_database.
   view_id?: IdRequest
   // Filter to apply to the view. Uses the same format as the data source query filter.
+  // Simple property filters appear in the view's filter bar. For example, a status filter
+  // can exclude several values with does_not_equal.
   filter?: ViewFilterRequest
-  // Sorts to apply to the view. Uses the same format as the data source query sorts.
+  // Property sorts to save on the view. Timestamp sorts are accepted but are not saved.
   sorts?: ViewSortsRequest
   // Quick filters to pin in the view's filter bar. Keys are property names or IDs. Values
   // are filter conditions (same shape as a property filter but without the property
@@ -1973,11 +1975,9 @@ type ViewConfigRequest =
   | ChartViewConfigRequest
 
 /**
- * Filter for the view. Uses the same format as the data source query filter. Simple
- * property filters appear in the view's filter bar. Select, status, and multi_select
- * filters accept a string or an array of strings.
+ * A property filter, timestamp filter, or compound and/or filter.
  */
-type ViewFilterRequest =
+export type ViewFilterRequest =
   | { or: GroupFilterOperatorArray }
   | { and: GroupFilterOperatorArray }
   | PropertyFilter
@@ -2038,10 +2038,9 @@ type ViewPropertySortRequest = {
 type ViewPropertySortsRequest = Array<ViewPropertySortRequest>
 
 /**
- * Sort by property name or ID and direction. View creation also accepts timestamp sorts,
- * but only property sorts are saved.
+ * Sort by property name or ID, or by timestamp.
  */
-type ViewSortRequest =
+export type ViewSortRequest =
   | { property: string; direction: "ascending" | "descending" }
   | {
       timestamp: "created_time" | "last_edited_time"
