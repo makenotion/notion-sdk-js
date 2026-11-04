@@ -18,6 +18,7 @@ permissions: {}
 jobs:
   increment-version:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     permissions:
       actions: write

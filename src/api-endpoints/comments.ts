@@ -100,9 +100,10 @@ type CreateCommentBodyParameters = {
           name: string
         }
       }
-  // The Markdown syntax to use. `v1` (the default) is enhanced markdown. `v2` is
-  // [Notion-flavored Markdown](/guides/data-apis/notion-flavored-markdown), an opt-in
-  // preview.
+  // The Markdown syntax to use. `v2` is [Notion-flavored
+  // Markdown](/guides/data-apis/notion-flavored-markdown) and is recommended. `v1` is
+  // enhanced markdown. It's deprecated. It's the default on current Notion-Versions. The
+  // next Notion-Version rejects `v1` with a `400` `validation_error`.
   markdown_version?: "v1" | "v2"
 } & (
   | {
@@ -256,9 +257,10 @@ type UpdateCommentPathParameters = {
 }
 
 type UpdateCommentBodyParameters = {
-  // The Markdown syntax to use. `v1` (the default) is enhanced markdown. `v2` is
-  // [Notion-flavored Markdown](/guides/data-apis/notion-flavored-markdown), an opt-in
-  // preview.
+  // The Markdown syntax to use. `v2` is [Notion-flavored
+  // Markdown](/guides/data-apis/notion-flavored-markdown) and is recommended. `v1` is
+  // enhanced markdown. It's deprecated. It's the default on current Notion-Versions. The
+  // next Notion-Version rejects `v1` with a `400` `validation_error`.
   markdown_version?: "v1" | "v2"
 } & (
   | {
