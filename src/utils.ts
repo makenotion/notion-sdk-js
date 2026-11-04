@@ -1,3 +1,5 @@
+import type { NotionBeta } from "./api-endpoint-methods"
+
 /**
  * Utility for enforcing exhaustiveness checks in the type system.
  *
@@ -23,6 +25,22 @@ export function isObject(o: unknown): o is Record<PropertyKey, unknown> {
   return typeof o === "object" && o !== null
 }
 
+export type EndpointRequestOptions = {
+  auth?: string
+  /** Dated beta flags to send in the Notion-Beta header for this request. */
+  betas?: readonly NotionBeta[]
+}
+
+export function getEndpointRequestOptions(
+  args?: EndpointRequestOptions,
+  endpointHeaders?: Record<string, string>
+) {
+  const headers = args?.betas?.length
+    ? { ...endpointHeaders, "Notion-Beta": args.betas.join(", ") }
+    : endpointHeaders
+  return { auth: args?.auth, ...(headers && { headers }) }
+}
+
 export type EndpointDefinition = {
   pathParams: readonly string[]
   queryParams: readonly string[]
@@ -45,6 +63,7 @@ export function getUnknownParams(
     ...endpoint.bodyParams,
     ...(endpoint.formDataParams ?? []),
     "auth",
+    "betas",
   ])
   return Object.keys(args).filter(k => !knownKeys.has(k))
 }
