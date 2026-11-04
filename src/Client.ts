@@ -19,7 +19,13 @@ import {
   RequestTimeoutError,
   validateRequestPath,
 } from "./errors"
-import { pick, getUnknownParams, type EndpointDefinition } from "./utils"
+import {
+  pick,
+  getEndpointRequestOptions,
+  getUnknownParams,
+  type EndpointDefinition,
+  type EndpointRequestOptions,
+} from "./utils"
 import {
   DEFAULT_BASE_URL,
   DEFAULT_TIMEOUT_MS,
@@ -703,7 +709,7 @@ export default class Client {
 
   public readonly plugins = {
     list: this.#endpointMethods.plugins.list,
-    retrieve: (args: WithAuth<GetPluginDirectoryParameters>) =>
+    retrieve: (args: GetPluginDirectoryParameters & EndpointRequestOptions) =>
       this.#endpointMethods.plugins.retrieve({
         ...args,
         // Plugin IDs can be tag IDs containing URL delimiters, not just UUIDs.
@@ -730,7 +736,7 @@ export default class Client {
      * Open a session stream
      */
     stream: (
-      args: WithAuth<UpdateSessionStreamParameters>
+      args: UpdateSessionStreamParameters & EndpointRequestOptions
     ): AsyncIterable<UpdateSessionStreamResponse> => {
       this.warnUnknownParams(args, updateSessionStream)
       return this.streamRequest(
@@ -739,8 +745,7 @@ export default class Client {
           method: updateSessionStream.method,
           query: pick(args, updateSessionStream.queryParams),
           body: pick(args, updateSessionStream.bodyParams),
-          headers: updateSessionStream.headers,
-          auth: args?.auth,
+          ...getEndpointRequestOptions(args, updateSessionStream.headers),
         },
         parseSessionStreamEvent
       )
@@ -791,14 +796,14 @@ export default class Client {
        * Query meeting notes
        */
       query: (
-        args: WithAuth<QueryMeetingNotesParameters>
+        args: QueryMeetingNotesParameters & EndpointRequestOptions
       ): Promise<QueryMeetingNotesResponse> => {
         return this.request<QueryMeetingNotesResponse>({
           path: queryMeetingNotes.path(),
           method: queryMeetingNotes.method,
           query: pick(args, queryMeetingNotes.queryParams),
           body: pick(args, queryMeetingNotes.bodyParams),
-          auth: args?.auth,
+          ...getEndpointRequestOptions(args),
         })
       },
     },
@@ -833,14 +838,14 @@ export default class Client {
      * Retrieve a page as markdown
      */
     retrieveMarkdown: (
-      args: WithAuth<GetPageMarkdownParameters>
+      args: GetPageMarkdownParameters & EndpointRequestOptions
     ): Promise<GetPageMarkdownResponse> => {
       return this.request<GetPageMarkdownResponse>({
         path: getPageMarkdown.path(args),
         method: getPageMarkdown.method,
         query: pick(args, getPageMarkdown.queryParams),
         body: pick(args, getPageMarkdown.bodyParams),
-        auth: args?.auth,
+        ...getEndpointRequestOptions(args),
       })
     },
 
@@ -848,14 +853,14 @@ export default class Client {
      * Update a page's content as markdown
      */
     updateMarkdown: (
-      args: WithAuth<UpdatePageMarkdownParameters>
+      args: UpdatePageMarkdownParameters & EndpointRequestOptions
     ): Promise<UpdatePageMarkdownResponse> => {
       return this.request<UpdatePageMarkdownResponse>({
         path: updatePageMarkdown.path(args),
         method: updatePageMarkdown.method,
         query: pick(args, updatePageMarkdown.queryParams),
         body: pick(args, updatePageMarkdown.bodyParams),
-        auth: args?.auth,
+        ...getEndpointRequestOptions(args),
       })
     },
     properties: this.#endpointMethods.pages.properties,
@@ -868,7 +873,7 @@ export default class Client {
      * List custom emojis
      */
     list: (
-      args?: WithAuth<ListCustomEmojisParameters>
+      args?: ListCustomEmojisParameters & EndpointRequestOptions
     ): Promise<ListCustomEmojisResponse> => {
       this.warnUnknownParams(args ?? {}, listCustomEmojis)
       return this.request<ListCustomEmojisResponse>({
@@ -876,7 +881,7 @@ export default class Client {
         method: listCustomEmojis.method,
         query: pick(args ?? {}, listCustomEmojis.queryParams),
         body: pick(args ?? {}, listCustomEmojis.bodyParams),
-        auth: args?.auth,
+        ...getEndpointRequestOptions(args),
       })
     },
   }
@@ -893,14 +898,14 @@ export default class Client {
      * Retrieve a file upload
      */
     retrieve: (
-      args: WithAuth<GetFileUploadParameters>
+      args: GetFileUploadParameters & EndpointRequestOptions
     ): Promise<GetFileUploadResponse> => {
       this.warnUnknownParams(args, getFileUpload)
       return this.request<GetFileUploadResponse>({
         path: getFileUpload.path(args),
         method: getFileUpload.method,
         query: pick(args, getFileUpload.queryParams),
-        auth: args?.auth,
+        ...getEndpointRequestOptions(args),
       })
     },
 
@@ -908,14 +913,14 @@ export default class Client {
      * List file uploads
      */
     list: (
-      args: WithAuth<ListFileUploadsParameters>
+      args: ListFileUploadsParameters & EndpointRequestOptions
     ): Promise<ListFileUploadsResponse> => {
       this.warnUnknownParams(args, listFileUploads)
       return this.request<ListFileUploadsResponse>({
         path: listFileUploads.path(),
         method: listFileUploads.method,
         query: pick(args, listFileUploads.queryParams),
-        auth: args?.auth,
+        ...getEndpointRequestOptions(args),
       })
     },
 
@@ -934,7 +939,7 @@ export default class Client {
      * This endpoint sends HTTP multipart/form-data instead of JSON parameters.
      */
     send: (
-      args: WithAuth<SendFileUploadParameters>
+      args: SendFileUploadParameters & EndpointRequestOptions
     ): Promise<SendFileUploadResponse> => {
       this.warnUnknownParams(args, sendFileUpload)
       return this.request<SendFileUploadResponse>({
@@ -942,7 +947,7 @@ export default class Client {
         method: sendFileUpload.method,
         query: pick(args, sendFileUpload.queryParams),
         formDataParams: pick(args, sendFileUpload.formDataParams),
-        auth: args?.auth,
+        ...getEndpointRequestOptions(args),
       })
     },
 
@@ -950,14 +955,14 @@ export default class Client {
      * Complete a file upload
      */
     complete: (
-      args: WithAuth<CompleteFileUploadParameters>
+      args: CompleteFileUploadParameters & EndpointRequestOptions
     ): Promise<CompleteFileUploadResponse> => {
       this.warnUnknownParams(args, completeFileUpload)
       return this.request<CompleteFileUploadResponse>({
         path: completeFileUpload.path(args),
         method: completeFileUpload.method,
         query: pick(args, completeFileUpload.queryParams),
-        auth: args?.auth,
+        ...getEndpointRequestOptions(args),
       })
     },
   }
@@ -967,7 +972,7 @@ export default class Client {
      * Create a view
      */
     create: (
-      args: WithAuth<CreateViewParameters>
+      args: CreateViewParameters & EndpointRequestOptions
     ): Promise<CreateViewResponse> => {
       return this.request<CreateViewResponse>({
         path: createView.path(),
@@ -987,7 +992,7 @@ export default class Client {
           "position",
           "placement",
         ] as const),
-        auth: args?.auth,
+        ...getEndpointRequestOptions(args),
       })
     },
 
@@ -1000,7 +1005,7 @@ export default class Client {
      * Update a view
      */
     update: (
-      args: WithAuth<UpdateViewParameters>
+      args: UpdateViewParameters & EndpointRequestOptions
     ): Promise<UpdateViewResponse> => {
       return this.request<UpdateViewResponse>({
         path: updateView.path(args),
@@ -1013,7 +1018,7 @@ export default class Client {
           "quick_filters",
           "configuration",
         ] as const),
-        auth: args?.auth,
+        ...getEndpointRequestOptions(args),
       })
     },
 
@@ -1032,14 +1037,14 @@ export default class Client {
        * Create a view query
        */
       create: (
-        args: WithAuth<CreateViewQueryParameters>
+        args: CreateViewQueryParameters & EndpointRequestOptions
       ): Promise<CreateViewQueryResponse> => {
         return this.request<CreateViewQueryResponse>({
           path: createViewQuery.path(args),
           method: createViewQuery.method,
           query: pick(args, createViewQuery.queryParams),
           body: pick(args, ["page_size"] as const),
-          auth: args?.auth,
+          ...getEndpointRequestOptions(args),
         })
       },
 
@@ -1065,60 +1070,42 @@ export default class Client {
      * Get token
      */
     token: (
-      args: OauthTokenParameters & {
-        client_id: string
-        client_secret: string
-      }
+      args: OauthTokenParameters & OAuthRequestOptions
     ): Promise<OauthTokenResponse> => {
       return this.request<OauthTokenResponse>({
         path: oauthToken.path(),
         method: oauthToken.method,
         query: pick(args, oauthToken.queryParams),
         body: pick(args, oauthToken.bodyParams),
-        auth: {
-          client_id: args.client_id,
-          client_secret: args.client_secret,
-        },
+        ...getOAuthRequestOptions(args),
       })
     },
     /**
      * Introspect token
      */
     introspect: (
-      args: OauthIntrospectParameters & {
-        client_id: string
-        client_secret: string
-      }
+      args: OauthIntrospectParameters & OAuthRequestOptions
     ): Promise<OauthIntrospectResponse> => {
       return this.request<OauthIntrospectResponse>({
         path: oauthIntrospect.path(),
         method: oauthIntrospect.method,
         query: pick(args, oauthIntrospect.queryParams),
         body: pick(args, oauthIntrospect.bodyParams),
-        auth: {
-          client_id: args.client_id,
-          client_secret: args.client_secret,
-        },
+        ...getOAuthRequestOptions(args),
       })
     },
     /**
      * Revoke token
      */
     revoke: (
-      args: OauthRevokeParameters & {
-        client_id: string
-        client_secret: string
-      }
+      args: OauthRevokeParameters & OAuthRequestOptions
     ): Promise<OauthRevokeResponse> => {
       return this.request<OauthRevokeResponse>({
         path: oauthRevoke.path(),
         method: oauthRevoke.method,
         query: pick(args, oauthRevoke.queryParams),
         body: pick(args, oauthRevoke.bodyParams),
-        auth: {
-          client_id: args.client_id,
-          client_secret: args.client_secret,
-        },
+        ...getOAuthRequestOptions(args),
       })
     },
   }
@@ -1297,4 +1284,14 @@ type Method = "get" | "post" | "patch" | "delete"
 type QueryParams =
   Record<string, string | number | boolean | string[] | null> | URLSearchParams
 
-type WithAuth<P> = P & { auth?: string }
+type OAuthRequestOptions = Pick<EndpointRequestOptions, "betas"> & {
+  client_id: string
+  client_secret: string
+}
+
+function getOAuthRequestOptions(args: OAuthRequestOptions) {
+  return {
+    ...getEndpointRequestOptions(args),
+    auth: { client_id: args.client_id, client_secret: args.client_secret },
+  }
+}
