@@ -355,8 +355,10 @@ export type CreateViewRequest = {
   // database_id and create_database.
   view_id?: IdRequest
   // Filter to apply to the view. Uses the same format as the data source query filter.
+  // Simple property filters appear in the view's filter bar. For example, a status filter
+  // can exclude several values with does_not_equal.
   filter?: ViewFilterRequest
-  // Sorts to apply to the view. Uses the same format as the data source query sorts.
+  // Property sorts to save on the view. Timestamp sorts are accepted but are not saved.
   sorts?: ViewSortsRequest
   // Quick filters to pin in the view's filter bar. Keys are property names or IDs. Values
   // are filter conditions (same shape as a property filter but without the property
@@ -1137,8 +1139,9 @@ export type PageMarkdownResponse = {
   object: "page_markdown"
   // The ID of the page or block.
   id: IdResponse
-  // The page content as Markdown, in the syntax set by `markdown_version`: enhanced
-  // markdown (`v1`, the default) or Notion-flavored Markdown (`v2`).
+  // The page content as Markdown, in the syntax set by `markdown_version`: Notion-flavored
+  // Markdown (`v2`, recommended) or enhanced markdown (`v1`, deprecated, the default on
+  // current Notion-Versions).
   markdown: string
   // Whether the content was truncated due to exceeding the record count limit.
   truncated: boolean
@@ -1343,12 +1346,38 @@ export type PublicApiAsyncTaskStatusResultJsonValue =
   | { [key: string]: PublicApiAsyncTaskStatusResultJsonValue }
 
 /**
- * A property filter condition. Same shape as a property filter but without the
- * "property" field (the hashmap key identifies the property). For example: { "select": {
- * "equals": "High" } }. Pass an empty object to add the property to the filter bar
- * without criteria.
+ * A property filter condition. The quick filter key identifies the property. Pass an
+ * empty object to add the property to the filter bar without criteria.
  */
-type QuickFilterConditionRequest = Record<string, never>
+type QuickFilterConditionRequest =
+  | EmptyObject
+  | { title: TextPropertyFilter; type?: "title" }
+  | { rich_text: TextPropertyFilter; type?: "rich_text" }
+  | { number: NumberPropertyFilter; type?: "number" }
+  | { checkbox: CheckboxPropertyFilter; type?: "checkbox" }
+  | { select: SelectPropertyFilter; type?: "select" }
+  | { multi_select: MultiSelectPropertyFilter; type?: "multi_select" }
+  | { status: StatusPropertyFilter; type?: "status" }
+  | { date: DatePropertyFilter; type?: "date" }
+  | { people: PeoplePropertyFilter; type?: "people" }
+  | { files: ExistencePropertyFilter; type?: "files" }
+  | { url: TextPropertyFilter; type?: "url" }
+  | { email: TextPropertyFilter; type?: "email" }
+  | { phone_number: TextPropertyFilter; type?: "phone_number" }
+  | { relation: RelationPropertyFilter; type?: "relation" }
+  | { created_by: PeoplePropertyFilter; type?: "created_by" }
+  | { created_time: DatePropertyFilter; type?: "created_time" }
+  | { last_edited_by: PeoplePropertyFilter; type?: "last_edited_by" }
+  | { last_edited_time: DatePropertyFilter; type?: "last_edited_time" }
+  | { formula: FormulaPropertyFilter; type?: "formula" }
+  | { unique_id: NumberPropertyFilter; type?: "unique_id" }
+  | { rollup: RollupPropertyFilter; type?: "rollup" }
+  | {
+      verification:
+        | VerificationPropertyStatusFilter
+        | VerificationPropertyDoesNotEqualFilter
+      type?: "verification"
+    }
 
 type RelationGroupByConfigRequest = {
   // The property type for grouping.
@@ -1947,13 +1976,13 @@ type ViewConfigRequest =
   | ChartViewConfigRequest
 
 /**
- * Filter for the view. Uses the same format as the data source query filter (property
- * filters, timestamp filters, or compound and/or filters). Simple property filters appear
- * in the view's filter bar in the Notion UI. Select, status, and multi_select filter
- * operators accept a single string or an array of strings to filter by multiple values
- * (e.g. { "does_not_equal": ["Done", "Archive"] }).
+ * A property filter, timestamp filter, or compound and/or filter.
  */
-type ViewFilterRequest = Record<string, never>
+export type ViewFilterRequest =
+  | { or: GroupFilterOperatorArray }
+  | { and: GroupFilterOperatorArray }
+  | PropertyFilter
+  | TimestampFilter
 
 /**
  * Position of the new view in the database's view tab bar.
@@ -2010,10 +2039,14 @@ type ViewPropertySortRequest = {
 type ViewPropertySortsRequest = Array<ViewPropertySortRequest>
 
 /**
- * Sort for the view. Can be a property sort (with property and direction) or timestamp
- * sort (with timestamp and direction).
+ * Sort by property name or ID, or by timestamp.
  */
-type ViewSortRequest = Record<string, never>
+export type ViewSortRequest =
+  | { property: string; direction: "ascending" | "descending" }
+  | {
+      timestamp: "created_time" | "last_edited_time"
+      direction: "ascending" | "descending"
+    }
 
 type ViewSortsRequest = Array<ViewSortRequest>
 
