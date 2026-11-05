@@ -6,6 +6,11 @@ on:
       - main
   workflow_dispatch: {}
 
+concurrency:
+  group: npm-publish
+  queue: max
+  cancel-in-progress: false
+
 permissions: {}
 
 jobs:
@@ -31,20 +36,30 @@ jobs:
       # Drop this step after Node 22 support ends and all selected Node versions bundle npm >=11.10.
       - name: Use npm with release-age support
         run: npm install -g npm@11.21.1
-      - run: npm ci
-      - run: npm run build
-      - run: npm run lint
-      - run: npm run test
-      - name: Publish to npm
+      - name: Check whether the version is published
+        id: version
         run: |
           PACKAGE_NAME=$(jq -r '.name' package.json)
           PACKAGE_VERSION=$(jq -r '.version' package.json)
-          if npm view "$PACKAGE_NAME" versions | grep -q "$PACKAGE_VERSION"; then
+          if npm view "$PACKAGE_NAME@$PACKAGE_VERSION" version --json > "$RUNNER_TEMP/npm-version.json"; then
             echo "Package $PACKAGE_NAME@$PACKAGE_VERSION already exists. Skipping publish."
+            echo "publish=false" >> "$GITHUB_OUTPUT"
+          elif jq -e '.error.code == "E404"' "$RUNNER_TEMP/npm-version.json" > /dev/null; then
+            echo "publish=true" >> "$GITHUB_OUTPUT"
           else
-            echo "Publishing $PACKAGE_NAME@$PACKAGE_VERSION..."
-            npm publish --ignore-scripts --provenance
+            exit 1
           fi
+      - run: npm ci
+        if: steps.version.outputs.publish == 'true'
+      - run: npm run build
+        if: steps.version.outputs.publish == 'true'
+      - run: npm run lint
+        if: steps.version.outputs.publish == 'true'
+      - run: npm run test
+        if: steps.version.outputs.publish == 'true'
+      - name: Publish to npm
+        if: steps.version.outputs.publish == 'true'
+        run: npm publish --ignore-scripts --provenance
 
       - name: Create and push tag
         if: github.event_name == 'push' && contains(github.event.head_commit.message, 'Bump version to')
