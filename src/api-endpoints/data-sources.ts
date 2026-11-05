@@ -204,6 +204,24 @@ type NumberDatabasePropertyConfigResponse = {
   }
 }
 
+export type PageOrDataSourceListResponse = {
+  type: "page_or_data_source"
+  page_or_data_source: EmptyObject
+  object: "list"
+  next_cursor: string | null
+  has_more: boolean
+  results: Array<
+    | PageObjectResponse
+    | PartialPageObjectResponse
+    | PartialDataSourceObjectResponse
+    | DataSourceObjectResponse
+  >
+  request_status?: {
+    type: "complete" | "incomplete"
+    incomplete_reason?: "query_result_limit_reached"
+  }
+}
+
 /**
  * The parent of the data source. This is typically a database (`database_id`), but for
  * externally synced data sources, can be another data source (`data_source_id`).
@@ -588,23 +606,7 @@ export type QueryDataSourceParameters = QueryDataSourcePathParameters &
   QueryDataSourceQueryParameters &
   QueryDataSourceBodyParameters
 
-export type QueryDataSourceResponse = {
-  type: "page_or_data_source"
-  page_or_data_source: EmptyObject
-  object: "list"
-  next_cursor: string | null
-  has_more: boolean
-  results: Array<
-    | PageObjectResponse
-    | PartialPageObjectResponse
-    | PartialDataSourceObjectResponse
-    | DataSourceObjectResponse
-  >
-  request_status?: {
-    type: "complete" | "incomplete"
-    incomplete_reason?: "query_result_limit_reached"
-  }
-}
+export type QueryDataSourceResponse = PageOrDataSourceListResponse
 
 /**
  * Query a data source

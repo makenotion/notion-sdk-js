@@ -1,15 +1,7 @@
 // cspell:disable-file
 // Note: This is a generated file. DO NOT EDIT!
 
-import type {
-  EmptyObject,
-  PageObjectResponse,
-  PartialPageObjectResponse,
-} from "./common"
-import type {
-  DataSourceObjectResponse,
-  PartialDataSourceObjectResponse,
-} from "./data-sources"
+import type { PageOrDataSourceListResponse } from "./data-sources"
 
 type SearchQueryParameters = {
   // Property names or IDs to include in each page's `properties` object. Other properties
@@ -33,23 +25,7 @@ type SearchBodyParameters = {
 
 export type SearchParameters = SearchQueryParameters & SearchBodyParameters
 
-export type SearchResponse = {
-  type: "page_or_data_source"
-  page_or_data_source: EmptyObject
-  object: "list"
-  next_cursor: string | null
-  has_more: boolean
-  results: Array<
-    | PageObjectResponse
-    | PartialPageObjectResponse
-    | PartialDataSourceObjectResponse
-    | DataSourceObjectResponse
-  >
-  request_status?: {
-    type: "complete" | "incomplete"
-    incomplete_reason?: "query_result_limit_reached"
-  }
-}
+export type SearchResponse = PageOrDataSourceListResponse
 
 /**
  * Search by title
