@@ -4653,6 +4653,8 @@ type StartExternalAgentStubSessionBodyParameters = {
   }
   // Preferred model hint. The stub echoes it back and may ignore it.
   model?: string
+  // Preferred reasoning effort hint. The stub echoes it back and may ignore it.
+  reasoning_effort?: string
   // Working directory hint. Not applicable to this provider; echoed back.
   cwd?: string
   // BCP 47 locale identifier such as `en-US`.
@@ -4668,6 +4670,7 @@ export type StartExternalAgentStubSessionParameters =
 export type StartExternalAgentStubSessionResponse = {
   session_id: string
   model?: string
+  reasoning_effort?: string
   cwd?: string
   last_active_at?: string
 }
@@ -4684,6 +4687,7 @@ export const startExternalAgentStubSession = {
     "client_reference_id",
     "configs",
     "model",
+    "reasoning_effort",
     "cwd",
     "locale",
     "system_prompt",
