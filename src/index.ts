@@ -7,6 +7,7 @@
  * @packageDocumentation
  */
 
+import Client from "./Client"
 import type {
   QueryDataSourceParameters,
   RichTextItemResponseCommon,
@@ -287,7 +288,8 @@ export type QueryDataSourceSort = NonNullable<
   QueryDataSourceParameters["sorts"]
 >[number]
 
-export { default as Client } from "./Client"
+// Keep the emitted Client assignment recognizable to Node 22's ESM loader.
+export { Client }
 export { LogLevel, type Logger } from "./logging"
 export {
   // Error codes
