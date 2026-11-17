@@ -5,6 +5,7 @@ import {
   Client,
   InvalidPathParameterError,
   LogLevel,
+  RequestTimeoutError,
   UnknownHTTPResponseError,
   isHTTPResponseError,
 } from "../src"
@@ -1913,6 +1914,53 @@ describe("Notion SDK Client", () => {
 
         expect(mockFetch).toHaveBeenCalledTimes(2)
       })
+    })
+  })
+
+  describe("request timeout", () => {
+    beforeEach(() => {
+      jest.useFakeTimers()
+    })
+
+    afterEach(() => {
+      jest.useRealTimers()
+    })
+
+    it("times out when the response headers never arrive", async () => {
+      const mockFetch: jest.MockedFn<typeof fetch> = jest.fn()
+      mockFetch.mockReturnValue(new Promise<Response>(() => {}))
+      const notion = new Client({
+        fetch: mockFetch,
+        timeoutMs: 1000,
+        retry: false,
+      })
+
+      const promise = notion.blocks.retrieve({ block_id: TEST_BLOCK_ID })
+      const assertion =
+        expect(promise).rejects.toBeInstanceOf(RequestTimeoutError)
+      await jest.advanceTimersByTimeAsync(1000)
+      await assertion
+    })
+
+    it("times out when the response body stalls after the headers arrive", async () => {
+      const mockFetch: jest.MockedFn<typeof fetch> = jest.fn()
+      mockFetch.mockResolvedValue({
+        ok: true,
+        status: 200,
+        headers: new Headers(),
+        text: () => new Promise<string>(() => {}),
+      } as Response)
+      const notion = new Client({
+        fetch: mockFetch,
+        timeoutMs: 1000,
+        retry: false,
+      })
+
+      const promise = notion.blocks.retrieve({ block_id: TEST_BLOCK_ID })
+      const assertion =
+        expect(promise).rejects.toBeInstanceOf(RequestTimeoutError)
+      await jest.advanceTimersByTimeAsync(1000)
+      await assertion
     })
   })
 
