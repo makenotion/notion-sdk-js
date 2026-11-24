@@ -377,6 +377,8 @@ type GalleryViewConfigResponse = {
   type: "gallery"
   // Properties to display on gallery cards.
   properties?: Array<ViewPropertyConfigResponse>
+  // Grouping configuration.
+  group_by?: GroupByConfigResponse
   // Card cover/preview image configuration.
   cover?: CoverConfigResponse
   // Cover image size.
@@ -411,6 +413,8 @@ type ListViewConfigResponse = {
   type: "list"
   // Properties to display in list items.
   properties?: Array<ViewPropertyConfigResponse>
+  // Grouping configuration.
+  group_by?: GroupByConfigResponse
 }
 
 type MapViewConfigResponse = {
@@ -567,7 +571,8 @@ type TableViewConfigResponse = {
   subtasks?: SubtaskConfigResponse
   // Whether to wrap cell content by default.
   wrap_cells?: boolean
-  // Index of the last frozen column. Columns up to and including this index are frozen.
+  // Index of the last frozen column. Columns up to and including this index are frozen. -1
+  // means no columns are frozen.
   frozen_column_index?: number
   // Whether to show vertical lines between columns.
   show_vertical_lines?: boolean
@@ -621,6 +626,8 @@ type TimelineViewConfigResponse = {
   end_date_property_name?: string
   // Properties to display on timeline items.
   properties?: Array<ViewPropertyConfigResponse>
+  // Grouping configuration.
+  group_by?: GroupByConfigResponse
   // Whether to show the table panel alongside the timeline.
   show_table?: boolean
   // Properties to display in the table panel (when show_table is true).
