@@ -715,11 +715,17 @@ type UpdatePageMarkdownBodyParameters = {
         // Notion-flavored Markdown (`v2`, recommended) or enhanced markdown (`v1`, deprecated,
         // the default on current Notion-Versions).
         content: string
+        /** @deprecated */
+
+        // Deprecated: use `position` with `{"type":"after_content","anchor":"..."}` instead.
         // Selection of existing content to insert after, using the ellipsis format ("start
-        // text...end text"). Omit to append at the end of the page.
+        // text...end text"). Cannot be combined with `position`.
         after?: string
-        // Explicit position for inserted content. Use {"type":"start"} to prepend or
-        // {"type":"end"} to append. Cannot be combined with after.
+        // Where to insert the content. Use `{"type":"start"}` to prepend or `{"type":"end"}` to
+        // append. Use `{"type":"after_content","anchor":"..."}` or
+        // `{"type":"before_content","anchor":"..."}` to insert next to the block that the anchor
+        // matches; anchored positions require `markdown_version: "v2"`. Omit to append at the
+        // end of the page.
         position?:
           | {
               // Insert the content at the start of the page.
@@ -728,6 +734,30 @@ type UpdatePageMarkdownBodyParameters = {
           | {
               // Insert the content at the end of the page.
               type: "end"
+            }
+          | {
+              // Insert the content after the block where the anchor ends, at that block's nesting
+              // level, so anchoring on a parent block inserts after its children.
+              type: "after_content"
+              // Text copied exactly from the page, starting at the beginning of a line with its
+              // leading syntax, such as `## ` or `- `, and keeping its inline formatting and escapes.
+              // It doesn't need the whole line, only enough to match exactly one place on the page. If
+              // the target's text repeats, extend the anchor without moving its end for after_content
+              // or its start for before_content: start after_content at an earlier unique line, and
+              // continue before_content into the lines after it.
+              anchor: string
+            }
+          | {
+              // Insert the content before the block where the anchor starts, at that block's nesting
+              // level.
+              type: "before_content"
+              // Text copied exactly from the page, starting at the beginning of a line with its
+              // leading syntax, such as `## ` or `- `, and keeping its inline formatting and escapes.
+              // It doesn't need the whole line, only enough to match exactly one place on the page. If
+              // the target's text repeats, extend the anchor without moving its end for after_content
+              // or its start for before_content: start after_content at an earlier unique line, and
+              // continue before_content into the lines after it.
+              anchor: string
             }
       }
     }
