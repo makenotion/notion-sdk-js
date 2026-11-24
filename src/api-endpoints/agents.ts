@@ -19,7 +19,13 @@ import type {
 export type UpdateSessionStreamParameters =
   | {
       message: string
-      agent_id?: string | "notion_ai" | "33333333-3333-3333-3333-333333333333"
+      /**
+       * The agent to start a session with: a custom agent ID, or `notion_ai` for the personal agent with a personal access token. Required when `session_id` is omitted.
+       */
+      agent_id?: string | "notion_ai"
+      /**
+       * An existing session to send this message to. Omit it to start a new session.
+       */
       session_id?: string
       attachments?: Array<{
         file_upload: {
@@ -1278,7 +1284,7 @@ export const queryAgents = {
 type GetAgentPathParameters = {
   // The agent ID (a UUID), or `notion_ai` for the personal agent. Endpoint-specific
   // restrictions still apply.
-  agent_id: IdRequest | "notion_ai" | "33333333-3333-3333-3333-333333333333"
+  agent_id: IdRequest | "notion_ai"
 }
 
 type GetAgentQueryParameters = {
@@ -1684,7 +1690,7 @@ export const getAgent = {
 type DeleteAgentPathParameters = {
   // The agent ID (a UUID), or `notion_ai` for the personal agent. The personal agent
   // cannot be deleted.
-  agent_id: IdRequest | "notion_ai" | "33333333-3333-3333-3333-333333333333"
+  agent_id: IdRequest | "notion_ai"
 }
 
 export type DeleteAgentParameters = DeleteAgentPathParameters
@@ -1709,10 +1715,437 @@ export const deleteAgent = {
   path: (p: DeleteAgentPathParameters): string => `agents/${p.agent_id}`,
 } as const
 
+type UpdateAgentPathParameters = {
+  // The agent ID (a UUID), or `notion_ai` for the personal agent. Endpoint-specific
+  // restrictions still apply.
+  agent_id: IdRequest | "notion_ai"
+}
+
+type UpdateAgentBodyParameters = {
+  // Enable or disable the agent. Re-enabling works only for an agent an editor disabled,
+  // through the API or in agent settings.
+  status?: "active" | "disabled"
+  // The agent's display name.
+  name?: string
+  // The custom agent's short description. Use an empty string to clear it.
+  description?: string
+  // Whether the personal-access-token owner has this agent in their favorites.
+  is_favorited?: boolean
+  // The model selection. Use auto to let Notion choose, or pinned with an available public
+  // model ID.
+  model?:
+    | {
+        // Let Notion select the model for each run.
+        mode: "auto"
+      }
+    | {
+        // Use the selected model for each run after publishing the agent.
+        mode: "pinned"
+        // A public model ID, such as `claude-sonnet-5`. It must currently be available to the
+        // caller in this workspace.
+        id: string
+      }
+}
+
+export type UpdateAgentParameters = UpdateAgentPathParameters &
+  UpdateAgentBodyParameters
+
+export type UpdateAgentResponse = {
+  // Always `agent`
+  object: "agent"
+  id: IdResponse | "notion_ai"
+  // What kind of agent this is: "notion_ai" is the personal agent; "custom_agent" is a
+  // standalone agent you chat with; "autofill_custom_agent" fills a database property;
+  // "external" runs through an external provider.
+  agent_type:
+    "notion_ai" | "custom_agent" | "autofill_custom_agent" | "external"
+  name: string
+  description: string | null
+  instructions_page_id: IdResponse | null
+  icon:
+    | PageIconResponse
+    | {
+        // Type of icon. In this case, a custom agent avatar.
+        type: "custom_agent_avatar"
+        // The static and animated URLs for the agent avatar.
+        custom_agent_avatar: {
+          // The URL of the static custom agent avatar.
+          static_url: string
+          // The URL of the animated custom agent avatar.
+          animated_url: string
+        }
+      }
+    | null
+  // The model the agent runs on: auto (Notion selects) or a pinned model.
+  model:
+    | {
+        // Always `auto`
+        mode: "auto"
+      }
+    | {
+        // Always `pinned`
+        mode: "pinned"
+        // The public model this agent maps to (e.g. "claude-sonnet-5"), or null for a
+        // pre-release / early-access model.
+        id: string | null
+      }
+  // Integrations the agent is connected to (Notion, Slack, Discord, MCP servers, and other
+  // connectors), each with an account and per-target permissions.
+  connections: Array<
+    | {
+        // Always `notion`
+        type: "notion"
+        name: string
+        account: null
+        permissions: Array<{
+          target:
+            | {
+                // Always `page`
+                type: "page"
+                id: string
+              }
+            | {
+                // Always `database_property`
+                type: "database_property"
+                data_source_id: string
+                property_id: string
+              }
+            | {
+                // Always `agent`
+                type: "agent"
+                id: string
+              }
+            | {
+                // Always `workspace`
+                type: "workspace"
+              }
+            | {
+                // Always `owner_private_pages`
+                type: "owner_private_pages"
+              }
+            | {
+                // Always `web_search`
+                type: "web_search"
+                // Domains web search is restricted to, or null when unrestricted.
+                allowed_domains: Array<string> | null
+              }
+            | {
+                // Always `notion_help_docs_search`
+                type: "notion_help_docs_search"
+              }
+          // Content roles ("reader" | "comment_only" | "read_and_write" | "editor") for scoped
+          // targets, or search verbs ("allow" | "disallow") for the search targets.
+          scopes: Array<string>
+        }>
+      }
+    | {
+        // Always `slack`
+        type: "slack"
+        name: string
+        // The linked Slack workspace, null when none is linked, or "hidden" when the caller
+        // lacks edit access to the agent.
+        account:
+          | {
+              // Always `slack_workspace`
+              type: "slack_workspace"
+              team_id: string
+            }
+          | "hidden"
+          | null
+        permissions: Array<{
+          target:
+            | {
+                // Always `slack_channel`
+                type: "slack_channel"
+                id: string
+              }
+            | {
+                // Always `slack_all_public_channels`
+                type: "slack_all_public_channels"
+              }
+            | {
+                // Always `slack_all_channels`
+                type: "slack_all_channels"
+              }
+          // Slack verbs granted on this target ("read" | "write" | "reply_in_thread" | "react").
+          scopes: Array<string>
+        }>
+      }
+    | {
+        // Always `discord`
+        type: "discord"
+        name: string
+        // The linked Discord server, null when none is linked, or "hidden" when the caller lacks
+        // edit access to the agent.
+        account:
+          | {
+              // Always `discord_server`
+              type: "discord_server"
+              id: string
+            }
+          | "hidden"
+          | null
+        permissions: Array<{
+          target:
+            | {
+                // Always `discord_channel`
+                type: "discord_channel"
+                id: string
+              }
+            | {
+                // Always `discord_all_channels`
+                type: "discord_all_channels"
+              }
+          // Discord verbs granted on this target ("read" | "write" | "reply_in_thread" | "react").
+          scopes: Array<string>
+        }>
+      }
+    | {
+        // Always `mcp_server`
+        type: "mcp_server"
+        name: string
+        // The MCP server host, null when none is linked, or "hidden" when the caller lacks edit
+        // access to the agent.
+        account:
+          | {
+              // Always `mcp_server`
+              type: "mcp_server"
+              // The MCP server host (never the full URL, which can carry credentials or private path
+              // components).
+              server_host: string
+            }
+          | "hidden"
+          | null
+        // The tools the agent may call, null when all tools are enabled (including any the
+        // server adds later), or "hidden" when the caller lacks edit access to the agent.
+        enabled_tools:
+          Array<{ name: string; title: string | null }> | "hidden" | null
+        // Whether read / write tool calls run without a confirmation step.
+        run_tools_automatically: {
+          // Whether read tool calls run without a confirmation step.
+          read: boolean
+          // Whether write tool calls run without a confirmation step.
+          write: boolean
+        }
+      }
+    | {
+        // Always `custom_mcp_server`
+        type: "custom_mcp_server"
+        name: string
+        // The MCP server host, null when none is linked, or "hidden" when the caller lacks edit
+        // access to the agent.
+        account:
+          | {
+              // Always `mcp_server`
+              type: "mcp_server"
+              // The MCP server host (never the full URL, which can carry credentials or private path
+              // components).
+              server_host: string
+            }
+          | "hidden"
+          | null
+        // The tools the agent may call, null when all tools are enabled (including any the
+        // server adds later), or "hidden" when the caller lacks edit access to the agent.
+        enabled_tools:
+          Array<{ name: string; title: string | null }> | "hidden" | null
+        // Whether read / write tool calls run without a confirmation step.
+        run_tools_automatically: {
+          // Whether read tool calls run without a confirmation step.
+          read: boolean
+          // Whether write tool calls run without a confirmation step.
+          write: boolean
+        }
+      }
+    | {
+        // The connector's machine name (e.g. "github", "google_drive").
+        type:
+          | "asana"
+          | "box"
+          | "calendar"
+          | "computer"
+          | "confluence"
+          | "cursor"
+          | "feedback"
+          | "files"
+          | "fs"
+          | "github"
+          | "gmail"
+          | "google_calendar"
+          | "google_drive"
+          | "google_drive_oauth"
+          | "gtm"
+          | "helpdocs"
+          | "images"
+          | "jira"
+          | "linear"
+          | "mail"
+          | "marketplace"
+          | "memory"
+          | "microsoft_teams"
+          | "microsoft_teams_oauth"
+          | "outlook"
+          | "salesforce"
+          | "search"
+          | "security"
+          | "sharepoint"
+          | "sharepoint_oauth"
+          | "shopify"
+          | "skills"
+          | "system"
+          | "test"
+          | "web"
+          | "webhooks"
+          | "worker"
+          | "workers"
+        name: string
+        // The provider-side account identifier, null when none is linked, or "hidden" when the
+        // caller lacks edit access to the agent.
+        account: string | null
+        permissions: Array<{
+          target: { type: string; id: string }
+          // The scopes granted on this target.
+          scopes: Array<string>
+        }>
+      }
+  >
+  // "active" when the agent can run; "disabled" when it is paused (see pause_reason);
+  // "deleted" when it has been removed.
+  status: "active" | "disabled" | "deleted"
+  // Why the agent is paused when status is "disabled" (e.g. "credit_limit",
+  // "disabled_from_workspace_settings"); null when active.
+  pause_reason:
+    | "run_limit"
+    | "credit_limit"
+    | "runaway_credit_usage"
+    | "workspace_credit_limit"
+    | "owner_allowance_limit"
+    | "failure_limit"
+    | "mark_session_failed_autopause"
+    | "disabled_from_workspace_settings"
+    | "disabled_from_workspace_settings_but_resumable"
+    | "disabled_from_api"
+    | "disabled_from_agent_settings"
+    | "disabled_due_to_no_members_with_access"
+    | "disabled_due_to_lack_of_editors"
+    | "disabled_by_notion"
+    | "internal_error"
+    | "needs_user_review"
+    | "tool_unavailable"
+    | null
+  created_by: {
+    // Always `user`
+    object: "user"
+    // Always `user`
+    type: "user"
+    // The ID of the user that created this agent.
+    id: IdResponse
+  } | null
+  version: {
+    // The ID of the published artifact.
+    id: IdResponse
+    // The version number.
+    number: number
+    // The ISO 8601 timestamp when this version was published.
+    published_at: string
+  } | null
+  agent_version: {
+    // The ID of the published artifact.
+    id: IdResponse
+    // The version number.
+    number: number
+    // The ISO 8601 timestamp when this version was published.
+    published_at: string
+  } | null
+  // Whether the draft has edits not yet in the published version, or "hidden" when the
+  // caller lacks edit access to the agent.
+  has_unpublished_changes: boolean | "hidden"
+  // ISO 8601 timestamp of the agent's most recent run, null if it has never run, or
+  // "hidden" when the caller lacks edit access to the agent.
+  last_run_time: string | "hidden" | null
+  // ISO 8601 timestamp of the agent's most recent run, null if it has never run, or
+  // "hidden" when the caller lacks edit access to the agent.
+  last_run_at: string | "hidden" | null
+  // The per-agent credit limit that applies to this agent, null when uncapped, or "hidden"
+  // when the caller lacks full access to the agent. This is the effective limit computed
+  // at runtime, folding in both the agent's own limit and any workspace-admin default.
+  credit_limit: number | "hidden" | null
+  // The agent's configured triggers, each with a machine type, an enabled flag, and (for
+  // recurrence triggers) a structured schedule.
+  triggers: Array<{
+    // Machine trigger type (e.g. "notion.agent.mentioned", "recurrence",
+    // "slack.reaction.added").
+    type: string
+    // Whether this trigger is currently enabled.
+    enabled: boolean
+    // Structured recurrence cadence. Present only for recurrence triggers.
+    schedule?: {
+      // Base cadence unit ("hour" | "day" | "week" | "month" | "year").
+      frequency: string
+      // Multiplier on the frequency (e.g. every 2 weeks).
+      interval: number
+      // Days of the week the schedule runs (e.g. "monday"). Present for weekly cadences and
+      // monthly weekday restrictions.
+      weekdays?: Array<string>
+      // Days of the month the schedule runs. Present for monthly monthday restrictions.
+      monthdays?: Array<number>
+      // Week-of-month ordinals for a monthly weekday restriction (e.g. [2, 3] for the 2nd and
+      // 3rd occurrence); -1 means the last week.
+      week_numbers?: Array<number>
+      // Hour of day (0–23) the schedule runs.
+      hour?: number
+      // Minute of the hour (0–59) the schedule runs.
+      minute?: number
+      // IANA timezone (e.g. "America/New_York").
+      timezone?: string
+      // ISO 8601 timestamp the schedule starts from.
+      start_date?: string
+      // When the schedule stops, when it is bounded.
+      end?:
+        | {
+            // Always `date`
+            type: "date"
+            // ISO 8601 timestamp when the schedule stops.
+            end_at: string
+          }
+        | {
+            // Always `count`
+            type: "count"
+            // Number of occurrences after which the schedule stops.
+            occurrences: number
+          }
+    }
+    // Remaining per-type trigger configuration (e.g. watched channel ids, reaction config),
+    // keys in snake_case. Present only when the trigger carries such state.
+    config?: Record<string, Record<string, never>>
+  }>
+  // Whether this agent is in the caller's personal favorites, or null when the caller has
+  // no personal favorites scope.
+  is_favorited: boolean | null
+  // Date and time when this agent was created.
+  created_time?: string
+  // Date and time when this agent was last edited.
+  last_edited_time?: string
+  // The agent's inline instructions when verbose=true, or null when its instructions are
+  // stored on a page.
+  instructions?: string | null
+}
+
+/**
+ * Update agent
+ */
+export const updateAgent = {
+  method: "patch",
+  pathParams: ["agent_id"],
+  queryParams: [],
+  bodyParams: ["status", "name", "description", "is_favorited", "model"],
+
+  path: (p: UpdateAgentPathParameters): string => `agents/${p.agent_id}`,
+} as const
+
 type GetInsightsPathParameters = {
   // The agent ID (a UUID), or `notion_ai` for the personal agent. Endpoint-specific
   // restrictions still apply.
-  agent_id: IdRequest | "notion_ai" | "33333333-3333-3333-3333-333333333333"
+  agent_id: IdRequest | "notion_ai"
 }
 
 type GetInsightsQueryParameters = {
@@ -1762,7 +2195,9 @@ export type GetInsightsResponse = {
     // One of: `user`, `bot`
     type: "user" | "bot"
   } | null
-  // Premium AI credits consumed by this agent within the window.
+  // Premium AI credits consumed by this agent within the window. Values of 1 or more are
+  // whole credits, and values below 1 have at most two significant figures. Both round
+  // down.
   total_credits_used: number
   // Enforced per-agent credit limit; null when none is configured, and "hidden" when the
   // caller lacks full access to the agent.
@@ -1787,12 +2222,12 @@ export const getInsights = {
 type UpdateAgentStatusPathParameters = {
   // The agent ID (a UUID), or `notion_ai` for the personal agent. Endpoint-specific
   // restrictions still apply.
-  agent_id: IdRequest | "notion_ai" | "33333333-3333-3333-3333-333333333333"
+  agent_id: IdRequest | "notion_ai"
 }
 
 type UpdateAgentStatusBodyParameters = {
-  // Set to "active" to re-enable an agent that was disabled through this API, or
-  // "disabled" to turn off a running agent.
+  // Set to "active" to re-enable an agent that an editor disabled, through this API or in
+  // agent settings, or "disabled" to turn off a running agent.
   status: "active" | "disabled"
 }
 
@@ -1845,7 +2280,7 @@ export const updateAgentStatus = {
 type UpdateAgentCreditLimitPathParameters = {
   // The ID of the custom agent (a UUID). The personal agent (Notion AI) is not supported
   // by this endpoint.
-  agent_id: IdRequest | "notion_ai" | "33333333-3333-3333-3333-333333333333"
+  agent_id: IdRequest | "notion_ai"
 }
 
 type UpdateAgentCreditLimitBodyParameters = {
@@ -1887,8 +2322,7 @@ type AgentBatchBodyParameters = {
         action: "update_status"
         // The agent ID (a UUID), or `notion_ai` for the personal agent. Endpoint-specific
         // restrictions still apply.
-        agent_id:
-          IdRequest | "notion_ai" | "33333333-3333-3333-3333-333333333333"
+        agent_id: IdRequest | "notion_ai"
         // The status to apply to this agent.
         fields: {
           // "active" to re-enable an agent disabled through this API, or "disabled" to turn it
@@ -1898,12 +2332,12 @@ type AgentBatchBodyParameters = {
       }
     | {
         // Set or clear one agent's credit limit, equivalent to `PATCH
-        // /v1/agents/:agent_id/credit_limit`. Requires full access to the agent.
+        // /v1/agents/:agent_id/credit_limit`. Requires a personal access token whose user has
+        // full access to the agent.
         action: "update_credit_limit"
         // The agent ID (a UUID), or `notion_ai` for the personal agent. Endpoint-specific
         // restrictions still apply.
-        agent_id:
-          IdRequest | "notion_ai" | "33333333-3333-3333-3333-333333333333"
+        agent_id: IdRequest | "notion_ai"
         // The credit limit to apply to this agent.
         fields: {
           // The per-agent credit limit as a non-negative integer, or null to clear the limit.
@@ -1915,8 +2349,7 @@ type AgentBatchBodyParameters = {
         action: "delete"
         // The agent ID (a UUID), or `notion_ai` for the personal agent. Endpoint-specific
         // restrictions still apply.
-        agent_id:
-          IdRequest | "notion_ai" | "33333333-3333-3333-3333-333333333333"
+        agent_id: IdRequest | "notion_ai"
       }
   >
 }
@@ -1948,8 +2381,10 @@ export const agentBatch = {
 type UpdateSessionBodyParameters =
   | {
       message: string
-      agent_id?:
-        IdRequest | "notion_ai" | "33333333-3333-3333-3333-333333333333"
+      // The agent to start a session with: a custom agent ID, or `notion_ai` for the personal
+      // agent with a personal access token. Required when `session_id` is omitted.
+      agent_id?: IdRequest | "notion_ai"
+      // An existing session to send this message to. Omit it to start a new session.
       session_id?: IdRequest
       attachments?: Array<{
         file_upload: { id: string }
@@ -2080,6 +2515,9 @@ export type RetrieveSessionResponse = {
   chat_user_emails?: Array<string> | null
   tool_types?: Array<string> | null
   tool_call_count?: number | null
+  // Premium AI credits this session consumed. Values of 0.01 or more have at most two
+  // decimal places, and values below 0.01 have at most two significant figures. Both round
+  // down.
   credits_used?: number | null
   runs_completed?: number | null
   message_count?: number | null
@@ -2187,6 +2625,9 @@ export type QuerySessionsResponse = {
     chat_user_emails?: Array<string> | null
     tool_types?: Array<string> | null
     tool_call_count?: number | null
+    // Premium AI credits this session consumed. Values of 0.01 or more have at most two
+    // decimal places, and values below 0.01 have at most two significant figures. Both round
+    // down.
     credits_used?: number | null
     runs_completed?: number | null
     message_count?: number | null
@@ -3098,9 +3539,8 @@ export const cancelSession = {
 
 type ChatWithAgentPathParameters = {
   // The ID of the agent to chat with. Use a UUID for custom agents or `notion_ai` for
-  // Notion Agent (personal agent); the reserved UUID
-  // `33333333-3333-3333-3333-333333333333` remains supported for backward compatibility.
-  agent_id: IdRequest | "notion_ai" | "33333333-3333-3333-3333-333333333333"
+  // Notion Agent (personal agent).
+  agent_id: IdRequest | "notion_ai"
 }
 
 type ChatWithAgentQueryParameters = {
@@ -3369,9 +3809,7 @@ type ListAgentsQueryParameters = {
   >
   // Filter agents by one or more agent IDs. Use `notion_ai` for Notion Agent (personal
   // agent).
-  agent_ids?: Array<
-    IdRequest | "notion_ai" | "33333333-3333-3333-3333-333333333333"
-  >
+  agent_ids?: Array<IdRequest | "notion_ai">
   // Filter agents by one or more creator IDs. Use "me" for the user associated with the
   // API token.
   created_by?: Array<IdRequest | "me">
@@ -4014,9 +4452,8 @@ export const sendThreadMessage = {
 
 type ListThreadsPathParameters = {
   // The ID of the agent. Use a UUID for custom agents or `notion_ai` for Notion Agent
-  // (personal agent); the reserved UUID `33333333-3333-3333-3333-333333333333` remains
-  // supported for backward compatibility.
-  agent_id: IdRequest | "notion_ai" | "33333333-3333-3333-3333-333333333333"
+  // (personal agent).
+  agent_id: IdRequest | "notion_ai"
 }
 
 type ListThreadsQueryParameters = {
@@ -4109,7 +4546,8 @@ export type ListThreadsResponse = {
     // agent.
     tool_call_count?: number | null
     // Premium AI credits this thread consumed. Null when the caller lacks edit access to the
-    // agent.
+    // agent. Values of 0.01 or more have at most two decimal places, and values below 0.01
+    // have at most two significant figures. Both round down.
     credits_used?: number | null
     // Runs completed in this thread. Null when the caller lacks edit access to the agent, or
     // when the thread predates run tracking.
@@ -4386,9 +4824,8 @@ export const queryThreadMessages = {
 
 type QueryThreadsPathParameters = {
   // The ID of the agent. Use a UUID for custom agents or `notion_ai` for Notion Agent
-  // (personal agent); the reserved UUID `33333333-3333-3333-3333-333333333333` remains
-  // supported for backward compatibility.
-  agent_id: IdRequest | "notion_ai" | "33333333-3333-3333-3333-333333333333"
+  // (personal agent).
+  agent_id: IdRequest | "notion_ai"
 }
 
 type QueryThreadsBodyParameters = {
@@ -4489,7 +4926,8 @@ export type QueryThreadsResponse = {
     // agent.
     tool_call_count?: number | null
     // Premium AI credits this thread consumed. Null when the caller lacks edit access to the
-    // agent.
+    // agent. Values of 0.01 or more have at most two decimal places, and values below 0.01
+    // have at most two significant figures. Both round down.
     credits_used?: number | null
     // Runs completed in this thread. Null when the caller lacks edit access to the agent, or
     // when the thread predates run tracking.
@@ -4653,6 +5091,8 @@ type StartExternalAgentStubSessionBodyParameters = {
   }
   // Preferred model hint. The stub echoes it back and may ignore it.
   model?: string
+  // Preferred reasoning effort hint. The stub echoes it back and may ignore it.
+  reasoning_effort?: string
   // Working directory hint. Not applicable to this provider; echoed back.
   cwd?: string
   // BCP 47 locale identifier such as `en-US`.
@@ -4668,6 +5108,7 @@ export type StartExternalAgentStubSessionParameters =
 export type StartExternalAgentStubSessionResponse = {
   session_id: string
   model?: string
+  reasoning_effort?: string
   cwd?: string
   last_active_at?: string
 }
@@ -4684,6 +5125,7 @@ export const startExternalAgentStubSession = {
     "client_reference_id",
     "configs",
     "model",
+    "reasoning_effort",
     "cwd",
     "locale",
     "system_prompt",

@@ -96,6 +96,72 @@ export type DataSourceObjectResponse = {
   url: string
   // The public URL of the data source if it is publicly accessible.
   public_url: string | null
+  // Sync identity and available health, included when listing or retrieving data sources.
+  sync_metadata?: {
+    // Live collection sync health. Null means unavailable, not unhealthy. Missing timestamps
+    // are unknown.
+    health?:
+      | null
+      | {
+          checks: {
+            sync_version_updated_at: string
+            delta_synced_through_at?: string
+            last_execution_succeeded_at?: string
+          }
+          error: {
+            code: string
+            severity: "action_required" | "degraded" | "failing"
+          }
+          ok: false
+          paused: boolean
+          stage: "backfilling" | "initializing" | "steady"
+        }
+      | {
+          checks: {
+            sync_version_updated_at: string
+            delta_synced_through_at?: string
+            last_execution_succeeded_at?: string
+          }
+          ok: true
+          paused: boolean
+          stage: "backfilling" | "initializing" | "steady"
+        }
+      | { paused: true }
+    // Notion user who owns the sync credential, included when health is available.
+    owner_user_id?: IdResponse
+    // Provider resource synced to this data source, when available.
+    resource?: string
+    // Stored identity of an external database sync.
+    external_database_sync?: {
+      // The stored sync ID. This is not a credential.
+      sync_id: IdResponse
+      // The sync provider: github (GitHub), jira (Jira), or salesforce (Salesforce).
+      provider: "github" | "jira" | "salesforce"
+    }
+    // The provider of a legacy synced data source: Jira or Salesforce. Values are
+    // case-sensitive.
+    external_collection_type?: "Jira" | "Salesforce"
+    // The stored sync ID when provider details are unavailable. This is not a credential.
+    sync_id?: IdResponse
+    // Stored state for a legacy synced data source. Missing or invalid timestamps are
+    // omitted. This is not a live health check.
+    sync_state?: {
+      // Stored legacy sync state: true means syncing, false means not syncing, and
+      // row_limit_exceeded means the row limit stopped syncing. False does not guarantee a
+      // successful sync.
+      syncing: boolean | "row_limit_exceeded"
+      // Stored legacy sync update time in UTC ISO 8601 format. This does not guarantee that
+      // all source changes have been imported.
+      last_synced_at?: string
+      // Stored legacy sync checkpoint time in UTC ISO 8601 format.
+      last_sync_checkpoint_at?: string
+      // Stored legacy sync heartbeat time in UTC ISO 8601 format.
+      last_sync_heartbeat_at?: string
+    }
+    // Opaque, developer-defined collection key for a worker sync. It is not a globally
+    // unique ID or a credential. Worker status is not included.
+    synced_collection_key?: string
+  }
 }
 
 type DatabasePropertyConfigResponse = DatabasePropertyConfigResponseCommon &
@@ -589,8 +655,13 @@ type QueryDataSourceBodyParameters = {
   filter?: ViewFilterRequest
   start_cursor?: string | null
   page_size?: number
-  // Whether to return archived pages. When omitted or false, returns non-archived pages.
-  // When true, returns archived pages.
+  // Select active pages, archived pages, or both. Defaults to active. Takes precedence
+  // over is_archived. Trashed pages remain excluded, and permissions still apply.
+  archive_status?: "active" | "archived" | "all"
+  /** @deprecated */
+
+  // Legacy archive selector. False selects active pages. True selects archived pages.
+  // Ignored when archive_status is provided.
   is_archived?: boolean
   /** @deprecated Use `is_archived` instead. */
   in_trash?: boolean
@@ -622,6 +693,7 @@ export const queryDataSource = {
     "filter",
     "start_cursor",
     "page_size",
+    "archive_status",
     "is_archived",
     "result_type",
   ],

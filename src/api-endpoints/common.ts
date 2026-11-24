@@ -8,6 +8,21 @@ type AgentIdParentForBlockBasedObjectResponse = {
   agent_id: IdResponse
 }
 
+type AnnotationRequest = {
+  // Whether the text is formatted as bold.
+  bold?: boolean
+  // Whether the text is formatted as italic.
+  italic?: boolean
+  // Whether the text is formatted with a strikethrough.
+  strikethrough?: boolean
+  // Whether the text is formatted with an underline.
+  underline?: boolean
+  // Whether the text is formatted as code.
+  code?: boolean
+  // The color of the text.
+  color?: ApiColor
+}
+
 type AnnotationResponse = {
   bold: boolean
   italic: boolean
@@ -45,6 +60,18 @@ export type ApiColor =
   | "pink_background"
   | "red_background"
 
+type ArrayBasedPropertyValueResponse =
+  | TitleArrayBasedPropertyValueResponse
+  | RichTextArrayBasedPropertyValueResponse
+  | PeopleArrayBasedPropertyValueResponse
+  | RelationArrayBasedPropertyValueResponse
+
+type ArrayPartialRollupValueResponse = {
+  // Always `array`
+  type: "array"
+  array: Array<SimpleOrArrayPropertyValueResponse>
+}
+
 type BlockIdParentForBlockBasedObjectResponse = {
   // The parent type.
   type: "block_id"
@@ -72,6 +99,12 @@ type BoardViewConfigRequest = {
   // Card layout mode. "list" shows full cards, "compact" shows condensed cards. Pass null
   // to clear.
   card_layout?: "list" | "compact" | null
+}
+
+type BooleanFormulaPropertyValueResponse = {
+  // Always `boolean`
+  type: "boolean"
+  boolean: boolean | null
 }
 
 type BotInfoResponse = {
@@ -132,6 +165,12 @@ export type BotUserObjectResponse = {
 type ButtonPropertyConfigurationRequest = {
   // Always `button`
   type?: "button"
+  button: EmptyObject
+}
+
+type ButtonSimplePropertyValueResponse = {
+  // Always `button`
+  type: "button"
   button: EmptyObject
 }
 
@@ -295,6 +334,12 @@ type CheckboxPropertyConfigurationRequest = {
 
 type CheckboxPropertyFilter = { equals: boolean } | { does_not_equal: boolean }
 
+type CheckboxSimplePropertyValueResponse = {
+  // Always `checkbox`
+  type: "checkbox"
+  checkbox: boolean
+}
+
 export type ContentPositionSchema =
   | { type: "after_block"; after_block: { id: IdRequest } }
   | { type: "start" }
@@ -384,10 +429,22 @@ type CreatedByPropertyConfigurationRequest = {
   created_by: EmptyObject
 }
 
+type CreatedBySimplePropertyValueResponse = {
+  // Always `created_by`
+  type: "created_by"
+  created_by: UserValueResponse
+}
+
 type CreatedTimePropertyConfigurationRequest = {
   // Always `created_time`
   type?: "created_time"
   created_time: EmptyObject
+}
+
+type CreatedTimeSimplePropertyValueResponse = {
+  // Always `created_time`
+  type: "created_time"
+  created_time: string
 }
 
 type CustomEmojiPageIconResponse = {
@@ -429,6 +486,12 @@ export type DatabaseParentResponse = {
   database_id: IdResponse
 }
 
+type DateFormulaPropertyValueResponse = {
+  // Always `date`
+  type: "date"
+  date: DateResponse | null
+}
+
 type DateGroupByConfigRequest = {
   // The property type for grouping.
   type: "date" | "created_time" | "last_edited_time"
@@ -445,6 +508,12 @@ type DateGroupByConfigRequest = {
 }
 
 type DateOrRelativeDate = string | RelativeDateValue
+
+type DatePartialRollupValueResponse = {
+  // Always `date`
+  type: "date"
+  date: DateResponse | null
+}
 
 type DatePropertyConfigurationRequest = {
   // Always `date`
@@ -467,6 +536,16 @@ type DatePropertyFilter =
   | { next_year: EmptyObject }
   | ExistencePropertyFilter
 
+export type DateRequest = {
+  // The start date of the date object.
+  start: string
+  // The end date of the date object, if any.
+  end?: string | null
+  // The time zone of the date object, if any. E.g. America/Los_Angeles, Europe/London,
+  // etc.
+  time_zone?: TimeZoneRequest | null
+}
+
 export type DateResponse = {
   // The start date of the date object.
   start: string
@@ -476,10 +555,22 @@ export type DateResponse = {
   time_zone: TimeZoneRequest | null
 }
 
+type DateSimplePropertyValueResponse = {
+  // Always `date`
+  type: "date"
+  date: DateResponse | null
+}
+
 type EmailPropertyConfigurationRequest = {
   // Always `email`
   type?: "email"
   email: EmptyObject
+}
+
+type EmailSimplePropertyValueResponse = {
+  // Always `email`
+  type: "email"
+  email: string | null
 }
 
 type EmojiPageIconResponse = {
@@ -493,6 +584,17 @@ type EmojiRequest = string
 
 export type EmptyObject = Record<string, never>
 
+type EquationRichTextItemRequest = {
+  // Always `equation`
+  type?: "equation"
+  // Notion supports inline LaTeX equations as rich text objects with a type value of
+  // `equation`.
+  equation: {
+    // A KaTeX compatible string.
+    expression: string
+  }
+}
+
 export type EquationRichTextItemResponse = {
   // Always `equation`
   type: "equation"
@@ -505,6 +607,18 @@ export type EquationRichTextItemResponse = {
 }
 
 type ExistencePropertyFilter = { is_empty: true } | { is_not_empty: true }
+
+type ExternalFileRequest = { url: TextRequest }
+
+type ExternalInternalOrExternalFileWithNameResponse = {
+  // Type of attachment. In this case, an external URL.
+  type: "external"
+  // The external URL.
+  external: {
+    // The URL of the external file or resource.
+    url: string
+  }
+}
 
 type ExternalPageCoverRequest = {
   // Always `external`
@@ -536,6 +650,13 @@ type ExternalPageIconResponse = {
   }
 }
 
+type FileInternalOrExternalFileWithNameResponse = {
+  // Type of attachment. In this case, a file uploaded to a Notion workspace.
+  type: "file"
+  // The file URL.
+  file: InternalFileResponse
+}
+
 type FilePageCoverResponse = {
   // Type of cover. In this case, a file.
   type: "file"
@@ -549,6 +670,8 @@ type FilePageIconResponse = {
   // The file URL for the icon.
   file: InternalFileResponse
 }
+
+type FileUploadIdRequest = { id: IdRequest }
 
 type FileUploadPageCoverRequest = {
   // Always `file_upload`
@@ -570,6 +693,12 @@ type FilesPropertyConfigurationRequest = {
   // Always `files`
   type?: "files"
   files: EmptyObject
+}
+
+type FilesSimplePropertyValueResponse = {
+  // Always `files`
+  type: "files"
+  files: Array<InternalOrExternalFileWithNameResponse>
 }
 
 type FormViewConfigRequest = {
@@ -642,6 +771,19 @@ type FormulaPropertyFilter =
   | { checkbox: CheckboxPropertyFilter }
   | { number: NumberPropertyFilter }
   | { date: DatePropertyFilter }
+
+type FormulaPropertyValueResponse =
+  | BooleanFormulaPropertyValueResponse
+  | DateFormulaPropertyValueResponse
+  | NumberFormulaPropertyValueResponse
+  | StringFormulaPropertyValueResponse
+  | UnsupportedFormulaPropertyValueResponse
+
+type FormulaSimplePropertyValueResponse = {
+  // Always `formula`
+  type: "formula"
+  formula: FormulaPropertyValueResponse
+}
 
 type FormulaTextSubGroupByRequest = {
   // The formula result type for grouping.
@@ -716,6 +858,8 @@ type IconPageIconResponse = {
   icon: NoticonIconResponse
 }
 
+type IdObjectResponse = { id: string }
+
 export type IdRequest = string
 
 export type IdResponse = string
@@ -738,16 +882,40 @@ export type InternalOrExternalFileWithNameRequest =
   | { file: InternalFileRequest; name: StringRequest; type?: "file" }
   | { external: ExternalFileRequest; name: StringRequest; type?: "external" }
 
+export type InternalOrExternalFileWithNameResponse =
+  InternalOrExternalFileWithNameResponseCommon &
+    (
+      | FileInternalOrExternalFileWithNameResponse
+      | ExternalInternalOrExternalFileWithNameResponse
+    )
+
+type InternalOrExternalFileWithNameResponseCommon = {
+  // The name of the file.
+  name: string
+}
+
 type LastEditedByPropertyConfigurationRequest = {
   // Always `last_edited_by`
   type?: "last_edited_by"
   last_edited_by: EmptyObject
 }
 
+type LastEditedBySimplePropertyValueResponse = {
+  // Always `last_edited_by`
+  type: "last_edited_by"
+  last_edited_by: UserValueResponse
+}
+
 type LastEditedTimePropertyConfigurationRequest = {
   // Always `last_edited_time`
   type?: "last_edited_time"
   last_edited_time: EmptyObject
+}
+
+type LastEditedTimeSimplePropertyValueResponse = {
+  // Always `last_edited_time`
+  type: "last_edited_time"
+  last_edited_time: string
 }
 
 type LastVisitedTimePropertyConfigurationRequest = {
@@ -975,6 +1143,64 @@ export type MeetingNotesPropertyFilter = {
       }
 }
 
+type MentionRichTextItemRequest = {
+  // Always `mention`
+  type?: "mention"
+  // Mention objects represent an inline mention of a database, date, link preview mention,
+  // page, template mention, or user. A mention is created in the Notion UI when a user
+  // types `@` followed by the name of the reference.
+  mention:
+    | {
+        // Always `user`
+        type?: "user"
+        // Details of the user mention.
+        user: PartialUserObjectRequest
+      }
+    | {
+        // Always `date`
+        type?: "date"
+        // Details of the date mention.
+        date: DateRequest
+      }
+    | {
+        // Always `page`
+        type?: "page"
+        // Details of the page mention.
+        page: {
+          // The ID of the page in the mention.
+          id: IdRequest
+        }
+      }
+    | {
+        // Always `database`
+        type?: "database"
+        // Details of the database mention.
+        database: {
+          // The ID of the database in the mention.
+          id: IdRequest
+        }
+      }
+    | {
+        // Always `template_mention`
+        type?: "template_mention"
+        // Details of the template mention.
+        template_mention: TemplateMentionRequest
+      }
+    | {
+        // Always `custom_emoji`
+        type?: "custom_emoji"
+        // Details of the custom emoji mention.
+        custom_emoji: {
+          // The ID of the custom emoji.
+          id: IdRequest
+          // The name of the custom emoji.
+          name?: string
+          // The URL of the custom emoji.
+          url?: string
+        }
+      }
+}
+
 export type MentionRichTextItemResponse = {
   // Always `mention`
   type: "mention"
@@ -1055,6 +1281,12 @@ type MultiSelectPropertyFilter =
   | { does_not_contain: StringOrStringArray }
   | ExistencePropertyFilter
 
+type MultiSelectSimplePropertyValueResponse = {
+  // Always `multi_select`
+  type: "multi_select"
+  multi_select: Array<PartialSelectPropertyValueResponse>
+}
+
 /**
  * One of: `gray`, `lightgray`, `brown`, `yellow`, `orange`, `green`, `blue`, `purple`,
  * `pink`, `red`
@@ -1082,6 +1314,12 @@ type NoticonIconResponse = {
 
 type NoticonName = string
 
+type NumberFormulaPropertyValueResponse = {
+  // Always `number`
+  type: "number"
+  number: number | null
+}
+
 type NumberGroupByConfigRequest = {
   // The property type for grouping.
   type: "number"
@@ -1099,6 +1337,12 @@ type NumberGroupByConfigRequest = {
   range_size?: number
 }
 
+type NumberPartialRollupValueResponse = {
+  // Always `number`
+  type: "number"
+  number: number | null
+}
+
 type NumberPropertyConfigurationRequest = {
   // Always `number`
   type?: "number"
@@ -1113,6 +1357,12 @@ type NumberPropertyFilter =
   | { greater_than_or_equal_to: number }
   | { less_than_or_equal_to: number }
   | ExistencePropertyFilter
+
+type NumberSimplePropertyValueResponse = {
+  // Always `number`
+  type: "number"
+  number: number | null
+}
 
 export type PageCoverRequest =
   FileUploadPageCoverRequest | ExternalPageCoverRequest
@@ -1158,10 +1408,48 @@ export type PageMarkdownResponse = {
   }>
 }
 
+export type PageObjectResponse = {
+  // The page object type name.
+  object: "page"
+  // The ID of the page.
+  id: IdResponse
+  // Date and time when this page was created.
+  created_time: string
+  // Date and time when this page was last edited.
+  last_edited_time: string
+  // Whether the page is in trash.
+  in_trash: boolean
+  /** @deprecated Use `in_trash` instead. Present for backwards compatibility with API versions prior to 2026-03-11. */
+  archived: boolean
+  // Whether the page has been archived.
+  is_archived: boolean
+  // Whether the page is locked from editing in the Notion app UI.
+  is_locked: boolean
+  // The URL of the Notion page.
+  url: string
+  // The public URL of the Notion page, if it has been published to the web.
+  public_url: string | null
+  // Information about the page's parent.
+  parent: ParentForBlockBasedObjectResponse
+  // Property values of this page.
+  properties: Record<string, PagePropertyValueWithIdResponse>
+  // Page icon.
+  icon: PageIconResponse | null
+  // Page cover image.
+  cover: PageCoverResponse | null
+  // User who created the page.
+  created_by: PartialUserObjectResponse
+  // User who last edited the page.
+  last_edited_by: PartialUserObjectResponse
+}
+
 export type PagePositionSchema =
   | { type: "after_block"; after_block: { id: IdRequest } }
   | { type: "page_start" }
   | { type: "page_end" }
+
+type PagePropertyValueWithIdResponse = IdObjectResponse &
+  (SimpleOrArrayPropertyValueResponse | PartialRollupPropertyResponse)
 
 /**
  * Controls the notifications Notion sends people about this change. Set mode to "silent"
@@ -1194,10 +1482,67 @@ export type ParentOfDatabaseResponse =
   | DatabaseParentResponse
   | BlockIdParentForBlockBasedObjectResponse
 
+export type PartialPageObjectResponse = {
+  // The page object type name.
+  object: "page"
+  // The ID of the page.
+  id: IdResponse
+}
+
+type PartialRollupPropertyResponse = {
+  // Always `rollup`
+  type: "rollup"
+  rollup: PartialRollupValueResponse
+}
+
+type PartialRollupValueResponse = PartialRollupValueResponseCommon &
+  (
+    | NumberPartialRollupValueResponse
+    | DatePartialRollupValueResponse
+    | ArrayPartialRollupValueResponse
+    | UnsupportedPartialRollupValueResponse
+  )
+
+type PartialRollupValueResponseCommon = {
+  // The function used for the rollup, e.g. count, count_values, percent_not_empty, max.
+  function: RollupFunction
+}
+
+type PartialSelectPropertyValueResponse = {
+  id: string
+  name: string
+  // One of: `default`, `gray`, `brown`, `orange`, `yellow`, `green`, `blue`, `purple`,
+  // `pink`, `red`
+  color:
+    | "default"
+    | "gray"
+    | "brown"
+    | "orange"
+    | "yellow"
+    | "green"
+    | "blue"
+    | "purple"
+    | "pink"
+    | "red"
+}
+
+export type PartialUserObjectRequest = {
+  // The ID of the user.
+  id: IdRequest
+  // The user object type name.
+  object?: "user"
+}
+
 export type PartialUserObjectResponse = {
   id: IdResponse
   // Always `user`
   object: "user"
+}
+
+type PeopleArrayBasedPropertyValueResponse = {
+  // Always `people`
+  type: "people"
+  people: Array<UserValueResponse | GroupObjectResponse>
 }
 
 type PeoplePropertyConfigurationRequest = {
@@ -1242,10 +1587,31 @@ type PhoneNumberPropertyConfigurationRequest = {
   phone_number: EmptyObject
 }
 
+type PhoneNumberSimplePropertyValueResponse = {
+  // Always `phone_number`
+  type: "phone_number"
+  phone_number: string | null
+}
+
 type PlacePropertyConfigurationRequest = {
   // Always `place`
   type?: "place"
   place: EmptyObject
+}
+
+type PlacePropertyValueResponse = {
+  lat: number
+  lon: number
+  name?: string | null
+  address?: string | null
+  aws_place_id?: string | null
+  google_place_id?: string | null
+}
+
+type PlaceSimplePropertyValueResponse = {
+  // Always `place`
+  type: "place"
+  place: PlacePropertyValueResponse | null
 }
 
 export type PropertyConfigurationRequest = PropertyConfigurationRequestCommon &
@@ -1379,6 +1745,12 @@ type QuickFilterConditionRequest =
       type?: "verification"
     }
 
+type RelationArrayBasedPropertyValueResponse = {
+  // Always `relation`
+  type: "relation"
+  relation: Array<RelationItemPropertyValueResponse>
+}
+
 type RelationGroupByConfigRequest = {
   // The property type for grouping.
   type: "relation"
@@ -1389,6 +1761,8 @@ type RelationGroupByConfigRequest = {
   // Whether to hide groups that have no items.
   hide_empty_groups?: boolean
 }
+
+export type RelationItemPropertyValueResponse = { id: IdRequest }
 
 type RelationPropertyConfigurationRequest = {
   // Always `relation`
@@ -1423,6 +1797,25 @@ type RelativeDateValue =
   | "one_week_from_now"
   | "one_month_ago"
   | "one_month_from_now"
+
+type RichTextArrayBasedPropertyValueResponse = {
+  // Always `rich_text`
+  type: "rich_text"
+  rich_text: Array<RichTextItemResponse>
+}
+
+export type RichTextItemRequest = RichTextItemRequestCommon &
+  (
+    | TextRichTextItemRequest
+    | MentionRichTextItemRequest
+    | EquationRichTextItemRequest
+  )
+
+type RichTextItemRequestCommon = {
+  // All rich text objects contain an annotations object that sets the styling for the rich
+  // text.
+  annotations?: AnnotationRequest
+}
 
 export type RichTextItemResponse = RichTextItemResponseCommon &
   (
@@ -1550,6 +1943,12 @@ type SelectPropertyFilter =
   | { does_not_equal: StringOrStringArray }
   | ExistencePropertyFilter
 
+type SelectSimplePropertyValueResponse = {
+  // Always `select`
+  type: "select"
+  select: PartialSelectPropertyValueResponse | null
+}
+
 export type SessionAgentIdFilter = {
   // Filter sessions by agent_id.
   property: "agent_id"
@@ -1637,6 +2036,30 @@ export type SessionTimestampFilter = {
   }
 }
 
+type SimpleOrArrayPropertyValueResponse =
+  SimplePropertyValueResponse | ArrayBasedPropertyValueResponse
+
+type SimplePropertyValueResponse =
+  | NumberSimplePropertyValueResponse
+  | UrlSimplePropertyValueResponse
+  | SelectSimplePropertyValueResponse
+  | MultiSelectSimplePropertyValueResponse
+  | StatusSimplePropertyValueResponse
+  | DateSimplePropertyValueResponse
+  | EmailSimplePropertyValueResponse
+  | PhoneNumberSimplePropertyValueResponse
+  | CheckboxSimplePropertyValueResponse
+  | FilesSimplePropertyValueResponse
+  | CreatedBySimplePropertyValueResponse
+  | CreatedTimeSimplePropertyValueResponse
+  | LastEditedBySimplePropertyValueResponse
+  | LastEditedTimeSimplePropertyValueResponse
+  | FormulaSimplePropertyValueResponse
+  | ButtonSimplePropertyValueResponse
+  | UniqueIdSimplePropertyValueResponse
+  | VerificationSimplePropertyValueResponse
+  | PlaceSimplePropertyValueResponse
+
 /**
  * One of: `ascending`, `descending`
  */
@@ -1703,6 +2126,12 @@ type StatusPropertyConfigurationRequest = {
 
 type StatusPropertyFilter = StatusValueFilter | ExistencePropertyFilter
 
+type StatusSimplePropertyValueResponse = {
+  // Always `status`
+  type: "status"
+  status: PartialSelectPropertyValueResponse | null
+}
+
 /**
  * The group operators match status groups instead of options. They require the
  * `Notion-Beta: status-group-filters-2026-10-06` header.
@@ -1713,7 +2142,15 @@ type StatusValueFilter =
   | { group_equals: StatusGroupNames }
   | { group_does_not_equal: StatusGroupNames }
 
+type StringFormulaPropertyValueResponse = {
+  // Always `string`
+  type: "string"
+  string: string | null
+}
+
 type StringOrStringArray = string | Array<string>
+
+export type StringRequest = string
 
 type SubtaskConfigRequest = {
   // Relation property ID used for parent-child nesting.
@@ -1742,10 +2179,18 @@ type TableViewConfigRequest = {
   subtasks?: SubtaskConfigRequest | null
   // Whether to wrap cell content in the table.
   wrap_cells?: boolean
-  // Number of columns frozen from the left side of the table.
+  // Index of the last frozen column. Columns up to and including this index are frozen.
+  // Use -1 to unfreeze all columns.
   frozen_column_index?: number
   // Whether to show vertical grid lines between columns.
   show_vertical_lines?: boolean
+}
+
+type TemplateMentionDateTemplateMentionRequest = {
+  // Always `template_mention_date`
+  type?: "template_mention_date"
+  // The date of the template mention.
+  template_mention_date: "today" | "now"
 }
 
 type TemplateMentionDateTemplateMentionResponse = {
@@ -1755,9 +2200,20 @@ type TemplateMentionDateTemplateMentionResponse = {
   template_mention_date: "today" | "now"
 }
 
+type TemplateMentionRequest =
+  | TemplateMentionDateTemplateMentionRequest
+  | TemplateMentionUserTemplateMentionRequest
+
 type TemplateMentionResponse =
   | TemplateMentionDateTemplateMentionResponse
   | TemplateMentionUserTemplateMentionResponse
+
+type TemplateMentionUserTemplateMentionRequest = {
+  // Always `template_mention_user`
+  type?: "template_mention_user"
+  // The user of the template mention.
+  template_mention_user: "me"
+}
 
 type TemplateMentionUserTemplateMentionResponse = {
   // Always `template_mention_user`
@@ -1794,6 +2250,24 @@ type TextPropertyFilter =
   | { starts_with: string }
   | { ends_with: string }
   | ExistencePropertyFilter
+
+export type TextRequest = string
+
+type TextRichTextItemRequest = {
+  // Always `text`
+  type?: "text"
+  // If a rich text object's type value is `text`, then the corresponding text field
+  // contains an object including the text content and any inline link.
+  text: {
+    // The actual text content of the text.
+    content: string
+    // An object with information about any inline link in this text, if included.
+    link?: {
+      // The URL of the link.
+      url: string
+    } | null
+  }
+}
 
 export type TextRichTextItemResponse = {
   // Always `text`
@@ -1871,6 +2345,12 @@ type TimestampLastEditedTimeFilter = {
   type?: "last_edited_time"
 }
 
+type TitleArrayBasedPropertyValueResponse = {
+  // Always `title`
+  type: "title"
+  title: Array<RichTextItemResponse>
+}
+
 type TitlePropertyConfigurationRequest = {
   // Always `title`
   type?: "title"
@@ -1881,6 +2361,29 @@ type UniqueIdPropertyConfigurationRequest = {
   // Always `unique_id`
   type?: "unique_id"
   unique_id: { prefix?: string | null }
+}
+
+type UniqueIdPropertyValueResponse = {
+  prefix: string | null
+  number: number | null
+}
+
+type UniqueIdSimplePropertyValueResponse = {
+  // Always `unique_id`
+  type: "unique_id"
+  unique_id: UniqueIdPropertyValueResponse
+}
+
+type UnsupportedFormulaPropertyValueResponse = {
+  // Always `unsupported`
+  type: "unsupported"
+  unsupported: EmptyObject
+}
+
+type UnsupportedPartialRollupValueResponse = {
+  // Always `unsupported`
+  type: "unsupported"
+  unsupported: EmptyObject
 }
 
 export type UpdateEmbedFileUploadRequest = {
@@ -1931,6 +2434,12 @@ type UrlPropertyConfigurationRequest = {
   url: EmptyObject
 }
 
+type UrlSimplePropertyValueResponse = {
+  // Always `url`
+  type: "url"
+  url: string | null
+}
+
 export type UserObjectResponse = UserObjectResponseCommon &
   (PersonUserObjectResponse | BotUserObjectResponse)
 
@@ -1943,6 +2452,9 @@ export type UserObjectResponseCommon = {
   name: string | null
   // The avatar URL of the user.
   avatar_url: string | null
+  // The ID of the Custom Agent this bot acts for. Only present when the user is a Custom
+  // Agent's bot.
+  agent_id?: IdResponse
 }
 
 type UserValueResponse = PartialUserObjectResponse | UserObjectResponse
@@ -1957,8 +2469,31 @@ type VerificationPropertyDoesNotEqualFilter = {
   does_not_equal: "verified" | "expired" | "none"
 }
 
+type VerificationPropertyResponse = {
+  // One of: `verified`, `expired`
+  state: "verified" | "expired"
+  date: DateResponse | null
+  verified_by: UserValueResponse | null
+}
+
 type VerificationPropertyStatusFilter = {
   status: "verified" | "expired" | "none"
+}
+
+type VerificationPropertyUnverifiedResponse = {
+  // Always `unverified`
+  state: "unverified"
+  date: null
+  verified_by: null
+}
+
+export type VerificationPropertyValueResponse =
+  VerificationPropertyUnverifiedResponse | VerificationPropertyResponse
+
+type VerificationSimplePropertyValueResponse = {
+  // Always `verification`
+  type: "verification"
+  verification: VerificationPropertyValueResponse | null
 }
 
 /**
@@ -2091,6 +2626,15 @@ type WorkspaceParentForBlockBasedObjectResponse = {
   type: "workspace"
   // Always true for workspace parent.
   workspace: true
+}
+
+export type RequestStatusResponse = {
+  // Whether the result set is complete or incomplete. `incomplete` means the response does
+  // not include all rows that match the query parameters (e.g. due to a server-side
+  // pagination depth limit).
+  type: "complete" | "incomplete"
+  // Why the result set is incomplete. Only present when `type` is `incomplete`.
+  incomplete_reason?: "query_result_limit_reached"
 }
 
 export type BlockObjectRequest =
@@ -2294,91 +2838,12 @@ export type BlockObjectRequest =
       object?: "block"
     }
 
-export type DateRequest = {
-  // The start date of the date object.
-  start: string
-  // The end date of the date object, if any.
-  end?: string | null
-  // The time zone of the date object, if any. E.g. America/Los_Angeles, Europe/London,
-  // etc.
-  time_zone?: TimeZoneRequest | null
-}
-
 export type PageIconRequest =
   | FileUploadPageIconRequest
   | EmojiPageIconRequest
   | ExternalPageIconRequest
   | CustomEmojiPageIconRequest
   | IconPageIconRequest
-
-export type PartialUserObjectRequest = {
-  // The ID of the user.
-  id: IdRequest
-  // The user object type name.
-  object?: "user"
-}
-
-export type RichTextItemRequest = RichTextItemRequestCommon &
-  (
-    | TextRichTextItemRequest
-    | MentionRichTextItemRequest
-    | EquationRichTextItemRequest
-  )
-
-export type StringRequest = string
-
-export type TextRequest = string
-
-export type RequestStatusResponse = {
-  // Whether the result set is complete or incomplete. `incomplete` means the response does
-  // not include all rows that match the query parameters (e.g. due to a server-side
-  // pagination depth limit).
-  type: "complete" | "incomplete"
-  // Why the result set is incomplete. Only present when `type` is `incomplete`.
-  incomplete_reason?: "query_result_limit_reached"
-}
-
-export type PartialPageObjectResponse = {
-  // The page object type name.
-  object: "page"
-  // The ID of the page.
-  id: IdResponse
-}
-
-export type PageObjectResponse = {
-  // The page object type name.
-  object: "page"
-  // The ID of the page.
-  id: IdResponse
-  // Date and time when this page was created.
-  created_time: string
-  // Date and time when this page was last edited.
-  last_edited_time: string
-  // Whether the page is in trash.
-  in_trash: boolean
-  /** @deprecated Use `in_trash` instead. Present for backwards compatibility with API versions prior to 2026-03-11. */
-  archived: boolean
-  // Whether the page has been archived.
-  is_archived: boolean
-  // Whether the page is locked from editing in the Notion app UI.
-  is_locked: boolean
-  // The URL of the Notion page.
-  url: string
-  // The public URL of the Notion page, if it has been published to the web.
-  public_url: string | null
-  // Information about the page's parent.
-  parent: ParentForBlockBasedObjectResponse
-  // Property values of this page.
-  properties: Record<string, PagePropertyValueWithIdResponse>
-  // Page icon.
-  icon: PageIconResponse | null
-  // Page cover image.
-  cover: PageCoverResponse | null
-  // User who created the page.
-  created_by: PartialUserObjectResponse
-  // User who last edited the page.
-  last_edited_by: PartialUserObjectResponse
-}
 
 type BlockObjectWithSingleLevelOfChildrenRequest =
   | {
@@ -2579,19 +3044,6 @@ type EmojiPageIconRequest = {
   emoji: EmojiRequest
 }
 
-type EquationRichTextItemRequest = {
-  // Always `equation`
-  type?: "equation"
-  // Notion supports inline LaTeX equations as rich text objects with a type value of
-  // `equation`.
-  equation: {
-    // A KaTeX compatible string.
-    expression: string
-  }
-}
-
-type ExternalFileRequest = { url: TextRequest }
-
 type ExternalPageIconRequest = {
   // Always `external`
   type?: "external"
@@ -2600,8 +3052,6 @@ type ExternalPageIconRequest = {
     url: string
   }
 }
-
-type FileUploadIdRequest = { id: IdRequest }
 
 type FileUploadPageIconRequest = {
   // Always `file_upload`
@@ -2749,70 +3199,6 @@ type MediaContentWithUrlAndCaptionRequest = {
   caption?: Array<RichTextItemRequest>
 }
 
-type MentionRichTextItemRequest = {
-  // Always `mention`
-  type?: "mention"
-  // Mention objects represent an inline mention of a database, date, link preview mention,
-  // page, template mention, or user. A mention is created in the Notion UI when a user
-  // types `@` followed by the name of the reference.
-  mention:
-    | {
-        // Always `user`
-        type?: "user"
-        // Details of the user mention.
-        user: PartialUserObjectRequest
-      }
-    | {
-        // Always `date`
-        type?: "date"
-        // Details of the date mention.
-        date: DateRequest
-      }
-    | {
-        // Always `page`
-        type?: "page"
-        // Details of the page mention.
-        page: {
-          // The ID of the page in the mention.
-          id: IdRequest
-        }
-      }
-    | {
-        // Always `database`
-        type?: "database"
-        // Details of the database mention.
-        database: {
-          // The ID of the database in the mention.
-          id: IdRequest
-        }
-      }
-    | {
-        // Always `template_mention`
-        type?: "template_mention"
-        // Details of the template mention.
-        template_mention: TemplateMentionRequest
-      }
-    | {
-        // Always `custom_emoji`
-        type?: "custom_emoji"
-        // Details of the custom emoji mention.
-        custom_emoji: {
-          // The ID of the custom emoji.
-          id: IdRequest
-          // The name of the custom emoji.
-          name?: string
-          // The URL of the custom emoji.
-          url?: string
-        }
-      }
-}
-
-type RichTextItemRequestCommon = {
-  // All rich text objects contain an annotations object that sets the styling for the rich
-  // text.
-  annotations?: AnnotationRequest
-}
-
 type TabRequestWithNestedTabItemChildren = {
   children: Array<TabItemRequestWithSingleLevelOfChildren>
 }
@@ -2824,43 +3210,9 @@ type TableRequestWithTableRowChildren = {
   has_row_header?: boolean
 }
 
-type TextRichTextItemRequest = {
-  // Always `text`
-  type?: "text"
-  // If a rich text object's type value is `text`, then the corresponding text field
-  // contains an object including the text content and any inline link.
-  text: {
-    // The actual text content of the text.
-    content: string
-    // An object with information about any inline link in this text, if included.
-    link?: {
-      // The URL of the link.
-      url: string
-    } | null
-  }
-}
-
-type PagePropertyValueWithIdResponse = IdObjectResponse &
-  (SimpleOrArrayPropertyValueResponse | PartialRollupPropertyResponse)
-
 export type NumberFormat = string
 
 export type PropertyDescriptionRequest = string
-
-type AnnotationRequest = {
-  // Whether the text is formatted as bold.
-  bold?: boolean
-  // Whether the text is formatted as italic.
-  italic?: boolean
-  // Whether the text is formatted with a strikethrough.
-  strikethrough?: boolean
-  // Whether the text is formatted with an underline.
-  underline?: boolean
-  // Whether the text is formatted as code.
-  code?: boolean
-  // The color of the text.
-  color?: ApiColor
-}
 
 export type BlockObjectRequestWithoutChildren =
   | {
@@ -3051,21 +3403,6 @@ type TableRowRequest = {
   object?: "block"
 }
 
-type TemplateMentionRequest =
-  | TemplateMentionDateTemplateMentionRequest
-  | TemplateMentionUserTemplateMentionRequest
-
-type IdObjectResponse = { id: string }
-
-type PartialRollupPropertyResponse = {
-  // Always `rollup`
-  type: "rollup"
-  rollup: PartialRollupValueResponse
-}
-
-type SimpleOrArrayPropertyValueResponse =
-  SimplePropertyValueResponse | ArrayBasedPropertyValueResponse
-
 export type ContentWithRichTextAndColorRequest = {
   rich_text: Array<RichTextItemRequest>
   color?: ApiColor
@@ -3091,337 +3428,4 @@ type TabItemRequestWithoutChildren = {
   paragraph: ContentWithRichTextColorAndIconRequest
   type?: "paragraph"
   object?: "block"
-}
-
-type TemplateMentionDateTemplateMentionRequest = {
-  // Always `template_mention_date`
-  type?: "template_mention_date"
-  // The date of the template mention.
-  template_mention_date: "today" | "now"
-}
-
-type TemplateMentionUserTemplateMentionRequest = {
-  // Always `template_mention_user`
-  type?: "template_mention_user"
-  // The user of the template mention.
-  template_mention_user: "me"
-}
-
-type ArrayBasedPropertyValueResponse =
-  | TitleArrayBasedPropertyValueResponse
-  | RichTextArrayBasedPropertyValueResponse
-  | PeopleArrayBasedPropertyValueResponse
-  | RelationArrayBasedPropertyValueResponse
-
-type PartialRollupValueResponse = PartialRollupValueResponseCommon &
-  (
-    | NumberPartialRollupValueResponse
-    | DatePartialRollupValueResponse
-    | ArrayPartialRollupValueResponse
-    | UnsupportedPartialRollupValueResponse
-  )
-
-type SimplePropertyValueResponse =
-  | NumberSimplePropertyValueResponse
-  | UrlSimplePropertyValueResponse
-  | SelectSimplePropertyValueResponse
-  | MultiSelectSimplePropertyValueResponse
-  | StatusSimplePropertyValueResponse
-  | DateSimplePropertyValueResponse
-  | EmailSimplePropertyValueResponse
-  | PhoneNumberSimplePropertyValueResponse
-  | CheckboxSimplePropertyValueResponse
-  | FilesSimplePropertyValueResponse
-  | CreatedBySimplePropertyValueResponse
-  | CreatedTimeSimplePropertyValueResponse
-  | LastEditedBySimplePropertyValueResponse
-  | LastEditedTimeSimplePropertyValueResponse
-  | FormulaSimplePropertyValueResponse
-  | ButtonSimplePropertyValueResponse
-  | UniqueIdSimplePropertyValueResponse
-  | VerificationSimplePropertyValueResponse
-  | PlaceSimplePropertyValueResponse
-
-type ArrayPartialRollupValueResponse = {
-  // Always `array`
-  type: "array"
-  array: Array<SimpleOrArrayPropertyValueResponse>
-}
-
-type ButtonSimplePropertyValueResponse = {
-  // Always `button`
-  type: "button"
-  button: EmptyObject
-}
-
-type CheckboxSimplePropertyValueResponse = {
-  // Always `checkbox`
-  type: "checkbox"
-  checkbox: boolean
-}
-
-type CreatedBySimplePropertyValueResponse = {
-  // Always `created_by`
-  type: "created_by"
-  created_by: UserValueResponse
-}
-
-type CreatedTimeSimplePropertyValueResponse = {
-  // Always `created_time`
-  type: "created_time"
-  created_time: string
-}
-
-type DatePartialRollupValueResponse = {
-  // Always `date`
-  type: "date"
-  date: DateResponse | null
-}
-
-type DateSimplePropertyValueResponse = {
-  // Always `date`
-  type: "date"
-  date: DateResponse | null
-}
-
-type EmailSimplePropertyValueResponse = {
-  // Always `email`
-  type: "email"
-  email: string | null
-}
-
-type FilesSimplePropertyValueResponse = {
-  // Always `files`
-  type: "files"
-  files: Array<InternalOrExternalFileWithNameResponse>
-}
-
-type FormulaSimplePropertyValueResponse = {
-  // Always `formula`
-  type: "formula"
-  formula: FormulaPropertyValueResponse
-}
-
-type LastEditedBySimplePropertyValueResponse = {
-  // Always `last_edited_by`
-  type: "last_edited_by"
-  last_edited_by: UserValueResponse
-}
-
-type LastEditedTimeSimplePropertyValueResponse = {
-  // Always `last_edited_time`
-  type: "last_edited_time"
-  last_edited_time: string
-}
-
-type MultiSelectSimplePropertyValueResponse = {
-  // Always `multi_select`
-  type: "multi_select"
-  multi_select: Array<PartialSelectPropertyValueResponse>
-}
-
-type NumberPartialRollupValueResponse = {
-  // Always `number`
-  type: "number"
-  number: number | null
-}
-
-type NumberSimplePropertyValueResponse = {
-  // Always `number`
-  type: "number"
-  number: number | null
-}
-
-type PartialRollupValueResponseCommon = {
-  // The function used for the rollup, e.g. count, count_values, percent_not_empty, max.
-  function: RollupFunction
-}
-
-type PeopleArrayBasedPropertyValueResponse = {
-  // Always `people`
-  type: "people"
-  people: Array<UserValueResponse | GroupObjectResponse>
-}
-
-type PhoneNumberSimplePropertyValueResponse = {
-  // Always `phone_number`
-  type: "phone_number"
-  phone_number: string | null
-}
-
-type PlaceSimplePropertyValueResponse = {
-  // Always `place`
-  type: "place"
-  place: PlacePropertyValueResponse | null
-}
-
-type RelationArrayBasedPropertyValueResponse = {
-  // Always `relation`
-  type: "relation"
-  relation: Array<RelationItemPropertyValueResponse>
-}
-
-type RichTextArrayBasedPropertyValueResponse = {
-  // Always `rich_text`
-  type: "rich_text"
-  rich_text: Array<RichTextItemResponse>
-}
-
-type SelectSimplePropertyValueResponse = {
-  // Always `select`
-  type: "select"
-  select: PartialSelectPropertyValueResponse | null
-}
-
-type StatusSimplePropertyValueResponse = {
-  // Always `status`
-  type: "status"
-  status: PartialSelectPropertyValueResponse | null
-}
-
-type TitleArrayBasedPropertyValueResponse = {
-  // Always `title`
-  type: "title"
-  title: Array<RichTextItemResponse>
-}
-
-type UniqueIdSimplePropertyValueResponse = {
-  // Always `unique_id`
-  type: "unique_id"
-  unique_id: UniqueIdPropertyValueResponse
-}
-
-type UnsupportedPartialRollupValueResponse = {
-  // Always `unsupported`
-  type: "unsupported"
-  unsupported: EmptyObject
-}
-
-type UrlSimplePropertyValueResponse = {
-  // Always `url`
-  type: "url"
-  url: string | null
-}
-
-type VerificationSimplePropertyValueResponse = {
-  // Always `verification`
-  type: "verification"
-  verification: VerificationPropertyValueResponse | null
-}
-
-type FormulaPropertyValueResponse =
-  | BooleanFormulaPropertyValueResponse
-  | DateFormulaPropertyValueResponse
-  | NumberFormulaPropertyValueResponse
-  | StringFormulaPropertyValueResponse
-  | UnsupportedFormulaPropertyValueResponse
-
-export type InternalOrExternalFileWithNameResponse =
-  InternalOrExternalFileWithNameResponseCommon &
-    (
-      | FileInternalOrExternalFileWithNameResponse
-      | ExternalInternalOrExternalFileWithNameResponse
-    )
-
-type PartialSelectPropertyValueResponse = {
-  id: string
-  name: string
-  // One of: `default`, `gray`, `brown`, `orange`, `yellow`, `green`, `blue`, `purple`,
-  // `pink`, `red`
-  color:
-    | "default"
-    | "gray"
-    | "brown"
-    | "orange"
-    | "yellow"
-    | "green"
-    | "blue"
-    | "purple"
-    | "pink"
-    | "red"
-}
-
-type PlacePropertyValueResponse = {
-  lat: number
-  lon: number
-  name?: string | null
-  address?: string | null
-  aws_place_id?: string | null
-  google_place_id?: string | null
-}
-
-export type RelationItemPropertyValueResponse = { id: IdRequest }
-
-type UniqueIdPropertyValueResponse = {
-  prefix: string | null
-  number: number | null
-}
-
-export type VerificationPropertyValueResponse =
-  VerificationPropertyUnverifiedResponse | VerificationPropertyResponse
-
-type BooleanFormulaPropertyValueResponse = {
-  // Always `boolean`
-  type: "boolean"
-  boolean: boolean | null
-}
-
-type DateFormulaPropertyValueResponse = {
-  // Always `date`
-  type: "date"
-  date: DateResponse | null
-}
-
-type ExternalInternalOrExternalFileWithNameResponse = {
-  // Type of attachment. In this case, an external URL.
-  type: "external"
-  // The external URL.
-  external: {
-    // The URL of the external file or resource.
-    url: string
-  }
-}
-
-type FileInternalOrExternalFileWithNameResponse = {
-  // Type of attachment. In this case, a file uploaded to a Notion workspace.
-  type: "file"
-  // The file URL.
-  file: InternalFileResponse
-}
-
-type InternalOrExternalFileWithNameResponseCommon = {
-  // The name of the file.
-  name: string
-}
-
-type NumberFormulaPropertyValueResponse = {
-  // Always `number`
-  type: "number"
-  number: number | null
-}
-
-type StringFormulaPropertyValueResponse = {
-  // Always `string`
-  type: "string"
-  string: string | null
-}
-
-type UnsupportedFormulaPropertyValueResponse = {
-  // Always `unsupported`
-  type: "unsupported"
-  unsupported: EmptyObject
-}
-
-type VerificationPropertyResponse = {
-  // One of: `verified`, `expired`
-  state: "verified" | "expired"
-  date: DateResponse | null
-  verified_by: UserValueResponse | null
-}
-
-type VerificationPropertyUnverifiedResponse = {
-  // Always `unverified`
-  state: "unverified"
-  date: null
-  verified_by: null
 }

@@ -278,3 +278,253 @@ export const queryMeetingNotes = {
 
   path: (): string => `blocks/meeting_notes/query`,
 } as const
+
+type CreateMeetingNotePageBodyParameters = {
+  // Page or data source to create the meeting note in. Defaults to the user's meeting
+  // notes database, which is created if they don't have one. Not accepted with
+  // calendar_event.
+  parent?:
+    | {
+        // Always `page_id`
+        type: "page_id"
+        // ID of the parent page.
+        page_id: IdRequest
+      }
+    | {
+        // Always `data_source_id`
+        type: "data_source_id"
+        // ID of the parent data source.
+        data_source_id: IdRequest
+      }
+  // Title for the meeting note. Not accepted with calendar_event.
+  title?: string
+  // Content for the meeting note's Notes tab, as Markdown. Not accepted with
+  // calendar_event.
+  markdown?: string
+  // Calendar event to get or create the meeting note for. The meeting note is filed and
+  // titled like the event's other meeting notes. Add content to it afterwards.
+  calendar_event?: {
+    // The calendar the event belongs to.
+    calendar: {
+      // ID of the calendar account.
+      account_id: string
+      // ID of the calendar.
+      calendar_id: string
+    }
+    // ID of the event, as returned in eventId by Notion MCP's notion-calendar-list-events.
+    event_id: string
+  }
+  // The Markdown syntax to use. `v2` is [Notion-flavored
+  // Markdown](/guides/data-apis/notion-flavored-markdown) and is recommended. `v1` is
+  // enhanced markdown. It's deprecated. It's the default on current Notion-Versions. The
+  // next Notion-Version rejects `v1` with a `400` `validation_error`.
+  markdown_version?: "v1" | "v2"
+}
+
+export type CreateMeetingNotePageParameters =
+  CreateMeetingNotePageBodyParameters
+
+export type CreateMeetingNotePageResponse = {
+  // Always "meeting_note_page_result".
+  object: "meeting_note_page_result"
+  // The full-page meeting note, as a meeting_notes block.
+  meeting_note: {
+    // Always "block".
+    object: "block"
+    // The ID of the meeting note block.
+    id: IdResponse
+    // Always "meeting_notes".
+    type: "meeting_notes"
+    // Meeting note content fields.
+    meeting_notes: {
+      // Whether this is a full-page meeting note.
+      is_full_page: boolean
+      // Title of the meeting note as rich text.
+      title?: Array<RichTextItemResponse>
+      // Current processing status of the meeting note transcription.
+      status?:
+        | "transcription_not_started"
+        | "transcription_paused"
+        | "transcription_in_progress"
+        | "transcription_failed"
+        | "summary_in_progress"
+        | "notes_ready"
+      // Block IDs for each tab (summary, notes, transcript).
+      children?: {
+        // Block ID of the AI summary tab.
+        summary_block_id?: IdResponse
+        // Block ID of the meeting notes tab.
+        notes_block_id?: IdResponse
+        // Block ID of the transcript tab.
+        transcript_block_id?: IdResponse
+      }
+      // Calendar event metadata associated with this meeting note.
+      calendar_event?: {
+        // ISO-8601 start time of the calendar event.
+        start_time: string
+        // ISO-8601 end time of the calendar event.
+        end_time: string
+        // ID of the calendar event, as returned by the calendar tools.
+        event_id?: string
+        // List of attendee user IDs.
+        attendees?: Array<IdResponse>
+      }
+      // Start and end times of the actual recording.
+      recording?: {
+        // ISO-8601 timestamp when the recording started.
+        start_time?: string
+        // ISO-8601 timestamp when the recording ended.
+        end_time?: string
+      }
+    }
+    // ISO-8601 timestamp when this meeting note was created.
+    created_time: string
+    // ISO-8601 timestamp when this meeting note was last edited.
+    last_edited_time: string
+    // User who created this meeting note.
+    created_by: PartialUserObjectResponse
+    // User who last edited this meeting note.
+    last_edited_by: PartialUserObjectResponse
+    // Whether this block has child blocks.
+    has_children: boolean
+    // Whether this meeting note is in the trash.
+    in_trash: boolean
+    /** @deprecated Use `in_trash` instead. Present for backwards compatibility with API versions prior to 2026-03-11. */
+    archived: boolean
+  }
+  // Whether the meeting note was created, rather than an existing meeting note for the
+  // event returned.
+  created: boolean
+}
+
+/**
+ * Create a full-page meeting note
+ */
+export const createMeetingNotePage = {
+  method: "post",
+  pathParams: [],
+  queryParams: [],
+  bodyParams: [
+    "parent",
+    "title",
+    "markdown",
+    "calendar_event",
+    "markdown_version",
+  ],
+
+  path: (): string => `meeting_notes`,
+} as const
+
+type UpdateMeetingNotePagePathParameters = {
+  // ID of the full-page meeting note.
+  meeting_note_id: IdRequest
+}
+
+type UpdateMeetingNotePageBodyParameters = {
+  // Calendar event to link the meeting note to. Replaces any event it is already linked
+  // to.
+  calendar_event: {
+    // The calendar the event belongs to.
+    calendar: {
+      // ID of the calendar account.
+      account_id: string
+      // ID of the calendar.
+      calendar_id: string
+    }
+    // ID of the event, as returned in eventId by Notion MCP's notion-calendar-list-events.
+    event_id: string
+  }
+  // Link even when other meeting notes are linked to the same event. Defaults to false,
+  // which returns a 409 listing them instead.
+  allow_other_meeting_notes?: boolean
+}
+
+export type UpdateMeetingNotePageParameters =
+  UpdateMeetingNotePagePathParameters & UpdateMeetingNotePageBodyParameters
+
+export type UpdateMeetingNotePageResponse = {
+  // Always "meeting_note_page_result".
+  object: "meeting_note_page_result"
+  // The full-page meeting note, as a meeting_notes block.
+  meeting_note: {
+    // Always "block".
+    object: "block"
+    // The ID of the meeting note block.
+    id: IdResponse
+    // Always "meeting_notes".
+    type: "meeting_notes"
+    // Meeting note content fields.
+    meeting_notes: {
+      // Whether this is a full-page meeting note.
+      is_full_page: boolean
+      // Title of the meeting note as rich text.
+      title?: Array<RichTextItemResponse>
+      // Current processing status of the meeting note transcription.
+      status?:
+        | "transcription_not_started"
+        | "transcription_paused"
+        | "transcription_in_progress"
+        | "transcription_failed"
+        | "summary_in_progress"
+        | "notes_ready"
+      // Block IDs for each tab (summary, notes, transcript).
+      children?: {
+        // Block ID of the AI summary tab.
+        summary_block_id?: IdResponse
+        // Block ID of the meeting notes tab.
+        notes_block_id?: IdResponse
+        // Block ID of the transcript tab.
+        transcript_block_id?: IdResponse
+      }
+      // Calendar event metadata associated with this meeting note.
+      calendar_event?: {
+        // ISO-8601 start time of the calendar event.
+        start_time: string
+        // ISO-8601 end time of the calendar event.
+        end_time: string
+        // ID of the calendar event, as returned by the calendar tools.
+        event_id?: string
+        // List of attendee user IDs.
+        attendees?: Array<IdResponse>
+      }
+      // Start and end times of the actual recording.
+      recording?: {
+        // ISO-8601 timestamp when the recording started.
+        start_time?: string
+        // ISO-8601 timestamp when the recording ended.
+        end_time?: string
+      }
+    }
+    // ISO-8601 timestamp when this meeting note was created.
+    created_time: string
+    // ISO-8601 timestamp when this meeting note was last edited.
+    last_edited_time: string
+    // User who created this meeting note.
+    created_by: PartialUserObjectResponse
+    // User who last edited this meeting note.
+    last_edited_by: PartialUserObjectResponse
+    // Whether this block has child blocks.
+    has_children: boolean
+    // Whether this meeting note is in the trash.
+    in_trash: boolean
+    /** @deprecated Use `in_trash` instead. Present for backwards compatibility with API versions prior to 2026-03-11. */
+    archived: boolean
+  }
+  // IDs of other meeting notes you can read that are linked to the same event. For a
+  // meeting note inside a page, this is the page's ID. Only the first 50 meeting notes
+  // found are checked.
+  other_meeting_note_ids: Array<IdResponse>
+}
+
+/**
+ * Link a full-page meeting note to a calendar event
+ */
+export const updateMeetingNotePage = {
+  method: "patch",
+  pathParams: ["meeting_note_id"],
+  queryParams: [],
+  bodyParams: ["calendar_event", "allow_other_meeting_notes"],
+
+  path: (p: UpdateMeetingNotePagePathParameters): string =>
+    `meeting_notes/${p.meeting_note_id}`,
+} as const
