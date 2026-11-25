@@ -268,6 +268,7 @@ export type {
   PageDeletedWebhookPayload,
   PageLockedWebhookPayload,
   PageMovedWebhookPayload,
+  PagePermissionsUpdatedWebhookPayload,
   PagePropertiesUpdatedWebhookPayload,
   PageTranscriptionBlockTranscriptDeletedWebhookPayload,
   PageUndeletedWebhookPayload,
