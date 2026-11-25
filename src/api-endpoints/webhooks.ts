@@ -403,6 +403,18 @@ export type PageMovedWebhookPayload = BaseWebhookPayload & {
   }
 }
 
+export type PagePermissionsUpdatedWebhookPayload = BaseWebhookPayload & {
+  // Always `page.permissions_updated`
+  type: "page.permissions_updated"
+  // The object that triggered the event.
+  entity: WebhookPageEntity
+  // Additional event-specific data.
+  data: {
+    // The parent of the entity that triggered the event.
+    parent: WebhookParentBlock
+  }
+}
+
 export type PagePropertiesUpdatedWebhookPayload = BaseWebhookPayload & {
   // Always `page.properties_updated`
   type: "page.properties_updated"
