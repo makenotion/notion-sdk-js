@@ -605,6 +605,11 @@ type MovePageBodyParameters = {
         // Always `data_source_id`
         type?: "data_source_id"
       }
+  // What to do with source properties the destination data source doesn't have. `add`
+  // (default) adds them to the data source schema when you can edit it. `omit` leaves the
+  // schema unchanged; the page keeps those values, but they aren't shown. Properties that
+  // match by name and type carry over either way.
+  missing_properties?: "add" | "omit"
 }
 
 export type MovePageParameters = MovePagePathParameters & MovePageBodyParameters
@@ -618,7 +623,7 @@ export const movePage = {
   method: "post",
   pathParams: ["page_id"],
   queryParams: [],
-  bodyParams: ["parent"],
+  bodyParams: ["parent", "missing_properties"],
 
   path: (p: MovePagePathParameters): string => `pages/${p.page_id}/move`,
 } as const
